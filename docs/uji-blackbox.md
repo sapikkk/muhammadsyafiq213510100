@@ -44,7 +44,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US2.1 | `feat/us2.1-coa` | #52 | Done |
 | US2.2 | `feat/us2.2-jurnal` | #53 | Done |
 | US4.1 | `feat/us4.1-stok-movement` | #54 | Done |
-| US4.2 | `feat/us4.2-active-pack` | #PR_US42 | In progress |
+| US4.2 | `feat/us4.2-active-pack` | #55 | In progress |
 
 ---
 
@@ -554,7 +554,7 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 
 ## Notulensi pengujian US4.2
 
-**Branch:** `feat/us4.2-active-pack` · **PR:** #PR_US42 · **Commit:** lihat PR  
+**Branch:** `feat/us4.2-active-pack` · **PR:** #55 · **Commit:** lihat PR  
 **Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox API (`curl` + cookie) di `http://localhost:3002`
 
 ### Keputusan desain yang mengikat
