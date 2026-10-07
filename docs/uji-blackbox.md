@@ -1,0 +1,337 @@
+# Catatan uji blackbox Kokonus Farm
+
+Berkas ini adalah notulensi pengujian setiap user story. Isi yang sama ditempel ke issue GitHub masing-masing supaya papan proyek https://github.com/users/sapikkk/projects/1 bisa dibaca tanpa membuka repo.
+
+## Cara membaca
+
+- **Acceptance criteria**: syarat dari PRD, workbook, dan Figma. Status: Terpenuhi, Ditunda (dengan alasan), atau Tidak berlaku.
+- **Definition of Done**: nomor item mengikuti PRD bagian 10. Item yang tidak relevan untuk US tersebut tidak ditulis.
+- **Langkah uji blackbox**: urutan aksi pengguna tanpa melihat kode, masukan yang dipakai, hasil yang diharapkan, hasil aktual, dan status Lulus, Gagal, atau Belum.
+- **Temuan**: bug yang ditemukan, keputusan desain yang menyimpang dari sumber, dan kendala lingkungan. Kendala lintas US diberi nomor FINDING-xx dan dibahas di bagian akhir.
+
+## Alur kerja per user story
+
+1. Buat branch `feat/usX.Y-nama` dari branch terakhir yang sudah lengkap.
+2. Analisis sumber: workbook (prioritas tertinggi), Figma, lalu Google Doc.
+3. Implementasi minimal yang memenuhi AC.
+4. Uji blackbox di browser dengan akun demo. Catat setiap langkah.
+5. `tsc --noEmit` dan `next lint` bersih.
+6. Commit, push branch, buka PR ke `main`. `main` tidak disentuh tanpa persetujuan pemilik repo.
+7. Tempel notulensi ke issue, pindahkan status di papan proyek.
+
+## Akun demo
+
+| Peran | Email | Catatan |
+| --- | --- | --- |
+| Owner | owner@kokonus.farm | Koko Nuswantoro |
+| Admin | admin@kokonus.farm | Admin pembukuan |
+| Petani | petani@kokonus.farm | Marzuki |
+| Petani (uji US1.6) | darusman@kokonus.farm | Sandi awal, wajib ganti saat masuk |
+
+Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
+
+## Peta branch dan PR
+
+| US | Branch | PR | Status papan |
+| --- | --- | --- | --- |
+| US1.1 sampai US1.3 | `main` (commit awal) | rilis v1.0.0 sampai v1.1.0 | Done |
+| US1.4 | `feat/us1.4-login-rbac` | ada di `main` v1.1.0 | Done |
+| US1.5 | `feat/us1.5-password-reset` | #46 | Done |
+| US1.6 | `feat/us1.6-daftar-petani` | #47 | Done |
+| US1.8 | `feat/us1.8-state-global` | #48 | Done |
+| US1.7 | `feat/us1.7-pengaturan` | #49 | Done |
+| US1.9 | belum | Sprint 4 | Todo |
+
+---
+
+## Notulensi pengujian US1.4
+
+**Branch:** `feat/us1.4-login-rbac` · **Commit:** `a70516d` · sudah ada di `main` (rilis v1.1.0)
+**Tanggal uji:** 7 Oktober 2026 · **Penguji:** agent + pemilik repo · **Metode:** blackbox lewat browser di `http://localhost:3000`
+
+### Acceptance criteria
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | Login memakai email dan sandi, sesi JWT, hash bcrypt | Terpenuhi |
+| AC2 | Field kosong menampilkan "Isi email dan sandi." | Terpenuhi |
+| AC3 | Sandi salah menampilkan "Email atau sandi tidak cocok." tanpa membocorkan apakah email terdaftar | Terpenuhi |
+| AC4 | Redirect per peran: Owner ke `/owner`, Admin ke `/admin`, Petani ke `/petani` | Terpenuhi |
+| AC5 | Middleware melindungi `/owner`, `/admin`, `/petani`. Tanpa sesi kembali ke `/login` | Terpenuhi |
+| AC6 | Keluar memakai dialog konfirmasi dan menutup sesi | Terpenuhi |
+| AC7 | Tiga akun demo tersedia dari seed | Terpenuhi |
+
+### Definition of Done (PRD bagian 10)
+
+| # | Item | Status |
+| --- | --- | --- |
+| 1 | Semua AC terpenuhi | Ya |
+| 2 | Review minimal 1 developer | Belum. Baru self-review |
+| 3 | TypeScript bersih (`tsc --noEmit`) | Ya |
+| 4 | ESLint bersih (`next lint`) | Ya |
+| 5 | Tidak ada `console.error` di production | Ya |
+| 7 | UI 375px dan desktop | Desktop diuji. 375px belum diuji di browser nyata, layout memakai `max-w-sm` |
+| 8 | Migrasi terdokumentasi | Memakai `prisma db push`, belum ada berkas migrasi |
+| 9 | Seed diperbarui | Ya, `prisma/seed.js` |
+| 11 | Edge dan error state informatif | Ya |
+| 12 | Tidak ada data bisnis hardcode | Ya. Sandi demo ada di seed dan ditandai wajib diganti |
+
+### Langkah uji blackbox
+
+| No | Langkah | Masukan | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Buka `/login`, klik Masuk tanpa isi | kosong | Pesan "Isi email dan sandi." | Sesuai | Lulus |
+| 2 | Isi email benar, sandi salah | `owner@kokonus.farm` / `salah` | Pesan "Email atau sandi tidak cocok." tetap di `/login` | Sesuai | Lulus |
+| 3 | Login Owner | `owner@kokonus.farm` / sandi demo | Masuk ke `/owner`, nama Koko Nuswantoro | Sesuai | Lulus |
+| 4 | Login Admin | `admin@kokonus.farm` / sandi demo | Masuk ke `/admin` | Sesuai | Lulus |
+| 5 | Login Petani | `petani@kokonus.farm` / sandi demo | Masuk ke `/petani`, nama Marzuki | Sesuai | Lulus |
+| 6 | Klik Keluar, konfirmasi | - | Dialog "Keluar dari akun ini?", lalu kembali ke `/login` | Sesuai | Lulus |
+| 7 | Tanpa sesi buka `/admin` | - | Dialihkan ke `/login` | Sesuai | Lulus |
+
+### Temuan
+
+- Tidak ada temuan fungsional.
+- Catatan: login kadang lambat (1 sampai 24 detik) karena latensi database. Lihat FINDING-01.
+
+---
+
+## Notulensi pengujian US1.5
+
+**Branch:** `feat/us1.5-password-reset` · **PR:** #46 · **Commit:** `aaa0b54`
+**Tanggal uji:** 7 sampai 8 Oktober 2026 · **Metode:** blackbox lewat browser
+
+### Keputusan desain yang mengikat
+
+- Reset sandi lewat persetujuan Admin, mengikuti flowchart "Lupa sandi" di halaman Architecture Figma.
+- **Tidak ada OTP.** PRD F3 menyebut OTP, tetapi aplikasi belum punya kanal email atau SMS. AC OTP diganti menjadi sandi sementara dari Admin yang wajib diganti saat masuk. Perlu disetujui pembimbing dan PRD F3 disesuaikan.
+
+### Acceptance criteria
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | Pengguna meminta reset lewat `/lupa-sandi` dengan email | Terpenuhi |
+| AC2 | Jawaban sama untuk email terdaftar atau tidak, supaya daftar akun tidak bocor | Terpenuhi |
+| AC3 | Admin melihat daftar permintaan dan bisa Setujui atau Tolak | Terpenuhi (Tolak belum diuji di browser) |
+| AC4 | Setujui menghasilkan sandi sementara yang tampil sekali | Terpenuhi |
+| AC5 | Login dengan sandi sementara dipaksa ke `/ganti-sandi` sebelum ke halaman lain | Terpenuhi |
+| AC6 | Sandi baru minimal 8 karakter, berisi huruf dan angka. Yang tidak memenuhi ditolak | Terpenuhi |
+| AC7 | Sandi baru di-hash, jejak permintaan tersimpan (siapa menyetujui, kapan) | Terpenuhi (tabel `PasswordResetRequest`) |
+| AC8 | OTP kedaluwarsa ditolak | Tidak berlaku. Tidak ada OTP, lihat keputusan desain |
+
+### Definition of Done
+
+| # | Item | Status |
+| --- | --- | --- |
+| 1 | Semua AC terpenuhi | Ya, dengan deviasi OTP yang tercatat |
+| 2 | Review minimal 1 developer | Belum. PR #46 terbuka |
+| 3 | TypeScript bersih | Ya |
+| 4 | ESLint bersih | Ya |
+| 7 | UI 375px dan desktop | Desktop diuji. 375px belum |
+| 8 | Migrasi terdokumentasi | `prisma db push`, skema di `prisma/schema.prisma` |
+| 9 | Seed diperbarui | Tidak perlu perubahan |
+| 11 | Edge dan error state informatif | Ya |
+
+### Langkah uji blackbox
+
+| No | Langkah | Masukan | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Buka `/lupa-sandi`, kirim tanpa email | kosong | "Isi email akun Anda." | Sesuai | Lulus |
+| 2 | Kirim permintaan sebagai petani | `petani@kokonus.farm` | Pesan konfirmasi permintaan masuk ke Admin | Sesuai | Lulus |
+| 3 | Login Admin, buka `/admin` | - | Permintaan Marzuki tampil dengan waktu | Sesuai | Lulus |
+| 4 | Klik Setujui | - | Sandi sementara tampil sekali, daftar jadi kosong | Sandi `abX1cIW60inD` tampil, daftar kosong | Lulus |
+| 5 | Keluar Admin, login petani dengan sandi sementara | sandi sementara | Dialihkan ke `/ganti-sandi` dengan pesan sandi dari Admin | Sesuai | Lulus |
+| 6 | Isi sandi baru lemah | `pendek` / `pendek` | "Sandi baru minimal 8 karakter, berisi huruf dan angka." | Sesuai | Lulus |
+| 7 | Isi sandi baru sah | `KokonusDemo2026` dua kali | Tersimpan, masuk ke `/petani` sebagai Marzuki, paksaan hilang | Sesuai | Lulus |
+| 8 | Klik Tolak pada permintaan | - | Permintaan hilang dari daftar | Belum diuji | Belum |
+
+### Temuan
+
+- **FINDING-01** pada langkah 7: simpan pertama gagal dengan `Timed out fetching a new connection from the connection pool` (HTTP 500, 10 detik). Percobaan ulang berhasil dalam 10 detik. Bukan bug kode.
+- **Batasan:** Admin tidak bisa menyetujui permintaan untuk akunnya sendiri. Jika hanya ada satu Admin dan ia lupa sandi, tidak ada jalur reset selain lewat database.
+
+---
+
+## Notulensi pengujian US1.6
+
+**Branch:** `feat/us1.6-daftar-petani` · **PR:** #47 · **Commit:** `69b7939`
+**Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox lewat browser
+
+### Keputusan desain yang mengikat
+
+- **Email dipakai sebagai username** karena layar masuk yang ada memakai email. PRD menyebut "username".
+- **Peran terkunci sebagai Petani.** Pilihan tiga hak akses pada flowchart Registrasi ditunda ke US1.9 (kelola user oleh Owner, Sprint 4).
+- Sandi awal wajib diganti saat masuk pertama (`mustChangePassword = true`).
+
+### Acceptance criteria
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | Admin mengisi nama, email, sandi awal | Terpenuhi |
+| AC2 | Email duplikat ditolak | Terpenuhi |
+| AC3 | Tidak ada halaman pendaftaran publik | Terpenuhi |
+| AC4 | Owner bisa melihat daftar akun petani | Terpenuhi (`/owner`) |
+| AC5 | Admin menetapkan salah satu dari tiga hak | Ditunda ke US1.9. Peran selalu Petani |
+| AC6 | Sandi awal memenuhi aturan minimal 8 karakter huruf dan angka | Terpenuhi |
+
+### Definition of Done
+
+| # | Item | Status |
+| --- | --- | --- |
+| 1 | Semua AC terpenuhi | Ya, kecuali AC5 yang ditunda dan tercatat |
+| 2 | Review minimal 1 developer | Belum. PR #47 terbuka |
+| 3 | TypeScript bersih | Ya |
+| 4 | ESLint bersih | Ya |
+| 7 | UI 375px dan desktop | Desktop diuji. 375px belum |
+| 9 | Seed diperbarui | Tidak perlu |
+| 11 | Edge dan error state informatif | Ya, termasuk pesan "Database sedang sibuk. Coba simpan lagi." |
+
+### Langkah uji blackbox
+
+| No | Langkah | Masukan | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Login Admin, buka `/admin`, klik Simpan akun tanpa isi | kosong | "Isi nama, email, dan sandi awal." | Sesuai | Lulus |
+| 2 | Isi nama dan email, sandi lemah | Darusman / `darusman@kokonus.farm` / `pendek` | "Sandi awal minimal 8 karakter, berisi huruf dan angka." | Sesuai | Lulus |
+| 3 | Isi sandi sah | `KokonusAwal2026` | "Akun Darusman (darusman@kokonus.farm) tersimpan sebagai petani." | Sesuai, setelah satu kali ulang (lihat temuan) | Lulus |
+| 4 | Simpan lagi dengan email sama | sama | "Email ini sudah dipakai." | Sesuai | Lulus |
+| 5 | Keluar, buka `/admin` tanpa sesi | - | Dialihkan ke `/login` | Sesuai | Lulus |
+| 6 | Login Owner, buka `/owner` | - | Daftar akun petani berisi Darusman dan Marzuki | Sesuai | Lulus |
+| 7 | Login Darusman dengan sandi awal | `KokonusAwal2026` | Dialihkan ke `/ganti-sandi` | Sesuai | Lulus |
+
+### Temuan
+
+- **FINDING-01** pada langkah 3: simpan pertama gagal `prisma.user.create()` timeout pool (HTTP 500, 10,8 detik). Ulang berhasil dalam 10,4 detik. Sebagai mitigasi, action `registerPetani` kini mengulang sekali pada kode Prisma `P2024` dan menampilkan "Database sedang sibuk. Coba simpan lagi." jika masih gagal.
+
+---
+
+## Notulensi pengujian US1.8
+
+**Branch:** `feat/us1.8-state-global` · **PR:** #48 · **Commit:** `5d5fb01`
+**Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox lewat browser
+
+### Acceptance criteria (PRD F23)
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | Peran yang tidak berhak mendapat layar 403 "akses ditolak", bukan halaman kosong atau dialihkan diam-diam | Terpenuhi (`/akses-ditolak`) |
+| AC2 | Empty state memakai teks nyata, bukan lorem | Terpenuhi ("Belum ada permintaan reset sandi.", "Belum ada akun petani.", "Belum ada notifikasi.") |
+| AC3 | Error state bisa dicoba lagi | Terpenuhi (`app/error.tsx`, tombol "Coba lagi") |
+| AC4 | Loading state saat data belum datang | Terpenuhi (`app/loading.tsx`), belum tertangkap visual karena cepat |
+| AC5 | 404 untuk alamat yang tidak ada | Terpenuhi (`app/not-found.tsx`) |
+
+### Definition of Done
+
+| # | Item | Status |
+| --- | --- | --- |
+| 1 | Semua AC terpenuhi | Ya |
+| 2 | Review minimal 1 developer | Belum. PR #48 terbuka |
+| 3 | TypeScript bersih | Ya |
+| 4 | ESLint bersih | Ya |
+| 5 | Tidak ada `console.error` di production | `app/error.tsx` memanggil `console.error(error)` untuk pelacakan. Perlu diganti pelapor error sebelum production |
+| 7 | UI 375px dan desktop | Desktop diuji. 375px belum |
+| 11 | Edge dan error state informatif | Ya |
+
+### Langkah uji blackbox
+
+| No | Langkah | Masukan | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Login Petani, ketik alamat `/admin` | - | Dialihkan ke `/akses-ditolak` dengan judul "Akses ditolak" | Sesuai | Lulus |
+| 2 | Klik "Kembali ke halaman Anda" | - | Kembali ke `/petani` | Sesuai | Lulus |
+| 3 | Buka `/halaman-ngawur` | - | Layar "Halaman tidak ada" dengan tautan beranda | Sesuai | Lulus |
+| 4 | Picu error server (terjadi alami saat uji US1.7, DB timeout) | - | Layar "Gagal memuat halaman" dengan tombol "Coba lagi" | Sesuai | Lulus |
+| 5 | Klik "Coba lagi" | - | Halaman pulih tanpa reload manual | Sesuai | Lulus |
+
+### Temuan
+
+- Langkah 4 dan 5 terpicu oleh **FINDING-01** (DB timeout). Itu membuktikan error boundary bekerja di kondisi nyata.
+- Perubahan perilaku: sebelumnya peran salah dialihkan diam-diam ke beranda perannya. Sekarang tampil 403 sesuai Figma `web-global-access-denied`.
+
+---
+
+## Notulensi pengujian US1.7
+
+**Branch:** `feat/us1.7-pengaturan` · **PR:** #49 · **Commit:** `d4bfeab`
+**Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox lewat browser dan verifikasi langsung ke database
+
+### Acceptance criteria (PRD F24 dan layar settings Figma)
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | Pengguna bisa mengubah nama profil | Terpenuhi |
+| AC2 | Ganti sandi butuh sandi lama | Terpenuhi |
+| AC3 | Sandi baru mengikuti aturan minimal 8 karakter huruf dan angka | Terpenuhi |
+| AC4 | Matrix hak tiga peran tampil | Terpenuhi (tabel 8 kemampuan x 3 peran) |
+| AC5 | Notifikasi nyata, bukan placeholder | Terpenuhi (Admin: jumlah permintaan reset menunggu. Peran lain: "Belum ada notifikasi.") |
+| AC6 | Notifikasi harvest pending untuk Admin | Ditunda. Harvest report baru ada di Epic 3 |
+
+### Definition of Done
+
+| # | Item | Status |
+| --- | --- | --- |
+| 1 | Semua AC terpenuhi | Ya, AC6 ditunda dan tercatat |
+| 2 | Review minimal 1 developer | Belum. PR #49 terbuka |
+| 3 | TypeScript bersih | Ya |
+| 4 | ESLint bersih | Ya |
+| 7 | UI 375px dan desktop | Desktop diuji. 375px belum |
+| 11 | Edge dan error state informatif | Ya |
+
+### Langkah uji blackbox
+
+| No | Langkah | Masukan | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Login Petani, buka `/pengaturan` | - | Nama, peran, notifikasi kosong, form profil, form sandi, matrix peran | Sesuai | Lulus |
+| 2 | Ubah nama, Simpan nama | `Marzuki Petani` | Tersimpan, header dan field menampilkan nama baru | Tersimpan di DB (diverifikasi query). Header baru segar setelah halaman dibuat membaca nama dari DB | Lulus setelah perbaikan |
+| 3 | Ubah sandi dengan sandi lama salah | `salahLama9` / `BaruBanget9` x2 | "Sandi lama tidak cocok." | Sesuai | Lulus |
+| 4 | Lihat matrix peran | - | 8 baris, kolom Owner, Admin, Petani berisi Ya atau Tidak | Sesuai | Lulus |
+| 5 | Ubah sandi dengan sandi lama benar | - | "Sandi tersimpan." | Belum diuji agar sandi demo tidak berubah | Belum |
+
+### Temuan
+
+- **Bug ditemukan dan diperbaiki saat uji:** halaman awalnya membaca nama dari token JWT sehingga nama baru tidak tampil sampai login ulang. Perbaikan: halaman membaca nama dari database, dan callback JWT menyegarkan `token.name` saat `update()`.
+- **FINDING-01:** simpan nama butuh 50 detik, dan satu percobaan ubah sandi gagal 500 karena pool timeout. Error boundary US1.8 menangkapnya dan "Coba lagi" memulihkan.
+- Setelah uji, seed dijalankan ulang sehingga nama kembali "Marzuki" dan sandi demo kembali `KokonusDemo2026`.
+
+---
+
+# Findings lintas US
+
+## FINDING-01: Database Prisma Postgres lambat dan pool timeout
+
+**Kategori:** infrastruktur, bukan bug kode · **Dampak:** menengah untuk demo, rendah untuk fungsi · **Status:** terbuka, mitigasi sebagian
+
+### Gejala
+
+- Query sederhana (`findUnique`, `create`, `update`) sering butuh 10 sampai 50 detik.
+- Sesekali gagal dengan `PrismaClientKnownRequestError P2024: Timed out fetching a new connection from the connection pool (timeout: 10, connection limit: 5)` yang menghasilkan HTTP 500.
+- Terjadi pada US1.5 (ganti sandi), US1.6 (daftar petani), US1.7 (simpan nama, ubah sandi).
+
+### Bukti dari log dev server
+
+```
+POST /ganti-sandi 500 in 10180ms   (US1.5, percobaan 1)
+POST /ganti-sandi 200 in 10358ms   (US1.5, percobaan 2)
+POST /admin 500 in 10832ms         (US1.6, percobaan 1)
+POST /admin 200 in 10384ms         (US1.6, percobaan 2)
+POST /pengaturan 200 in 50776ms    (US1.7, simpan nama)
+POST /pengaturan 500 in 10519ms    (US1.7, ubah sandi, percobaan 1)
+POST /pengaturan 200 in 40769ms    (US1.7, ubah sandi, percobaan 2)
+POST /api/auth/callback/credentials 200 in 24253ms
+```
+
+### Analisis
+
+- Database berada di `pooled.db.prisma.io` (jauh dari mesin dev). Latensi jaringan tinggi membuat 5 koneksi pool Prisma sibuk lebih dari 10 detik, lalu permintaan berikutnya timeout.
+- Dev server Next.js dengan hot reload menambah tekanan pada pool.
+- Kode aplikasi tidak salah. Setiap percobaan ulang berhasil dengan hasil benar.
+
+### Mitigasi yang sudah dilakukan
+
+1. `app/error.tsx` (US1.8) menangkap error dan menyediakan tombol "Coba lagi". Terbukti memulihkan halaman.
+2. `registerPetani` (US1.6) mengulang sekali pada `P2024` dan memberi pesan "Database sedang sibuk. Coba simpan lagi."
+3. Parameter `pool_timeout` pada `DATABASE_URL` di `.env` lokal dinaikkan supaya permintaan menunggu lebih lama daripada gagal. Nilai tidak dicatat di repo karena `.env` berisi kredensial.
+
+### Rekomendasi sebelum demo sidang
+
+- Pakai Prisma Accelerate atau database di region yang lebih dekat.
+- Atau jalankan PostgreSQL lokal untuk demo, lalu `prisma db push` dan seed.
+- Pertimbangkan `connection_limit` dan `pool_timeout` di connection string production.
+- Tambahkan pengulangan `P2024` yang sama ke action lain jika gejala berlanjut.
