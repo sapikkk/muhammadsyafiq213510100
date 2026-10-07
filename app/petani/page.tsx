@@ -11,6 +11,12 @@ export default function PetaniPage() {
         >
           Inventaris
         </Link>
+        <Link
+          href="/petani/active-pack"
+          className="inline-flex h-11 items-center rounded-md border border-input px-4 text-sm font-medium hover:bg-accent"
+        >
+          Active pack
+        </Link>
       </nav>
     </RoleHome>
   );
