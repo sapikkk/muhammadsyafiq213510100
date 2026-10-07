@@ -188,11 +188,32 @@ enum Role {
 }
 
 model User {
-  id           Int    @id @default(autoincrement())
-  nama         String @db.VarChar(100)
-  email        String @unique @db.VarChar(254)
-  passwordHash String @db.VarChar(100)
-  role         Role
+  id                 Int                    @id @default(autoincrement())
+  nama               String                 @db.VarChar(100)
+  email              String                 @unique @db.VarChar(254)
+  passwordHash       String                 @db.VarChar(100)
+  role               Role
+  mustChangePassword Boolean                @default(false)
+  resetRequests      PasswordResetRequest[] @relation("requester")
+  handledResets      PasswordResetRequest[] @relation("handler")
+}
+
+enum ResetStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// Satu baris per permintaan lupa sandi. Jadi jejak siapa menyetujui dan kapan.
+model PasswordResetRequest {
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  user        User        @relation("requester", fields: [userId], references: [id])
+  status      ResetStatus @default(PENDING)
+  requestedAt DateTime    @default(now())
+  handledById Int?
+  handledBy   User?       @relation("handler", fields: [handledById], references: [id])
+  handledAt   DateTime?
 }
 
 model Arus_Kas {

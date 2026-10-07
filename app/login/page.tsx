@@ -1,17 +1,12 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Link from "next/link";
 import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { Role } from "@/types/role";
-
-const home: Record<Role, string> = {
-  OWNER: "/owner",
-  ADMIN: "/admin",
-  PEKERJA: "/petani",
-};
+import { roleHome } from "@/lib/role-home";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -45,7 +40,8 @@ export default function LoginPage() {
 
     const session = await getSession();
     const role = session?.user?.role;
-    router.push(role ? home[role] : "/login");
+    if (session?.user?.mustChangePassword) router.push("/ganti-sandi");
+    else router.push(role ? roleHome[role] : "/login");
     router.refresh();
   }
 
@@ -86,6 +82,12 @@ export default function LoginPage() {
           {pending ? "Memeriksa..." : "Masuk"}
         </Button>
       </form>
+      <Link
+        href="/lupa-sandi"
+        className="mt-4 text-center text-sm text-primary underline-offset-4 hover:underline"
+      >
+        Lupa sandi?
+      </Link>
     </main>
   );
 }
