@@ -30,6 +30,12 @@ export default async function PetaniPage() {
         >
           Stok rendah
         </Link>
+        <Link
+          href="/petani/varietas"
+          className="inline-flex h-11 items-center rounded-md border border-input px-4 text-sm font-medium hover:bg-accent"
+        >
+          Varietas (baca)
+        </Link>
       </nav>
     </RoleHome>
   );

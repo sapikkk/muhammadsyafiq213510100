@@ -124,3 +124,15 @@ Alias: `GET /api/inventory/alerts` (respon sama).
 | PUT | `.../kolam` | Admin | `{ id, status }` | 200, `MENGANGGUR` atau `TERPAKAI` |
 
 Petani tidak berhak (403). Seed demo: 4 kolam × 480 lubang = **1.920** total.
+
+## `/api/varietas` (US3.4, master varietas & asumsi)
+
+| Method | Peran | Body / query | Jawaban |
+| --- | --- | --- | --- |
+| GET | Admin, Owner, Petani | `?aktif=1` hanya status AKTIF | 200, array varietas |
+| POST | Admin, Owner | lihat field di bawah | 201 |
+| PUT | Admin, Owner | `{ id, status }` (`AKTIF` / `NONAKTIF`) | 200 |
+
+Field POST (camelCase): `nama`, `hargaBenihPerGram`, `bijiPerGram`, `dayaKecambah`, `lamaSemai`, `lamaDiKolam`, `beratRataRataPanen`, `beratPerPack`, `hargaJualCurah`, `hargaJualPack`, `status?` (default AKTIF).
+
+UI: `/admin/varietas`, `/owner/varietas` (form + daftar), `/petani/varietas` (baca, hanya aktif). Nonaktif di UI wajib centang konfirmasi.
