@@ -1,38 +1,32 @@
 # Kokonus Farm
 
-Aplikasi pertama untuk repositori [sapikkk/muhammadsyafiq213510100](https://github.com/sapikkk/muhammadsyafiq213510100).
+Website tata kelola biaya produksi hidroponik untuk skripsi. Studi kasus: greenhouse rakit apung di Pekanbaru, 1.920 lubang tanam.
 
-Dua layanan Prisma Composer:
+Dokumen pengerjaan ada di `docs/`:
 
-- `notes` menyimpan kalimat fakta usaha (rakit apung, 1.920 lubang, Owner Koko Nuswantoro).
-- `web` memanggil `notes` dan mengembalikan satu kalimat sebagai teks.
+- `prd-agile-kokonus-farm.md` — backlog dan sprint
+- `project-context.md` — fakta usaha dan batasan
+- `skenario-narasi-ucd-agile.md` — naskah UCD
+- `notes.md` — yang masih terbuka
 
-Push ke `main` menjalankan dua workflow:
-
-- `prisma-deploy` memasang dependensi, membangun, lalu men-deploy ke Prisma Compute (proyek yang sudah dihubungkan di Console).
-- `Release` menjalankan [semantic-release](https://github.com/semantic-release/semantic-release). Versi, changelog, dan GitHub Release mengikuti [Conventional Commits](https://www.conventionalcommits.org/). Paket ini `private`, jadi tidak diterbitkan ke npm.
-
-## Commit yang memicu rilis
-
-| Pesan | Versi |
-| --- | --- |
-| `fix: ...` | patch |
-| `feat: ...` | minor |
-| `feat!: ...` atau `BREAKING CHANGE:` | major |
-
-`chore:`, `docs:`, `ci:`, dan `refactor:` tidak menaikkan versi. Commit rilis memakai `[skip ci]` supaya tidak memicu deploy kedua.
+Yang terpasang sekarang adalah fondasi Sprint 1 (US1.1): Next.js 14 App Router, TypeScript ketat, Tailwind, dan komponen Button, Card, Input, Badge, Dialog, Table, Select.
 
 ## Menjalankan lokal
 
-Butuh Node.js 22.18 atau lebih baru, dan Bun.
+Butuh Node.js 18.18 atau lebih baru.
 
 ```bash
 npm install
-npm run build
-npm run typecheck
-npx prisma dev module.ts
+cp .env.example .env.local
+npm run dev
 ```
 
-Konfigurasi deploy ada di `prisma.config.ts` (bagian `composer`). Layanan `web` menjawab di port lokal yang dicetak CLI, biasanya `http://localhost:3001`. Layanan `notes` menolak panggilan langsung (401); hanya `web` yang memegang kunci.
+Buka `http://localhost:3000`.
 
-Lalu buka URL `web` yang dicetak CLI (biasanya `http://localhost:3001`).
+```bash
+npm run lint
+npm run typecheck
+npm run build
+```
+
+PostgreSQL dan login belum dipakai. `DATABASE_URL` dan `NEXTAUTH_SECRET` di `.env.example` disiapkan untuk story berikutnya.

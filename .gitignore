@@ -1,8 +1,7 @@
 node_modules
+.next
+tsconfig.tsbuildinfo
 dist
-.prisma
-.prisma-composer
-.alchemy
 .env
 .env.*
 !.env.example

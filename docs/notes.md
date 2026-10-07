@@ -1,0 +1,7 @@
+- [x] Cabut PAT GitHub yang sempat ditempel di chat — sudah dihapus di GitHub
+- [x] Folder lokal ini adalah repo `main`, sejajar dengan origin
+- [x] US1.1 setup Next.js 14 + TypeScript + Tailwind + shadcn
+- [ ] Item berikutnya skripsi: **US1.2** schema Prisma (Sprint 1)
+- [x] [Repo GitHub](https://github.com/sapikkk/muhammadsyafiq213510100) `main` berisi kode, rilis v1.0.0
+- [x] [Naskah UCD & Agile](skenario-narasi-ucd-agile.md) sudah di-humanizer
+- [x] [PRD Agile](prd-agile-kokonus-farm.md) 6 epic, 5 sprint, 24 flow
