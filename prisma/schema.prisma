@@ -1,0 +1,205 @@
+// Satuan masih terbuka: masa_sewa, umur_ekonomis, berat panen, dasar harga curah, bunga_persen. PRD 8.1.
+// ponytail: tanggal dan jumlah panen wajib. Jadikan nullable saat US3.1 butuh baris siklus yang belum panen.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Lahan {
+  id                   Int          @id @default(autoincrement())
+  nilai_sewa           Decimal      @db.Decimal(18, 2)
+  masa_sewa            Int
+  amortisasi_per_bulan Decimal      @db.Decimal(18, 2)
+  greenhouse           Greenhouse[]
+}
+
+model Greenhouse {
+  id                   Int     @id @default(autoincrement())
+  lahan_id             Int
+  lahan                Lahan   @relation(fields: [lahan_id], references: [id])
+  nama                 String  @db.VarChar(100)
+  nilai_investasi      Decimal @db.Decimal(18, 2)
+  umur_ekonomis        Int
+  depresiasi_per_bulan Decimal @db.Decimal(18, 2)
+  kolam                Kolam[]
+}
+
+model Kolam {
+  id               Int               @id @default(autoincrement())
+  greenhouse_id    Int
+  greenhouse       Greenhouse        @relation(fields: [greenhouse_id], references: [id])
+  nama             String            @db.VarChar(100)
+  kapasitas_lubang Int
+  status           String            @db.VarChar(30)
+  siklus           Siklus_Produksi[]
+}
+
+model Varietas {
+  id                    Int               @id @default(autoincrement())
+  nama                  String            @db.VarChar(100)
+  harga_benih_per_gram  Decimal           @db.Decimal(18, 2)
+  biji_per_gram         Decimal           @db.Decimal(10, 2)
+  daya_kecambah         Decimal           @db.Decimal(5, 2)
+  lama_semai            Int
+  lama_di_kolam         Int
+  berat_rata_rata_panen Decimal           @db.Decimal(12, 3)
+  berat_per_pack        Decimal           @db.Decimal(12, 3)
+  harga_jual_curah      Decimal           @db.Decimal(18, 2)
+  harga_jual_pack       Decimal           @db.Decimal(18, 2)
+  status                String            @db.VarChar(30)
+  siklus                Siklus_Produksi[]
+}
+
+model Siklus_Produksi {
+  id                   Int             @id @default(autoincrement())
+  varietas_id          Int
+  varietas             Varietas        @relation(fields: [varietas_id], references: [id])
+  kolam_id             Int
+  kolam                Kolam           @relation(fields: [kolam_id], references: [id])
+  tanggal_semai        DateTime        @db.Date
+  tanggal_pindah_kolam DateTime        @db.Date
+  tanggal_panen        DateTime        @db.Date
+  jumlah_disemai       Int
+  jumlah_layak_jual    Int
+  total_susut          Int
+  status               String          @db.VarChar(30)
+  biaya_langsung       Biaya_Langsung?
+  log_kegagalan        Log_Kegagalan[]
+  hpp                  HPP?
+  penjualan            Penjualan[]
+}
+
+model Biaya_Langsung {
+  id                  Int             @id @default(autoincrement())
+  siklus_id           Int             @unique
+  siklus              Siklus_Produksi @relation(fields: [siklus_id], references: [id])
+  biaya_benih         Decimal         @db.Decimal(18, 2)
+  biaya_rockwool      Decimal         @db.Decimal(18, 2)
+  biaya_nutrisi       Decimal         @db.Decimal(18, 2)
+  biaya_listrik_pompa Decimal         @db.Decimal(18, 2)
+  subtotal            Decimal         @db.Decimal(18, 2)
+}
+
+model Petani {
+  id           Int     @id @default(autoincrement())
+  nama         String  @db.VarChar(100)
+  gaji_bulanan Decimal @db.Decimal(18, 2)
+}
+
+model Biaya_Overhead {
+  id                    Int      @id @default(autoincrement())
+  periode               DateTime @db.Date
+  depresiasi_greenhouse Decimal  @db.Decimal(18, 2)
+  depresiasi_listrik    Decimal  @db.Decimal(18, 2)
+  sewa_lahan            Decimal  @db.Decimal(18, 2)
+  gaji_karyawan         Decimal  @db.Decimal(18, 2)
+  subtotal              Decimal  @db.Decimal(18, 2)
+}
+
+model Log_Kegagalan {
+  id             Int             @id @default(autoincrement())
+  siklus_id      Int
+  siklus         Siklus_Produksi @relation(fields: [siklus_id], references: [id])
+  tahap          String          @db.VarChar(50)
+  jumlah_gagal   Int
+  hari_hidup     Int
+  penyebab       String          @db.Text
+  kategori_susut String          @db.VarChar(50)
+  jenis_kerugian String          @db.VarChar(50)
+  biaya_kerugian Decimal         @db.Decimal(18, 2)
+}
+
+model HPP {
+  id                    Int             @id @default(autoincrement())
+  siklus_id             Int             @unique
+  siklus                Siklus_Produksi @relation(fields: [siklus_id], references: [id])
+  biaya_langsung_total  Decimal         @db.Decimal(18, 2)
+  overhead_teralokasi   Decimal         @db.Decimal(18, 2)
+  biaya_plastik_packing Decimal         @db.Decimal(18, 2)
+  total_biaya           Decimal         @db.Decimal(18, 2)
+  hpp_per_lubang        Decimal         @db.Decimal(18, 2)
+  hpp_per_kg            Decimal         @db.Decimal(18, 2)
+  hpp_per_pack          Decimal         @db.Decimal(18, 2)
+}
+
+model Penjualan {
+  id               Int             @id @default(autoincrement())
+  siklus_id        Int
+  siklus           Siklus_Produksi @relation(fields: [siklus_id], references: [id])
+  pelanggan_id     Int
+  pelanggan        Pelanggan       @relation(fields: [pelanggan_id], references: [id])
+  jenis            String          @db.VarChar(30)
+  jumlah           Decimal         @db.Decimal(12, 3)
+  harga_satuan     Decimal         @db.Decimal(18, 2)
+  total_pendapatan Decimal         @db.Decimal(18, 2)
+}
+
+model Pelanggan {
+  id         Int         @id @default(autoincrement())
+  nama       String      @db.VarChar(100)
+  alamat     String      @db.Text
+  no_telepon String      @db.VarChar(25)
+  email      String      @db.VarChar(254)
+  penjualan  Penjualan[]
+}
+
+model Laporan_LabaRugi {
+  id                    Int      @id @default(autoincrement())
+  periode               DateTime @db.Date
+  pendapatan            Decimal  @db.Decimal(18, 2)
+  hpp                   Decimal  @db.Decimal(18, 2)
+  laba_kotor            Decimal  @db.Decimal(18, 2)
+  kerugian_operasional  Decimal  @db.Decimal(18, 2)
+  beban_penjualan       Decimal  @db.Decimal(18, 2)
+  beban_ops_nonproduksi Decimal  @db.Decimal(18, 2)
+  laba_usaha_ebit       Decimal  @db.Decimal(18, 2)
+  beban_bunga           Decimal  @db.Decimal(18, 2)
+  laba_rugi_bersih      Decimal  @db.Decimal(18, 2)
+}
+
+model Neraca {
+  id               Int      @id @default(autoincrement())
+  periode          DateTime @db.Date
+  total_aset       Decimal  @db.Decimal(18, 2)
+  total_liabilitas Decimal  @db.Decimal(18, 2)
+  total_ekuitas    Decimal  @db.Decimal(18, 2)
+}
+
+model Pinjaman_Modal {
+  id                    Int     @id @default(autoincrement())
+  pokok                 Decimal @db.Decimal(18, 2)
+  bunga_persen          Decimal @db.Decimal(7, 4)
+  tenor                 Int
+  sisa_pokok            Decimal @db.Decimal(18, 2)
+  cicilan_per_bulan     Decimal @db.Decimal(18, 2)
+  beban_bunga_per_bulan Decimal @db.Decimal(18, 2)
+}
+
+// Akun login. Bukan entitas Petani di ERD.
+enum Role {
+  OWNER
+  ADMIN
+  PEKERJA
+}
+
+model User {
+  id           Int    @id @default(autoincrement())
+  nama         String @db.VarChar(100)
+  email        String @unique @db.VarChar(254)
+  passwordHash String @db.VarChar(100)
+  role         Role
+}
+
+model Arus_Kas {
+  id                   Int      @id @default(autoincrement())
+  periode              DateTime @db.Date
+  kas_operasi          Decimal  @db.Decimal(18, 2)
+  kas_investasi        Decimal  @db.Decimal(18, 2)
+  kas_pendanaan        Decimal  @db.Decimal(18, 2)
+  perubahan_kas_bersih Decimal  @db.Decimal(18, 2)
+}

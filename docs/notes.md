@@ -1,7 +1,10 @@
 - [x] Cabut PAT GitHub yang sempat ditempel di chat — sudah dihapus di GitHub
 - [x] Folder lokal ini adalah repo `main`, sejajar dengan origin
 - [x] US1.1 setup Next.js 14 + TypeScript + Tailwind + shadcn
-- [ ] Item berikutnya skripsi: **US1.2** schema Prisma (Sprint 1)
+- [x] US1.2 schema Prisma, 16 tabel kamus ERD (Sprint 1)
+- [x] US1.3 schema 16 tabel sudah di PostgreSQL (Prisma Postgres)
+- [x] US1.4 login email+sandi, tiga akun demo (Sprint 1). Sandi demo `KokonusDemo2026` untuk owner@kokonus.farm, admin@kokonus.farm, petani@kokonus.farm. Ganti sebelum production.
+- [ ] Item berikutnya skripsi: **US1.5** lupa sandi lewat Admin (Sprint 1)
 - [x] [Repo GitHub](https://github.com/sapikkk/muhammadsyafiq213510100) `main` berisi kode, rilis v1.0.0
 - [x] [Naskah UCD & Agile](skenario-narasi-ucd-agile.md) sudah di-humanizer
 - [x] [PRD Agile](prd-agile-kokonus-farm.md) 6 epic, 5 sprint, 24 flow

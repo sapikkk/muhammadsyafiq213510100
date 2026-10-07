@@ -54,8 +54,8 @@ export function FoundationPanel() {
         <CardHeader>
           <CardTitle>Fondasi terpasang</CardTitle>
           <CardDescription>
-            Next.js 14, TypeScript ketat, Tailwind, dan komponen dasar. Login
-            dan skema basis data belum dibuat.
+            Next.js 14, TypeScript ketat, Tailwind, dan komponen dasar. Skema
+            16 tabel ada di PostgreSQL. Login tiga peran ada di halaman Masuk.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-wrap gap-2">
@@ -69,7 +69,7 @@ export function FoundationPanel() {
         <CardHeader>
           <CardTitle>Peran</CardTitle>
           <CardDescription>
-            Tiga peran di sistem. Akun dan sandi menyusul di US1.3 dan US1.4.
+            Tiga peran di sistem. Akun demo masuk lewat halaman Masuk.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -124,11 +124,10 @@ export function FoundationPanel() {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>US1.2 — skema basis data</DialogTitle>
+                <DialogTitle>US1.5 — lupa sandi</DialogTitle>
                 <DialogDescription>
-                  Berikutnya menyusun tabel Prisma: pengguna, akun, siklus,
-                  inventaris, varietas, dan kegagalan. Login dipasang setelah
-                  skema dan data awal ada.
+                  Login sudah bisa dipakai. Berikutnya reset sandi lewat
+                  Admin, bukan tautan publik.
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>
