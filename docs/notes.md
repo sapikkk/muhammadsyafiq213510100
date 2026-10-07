@@ -6,7 +6,8 @@
 - [x] US1.4 login email+sandi, tiga akun demo (Sprint 1). Sandi demo `KokonusDemo2026` untuk owner@kokonus.farm, admin@kokonus.farm, petani@kokonus.farm. Ganti sebelum production.
 - [x] US1.5 lupa sandi lewat Admin: minta, setujui atau tolak, sandi sementara, wajib ganti. Tanpa OTP.
 - [x] US1.6 Admin mendaftarkan petani: nama, email, sandi awal, peran petani, tanpa signup publik. Owner melihat daftar di /owner. Email dipakai sebagai username login.
-- [ ] Item berikutnya skripsi: **US1.7** profil dan matrix peran (Sprint 1)
+- [x] US1.8 state global: /loading, /error (tombol coba lagi), /not-found, dan /akses-ditolak (403). Middleware mengarahkan peran salah ke 403, bukan diam-diam. Empty state nyata sudah ada di admin dan owner.
+- [ ] Item berikutnya skripsi: **US1.7** settings profil dan matrix peran (Sprint 1)
 - [x] [Repo GitHub](https://github.com/sapikkk/muhammadsyafiq213510100) `main` berisi kode, rilis v1.0.0
 - [x] [Naskah UCD & Agile](skenario-narasi-ucd-agile.md) sudah di-humanizer
 - [x] [PRD Agile](prd-agile-kokonus-farm.md) 6 epic, 5 sprint, 24 flow
