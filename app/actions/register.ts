@@ -13,30 +13,14 @@ export type RegisterState = {
   error?: string;
 };
 
-// ponytail: satu ulang pada P2024. Pool Prisma Postgres sering habis di dev server.
-async function retryIfPoolBusy(
-  error: unknown,
-  retry: () => Promise<unknown>,
-): Promise<RegisterState | null> {
-  const first =
-    error instanceof Prisma.PrismaClientKnownRequestError ? error : null;
-  if (first?.code === "P2002") return { error: "Email ini sudah dipakai." };
-  if (first?.code !== "P2024") throw error;
-
-  try {
-    await retry();
-    return null;
-  } catch (retryError) {
-    const second =
-      retryError instanceof Prisma.PrismaClientKnownRequestError
-        ? retryError
-        : null;
-    if (second?.code === "P2002") return { error: "Email ini sudah dipakai." };
-    if (second?.code === "P2024") {
-      return { error: "Database sedang sibuk. Coba simpan lagi." };
-    }
-    throw retryError;
+// Pengulangan P2024 sudah terpusat di lib/prisma.ts. Di sini hanya terjemahkan kode error.
+function translate(error: unknown): RegisterState {
+  if (!(error instanceof Prisma.PrismaClientKnownRequestError)) throw error;
+  if (error.code === "P2002") return { error: "Email ini sudah dipakai." };
+  if (error.code === "P2024") {
+    return { error: "Database sedang sibuk. Coba simpan lagi." };
   }
+  throw error;
 }
 
 export async function registerPetani(
@@ -80,10 +64,7 @@ export async function registerPetani(
   try {
     await prisma.user.create({ data });
   } catch (error) {
-    const busy = await retryIfPoolBusy(error, () =>
-      prisma.user.create({ data }),
-    );
-    if (busy) return busy;
+    return translate(error);
   }
 
   revalidatePath("/admin");
