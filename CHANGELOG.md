@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.0.0...v1.1.0) (2026-10-07)
+
+
+### Features
+
+* record the Architecture spec and start the thesis app ([6554d71](https://github.com/sapikkk/muhammadsyafiq213510100/commit/6554d71a00d0acf585db5443b326c120a8aec403))
+
 # 1.0.0 (2026-10-07)
 
 
