@@ -49,7 +49,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US4.4 | `feat/us4.4-infrastruktur` | #57 | Done |
 | US3.4 | `feat/us3.4-varietas` | #58 | Done |
 | US3.1 | `feat/us3.1-siklus-semai` | #59 | Done |
-| US3.2 | `feat/us3.2-pindah-fase` | #PR_US32 | In progress |
+| US3.2 | `feat/us3.2-pindah-fase` | #60 | In progress |
 
 ---
 
@@ -785,7 +785,7 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 
 ## Notulensi pengujian US3.2
 
-**Branch:** `feat/us3.2-pindah-fase` · **PR:** #PR_US32 · **Issue:** #18  
+**Branch:** `feat/us3.2-pindah-fase` · **PR:** #60 · **Issue:** #18  
 **Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox API + UI Petani
 
 ### Acceptance criteria (F10 / US3.2)
