@@ -44,9 +44,10 @@ export const authOptions: NextAuthOptions = {
       if (trigger === "update" && token.sub) {
         const fresh = await prisma.user.findUnique({
           where: { id: Number(token.sub) },
-          select: { mustChangePassword: true },
+          select: { mustChangePassword: true, nama: true },
         });
         token.mustChangePassword = fresh?.mustChangePassword ?? false;
+        if (fresh?.nama) token.name = fresh.nama;
       }
       return token;
     },
