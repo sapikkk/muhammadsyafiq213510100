@@ -105,3 +105,22 @@ curl -b cookie.txt -X PUT -H 'content-type: application/json' \
 | GET | Admin, Owner, Petani | - | 200, `{ jumlah, items[] }` |
 
 Setiap item memuat field inventaris plus `kekurangan` (selisih minimum − stok saat ini). Hanya item **aktif** dengan `stokSaatIni` &lt; `stokMinimum`. UI: `/admin/stok-rendah`, `/petani/stok-rendah`, `/owner/stok-rendah`, banner di beranda per peran.
+
+Alias: `GET /api/inventory/alerts` (respon sama).
+
+## `/api/infrastructure` (US4.4, pohon lahan → greenhouse → kolam)
+
+| Method | Peran | Body | Jawaban |
+| --- | --- | --- | --- |
+| GET | Admin, Owner | - | 200, `{ totalKapasitasLubang, lahan[] }` nested |
+
+## `/api/infrastructure/lahan` · `/greenhouse` · `/kolam`
+
+| Method | Path | Peran | Body | Jawaban |
+| --- | --- | --- | --- | --- |
+| POST | `.../lahan` | Admin | `{ nilaiSewa, masaSewa }` | 201, hitung `amortisasi_per_bulan` |
+| POST | `.../greenhouse` | Admin | `{ lahanId, nama, nilaiInvestasi, umurEkonomis }` | 201, hitung `depresiasi_per_bulan` |
+| POST | `.../kolam` | Admin | `{ greenhouseId, nama, kapasitasLubang, status? }` | 201, status default `MENGANGGUR` |
+| PUT | `.../kolam` | Admin | `{ id, status }` | 200, `MENGANGGUR` atau `TERPAKAI` |
+
+Petani tidak berhak (403). Seed demo: 4 kolam × 480 lubang = **1.920** total.
