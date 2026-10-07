@@ -216,6 +216,26 @@ model PasswordResetRequest {
   handledAt   DateTime?
 }
 
+// Bagan akun (COA). Tidak ada di ERD Figma, ditambah untuk Epic 2 sesuai PRD US2.1.
+enum TipeAkun {
+  ASET
+  KEWAJIBAN
+  MODAL
+  PENDAPATAN
+  BEBAN
+}
+
+model Akun {
+  id       Int      @id @default(autoincrement())
+  kode     String   @unique @db.VarChar(20)
+  nama     String   @db.VarChar(100)
+  tipe     TipeAkun
+  parentId Int?
+  parent   Akun?    @relation("AkunInduk", fields: [parentId], references: [id])
+  anak     Akun[]   @relation("AkunInduk")
+  aktif    Boolean  @default(true)
+}
+
 model Arus_Kas {
   id                   Int      @id @default(autoincrement())
   periode              DateTime @db.Date

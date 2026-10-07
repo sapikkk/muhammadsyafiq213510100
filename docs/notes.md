@@ -8,7 +8,9 @@
 - [x] US1.6 Admin mendaftarkan petani: nama, email, sandi awal, peran petani, tanpa signup publik. Owner melihat daftar di /owner. Email dipakai sebagai username login.
 - [x] US1.8 state global: /loading, /error (tombol coba lagi), /not-found, dan /akses-ditolak (403). Middleware mengarahkan peran salah ke 403, bukan diam-diam. Empty state nyata sudah ada di admin dan owner.
 - [x] US1.7 pengaturan: ubah nama, ubah sandi (wajib sandi lama), matrix peran, notifikasi nyata (jumlah permintaan reset untuk Admin). Halaman /pengaturan baca nama dari DB supaya langsung segar.
-- [ ] Sprint 1 inti selesai (US1.1-US1.8). US1.9 kelola user dijadwalkan Sprint 4. Berikutnya: Sprint 2 (Epic 2) atau US1.9 jika diminta.
+- [x] Sprint 1 inti selesai (US1.1-US1.8). US1.9 kelola user dijadwalkan Sprint 4. Notulensi uji di [uji-blackbox.md](uji-blackbox.md).
+- [x] US2.1 bagan akun: model `Akun` (kode unik, 5 tipe, induk-anak, soft delete `aktif`), seed 38 akun UMKM hidroponik, halaman `/admin/akun` pohon + form tambah/ubah lewat `?edit=`, API `/api/accounts` GET/POST/PUT ([api.md](api.md)). Logika bersama di `lib/akun.ts`.
+- [ ] Berikutnya: US2.2 jurnal double-entry dengan approval.
 - [x] [Repo GitHub](https://github.com/sapikkk/muhammadsyafiq213510100) `main` berisi kode, rilis v1.0.0
 - [x] [Naskah UCD & Agile](skenario-narasi-ucd-agile.md) sudah di-humanizer
 - [x] [PRD Agile](prd-agile-kokonus-farm.md) 6 epic, 5 sprint, 24 flow

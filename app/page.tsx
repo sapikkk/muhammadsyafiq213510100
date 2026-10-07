@@ -6,7 +6,7 @@ export default function HomePage() {
     <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col gap-8 px-6 py-12">
       <header className="space-y-2">
         <div className="flex items-center justify-between gap-3">
-          <p className="text-sm font-medium text-primary">Sprint 1 · US1.7</p>
+          <p className="text-sm font-medium text-primary">Sprint 2 · US2.1</p>
           <Link
             href="/login"
             className="inline-flex h-11 items-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground"
