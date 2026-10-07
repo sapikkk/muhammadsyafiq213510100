@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { RegisterPetani } from "@/components/register-petani";
 import { ResetRequests } from "@/components/reset-requests";
 import { RoleHome } from "@/components/role-home";
@@ -20,6 +21,14 @@ export default async function AdminPage() {
 
   return (
     <RoleHome role="ADMIN">
+      <nav aria-label="Modul Admin" className="flex flex-wrap gap-2">
+        <Link
+          href="/admin/akun"
+          className="inline-flex h-11 items-center rounded-md border border-input px-4 text-sm font-medium hover:bg-accent"
+        >
+          Bagan akun
+        </Link>
+      </nav>
       <RegisterPetani />
       <ResetRequests
         requests={pending.map((request) => ({
