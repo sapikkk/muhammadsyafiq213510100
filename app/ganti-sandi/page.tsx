@@ -31,7 +31,7 @@ export default function GantiSandiPage() {
       </h1>
       <p className="mt-1 text-sm text-muted-foreground">
         {session?.user?.mustChangePassword
-          ? "Anda masuk dengan sandi sementara dari Admin. Buat sandi baru sebelum lanjut."
+          ? "Anda masuk dengan sandi dari Admin. Buat sandi baru sebelum lanjut."
           : "Buat sandi baru untuk akun ini."}
       </p>
       <form action={formAction} noValidate className="mt-6 space-y-4">

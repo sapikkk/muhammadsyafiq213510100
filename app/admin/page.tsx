@@ -1,3 +1,4 @@
+import { RegisterPetani } from "@/components/register-petani";
 import { ResetRequests } from "@/components/reset-requests";
 import { RoleHome } from "@/components/role-home";
 import { prisma } from "@/lib/prisma";
@@ -19,6 +20,7 @@ export default async function AdminPage() {
 
   return (
     <RoleHome role="ADMIN">
+      <RegisterPetani />
       <ResetRequests
         requests={pending.map((request) => ({
           id: request.id,

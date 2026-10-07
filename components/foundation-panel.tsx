@@ -126,8 +126,8 @@ export function FoundationPanel() {
               <DialogHeader>
                 <DialogTitle>US1.6: daftar petani</DialogTitle>
                 <DialogDescription>
-                  Login dan lupa sandi lewat Admin sudah bisa dipakai.
-                  Berikutnya Admin mendaftarkan akun petani.
+                  Admin mendaftarkan akun petani di halaman Admin. Owner melihat
+                  daftarnya. Tidak ada pendaftaran publik.
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>
