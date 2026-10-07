@@ -30,4 +30,8 @@ const globalForPrisma = globalThis as unknown as { prisma?: Client };
 
 export const prisma = globalForPrisma.prisma ?? buildClient();
 
+export type PrismaTransaction = Parameters<
+  Parameters<typeof prisma.$transaction>[0]
+>[0];
+
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;

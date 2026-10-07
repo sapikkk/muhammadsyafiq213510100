@@ -16,7 +16,8 @@
 - [x] US4.3 alert stok minimum: API `GET /api/inventory/alert` (+ alias `/alerts`), halaman stok rendah Admin/Owner/Petani, banner di beranda.
 - [x] US4.4 infrastruktur: pohon lahan/greenhouse/kolam, API `/api/infrastructure/*`, halaman Admin (CRUD) + Owner (baca), seed 1.920 lubang.
 - [x] US3.4 varietas: API `/api/varietas`, halaman Admin/Owner (tulis) + Petani (baca aktif), seed 2 varietas.
-- [ ] Berikutnya: US3.1 mulai siklus, US4.5 master petani, HPP US2.3 sesuai PRD Sprint 2.
+- [x] US3.1 mulai siklus semai: `kode_batch` unik, fase SEMAI, potong active pack atomik, API `/api/production`, `/petani/siklus`.
+- [ ] Berikutnya: US3.2 pindah fase, US4.5 master petani, HPP US2.3 sesuai PRD Sprint 2.
 - [x] [Repo GitHub](https://github.com/sapikkk/muhammadsyafiq213510100) `main` berisi kode, rilis v1.0.0
 - [x] [Naskah UCD & Agile](skenario-narasi-ucd-agile.md) sudah di-humanizer
 - [x] [PRD Agile](prd-agile-kokonus-farm.md) 6 epic, 5 sprint, 24 flow

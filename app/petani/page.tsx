@@ -36,6 +36,12 @@ export default async function PetaniPage() {
         >
           Varietas (baca)
         </Link>
+        <Link
+          href="/petani/siklus"
+          className="inline-flex h-11 items-center rounded-md border border-input px-4 text-sm font-medium hover:bg-accent"
+        >
+          Mulai siklus
+        </Link>
       </nav>
     </RoleHome>
   );

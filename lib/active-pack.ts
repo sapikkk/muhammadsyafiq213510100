@@ -3,7 +3,7 @@ import {
   type ActivePack,
   type StatusActivePack,
 } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import { prisma, type PrismaTransaction } from "@/lib/prisma";
 
 export class ActivePackError extends Error {
   constructor(
@@ -127,27 +127,33 @@ export async function buatActivePack(input: ActivePackInput): Promise<ActivePack
   }
 }
 
+export async function pakaiActivePackDalamTx(
+  tx: PrismaTransaction,
+  id: number,
+  jumlah: Prisma.Decimal,
+): Promise<ActivePack> {
+  const pack = await tx.activePack.findUnique({ where: { id } });
+  if (!pack) throw new ActivePackError("Active pack tidak ditemukan.", 404);
+  if (pack.status !== "AKTIF") {
+    throw new ActivePackError("Pack sudah habis atau nonaktif.", 400);
+  }
+  const sisaBaru = pack.sisaUnit.sub(jumlah);
+  if (sisaBaru.lt(0)) {
+    throw new ActivePackError("Sisa unit pack tidak cukup.", 400);
+  }
+  const status: StatusActivePack = sisaBaru.eq(0) ? "HABIS" : "AKTIF";
+  return tx.activePack.update({
+    where: { id },
+    data: { sisaUnit: sisaBaru, status },
+  });
+}
+
 export async function pakaiActivePack(
   id: number,
   jumlahRaw: unknown,
 ): Promise<ActivePack> {
   const jumlah = parseDecimal(jumlahRaw, "Jumlah pakai");
-  return prisma.$transaction(async (tx) => {
-    const pack = await tx.activePack.findUnique({ where: { id } });
-    if (!pack) throw new ActivePackError("Active pack tidak ditemukan.", 404);
-    if (pack.status !== "AKTIF") {
-      throw new ActivePackError("Pack sudah habis atau nonaktif.", 400);
-    }
-    const sisaBaru = pack.sisaUnit.sub(jumlah);
-    if (sisaBaru.lt(0)) {
-      throw new ActivePackError("Sisa unit pack tidak cukup.", 400);
-    }
-    const status: StatusActivePack = sisaBaru.eq(0) ? "HABIS" : "AKTIF";
-    return tx.activePack.update({
-      where: { id },
-      data: { sisaUnit: sisaBaru, status },
-    });
-  });
+  return prisma.$transaction(async (tx) => pakaiActivePackDalamTx(tx, id, jumlah));
 }
 
 export function serializeActivePack(

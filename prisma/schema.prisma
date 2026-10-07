@@ -57,16 +57,17 @@ model Varietas {
 
 model Siklus_Produksi {
   id                   Int             @id @default(autoincrement())
+  kode_batch           String          @unique @db.VarChar(40)
   varietas_id          Int
   varietas             Varietas        @relation(fields: [varietas_id], references: [id])
   kolam_id             Int
   kolam                Kolam           @relation(fields: [kolam_id], references: [id])
   tanggal_semai        DateTime        @db.Date
-  tanggal_pindah_kolam DateTime        @db.Date
-  tanggal_panen        DateTime        @db.Date
+  tanggal_pindah_kolam DateTime?       @db.Date
+  tanggal_panen        DateTime?       @db.Date
   jumlah_disemai       Int
-  jumlah_layak_jual    Int
-  total_susut          Int
+  jumlah_layak_jual    Int             @default(0)
+  total_susut          Int             @default(0)
   status               String          @db.VarChar(30)
   biaya_langsung       Biaya_Langsung?
   log_kegagalan        Log_Kegagalan[]

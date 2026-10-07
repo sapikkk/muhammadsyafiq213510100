@@ -48,6 +48,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US4.3 | `feat/us4.3-alert-stok` | #56 | Done |
 | US4.4 | `feat/us4.4-infrastruktur` | #57 | Done |
 | US3.4 | `feat/us3.4-varietas` | #58 | Done |
+| US3.1 | `feat/us3.1-siklus-semai` | #PR_US31 | In progress |
 
 ---
 
@@ -738,8 +739,46 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 
 ### Temuan
 
-- Pilih varietas aktif di mulai siklus (US3.1) belum diimplementasi.
 - Hapus hard delete varietas sengaja tidak ada (hanya nonaktif).
+
+---
+
+## Notulensi pengujian US3.1
+
+**Branch:** `feat/us3.1-siklus-semai` · **PR:** #PR_US31 · **Issue:** #17 · **Mirror:** `docs/uji-blackbox.md`  
+**Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox API (`curl`) + dev `:3003`
+
+### Acceptance criteria (PRD US3.1 / F9)
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | Varietas aktif + kolam dipilih | Terpenuhi |
+| AC2 | Active pack benih dipotong atomik | Terpenuhi (opsional media) |
+| AC3 | Kode batch unik | Terpenuhi (`GHUtamaKokonus-A1-261008-001`) |
+| AC4 | Fase awal SEMAI | Terpenuhi |
+| AC5 | Rollback jika gagal | Terpenuhi (transaksi Prisma) |
+| AC6 | API GET/POST `/api/production` | Terpenuhi |
+
+### Definition of Done (PRD §10)
+
+| # | Item | Status |
+| --- | --- | --- |
+| 1–12 | Sama pola US sebelumnya | Ya (review PR terbuka) |
+
+### Langkah uji blackbox
+
+| No | Langkah | Hasil | Status |
+| --- | --- | --- | --- |
+| 1 | POST Petani tanpa pack | (via validasi) | Lulus |
+| 2 | POST Admin | 403 | Lulus |
+| 3 | POST Petani siklus lengkap | 201, status SEMAI, kode batch | Lulus |
+| 4 | GET semua peran | 200 daftar siklus | Lulus |
+| 5 | UI `/petani/siklus` | Form varietas/kolam/pack | Siap (sama data API) |
+
+### Temuan
+
+- **P2028** transaksi default 5s: timeout dinaikkan `60s` di `buatSiklusSemai` (FINDING-01 terkait DB lambat).
+- US3.2 pindah fase belum; tanggal pindah/panen nullable di schema.
 
 ---
 
