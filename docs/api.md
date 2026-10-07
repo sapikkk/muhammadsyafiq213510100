@@ -63,3 +63,27 @@ curl -b cookie.txt -X PUT -H 'content-type: application/json' \
   -d '{"id":1,"aksi":"SETUJUI"}' \
   http://localhost:3000/api/transactions
 ```
+
+## `/api/inventory` (US4.1, stok bahan)
+
+| Method | Peran | Body | Jawaban |
+| --- | --- | --- | --- |
+| GET | Admin, Owner, Petani | - | 200, array item aktif dengan `stokSaatIni`, `stokMinimum`, `diBawahMinimum` |
+| POST | Admin | `{ kode, nama, satuan, stokMinimum? }` | 201, item baru (stok awal 0) |
+
+`satuan`: `GRAM`, `KG`, `PCS`, `PACK`, `LITER`. `kode` unik 2–30 karakter (409 jika bentrok).
+
+## `/api/inventory/movement` (US4.1, log pergerakan)
+
+| Method | Peran | Body / query | Jawaban |
+| --- | --- | --- | --- |
+| GET | Admin, Owner, Petani | `?itemId=` opsional | 200, riwayat pergerakan (terbaru dulu) |
+| POST | Admin, Petani | `{ itemId, tipe, jumlah, keterangan? }` | 201, log + stok terbarui |
+
+`tipe`:
+
+- `IN` — stok bertambah sebesar `jumlah`.
+- `OUT` — stok berkurang; 400 jika stok tidak cukup.
+- `ADJUST` — stok diset ke `jumlah` (opname); **wajib** `keterangan`.
+
+`jumlah` harus > 0, maksimal 3 desimal. Pembaruan stok atomik dalam transaksi DB.

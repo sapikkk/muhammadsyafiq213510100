@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const { hash } = require("bcryptjs");
 const { seedAkun } = require("./seed-akun");
+const { seedInventaris } = require("./seed-inventaris");
 
 const prisma = new PrismaClient();
 const password = "KokonusDemo2026";
@@ -33,7 +34,10 @@ async function main() {
     });
   }
   const jumlahAkun = await seedAkun(prisma);
-  console.log(`Seed selesai: ${accounts.length} akun login, ${jumlahAkun} akun COA.`);
+  const jumlahItem = await seedInventaris(prisma);
+  console.log(
+    `Seed selesai: ${accounts.length} akun login, ${jumlahAkun} akun COA, ${jumlahItem} item inventaris.`,
+  );
 }
 
 main()

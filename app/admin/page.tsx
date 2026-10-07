@@ -34,6 +34,12 @@ export default async function AdminPage() {
         >
           Jurnal
         </Link>
+        <Link
+          href="/admin/inventaris"
+          className="inline-flex h-11 items-center rounded-md border border-input px-4 text-sm font-medium hover:bg-accent"
+        >
+          Inventaris
+        </Link>
       </nav>
       <RegisterPetani />
       <ResetRequests
