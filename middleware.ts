@@ -1,7 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { roleHome } from "@/lib/role-home";
 import type { Role } from "@/types/role";
 
 function requiredRole(pathname: string): Role | null {
@@ -32,12 +31,18 @@ export async function middleware(request: NextRequest) {
 
   const role = requiredRole(pathname);
   if (role && token.role !== role) {
-    return redirectTo(request, roleHome[token.role as Role] ?? "/login");
+    return redirectTo(request, "/akses-ditolak");
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/owner/:path*", "/admin/:path*", "/petani/:path*", "/ganti-sandi"],
+  matcher: [
+    "/owner/:path*",
+    "/admin/:path*",
+    "/petani/:path*",
+    "/ganti-sandi",
+    "/akses-ditolak",
+  ],
 };
