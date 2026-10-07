@@ -44,5 +44,6 @@ export const config = {
     "/petani/:path*",
     "/ganti-sandi",
     "/akses-ditolak",
+    "/pengaturan",
   ],
 };

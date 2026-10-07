@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { LogoutButton } from "@/components/logout-button";
 import { authOptions } from "@/lib/auth";
@@ -24,7 +25,15 @@ export async function RoleHome({
         </p>
       </header>
       {children}
-      <LogoutButton />
+      <div className="flex items-center gap-3">
+        <Link
+          href="/pengaturan"
+          className="inline-flex h-11 items-center rounded-md border border-input px-4 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+        >
+          Pengaturan
+        </Link>
+        <LogoutButton />
+      </div>
     </main>
   );
 }
