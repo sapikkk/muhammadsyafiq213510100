@@ -48,7 +48,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US4.3 | `feat/us4.3-alert-stok` | #56 | Done |
 | US4.4 | `feat/us4.4-infrastruktur` | #57 | Done |
 | US3.4 | `feat/us3.4-varietas` | #58 | Done |
-| US3.1 | `feat/us3.1-siklus-semai` | #PR_US31 | In progress |
+| US3.1 | `feat/us3.1-siklus-semai` | #59 | Done |
 
 ---
 
@@ -745,7 +745,7 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 
 ## Notulensi pengujian US3.1
 
-**Branch:** `feat/us3.1-siklus-semai` · **PR:** #PR_US31 · **Issue:** #17 · **Mirror:** `docs/uji-blackbox.md`  
+**Branch:** `feat/us3.1-siklus-semai` · **PR:** #59 · **Issue:** #17 · **Mirror:** `docs/uji-blackbox.md`  
 **Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox API (`curl`) + dev `:3003`
 
 ### Acceptance criteria (PRD US3.1 / F9)
