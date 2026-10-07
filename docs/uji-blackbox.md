@@ -47,7 +47,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US4.2 | `feat/us4.2-active-pack` | #55 | Done |
 | US4.3 | `feat/us4.3-alert-stok` | #56 | Done |
 | US4.4 | `feat/us4.4-infrastruktur` | #57 | Done |
-| US3.4 | `feat/us3.4-varietas` | (PR baru) | In progress |
+| US3.4 | `feat/us3.4-varietas` | #58 | Done |
 
 ---
 
@@ -704,7 +704,7 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 
 ## Notulensi pengujian US3.4
 
-**Branch:** `feat/us3.4-varietas` · **Issue:** #20 · **Mirror:** `docs/uji-blackbox.md`  
+**Branch:** `feat/us3.4-varietas` · **PR:** #58 · **Issue:** #20 · **Mirror:** `docs/uji-blackbox.md`  
 **Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox API + halaman Admin/Owner/Petani
 
 ### Acceptance criteria (F6 / PRD)
