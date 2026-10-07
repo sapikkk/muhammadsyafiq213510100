@@ -136,3 +136,21 @@ Petani tidak berhak (403). Seed demo: 4 kolam × 480 lubang = **1.920** total.
 Field POST (camelCase): `nama`, `hargaBenihPerGram`, `bijiPerGram`, `dayaKecambah`, `lamaSemai`, `lamaDiKolam`, `beratRataRataPanen`, `beratPerPack`, `hargaJualCurah`, `hargaJualPack`, `status?` (default AKTIF).
 
 UI: `/admin/varietas`, `/owner/varietas` (form + daftar), `/petani/varietas` (baca, hanya aktif). Nonaktif di UI wajib centang konfirmasi.
+
+## `/api/production` (US3.1, mulai siklus semai)
+
+| Method | Peran | Body | Jawaban |
+| --- | --- | --- | --- |
+| GET | Admin, Owner, Petani | - | 200, daftar siklus |
+| POST | Petani | lihat field di bawah | 201, siklus baru fase `SEMAI` |
+
+Field POST: `varietasId`, `kolamId`, `tanggalSemai` (YYYY-MM-DD), `jumlahDisemai`, `activePackBenihId`, `jumlahBenihPakai`, opsional `activePackMediaId` + `jumlahMediaPakai`.
+
+Aturan:
+
+- Varietas harus `AKTIF`. Jumlah disemai ≤ kapasitas lubang kolam.
+- Active pack benih (dan media jika diisi) dipotong dalam transaksi yang sama; gagal = rollback.
+- `kode_batch` unik, pola `GH…-A1-YYMMDD-NNN` dari greenhouse/kolam/tanggal.
+- Kolam `MENGANGGUR` → `BERPRODUKSI` saat siklus pertama dibuat.
+
+UI: `/petani/siklus`.
