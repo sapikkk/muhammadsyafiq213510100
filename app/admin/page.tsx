@@ -28,6 +28,12 @@ export default async function AdminPage() {
         >
           Bagan akun
         </Link>
+        <Link
+          href="/admin/jurnal"
+          className="inline-flex h-11 items-center rounded-md border border-input px-4 text-sm font-medium hover:bg-accent"
+        >
+          Jurnal
+        </Link>
       </nav>
       <RegisterPetani />
       <ResetRequests

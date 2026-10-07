@@ -196,6 +196,8 @@ model User {
   mustChangePassword Boolean                @default(false)
   resetRequests      PasswordResetRequest[] @relation("requester")
   handledResets      PasswordResetRequest[] @relation("handler")
+  jurnalDibuat       Jurnal[]               @relation("jurnalPembuat")
+  jurnalDiputus      Jurnal[]               @relation("jurnalPemutus")
 }
 
 enum ResetStatus {
@@ -226,14 +228,49 @@ enum TipeAkun {
 }
 
 model Akun {
-  id       Int      @id @default(autoincrement())
-  kode     String   @unique @db.VarChar(20)
-  nama     String   @db.VarChar(100)
+  id       Int           @id @default(autoincrement())
+  kode     String        @unique @db.VarChar(20)
+  nama     String        @db.VarChar(100)
   tipe     TipeAkun
   parentId Int?
-  parent   Akun?    @relation("AkunInduk", fields: [parentId], references: [id])
-  anak     Akun[]   @relation("AkunInduk")
-  aktif    Boolean  @default(true)
+  parent   Akun?         @relation("AkunInduk", fields: [parentId], references: [id])
+  anak     Akun[]        @relation("AkunInduk")
+  aktif    Boolean       @default(true)
+  // Saldo normal: Aset dan Beban bertambah di debit, lainnya di kredit. Hanya berubah saat jurnal APPROVED.
+  saldo    Decimal       @default(0) @db.Decimal(18, 2)
+  baris    JurnalBaris[]
+}
+
+enum StatusJurnal {
+  DRAFT
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Jurnal {
+  id            Int           @id @default(autoincrement())
+  tanggal       DateTime      @db.Date
+  keterangan    String        @db.VarChar(255)
+  status        StatusJurnal  @default(DRAFT)
+  dibuatOlehId  Int
+  dibuatOleh    User          @relation("jurnalPembuat", fields: [dibuatOlehId], references: [id])
+  dibuatPada    DateTime      @default(now())
+  diputusOlehId Int?
+  diputusOleh   User?         @relation("jurnalPemutus", fields: [diputusOlehId], references: [id])
+  diputusPada   DateTime?
+  alasanTolak   String?       @db.Text
+  baris         JurnalBaris[]
+}
+
+model JurnalBaris {
+  id       Int     @id @default(autoincrement())
+  jurnalId Int
+  jurnal   Jurnal  @relation(fields: [jurnalId], references: [id], onDelete: Cascade)
+  akunId   Int
+  akun     Akun    @relation(fields: [akunId], references: [id])
+  debit    Decimal @default(0) @db.Decimal(18, 2)
+  kredit   Decimal @default(0) @db.Decimal(18, 2)
 }
 
 model Arus_Kas {

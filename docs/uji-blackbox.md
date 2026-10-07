@@ -42,6 +42,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US1.7 | `feat/us1.7-pengaturan` | #49 | Done |
 | US1.9 | belum | Sprint 4 | Todo |
 | US2.1 | `feat/us2.1-coa` | #52 | Done |
+| US2.2 | `feat/us2.2-jurnal` | #PR | Done |
 
 ---
 
@@ -378,6 +379,97 @@ Sesi dibuat lewat `POST /api/auth/callback/credentials` untuk tiga akun demo.
 - **Bug saat uji, sudah diperbaiki sebelum commit:** dev server yang berjalan masih memakai Prisma Client lama sehingga `prisma.akun` undefined (TypeError 500). Solusi: restart dev server setelah `prisma db push`. Dicatat sebagai langkah wajib di alur kerja.
 - **FINDING-01:** simpan akun lewat UI butuh 16,5 detik, uji API langkah 3 sampai 16 total 2,5 menit. Setelah `pool_timeout=30` di `.env` lokal tidak ada lagi error 500 timeout selama uji US2.1.
 - Setelah uji, akun uji 1600 dan 1610 dibiarkan di database dev sebagai contoh akun nonaktif untuk demo.
+
+---
+
+## Notulensi pengujian US2.2
+
+**Branch:** `feat/us2.2-jurnal` · **PR:** #PR_US22 · **Commit:** lihat PR
+**Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox lewat API (`curl` + cookie sesi) dan browser sebagai Admin
+
+### Keputusan desain yang mengikat
+
+- Model `Jurnal` + `JurnalBaris` terpisah dari ERD Figma, sesuai PRD Epic 2.
+- Field `Akun.saldo` ditambah; hanya naik/turun saat jurnal `APPROVED`, dalam satu transaksi Prisma.
+- Normal balance: Aset/Beban bertambah di debit; Kewajiban/Modal/Pendapatan bertambah di kredit.
+- Hanya akun posting (aktif, tanpa anak) yang bisa dipilih di form jurnal.
+- Owner boleh GET `/api/transactions` dan filter; halaman Owner read-only jurnal (US2.6) ditunda Sprint 4.
+- Pengulangan query saat P2024 dipusatkan di `lib/prisma.ts` (mitigasi FINDING-01).
+
+### Acceptance criteria (PRD US2.2)
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | Multi baris jurnal (JournalLine) | Terpenuhi |
+| AC2 | Status DRAFT, PENDING, APPROVED, REJECTED | Terpenuhi |
+| AC3 | Filter tanggal dan status | Terpenuhi (GET query + form di `/admin/jurnal`) |
+| AC4 | Update saldo hanya setelah approve | Terpenuhi (transaksi DB, diverifikasi saldo akun) |
+| AC5 | Dialog tolak dengan alasan | Terpenuhi (`JurnalActions` + API TOLAK) |
+| AC6 | Validasi debit = kredit, tidak bisa simpan jika tidak seimbang | Terpenuhi (400 API + pesan form) |
+
+### Definition of Done (PRD bagian 10)
+
+| # | Item | Status |
+| --- | --- | --- |
+| 1 | Semua AC terpenuhi | Ya |
+| 2 | Review minimal 1 developer | Belum. PR terbuka |
+| 3 | TypeScript bersih | Ya |
+| 4 | ESLint bersih | Ya |
+| 5 | Tidak ada `console.error` di production | Ya (`app/error.tsx` masih log error boundary, sama seperti US1.8) |
+| 6 | API punya error handling dan status HTTP | Ya |
+| 7 | UI 375px dan desktop | Desktop diuji browser; 375px belum diuji khusus jurnal |
+| 8 | Migrasi terdokumentasi | `prisma db push`, skema di `prisma/schema.prisma` |
+| 9 | Seed diperbarui | Tidak perlu (jurnal dari uji) |
+| 10 | Dokumentasi API | Ya, `docs/api.md` bagian `/api/transactions` |
+| 11 | Edge dan error state informatif | Ya (empty filter, selisih merah di form, alasan tolak) |
+| 12 | Tidak ada data bisnis hardcode | Ya |
+
+### Langkah uji blackbox: API (26 langkah)
+
+| No | Langkah | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- |
+| 1 | GET tanpa sesi | 401 | Sesuai | Lulus |
+| 2 | GET Petani | 403 | Sesuai | Lulus |
+| 3 | GET Owner kosong | 200 [] | Sesuai | Lulus |
+| 4 | POST Owner | 403 | Sesuai | Lulus |
+| 5 | POST body kosong | 400 tanggal | Sesuai | Lulus |
+| 6 | POST satu baris | 400 minimal dua baris | Sesuai | Lulus |
+| 7 | POST tidak seimbang | 400 selisih | Sesuai | Lulus |
+| 8 | POST debit+kredit satu baris | 400 | Sesuai | Lulus |
+| 9 | POST ke akun induk 1000 | 400 akun induk | Sesuai | Lulus |
+| 10 | POST nominal `1.500.000` | 400 tanpa pemisah ribuan | Sesuai | Lulus |
+| 11 | POST PENDING beli benih 150.000 | 201 id=1 | Sesuai | Lulus |
+| 12 | POST DRAFT setor modal 5 juta | 201 id=2 | Sesuai | Lulus |
+| 13 | Saldo sebelum approve | semua 0 | Sesuai | Lulus |
+| 14 | SETUJUI draft | 409 hanya PENDING | Sesuai | Lulus |
+| 15 | AJUKAN draft | 200 PENDING | Sesuai | Lulus |
+| 16 | TOLAK tanpa alasan | 400 | Sesuai | Lulus |
+| 17 | TOLAK dengan alasan | 200 REJECTED | Sesuai | Lulus |
+| 18 | SETUJUI pending #1 | 200 APPROVED | Sesuai | Lulus |
+| 19 | Saldo setelah approve | Kas -150000, Benih +150000 | Sesuai | Lulus |
+| 20 | SETUJUI lagi | 409 | Sesuai | Lulus |
+| 21 | aksi HAPUS | 400 | Sesuai | Lulus |
+| 22 | id 99999 | 404 | Sesuai | Lulus |
+| 23 | filter APPROVED | 1 jurnal | Sesuai | Lulus |
+| 24 | filter dari 2026-10-05 | 1 jurnal 8 Okt | Sesuai | Lulus |
+| 25 | filter sampai 2026-10-05 | 1 jurnal 1 Okt | Sesuai | Lulus |
+| 26 | GET Owner semua | 200, 2 jurnal | Sesuai | Lulus |
+
+### Langkah uji blackbox: UI
+
+| No | Langkah | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- |
+| 1 | `/admin/jurnal` sebagai Admin | Daftar 2 jurnal, filter, tombol Jurnal baru | Sesuai | Lulus |
+| 2 | Form baru, selisih debit/kredit | Selisih merah Rp 5.000 | Sesuai | Lulus |
+| 3 | Ajukan tidak seimbang | Alert selisih 5000 | Sesuai | Lulus |
+| 4 | Perbaiki kredit, Ajukan seimbang | Redirect ke detail | **FINDING-01:** P2024 30s, error boundary "Gagal memuat", perlu Coba lagi atau ulang | Gagal lalu mitigasi |
+| 5 | Detail jurnal #1 APPROVED | Tabel baris, total seimbang | Diverifikasi lewat API + daftar | Lulus |
+| 6 | Jurnal REJECTED | Alasan tolak tampil | Sesuai (setor modal ditolak) | Lulus |
+
+### Temuan
+
+- **FINDING-01** pada UI langkah 4: `POST /admin/jurnal/baru` timeout pool 30 detik → HTTP 500, error boundary US1.8. Mitigasi ditambah: extension Prisma di `lib/prisma.ts` mengulang sekali semua query P2024.
+- **Operasional:** setelah `prisma db push`, wajib restart dev server agar client Prisma mengenal model baru (sama seperti US2.1).
 
 ---
 
