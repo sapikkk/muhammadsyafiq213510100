@@ -1,6 +1,8 @@
 node_modules
 dist
 .prisma
+.prisma-composer
+.alchemy
 .env
 .env.*
 !.env.example

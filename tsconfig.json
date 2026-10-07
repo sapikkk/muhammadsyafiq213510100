@@ -9,5 +9,5 @@
     "skipLibCheck": true,
     "types": ["bun"]
   },
-  "include": ["module.ts", "prisma-composer.config.ts", "src"]
+  "include": ["module.ts", "prisma.config.ts", "src"]
 }
