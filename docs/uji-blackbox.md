@@ -44,7 +44,8 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US2.1 | `feat/us2.1-coa` | #52 | Done |
 | US2.2 | `feat/us2.2-jurnal` | #53 | Done |
 | US4.1 | `feat/us4.1-stok-movement` | #54 | Done |
-| US4.2 | `feat/us4.2-active-pack` | #55 | In progress |
+| US4.2 | `feat/us4.2-active-pack` | #55 | Done |
+| US4.3 | `feat/us4.3-alert-stok` | (PR baru) | In progress |
 
 ---
 
@@ -485,7 +486,7 @@ Sesi dibuat lewat `POST /api/auth/callback/credentials` untuk tiga akun demo.
 - Model `ItemInventaris` + `PergerakanInventaris` di luar 16 tabel ERD Figma, sesuai Epic 4 PRD (COA/jurnal/inventaris tidak masuk ERD workbook).
 - `ADJUST` = set stok ke jumlah fisik hasil opname (bukan selisih delta); wajib keterangan.
 - Owner hanya lihat stok (GET + halaman baca); movement hanya Admin dan Petani (matriks RBAC PRD §12).
-- Badge "Di bawah minimum" di UI dari perbandingan `stokSaatIni` vs `stokMinimum`; alert otomatis penuh (US4.3) belum diimplementasi.
+- Badge "Di bawah minimum" di daftar inventaris; alert terpusat di US4.3 (`/api/inventory/alert`, halaman stok rendah, banner beranda).
 
 ### Acceptance criteria (PRD US4.1 + F16)
 
@@ -548,7 +549,7 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 
 - **Operasional (sama US2.1):** jika dev server lama masih di `:3000` tanpa restart setelah `db push`, GET `/api/inventory` bisa 500 (`itemInventaris` undefined). Restart dev atau pakai instance baru (`:3001` saat uji).
 - **FINDING-01:** login credentials ~15–25 detik; movement POST ~3–15 detik; tidak ada P2024 gagal permanen selama uji US4.1 setelah pool diperpanjang lokal.
-- US4.3 (alert sistem otomatis) dan hubungan pembelian→jurnal→IN (F14) sengaja ditunda; stok minimum hanya dipakai untuk badge UI.
+- Hubungan pembelian→jurnal→IN (F14) sengaja di luar US4.1; alert stok penuh ada di US4.3.
 
 ---
 
@@ -613,7 +614,62 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 
 ---
 
+## Notulensi pengujian US4.3
+
+**Branch:** `feat/us4.3-alert-stok` · **Issue:** #26 · **Mirror:** `docs/uji-blackbox.md`  
+**Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox API (`curl` + cookie sesi) di dev server lokal
+
+### Acceptance criteria (Epic 4 / Figma low-stock)
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | Sistem mendeteksi item aktif dengan `stokSaatIni` &lt; `stokMinimum` | Terpenuhi |
+| AC2 | API khusus daftar alert (`GET /api/inventory/alert`) | Terpenuhi |
+| AC3 | UI daftar stok rendah Admin (`web-admin-low-stock-list`) | Terpenuhi (`/admin/stok-rendah`) |
+| AC4 | Petani dan Owner bisa melihat alert (baca) | Terpenuhi |
+| AC5 | Banner/alert di beranda saat ada item rendah | Terpenuhi (`role="alert"`) |
+
+### Definition of Done (PRD §10)
+
+| # | Item | Status |
+| --- | --- | --- |
+| 1 | Semua AC terpenuhi | Ya |
+| 2 | Review minimal 1 developer | Belum, PR terbuka |
+| 3–5 | TS, ESLint, console | Ya |
+| 6 | API error handling | Ya (401, 403) |
+| 7 | UI 375px + desktop | Ya (layout sama modul inventaris) |
+| 8–10 | Tanpa migrasi baru, docs API | Ya |
+| 11–12 | Empty state + no hardcode | Ya |
+
+### Langkah uji blackbox: API
+
+| No | Langkah | Masukan | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | GET tanpa sesi | - | 401 | Sesuai | Lulus |
+| 2 | GET Admin | - | 200, `jumlah` + `items` | Sesuai | Lulus |
+| 3 | GET Owner | - | 200 | Sesuai | Lulus |
+| 4 | GET Petani | - | 200 | Sesuai | Lulus |
+| 5 | POST OUT besar pada BNH-SLAD | stok &lt; 500 | Item masuk alert, `kekurangan` &gt; 0 | Sesuai | Lulus |
+| 6 | POST IN cukup | stok ≥ minimum | Item hilang dari alert | Sesuai | Lulus |
+
+### Langkah uji blackbox: UI
+
+| No | Langkah | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- |
+| 1 | Admin beranda dengan stok rendah | Banner jumlah item + link daftar | Sesuai | Lulus |
+| 2 | `/admin/stok-rendah` | Daftar item + kekurangan | Sesuai | Lulus |
+| 3 | Semua stok aman | Empty "Semua stok di atas minimum" | Sesuai | Lulus |
+| 4 | Petani/Owner beranda + halaman stok rendah | Banner/daftar baca saja | Sesuai | Lulus |
+
+### Temuan
+
+- Integrasi journey pembelian → jurnal → IN (F14) tetap di luar scope US4.3; alert hanya memandu ke inventaris.
+- **FINDING-01:** latensi DB masih mempengaruhi waktu login sebelum uji API.
+
+---
+
 # Findings lintas US
+
 
 ## FINDING-01: Database Prisma Postgres lambat dan pool timeout
 

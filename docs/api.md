@@ -97,3 +97,11 @@ curl -b cookie.txt -X PUT -H 'content-type: application/json' \
 | PUT | Admin, Petani | `{ id, aksi: "PAKAI", jumlah }` | 200, sisa berkurang; `status` `HABIS` jika sisa 0 |
 
 `biayaPerUnit` = `hargaPack` ÷ `jumlahUnit` (4 desimal). Owner tidak berhak (403).
+
+## `/api/inventory/alert` (US4.3, stok di bawah minimum)
+
+| Method | Peran | Body | Jawaban |
+| --- | --- | --- | --- |
+| GET | Admin, Owner, Petani | - | 200, `{ jumlah, items[] }` |
+
+Setiap item memuat field inventaris plus `kekurangan` (selisih minimum − stok saat ini). Hanya item **aktif** dengan `stokSaatIni` &lt; `stokMinimum`. UI: `/admin/stok-rendah`, `/petani/stok-rendah`, `/owner/stok-rendah`, banner di beranda per peran.
