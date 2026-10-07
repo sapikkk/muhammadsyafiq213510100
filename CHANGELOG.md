@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.1.0...v1.2.0) (2026-10-07)
+
+
+### Features
+
+* add the ERD schema and role login ([a70516d](https://github.com/sapikkk/muhammadsyafiq213510100/commit/a70516da9c7b6c55df6622fecd9200cd7af8b990))
+
 # [1.1.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.0.0...v1.1.0) (2026-10-07)
 
 
