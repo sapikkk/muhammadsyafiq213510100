@@ -45,7 +45,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US2.2 | `feat/us2.2-jurnal` | #53 | Done |
 | US4.1 | `feat/us4.1-stok-movement` | #54 | Done |
 | US4.2 | `feat/us4.2-active-pack` | #55 | Done |
-| US4.3 | `feat/us4.3-alert-stok` | (PR baru) | In progress |
+| US4.3 | `feat/us4.3-alert-stok` | #56 | Done |
 
 ---
 
@@ -616,7 +616,7 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 
 ## Notulensi pengujian US4.3
 
-**Branch:** `feat/us4.3-alert-stok` · **Issue:** #26 · **Mirror:** `docs/uji-blackbox.md`  
+**Branch:** `feat/us4.3-alert-stok` · **PR:** #56 · **Issue:** #26 · **Mirror:** `docs/uji-blackbox.md`  
 **Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox API (`curl` + cookie sesi) di dev server lokal
 
 ### Acceptance criteria (Epic 4 / Figma low-stock)
