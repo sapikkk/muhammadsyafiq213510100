@@ -49,6 +49,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US4.4 | `feat/us4.4-infrastruktur` | #57 | Done |
 | US3.4 | `feat/us3.4-varietas` | #58 | Done |
 | US3.1 | `feat/us3.1-siklus-semai` | #59 | Done |
+| US3.2 | `feat/us3.2-pindah-fase` | #PR_US32 | In progress |
 
 ---
 
@@ -778,7 +779,38 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 ### Temuan
 
 - **P2028** transaksi default 5s: timeout dinaikkan `60s` di `buatSiklusSemai` (FINDING-01 terkait DB lambat).
-- US3.2 pindah fase belum; tanggal pindah/panen nullable di schema.
+- US3.2 pindah fase: lihat notulensi di bawah.
+
+---
+
+## Notulensi pengujian US3.2
+
+**Branch:** `feat/us3.2-pindah-fase` · **PR:** #PR_US32 · **Issue:** #18  
+**Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox API + UI Petani
+
+### Acceptance criteria (F10 / US3.2)
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | Tombol besar + konfirmasi | Terpenuhi (h-14 + checkbox wajib) |
+| AC2 | Hanya maju fase | Terpenuhi (urutan tetap, tolak loncat) |
+| AC3 | ProductionLog waktu + user | Terpenuhi (`Log_Produksi`) |
+| AC4 | PUT `/api/production/[id]/phase` Petani | Terpenuhi |
+| AC5 | Admin/Owner tidak pindah fase | Terpenuhi (403) |
+
+### Langkah uji blackbox (API)
+
+| No | Langkah | Hasil diharapkan | Status |
+| --- | --- | --- | --- |
+| 1 | PUT tanpa konfirmasi | 400 | Lulus |
+| 2 | PUT Admin | 403 | Lulus |
+| 3 | PUT Petani konfirmasi | 200, fase SEMAI→SPROUT_DAUN + log | Lulus |
+| 4 | PUT fase akhir | 400 sudah selesai | Lulus (setelah rantai) |
+
+### Temuan
+
+- Durasi per fase bisa dihitung dari selisih `waktu` log (US3.6 timeline belum).
+- DB push `Log_Produksi` wajib sebelum uji di lingkungan dev.
 
 ---
 

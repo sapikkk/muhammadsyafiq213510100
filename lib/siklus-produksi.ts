@@ -2,6 +2,12 @@ import { Prisma } from "@prisma/client";
 import { ActivePackError, pakaiActivePackDalamTx } from "@/lib/active-pack";
 import { keTanggalIso } from "@/lib/format";
 import { prisma, type PrismaTransaction } from "@/lib/prisma";
+import {
+  faseBerikutnya,
+  faseLabel,
+  isFaseProduksi,
+  type FaseProduksi,
+} from "@/lib/siklus-fase";
 
 export class SiklusError extends Error {
   constructor(
@@ -192,6 +198,97 @@ export async function buatSiklusSemai(input: SiklusInput) {
   }
 }
 
+export async function getSiklusProduksi(id: number) {
+  return prisma.siklus_Produksi.findUnique({
+    where: { id },
+    include: {
+      varietas: { select: { nama: true } },
+      kolam: {
+        select: { nama: true, greenhouse: { select: { nama: true } } },
+      },
+    },
+  });
+}
+
+export async function listLogProduksi(siklusId: number) {
+  return prisma.log_Produksi.findMany({
+    where: { siklus_id: siklusId },
+    orderBy: { waktu: "asc" },
+    include: { user: { select: { nama: true } } },
+  });
+}
+
+function parseCatatan(raw: unknown): string | null {
+  if (raw === null || raw === undefined || raw === "") return null;
+  const text = String(raw).trim();
+  if (text.length > 255) {
+    throw new SiklusError("Catatan maksimal 255 karakter.", 400);
+  }
+  return text;
+}
+
+export async function lanjutFase(
+  siklusId: number,
+  userId: number,
+  raw: Record<string, unknown>,
+) {
+  if (raw.konfirmasi !== true && raw.konfirmasi !== "true" && raw.konfirmasi !== "on") {
+    throw new SiklusError("Centang konfirmasi sebelum lanjut fase.", 400);
+  }
+  const catatan = parseCatatan(raw.catatan);
+
+  return prisma.$transaction(
+    async (tx) => {
+      const siklus = await tx.siklus_Produksi.findUnique({ where: { id: siklusId } });
+      if (!siklus) throw new SiklusError("Siklus tidak ditemukan.", 404);
+      if (!isFaseProduksi(siklus.status)) {
+        throw new SiklusError("Fase siklus tidak dikenali.", 400);
+      }
+      const berikut = faseBerikutnya(siklus.status);
+      if (!berikut) {
+        throw new SiklusError("Siklus sudah di fase akhir.", 400);
+      }
+
+      const data: {
+        status: FaseProduksi;
+        tanggal_pindah_kolam?: Date;
+        tanggal_panen?: Date;
+      } = { status: berikut };
+
+      const hariIni = new Date(`${keTanggalIso(new Date())}T12:00:00.000Z`);
+      if (berikut === "PINDAH_KOLAM") {
+        data.tanggal_pindah_kolam = hariIni;
+      }
+      if (berikut === "PANEN" || berikut === "SELESAI") {
+        data.tanggal_panen = hariIni;
+      }
+
+      const updated = await tx.siklus_Produksi.update({
+        where: { id: siklusId },
+        data,
+      });
+
+      await tx.log_Produksi.create({
+        data: {
+          siklus_id: siklusId,
+          fase_dari: siklus.status,
+          fase_ke: berikut,
+          catatan,
+          userId,
+        },
+      });
+
+      return {
+        siklus: updated,
+        fase_dari: siklus.status as FaseProduksi,
+        fase_ke: berikut,
+        label_ke: faseLabel[berikut],
+      };
+    },
+    { maxWait: 20_000, timeout: 60_000 },
+  );
+}
+
 export function serializeSiklus(
   row: Awaited<ReturnType<typeof listSiklusProduksi>>[number],
 ) {
@@ -212,5 +309,10 @@ export function serializeSiklus(
     jumlah_layak_jual: row.jumlah_layak_jual,
     total_susut: row.total_susut,
     status: row.status,
+    fase_label: isFaseProduksi(row.status) ? faseLabel[row.status] : row.status,
+    fase_berikutnya: faseBerikutnya(row.status),
+    fase_berikutnya_label: faseBerikutnya(row.status)
+      ? faseLabel[faseBerikutnya(row.status)!]
+      : null,
   };
 }
