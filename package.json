@@ -1,0 +1,32 @@
+{
+  "name": "muhammadsyafiq213510100",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Kokonus Farm — aplikasi pertama di Prisma Compute (studi kasus skripsi).",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sapikkk/muhammadsyafiq213510100.git"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "build": "bun build src/notes/server.ts --target=bun --outfile dist/notes/server.mjs && bun build src/web/server.ts --target=bun --outfile dist/web/server.mjs",
+    "typecheck": "tsc --noEmit",
+    "dev": "prisma dev module.ts"
+  },
+  "dependencies": {
+    "@prisma/composer": "0.28.0",
+    "@prisma/composer-prisma-cloud": "0.28.0",
+    "arktype": "^2.1.20"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "7.0.0",
+    "@semantic-release/git": "11.0.1",
+    "@types/bun": "^1.2.18",
+    "prisma": "8.0.0-rc.21",
+    "semantic-release": "25.0.9",
+    "typescript": "^5.9.2"
+  }
+}
