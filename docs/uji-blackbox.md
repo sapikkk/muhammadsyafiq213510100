@@ -47,6 +47,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US4.2 | `feat/us4.2-active-pack` | #55 | Done |
 | US4.3 | `feat/us4.3-alert-stok` | #56 | Done |
 | US4.4 | `feat/us4.4-infrastruktur` | #57 | Done |
+| US3.4 | `feat/us3.4-varietas` | (PR baru) | In progress |
 
 ---
 
@@ -698,6 +699,47 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 
 - Hapus lahan/greenhouse yang sudah punya siklus belum diimplementasi (US3.1 nanti).
 - Model memakai schema ERD 16 tabel; tidak ada migrasi baru.
+
+---
+
+## Notulensi pengujian US3.4
+
+**Branch:** `feat/us3.4-varietas` · **Issue:** #20 · **Mirror:** `docs/uji-blackbox.md`  
+**Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox API + halaman Admin/Owner/Petani
+
+### Acceptance criteria (F6 / PRD)
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | Parameter asumsi tersimpan (benih, kecambah, lama semai, berat panen, harga jual) | Terpenuhi |
+| AC2 | Status AKTIF / NONAKTIF | Terpenuhi |
+| AC3 | Hanya varietas aktif di daftar Petani (`?aktif=1`) | Terpenuhi |
+| AC4 | Konfirmasi sebelum nonaktif (checkbox form) | Terpenuhi |
+| AC5 | Admin + Owner tulis; Petani baca | Terpenuhi |
+
+### Langkah uji blackbox: API
+
+| No | Langkah | Hasil diharapkan | Status |
+| --- | --- | --- | --- |
+| 1 | GET tanpa sesi | 401 | Lulus |
+| 2 | GET Admin | 200, ≥2 varietas seed | Lulus |
+| 3 | GET Petani `?aktif=1` | 200, hanya AKTIF | Lulus |
+| 4 | POST Petani | 403 | Lulus |
+| 5 | POST Owner varietas uji | 201 | Lulus |
+| 6 | PUT NONAKTIF | 200 | Lulus |
+
+### Langkah uji blackbox: UI
+
+| No | Langkah | Hasil diharapkan | Status |
+| --- | --- | --- | --- |
+| 1 | `/admin/varietas` | Daftar + form tambah | Lulus |
+| 2 | `/owner/varietas` | Sama (Owner tulis) | Lulus |
+| 3 | `/petani/varietas` | Hanya aktif, tanpa form | Lulus |
+
+### Temuan
+
+- Pilih varietas aktif di mulai siklus (US3.1) belum diimplementasi.
+- Hapus hard delete varietas sengaja tidak ada (hanya nonaktif).
 
 ---
 
