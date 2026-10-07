@@ -198,6 +198,47 @@ model User {
   handledResets      PasswordResetRequest[] @relation("handler")
   jurnalDibuat       Jurnal[]               @relation("jurnalPembuat")
   jurnalDiputus      Jurnal[]               @relation("jurnalPemutus")
+  pergerakanInventaris PergerakanInventaris[]
+}
+
+// Epic 4 — inventaris bahan. Tidak ada di ERD Figma 16 tabel, ditambah untuk US4.1.
+enum SatuanInventaris {
+  GRAM
+  KG
+  PCS
+  PACK
+  LITER
+}
+
+enum TipePergerakan {
+  IN
+  OUT
+  ADJUST
+}
+
+model ItemInventaris {
+  id          Int                    @id @default(autoincrement())
+  kode        String                 @unique @db.VarChar(30)
+  nama        String                 @db.VarChar(100)
+  satuan      SatuanInventaris
+  stokSaatIni Decimal                @default(0) @db.Decimal(12, 3)
+  stokMinimum Decimal                @default(0) @db.Decimal(12, 3)
+  aktif       Boolean                @default(true)
+  pergerakan  PergerakanInventaris[]
+}
+
+model PergerakanInventaris {
+  id          Int              @id @default(autoincrement())
+  itemId      Int
+  item        ItemInventaris   @relation(fields: [itemId], references: [id])
+  tipe        TipePergerakan
+  jumlah      Decimal          @db.Decimal(12, 3)
+  stokSebelum Decimal          @db.Decimal(12, 3)
+  stokSesudah Decimal          @db.Decimal(12, 3)
+  keterangan  String?          @db.VarChar(255)
+  userId      Int
+  user        User             @relation(fields: [userId], references: [id])
+  dibuatPada  DateTime         @default(now())
 }
 
 enum ResetStatus {

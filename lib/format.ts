@@ -26,3 +26,12 @@ const tanggalIso = new Intl.DateTimeFormat("en-CA", {
 export function keTanggalIso(value: Date) {
   return tanggalIso.format(value);
 }
+
+const qty = new Intl.NumberFormat("id-ID", {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 3,
+});
+
+export function formatQty(value: number | string | { toString(): string }) {
+  return qty.format(Number(value.toString()));
+}

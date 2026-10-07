@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { RoleHome } from "@/components/role-home";
 import { prisma } from "@/lib/prisma";
 
@@ -12,6 +13,14 @@ export default async function OwnerPage() {
 
   return (
     <RoleHome role="OWNER">
+      <nav aria-label="Modul Owner" className="flex flex-wrap gap-2">
+        <Link
+          href="/owner/inventaris"
+          className="inline-flex h-11 items-center rounded-md border border-input px-4 text-sm font-medium hover:bg-accent"
+        >
+          Inventaris (baca)
+        </Link>
+      </nav>
       <section aria-labelledby="petani-title" className="space-y-3">
         <h2 id="petani-title" className="text-lg font-semibold">
           Akun petani

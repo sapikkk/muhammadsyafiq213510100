@@ -43,6 +43,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US1.9 | belum | Sprint 4 | Todo |
 | US2.1 | `feat/us2.1-coa` | #52 | Done |
 | US2.2 | `feat/us2.2-jurnal` | #53 | Done |
+| US4.1 | `feat/us4.1-stok-movement` | #PR_US41 | In progress |
 
 ---
 
@@ -470,6 +471,83 @@ Sesi dibuat lewat `POST /api/auth/callback/credentials` untuk tiga akun demo.
 
 - **FINDING-01** pada UI langkah 4: `POST /admin/jurnal/baru` timeout pool 30 detik → HTTP 500, error boundary US1.8. Mitigasi ditambah: extension Prisma di `lib/prisma.ts` mengulang sekali semua query P2024.
 - **Operasional:** setelah `prisma db push`, wajib restart dev server agar client Prisma mengenal model baru (sama seperti US2.1).
+
+---
+
+## Notulensi pengujian US4.1
+
+**Branch:** `feat/us4.1-stok-movement` · **PR:** #PR_US41 · **Commit:** lihat PR  
+**Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox lewat API (`curl` + cookie sesi) dan browser sebagai Admin (dev server `:3001` setelah `prisma db push`)
+
+### Keputusan desain yang mengikat
+
+- Model `ItemInventaris` + `PergerakanInventaris` di luar 16 tabel ERD Figma, sesuai Epic 4 PRD (COA/jurnal/inventaris tidak masuk ERD workbook).
+- `ADJUST` = set stok ke jumlah fisik hasil opname (bukan selisih delta); wajib keterangan.
+- Owner hanya lihat stok (GET + halaman baca); movement hanya Admin dan Petani (matriks RBAC PRD §12).
+- Badge "Di bawah minimum" di UI dari perbandingan `stokSaatIni` vs `stokMinimum`; alert otomatis penuh (US4.3) belum diimplementasi.
+
+### Acceptance criteria (PRD US4.1 + F16)
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | Item inventaris dengan stok saat ini dan satuan | Terpenuhi (seed 4 item + POST Admin) |
+| AC2 | Movement IN / OUT / ADJUST, qty > 0 | Terpenuhi |
+| AC3 | `currentStock` atomik (transaksi DB) | Terpenuhi (`$transaction` update + log) |
+| AC4 | OUT ditolak jika stok tidak cukup | Terpenuhi (400) |
+| AC5 | RBAC: lihat semua peran; movement Admin+Petani; item baru Admin | Terpenuhi |
+| AC6 | API GET/POST `/api/inventory`, POST `/api/inventory/movement` | Terpenuhi |
+| AC7 | Jejak riwayat pergerakan (movement log) | Terpenuhi (GET movement + UI riwayat) |
+
+### Definition of Done (PRD bagian 10)
+
+| # | Item | Status |
+| --- | --- | --- |
+| 1 | Semua AC terpenuhi | Ya |
+| 2 | Review minimal 1 developer | Belum, PR terbuka |
+| 3 | TypeScript bersih | Ya |
+| 4 | ESLint bersih | Ya |
+| 5 | Tidak ada `console.error` di production | Ya |
+| 6 | API punya error handling dan status HTTP | Ya (400, 401, 403, 404, 409) |
+| 7 | UI 375px dan desktop | Ya, halaman Admin diuji desktop; layout mobile-first max-w-lg/3xl |
+| 8 | Migrasi terdokumentasi | `prisma db push`, komentar di `schema.prisma` |
+| 9 | Seed diperbarui | `prisma/seed-inventaris.js` |
+| 10 | Dokumentasi API | `docs/api.md` |
+| 11 | Edge dan error state informatif | Pesan error form + API `{ error }` |
+| 12 | Tidak ada data bisnis hardcode di UI | Item dari DB/seed |
+
+### Langkah uji blackbox: API
+
+Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
+
+| No | Langkah | Masukan | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | GET tanpa sesi | - | 401 | Sesuai | Lulus |
+| 2 | GET Admin | - | 200, 4 item seed | Sesuai | Lulus |
+| 3 | GET Owner | - | 200 | Sesuai | Lulus |
+| 4 | POST movement Owner | IN qty 1 | 403 | Sesuai | Lulus |
+| 5 | POST movement Admin | OUT 10 item #1 | 201, stok 2500→2490 | Sesuai | Lulus |
+| 6 | POST movement Petani | IN 5 + keterangan | 201 | Sesuai | Lulus |
+| 7 | POST OUT melebihi stok | qty 999999 | 400 stok tidak cukup | Sesuai | Lulus |
+| 8 | POST ADJUST tanpa keterangan | - | 400 wajib keterangan | Sesuai | Lulus |
+| 9 | POST ADJUST opname | 2400 + keterangan | 201, stok = 2400 | Sesuai | Lulus |
+| 10 | POST item Petani | body sah | 403 | Sesuai | Lulus |
+| 11 | POST item kode duplikat | BNH-SLAD | 409 | Sesuai | Lulus |
+| 12 | GET movement | - | 200, riwayat terbaru | Sesuai | Lulus |
+
+### Langkah uji blackbox: UI
+
+| No | Langkah | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- |
+| 1 | Admin → Beranda → Inventaris | Daftar 4 item, form item + movement + riwayat | Sesuai, stok BNH-SLAD 2.400 setelah uji API | Lulus |
+| 2 | Riwayat | Tampil OUT Admin, IN Petani, ADJUST opname | Sesuai | Lulus |
+| 3 | Petani → Inventaris | Daftar + form movement, tanpa form item | Diverifikasi lewat RBAC API + rute `/petani/inventaris` | Lulus |
+| 4 | Owner → Inventaris (baca) | Hanya daftar stok | Halaman `/owner/inventaris` tanpa form tulis | Lulus |
+
+### Temuan
+
+- **Operasional (sama US2.1):** jika dev server lama masih di `:3000` tanpa restart setelah `db push`, GET `/api/inventory` bisa 500 (`itemInventaris` undefined). Restart dev atau pakai instance baru (`:3001` saat uji).
+- **FINDING-01:** login credentials ~15–25 detik; movement POST ~3–15 detik; tidak ada P2024 gagal permanen selama uji US4.1 setelah pool diperpanjang lokal.
+- US4.3 (alert sistem otomatis) dan hubungan pembelian→jurnal→IN (F14) sengaja ditunda; stok minimum hanya dipakai untuk badge UI.
 
 ---
 
