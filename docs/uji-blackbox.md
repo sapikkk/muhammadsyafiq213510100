@@ -46,7 +46,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US4.1 | `feat/us4.1-stok-movement` | #54 | Done |
 | US4.2 | `feat/us4.2-active-pack` | #55 | Done |
 | US4.3 | `feat/us4.3-alert-stok` | #56 | Done |
-| US4.4 | `feat/us4.4-infrastruktur` | (PR baru) | In progress |
+| US4.4 | `feat/us4.4-infrastruktur` | #57 | Done |
 
 ---
 
@@ -671,7 +671,7 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 
 ## Notulensi pengujian US4.4
 
-**Branch:** `feat/us4.4-infrastruktur` · **Issue:** #27 · **Mirror:** `docs/uji-blackbox.md`  
+**Branch:** `feat/us4.4-infrastruktur` · **PR:** #57 · **Issue:** #27 · **Mirror:** `docs/uji-blackbox.md`  
 **Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox API + seed `prisma/seed-infrastruktur.js`
 
 ### Acceptance criteria (F7 / PRD)
