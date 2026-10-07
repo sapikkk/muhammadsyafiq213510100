@@ -32,6 +32,12 @@ export default async function OwnerPage() {
         >
           Stok rendah
         </Link>
+        <Link
+          href="/owner/infrastruktur"
+          className="inline-flex h-11 items-center rounded-md border border-input px-4 text-sm font-medium hover:bg-accent"
+        >
+          Infrastruktur
+        </Link>
       </nav>
       <section aria-labelledby="petani-title" className="space-y-3">
         <h2 id="petani-title" className="text-lg font-semibold">

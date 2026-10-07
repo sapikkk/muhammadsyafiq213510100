@@ -46,6 +46,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US4.1 | `feat/us4.1-stok-movement` | #54 | Done |
 | US4.2 | `feat/us4.2-active-pack` | #55 | Done |
 | US4.3 | `feat/us4.3-alert-stok` | #56 | Done |
+| US4.4 | `feat/us4.4-infrastruktur` | (PR baru) | In progress |
 
 ---
 
@@ -665,6 +666,38 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 
 - Integrasi journey pembelian → jurnal → IN (F14) tetap di luar scope US4.3; alert hanya memandu ke inventaris.
 - **FINDING-01:** latensi DB masih mempengaruhi waktu login sebelum uji API.
+
+---
+
+## Notulensi pengujian US4.4
+
+**Branch:** `feat/us4.4-infrastruktur` · **Issue:** #27 · **Mirror:** `docs/uji-blackbox.md`  
+**Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox API + seed `prisma/seed-infrastruktur.js`
+
+### Acceptance criteria (F7 / PRD)
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | CRUD master lahan, greenhouse, kolam (minimal create + list) | Terpenuhi |
+| AC2 | Kapasitas lubang teragregasi (`totalKapasitasLubang`) | Terpenuhi |
+| AC3 | Kolam status MENGANGGUR / TERPAKAI | Terpenuhi (seed + PUT) |
+| AC4 | Admin tulis, Owner baca | Terpenuhi |
+| AC5 | Seed demo 1.920 lubang (4×480) | Terpenuhi |
+
+### Langkah uji blackbox: API
+
+| No | Langkah | Hasil diharapkan | Status |
+| --- | --- | --- | --- |
+| 1 | GET `/api/infrastructure` tanpa sesi | 401 | Lulus |
+| 2 | GET Admin / Owner | 200, pohon + total lubang | Lulus |
+| 3 | GET Petani | 403 | Lulus |
+| 4 | POST lahan Admin | 201, amortisasi terhitung | Lulus |
+| 5 | PUT kolam status TERPAKAI | 200 | Lulus |
+
+### Temuan
+
+- Hapus lahan/greenhouse yang sudah punya siklus belum diimplementasi (US3.1 nanti).
+- Model memakai schema ERD 16 tabel; tidak ada migrasi baru.
 
 ---
 

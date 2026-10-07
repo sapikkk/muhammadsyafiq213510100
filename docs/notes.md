@@ -13,15 +13,9 @@
 - [x] US2.2 jurnal: model `Jurnal`/`JurnalBaris`, saldo akun saat APPROVED, `/admin/jurnal` + API `/api/transactions`, dialog tolak. Mitigasi P2024 di `lib/prisma.ts`.
 - [x] US4.1 inventaris: model `ItemInventaris` + `PergerakanInventaris`, API `/api/inventory` dan `/api/inventory/movement`, halaman `/admin/inventaris`, `/petani/inventaris`, `/owner/inventaris` (baca), seed 4 item bahan.
 - [x] US4.2 active pack: model `ActivePack`, biaya/unit = harga÷unit, status `HABIS` saat sisa 0, API `/api/inventory/active-pack`, halaman `/admin/active-pack` dan `/petani/active-pack`.
-- [x] US4.3 alert stok minimum: API `GET /api/inventory/alert`, halaman stok rendah Admin/Owner/Petani, banner di beranda.
-- [ ] Berikutnya: US4.4 master kolam/greenhouse/lahan, US3.4 varietas, produksi US3.x, HPP US2.3 sesuai PRD Sprint 2.
-
-### Rencana branch US4.4 (belum dikerjakan)
-
-- Branch: `feat/us4.4-infrastruktur` dari `feat/us4.3-alert-stok` (atau `main` setelah merge berurutan).
-- Model Prisma: `Kolam`, `Greenhouse`, `Lahan` sesuai ERD/kamus; soft delete atau flag aktif.
-- Halaman Owner/Admin read-write sesuai RBAC PRD; seed minimal 1 kolam demo.
-- API REST mirror pola `/api/inventory`; notulensi di `docs/uji-blackbox.md`, issue #27.
+- [x] US4.3 alert stok minimum: API `GET /api/inventory/alert` (+ alias `/alerts`), halaman stok rendah Admin/Owner/Petani, banner di beranda.
+- [x] US4.4 infrastruktur: pohon lahan/greenhouse/kolam, API `/api/infrastructure/*`, halaman Admin (CRUD) + Owner (baca), seed 1.920 lubang.
+- [ ] Berikutnya: US4.5 master petani, US3.4 varietas, produksi US3.x, HPP US2.3 sesuai PRD Sprint 2.
 - [x] [Repo GitHub](https://github.com/sapikkk/muhammadsyafiq213510100) `main` berisi kode, rilis v1.0.0
 - [x] [Naskah UCD & Agile](skenario-narasi-ucd-agile.md) sudah di-humanizer
 - [x] [PRD Agile](prd-agile-kokonus-farm.md) 6 epic, 5 sprint, 24 flow
