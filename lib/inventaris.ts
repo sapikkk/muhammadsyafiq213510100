@@ -212,3 +212,18 @@ export function serializeItem(item: ItemInventaris) {
     diBawahMinimum: item.stokSaatIni.lt(item.stokMinimum),
   };
 }
+
+/** Item aktif dengan stok saat ini di bawah stok minimum (US4.3). */
+export async function listAlertStokMinimum() {
+  const items = await listItemInventaris(true);
+  return items.filter((item) => item.stokSaatIni.lt(item.stokMinimum));
+}
+
+export function serializeAlertStok(item: ItemInventaris) {
+  const base = serializeItem(item);
+  const kekurangan = item.stokMinimum.sub(item.stokSaatIni);
+  return {
+    ...base,
+    kekurangan: kekurangan.gt(0) ? kekurangan.toString() : "0",
+  };
+}
