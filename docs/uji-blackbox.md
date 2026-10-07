@@ -43,7 +43,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US1.9 | belum | Sprint 4 | Todo |
 | US2.1 | `feat/us2.1-coa` | #52 | Done |
 | US2.2 | `feat/us2.2-jurnal` | #53 | Done |
-| US4.1 | `feat/us4.1-stok-movement` | #PR_US41 | In progress |
+| US4.1 | `feat/us4.1-stok-movement` | #54 | In progress |
 
 ---
 
@@ -476,7 +476,7 @@ Sesi dibuat lewat `POST /api/auth/callback/credentials` untuk tiga akun demo.
 
 ## Notulensi pengujian US4.1
 
-**Branch:** `feat/us4.1-stok-movement` · **PR:** #PR_US41 · **Commit:** lihat PR  
+**Branch:** `feat/us4.1-stok-movement` · **PR:** #54 · **Commit:** lihat PR  
 **Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox lewat API (`curl` + cookie sesi) dan browser sebagai Admin (dev server `:3001` setelah `prisma db push`)
 
 ### Keputusan desain yang mengikat
