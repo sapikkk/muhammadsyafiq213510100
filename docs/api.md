@@ -87,3 +87,13 @@ curl -b cookie.txt -X PUT -H 'content-type: application/json' \
 - `ADJUST` — stok diset ke `jumlah` (opname); **wajib** `keterangan`.
 
 `jumlah` harus > 0, maksimal 3 desimal. Pembaruan stok atomik dalam transaksi DB.
+
+## `/api/inventory/active-pack` (US4.2)
+
+| Method | Peran | Body / query | Jawaban |
+| --- | --- | --- | --- |
+| GET | Admin, Petani | `?aktif=1` opsional | 200, daftar active pack |
+| POST | Admin, Petani | `{ kode, itemId, hargaPack, jumlahUnit, keterangan? }` | 201, pack baru (`sisaUnit` = `jumlahUnit`) |
+| PUT | Admin, Petani | `{ id, aksi: "PAKAI", jumlah }` | 200, sisa berkurang; `status` `HABIS` jika sisa 0 |
+
+`biayaPerUnit` = `hargaPack` ÷ `jumlahUnit` (4 desimal). Owner tidak berhak (403).

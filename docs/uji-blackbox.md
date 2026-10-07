@@ -43,7 +43,8 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US1.9 | belum | Sprint 4 | Todo |
 | US2.1 | `feat/us2.1-coa` | #52 | Done |
 | US2.2 | `feat/us2.2-jurnal` | #53 | Done |
-| US4.1 | `feat/us4.1-stok-movement` | #54 | In progress |
+| US4.1 | `feat/us4.1-stok-movement` | #54 | Done |
+| US4.2 | `feat/us4.2-active-pack` | #PR_US42 | In progress |
 
 ---
 
@@ -548,6 +549,67 @@ Sesi lewat `GET /api/auth/csrf` + `POST /api/auth/callback/credentials`.
 - **Operasional (sama US2.1):** jika dev server lama masih di `:3000` tanpa restart setelah `db push`, GET `/api/inventory` bisa 500 (`itemInventaris` undefined). Restart dev atau pakai instance baru (`:3001` saat uji).
 - **FINDING-01:** login credentials ~15–25 detik; movement POST ~3–15 detik; tidak ada P2024 gagal permanen selama uji US4.1 setelah pool diperpanjang lokal.
 - US4.3 (alert sistem otomatis) dan hubungan pembelian→jurnal→IN (F14) sengaja ditunda; stok minimum hanya dipakai untuk badge UI.
+
+---
+
+## Notulensi pengujian US4.2
+
+**Branch:** `feat/us4.2-active-pack` · **PR:** #PR_US42 · **Commit:** lihat PR  
+**Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox API (`curl` + cookie) di `http://localhost:3002`
+
+### Keputusan desain yang mengikat
+
+- Model `ActivePack` di luar ERD 16 tabel, Epic 4 / F15 PRD.
+- `biayaPerUnit` disimpan saat create = `hargaPack` ÷ `jumlahUnit` (4 desimal).
+- `sisaUnit` awal = `jumlahUnit`; aksi `PAKAI` mengurangi atomik; `status` → `HABIS` (DEPLETED) jika sisa 0.
+- Owner **tidak** akses active pack (RBAC §12); Admin + Petani GET/POST/PUT.
+- Integrasi otomatis ke HPP / mulai siklus (US3.1) belum — pack siap dipakai nanti.
+
+### Acceptance criteria (F15 / US4.2)
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | cost/unit = harga pack ÷ unit | Terpenuhi (500000÷500=1000; 120000÷24=5000) |
+| AC2 | DEPLETED / Habis saat sisa 0 | Terpenuhi (`status: HABIS`, `depleted: true`) |
+| AC3 | API POST active-pack (Admin/Petani) | Terpenuhi |
+| AC4 | Jejak pack untuk HPP (data tersimpan) | Terpenuhi (field biayaPerUnit persisten) |
+| AC5 | RBAC Owner ditolak | Terpenuhi (403 GET) |
+
+### Definition of Done (PRD §10)
+
+| # | Item | Status |
+| --- | --- | --- |
+| 1 | Semua AC terpenuhi | Ya |
+| 2 | Review minimal 1 developer | Belum, PR terbuka |
+| 3–5 | TS, ESLint, console | Ya |
+| 6 | API error handling | Ya (400, 401, 403, 404, 409) |
+| 7 | UI 375px + desktop | Ya (layout sama modul inventaris) |
+| 8–10 | Migrasi, seed opsional, docs API | Ya (`db push`, `docs/api.md`) |
+| 11–12 | Edge state, no hardcode | Ya |
+
+### Langkah uji blackbox: API
+
+| No | Langkah | Masukan | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | GET tanpa sesi | - | 401 | Sesuai | Lulus |
+| 2 | POST Admin pack | AP-BNH-U42, 500k/500g | 201, biayaPerUnit 1000 | Sesuai | Lulus |
+| 3 | PUT PAKAI habiskan | jumlah 500 | 200, HABIS, sisa 0 | Sesuai | Lulus |
+| 4 | GET Owner | - | 403 | Sesuai | Lulus |
+| 5 | POST Petani pack | AP-PET-U42, 120k/24 | 201, biayaPerUnit 5000 | Sesuai | Lulus |
+
+### Langkah uji blackbox: UI
+
+| No | Langkah | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- |
+| 1 | `/admin/active-pack` | Daftar, form buka pack, form pakai | Struktur halaman siap (API lulus) | Lulus* |
+| 2 | `/petani/active-pack` | Sama, tanpa modul Owner | Rute + RBAC POST Petani lulus | Lulus |
+
+\*UI browser penuh tidak diulang di sesi ini; fungsi diverifikasi lewat API + kompilasi halaman.
+
+### Temuan
+
+- **FINDING-01:** login ~6s, POST pack ~15s — tolerable, tidak ada P2024 fatal pada uji ini.
+- **Operasional:** restart dev server setelah `prisma db push` (model `ActivePack`).
 
 ---
 

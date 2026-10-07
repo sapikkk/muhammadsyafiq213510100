@@ -12,7 +12,8 @@
 - [x] US2.1 bagan akun: model `Akun` (kode unik, 5 tipe, induk-anak, soft delete `aktif`), seed 38 akun UMKM hidroponik, halaman `/admin/akun` pohon + form tambah/ubah lewat `?edit=`, API `/api/accounts` GET/POST/PUT ([api.md](api.md)). Logika bersama di `lib/akun.ts`.
 - [x] US2.2 jurnal: model `Jurnal`/`JurnalBaris`, saldo akun saat APPROVED, `/admin/jurnal` + API `/api/transactions`, dialog tolak. Mitigasi P2024 di `lib/prisma.ts`.
 - [x] US4.1 inventaris: model `ItemInventaris` + `PergerakanInventaris`, API `/api/inventory` dan `/api/inventory/movement`, halaman `/admin/inventaris`, `/petani/inventaris`, `/owner/inventaris` (baca), seed 4 item bahan.
-- [ ] Berikutnya: US4.2 Active Pack, US4.3 alert minimum, master US4.4/US3.4, produksi US3.x, HPP US2.3 sesuai PRD Sprint 2.
+- [x] US4.2 active pack: model `ActivePack`, biaya/unit = harga÷unit, status `HABIS` saat sisa 0, API `/api/inventory/active-pack`, halaman `/admin/active-pack` dan `/petani/active-pack`.
+- [ ] Berikutnya: US4.3 alert minimum, master US4.4/US3.4, produksi US3.x, HPP US2.3 sesuai PRD Sprint 2.
 - [x] [Repo GitHub](https://github.com/sapikkk/muhammadsyafiq213510100) `main` berisi kode, rilis v1.0.0
 - [x] [Naskah UCD & Agile](skenario-narasi-ucd-agile.md) sudah di-humanizer
 - [x] [PRD Agile](prd-agile-kokonus-farm.md) 6 epic, 5 sprint, 24 flow

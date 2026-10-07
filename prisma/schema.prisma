@@ -199,6 +199,7 @@ model User {
   jurnalDibuat       Jurnal[]               @relation("jurnalPembuat")
   jurnalDiputus      Jurnal[]               @relation("jurnalPemutus")
   pergerakanInventaris PergerakanInventaris[]
+  activePackDibuat     ActivePack[]
 }
 
 // Epic 4 — inventaris bahan. Tidak ada di ERD Figma 16 tabel, ditambah untuk US4.1.
@@ -225,6 +226,29 @@ model ItemInventaris {
   stokMinimum Decimal                @default(0) @db.Decimal(12, 3)
   aktif       Boolean                @default(true)
   pergerakan  PergerakanInventaris[]
+  activePack  ActivePack[]
+}
+
+enum StatusActivePack {
+  AKTIF
+  HABIS
+}
+
+// US4.2 — pack aktif untuk alokasi biaya per unit (F15).
+model ActivePack {
+  id           Int              @id @default(autoincrement())
+  kode         String           @unique @db.VarChar(30)
+  itemId       Int
+  item         ItemInventaris   @relation(fields: [itemId], references: [id])
+  hargaPack    Decimal          @db.Decimal(18, 2)
+  jumlahUnit   Decimal          @db.Decimal(12, 3)
+  sisaUnit     Decimal          @db.Decimal(12, 3)
+  biayaPerUnit Decimal          @db.Decimal(18, 4)
+  status       StatusActivePack @default(AKTIF)
+  keterangan   String?          @db.VarChar(255)
+  dibuatOlehId Int
+  dibuatOleh   User             @relation(fields: [dibuatOlehId], references: [id])
+  dibuatPada   DateTime         @default(now())
 }
 
 model PergerakanInventaris {
