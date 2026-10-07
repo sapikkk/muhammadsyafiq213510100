@@ -49,7 +49,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US4.4 | `feat/us4.4-infrastruktur` | #57 | Done |
 | US3.4 | `feat/us3.4-varietas` | #58 | Done |
 | US3.1 | `feat/us3.1-siklus-semai` | #59 | Done |
-| US3.2 | `feat/us3.2-pindah-fase` | #60 | In progress |
+| US3.2 | `feat/us3.2-pindah-fase` | #60 | Done |
 
 ---
 
