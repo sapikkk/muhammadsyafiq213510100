@@ -33,4 +33,6 @@ npm run typecheck
 npx prisma dev module.ts
 ```
 
+Konfigurasi deploy ada di `prisma.config.ts` (bagian `composer`). Layanan `web` menjawab di port lokal yang dicetak CLI, biasanya `http://localhost:3001`. Layanan `notes` menolak panggilan langsung (401); hanya `web` yang memegang kunci.
+
 Lalu buka URL `web` yang dicetak CLI (biasanya `http://localhost:3001`).
