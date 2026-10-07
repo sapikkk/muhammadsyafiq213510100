@@ -41,6 +41,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US1.8 | `feat/us1.8-state-global` | #48 | Done |
 | US1.7 | `feat/us1.7-pengaturan` | #49 | Done |
 | US1.9 | belum | Sprint 4 | Todo |
+| US2.1 | `feat/us2.1-coa` | #52 | Done |
 
 ---
 
@@ -289,6 +290,94 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 - **Bug ditemukan dan diperbaiki saat uji:** halaman awalnya membaca nama dari token JWT sehingga nama baru tidak tampil sampai login ulang. Perbaikan: halaman membaca nama dari database, dan callback JWT menyegarkan `token.name` saat `update()`.
 - **FINDING-01:** simpan nama butuh 50 detik, dan satu percobaan ubah sandi gagal 500 karena pool timeout. Error boundary US1.8 menangkapnya dan "Coba lagi" memulihkan.
 - Setelah uji, seed dijalankan ulang sehingga nama kembali "Marzuki" dan sandi demo kembali `KokonusDemo2026`.
+
+---
+
+## Notulensi pengujian US2.1
+
+**Branch:** `feat/us2.1-coa` · **PR:** #52 · **Commit:** lihat PR
+**Tanggal uji:** 8 Oktober 2026 · **Metode:** blackbox lewat API (`curl` dengan cookie sesi tiap peran) dan lewat browser sebagai Admin
+
+### Keputusan desain yang mengikat
+
+- COA tidak ada di ERD Figma. Ditambah sebagai model `Akun` terpisah sesuai PRD US2.1, tidak mengubah 16 tabel ERD.
+- Kode akun 4 digit angka, digit pertama mengikuti tipe (1 Aset, 2 Kewajiban, 3 Modal, 4 Pendapatan, 5 Beban). Akun x000 adalah induk pengelompokan.
+- Anak harus bertipe sama dengan induknya supaya laporan per tipe konsisten.
+- Soft delete memakai field `aktif`. Akun nonaktif tetap tampil (dicoret, badge Nonaktif) agar jurnal lama tidak putus saat US2.2.
+- Owner belum punya halaman COA (US2.6, Sprint 4), tetapi API GET sudah mengizinkan Owner membaca.
+
+### Acceptance criteria (PRD US2.1)
+
+| # | Kriteria | Status |
+| --- | --- | --- |
+| AC1 | Tree UI induk-anak | Terpenuhi (`/admin/akun`, kedalaman bebas, diuji 3 tingkat) |
+| AC2 | Kode unik | Terpenuhi (constraint DB + pesan "Kode akun ini sudah dipakai." 409) |
+| AC3 | Tipe Aset, Kewajiban, Modal, Pendapatan, Beban | Terpenuhi (enum `TipeAkun`) |
+| AC4 | Soft delete | Terpenuhi (Nonaktifkan dan Aktifkan, ditolak jika masih ada anak aktif) |
+| AC5 | API GET/POST/PUT `/api/accounts` | Terpenuhi, Admin tulis, Owner baca, Petani 403 |
+| AC6 | Seed minimal 20 akun | Terpenuhi, 38 akun (5 induk + 33 anak) |
+
+### Definition of Done (PRD bagian 10)
+
+| # | Item | Status |
+| --- | --- | --- |
+| 1 | Semua AC terpenuhi | Ya |
+| 2 | Review minimal 1 developer | Belum. PR terbuka |
+| 3 | TypeScript bersih | Ya |
+| 4 | ESLint bersih | Ya |
+| 5 | Tidak ada `console.error` di production | Ya |
+| 6 | API punya error handling dan status HTTP | Ya (400, 401, 403, 404, 409) |
+| 7 | UI 375px dan desktop | Ya, keduanya diuji di browser, tanpa overflow horizontal |
+| 8 | Migrasi terdokumentasi | `prisma db push`, model di `prisma/schema.prisma` dengan komentar alasan |
+| 9 | Seed diperbarui | Ya, `prisma/seed-akun.js` dipanggil dari `prisma/seed.js` |
+| 10 | Dokumentasi API | Ya, `docs/api.md` |
+| 11 | Edge dan error state informatif | Ya, empty state "Belum ada akun", semua error punya pesan |
+| 12 | Tidak ada data bisnis hardcode | Ya, bagan akun ada di seed dan bisa diubah Admin |
+
+### Langkah uji blackbox: API
+
+Sesi dibuat lewat `POST /api/auth/callback/credentials` untuk tiga akun demo.
+
+| No | Langkah | Masukan | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | GET tanpa sesi | - | 401 "Belum masuk." | Sesuai | Lulus |
+| 2 | GET sebagai Petani | - | 403 "Peran Anda tidak berhak." | Sesuai | Lulus |
+| 3 | GET sebagai Owner | - | 200, 38 akun, 5 induk | Sesuai | Lulus |
+| 4 | POST sebagai Owner | akun sah | 403 | Sesuai | Lulus |
+| 5 | POST Admin body kosong | `{}` | 400 "Isi kode, nama, dan tipe akun." | Sesuai | Lulus |
+| 6 | POST Admin kode huruf | `kode: "ABC"` | 400 "Kode akun hanya angka, maksimal 20 digit." | Sesuai | Lulus |
+| 7 | POST Admin kode duplikat | `kode: "1100"` | 409 "Kode akun ini sudah dipakai." | Sesuai | Lulus |
+| 8 | POST Admin tipe beda induk | BEBAN di bawah 1000 Aset | 400 "Tipe harus sama dengan induknya (Aset)." | Sesuai | Lulus |
+| 9 | POST Admin sah | 1600 Perlengkapan Kebun, ASET, induk 1000 | 201, akun baru | Sesuai | Lulus |
+| 10 | PUT ubah nama 1600 | nama baru | 200 | Sesuai | Lulus |
+| 11 | PUT nonaktifkan 1000 yang punya anak aktif | `aktif: false` | 400 "Nonaktifkan akun anak dulu." | Sesuai | Lulus |
+| 12 | PUT nonaktifkan 1600 | `aktif: false` | 200, `aktif: false` | Sesuai | Lulus |
+| 13 | PUT id tidak ada | `id: 99999` | 404 "Akun tidak ditemukan." | Sesuai | Lulus |
+| 14 | PUT body bukan JSON | `bukan json` | 400 "Body bukan JSON." | Sesuai | Lulus |
+| 15 | PUT induk = diri sendiri | `parentId = id` | 400 "Akun tidak bisa menjadi induk dirinya sendiri." | Sesuai | Lulus |
+| 16 | POST dengan induk nonaktif | induk 1600 (nonaktif) | 400 "Akun induk tidak ditemukan atau nonaktif." | Sesuai | Lulus |
+
+### Langkah uji blackbox: UI
+
+| No | Langkah | Masukan | Hasil diharapkan | Hasil aktual | Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Login Petani, buka `/admin/akun` | - | 403 "Akses ditolak" | Sesuai | Lulus |
+| 2 | Login Owner, buka `/admin/akun` | - | 403 | Sesuai (307 ke `/akses-ditolak`) | Lulus |
+| 3 | Tanpa sesi buka `/admin/akun` | - | Ke `/login` | Sesuai | Lulus |
+| 4 | Login Admin, klik "Bagan akun" di beranda | - | Halaman pohon 5 induk, ringkasan "38 akun aktif dari 39", akun 1600 dicoret badge Nonaktif | Sesuai | Lulus |
+| 5 | Klik Aktifkan pada 1600 | - | 1600 aktif lagi, ringkasan 39 dari 39 | Sesuai | Lulus |
+| 6 | Isi kode 1610, nama, induk 1600, tipe dibiarkan kosong, Simpan | - | Alert "Isi kode, nama, dan tipe akun.", isian tidak hilang | Sesuai | Lulus |
+| 7 | Pilih tipe Aset, Simpan | - | Status "Akun 1610 Peralatan Semai tersimpan.", 1610 tampil di bawah 1600 (tingkat 3) | Sesuai, 16,5 detik | Lulus |
+| 8 | Klik Nonaktifkan pada 1600 (punya anak 1610 aktif) | - | Alert "Nonaktifkan akun anak dulu." | Sesuai | Lulus |
+| 9 | Klik Nonaktifkan pada 1610 | - | Status "Akun 1610 Peralatan Semai dinonaktifkan.", baris dicoret, tombol jadi Aktifkan | Sesuai | Lulus |
+| 10 | Buka `/admin/akun?edit=<id 1600>` | - | Judul "Ubah akun 1600", field terisi, tombol Simpan perubahan dan Batal | Sesuai | Lulus |
+| 11 | Lebar 375px | - | Tanpa overflow horizontal, tombol di bawah nama akun | Sesuai | Lulus |
+
+### Temuan
+
+- **Bug saat uji, sudah diperbaiki sebelum commit:** dev server yang berjalan masih memakai Prisma Client lama sehingga `prisma.akun` undefined (TypeError 500). Solusi: restart dev server setelah `prisma db push`. Dicatat sebagai langkah wajib di alur kerja.
+- **FINDING-01:** simpan akun lewat UI butuh 16,5 detik, uji API langkah 3 sampai 16 total 2,5 menit. Setelah `pool_timeout=30` di `.env` lokal tidak ada lagi error 500 timeout selama uji US2.1.
+- Setelah uji, akun uji 1600 dan 1610 dibiarkan di database dev sebagai contoh akun nonaktif untuk demo.
 
 ---
 
