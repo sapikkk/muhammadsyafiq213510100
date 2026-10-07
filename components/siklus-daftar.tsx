@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { formatTanggal } from "@/lib/format";
+import { faseLabel, isFaseProduksi } from "@/lib/siklus-fase";
 
 export type SiklusBaris = {
   id: number;
@@ -27,7 +29,9 @@ export function SiklusDaftar({ rows }: { rows: SiklusBaris[] }) {
         <li key={row.id} className="space-y-1 p-4 text-sm">
           <div className="flex flex-wrap items-center gap-2">
             <p className="font-medium">{row.kode_batch}</p>
-            <Badge variant="secondary">{row.status}</Badge>
+            <Badge variant="secondary">
+              {isFaseProduksi(row.status) ? faseLabel[row.status] : row.status}
+            </Badge>
           </div>
           <p className="text-muted-foreground">
             {row.varietas_nama} · {row.greenhouse_nama} / {row.kolam_nama}
@@ -36,6 +40,12 @@ export function SiklusDaftar({ rows }: { rows: SiklusBaris[] }) {
             Semai {formatTanggal(new Date(`${row.tanggal_semai}T12:00:00.000Z`))} ·{" "}
             {row.jumlah_disemai} bibit
           </p>
+          <Link
+            href={`/petani/siklus/${row.id}`}
+            className="inline-flex min-h-11 items-center text-sm font-medium text-primary underline-offset-4 hover:underline"
+          >
+            Pindah fase
+          </Link>
         </li>
       ))}
     </ul>

@@ -154,3 +154,15 @@ Aturan:
 - Kolam `MENGANGGUR` → `BERPRODUKSI` saat siklus pertama dibuat.
 
 UI: `/petani/siklus`.
+
+## `/api/production/[id]/phase` (US3.2, pindah fase)
+
+| Method | Peran | Body | Jawaban |
+| --- | --- | --- | --- |
+| GET | Admin, Owner, Petani | - | 200, ringkasan siklus + fase berikutnya |
+| PUT | Petani | `{ konfirmasi: true, catatan? }` | 200, fase baru + log |
+
+Urutan fase (hanya maju): SEMAI → SPROUT_DAUN → TAMBAL → PINDAH_KOLAM → PENDEWASAAN → PANEN → SELESAI.  
+Saat masuk `PINDAH_KOLAM` / `PANEN` tanggal terkait diisi otomatis. Log disimpan di `Log_Produksi`.
+
+UI: `/petani/siklus/[id]` — tombol besar + checkbox konfirmasi.
