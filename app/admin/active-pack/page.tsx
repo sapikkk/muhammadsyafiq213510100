@@ -18,7 +18,7 @@ export default async function AdminActivePackPage() {
   ]);
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col gap-8 px-4 py-10">
+    <div className="flex flex-col gap-8">
       <header className="space-y-2">
         <p className="text-sm font-medium text-primary">Admin</p>
         <h1 className="text-3xl font-semibold tracking-tight">Active pack</h1>
@@ -36,6 +36,6 @@ export default async function AdminActivePackPage() {
       <ActivePackDaftar rows={packs} />
       <ActivePackForm items={items} action={simpanActivePackAdmin} />
       <ActivePackPakaiForm packs={packs} action={pakaiActivePackAdmin} />
-    </main>
+    </div>
   );
 }

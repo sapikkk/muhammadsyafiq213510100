@@ -33,7 +33,7 @@ export async function RoleHome({
         </header>
         {/* Page content */}
         <div className="flex-1 p-6">
-          <div className="mx-auto max-w-4xl space-y-6">{children}</div>
+          <div className="mx-auto w-full max-w-5xl space-y-6">{children}</div>
         </div>
       </main>
     </div>

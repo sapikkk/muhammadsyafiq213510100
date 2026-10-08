@@ -18,9 +18,10 @@
 - [x] US3.4 varietas: API `/api/varietas`, halaman Admin/Owner (tulis) + Petani (baca aktif), seed 2 varietas.
 - [x] US3.1 mulai siklus semai: `kode_batch` unik, fase SEMAI, potong active pack atomik, API `/api/production`, `/petani/siklus`.
 - [x] US3.2 pindah fase: `Log_Produksi`, PUT `/api/production/[id]/phase`, urutan fase maju saja, `/petani/siklus/[id]`.
-- [x] US3.3 submit harvest report (branch `feat/us3.3-harvest`): `Laporan_Panen`, `/api/harvest`, form fase PANEN.
-- [ ] UX form siklus gram vs bibit: issue [#61](https://github.com/sapikkk/muhammadsyafiq213510100/issues/61).
-- [ ] Berikutnya: approve harvest/HPP, US4.5 master petani, HPP US2.3.
+- [x] US3.3 submit harvest report (PR #62 `feat/us3.3-harvest`): `Laporan_Panen`, `/api/harvest`, form fase PANEN.
+- [x] UX form siklus gram vs bibit — perbaikan di #62 / issue [#61](https://github.com/sapikkk/muhammadsyafiq213510100/issues/61).
+- [x] UI redesign (`feat/ui-redesign`): layout sidebar Admin/Owner/Petani via `RoleHome`.
+- [ ] Berikutnya: approve harvest/HPP (F12), US4.5 master petani, HPP US2.3.
 - [x] [Repo GitHub](https://github.com/sapikkk/muhammadsyafiq213510100) `main` berisi kode, rilis v1.0.0
 - [x] [Naskah UCD & Agile](skenario-narasi-ucd-agile.md) sudah di-humanizer
 - [x] [PRD Agile](prd-agile-kokonus-farm.md) 6 epic, 5 sprint, 24 flow

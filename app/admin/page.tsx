@@ -1,7 +1,6 @@
 import { RegisterPetani } from "@/components/register-petani";
 import { ResetRequests } from "@/components/reset-requests";
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
-import { RoleHome } from "@/components/role-home";
 import { listAlertStokMinimum } from "@/lib/inventaris";
 import { prisma } from "@/lib/prisma";
 import {
@@ -31,7 +30,7 @@ export default async function AdminPage() {
   ]);
 
   return (
-    <RoleHome role="ADMIN" stokRendahCount={stokRendah.length}>
+    <>
       <InventarisAlertBanner items={stokRendah} detailHref="/admin/stok-rendah" />
 
       <Card>
@@ -66,6 +65,6 @@ export default async function AdminPage() {
           </CardContent>
         </Card>
       )}
-    </RoleHome>
+    </>
   );
 }
