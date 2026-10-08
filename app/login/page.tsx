@@ -6,6 +6,13 @@ import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { roleHome } from "@/lib/role-home";
 
 export default function LoginPage() {
@@ -46,48 +53,67 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-sm flex-col justify-center px-4 py-10">
-      <p className="text-sm font-medium text-primary">Kokonus Farm</p>
-      <h1 className="mt-2 text-2xl font-semibold tracking-tight">Masuk</h1>
-      <p className="mt-1 text-sm text-muted-foreground">
-        Email dan sandi untuk Owner, Admin, atau Petani.
-      </p>
-      <form className="mt-6 space-y-4" noValidate onSubmit={onSubmit}>
-        <label className="block space-y-1.5 text-sm">
-          <span className="font-medium">Email</span>
-          <Input
-            name="email"
-            type="email"
-            autoComplete="username"
-            className="h-11"
-            aria-invalid={error ? true : undefined}
-          />
-        </label>
-        <label className="block space-y-1.5 text-sm">
-          <span className="font-medium">Sandi</span>
-          <Input
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            className="h-11"
-            aria-invalid={error ? true : undefined}
-          />
-        </label>
-        {error ? (
-          <p role="alert" className="text-sm text-destructive">
-            {error}
+    <main className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="w-full max-w-sm space-y-6">
+        {/* Brand */}
+        <div className="space-y-1 text-center">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            Kokonus Farm
           </p>
-        ) : null}
-        <Button type="submit" className="h-11 w-full" disabled={pending}>
-          {pending ? "Memeriksa..." : "Masuk"}
-        </Button>
-      </form>
-      <Link
-        href="/lupa-sandi"
-        className="mt-4 text-center text-sm text-primary underline-offset-4 hover:underline"
-      >
-        Lupa sandi?
-      </Link>
+          <h1 className="text-2xl font-bold tracking-tight">Masuk</h1>
+          <p className="text-sm text-muted-foreground">
+            Gunakan akun Owner, Admin, atau Petani.
+          </p>
+        </div>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base">Login</CardTitle>
+            <CardDescription>Masuk dengan email dan sandi Anda.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-4" noValidate onSubmit={onSubmit}>
+              <label className="block space-y-1.5 text-sm">
+                <span className="font-medium">Email</span>
+                <Input
+                  name="email"
+                  type="email"
+                  autoComplete="username"
+                  placeholder="contoh@email.com"
+                  aria-invalid={error ? true : undefined}
+                />
+              </label>
+              <label className="block space-y-1.5 text-sm">
+                <span className="font-medium">Sandi</span>
+                <Input
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="••••••••"
+                  aria-invalid={error ? true : undefined}
+                />
+              </label>
+              {error ? (
+                <p role="alert" className="text-sm text-destructive">
+                  {error}
+                </p>
+              ) : null}
+              <Button type="submit" className="w-full" disabled={pending}>
+                {pending ? "Memeriksa..." : "Masuk"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+        <p className="text-center text-sm text-muted-foreground">
+          <Link
+            href="/lupa-sandi"
+            className="font-medium text-foreground underline-offset-4 hover:underline"
+          >
+            Lupa sandi?
+          </Link>
+        </p>
+      </div>
     </main>
   );
 }
