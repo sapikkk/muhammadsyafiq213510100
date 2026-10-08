@@ -858,3 +858,27 @@ POST /api/auth/callback/credentials 200 in 24253ms
 - Atau jalankan PostgreSQL lokal untuk demo, lalu `prisma db push` dan seed.
 - Pertimbangkan `connection_limit` dan `pool_timeout` di connection string production.
 - Tambahkan pengulangan `P2024` yang sama ke action lain jika gejala berlanjut.
+
+---
+
+## FINDING-02: Dev server stale — `/api/auth/session` 404 dan CSS preload 404
+
+**Kategori:** operasional dev, bukan bug kode · **Dampak:** tinggi saat uji (SessionProvider error, halaman setengah rusak) · **Status:** mitigasi dokumentasi
+
+### Gejala
+
+- Konsol: `GET /api/auth/session 404`, `[next-auth][error][CLIENT_FETCH_ERROR] Unexpected token '<', "<!DOCTYPE "...`
+- `GET /_next/static/css/app/layout.css?v=...` 404 / preload tidak terpakai
+- `/api/production` bisa masih 401 sementara **semua** `/api/auth/*` mengembalikan HTML not-found
+
+### Penyebab
+
+- Proses `next dev` lama masih jalan dengan folder `.next` tidak selaras (hot reload gagal sebagian, sering setelah ganti branch, `prisma generate`, atau banyak instance di port 3000–3004).
+- Verifikasi: `rm -rf .next && npm run dev` → `/api/auth/session` **200** `{}`.
+
+### Mitigasi
+
+1. Hentikan semua `next dev` (`lsof -i :3000`).
+2. Jalankan `npm run dev:clean` (hapus `.next` lalu dev).
+3. Pastikan `NEXTAUTH_URL` di `.env` cocok dengan port (mis. `http://localhost:3000`).
+4. Setelah `prisma db push` / ganti schema: restart dev server.
