@@ -7,6 +7,7 @@ import {
   BookOpen,
   Box,
   ChevronRight,
+  ClipboardList,
   Home,
   Layers,
   LayoutDashboard,
@@ -49,6 +50,7 @@ function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
         icon: Home,
       },
       { label: "Varietas", href: "/admin/varietas", icon: LeafyGreen },
+      { label: "Laporan panen", href: "/admin/harvest", icon: ClipboardList },
       alertItem,
     ];
   }

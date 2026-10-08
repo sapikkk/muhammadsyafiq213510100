@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { HarvestForm } from "@/components/harvest-form";
 import { LogProduksiDaftar } from "@/components/log-produksi-daftar";
+import { PageHeader } from "@/components/page-header";
 import { PindahFaseForm } from "@/components/pindah-fase-form";
 import { Badge } from "@/components/ui/badge";
 import { formatTanggal } from "@/lib/format";
@@ -39,23 +40,22 @@ export default async function PetaniSiklusDetailPage({
     : null;
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col gap-8 px-4 py-10">
-      <header className="space-y-2">
-        <p className="text-sm font-medium text-primary">Petani</p>
-        <h1 className="text-3xl font-semibold tracking-tight">{siklus.kode_batch}</h1>
+    <div className="flex flex-col gap-8">
+      <PageHeader
+        title={siklus.kode_batch}
+        description={`${siklus.varietas.nama} · ${siklus.kolam.greenhouse.nama} / ${siklus.kolam.nama}`}
+      />
+      <div className="flex flex-wrap items-center gap-2">
         <Badge variant="secondary">
           {faseAktif ? faseLabel[faseAktif] : status}
         </Badge>
-        <p className="text-muted-foreground">
-          {siklus.varietas.nama} · {siklus.kolam.greenhouse.nama} / {siklus.kolam.nama}
-        </p>
         <Link
           href="/petani/siklus"
-          className="inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline"
+          className="text-sm font-medium text-primary underline-offset-4 hover:underline"
         >
-          Kembali ke daftar siklus
+          Daftar siklus
         </Link>
-      </header>
+      </div>
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">Log fase</h2>
@@ -99,6 +99,6 @@ export default async function PetaniSiklusDetailPage({
           new Date(`${siklus.tanggal_semai.toISOString().slice(0, 10)}T12:00:00.000Z`),
         )}
       </p>
-    </main>
+    </div>
   );
 }

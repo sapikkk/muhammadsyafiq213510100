@@ -21,7 +21,7 @@ export default async function JurnalPage({
   const adaFilter = Boolean(searchParams.status || searchParams.dari || searchParams.sampai);
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col gap-8 px-4 py-10">
+    <div className="flex flex-col gap-8">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-2">
           <p className="text-sm font-medium text-primary">Admin</p>
@@ -123,6 +123,6 @@ export default async function JurnalPage({
       <Link href="/admin" className="text-sm underline underline-offset-4">
         Kembali ke beranda Admin
       </Link>
-    </main>
+    </div>
   );
 }

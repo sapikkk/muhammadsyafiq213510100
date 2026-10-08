@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { PageHeader } from "@/components/page-header";
 import { SiklusAsumsiPanel } from "@/components/siklus-asumsi-panel";
 import { SiklusDaftar } from "@/components/siklus-daftar";
 import { SiklusForm } from "@/components/siklus-form";
@@ -24,17 +24,8 @@ export default async function PetaniSiklusPage() {
   const packsAktif = packs.filter((p) => p.status === "AKTIF");
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col gap-8 px-4 py-10">
-      <header className="space-y-2">
-        <p className="text-sm font-medium text-primary">Petani</p>
-        <h1 className="text-3xl font-semibold tracking-tight">Siklus produksi</h1>
-        <Link
-          href="/petani"
-          className="inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline"
-        >
-          Kembali ke beranda Petani
-        </Link>
-      </header>
+    <div className="flex flex-col gap-8">
+      <PageHeader title="Siklus produksi" description="Mulai semai dan pantau batch aktif." />
 
       <SiklusDaftar rows={siklusRows.map(serializeSiklus)} />
 
@@ -71,6 +62,6 @@ export default async function PetaniSiklusPage() {
         }))}
         tanggalAwal={keTanggalIso(new Date())}
       />
-    </main>
+    </div>
   );
 }

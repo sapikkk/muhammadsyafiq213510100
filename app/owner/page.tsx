@@ -1,5 +1,4 @@
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
-import { RoleHome } from "@/components/role-home";
 import { listAlertStokMinimum } from "@/lib/inventaris";
 import { prisma } from "@/lib/prisma";
 import {
@@ -23,7 +22,7 @@ export default async function OwnerPage() {
   ]);
 
   return (
-    <RoleHome role="OWNER" stokRendahCount={stokRendah.length}>
+    <>
       <InventarisAlertBanner items={stokRendah} detailHref="/owner/stok-rendah" />
 
       <Card>
@@ -50,6 +49,6 @@ export default async function OwnerPage() {
           )}
         </CardContent>
       </Card>
-    </RoleHome>
+    </>
   );
 }

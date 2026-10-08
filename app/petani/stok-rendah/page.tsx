@@ -8,7 +8,7 @@ export default async function PetaniStokRendahPage() {
   const items = await listAlertStokMinimum();
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col gap-8 px-4 py-10">
+    <div className="flex flex-col gap-8">
       <header className="space-y-2">
         <p className="text-sm font-medium text-primary">Petani</p>
         <h1 className="text-3xl font-semibold tracking-tight">Stok rendah</h1>
@@ -24,6 +24,6 @@ export default async function PetaniStokRendahPage() {
       </header>
 
       <InventarisStokRendah items={items} />
-    </main>
+    </div>
   );
 }

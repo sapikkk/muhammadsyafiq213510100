@@ -29,7 +29,7 @@ export default async function JurnalDetailPage({
   const totalKredit = jurnal.baris.reduce((s, b) => s.add(b.kredit), nol);
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col gap-8 px-4 py-10">
+    <div className="flex flex-col gap-8">
       <header className="space-y-2">
         <p className="text-sm font-medium text-primary">{`Jurnal #${jurnal.id}`}</p>
         <h1 className="text-3xl font-semibold tracking-tight">{jurnal.keterangan}</h1>
@@ -93,6 +93,6 @@ export default async function JurnalDetailPage({
       <Link href="/admin/jurnal" className="text-sm underline underline-offset-4">
         Kembali ke daftar jurnal
       </Link>
-    </main>
+    </div>
   );
 }
