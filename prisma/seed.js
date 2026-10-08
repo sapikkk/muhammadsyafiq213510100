@@ -40,7 +40,7 @@ async function main() {
   const infra = await seedInfrastruktur(prisma);
   const varietas = await seedVarietas(prisma);
   console.log(
-    `Seed selesai: ${accounts.length} akun login, ${jumlahAkun} akun COA, ${jumlahItem} item inventaris, infrastruktur ${infra.totalLubang ?? "?"} lubang, ${varietas.count} varietas.`,
+    `Seed selesai: ${accounts.length} akun login, ${jumlahAkun} akun COA, ${jumlahItem} item inventaris, infrastruktur ${infra.totalLubang ?? "?"} lubang, ${varietas.count} varietas (${varietas.created ?? 0} baru, ${varietas.updated ?? 0} diperbarui).`,
   );
 }
 

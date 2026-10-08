@@ -3,17 +3,38 @@ async function seedInventaris(prisma) {
   const items = [
     {
       kode: "BNH-SLAD",
-      nama: "Benih selada butterhead",
+      nama: "Benih selada Grand Rapids",
       satuan: "GRAM",
       stokSaatIni: "2500.000",
       stokMinimum: "500.000",
     },
     {
-      kode: "RW-36",
-      nama: "Rockwool cube 36 lubang",
-      satuan: "PCS",
+      kode: "BNH-PKCY",
+      nama: "Benih pakcoy Nauli F1",
+      satuan: "GRAM",
+      stokSaatIni: "800.000",
+      stokMinimum: "200.000",
+    },
+    {
+      kode: "BNH-KLN",
+      nama: "Benih kailan Nita",
+      satuan: "GRAM",
+      stokSaatIni: "1200.000",
+      stokMinimum: "300.000",
+    },
+    {
+      kode: "BNH-KALE",
+      nama: "Benih kale Nero Lacinato",
+      satuan: "GRAM",
       stokSaatIni: "120.000",
-      stokMinimum: "24.000",
+      stokMinimum: "25.000",
+    },
+    {
+      kode: "RW-SLAB",
+      nama: "Rockwool slab ~100×15×7,5 cm (720 dadu 2,5³ cm)",
+      satuan: "PCS",
+      stokSaatIni: "32.000",
+      stokMinimum: "8.000",
     },
     {
       kode: "NUT-A-B",

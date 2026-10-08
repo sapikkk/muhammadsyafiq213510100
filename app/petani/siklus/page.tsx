@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiklusAsumsiPanel } from "@/components/siklus-asumsi-panel";
 import { SiklusDaftar } from "@/components/siklus-daftar";
 import { SiklusForm } from "@/components/siklus-form";
 import { listActivePack } from "@/lib/active-pack";
@@ -37,8 +38,20 @@ export default async function PetaniSiklusPage() {
 
       <SiklusDaftar rows={siklusRows.map(serializeSiklus)} />
 
+      <SiklusAsumsiPanel
+        varietas={varietasRows
+          .filter((v) => v.status === "AKTIF")
+          .map((v) => ({
+            id: v.id,
+            nama: v.nama,
+            bijiPerGram: Number(v.biji_per_gram),
+          }))}
+      />
+
       <SiklusForm
-        varietas={varietasRows.map((v) => ({ id: v.id, nama: v.nama }))}
+        varietas={varietasRows
+          .filter((v) => v.status === "AKTIF")
+          .map((v) => ({ id: v.id, nama: v.nama }))}
         kolam={kolamRows.map((k) => ({
           id: k.id,
           label: `${k.greenhouse.nama} / ${k.nama}`,
