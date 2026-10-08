@@ -51,7 +51,11 @@ export default async function PetaniSiklusPage() {
       <SiklusForm
         varietas={varietasRows
           .filter((v) => v.status === "AKTIF")
-          .map((v) => ({ id: v.id, nama: v.nama }))}
+          .map((v) => ({
+            id: v.id,
+            nama: v.nama,
+            bijiPerGram: Number(v.biji_per_gram),
+          }))}
         kolam={kolamRows.map((k) => ({
           id: k.id,
           label: `${k.greenhouse.nama} / ${k.nama}`,
@@ -60,6 +64,7 @@ export default async function PetaniSiklusPage() {
         packs={packsAktif.map((p) => ({
           id: p.id,
           kode: p.kode,
+          itemKode: p.item.kode,
           itemNama: p.item.nama,
           satuan: p.item.satuan,
           sisaUnit: p.sisaUnit.toString(),

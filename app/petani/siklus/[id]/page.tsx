@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { HarvestForm } from "@/components/harvest-form";
 import { LogProduksiDaftar } from "@/components/log-produksi-daftar";
 import { PindahFaseForm } from "@/components/pindah-fase-form";
 import { Badge } from "@/components/ui/badge";
 import { formatTanggal } from "@/lib/format";
+import { serializeLaporanRingkas } from "@/lib/laporan-panen";
 import {
   faseBerikutnya,
   faseLabel,
@@ -32,6 +34,9 @@ export default async function PetaniSiklusDetailPage({
   const status = siklus.status;
   const faseAktif = isFaseProduksi(status) ? status : null;
   const berikut = faseAktif ? faseBerikutnya(faseAktif) : null;
+  const laporan = siklus.laporanPanen
+    ? serializeLaporanRingkas(siklus.laporanPanen)
+    : null;
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col gap-8 px-4 py-10">
@@ -71,9 +76,28 @@ export default async function PetaniSiklusDetailPage({
         </p>
       )}
 
+      {faseAktif === "PANEN" && !laporan ? (
+        <HarvestForm siklusId={id} jumlahDisemai={siklus.jumlah_disemai} />
+      ) : null}
+
+      {laporan ? (
+        <section className="space-y-2 rounded-md border bg-muted/20 p-4 text-sm">
+          <h2 className="text-lg font-semibold">Laporan panen</h2>
+          <p>
+            Status: <strong>{laporan.status}</strong> · {laporan.waktu_kirim}
+          </p>
+          <p>
+            Layak {laporan.jumlah_layak} pohon ({laporan.berat_layak_gram} g) · Tidak layak{" "}
+            {laporan.jumlah_tidak_layak} pohon ({laporan.berat_tidak_layak_gram} g)
+          </p>
+        </section>
+      ) : null}
+
       <p className="text-xs text-muted-foreground">
         Semai{" "}
-        {formatTanggal(new Date(`${siklus.tanggal_semai.toISOString().slice(0, 10)}T12:00:00.000Z`))}
+        {formatTanggal(
+          new Date(`${siklus.tanggal_semai.toISOString().slice(0, 10)}T12:00:00.000Z`),
+        )}
       </p>
     </main>
   );

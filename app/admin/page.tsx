@@ -65,6 +65,12 @@ export default async function AdminPage() {
           Varietas
         </Link>
         <Link
+          href="/admin/harvest"
+          className="inline-flex h-11 items-center rounded-md border border-input px-4 text-sm font-medium hover:bg-accent"
+        >
+          Laporan panen
+        </Link>
+        <Link
           href="/admin/stok-rendah"
           className="inline-flex h-11 items-center rounded-md border border-input px-4 text-sm font-medium hover:bg-accent"
         >

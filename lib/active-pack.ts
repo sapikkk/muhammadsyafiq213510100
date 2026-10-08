@@ -132,14 +132,20 @@ export async function pakaiActivePackDalamTx(
   id: number,
   jumlah: Prisma.Decimal,
 ): Promise<ActivePack> {
-  const pack = await tx.activePack.findUnique({ where: { id } });
+  const pack = await tx.activePack.findUnique({
+    where: { id },
+    include: { item: { select: { satuan: true } } },
+  });
   if (!pack) throw new ActivePackError("Active pack tidak ditemukan.", 404);
   if (pack.status !== "AKTIF") {
     throw new ActivePackError("Pack sudah habis atau nonaktif.", 400);
   }
   const sisaBaru = pack.sisaUnit.sub(jumlah);
   if (sisaBaru.lt(0)) {
-    throw new ActivePackError("Sisa unit pack tidak cukup.", 400);
+    throw new ActivePackError(
+      `Pack ${pack.kode}: sisa ${pack.sisaUnit.toString()} ${pack.item.satuan.toLowerCase()}, butuh ${jumlah.toString()}. Kurangi jumlah atau pilih pack lain.`,
+      400,
+    );
   }
   const status: StatusActivePack = sisaBaru.eq(0) ? "HABIS" : "AKTIF";
   return tx.activePack.update({

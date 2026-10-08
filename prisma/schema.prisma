@@ -74,6 +74,7 @@ model Siklus_Produksi {
   hpp                  HPP?
   penjualan            Penjualan[]
   logProduksi          Log_Produksi[]
+  laporanPanen         Laporan_Panen?
 }
 
 // Jejak pindah fase (ProductionLog, US3.2).
@@ -87,6 +88,22 @@ model Log_Produksi {
   userId     Int
   user       User            @relation(fields: [userId], references: [id])
   waktu      DateTime        @default(now())
+}
+
+// US3.3 — harvest report (satu per siklus, menunggu approval Admin).
+model Laporan_Panen {
+  id                     Int             @id @default(autoincrement())
+  siklus_id              Int             @unique
+  siklus                 Siklus_Produksi @relation(fields: [siklus_id], references: [id], onDelete: Cascade)
+  berat_layak_gram       Decimal         @db.Decimal(12, 3)
+  berat_tidak_layak_gram Decimal         @db.Decimal(12, 3)
+  jumlah_layak           Int
+  jumlah_tidak_layak     Int
+  status                 String          @db.VarChar(30)
+  catatan                String?         @db.VarChar(500)
+  userId                 Int
+  user                   User            @relation(fields: [userId], references: [id])
+  waktu_kirim            DateTime        @default(now())
 }
 
 model Biaya_Langsung {
@@ -216,6 +233,7 @@ model User {
   pergerakanInventaris PergerakanInventaris[]
   activePackDibuat     ActivePack[]
   logProduksi          Log_Produksi[]
+  laporanPanen         Laporan_Panen[]
 }
 
 // Epic 4 — inventaris bahan. Tidak ada di ERD Figma 16 tabel, ditambah untuk US4.1.
