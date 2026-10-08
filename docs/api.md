@@ -166,3 +166,13 @@ Urutan fase (hanya maju): SEMAI → SPROUT_DAUN → TAMBAL → PINDAH_KOLAM → 
 Saat masuk `PINDAH_KOLAM` / `PANEN` tanggal terkait diisi otomatis. Log disimpan di `Log_Produksi`.
 
 UI: `/petani/siklus/[id]` — tombol besar + checkbox konfirmasi.
+
+## `/api/harvest` (US3.3, laporan panen)
+
+| Method | Peran | Body | Jawaban |
+| --- | --- | --- | --- |
+| GET | Admin, Owner | `?status=PENDING` opsional | 200, daftar laporan |
+| POST | Petani | `{ siklusId, jumlahLayak, jumlahTidakLayak, beratLayakGram, beratTidakLayakGram, catatan? }` | 201 |
+
+Satu laporan per siklus. Hanya saat fase `PANEN`. Status awal `PENDING`.  
+UI Petani: form di `/petani/siklus/[id]`. Admin: `/admin/harvest` (baca).

@@ -160,6 +160,16 @@ export async function buatSiklusSemai(input: SiklusInput) {
         throw new SiklusError("Jumlah disemai melebihi kapasitas lubang kolam.", 400);
       }
 
+      if (
+        input.activePackMediaId !== null &&
+        input.activePackMediaId === input.activePackBenihId
+      ) {
+        throw new SiklusError(
+          "Pack benih dan pack media harus berbeda. Media rockwool/cocopeat, bukan benih yang sama.",
+          400,
+        );
+      }
+
       await pakaiActivePackDalamTx(tx, input.activePackBenihId, input.jumlahBenihPakai);
       if (input.activePackMediaId !== null && input.jumlahMediaPakai !== null) {
         await pakaiActivePackDalamTx(tx, input.activePackMediaId, input.jumlahMediaPakai);
@@ -206,6 +216,7 @@ export async function getSiklusProduksi(id: number) {
       kolam: {
         select: { nama: true, greenhouse: { select: { nama: true } } },
       },
+      laporanPanen: true,
     },
   });
 }
