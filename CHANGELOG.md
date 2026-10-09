@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.6.0...v1.7.0) (2026-10-09)
+
+
+### Features
+
+* **owner:** US6.2 pie biaya + drill-down ([#74](https://github.com/sapikkk/muhammadsyafiq213510100/issues/74)) ([774c3f4](https://github.com/sapikkk/muhammadsyafiq213510100/commit/774c3f4e2feb2a4640380f3d13c3b8cb0e314007))
+* **owner:** US6.2 pie breakdown biaya dan drill-down jurnal ([cbebe89](https://github.com/sapikkk/muhammadsyafiq213510100/commit/cbebe89bca99ff488245fb6f8df165ccd1aaeaec))
+
 # [1.6.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.5.0...v1.6.0) (2026-10-09)
 
 
