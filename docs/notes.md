@@ -21,7 +21,8 @@
 - [x] US3.3 submit harvest report (PR #62 `feat/us3.3-harvest`): `Laporan_Panen`, `/api/harvest`, form fase PANEN.
 - [x] UX form siklus gram vs bibit — perbaikan di #62 / issue [#61](https://github.com/sapikkk/muhammadsyafiq213510100/issues/61).
 - [x] UI redesign (`feat/ui-redesign`): layout sidebar Admin/Owner/Petani via `RoleHome`.
-- [ ] Berikutnya: approve harvest/HPP (F12), US4.5 master petani, HPP US2.3.
+- [x] US2.3 & F12 approve harvest/HPP: `HPP` model, `calculateHPP` library, `/admin/harvest/[id]`, API approve/reject, jurnal persediaan otomatis.
+- [ ] Berikutnya: US4.5 master petani, US2.4 form biaya langsung & overhead.
 - [x] [Repo GitHub](https://github.com/sapikkk/muhammadsyafiq213510100) `main` berisi kode, rilis v1.0.0
 - [x] [Naskah UCD & Agile](skenario-narasi-ucd-agile.md) sudah di-humanizer
 - [x] [PRD Agile](prd-agile-kokonus-farm.md) 6 epic, 5 sprint, 24 flow
