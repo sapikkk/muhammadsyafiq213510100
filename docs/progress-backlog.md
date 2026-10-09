@@ -49,8 +49,8 @@
 | ✅ | F12 Approve/reject | API + UI admin detail |
 | 🟡 | US2.3 HPP ABC penuh | MVP on approve; nutrisi/listrik/overhead/plastik belum dari form |
 | ⬜ | US2.4 Biaya langsung & overhead | **Blok berikutnya** — isi `Biaya_Langsung` pasca-semai + `Biaya_Overhead` + alokasi ke `calculateHPP` |
-| ⬜ | US2.5 Susut normal vs abnormal | Butuh US3.5 + aturan agregasi yield untuk HPP vs kerugian |
-| ⬜ | US3.5 Log kegagalan | Input lapangan; feed US2.5 & yield |
+| 🟡 | US2.5 Susut normal vs abnormal | `/admin/susut` + alokasi HPP; override Admin belum |
+| ✅ | US3.5 Log kegagalan | Form petani + `lib/log-kegagalan.ts` |
 
 **Urutan disarankan:** US2.4 → US3.5 → US2.5 → black-box ulang G1 di `uji-blackbox.md`.
 
@@ -128,8 +128,8 @@ T5.1–T5.6, T5.9 — bergantung fitur Sprint 2–4 selesai. T5.4 audit debit=kr
 |---|----------|-----------|--------|
 | P0 | G1 | **US2.4** | HPP PRD tidak lengkap tanpa overhead & edit biaya langsung |
 | P0 | G1 | Verifikasi F12 + jurnal | Commit `9868c5a`; perbaiki copy UI `/admin/harvest` (masih “US berikutnya”) |
-| P1 | G1 | **US3.5** | Prasyarat US2.5 & yield benar |
-| P1 | G1 | **US2.5** | Susut → HPP vs kerugian |
+| P1 | G1 | **US2.5** (lanjut) | Override HPP + jurnal kerugian abnormal opsional |
+| P2 | G2 | **US3.6**, **US3.7** | Lengkapi Sprint 2 produksi |
 | P1 | G3 | **US4.5** | Backlog `notes.md` |
 | P2 | G2 | US3.6, US3.7 | Lengkapi Sprint 2 produksi |
 | P2 | — | Merge/push `feat/ui-redesign` | US2.3+F12 + submodule belum di origin |
