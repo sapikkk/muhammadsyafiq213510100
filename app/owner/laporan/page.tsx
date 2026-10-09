@@ -64,6 +64,12 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
             <p className="text-sm text-muted-foreground">Saldo akun posting (snapshot)</p>
           </a>
         </li>
+        <li>
+          <a href={`/api/export/cash-flow?${q}`} className="block rounded-md border p-4 hover:bg-muted/50">
+            <p className="font-medium">Arus kas (PDF)</p>
+            <p className="text-sm text-muted-foreground">Kas/Bank · jurnal APPROVED</p>
+          </a>
+        </li>
       </ul>
     </div>
   );
