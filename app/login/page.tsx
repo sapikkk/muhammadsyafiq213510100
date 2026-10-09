@@ -14,6 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { roleHome } from "@/lib/role-home";
+import { notify } from "@/lib/notify";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -27,7 +28,9 @@ export default function LoginPage() {
     const password = String(data.get("password") ?? "");
 
     if (!email || !password) {
-      setError("Isi email dan sandi.");
+      const msg = "Isi email dan sandi.";
+      setError(msg);
+      notify.error(msg);
       return;
     }
 
@@ -41,7 +44,9 @@ export default function LoginPage() {
     setPending(false);
 
     if (!result?.ok) {
-      setError("Email atau sandi tidak cocok.");
+      const msg = "Email atau sandi tidak cocok.";
+      setError(msg);
+      notify.error(msg);
       return;
     }
 

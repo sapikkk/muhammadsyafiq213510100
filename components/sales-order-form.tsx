@@ -6,6 +6,7 @@ import { submitSalesOrder } from "@/app/actions/sales-order";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { formatRupiah } from "@/lib/format";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 type SiklusOpt = {
   id: number;
@@ -30,6 +31,7 @@ export function SalesOrderForm({
   siklus: SiklusOpt[];
 }) {
   const [state, formAction] = useFormState(submitSalesOrder, {});
+  useActionToast({ error: state.error, ok: state.ok });
   const [lines, setLines] = useState<Line[]>([
     { siklusId: siklus[0]?.id ? String(siklus[0].id) : "", jenis: "CURAH", jumlah: "", hargaSatuan: "" },
   ]);
@@ -92,16 +94,6 @@ export function SalesOrderForm({
     <form action={formAction} className="space-y-4 rounded-md border p-4">
       <input type="hidden" name="barisJson" value={barisJson} readOnly />
       <h3 className="text-lg font-semibold">Buat sales order (DRAFT)</h3>
-      {state.error ? (
-        <p className="text-sm text-destructive" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="text-sm text-primary" role="status">
-          {state.ok}
-        </p>
-      ) : null}
 
       <label className="block space-y-1 text-sm">
         <span className="font-medium">Pelanggan</span>

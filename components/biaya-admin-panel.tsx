@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { formatRupiah } from "@/lib/format";
 import { useState } from "react";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 type SiklusOpt = { id: number; kode_batch: string };
 type OverheadRow = {
@@ -31,6 +32,14 @@ export function BiayaAdminPanel({
   const [siklusId, setSiklusId] = useState(String(siklusOptions[0]?.id ?? ""));
   const [langState, langAction] = useFormState(simpanBiayaLangsung, {} as { error?: string; ok?: boolean });
   const [ohState, ohAction] = useFormState(simpanOverhead, {} as { error?: string; ok?: boolean });
+  useActionToast({
+    error: langState.error,
+    ok: langState.ok ? "Biaya langsung diperbarui." : undefined,
+  });
+  useActionToast({
+    error: ohState.error,
+    ok: ohState.ok ? "Overhead tersimpan." : undefined,
+  });
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
@@ -67,8 +76,6 @@ export function BiayaAdminPanel({
         <p className="text-xs text-muted-foreground">
           Benih dan rockwool tetap dari mulai siklus; subtotal dihitung ulang.
         </p>
-        {langState.error ? <p className="text-sm text-destructive">{langState.error}</p> : null}
-        {langState.ok ? <p className="text-sm text-primary">Biaya langsung diperbarui.</p> : null}
         <Button type="submit">Simpan biaya langsung</Button>
       </form>
 
@@ -85,8 +92,6 @@ export function BiayaAdminPanel({
           <Input name="depresiasiListrik" placeholder="Depresiasi listrik" inputMode="decimal" />
           <Input name="sewaLahan" placeholder="Sewa lahan" inputMode="decimal" />
           <Input name="gajiKaryawan" placeholder="Gaji karyawan" inputMode="decimal" />
-          {ohState.error ? <p className="text-sm text-destructive">{ohState.error}</p> : null}
-          {ohState.ok ? <p className="text-sm text-primary">Overhead tersimpan.</p> : null}
           <Button type="submit">Simpan overhead</Button>
         </form>
         {overheadRows.length > 0 ? (
