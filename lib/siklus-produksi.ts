@@ -141,6 +141,7 @@ export async function listSiklusProduksi() {
           greenhouse: { select: { nama: true } },
         },
       },
+      laporanPanen: { select: { id: true, status: true } },
     },
   });
 }
