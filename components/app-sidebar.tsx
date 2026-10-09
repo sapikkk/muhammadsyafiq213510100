@@ -15,6 +15,7 @@ import {
   LeafyGreen,
   LogOut,
   Package,
+  FileDown,
   PieChart,
   Receipt,
   Settings,
@@ -68,6 +69,7 @@ function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
     return [
       { label: "Dashboard", href: "/owner", icon: LayoutDashboard },
       { label: "Breakdown biaya", href: "/owner/biaya", icon: PieChart },
+      { label: "Ekspor laporan", href: "/owner/laporan", icon: FileDown },
       { label: "Inventaris", href: "/owner/inventaris", icon: Box },
       {
         label: "Infrastruktur",

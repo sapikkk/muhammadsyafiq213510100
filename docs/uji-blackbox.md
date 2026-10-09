@@ -990,6 +990,15 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | Klik akun di legenda | Owner | Daftar baris jurnal APPROVED (drill-down) |
 | `GET /api/reports/cost-breakdown?akunId=` | Owner/Admin | JSON slices + drilldown |
 
+### US6.3 Ekspor jurnal xlsx & laporan PDF
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/admin/jurnal` → Ekspor xlsx | Admin | File `.xlsx` baris jurnal (hormat filter) |
+| `/owner/laporan` | Owner | Unduh laba rugi PDF & neraca PDF |
+| `GET /api/export/income-statement` | Owner/Admin | PDF laba rugi periode |
+| `GET /api/export/balance-sheet` | Owner/Admin | PDF neraca saldo akun |
+
 ### Otomatisasi
 
 ```bash
