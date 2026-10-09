@@ -15,7 +15,7 @@
 | EPIC-2 Akuntansi & HPP | 2 | 1 (US2.3) | 3 | 33%→50% dengan MVP 2.3 |
 | EPIC-3 Produksi | 4 | 0 | 3 | 57% (4/7) |
 | EPIC-4 Inventaris | 4 | 0 | 1 | 80% (4/5) |
-| EPIC-5 Penjualan | 4 | 0 | 1 | ~80% (US5.1–5.4 di PR #72; US5.5 belum) |
+| EPIC-5 Penjualan | 5 | 0 | 0 | **100%** (US5.1–5.5 di PR #72) |
 | EPIC-6 Dashboard & ekspor | 0 | 0 | 5 | 0% |
 
 **Sprint 2 (EPIC 2+3+4):** fondasi produksi + inventaris kuat; sisa = biaya/HPP lengkap, kegagalan, master petani.
@@ -95,7 +95,7 @@ US5.1 Pelanggan + SO
         → US5.5 Invoice, batal, biaya packing (US2.3/US2.4)
 ```
 
-Semua ⬜ · butuh siklus **SELESAI** + stok hasil panen (G1 minimal MVP).
+| ✅ | US5.1–5.5 | PR [#72](https://github.com/sapikkk/muhammadsyafiq213510100/pull/72) — pelanggan/SO → kirim → jurnal → invoice/batal/packing |
 
 ---
 

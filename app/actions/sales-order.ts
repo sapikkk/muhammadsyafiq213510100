@@ -9,7 +9,9 @@ import {
   createSalesOrderDraft,
   parseSalesOrderInput,
 } from "@/lib/sales-order";
+import { cancelSalesOrder } from "@/lib/sales-order-cancel";
 import { deliverSalesOrder, shipSalesOrder } from "@/lib/sales-order-delivery";
+import { recordPackingCost } from "@/lib/sales-order-packing";
 
 type FormState = { error?: string; ok?: string };
 
@@ -98,6 +100,56 @@ export async function deliverSalesOrderAction(
     revalidatePath("/admin/jurnal");
     return {
       ok: `${row.nomor_so} terkirim (DELIVERED). Jurnal #${row.jurnal_pendapatan?.id ?? "?"} menunggu persetujuan.`,
+    };
+  } catch (err) {
+    if (err instanceof SalesOrderError) return { error: err.message };
+    throw err;
+  }
+}
+
+export async function recordPackingCostAction(
+  _prev: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  const session = await getServerSession(authOptions);
+  if (session?.user?.role !== "ADMIN") return { error: "Hanya Admin." };
+  if (!session.user.id) return { error: "Belum masuk." };
+  try {
+    const id = Number(formData.get("salesOrderId"));
+    if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
+    const row = await recordPackingCost(id, Number(session.user.id), formData.get("biayaPacking"));
+    revalidatePath("/admin/penjualan");
+    const jId = row.jurnal_packing?.id;
+    return {
+      ok: jId
+        ? `Biaya packing tercatat. Jurnal #${jId} menunggu persetujuan.`
+        : "Biaya packing diperbarui.",
+    };
+  } catch (err) {
+    if (err instanceof SalesOrderError) return { error: err.message };
+    throw err;
+  }
+}
+
+export async function cancelSalesOrderAction(
+  _prev: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  const session = await getServerSession(authOptions);
+  if (session?.user?.role !== "ADMIN") return { error: "Hanya Admin." };
+  if (!session.user.id) return { error: "Belum masuk." };
+  try {
+    const id = Number(formData.get("salesOrderId"));
+    if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
+    const row = await cancelSalesOrder(id, Number(session.user.id), formData.get("alasan"));
+    revalidatePath("/admin/penjualan");
+    revalidatePath("/petani/pengiriman");
+    revalidatePath("/admin/jurnal");
+    const rev = row.jurnal_reversal?.id;
+    return {
+      ok: rev
+        ? `${row.nomor_so} dibatalkan. Reversal jurnal #${rev} (PENDING).`
+        : `${row.nomor_so} dibatalkan.`,
     };
   } catch (err) {
     if (err instanceof SalesOrderError) return { error: err.message };

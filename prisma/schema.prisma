@@ -201,8 +201,17 @@ model Sales_Order {
   terkirim_pada  DateTime?
   terkirim_oleh_id Int?
   catatan_pengiriman String?         @db.VarChar(500)
+  nomor_invoice  String?             @unique @db.VarChar(20)
+  biaya_packing  Decimal             @default(0) @db.Decimal(18, 2)
+  alasan_batal   String?             @db.VarChar(500)
+  dibatalkan_pada DateTime?
+  dibatalkan_oleh_id Int?
   jurnal_pendapatan_id Int?          @unique
-  jurnal_pendapatan Jurnal?          @relation(fields: [jurnal_pendapatan_id], references: [id])
+  jurnal_pendapatan Jurnal?          @relation("JurnalPendapatanSO", fields: [jurnal_pendapatan_id], references: [id])
+  jurnal_packing_id Int?             @unique
+  jurnal_packing    Jurnal?          @relation("JurnalPackingSO", fields: [jurnal_packing_id], references: [id])
+  jurnal_reversal_id Int?            @unique
+  jurnal_reversal    Jurnal?          @relation("JurnalReversalSO", fields: [jurnal_reversal_id], references: [id])
   baris          Sales_Order_Baris[]
 }
 
@@ -402,7 +411,9 @@ model Jurnal {
   diputusPada   DateTime?
   alasanTolak   String?       @db.Text
   baris         JurnalBaris[]
-  sales_order   Sales_Order?
+  sales_order_pendapatan Sales_Order? @relation("JurnalPendapatanSO")
+  sales_order_packing    Sales_Order? @relation("JurnalPackingSO")
+  sales_order_reversal   Sales_Order? @relation("JurnalReversalSO")
 }
 
 model JurnalBaris {

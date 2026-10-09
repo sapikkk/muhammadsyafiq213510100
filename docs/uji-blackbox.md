@@ -967,6 +967,14 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | DELIVERED | Sistem | Jurnal PENDING: Kas Dr, Penjualan curah/pack Cr; HPP Dr, Persediaan Cr; keterangan berisi nomor SO |
 | `/admin/jurnal` | Admin | Setujui jurnal → saldo akun berubah |
 
+### US5.5 Invoice, batal SO, biaya packing
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/admin/penjualan/{id}/invoice` | Admin | Nomor `INV-YYYY-NNN`, detail pelanggan & baris, cetak |
+| Catat biaya packing | Admin | Field tersimpan; jurnal PENDING 5400/Kas jika nominal > 0 |
+| Batalkan SO (belum/sudah DELIVERED) | Admin | Status `CANCELLED`; jurnal PENDING ditolak; jurnal APPROVED → reversal PENDING |
+
 ### Otomatisasi
 
 ```bash
