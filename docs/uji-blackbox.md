@@ -945,6 +945,14 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | Pilih Normal / Abnormal | Admin | `kategori_susut` terisi; estimasi biaya kerugian |
 | Approve panen setelah abnormal diklasifikasi | Admin | HPP tidak membengkak (biaya abnormal dikurangi dari total HPP) |
 
+### US5.1 Pelanggan & sales order
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/admin/pelanggan` | Admin | CRUD pelanggan |
+| `/admin/penjualan` buat SO | Admin | Nomor `SO-YYYY-NNN`, status DRAFT, grand total |
+| Konfirmasi stok | Admin | Status CONFIRMED jika qty ≤ stok batch; error jika kurang |
+
 ### Otomatisasi
 
 ```bash
