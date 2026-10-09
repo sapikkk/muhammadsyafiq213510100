@@ -7,8 +7,11 @@ Append-only. Agent menambah baris per sesi.
 | High | `/owner/akun`, `/admin/akun` | `lib/akun.ts` | Prisma `Decimal` (`saldo`) ikut ke `AkunTree` → hydration warning | **Fixed:** `buildClientTree`, `toAkunEdit` |
 | Medium | `/pengaturan` | `app/pengaturan/page.tsx` | Tanpa sidebar role shell | **Fixed:** `app/pengaturan/layout.tsx` + `RoleHome` |
 | Medium | `/owner`, `/owner/biaya` | `owner-*-chart.tsx` | Pie/bar warna brand | **Fixed:** skala abu-abu |
-| Low | `/`, `/login` | inventory | Belum ada sidebar global | **Partial** — Phase 2.4 |
-| Low | Many lists | various | `Card` untuk data listing | **Blocked** — Phase 3 DataTable |
+| Medium | `/ganti-sandi`, `/akses-ditolak`, 404, loading | layouts | Tanpa sidebar | **Fixed:** `SessionShell` |
+| Medium | `/owner/*` errors | `app/owner/error.tsx` | Error di luar shell | **Fixed:** segment `error.tsx` + toast |
+| Low | `/`, `/login` | inventory | Landing/login tanpa sidebar | **Deferred** — public |
+| Low | `/owner/pengguna` | `owner-user-panel` | List `<ul>` bukan tabel | **Fixed:** `DataTable` pilot |
+| Low | Many lists | various | `Card` untuk KPI/detail | **Partial** — bukan listing CRUD |
 
 ## Responsif (belum diuji sistematis)
 
