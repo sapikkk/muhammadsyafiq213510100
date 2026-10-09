@@ -6,6 +6,7 @@ import { signOut } from "next-auth/react";
 import {
   BookOpen,
   Box,
+  Contact,
   ChevronRight,
   ClipboardList,
   Home,
@@ -54,6 +55,8 @@ function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
       { label: "Master petani", href: "/admin/petani", icon: Users },
       { label: "Biaya & overhead", href: "/admin/biaya", icon: Receipt },
       { label: "Klasifikasi susut", href: "/admin/susut", icon: Layers },
+      { label: "Pelanggan", href: "/admin/pelanggan", icon: Contact },
+      { label: "Sales order", href: "/admin/penjualan", icon: Receipt },
       { label: "Laporan panen", href: "/admin/harvest", icon: ClipboardList },
       alertItem,
     ];
