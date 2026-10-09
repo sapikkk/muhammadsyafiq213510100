@@ -7,7 +7,7 @@
 | 2 Flat B&W UI | **Partial** | Token + `ui/*`; `SessionShell` on pengaturan/ganti-sandi/404/loading |
 | 3 DataTable / CRUD | **Partial** | + stok rendah, tugas/histori petani, reset sandi; SO ringkas + panel detail |
 | 4 Performance | **Partial** | `perf-before-after.md`; session warm ~300ms |
-| 5 Errors / toaster | **Partial** | + `global-error`, `NetworkStatus`, SO/active-pack forms; `lib/api-client.ts` |
+| 5 Errors / toaster | **Partial** | + form admin utama (SO, pelanggan, varietas, infra, biaya, login) |
 | 6 Dept audits | **Partial** | + `07-verification.md`; qa/security diperbarui |
 | 7 Verification | **Partial** | CI + `check:legacy-api-json`; export auth JSON; e2e belum di CI |
 
