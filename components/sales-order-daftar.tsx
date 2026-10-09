@@ -1,7 +1,9 @@
 "use client";
 
+import type { ColumnDef } from "@tanstack/react-table";
 import { useFormState } from "react-dom";
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import {
   cancelSalesOrderAction,
   confirmSalesOrderAction,
@@ -9,7 +11,9 @@ import {
   recordPackingCostAction,
   shipSalesOrderAction,
 } from "@/app/actions/sales-order";
+import { DataTable } from "@/components/data-table";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { SubmitButton } from "@/components/submit-button";
 import { Badge } from "@/components/ui/badge";
 import { formatRupiah } from "@/lib/format";
@@ -113,6 +117,79 @@ function DeliverForm({ id }: { id: number }) {
   );
 }
 
+function SalesOrderDetail({
+  row,
+  mode,
+}: {
+  row: SoRow;
+  mode: "admin" | "pengiriman";
+}) {
+  return (
+    <div className="space-y-2 rounded-md border p-4 text-sm">
+      <div className="flex flex-wrap items-center gap-2">
+        <p className="font-medium">{row.nomor_so}</p>
+        <Badge variant="secondary">{row.status}</Badge>
+      </div>
+      <p className="text-muted-foreground">
+        {row.pelanggan_nama} · Total {formatRupiah(row.total)}
+      </p>
+      <ul className="text-xs text-muted-foreground">
+        {row.baris.map((b, i) => (
+          <li key={i}>
+            {b.kode_batch} · {b.jenis} {b.jumlah} → {formatRupiah(b.subtotal)}
+          </li>
+        ))}
+      </ul>
+      {row.catatan_pengiriman ? (
+        <p className="text-xs text-muted-foreground">Catatan kirim: {row.catatan_pengiriman}</p>
+      ) : null}
+      {row.dikirim_pada ? (
+        <p className="text-xs text-muted-foreground">
+          Dikirim: {new Date(row.dikirim_pada).toLocaleString("id-ID")}
+        </p>
+      ) : null}
+      {row.terkirim_pada ? (
+        <p className="text-xs text-muted-foreground">
+          Terkirim: {new Date(row.terkirim_pada).toLocaleString("id-ID")}
+          {row.jurnal_pendapatan_id
+            ? ` · Jurnal #${row.jurnal_pendapatan_id} (${row.jurnal_pendapatan_status ?? "?"})`
+            : null}
+        </p>
+      ) : null}
+      {row.alasan_batal ? (
+        <p className="text-xs text-destructive">Batal: {row.alasan_batal}</p>
+      ) : null}
+      {mode === "admin" && row.status !== "DRAFT" && row.status !== "CANCELLED" ? (
+        <Link
+          href={`/admin/penjualan/${row.id}/invoice`}
+          className="text-xs font-medium text-primary underline-offset-2 hover:underline"
+        >
+          Invoice {row.nomor_invoice ? `(${row.nomor_invoice})` : ""}
+        </Link>
+      ) : null}
+      {mode === "admin" && row.status === "DRAFT" ? <ConfirmButton id={row.id} /> : null}
+      {mode === "admin" &&
+      ["CONFIRMED", "SHIPPED", "DELIVERED"].includes(row.status) &&
+      !row.jurnal_packing_id ? (
+        <PackingCostForm id={row.id} defaultValue={row.biaya_packing ?? "0"} />
+      ) : null}
+      {mode === "admin" && row.biaya_packing && row.biaya_packing !== "0" ? (
+        <p className="text-xs text-muted-foreground">
+          Biaya packing: {formatRupiah(row.biaya_packing)}
+          {row.jurnal_packing_id ? ` · Jurnal #${row.jurnal_packing_id}` : null}
+        </p>
+      ) : null}
+      {mode === "admin" && row.status !== "CANCELLED" ? <CancelForm id={row.id} /> : null}
+      {(mode === "admin" || mode === "pengiriman") && row.status === "CONFIRMED" ? (
+        <ShipForm id={row.id} />
+      ) : null}
+      {(mode === "admin" || mode === "pengiriman") && row.status === "SHIPPED" ? (
+        <DeliverForm id={row.id} />
+      ) : null}
+    </div>
+  );
+}
+
 export function SalesOrderDaftar({
   rows,
   mode = "admin",
@@ -120,80 +197,56 @@ export function SalesOrderDaftar({
   rows: SoRow[];
   mode?: "admin" | "pengiriman";
 }) {
-  if (rows.length === 0) {
-    return (
-      <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-        Belum ada sales order.
-      </p>
-    );
-  }
+  const [selectedId, setSelectedId] = useState<number | null>(rows[0]?.id ?? null);
+
+  const columns = useMemo<ColumnDef<SoRow>[]>(
+    () => [
+      { accessorKey: "nomor_so", header: "Nomor SO" },
+      {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }) => <Badge variant="secondary">{row.original.status}</Badge>,
+      },
+      { accessorKey: "pelanggan_nama", header: "Pelanggan" },
+      {
+        accessorKey: "total",
+        header: "Total",
+        cell: ({ row }) => (
+          <span className="tabular-nums">{formatRupiah(row.original.total)}</span>
+        ),
+      },
+      {
+        id: "aksi",
+        header: "",
+        cell: ({ row }) => (
+          <Button
+            type="button"
+            variant={selectedId === row.original.id ? "default" : "outline"}
+            size="sm"
+            className="h-8"
+            onClick={() => setSelectedId(row.original.id)}
+          >
+            {selectedId === row.original.id ? "Dipilih" : "Detail"}
+          </Button>
+        ),
+      },
+    ],
+    [selectedId],
+  );
+
+  const selected = rows.find((r) => r.id === selectedId) ?? null;
 
   return (
-    <ul className="divide-y rounded-md border">
-      {rows.map((row) => (
-        <li key={row.id} className="space-y-2 p-4 text-sm">
-          <div className="flex flex-wrap items-center gap-2">
-            <p className="font-medium">{row.nomor_so}</p>
-            <Badge variant="secondary">{row.status}</Badge>
-          </div>
-          <p className="text-muted-foreground">
-            {row.pelanggan_nama} · Total {formatRupiah(row.total)}
-          </p>
-          <ul className="text-xs text-muted-foreground">
-            {row.baris.map((b, i) => (
-              <li key={i}>
-                {b.kode_batch} · {b.jenis} {b.jumlah} → {formatRupiah(b.subtotal)}
-              </li>
-            ))}
-          </ul>
-          {row.catatan_pengiriman ? (
-            <p className="text-xs text-muted-foreground">Catatan kirim: {row.catatan_pengiriman}</p>
-          ) : null}
-          {row.dikirim_pada ? (
-            <p className="text-xs text-muted-foreground">
-              Dikirim: {new Date(row.dikirim_pada).toLocaleString("id-ID")}
-            </p>
-          ) : null}
-          {row.terkirim_pada ? (
-            <p className="text-xs text-muted-foreground">
-              Terkirim: {new Date(row.terkirim_pada).toLocaleString("id-ID")}
-              {row.jurnal_pendapatan_id
-                ? ` · Jurnal #${row.jurnal_pendapatan_id} (${row.jurnal_pendapatan_status ?? "?"})`
-                : null}
-            </p>
-          ) : null}
-          {row.alasan_batal ? (
-            <p className="text-xs text-destructive">Batal: {row.alasan_batal}</p>
-          ) : null}
-          {mode === "admin" && row.status !== "DRAFT" && row.status !== "CANCELLED" ? (
-            <Link
-              href={`/admin/penjualan/${row.id}/invoice`}
-              className="text-xs font-medium text-primary underline-offset-2 hover:underline"
-            >
-              Invoice {row.nomor_invoice ? `(${row.nomor_invoice})` : ""}
-            </Link>
-          ) : null}
-          {mode === "admin" && row.status === "DRAFT" ? <ConfirmButton id={row.id} /> : null}
-          {mode === "admin" &&
-          ["CONFIRMED", "SHIPPED", "DELIVERED"].includes(row.status) &&
-          !row.jurnal_packing_id ? (
-            <PackingCostForm id={row.id} defaultValue={row.biaya_packing ?? "0"} />
-          ) : null}
-          {mode === "admin" && row.biaya_packing && row.biaya_packing !== "0" ? (
-            <p className="text-xs text-muted-foreground">
-              Biaya packing: {formatRupiah(row.biaya_packing)}
-              {row.jurnal_packing_id ? ` · Jurnal #${row.jurnal_packing_id}` : null}
-            </p>
-          ) : null}
-          {mode === "admin" && row.status !== "CANCELLED" ? <CancelForm id={row.id} /> : null}
-          {(mode === "admin" || mode === "pengiriman") && row.status === "CONFIRMED" ? (
-            <ShipForm id={row.id} />
-          ) : null}
-          {(mode === "admin" || mode === "pengiriman") && row.status === "SHIPPED" ? (
-            <DeliverForm id={row.id} />
-          ) : null}
-        </li>
-      ))}
-    </ul>
+    <div className="space-y-4">
+      <DataTable
+        columns={columns}
+        data={rows}
+        pageSize={10}
+        searchPlaceholder="Cari SO, pelanggan, status…"
+        searchColumnIds={["nomor_so", "pelanggan_nama", "status"]}
+        emptyMessage="Belum ada sales order."
+      />
+      {selected ? <SalesOrderDetail row={selected} mode={mode} /> : null}
+    </div>
   );
 }

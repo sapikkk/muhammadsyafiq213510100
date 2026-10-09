@@ -10,13 +10,13 @@ export async function requireApiRole(allowed: readonly Role[]) {
   if (!role) {
     return {
       denied: apiFail("UNAUTHORIZED", "Belum masuk.", 401),
-      session: null as null,
+      session: null,
     };
   }
   if (!isRoleAllowed(role, allowed)) {
     return {
       denied: apiFail("FORBIDDEN", "Peran Anda tidak berhak.", 403),
-      session: null as null,
+      session: null,
     };
   }
   return { denied: null, session };

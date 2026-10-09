@@ -159,6 +159,24 @@ export async function listPergerakan(itemId?: number, limit = 50) {
   });
 }
 
+export function serializePergerakan(
+  row: Awaited<ReturnType<typeof listPergerakan>>[number],
+) {
+  return {
+    id: row.id,
+    tipe: row.tipe,
+    jumlah: row.jumlah.toString(),
+    stokSebelum: row.stokSebelum.toString(),
+    stokSesudah: row.stokSesudah.toString(),
+    keterangan: row.keterangan,
+    dibuatPada: row.dibuatPada.toISOString(),
+    item: row.item,
+    user: row.user,
+  };
+}
+
+export type SerializedPergerakan = ReturnType<typeof serializePergerakan>;
+
 function hitungStokBaru(
   saatIni: Prisma.Decimal,
   tipe: TipePergerakan,

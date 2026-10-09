@@ -1,7 +1,5 @@
-import { getServerSession } from "next-auth";
-import { isRoleAllowed } from "@/lib/rbac";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
 import {
   PelangganError,
   createPelanggan,
@@ -11,56 +9,46 @@ import {
   updatePelanggan,
 } from "@/lib/pelanggan";
 
-async function requireRead() {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!isRoleAllowed(role, ["ADMIN", "OWNER"])) {
-    return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
+function handleError(error: unknown) {
+  if (error instanceof PelangganError) {
+    return apiFail("PELANGGAN_ERROR", error.message, error.status);
   }
-  return null;
+  if (error instanceof SyntaxError) {
+    return apiFail("INVALID_JSON", "Body bukan JSON.", 400);
+  }
+  throw error;
 }
 
-export async function GET() {
-  const denied = await requireRead();
+export const GET = withApiHandler(async () => {
+  const { denied } = await requireApiRole(["ADMIN", "OWNER"]);
   if (denied) return denied;
   const rows = await listPelanggan();
-  return NextResponse.json(rows.map(serializePelanggan));
-}
+  return apiOk(rows.map(serializePelanggan));
+});
 
-export async function POST(request: Request) {
-  const session = await getServerSession(authOptions);
-  if (!isRoleAllowed(session?.user?.role, "ADMIN")) {
-    return NextResponse.json({ error: "Hanya Admin." }, { status: 403 });
-  }
+export const POST = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN"]);
+  if (denied) return denied;
   try {
     const row = await createPelanggan(parsePelangganInput(await request.json()));
-    return NextResponse.json(serializePelanggan(row), { status: 201 });
+    return apiOk(serializePelanggan(row), { status: 201 });
   } catch (error) {
-    if (error instanceof PelangganError) {
-      return NextResponse.json({ error: error.message }, { status: error.status });
-    }
-    throw error;
+    return handleError(error);
   }
-}
+});
 
-export async function PUT(request: Request) {
-  const session = await getServerSession(authOptions);
-  if (!isRoleAllowed(session?.user?.role, "ADMIN")) {
-    return NextResponse.json({ error: "Hanya Admin." }, { status: 403 });
-  }
+export const PUT = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN"]);
+  if (denied) return denied;
   try {
     const body = await request.json();
     const id = Number(body.id);
     if (!Number.isInteger(id) || id <= 0) {
-      return NextResponse.json({ error: "ID tidak valid." }, { status: 400 });
+      return apiFail("INVALID_ID", "ID tidak valid.", 400);
     }
     const row = await updatePelanggan(id, parsePelangganInput(body));
-    return NextResponse.json(serializePelanggan(row));
+    return apiOk(serializePelanggan(row));
   } catch (error) {
-    if (error instanceof PelangganError) {
-      return NextResponse.json({ error: error.message }, { status: error.status });
-    }
-    throw error;
+    return handleError(error);
   }
-}
+});
