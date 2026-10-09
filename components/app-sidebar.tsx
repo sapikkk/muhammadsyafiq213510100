@@ -14,6 +14,7 @@ import {
   LeafyGreen,
   LogOut,
   Package,
+  Receipt,
   Settings,
   Users,
   TriangleAlert,
@@ -50,6 +51,8 @@ function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
         icon: Home,
       },
       { label: "Varietas", href: "/admin/varietas", icon: LeafyGreen },
+      { label: "Master petani", href: "/admin/petani", icon: Users },
+      { label: "Biaya & overhead", href: "/admin/biaya", icon: Receipt },
       { label: "Laporan panen", href: "/admin/harvest", icon: ClipboardList },
       alertItem,
     ];
@@ -65,6 +68,7 @@ function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
         icon: Home,
       },
       { label: "Varietas", href: "/owner/varietas", icon: LeafyGreen },
+      { label: "Master petani", href: "/owner/petani", icon: Users },
       alertItem,
     ];
   }
