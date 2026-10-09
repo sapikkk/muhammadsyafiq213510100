@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# Assign Iteration field on GitHub Project #1 (sapikkk)
+set -euo pipefail
+PROJECT_ID=PVT_kwHOBFQUR84BmFnB
+FIELD_ITER=PVTIF_lAHOBFQUR84BmFnBzhkv-ro
+
+# Iteration option IDs from Project configuration
+SPRINT1=4d036271
+SPRINT2=6827e0ea
+SPRINT3=de077b01
+SPRINT4=e44ba15c
+SPRINT5=55b92bab
+
+assign() {
+  local item_id=$1 iter=$2
+  gh project item-edit --project-id "$PROJECT_ID" --id "$item_id" --field-id "$FIELD_ITER" --iteration-id "$iter"
+}
+
+# Item IDs from project (US issues)
+assign PVTI_lAHOBFQUR84BmFnBzg_MVRE "$SPRINT1"  # 2
+assign PVTI_lAHOBFQUR84BmFnBzg_MVio "$SPRINT1"  # 3
+assign PVTI_lAHOBFQUR84BmFnBzg_MVoI "$SPRINT1"  # 4
+assign PVTI_lAHOBFQUR84BmFnBzg_MVtc "$SPRINT1"  # 5
+assign PVTI_lAHOBFQUR84BmFnBzg_MV9I "$SPRINT1"  # 6
+assign PVTI_lAHOBFQUR84BmFnBzg_MWB4 "$SPRINT1"  # 7
+assign PVTI_lAHOBFQUR84BmFnBzg_MWHQ "$SPRINT1"  # 8
+assign PVTI_lAHOBFQUR84BmFnBzg_MWWk "$SPRINT1"  # 9
+
+for id in PVTI_lAHOBFQUR84BmFnBzg_MWi4 PVTI_lAHOBFQUR84BmFnBzg_MWoE PVTI_lAHOBFQUR84BmFnBzg_MWtU \
+  PVTI_lAHOBFQUR84BmFnBzg_MW1Y PVTI_lAHOBFQUR84BmFnBzg_MW8U PVTI_lAHOBFQUR84BmFnBzg_MXKo \
+  PVTI_lAHOBFQUR84BmFnBzg_MXZc PVTI_lAHOBFQUR84BmFnBzg_MXeU PVTI_lAHOBFQUR84BmFnBzg_MXiU \
+  PVTI_lAHOBFQUR84BmFnBzg_MXok PVTI_lAHOBFQUR84BmFnBzg_MXtY PVTI_lAHOBFQUR84BmFnBzg_MX08 \
+  PVTI_lAHOBFQUR84BmFnBzg_MX7c PVTI_lAHOBFQUR84BmFnBzg_MYA4 PVTI_lAHOBFQUR84BmFnBzg_MYIg \
+  PVTI_lAHOBFQUR84BmFnBzg_MYLE PVTI_lAHOBFQUR84BmFnBzg_MYQ0; do
+  assign "$id" "$SPRINT2"
+done
+
+assign PVTI_lAHOBFQUR84BmFnBzg_MYVk "$SPRINT3"  # 29
+assign PVTI_lAHOBFQUR84BmFnBzg_MYb0 "$SPRINT3"  # 30
+assign PVTI_lAHOBFQUR84BmFnBzg_MYhY "$SPRINT3"  # 31
+assign PVTI_lAHOBFQUR84BmFnBzg_MYlU "$SPRINT3"  # 32
+assign PVTI_lAHOBFQUR84BmFnBzg_MYrQ "$SPRINT3"  # 33
+
+assign PVTI_lAHOBFQUR84BmFnBzg_MWdM "$SPRINT4"  # 10 US1.9
+assign PVTI_lAHOBFQUR84BmFnBzg_MXE8 "$SPRINT4"  # 16 US2.6
+assign PVTI_lAHOBFQUR84BmFnBzg_MYx4 "$SPRINT4"  # 34
+assign PVTI_lAHOBFQUR84BmFnBzg_MY3c "$SPRINT4"  # 35
+assign PVTI_lAHOBFQUR84BmFnBzg_MZFA "$SPRINT4"  # 36
+assign PVTI_lAHOBFQUR84BmFnBzg_MZLI "$SPRINT4"  # 37
+assign PVTI_lAHOBFQUR84BmFnBzg_Mc0k "$SPRINT4"  # 38
+
+assign PVTI_lAHOBFQUR84BmFnBzg_MZZE "$SPRINT5"  # 39
+assign PVTI_lAHOBFQUR84BmFnBzg_Mc6w "$SPRINT5"  # 40
+assign PVTI_lAHOBFQUR84BmFnBzg_MZmk "$SPRINT5"  # 41
+assign PVTI_lAHOBFQUR84BmFnBzg_MZso "$SPRINT5"  # 42
+assign PVTI_lAHOBFQUR84BmFnBzg_MdBA "$SPRINT5"  # 43
+assign PVTI_lAHOBFQUR84BmFnBzg_MZ4k "$SPRINT5"  # 44
+assign PVTI_lAHOBFQUR84BmFnBzg_MZ-k "$SPRINT5"  # 45
+
+echo "Project iterations assigned."

@@ -38,6 +38,9 @@ US berikutnya (2.4, 3.5, 4.5): form + server action atau route API tipis, logika
 
 Untuk `docs/`, notulensi uji, naskah skripsi: jalankan humanizer — hindari pola AI (kontras “bukan X tapi Y”, triad paksa, bold berlebihan).
 
-## Backlog
+## Backlog & pelacakan sprint
 
-Urutan dan kelompok US: `docs/progress-backlog.md`. Board: [Project #1](https://github.com/users/sapikkk/projects/1).
+- **Registry Agile (AC, DoD, timeline, audit log):** `docs/agile/README.md`
+- Urutan US: `docs/progress-backlog.md`
+- Board: [Project #1](https://github.com/users/sapikkk/projects/1)
+- Gap GitHub vs docs: `docs/agile/KONFIRMASI-GAP-GITHUB.md` (konfirmasi PO)
