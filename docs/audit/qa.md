@@ -12,7 +12,8 @@
 
 - [ ] `npm run typecheck` / `lint` / `check:banned-ui` / `check:audit-env`
 - [ ] `npm run build` (clean `.next`)
-- [ ] `npm run test:e2e` — perluas smoke post-audit (**todo**)
+- [x] `e2e/smoke.spec.ts` — login admin + halaman jurnal (butuh DB seed & dev server)
+- [ ] `npm run test:e2e` di CI (**todo** — butuh Postgres service)
 
 ## Failure paths (todo)
 

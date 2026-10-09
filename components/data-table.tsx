@@ -10,7 +10,8 @@ import {
   type ColumnDef,
   type SortingState,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -30,6 +31,8 @@ type DataTableProps<TData, TValue> = {
   searchPlaceholder?: string;
   /** Column ids to include in global filter; defaults to all columns. */
   searchColumnIds?: string[];
+  /** Sync search box to URL query param (e.g. `q`). */
+  syncSearchParam?: string;
 };
 
 export function DataTable<TData, TValue>({
@@ -39,9 +42,40 @@ export function DataTable<TData, TValue>({
   emptyMessage = "Belum ada data.",
   searchPlaceholder,
   searchColumnIds,
+  syncSearchParam,
 }: DataTableProps<TData, TValue>) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = useState("");
+  const initialQ = syncSearchParam ? (searchParams.get(syncSearchParam) ?? "") : "";
+  const [globalFilter, setGlobalFilter] = useState(initialQ);
+  const skipUrlSync = useRef(false);
+
+  useEffect(() => {
+    if (!syncSearchParam) return;
+    const fromUrl = searchParams.get(syncSearchParam) ?? "";
+    if (fromUrl !== globalFilter) {
+      skipUrlSync.current = true;
+      setGlobalFilter(fromUrl);
+    }
+  }, [searchParams, syncSearchParam, globalFilter]);
+
+  useEffect(() => {
+    if (!syncSearchParam || skipUrlSync.current) {
+      skipUrlSync.current = false;
+      return;
+    }
+    const t = window.setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      const v = globalFilter.trim();
+      if (v) params.set(syncSearchParam, v);
+      else params.delete(syncSearchParam);
+      const qs = params.toString();
+      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    }, 300);
+    return () => window.clearTimeout(t);
+  }, [globalFilter, pathname, router, searchParams, syncSearchParam]);
 
   const table = useReactTable({
     data,
