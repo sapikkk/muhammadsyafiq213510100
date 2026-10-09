@@ -5,9 +5,11 @@ import { useFormState } from "react-dom";
 import { requestPasswordReset } from "@/app/actions/password";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export default function LupaSandiPage() {
   const [state, formAction] = useFormState(requestPasswordReset, {});
+  useActionToast({ error: state.error, ok: state.sent ? "Permintaan terkirim." : undefined });
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-sm flex-col justify-center px-4 py-10">
@@ -45,11 +47,6 @@ export default function LupaSandiPage() {
                 aria-invalid={state.error ? true : undefined}
               />
             </label>
-            {state.error ? (
-              <p role="alert" className="text-sm text-destructive">
-                {state.error}
-              </p>
-            ) : null}
             <SubmitButton className="h-11 w-full" pendingLabel="Mengirim...">
               Kirim permintaan ke Admin
             </SubmitButton>

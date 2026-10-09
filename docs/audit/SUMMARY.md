@@ -8,8 +8,8 @@
 | 3 DataTable / CRUD | **Partial** | + stok rendah, tugas/histori petani, reset sandi; SO ringkas + panel detail |
 | 4 Performance | **Partial** | `perf-before-after.md`; session warm ~300ms |
 | 5 Errors / toaster | **Partial** | + `global-error`, `NetworkStatus`, SO/active-pack forms; `lib/api-client.ts` |
-| 6 Dept audits | **Partial** | `frontend.md`, `backend.md`; qa/security pending |
-| 7 Verification | **Partial** | typecheck/lint/build OK; CI + `build`; e2e smoke extended (local) |
+| 6 Dept audits | **Partial** | + `07-verification.md`; qa/security diperbarui |
+| 7 Verification | **Partial** | CI + `check:legacy-api-json`; export auth JSON; e2e belum di CI |
 
 ## Rekomendasi merge
 

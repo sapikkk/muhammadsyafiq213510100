@@ -1,14 +1,10 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { isRoleAllowed } from "@/lib/rbac";
+import { requireApiRole } from "@/lib/api-auth";
 import type { Role } from "@/types/role";
 
+/** Prefer `requireApiRole` + `apiFail` in route handlers. */
 export async function requireExportRole(allowed: readonly Role[]) {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role || !isRoleAllowed(role, allowed)) {
-    return null;
-  }
+  const { denied, session } = await requireApiRole(allowed);
+  if (denied) return null;
   return session;
 }
 
