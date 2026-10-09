@@ -1007,6 +1007,16 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | `/owner/evaluasi` | Owner | Kapasitas lubang idle, margin HPP vs harga curah/pack, BEP kg & lubang, rekomendasi |
 | `/owner/evaluasi` | Petani | Akses ditolak (middleware Owner) |
 
+### US6.5 Arus kas + filter periode
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/owner/arus-kas` | Owner | Saldo awal/akhir, ringkasan operasi/investasi/pendanaan, tabel mutasi Kas/Bank |
+| Filter YYYY-MM | Owner | Periode di URL & ringkasan berubah |
+| `GET /api/reports/cash-flow` | Owner/Admin | JSON arus kas |
+| `GET /api/export/cash-flow` | Owner/Admin | PDF periode |
+| `/owner/laporan` | Owner | Link unduh arus kas PDF |
+
 ### Otomatisasi
 
 ```bash

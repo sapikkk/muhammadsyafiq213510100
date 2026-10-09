@@ -34,6 +34,28 @@ export function incomeStatementPdfLines(
   ];
 }
 
+export function cashFlowPdfLines(
+  periode: string,
+  summary: { saldoAwal: string; netChange: string; saldoAkhir: string },
+  sections: { label: string; masuk: string; keluar: string; net: string }[],
+): string[] {
+  const lines = [
+    `Periode: ${periode}`,
+    "",
+    `Saldo awal kas: ${formatRupiah(summary.saldoAwal)}`,
+    `Perubahan bersih: ${formatRupiah(summary.netChange)}`,
+    `Saldo akhir kas: ${formatRupiah(summary.saldoAkhir)}`,
+    "",
+  ];
+  for (const sec of sections) {
+    lines.push(
+      `${sec.label}: masuk ${formatRupiah(sec.masuk)}, keluar ${formatRupiah(sec.keluar)}, net ${formatRupiah(sec.net)}`,
+    );
+  }
+  lines.push("", "Sumber: jurnal APPROVED · akun 1100 Kas & 1110 Bank.");
+  return lines;
+}
+
 export function balanceSheetPdfLines(
   asOf: string,
   sections: { tipe: string; rows: { kode: string; nama: string; saldo: string }[]; subtotal: string }[],
