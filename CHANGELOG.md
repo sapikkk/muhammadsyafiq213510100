@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.7.0...v1.8.0) (2026-10-09)
+
+
+### Features
+
+* **laporan:** US6.3 ekspor jurnal xlsx dan L/R + neraca PDF ([d2d9aee](https://github.com/sapikkk/muhammadsyafiq213510100/commit/d2d9aeeccbfccbdc802941745c58c1ad68995382))
+
 # [1.7.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.6.0...v1.7.0) (2026-10-09)
 
 
