@@ -126,7 +126,11 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
                 {data.movements.map((row) => (
                   <tr key={`${row.jurnalId}-${row.tanggal}`} className="border-b last:border-0">
                     <td className="px-4 py-2 whitespace-nowrap">{row.tanggal}</td>
-                    <td className="px-4 py-2 tabular-nums">#{row.jurnalId}</td>
+                    <td className="px-4 py-2 tabular-nums">
+                      <a href={`/owner/jurnal/${row.jurnalId}`} className="text-primary hover:underline">
+                        #{row.jurnalId}
+                      </a>
+                    </td>
                     <td className="px-4 py-2">{row.kategori}</td>
                     <td className="max-w-xs truncate px-4 py-2" title={row.keterangan}>
                       {row.keterangan || "—"}

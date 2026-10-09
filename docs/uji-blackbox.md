@@ -40,7 +40,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US1.6 | `feat/us1.6-daftar-petani` | #47 | Done |
 | US1.8 | `feat/us1.8-state-global` | #48 | Done |
 | US1.7 | `feat/us1.7-pengaturan` | #49 | Done |
-| US1.9 | belum | Sprint 4 | Todo |
+| US1.9 | selesai | Sprint 4 | Done (PR) |
 | US2.1 | `feat/us2.1-coa` | #52 | Done |
 | US2.2 | `feat/us2.2-jurnal` | #53 | Done |
 | US4.1 | `feat/us4.1-stok-movement` | #54 | Done |
@@ -1016,6 +1016,25 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | `GET /api/reports/cash-flow` | Owner/Admin | JSON arus kas |
 | `GET /api/export/cash-flow` | Owner/Admin | PDF periode |
 | `/owner/laporan` | Owner | Link unduh arus kas PDF |
+
+### US1.9 Kelola user (Owner)
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/owner/pengguna` | Owner | Daftar user; form tambah Admin/Petani; reset sandi non-Owner |
+| Buat akun | Owner | Email unik; `mustChangePassword` true |
+| Reset sandi Admin/Petani | Owner | Sandi baru; Owner sendiri & akun Owner tidak di-reset dari sini |
+| `/owner/pengguna` | Admin/Petani | 403 |
+
+### US2.6 Owner COA, jurnal, prive
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/owner/akun` | Owner | Pohon COA read-only |
+| `/owner/jurnal` | Owner | Filter tanggal/status; detail tanpa approve/edit |
+| `/owner/prive` | Owner | Jurnal PENDING Dr 3200 Cr 1100 |
+| Approve prive | Admin | Saldo Kas & Prive berubah setelah approve |
+| `/owner/prive` | Admin | 403 (hanya Owner input prive) |
 
 ### Otomatisasi
 
