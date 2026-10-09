@@ -7,8 +7,8 @@
 | 2 Flat B&W UI | **Partial** | Token + `ui/*`; `SessionShell` on pengaturan/ganti-sandi/404/loading |
 | 3 DataTable / CRUD | **Partial** | `@tanstack/react-table` + `DataTable`; pilot `/owner/pengguna` |
 | 4 Performance | **Partial** | Session ~300ms setelah warm; belum `perf-before-after.md` |
-| 5 Errors / toaster | **Partial** | Sonner + `lib/notify`; belum wire semua form; `logger.ts` server only |
-| 6 Dept audits | **Partial** | `frontend.md` started; backend/qa/security pending |
+| 5 Errors / toaster | **Partial** | Sonner + `useActionToast` on jurnal/akun/pengaturan/prive |
+| 6 Dept audits | **Partial** | `frontend.md`, `backend.md`; qa/security pending |
 | 7 Verification | **Partial** | typecheck/lint/build OK on branch |
 
 ## Rekomendasi merge

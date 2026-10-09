@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useFormState } from "react-dom";
 import { simpanJurnal } from "@/app/actions/jurnal";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { SubmitButton } from "@/components/submit-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,6 +33,7 @@ export function JurnalForm({
   tanggalAwal: string;
 }) {
   const [state, formAction] = useFormState(simpanJurnal, {});
+  useActionToast({ error: state.error, saved: state.saved });
   const [baris, setBaris] = useState<Baris[]>([barisKosong(1), barisKosong(2)]);
   const [nextKey, setNextKey] = useState(3);
 
