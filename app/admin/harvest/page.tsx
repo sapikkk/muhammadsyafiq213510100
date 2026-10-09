@@ -14,7 +14,7 @@ export default async function AdminHarvestPage() {
         title="Laporan panen"
         description={
           pending > 0
-            ? `${pending} laporan menunggu review (approval penuh di US berikutnya).`
+            ? `${pending} laporan menunggu review — buka detail untuk setujui atau tolak.`
             : "Daftar laporan panen dari petani."
         }
       />

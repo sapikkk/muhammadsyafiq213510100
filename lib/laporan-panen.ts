@@ -205,7 +205,7 @@ export async function approveLaporanPanen(id: number, userId: number) {
       });
 
       // Hitung dan simpan HPP
-      const hppCalc = await calculateHPP(laporan.siklus_id, tx);
+      const hppCalc = await calculateHPP(laporan.siklus_id, tx as typeof prisma);
       await tx.hPP.upsert({
         where: { siklus_id: laporan.siklus_id },
         create: {
