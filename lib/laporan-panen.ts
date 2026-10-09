@@ -173,7 +173,131 @@ export function serializeLaporanRingkas(
     waktu_kirim: keTanggalIso(row.waktu_kirim),
   };
 }
+import { calculateHPP } from "./hpp";
 
 export async function getLaporanBySiklus(siklusId: number) {
   return prisma.laporan_Panen.findUnique({ where: { siklus_id: siklusId } });
+}
+
+export async function approveLaporanPanen(id: number, userId: number) {
+  return prisma.$transaction(
+    async (tx) => {
+      const laporan = await tx.laporan_Panen.findUnique({
+        where: { id },
+        include: { siklus: true },
+      });
+
+      if (!laporan) throw new HarvestError("Laporan tidak ditemukan.", 404);
+      if (laporan.status !== "PENDING") {
+        throw new HarvestError("Laporan tidak dalam status PENDING.", 400);
+      }
+
+      // Update status laporan
+      const updatedLaporan = await tx.laporan_Panen.update({
+        where: { id },
+        data: { status: "APPROVED" },
+      });
+
+      // Update status siklus
+      await tx.siklus_Produksi.update({
+        where: { id: laporan.siklus_id },
+        data: { status: "SELESAI", tanggal_panen: new Date() },
+      });
+
+      // Hitung dan simpan HPP
+      const hppCalc = await calculateHPP(laporan.siklus_id, tx);
+      await tx.hPP.upsert({
+        where: { siklus_id: laporan.siklus_id },
+        create: {
+          siklus_id: laporan.siklus_id,
+          biaya_langsung_total: hppCalc.biaya_langsung_total,
+          overhead_teralokasi: hppCalc.overhead_teralokasi,
+          biaya_plastik_packing: hppCalc.biaya_plastik_packing,
+          total_biaya: hppCalc.total_biaya,
+          hpp_per_lubang: hppCalc.hpp_per_lubang,
+          hpp_per_kg: hppCalc.hpp_per_kg,
+          hpp_per_pack: hppCalc.hpp_per_pack,
+        },
+        update: {
+          biaya_langsung_total: hppCalc.biaya_langsung_total,
+          overhead_teralokasi: hppCalc.overhead_teralokasi,
+          biaya_plastik_packing: hppCalc.biaya_plastik_packing,
+          total_biaya: hppCalc.total_biaya,
+          hpp_per_lubang: hppCalc.hpp_per_lubang,
+          hpp_per_kg: hppCalc.hpp_per_kg,
+          hpp_per_pack: hppCalc.hpp_per_pack,
+        }
+      });
+
+      // Jurnal Otomatis Persediaan
+      const akunPersediaan = await tx.akun.findUnique({ where: { kode: "1350" } });
+      const akunHPP = await tx.akun.findUnique({ where: { kode: "5100" } });
+
+      if (akunPersediaan && akunHPP) {
+        const jurnal = await tx.jurnal.create({
+          data: {
+            tanggal: new Date(),
+            keterangan: `Harvest Report Approved: Batch ${laporan.siklus.kode_batch}`,
+            status: "APPROVED",
+            dibuatOlehId: userId,
+            diputusOlehId: userId,
+            diputusPada: new Date(),
+            baris: {
+              create: [
+                { akunId: akunPersediaan.id, debit: hppCalc.total_biaya, kredit: 0 },
+                { akunId: akunHPP.id, debit: 0, kredit: hppCalc.total_biaya },
+              ]
+            }
+          }
+        });
+
+        // Update saldo akun
+        await tx.akun.update({
+          where: { id: akunPersediaan.id },
+          data: { saldo: { increment: hppCalc.total_biaya } }
+        });
+        
+        // Saldo akun HPP dikurangi (Kredit = pengurangan saldo normal beban)
+        await tx.akun.update({
+          where: { id: akunHPP.id },
+          data: { saldo: { decrement: hppCalc.total_biaya } }
+        });
+      }
+
+      return updatedLaporan;
+    },
+    { maxWait: 20_000, timeout: 60_000 }
+  );
+}
+
+export async function rejectLaporanPanen(id: number, userId: number, alasan: string) {
+  if (!alasan || !alasan.trim()) {
+    throw new HarvestError("Alasan penolakan wajib diisi.", 400);
+  }
+
+  return prisma.$transaction(
+    async (tx) => {
+      const laporan = await tx.laporan_Panen.findUnique({
+        where: { id },
+        include: { siklus: true },
+      });
+
+      if (!laporan) throw new HarvestError("Laporan tidak ditemukan.", 404);
+      if (laporan.status !== "PENDING") {
+        throw new HarvestError("Laporan tidak dalam status PENDING.", 400);
+      }
+
+      // Update status laporan
+      const updatedLaporan = await tx.laporan_Panen.update({
+        where: { id },
+        data: { 
+          status: "REJECTED",
+          catatan: (laporan.catatan ? laporan.catatan + "\n" : "") + `Ditolak: ${alasan.trim()}`,
+        },
+      });
+
+      return updatedLaporan;
+    },
+    { maxWait: 20_000, timeout: 60_000 }
+  );
 }

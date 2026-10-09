@@ -170,10 +170,14 @@ export async function buatSiklusSemai(input: SiklusInput) {
         );
       }
 
-      await pakaiActivePackDalamTx(tx, input.activePackBenihId, input.jumlahBenihPakai);
+      const activeBenih = await pakaiActivePackDalamTx(tx, input.activePackBenihId, input.jumlahBenihPakai);
+      let biayaRockwool = new Prisma.Decimal(0);
       if (input.activePackMediaId !== null && input.jumlahMediaPakai !== null) {
-        await pakaiActivePackDalamTx(tx, input.activePackMediaId, input.jumlahMediaPakai);
+        const activeMedia = await pakaiActivePackDalamTx(tx, input.activePackMediaId, input.jumlahMediaPakai);
+        biayaRockwool = input.jumlahMediaPakai.mul(activeMedia.biayaPerUnit);
       }
+      const biayaBenih = input.jumlahBenihPakai.mul(activeBenih.biayaPerUnit);
+      const subtotal = biayaBenih.add(biayaRockwool);
 
       const kode_batch = await generateKodeBatch(input.kolamId, input.tanggalSemai, tx);
 
@@ -185,6 +189,15 @@ export async function buatSiklusSemai(input: SiklusInput) {
           tanggal_semai: input.tanggalSemai,
           jumlah_disemai: input.jumlahDisemai,
           status: FASE_SEMAI,
+          biaya_langsung: {
+            create: {
+              biaya_benih: biayaBenih,
+              biaya_rockwool: biayaRockwool,
+              biaya_nutrisi: 0,
+              biaya_listrik_pompa: 0,
+              subtotal: subtotal,
+            }
+          }
         },
         include: {
           varietas: { select: { nama: true } },
