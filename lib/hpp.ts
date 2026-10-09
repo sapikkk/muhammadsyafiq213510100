@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { allocateOverheadForSiklus } from "@/lib/biaya";
 import { prisma } from "@/lib/prisma";
+import { totalBiayaAbnormalSiklus } from "@/lib/susut";
 
 type PrismaDb = typeof prisma;
 
@@ -28,8 +29,14 @@ export async function calculateHPP(siklusId: number, tx: PrismaDb = prisma) {
   // PRD: "berat per pack ditambah biaya plastik"
   const biayaPlastikPacking = new Prisma.Decimal(0);
 
-  // Total Biaya
-  const totalBiaya = biayaLangsungTotal.add(overheadTeralokasi).add(biayaPlastikPacking);
+  const biayaAbnormal = await totalBiayaAbnormalSiklus(siklusId, tx as PrismaDb);
+
+  // Total biaya HPP — susut abnormal tidak menggelembungkan HPP per kg
+  let totalBiaya = biayaLangsungTotal
+    .add(overheadTeralokasi)
+    .add(biayaPlastikPacking)
+    .sub(biayaAbnormal);
+  if (totalBiaya.lt(0)) totalBiaya = new Prisma.Decimal(0);
 
   // Yield
   const jumlahLayakJual = new Prisma.Decimal(siklus.laporanPanen.jumlah_layak || 1);
