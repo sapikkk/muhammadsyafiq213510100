@@ -982,6 +982,14 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | `/owner` | Owner | 3 KPI bulan berjalan + grafik batang pendapatan vs beban (6 bulan) |
 | `GET /api/reports/monthly-summary` | Owner/Admin | JSON agregat dari jurnal APPROVED (tipe Pendapatan/Beban) |
 
+### US6.2 Pie breakdown biaya + drill-down
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/owner/biaya` | Owner | Pie beban per akun 5xxx, filter periode YYYY-MM |
+| Klik akun di legenda | Owner | Daftar baris jurnal APPROVED (drill-down) |
+| `GET /api/reports/cost-breakdown?akunId=` | Owner/Admin | JSON slices + drilldown |
+
 ### Otomatisasi
 
 ```bash
