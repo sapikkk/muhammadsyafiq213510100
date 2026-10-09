@@ -1,11 +1,12 @@
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { SalesOrderError, confirmSalesOrder, serializeSalesOrder, listSalesOrders } from "@/lib/sales-order";
 
 export async function PUT(_request: Request, { params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") {
+  if (!isRoleAllowed(session?.user?.role, "ADMIN")) {
     return NextResponse.json({ error: "Hanya Admin." }, { status: 403 });
   }
   const id = Number(params.id);

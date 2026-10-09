@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { listAlertStokMinimum, serializeAlertStok } from "@/lib/inventaris";
@@ -9,7 +10,7 @@ export async function GET() {
   if (!role) {
     return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
   }
-  if (!["ADMIN", "OWNER", "PEKERJA"].includes(role)) {
+  if (!isRoleAllowed(role, ["ADMIN", "OWNER", "PEKERJA"])) {
     return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
   }
 

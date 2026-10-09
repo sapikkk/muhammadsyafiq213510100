@@ -1,6 +1,7 @@
 "use server";
 
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { revalidatePath } from "next/cache";
 import { authOptions } from "@/lib/auth";
 import {
@@ -20,7 +21,7 @@ type FormState = { error?: string; ok?: string };
 async function requireAdmin() {
   const session = await getServerSession(authOptions);
   if (!session?.user?.role) throw new InfrastrukturError("Belum masuk.", 401);
-  if (session.user.role !== "ADMIN") {
+  if (!isRoleAllowed(session.user.role, "ADMIN")) {
     throw new InfrastrukturError("Peran Anda tidak berhak.", 403);
   }
 }

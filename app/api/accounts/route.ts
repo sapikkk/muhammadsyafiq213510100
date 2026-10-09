@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
 import {
   AkunError,
   createAkun,
@@ -9,19 +8,6 @@ import {
   setAkunAktif,
   updateAkun,
 } from "@/lib/akun";
-
-async function requireRole(allowed: string[]) {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!allowed.includes(role)) {
-    return NextResponse.json(
-      { error: "Peran Anda tidak berhak." },
-      { status: 403 },
-    );
-  }
-  return null;
-}
 
 function handleError(error: unknown) {
   if (error instanceof AkunError) {
@@ -34,13 +20,13 @@ function handleError(error: unknown) {
 }
 
 export async function GET() {
-  const denied = await requireRole(["ADMIN", "OWNER"]);
+  const { denied } = await requireApiRole(["ADMIN", "OWNER"]);
   if (denied) return denied;
   return NextResponse.json(await listAkun());
 }
 
 export async function POST(request: Request) {
-  const denied = await requireRole(["ADMIN"]);
+  const { denied } = await requireApiRole(["ADMIN"]);
   if (denied) return denied;
   try {
     const akun = await createAkun(parseAkunInput(await request.json()));
@@ -51,7 +37,7 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const denied = await requireRole(["ADMIN"]);
+  const { denied } = await requireApiRole(["ADMIN"]);
   if (denied) return denied;
   try {
     const body = (await request.json()) as Record<string, unknown>;

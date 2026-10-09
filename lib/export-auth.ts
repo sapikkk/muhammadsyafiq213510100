@@ -1,10 +1,12 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { isRoleAllowed } from "@/lib/rbac";
+import type { Role } from "@/types/role";
 
-export async function requireExportRole(allowed: ("ADMIN" | "OWNER")[]) {
+export async function requireExportRole(allowed: readonly Role[]) {
   const session = await getServerSession(authOptions);
   const role = session?.user?.role;
-  if (!role || !allowed.includes(role as "ADMIN" | "OWNER")) {
+  if (!role || !isRoleAllowed(role, allowed)) {
     return null;
   }
   return session;

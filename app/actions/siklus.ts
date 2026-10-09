@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import {
@@ -19,7 +20,7 @@ export async function mulaiSiklusSemai(
 ): Promise<FormState> {
   try {
     const session = await getServerSession(authOptions);
-    if (session?.user?.role !== "PEKERJA") {
+    if (!isRoleAllowed(session?.user?.role, "PEKERJA")) {
       throw new SiklusError("Peran Anda tidak berhak.", 403);
     }
     const raw = Object.fromEntries(formData.entries());

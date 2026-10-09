@@ -20,6 +20,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "check:audit-env": "bash scripts/check-audit-env.sh",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:e2e": "playwright test",

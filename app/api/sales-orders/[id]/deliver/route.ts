@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { SalesOrderError } from "@/lib/sales-order";
@@ -8,7 +9,7 @@ import { deliverSalesOrder } from "@/lib/sales-order-delivery";
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
   const role = session?.user?.role;
-  if (!session?.user?.id || !role || !["ADMIN", "PEKERJA"].includes(role)) {
+  if (!session?.user?.id || !isRoleAllowed(role, ["ADMIN", "PEKERJA"])) {
     return NextResponse.json({ error: "Akses ditolak." }, { status: 403 });
   }
   const id = Number(params.id);

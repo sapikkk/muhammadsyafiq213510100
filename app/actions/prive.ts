@@ -1,6 +1,7 @@
 "use server";
 
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { revalidatePath } from "next/cache";
 import { authOptions } from "@/lib/auth";
 import { createPriveJurnal, PriveError } from "@/lib/prive";
@@ -9,7 +10,8 @@ export type PriveState = { ok?: boolean; error?: string; jurnalId?: number };
 
 export async function submitPrive(_prev: PriveState, formData: FormData): Promise<PriveState> {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "OWNER") {
+  if (!session?.user?.id) return { error: "Belum masuk." };
+  if (!isRoleAllowed(session.user.role, "OWNER")) {
     return { error: "Hanya Owner yang dapat mencatat prive." };
   }
   const userId = Number(session.user.id);

@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { SiklusError, lanjutFase, serializeSiklus, getSiklusProduksi, listSiklusProduksi } from "@/lib/siklus-produksi";
@@ -23,7 +24,7 @@ export async function PUT(
   if (!role || !userId) {
     return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
   }
-  if (role !== "PEKERJA") {
+  if (!isRoleAllowed(role, "PEKERJA")) {
     return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
   }
 
@@ -55,7 +56,7 @@ export async function GET(
   const session = await getServerSession(authOptions);
   const role = session?.user?.role;
   if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!["ADMIN", "OWNER", "PEKERJA"].includes(role)) {
+  if (!isRoleAllowed(role, ["ADMIN", "OWNER", "PEKERJA"])) {
     return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
   }
   const id = Number(params.id);

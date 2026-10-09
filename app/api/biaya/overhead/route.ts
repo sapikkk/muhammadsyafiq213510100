@@ -1,11 +1,12 @@
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { BiayaError, createOverhead, listOverhead, serializeOverhead } from "@/lib/biaya";
 
 async function requireAdmin() {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") {
+  if (!isRoleAllowed(session?.user?.role, "ADMIN")) {
     return NextResponse.json({ error: "Hanya Admin." }, { status: 403 });
   }
   return null;
