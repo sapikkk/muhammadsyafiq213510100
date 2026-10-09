@@ -17,3 +17,4 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run check:audit-env
+      - run: npm run check:banned-ui
