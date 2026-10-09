@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useFormState } from "react-dom";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { saveAkun } from "@/app/actions/akun";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
@@ -28,6 +29,8 @@ export function AkunForm({
   edit?: AkunEdit;
 }) {
   const [state, formAction] = useFormState(saveAkun, {});
+
+  useActionToast({ error: state.error, saved: state.saved });
 
   return (
     <section aria-labelledby="akun-form-title" className="space-y-3">
