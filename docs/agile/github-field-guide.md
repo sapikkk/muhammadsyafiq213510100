@@ -6,11 +6,15 @@ URL: https://github.com/users/sapikkk/projects/1
 
 | Field | Arti | Sumber kebenaran |
 |-------|------|------------------|
-| **Status** | Todo / In progress / Done | Sinkron dengan issue open/closed + partial US |
+| **Status** | Todo / In progress / Done | Open + `progress-partial` = partial; Done = AC issue selesai atau close dengan catatan partial |
 | **Iteration** | Sprint 1–5 + rentang tanggal | `docs/agile/timeline-registry.md` |
 | **Priority** | P0 / P1 / P2 | PRD (HIGHEST → P0) — *belum diisi massal* |
 | **Size** | XS–XL | Opsional story points |
-| **Labels (issue)** | `sprint-2`, `blackbox-test`, `finding` | Filter di repo |
+| **Labels (issue)** | `sprint-1`…`sprint-5`, `progress-partial`, `blackbox-test`, `finding` | Filter di repo |
+
+## Iteration — actual start (PO 2026-10-09)
+
+Sesuaikan **start date** setiap Iteration di Project settings ke [timeline-registry.md](./timeline-registry.md) (Sprint 2 mulai **2026-10-08**, bukan 2026-10-21 PRD lama).
 
 ## Mapping issue → sprint (PRD)
 
@@ -24,9 +28,10 @@ URL: https://github.com/users/sapikkk/projects/1
 
 ## Views disarankan
 
-1. **By Iteration** — lihat progres per sprint.  
+1. **By Iteration** — progres per sprint (actual start).  
 2. **Board by Status** — daily standup.  
-3. **Filter `label:blackbox-test`** — US dengan notulensi uji.
+3. **Filter `label:progress-partial`** — US belum 100% AC.  
+4. **Filter `label:blackbox-test`** — notulensi uji.
 
 ## Repo vs Project
 

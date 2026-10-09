@@ -113,5 +113,5 @@
 - [x] Tiga akun demo login
 - [x] Middleware RBAC
 - [x] Notulensi US1.4–1.8 di `uji-blackbox.md`
-- [ ] Retro Sprint 1 tercatat di `audit-log.md` (isi tanggal demo PO)
-- [ ] Velocity points di `timeline-registry.md`
+- [x] Retro Sprint 1 → [retro/sprint-01-retro.md](../retro/sprint-01-retro.md)
+- [x] Velocity points di `timeline-registry.md` (29 pts selesai)

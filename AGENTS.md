@@ -36,7 +36,7 @@ US berikutnya (2.4, 3.5, 4.5): form + server action atau route API tipis, logika
 
 ## Humanizer (prosa)
 
-Untuk `docs/`, notulensi uji, naskah skripsi: jalankan humanizer — hindari pola AI (kontras “bukan X tapi Y”, triad paksa, bold berlebihan).
+Untuk `docs/` dan notulensi uji: jalankan humanizer — hindari pola AI (kontras “bukan X tapi Y”, triad paksa, bold berlebihan). Registry agile/README: tone produk profesional.
 
 ## Backlog & pelacakan sprint
 

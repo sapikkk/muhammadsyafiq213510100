@@ -4,6 +4,15 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-09 — Keputusan PO (partial, actual start, retro S1)
+
+- **Actor:** PO sapikkk + agent  
+- **Keputusan:** partial delivery + filter `progress-partial`; issue open sampai AC lengkap; iteration **actual start** (S2 dari 2026-10-08); retro S1 + velocity 29 pts; **PR review wajib**; tasklist di template US; tone produk (bukan akademik) di registry/README/AGENTS.  
+- **Artefak:** `partial-delivery-policy.md`, `retro/sprint-01-retro.md`, timeline milestone due dates diperbarui, label `progress-partial`, #13 dilabel partial.  
+- **PR:** [#65](https://github.com/sapikkk/muhammadsyafiq213510100/pull/65)
+
+---
+
 ## 2026-10-09 — Registry Agile + sinkron GitHub
 
 - **Actor:** agent (sesi Cursor) + PO sapikkk  

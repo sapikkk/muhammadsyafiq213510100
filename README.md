@@ -1,6 +1,6 @@
 # Kokonus Farm
 
-Website tata kelola biaya produksi hidroponik untuk skripsi. Studi kasus: greenhouse rakit apung di Pekanbaru, 1.920 lubang tanam.
+Website tata kelola biaya produksi hidroponik (Kokonus Farm). Studi kasus: greenhouse rakit apung di Pekanbaru, 1.920 lubang tanam.
 
 Dokumen pengerjaan ada di `docs/`:
 

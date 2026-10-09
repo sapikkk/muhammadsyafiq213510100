@@ -54,4 +54,4 @@ Legenda status: **Done** | **Partial** | **Todo**
 
 1. US3.5 → US2.5  
 2. US3.6, US3.7  
-3. Tutup US2.3 (full AC) setelah susut
+3. US2.3 tetap **open** + `progress-partial` sampai US2.5 + override; tutup dengan catatan partial jika scope dipotong (lihat partial-delivery-policy)
