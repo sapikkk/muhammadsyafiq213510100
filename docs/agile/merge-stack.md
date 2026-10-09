@@ -2,6 +2,17 @@
 
 Panduan urutan menggabungkan rantai PR Sprint 2–3 tanpa merge “loncat” yang meninggalkan base branch.
 
+## Status (2026-10-09)
+
+| Step | PR | Hasil |
+| --- | --- | --- |
+| 1 | [#65](https://github.com/sapikkk/muhammadsyafiq213510100/pull/65) | Merged |
+| 2 | [#70](https://github.com/sapikkk/muhammadsyafiq213510100/pull/70) `feat/ui-redesign` | Merged |
+| 3 | [#64](https://github.com/sapikkk/muhammadsyafiq213510100/pull/64) | Closed (sudah termasuk di #70) |
+| 4–7 | [#66](https://github.com/sapikkk/muhammadsyafiq213510100/pull/66) → [#69](https://github.com/sapikkk/muhammadsyafiq213510100/pull/69) | Merged ke `main` |
+
+**Lanjutan:** US5.3/5.4 (pengiriman + jurnal) → branch baru dari `main`, PR terpisah.
+
 ## Diagram stack (head → base)
 
 ```
