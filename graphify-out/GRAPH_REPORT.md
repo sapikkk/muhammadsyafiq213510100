@@ -1,17 +1,17 @@
 # Graph Report - muhammadsyafiq213510100  (2026-10-09)
 
 ## Corpus Check
-- 268 files · ~80,563 words
+- 279 files · ~82,950 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 8 file(s) not represented in the graph (top: (none) 5, .example 1, .css 1)
 
 ## Summary
-- 1633 nodes · 4107 edges · 108 communities (94 shown, 14 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 93 edges (avg confidence: 0.88)
+- 1680 nodes · 4281 edges · 117 communities (102 shown, 15 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 96 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2c66ab79`
+- Built from commit: `8ca870d3`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -21,7 +21,7 @@
 - lib/infrastruktur.ts
 - foundation-panel.tsx
 - lib/varietas.ts
-- formatRupiah
+- admin/page.tsx
 - 8. Product backlog bernomor
 - pengaturan/page.tsx
 - siklus-produksi.ts
@@ -29,8 +29,8 @@
 - lib/inventaris.ts
 - Rencana Sprint & Backlog Agile — Kokonus Farm
 - Notulensi 2026-10-09 — backlog, Graphify, US4.5, US2.4
-- lib/jurnal.ts
-- lib/sales-order.ts
+- Badge
+- next
 - Notulensi pengujian US4.3
 - lib/akun.ts
 - Notulensi — 2026-10-09
@@ -38,17 +38,17 @@
 - monitor-produksi.ts
 - @prisma/client
 - lib/active-pack.ts
-- sales-order-packing.ts
+- owner-user-panel.tsx
 - Testing — Kokonus Farm
 - lib/pelanggan.ts
 - package.json
-- sales-order-delivery.ts
+- cost-breakdown.ts
 - log-kegagalan.ts
 - agile/README.md
 - 9. Alur pengguna end-to-end dan kriteria penerimaan
-- isFaseProduksi
+- listAlertStokMinimum
 - @playwright/test
-- serializeSalesOrder
+- PageHeader
 - app/layout.tsx
 - siklus-form.tsx
 - Kelompok kerja (relasi antar US)
@@ -58,7 +58,7 @@
 - 3. Bagaimana UCD bekerja di Kokonus Farm
 - Skenario narasi UCD & Agile — Kokonus Farm
 - main
-- cash-flow.ts
+- prisma.ts
 - user-story.md
 - 4. Agile: peran, artefak, irama, DoD
 - Panduan GitHub Project #1
@@ -85,16 +85,25 @@
 - sprint-04-laporan.md
 - sprint-05-qa.md
 - overrides
-- prisma.ts
-- actions/sales-order.ts
-- Badge
-- penjualan/page.tsx
-- siklus/page.tsx
+- password.ts
+- sales-order-daftar.tsx
+- admin/inventaris/page.tsx
+- formatRupiah
+- app-sidebar.tsx
 - dependencies
-- Notulensi pengujian US3.1
-- seed-akun.js
+- production/route.ts
+- Sprint 1 — Fondasi & autentikasi
+- registerPetani
+- akses-ditolak/page.tsx
+- inventory/route.ts
+- uji-blackbox.md
+- Notulensi pengujian US1.6
+- format.ts
+- susut-klasifikasi-panel.tsx
+- alert/route.ts
+- Notulensi pengujian US3.2
 - PRD Agile — Kokonus Farm
-- next
+- next-auth
 - Catatan uji blackbox Kokonus Farm
 - Dokumentasi API
 - Varietas & harga retail (kisaran)
@@ -122,18 +131,20 @@
 - prisma
 
 ## God Nodes (most connected - your core abstractions)
-1. `next` - 96 edges
-2. `next-auth` - 63 edges
-3. `Input` - 59 edges
-4. `SubmitButton()` - 56 edges
-5. `authOptions` - 54 edges
-6. `@prisma/client` - 43 edges
-7. `formatRupiah()` - 41 edges
-8. `PageHeader()` - 39 edges
-9. `prisma` - 39 edges
-10. `cn()` - 36 edges
+1. `next` - 100 edges
+2. `Input` - 66 edges
+3. `next-auth` - 65 edges
+4. `SubmitButton()` - 61 edges
+5. `authOptions` - 56 edges
+6. `PageHeader()` - 47 edges
+7. `@prisma/client` - 47 edges
+8. `formatRupiah()` - 45 edges
+9. `prisma` - 41 edges
+10. `Badge()` - 37 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `Temuan` --references--> `registerPetani()`  [INFERRED]
+  docs/uji-blackbox.md → app/actions/register.ts
 - `Acceptance criteria (PRD US2.2)` --references--> `JurnalActions()`  [INFERRED]
   docs/uji-blackbox.md → components/jurnal-actions.tsx
 - `G1 — **Journey panen → HPP → jurnal** (EPIC-2 + EPIC-3)` --references--> `calculateHPP()`  [INFERRED]
@@ -142,81 +153,79 @@
   docs/uji-blackbox.md → lib/siklus-produksi.ts
 - `Alur kerja per user story` --references--> `main()`  [INFERRED]
   docs/uji-blackbox.md → prisma/seed.js
-- `Peta branch dan PR` --references--> `main()`  [INFERRED]
-  docs/uji-blackbox.md → prisma/seed.js
 
 ## Import Cycles
 - 3-file cycle: `lib/hpp-override.ts -> lib/laporan-panen.ts -> lib/hpp.ts -> lib/hpp-override.ts`
 
-## Communities (108 total, 14 thin omitted)
+## Communities (117 total, 15 thin omitted)
 
 ### Community 0 - "laporan-panen.ts"
-Cohesion: 0.10
-Nodes (34): FormState, submitHarvestReport(), AdminHarvestPage(), dynamic, handleError(), POST(), handleError(), POST() (+26 more)
+Cohesion: 0.07
+Nodes (51): FormState, submitHarvestReport(), ClientApproval(), dynamic, HarvestDetailAdminPage(), AdminHarvestPage(), dynamic, handleError() (+43 more)
 
 ### Community 1 - "siklus/[id]/page.tsx"
-Cohesion: 0.17
-Nodes (19): dynamic, PetaniSiklusDetailPage(), labelKategori(), LogKegagalanDaftar(), Row, SiklusTimeline(), formatTanggal(), serializeLaporanRingkas() (+11 more)
+Cohesion: 0.14
+Nodes (25): dynamic, PetaniSiklusDetailPage(), labelKategori(), LogKegagalanDaftar(), Row, labelFase(), LogBaris, LogProduksiDaftar() (+17 more)
 
 ### Community 2 - "lib/infrastruktur.ts"
 Cohesion: 0.09
 Nodes (53): FormState, requireAdmin(), revalidate(), simpanGreenhouse(), simpanKolam(), simpanLahan(), toState(), ubahStatusKolam() (+45 more)
 
 ### Community 3 - "foundation-panel.tsx"
-Cohesion: 0.10
-Nodes (42): ClientApproval(), AksesDitolakPage(), Error(), NotFound(), HomePage(), PengaturanPage(), BiayaAdminPanel(), OverheadRow (+34 more)
+Cohesion: 0.14
+Nodes (34): HomePage(), BiayaAdminPanel(), OverheadRow, SiklusOpt, FoundationPanel(), people, JurnalActions(), LogoutButton() (+26 more)
 
 ### Community 4 - "lib/varietas.ts"
 Cohesion: 0.11
 Nodes (41): FormState, requireWrite(), revalidate(), simpanVarietas(), toState(), ubahStatusVarietas(), AdminVarietasPage(), dynamic (+33 more)
 
-### Community 5 - "formatRupiah"
-Cohesion: 0.06
-Nodes (71): dynamic, HarvestDetailAdminPage(), AdminPage(), dynamic, formatter, dynamic, SalesOrderInvoicePage(), GET() (+63 more)
+### Community 5 - "admin/page.tsx"
+Cohesion: 0.25
+Nodes (17): AdminPage(), dynamic, formatter, LoginPage(), defaultMonth(), dynamic, OwnerArusKasPage(), Search (+9 more)
 
 ### Community 6 - "8. Product backlog bernomor"
-Cohesion: 0.25
-Nodes (8): 8.2 Arsitektur (halaman Architecture), 8. Product backlog bernomor, EPIC-2 — Akuntansi Double-Entry & HPP, EPIC-3 — Produksi, EPIC-4 — Inventaris & infrastruktur, EPIC-5 — Penjualan & pengiriman, EPIC-6 — Dashboard, visualisasi, ekspor, Sprint 5 — QA (bukan epic fitur)
+Cohesion: 0.22
+Nodes (9): 8.2 Arsitektur (halaman Architecture), 8. Product backlog bernomor, EPIC-1 — Core Framework & Authentication, EPIC-2 — Akuntansi Double-Entry & HPP, EPIC-3 — Produksi, EPIC-4 — Inventaris & infrastruktur, EPIC-5 — Penjualan & pengiriman, EPIC-6 — Dashboard, visualisasi, ekspor (+1 more)
 
 ### Community 7 - "pengaturan/page.tsx"
-Cohesion: 0.14
-Nodes (19): dynamic, AppSidebar(), AppSidebarUsers(), getNavItems(), NavItem, `/api/petani` (US4.5, master Petani ERD), EPIC-1 — Core Framework & Authentication, roleHome (+11 more)
+Cohesion: 0.18
+Nodes (14): dynamic, roleHome, config, middleware(), redirectTo(), requiredRole(), JWT, next-auth (+6 more)
 
 ### Community 8 - "siklus-produksi.ts"
-Cohesion: 0.17
-Nodes (26): FormState, mulaiSiklusSemai(), pindahFaseSiklus(), GET(), handleError(), PUT(), GET(), handleError() (+18 more)
+Cohesion: 0.25
+Nodes (16): FormState, mulaiSiklusSemai(), pindahFaseSiklus(), buatSiklusSemai(), FASE_SEMAI, generateKodeBatch(), lanjutFase(), parseCatatan() (+8 more)
 
 ### Community 9 - "lib/biaya.ts"
 Cohesion: 0.18
 Nodes (22): assertAdmin(), simpanBiayaLangsung(), simpanOverhead(), AdminBiayaPage(), dynamic, GET(), PUT(), requireAdmin() (+14 more)
 
 ### Community 10 - "lib/inventaris.ts"
-Cohesion: 0.08
-Nodes (44): catatPergerakanAdmin(), catatPergerakanForm(), catatPergerakanPetani(), FormState, requireAdmin(), requireMovement(), simpanItemInventaris(), toState() (+36 more)
+Cohesion: 0.15
+Nodes (26): catatPergerakanAdmin(), catatPergerakanForm(), catatPergerakanPetani(), FormState, requireAdmin(), requireMovement(), simpanItemInventaris(), toState() (+18 more)
 
 ### Community 11 - "Rencana Sprint & Backlog Agile — Kokonus Farm"
 Cohesion: 0.18
 Nodes (10): 1. Status keseluruhan proyek, 2. Backlog belum selesai, 3. Kelompok kerja (relasi), 4. Eksekusi berikutnya (prioritas), 5. Testing & referensi (repo, bukan `.agents`), Rencana Sprint & Backlog Agile — Kokonus Farm, Sprint 2 (sisa), Sprint 3 (EPIC-5) (+2 more)
 
 ### Community 12 - "Notulensi 2026-10-09 — backlog, Graphify, US4.5, US2.4"
-Cohesion: 0.04
-Nodes (48): registerPetani(), translate(), Sprint 1 — checklist demo, Sprint 1 — Fondasi & autentikasi, US1.1 — Setup Next.js 14 + TS + Tailwind + shadcn, US1.2 — Schema Prisma ERD, US1.3 — PostgreSQL + migrate/seed, US1.4 — NextAuth login/logout (+40 more)
+Cohesion: 0.10
+Nodes (20): Notulensi 2026-10-09 — backlog, Graphify, US4.5, US2.4, Otomatisasi, US1.9 Kelola user (Owner), US2.3 Override HPP & plastik, US2.4 Biaya langsung & overhead, US2.5 Klasifikasi susut, US2.6 Owner COA, jurnal, prive, US3.5 Log kegagalan (+12 more)
 
-### Community 13 - "lib/jurnal.ts"
-Cohesion: 0.09
-Nodes (39): adminId(), ajukanJurnalAction(), barisDariForm(), bukanAdmin, JurnalFormState, putuskan(), setujuiJurnalAction(), simpanJurnal() (+31 more)
+### Community 13 - "Badge"
+Cohesion: 0.07
+Nodes (54): adminId(), ajukanJurnalAction(), barisDariForm(), bukanAdmin, JurnalFormState, putuskan(), setujuiJurnalAction(), simpanJurnal() (+46 more)
 
-### Community 14 - "lib/sales-order.ts"
-Cohesion: 0.15
-Nodes (21): PUT(), cancelSalesOrder(), createReversalJurnal(), parseAlasan(), SalesOrderTx, voidPendingJurnal(), createSalesOrderDraft(), Db (+13 more)
+### Community 14 - "next"
+Cohesion: 0.06
+Nodes (71): confirmSalesOrderAction(), deliverSalesOrderAction(), deliveryRoleOk(), FormState, recordPackingCostAction(), shipSalesOrderAction(), submitSalesOrder(), dynamic (+63 more)
 
 ### Community 15 - "Notulensi pengujian US4.3"
 Cohesion: 0.22
 Nodes (9): jumlah(), `/api/inventory/movement` (US4.1, log pergerakan), 8.1 Kamus data operasional (sign-off ERD), Acceptance criteria (Epic 4 / Figma low-stock), Definition of Done (PRD §10), Langkah uji blackbox: API, Langkah uji blackbox: UI, Notulensi pengujian US4.3 (+1 more)
 
 ### Community 16 - "lib/akun.ts"
-Cohesion: 0.10
-Nodes (38): AkunFormState, formToRecord(), requireAdmin(), saveAkun(), toggleAkun(), AkunPage(), dynamic, GET() (+30 more)
+Cohesion: 0.11
+Nodes (37): AkunFormState, formToRecord(), requireAdmin(), saveAkun(), toggleAkun(), AkunPage(), dynamic, GET() (+29 more)
 
 ### Community 17 - "Notulensi — 2026-10-09"
 Cohesion: 0.25
@@ -227,20 +236,20 @@ Cohesion: 0.29
 Nodes (6): Backlog & pelacakan sprint, Graphify (wajib untuk eksplorasi kode), Humanizer (prosa), Kokonus Farm — panduan agent, Ponytail (implementasi), Superpowers (proses)
 
 ### Community 19 - "monitor-produksi.ts"
-Cohesion: 0.31
-Nodes (8): FormState, submitMonitorPertumbuhan(), catatMonitorPertumbuhan(), FASE_MONITOR, kondisiMonitorOptions, MonitorError, MonitorInput, parseMonitorInput()
+Cohesion: 0.29
+Nodes (9): FormState, submitMonitorPertumbuhan(), MonitorPertumbuhanForm(), catatMonitorPertumbuhan(), FASE_MONITOR, kondisiMonitorOptions, MonitorError, MonitorInput (+1 more)
 
 ### Community 20 - "@prisma/client"
-Cohesion: 0.15
-Nodes (20): AdminInventarisPage(), dynamic, dynamic, OwnerInventarisPage(), dynamic, PetaniInventarisPage(), Row, PackAktif (+12 more)
+Cohesion: 0.18
+Nodes (18): AdminActivePackPage(), dynamic, dynamic, PetaniActivePackPage(), ActivePackDaftar(), Row, ActivePackForm(), ActivePackPakaiForm() (+10 more)
 
 ### Community 21 - "lib/active-pack.ts"
-Cohesion: 0.10
-Nodes (41): FormState, pakaiActivePackAdmin(), pakaiActivePackForm(), pakaiActivePackPetani(), requirePack(), simpanActivePack(), simpanActivePackAdmin(), simpanActivePackPetani() (+33 more)
+Cohesion: 0.11
+Nodes (36): FormState, pakaiActivePackAdmin(), pakaiActivePackForm(), pakaiActivePackPetani(), requirePack(), simpanActivePack(), simpanActivePackAdmin(), simpanActivePackPetani() (+28 more)
 
-### Community 22 - "sales-order-packing.ts"
-Cohesion: 0.33
-Nodes (7): PUT(), nol, PACKING_OK, parsePackingAmount(), recordPackingCost(), requireAkunPosting(), SalesOrderTx
+### Community 22 - "owner-user-panel.tsx"
+Cohesion: 0.22
+Nodes (15): createOwnerUser(), OwnerUserState, requireOwnerId(), resetOwnerUserPassword(), dynamic, OwnerPenggunaPage(), OwnerUserPanel(), ResetPasswordForm() (+7 more)
 
 ### Community 23 - "Testing — Kokonus Farm"
 Cohesion: 0.33
@@ -252,35 +261,35 @@ Nodes (20): FormState, submitPelanggan(), AdminPelangganPage(), dynamic, GET(), 
 
 ### Community 25 - "package.json"
 Cohesion: 0.07
-Nodes (27): description, prettier, name, private, version, autoprefixer, class-variance-authority, clsx (+19 more)
+Nodes (28): description, prettier, name, private, version, autoprefixer, class-variance-authority, clsx (+20 more)
 
-### Community 26 - "sales-order-delivery.ts"
-Cohesion: 0.26
-Nodes (10): dynamic, PetaniPengirimanPage(), cogsForBaris(), createJurnalPenjualanPending(), listSalesOrdersPengiriman(), nol, requireAkunPosting(), round2() (+2 more)
+### Community 26 - "cost-breakdown.ts"
+Cohesion: 0.17
+Nodes (14): GET(), dynamic, OwnerBiayaPage(), Search, COLORS, OwnerCostPie(), costBreakdown(), CostBreakdownError (+6 more)
 
 ### Community 27 - "log-kegagalan.ts"
-Cohesion: 0.12
-Nodes (29): FormState, submitLogKegagalan(), FormState, klasifikasiSusut(), AdminSusutPage(), dynamic, KlasifikasiBaris(), LogMenunggu (+21 more)
+Cohesion: 0.26
+Nodes (13): FormState, submitLogKegagalan(), KegagalanForm(), catatLogKegagalan(), KegagalanError, KegagalanInput, parseHariHidup(), parseKegagalanInput() (+5 more)
 
 ### Community 29 - "9. Alur pengguna end-to-end dan kriteria penerimaan"
 Cohesion: 0.08
 Nodes (25): 9. Alur pengguna end-to-end dan kriteria penerimaan, F10 — Pindah fase (HP), F11 — Catat kegagalan, F12 — Panen & harvest report, F13 — HPP & susut, F14 — Jurnal pembelian & COA, F15 — Active Pack, F16 — Movement stok (+17 more)
 
-### Community 30 - "isFaseProduksi"
-Cohesion: 0.21
-Nodes (12): labelFase(), LogBaris, LogProduksiDaftar(), waktu, PetaniTugasPanel(), prioritasVariant(), waktu, faseBerikutnya() (+4 more)
+### Community 30 - "listAlertStokMinimum"
+Cohesion: 0.16
+Nodes (18): AdminStokRendahPage(), dynamic, dynamic, OwnerStokRendahPage(), dynamic, PetaniPage(), dynamic, PetaniStokRendahPage() (+10 more)
 
-### Community 32 - "serializeSalesOrder"
-Cohesion: 0.30
-Nodes (11): PUT(), PUT(), PUT(), GET(), POST(), requireRead(), deliverSalesOrder(), parseCatatan() (+3 more)
+### Community 32 - "PageHeader"
+Cohesion: 0.18
+Nodes (13): AdminSusutPage(), dynamic, dynamic, OwnerJurnalPage(), defaultMonth(), dynamic, OwnerLaporanPage(), Search (+5 more)
 
 ### Community 33 - "app/layout.tsx"
 Cohesion: 0.38
 Nodes (4): inter, metadata, RootLayout(), Providers()
 
 ### Community 34 - "siklus-form.tsx"
-Cohesion: 0.24
-Nodes (13): SiklusAsumsiPanel(), VarietasMeta, KolamOpt, PackOpt, SiklusForm(), VarietasOpt, BIJI_PER_GRAM_KISARAN, estimasiGramBenih() (+5 more)
+Cohesion: 0.19
+Nodes (17): dynamic, PetaniSiklusPage(), SiklusAsumsiPanel(), VarietasMeta, SiklusDaftar(), KolamOpt, PackOpt, SiklusForm() (+9 more)
 
 ### Community 35 - "Kelompok kerja (relasi antar US)"
 Cohesion: 0.15
@@ -295,8 +304,8 @@ Cohesion: 0.29
 Nodes (7): 6. Sprint 1: fondasi dan siapa yang boleh masuk (minggu 1–2), Adegan F1. Login sukses, Adegan F23 (awal). Ditolak dan state jujur, Adegan F2. Login gagal, Adegan F3. Lupa sandi, Adegan F4. Register petani, Adegan F5. Logout
 
 ### Community 38 - "Notulensi pengujian US4.2"
-Cohesion: 0.22
-Nodes (9): `/api/inventory/active-pack` (US4.2), Acceptance criteria (F15 / US4.2), Definition of Done (PRD §10), Keputusan desain yang mengikat, Langkah uji blackbox: API, Langkah uji blackbox: UI, Notulensi pengujian US4.2, Temuan (+1 more)
+Cohesion: 0.33
+Nodes (6): Acceptance criteria (F15 / US4.2), Definition of Done (PRD §10), Langkah uji blackbox: API, Langkah uji blackbox: UI, Notulensi pengujian US4.2, Temuan
 
 ### Community 39 - "3. Bagaimana UCD bekerja di Kokonus Farm"
 Cohesion: 0.33
@@ -307,12 +316,12 @@ Cohesion: 0.18
 Nodes (11): 10. Sprint 5: uji UCD (minggu 9–10), 11. Dua puluh empat alur sebagai satu cerita, 12. Matriks: siapa pegang pena, 13. Out of scope, 14. Epilog, 1. Prolog: Excel yang pernah cukup, greenhouse yang tidak mau menunggu, 2. Visi, misi, dan janji skripsi, 5. Sprint 0: product backlog yang sudah bernomor (+3 more)
 
 ### Community 41 - "main"
-Cohesion: 0.36
-Nodes (7): Diagram stack (head → base), Merge stack ke `main`, PR paralel ke `main` (#46–#62), Setelah merge, Status (2026-10-09), Urutan merge ke `main` (bottom-up), main()
+Cohesion: 0.21
+Nodes (10): Diagram stack (head → base), Merge stack ke `main`, PR paralel ke `main` (#46–#62), Setelah merge, Status (2026-10-09), Urutan merge ke `main` (bottom-up), akunAnak, akunInduk (+2 more)
 
-### Community 42 - "cash-flow.ts"
-Cohesion: 0.11
-Nodes (29): GET(), GET(), GET(), GET(), buildBalanceSheet(), buildCashFlow(), CashFlowCategory, CashFlowError (+21 more)
+### Community 42 - "prisma.ts"
+Cohesion: 0.06
+Nodes (44): GET(), GET(), GET(), GET(), GET(), BalanceRow, buildBalanceSheet(), nol (+36 more)
 
 ### Community 43 - "user-story.md"
 Cohesion: 0.20
@@ -387,7 +396,7 @@ Cohesion: 0.67
 Nodes (3): 1. Visi produk, Misi, Tagline operasional
 
 ### Community 62 - "petani/route.ts"
-Cohesion: 0.18
+Cohesion: 0.19
 Nodes (21): simpanPetaniMaster(), AdminPetaniPage(), dynamic, GET(), handleError(), POST(), PUT(), requireRead() (+13 more)
 
 ### Community 64 - "Timeline sprint — registry"
@@ -395,56 +404,88 @@ Cohesion: 0.67
 Nodes (3): Milestone GitHub (repo due = target selesai), Timeline sprint — registry, Velocity & retro
 
 ### Community 66 - "Input"
-Cohesion: 0.17
-Nodes (22): changePassword(), requestPasswordReset(), changeOwnPassword(), currentUserId(), updateProfile(), GantiSandiPage(), LupaSandiPage(), AccountSettings() (+14 more)
+Cohesion: 0.19
+Nodes (18): changePassword(), requestPasswordReset(), GantiSandiPage(), LupaSandiPage(), HarvestForm(), AkunPosting, Baris, PelangganForm() (+10 more)
 
-### Community 70 - "prisma.ts"
-Cohesion: 0.13
-Nodes (14): approvePasswordReset(), ApproveState, ChangeState, rejectPasswordReset(), RequestState, requireAdmin(), Client, globalForPrisma (+6 more)
+### Community 70 - "password.ts"
+Cohesion: 0.27
+Nodes (8): approvePasswordReset(), ApproveState, ChangeState, rejectPasswordReset(), RequestState, requireAdmin(), PendingReset, ResetRequests()
 
-### Community 71 - "actions/sales-order.ts"
+### Community 71 - "sales-order-daftar.tsx"
+Cohesion: 0.39
+Nodes (8): cancelSalesOrderAction(), CancelForm(), ConfirmButton(), DeliverForm(), PackingCostForm(), SalesOrderDaftar(), ShipForm(), SoRow
+
+### Community 72 - "admin/inventaris/page.tsx"
+Cohesion: 0.30
+Nodes (12): AdminInventarisPage(), dynamic, dynamic, OwnerInventarisPage(), dynamic, PetaniInventarisPage(), InventarisDaftar(), InventarisItemForm() (+4 more)
+
+### Community 73 - "formatRupiah"
 Cohesion: 0.25
-Nodes (15): cancelSalesOrderAction(), confirmSalesOrderAction(), deliverSalesOrderAction(), deliveryRoleOk(), FormState, recordPackingCostAction(), shipSalesOrderAction(), CancelForm() (+7 more)
+Nodes (12): GET(), dynamic, OwnerPage(), OwnerRevenueChart(), formatRupiah(), bestProfitMonth, labelFromKey(), monthKeyFromDate() (+4 more)
 
-### Community 72 - "Badge"
-Cohesion: 0.20
-Nodes (12): dynamic, JurnalDetailPage(), waktu, dynamic, JurnalPage(), Row, Badge(), BadgeProps (+4 more)
-
-### Community 73 - "penjualan/page.tsx"
-Cohesion: 0.24
-Nodes (9): submitSalesOrder(), AdminPenjualanPage(), dynamic, Line, SalesOrderForm(), onSiklusChange(), updateLine(), SiklusOpt (+1 more)
-
-### Community 74 - "siklus/page.tsx"
-Cohesion: 0.43
-Nodes (5): dynamic, PetaniSiklusPage(), SiklusBaris, SiklusDaftar(), keTanggalIso()
+### Community 74 - "app-sidebar.tsx"
+Cohesion: 0.25
+Nodes (9): AdminLayout(), OwnerLayout(), PetaniLayout(), AppSidebar(), AppSidebarUsers(), getNavItems(), NavItem, RoleHome() (+1 more)
 
 ### Community 75 - "dependencies"
 Cohesion: 0.11
 Nodes (18): dependencies, bcryptjs, class-variance-authority, clsx, jspdf, lucide-react, next, next-auth (+10 more)
 
-### Community 76 - "Notulensi pengujian US3.1"
-Cohesion: 0.40
-Nodes (5): Acceptance criteria (PRD US3.1 / F9), Definition of Done (PRD §10), Langkah uji blackbox, Notulensi pengujian US3.1, Temuan
+### Community 76 - "production/route.ts"
+Cohesion: 0.36
+Nodes (10): GET(), handleError(), PUT(), GET(), handleError(), POST(), requireRead(), getSiklusProduksi() (+2 more)
 
-### Community 77 - "seed-akun.js"
+### Community 77 - "Sprint 1 — Fondasi & autentikasi"
+Cohesion: 0.20
+Nodes (10): Sprint 1 — checklist demo, Sprint 1 — Fondasi & autentikasi, US1.1 — Setup Next.js 14 + TS + Tailwind + shadcn, US1.2 — Schema Prisma ERD, US1.3 — PostgreSQL + migrate/seed, US1.4 — NextAuth login/logout, US1.5 — Lupa sandi via Admin, US1.7 — Settings profil & matrix peran (+2 more)
+
+### Community 78 - "registerPetani"
+Cohesion: 0.22
+Nodes (9): registerPetani(), translate(), US1.6 — Register petani (User login), Analisis, Bukti dari log dev server, FINDING-01: Database Prisma Postgres lambat dan pool timeout, Gejala, Mitigasi yang sudah dilakukan (+1 more)
+
+### Community 79 - "akses-ditolak/page.tsx"
+Cohesion: 0.46
+Nodes (4): AksesDitolakPage(), Error(), NotFound(), StateScreen()
+
+### Community 80 - "inventory/route.ts"
+Cohesion: 0.67
+Nodes (5): GET(), handleError(), POST(), requireRole(), serializeItem()
+
+### Community 81 - "uji-blackbox.md"
+Cohesion: 0.33
+Nodes (5): FINDING-02: Dev server stale — `/api/auth/session` 404 dan CSS preload 404, Findings lintas US, Gejala, Mitigasi, Penyebab
+
+### Community 82 - "Notulensi pengujian US1.6"
+Cohesion: 0.33
+Nodes (6): Acceptance criteria, Definition of Done, Keputusan desain yang mengikat, Langkah uji blackbox, Notulensi pengujian US1.6, Temuan
+
+### Community 83 - "format.ts"
+Cohesion: 0.40
+Nodes (4): qty, rupiah, tanggalIso, tanggalPanjang
+
+### Community 84 - "susut-klasifikasi-panel.tsx"
+Cohesion: 0.67
+Nodes (3): klasifikasiSusut(), KlasifikasiBaris(), LogMenunggu
+
+### Community 86 - "Notulensi pengujian US3.2"
 Cohesion: 0.50
-Nodes (3): akunAnak, akunInduk, seedAkun()
+Nodes (4): Acceptance criteria (F10 / US3.2), Langkah uji blackbox (API), Notulensi pengujian US3.2, Temuan
 
 ### Community 93 - "PRD Agile — Kokonus Farm"
 Cohesion: 0.15
 Nodes (13): 11. API (kerangka, target sprint), 12. Matriks RBAC (kerangka, nama peran Kokonus), 13. Risiko (dari register kerangka, konteks Kokonus), 14. Uji kesiapan (Sprint 5), 15. Glosarium singkat, 16. Out of scope / later (ulang operasional), 17. Cara pakai backlog, 2. Tujuan (+5 more)
 
-### Community 94 - "next"
-Cohesion: 0.23
-Nodes (10): PasswordState, ProfileState, RegisterState, handler, GET(), authOptions, serializeAlertStok(), bcryptjs (+2 more)
+### Community 94 - "next-auth"
+Cohesion: 0.20
+Nodes (13): changeOwnPassword(), currentUserId(), PasswordState, ProfileState, updateProfile(), RegisterState, FormState, handler (+5 more)
 
 ### Community 95 - "Catatan uji blackbox Kokonus Farm"
-Cohesion: 0.15
-Nodes (13): Acceptance criteria (F10 / US3.2), Acceptance criteria (F7 / PRD), Akun demo, Alur kerja per user story, Cara membaca, Catatan uji blackbox Kokonus Farm, Langkah uji blackbox: API, Langkah uji blackbox (API) (+5 more)
+Cohesion: 0.14
+Nodes (14): Acceptance criteria (F7 / PRD), Acceptance criteria (PRD US3.1 / F9), Akun demo, Alur kerja per user story, Cara membaca, Catatan uji blackbox Kokonus Farm, Definition of Done (PRD §10), Langkah uji blackbox (+6 more)
 
 ### Community 115 - "Dokumentasi API"
-Cohesion: 0.17
-Nodes (12): `/api/accounts` (US2.1, bagan akun), `/api/biaya/langsung` · `/api/biaya/overhead` (US2.4), `/api/harvest` (US3.3, laporan panen), `/api/infrastructure/lahan` · `/greenhouse` · `/kolam`, `/api/infrastructure` (US4.4, pohon lahan → greenhouse → kolam), `/api/inventory/alert` (US4.3, stok di bawah minimum), `/api/inventory` (US4.1, stok bahan), `/api/production/[id]/phase` (US3.2, pindah fase) (+4 more)
+Cohesion: 0.15
+Nodes (13): `/api/accounts` (US2.1, bagan akun), `/api/biaya/langsung` · `/api/biaya/overhead` (US2.4), `/api/harvest` (US3.3, laporan panen), `/api/infrastructure/lahan` · `/greenhouse` · `/kolam`, `/api/infrastructure` (US4.4, pohon lahan → greenhouse → kolam), `/api/inventory/alert` (US4.3, stok di bawah minimum), `/api/inventory` (US4.1, stok bahan), `/api/petani` (US4.5, master Petani ERD) (+5 more)
 
 ### Community 134 - "Varietas & harga retail (kisaran)"
 Cohesion: 0.22
@@ -455,8 +496,8 @@ Cohesion: 0.18
 Nodes (11): scripts, build, dev, dev:clean, format, format:check, lint, start (+3 more)
 
 ### Community 137 - "CHANGELOG.md"
-Cohesion: 0.10
-Nodes (20): 1.0.0 (2026-10-07), [1.1.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.0.0...v1.1.0) (2026-10-07), [1.2.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.1.0...v1.2.0) (2026-10-07), [1.3.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.2.0...v1.3.0) (2026-10-09), [1.4.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.3.0...v1.4.0) (2026-10-09), [1.5.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.4.0...v1.5.0) (2026-10-09), [1.6.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.5.0...v1.6.0) (2026-10-09), [1.7.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.6.0...v1.7.0) (2026-10-09) (+12 more)
+Cohesion: 0.09
+Nodes (22): 1.0.0 (2026-10-07), [1.1.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.0.0...v1.1.0) (2026-10-07), [1.2.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.1.0...v1.2.0) (2026-10-07), [1.3.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.2.0...v1.3.0) (2026-10-09), [1.4.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.3.0...v1.4.0) (2026-10-09), [1.5.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.4.0...v1.5.0) (2026-10-09), [1.6.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.5.0...v1.6.0) (2026-10-09), [1.7.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.6.0...v1.7.0) (2026-10-09) (+14 more)
 
 ### Community 149 - "Konteks proyek — KOKONUS FARM"
 Cohesion: 0.25
@@ -528,23 +569,23 @@ Nodes (3): repository, type, url
 
 ## Knowledge Gaps
 - **18 isolated node(s):** `next/core-web-vitals`, `prettier`, `@semantic-release/changelog`, `@semantic-release/git`, `@types/bcryptjs` (+13 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 663 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 676 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **15 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `next` connect `next` to `laporan-panen.ts`, `siklus/[id]/page.tsx`, `lib/infrastruktur.ts`, `foundation-panel.tsx`, `lib/varietas.ts`, `formatRupiah`, `pengaturan/page.tsx`, `siklus-produksi.ts`, `lib/biaya.ts`, `lib/inventaris.ts`, `lib/jurnal.ts`, `lib/sales-order.ts`, `lib/akun.ts`, `monitor-produksi.ts`, `@prisma/client`, `lib/active-pack.ts`, `sales-order-packing.ts`, `lib/pelanggan.ts`, `package.json`, `log-kegagalan.ts`, `isFaseProduksi`, `serializeSalesOrder`, `app/layout.tsx`, `cash-flow.ts`, `petani/route.ts`, `Input`, `prisma.ts`, `actions/sales-order.ts`, `Badge`, `siklus/page.tsx`?**
-  _High betweenness centrality (0.167) - this node is a cross-community bridge._
+- **Why does `next` connect `next` to `laporan-panen.ts`, `siklus/[id]/page.tsx`, `lib/infrastruktur.ts`, `foundation-panel.tsx`, `lib/varietas.ts`, `admin/page.tsx`, `pengaturan/page.tsx`, `siklus-produksi.ts`, `lib/biaya.ts`, `lib/inventaris.ts`, `Badge`, `lib/akun.ts`, `monitor-produksi.ts`, `@prisma/client`, `lib/active-pack.ts`, `owner-user-panel.tsx`, `lib/pelanggan.ts`, `package.json`, `cost-breakdown.ts`, `log-kegagalan.ts`, `listAlertStokMinimum`, `PageHeader`, `app/layout.tsx`, `prisma.ts`, `petani/route.ts`, `Input`, `password.ts`, `sales-order-daftar.tsx`, `admin/inventaris/page.tsx`, `formatRupiah`, `app-sidebar.tsx`, `production/route.ts`, `akses-ditolak/page.tsx`, `inventory/route.ts`, `alert/route.ts`, `next-auth`?**
+  _High betweenness centrality (0.170) - this node is a cross-community bridge._
 - **What connects `next/core-web-vitals`, `prettier`, `@semantic-release/changelog` to the rest of the system?**
   _18 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `laporan-panen.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.10409745293466224 - nodes in this community are weakly interconnected._
-- **Why does `@prisma/client` connect `@prisma/client` to `laporan-panen.ts`, `lib/infrastruktur.ts`, `lib/varietas.ts`, `formatRupiah`, `siklus-produksi.ts`, `lib/biaya.ts`, `lib/inventaris.ts`, `lib/jurnal.ts`, `lib/sales-order.ts`, `lib/akun.ts`, `lib/active-pack.ts`, `sales-order-packing.ts`, `lib/pelanggan.ts`, `package.json`, `sales-order-delivery.ts`, `log-kegagalan.ts`, `siklus-form.tsx`, `seed.js`, `cash-flow.ts`, `petani/route.ts`, `prisma.ts`, `Badge`, `next`?**
-  _High betweenness centrality (0.125) - this node is a cross-community bridge._
+  _Cohesion score 0.0673076923076923 - nodes in this community are weakly interconnected._
+- **Why does `calculateHPP()` connect `laporan-panen.ts` to `Kelompok kerja (relasi antar US)`, `notes.md`?**
+  _High betweenness centrality (0.135) - this node is a cross-community bridge._
+- **Should `siklus/[id]/page.tsx` be split into smaller, more focused modules?**
+  _Cohesion score 0.1350806451612903 - nodes in this community are weakly interconnected._
+- **Why does `@prisma/client` connect `@prisma/client` to `laporan-panen.ts`, `lib/infrastruktur.ts`, `lib/varietas.ts`, `admin/page.tsx`, `siklus-produksi.ts`, `lib/biaya.ts`, `lib/inventaris.ts`, `Badge`, `next`, `lib/akun.ts`, `lib/active-pack.ts`, `owner-user-panel.tsx`, `lib/pelanggan.ts`, `package.json`, `cost-breakdown.ts`, `log-kegagalan.ts`, `listAlertStokMinimum`, `PageHeader`, `siklus-form.tsx`, `seed.js`, `prisma.ts`, `petani/route.ts`, `admin/inventaris/page.tsx`, `formatRupiah`, `next-auth`?**
+  _High betweenness centrality (0.109) - this node is a cross-community bridge._
 - **Should `lib/infrastruktur.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.09176587301587301 - nodes in this community are weakly interconnected._
-- **Why does `calculateHPP()` connect `formatRupiah` to `laporan-panen.ts`, `Kelompok kerja (relasi antar US)`, `notes.md`?**
-  _High betweenness centrality (0.113) - this node is a cross-community bridge._
-- **Should `foundation-panel.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.10445468509984639 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09086538461538461 - nodes in this community are weakly interconnected._
