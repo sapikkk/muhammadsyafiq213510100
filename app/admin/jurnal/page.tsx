@@ -1,16 +1,14 @@
-import { Prisma } from "@prisma/client";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
+import { JurnalDaftar } from "@/components/jurnal-daftar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { formatRupiah, formatTanggal } from "@/lib/format";
-import { listJurnal, type FilterJurnal } from "@/lib/jurnal";
+import { listJurnal, serializeJurnalListRow, type FilterJurnal } from "@/lib/jurnal";
 import { statusJurnalLabel, statusJurnalList } from "@/lib/jurnal-status";
 
 export const dynamic = "force-dynamic";
 
 const selectClass =
-  "flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm";
+  "flex h-11 w-full border border-input bg-background px-3 py-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground";
 
 export default async function JurnalPage({
   searchParams,
@@ -19,6 +17,7 @@ export default async function JurnalPage({
 }) {
   const rows = await listJurnal(searchParams);
   const adaFilter = Boolean(searchParams.status || searchParams.dari || searchParams.sampai);
+  const serialized = rows.map(serializeJurnalListRow);
 
   return (
     <div className="flex flex-col gap-8">
@@ -32,7 +31,7 @@ export default async function JurnalPage({
         </div>
         <Link
           href="/admin/jurnal/baru"
-          className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          className="inline-flex h-11 items-center justify-center border border-foreground bg-foreground px-4 text-sm font-medium text-background"
         >
           Jurnal baru
         </Link>
@@ -41,7 +40,7 @@ export default async function JurnalPage({
       <form
         method="get"
         aria-label="Filter jurnal"
-        className="grid gap-3 rounded-md border p-4 sm:grid-cols-[1fr_1fr_1fr_auto] sm:items-end"
+        className="grid gap-3 border p-4 sm:grid-cols-[1fr_1fr_1fr_auto] sm:items-end"
       >
         <label className="block space-y-1.5 text-sm">
           <span className="font-medium">Dari tanggal</span>
@@ -70,14 +69,14 @@ export default async function JurnalPage({
             href={`/api/export/journal?${new URLSearchParams(
               Object.entries(searchParams).filter(([, v]) => v) as [string, string][],
             ).toString()}`}
-            className="inline-flex h-11 items-center rounded-md border px-3 text-sm hover:bg-accent"
+            className="inline-flex h-11 items-center border px-3 text-sm hover:bg-accent"
           >
             Ekspor xlsx
           </a>
           {adaFilter ? (
             <Link
               href="/admin/jurnal"
-              className="inline-flex h-11 items-center rounded-md px-3 text-sm hover:bg-accent"
+              className="inline-flex h-11 items-center px-3 text-sm hover:bg-accent"
             >
               Hapus filter
             </Link>
@@ -90,41 +89,13 @@ export default async function JurnalPage({
           {`${rows.length} jurnal${adaFilter ? " sesuai filter" : ""}`}
         </h2>
         {rows.length === 0 ? (
-          <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
+          <p className="border border-dashed p-4 text-sm text-muted-foreground">
             {adaFilter
               ? "Tidak ada jurnal yang cocok dengan filter ini."
               : "Belum ada jurnal. Buat jurnal pertama lewat tombol Jurnal baru."}
           </p>
         ) : (
-          <ul className="divide-y rounded-md border">
-            {rows.map((j) => {
-              const total = j.baris.reduce(
-                (sum, b) => sum.add(b.debit),
-                new Prisma.Decimal(0),
-              );
-              return (
-                <li key={j.id}>
-                  <Link
-                    href={`/admin/jurnal/${j.id}`}
-                    className="flex flex-col gap-1 p-4 hover:bg-accent sm:flex-row sm:items-center sm:justify-between"
-                  >
-                    <div className="space-y-1">
-                      <p className="font-medium">{j.keterangan}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {`${formatTanggal(j.tanggal)} · ${j.dibuatOleh.nama} · ${j.baris.length} baris`}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm tabular-nums">{formatRupiah(total)}</span>
-                      <Badge variant={j.status === "APPROVED" ? "default" : j.status === "REJECTED" ? "outline" : "secondary"}>
-                        {statusJurnalLabel[j.status]}
-                      </Badge>
-                    </div>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+          <JurnalDaftar rows={serialized} detailPrefix="/admin/jurnal" />
         )}
       </section>
 

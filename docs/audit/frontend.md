@@ -16,6 +16,9 @@ Append-only. Agent menambah baris per sesi.
 | Low | Forms | jurnal/akun/pengaturan/inventaris | Tanpa toast | **Partial:** `useActionToast` |
 | Low | Inventaris/varietas | `*-daftar` | List `<ul>` + Decimal ke client | **Fixed:** `DataTable` + `serializeItem` |
 | Low | Mobile nav | `app-sidebar` | Drawer tidak tutup setelah klik | **Fixed:** `onNavigate` |
+| Medium | `/admin/jurnal`, `/owner/jurnal` | `jurnal-daftar` | List link `<ul>` | **Fixed:** `DataTable` + URL `?q=` |
+| Low | `/` | `app/page.tsx` | User login masih landing | **Fixed:** redirect ke dashboard |
+| Low | `/admin/petani` | `petani-master-daftar` | Table statis | **Fixed:** `DataTable` + search |
 | Low | Many lists | various | `Card` untuk KPI/detail | **Partial** — bukan listing CRUD |
 
 ## Responsif (belum diuji sistematis)
