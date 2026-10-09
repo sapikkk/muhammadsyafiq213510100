@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { HarvestForm } from "@/components/harvest-form";
+import { KegagalanForm } from "@/components/kegagalan-form";
+import { LogKegagalanDaftar } from "@/components/log-kegagalan-daftar";
 import { LogProduksiDaftar } from "@/components/log-produksi-daftar";
 import { PageHeader } from "@/components/page-header";
 import { PindahFaseForm } from "@/components/pindah-fase-form";
@@ -13,6 +15,7 @@ import {
   isFaseProduksi,
   type FaseProduksi,
 } from "@/lib/siklus-fase";
+import { listLogKegagalan, serializeLogKegagalan } from "@/lib/log-kegagalan";
 import {
   getSiklusProduksi,
   listLogProduksi,
@@ -31,7 +34,8 @@ export default async function PetaniSiklusDetailPage({
   const siklus = await getSiklusProduksi(id);
   if (!siklus) notFound();
 
-  const logs = await listLogProduksi(id);
+  const [logs, kegagalan] = await Promise.all([listLogProduksi(id), listLogKegagalan(id)]);
+  const kegagalanRows = kegagalan.map(serializeLogKegagalan);
   const status = siklus.status;
   const faseAktif = isFaseProduksi(status) ? status : null;
   const berikut = faseAktif ? faseBerikutnya(faseAktif) : null;
@@ -61,6 +65,19 @@ export default async function PetaniSiklusDetailPage({
         <h2 className="text-lg font-semibold">Log fase</h2>
         <LogProduksiDaftar rows={logs} />
       </section>
+
+      <section className="space-y-3">
+        <h2 className="text-lg font-semibold">Log kegagalan</h2>
+        <LogKegagalanDaftar rows={kegagalanRows} />
+      </section>
+
+      {status !== "SELESAI" && (!laporan || laporan.status !== "APPROVED") ? (
+        <KegagalanForm
+          siklusId={id}
+          jumlahDisemai={siklus.jumlah_disemai}
+          totalSusut={siklus.total_susut}
+        />
+      ) : null}
 
       {faseAktif && berikut ? (
         <PindahFaseForm

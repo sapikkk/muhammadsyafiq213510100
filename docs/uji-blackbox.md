@@ -905,6 +905,22 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | Post overhead periode | Admin | Muncul di daftar overhead |
 | Approve panen batch tersebut | Admin | HPP `overhead_teralokasi` > 0 jika overhead ada |
 
+### US3.5 Log kegagalan
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| Buka `/petani/siklus/[id]` batch aktif | Petani | Form **Catat kegagalan** tampil |
+| Isi tahap, jumlah gagal, penyebab | Petani | Log muncul di daftar; `total_susut` batch naik |
+| Melebihi jumlah disemai | Petani | Pesan error validasi |
+
+### US2.5 Klasifikasi susut
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| Buka `/admin/susut` | Admin | Log status **Menunggu** dari petani |
+| Pilih Normal / Abnormal | Admin | `kategori_susut` terisi; estimasi biaya kerugian |
+| Approve panen setelah abnormal diklasifikasi | Admin | HPP tidak membengkak (biaya abnormal dikurangi dari total HPP) |
+
 ### Otomatisasi
 
 ```bash

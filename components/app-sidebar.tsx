@@ -53,6 +53,7 @@ function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
       { label: "Varietas", href: "/admin/varietas", icon: LeafyGreen },
       { label: "Master petani", href: "/admin/petani", icon: Users },
       { label: "Biaya & overhead", href: "/admin/biaya", icon: Receipt },
+      { label: "Klasifikasi susut", href: "/admin/susut", icon: Layers },
       { label: "Laporan panen", href: "/admin/harvest", icon: ClipboardList },
       alertItem,
     ];
