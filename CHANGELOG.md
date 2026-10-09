@@ -1,3 +1,11 @@
+# [1.6.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.5.0...v1.6.0) (2026-10-09)
+
+
+### Features
+
+* **owner:** US6.1 KPI dan grafik pendapatan vs beban ([84424d4](https://github.com/sapikkk/muhammadsyafiq213510100/commit/84424d4af0ce44face45d99be154ea265146e2ff))
+* **owner:** US6.1 KPI dashboard ([#73](https://github.com/sapikkk/muhammadsyafiq213510100/issues/73)) ([f6d89c2](https://github.com/sapikkk/muhammadsyafiq213510100/commit/f6d89c24589aa0b7d09fa8b0888809d7be733625))
+
 # [1.5.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.4.0...v1.5.0) (2026-10-09)
 
 
