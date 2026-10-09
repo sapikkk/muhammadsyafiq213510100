@@ -1,6 +1,9 @@
 import { Prisma } from "@prisma/client";
 import { keTanggalIso } from "@/lib/format";
+import { applyHppOverride, parseHppOverride } from "@/lib/hpp-override";
+import { calculateHPP, yieldContextFromSiklus } from "@/lib/hpp";
 import { prisma } from "@/lib/prisma";
+import { totalBiayaAbnormalSiklus } from "@/lib/susut";
 
 export class HarvestError extends Error {
   constructor(
@@ -173,18 +176,26 @@ export function serializeLaporanRingkas(
     waktu_kirim: keTanggalIso(row.waktu_kirim),
   };
 }
-import { calculateHPP } from "./hpp";
-
 export async function getLaporanBySiklus(siklusId: number) {
   return prisma.laporan_Panen.findUnique({ where: { siklus_id: siklusId } });
 }
 
-export async function approveLaporanPanen(id: number, userId: number) {
+export async function approveLaporanPanen(
+  id: number,
+  userId: number,
+  rawBody: Record<string, unknown> = {},
+) {
+  const overrideInput = parseHppOverride(rawBody);
+
   return prisma.$transaction(
     async (tx) => {
       const laporan = await tx.laporan_Panen.findUnique({
         where: { id },
-        include: { siklus: true },
+        include: {
+          siklus: {
+            include: { varietas: { select: { berat_per_pack: true } } },
+          },
+        },
       });
 
       if (!laporan) throw new HarvestError("Laporan tidak ditemukan.", 404);
@@ -204,29 +215,31 @@ export async function approveLaporanPanen(id: number, userId: number) {
         data: { status: "SELESAI", tanggal_panen: new Date() },
       });
 
-      // Hitung dan simpan HPP
-      const hppCalc = await calculateHPP(laporan.siklus_id, tx as typeof prisma);
+      let hppCalc = await calculateHPP(laporan.siklus_id, tx as typeof prisma);
+      if (overrideInput) {
+        const yieldCtx = yieldContextFromSiklus(
+          laporan,
+          laporan.siklus.varietas.berat_per_pack,
+        );
+        hppCalc = applyHppOverride(hppCalc, yieldCtx, overrideInput);
+      }
+
+      const hppData = {
+        biaya_langsung_total: hppCalc.biaya_langsung_total,
+        overhead_teralokasi: hppCalc.overhead_teralokasi,
+        biaya_plastik_packing: hppCalc.biaya_plastik_packing,
+        total_biaya: hppCalc.total_biaya,
+        hpp_per_lubang: hppCalc.hpp_per_lubang,
+        hpp_per_kg: hppCalc.hpp_per_kg,
+        hpp_per_pack: hppCalc.hpp_per_pack,
+        is_override: Boolean(overrideInput),
+        override_justifikasi: overrideInput?.justifikasi ?? null,
+      };
+
       await tx.hPP.upsert({
         where: { siklus_id: laporan.siklus_id },
-        create: {
-          siklus_id: laporan.siklus_id,
-          biaya_langsung_total: hppCalc.biaya_langsung_total,
-          overhead_teralokasi: hppCalc.overhead_teralokasi,
-          biaya_plastik_packing: hppCalc.biaya_plastik_packing,
-          total_biaya: hppCalc.total_biaya,
-          hpp_per_lubang: hppCalc.hpp_per_lubang,
-          hpp_per_kg: hppCalc.hpp_per_kg,
-          hpp_per_pack: hppCalc.hpp_per_pack,
-        },
-        update: {
-          biaya_langsung_total: hppCalc.biaya_langsung_total,
-          overhead_teralokasi: hppCalc.overhead_teralokasi,
-          biaya_plastik_packing: hppCalc.biaya_plastik_packing,
-          total_biaya: hppCalc.total_biaya,
-          hpp_per_lubang: hppCalc.hpp_per_lubang,
-          hpp_per_kg: hppCalc.hpp_per_kg,
-          hpp_per_pack: hppCalc.hpp_per_pack,
-        }
+        create: { siklus_id: laporan.siklus_id, ...hppData },
+        update: hppData,
       });
 
       // Jurnal Otomatis Persediaan
@@ -262,6 +275,38 @@ export async function approveLaporanPanen(id: number, userId: number) {
           where: { id: akunHPP.id },
           data: { saldo: { decrement: hppCalc.total_biaya } }
         });
+      }
+
+      const biayaAbnormal = await totalBiayaAbnormalSiklus(laporan.siklus_id, tx as typeof prisma);
+      if (biayaAbnormal.gt(0)) {
+        const akunKerugian = await tx.akun.findUnique({ where: { kode: "5300" } });
+        const akunPersediaanAb = await tx.akun.findUnique({ where: { kode: "1350" } });
+        if (akunKerugian && akunPersediaanAb) {
+          await tx.jurnal.create({
+            data: {
+              tanggal: new Date(),
+              keterangan: `Susut abnormal batch ${laporan.siklus.kode_batch}`,
+              status: "APPROVED",
+              dibuatOlehId: userId,
+              diputusOlehId: userId,
+              diputusPada: new Date(),
+              baris: {
+                create: [
+                  { akunId: akunKerugian.id, debit: biayaAbnormal, kredit: 0 },
+                  { akunId: akunPersediaanAb.id, debit: 0, kredit: biayaAbnormal },
+                ],
+              },
+            },
+          });
+          await tx.akun.update({
+            where: { id: akunKerugian.id },
+            data: { saldo: { increment: biayaAbnormal } },
+          });
+          await tx.akun.update({
+            where: { id: akunPersediaanAb.id },
+            data: { saldo: { decrement: biayaAbnormal } },
+          });
+        }
       }
 
       return updatedLaporan;
