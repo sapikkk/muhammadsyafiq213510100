@@ -928,6 +928,15 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | Buka `/petani` | Petani | Daftar **Tugas hari ini** + **Histori aktivitas** |
 | Klik tugas batch | Petani | Navigasi ke `/petani/siklus/[id]` |
 
+### US2.3 Override HPP & plastik
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| Review `/admin/harvest/[id]` PENDING | Admin | Breakdown termasuk **plastik packing** & susut abnormal |
+| Approve tanpa override | Admin | HPP tersimpan; jurnal 1350/5100 |
+| Centang Override + justifikasi + nilai HPP/kg | Admin | `HPP.is_override` true; jurnal pakai total override |
+| Batch dengan susut abnormal diklasifikasi | Admin | Jurnal tambahan akun **5300** saat approve |
+
 ### US2.5 Klasifikasi susut
 
 | Langkah | Peran | Hasil diharapkan |

@@ -157,6 +157,8 @@ model HPP {
   hpp_per_lubang        Decimal         @db.Decimal(18, 2)
   hpp_per_kg            Decimal         @db.Decimal(18, 2)
   hpp_per_pack          Decimal         @db.Decimal(18, 2)
+  is_override           Boolean         @default(false)
+  override_justifikasi  String?         @db.Text
 }
 
 model Penjualan {
