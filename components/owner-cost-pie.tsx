@@ -6,13 +6,13 @@ import type { CostSlice } from "@/lib/cost-breakdown";
 import { formatRupiah } from "@/lib/format";
 
 const COLORS = [
-  "hsl(var(--primary))",
-  "hsl(142 76% 36%)",
-  "hsl(38 92% 50%)",
-  "hsl(280 65% 60%)",
-  "hsl(0 72% 51%)",
-  "hsl(199 89% 48%)",
-  "hsl(215 16% 47%)",
+  "hsl(0 0% 9%)",
+  "hsl(0 0% 25%)",
+  "hsl(0 0% 40%)",
+  "hsl(0 0% 55%)",
+  "hsl(0 0% 70%)",
+  "hsl(0 0% 85%)",
+  "hsl(0 0% 92%)",
 ];
 
 export function OwnerCostPie({

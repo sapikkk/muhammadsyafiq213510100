@@ -4,7 +4,6 @@ import { AccountSettings } from "@/components/account-settings";
 import { RoleMatrix } from "@/components/role-matrix";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { roleHome } from "@/lib/role-home";
 import { roleLabel, type Role } from "@/types/role";
 
 export const dynamic = "force-dynamic";
@@ -29,15 +28,9 @@ export default async function PengaturanPage() {
       : 0;
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col gap-8 px-4 py-10">
+    <div className="mx-auto flex w-full max-w-lg flex-col gap-8">
       <header className="space-y-2">
-        <Link
-          href={roleHome[role]}
-          className="text-sm text-primary underline-offset-4 hover:underline"
-        >
-          Kembali ke halaman Anda
-        </Link>
-        <h1 className="text-3xl font-semibold tracking-tight">Pengaturan</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Pengaturan</h1>
         <p className="text-muted-foreground">
           {`${nama} · ${roleLabel[role]}`}
         </p>
@@ -63,6 +56,6 @@ export default async function PengaturanPage() {
 
       <AccountSettings nama={nama} />
       <RoleMatrix />
-    </main>
+    </div>
   );
 }

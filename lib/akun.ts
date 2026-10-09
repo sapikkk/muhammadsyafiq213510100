@@ -1,5 +1,5 @@
 import { Prisma, type Akun, type TipeAkun } from "@prisma/client";
-import { tipeAkunLabel, tipeAkunList } from "@/lib/akun-tipe";
+import { tipeAkunLabel, tipeAkunList, type TipeAkunKey } from "@/lib/akun-tipe";
 import { prisma } from "@/lib/prisma";
 
 export class AkunError extends Error {
@@ -115,6 +115,7 @@ export async function setAkunAktif(id: number, aktif: boolean): Promise<Akun> {
 
 export type AkunNode = Akun & { anak: AkunNode[] };
 
+/** Tree for server-only use (may contain Prisma Decimal on saldo). */
 export function buildTree(rows: Akun[]): AkunNode[] {
   const nodes = new Map<number, AkunNode>(
     rows.map((row) => [row.id, { ...row, anak: [] }]),
@@ -125,6 +126,55 @@ export function buildTree(rows: Akun[]): AkunNode[] {
     (parent ? parent.anak : roots).push(node);
   }
   return roots;
+}
+
+/** Serializable tree for client components (AkunTree). */
+export type AkunClientNode = {
+  id: number;
+  kode: string;
+  nama: string;
+  tipe: TipeAkunKey;
+  aktif: boolean;
+  anak: AkunClientNode[];
+};
+
+export function buildClientTree(rows: Akun[]): AkunClientNode[] {
+  const nodes = new Map<number, AkunClientNode>(
+    rows.map((row) => [
+      row.id,
+      {
+        id: row.id,
+        kode: row.kode,
+        nama: row.nama,
+        tipe: row.tipe as TipeAkunKey,
+        aktif: row.aktif,
+        anak: [],
+      },
+    ]),
+  );
+  const roots: AkunClientNode[] = [];
+  for (const row of rows) {
+    const node = nodes.get(row.id)!;
+    const parent = row.parentId ? nodes.get(row.parentId) : undefined;
+    (parent ? parent.anak : roots).push(node);
+  }
+  return roots;
+}
+
+export function toAkunEdit(row: Akun): {
+  id: number;
+  kode: string;
+  nama: string;
+  tipe: string;
+  parentId: number | null;
+} {
+  return {
+    id: row.id,
+    kode: row.kode,
+    nama: row.nama,
+    tipe: row.tipe,
+    parentId: row.parentId,
+  };
 }
 
 export function listAkun() {

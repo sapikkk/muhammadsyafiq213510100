@@ -10,3 +10,5 @@ Master prompt execution log. Start with `00-inventory.md` and `01-baseline.md`.
 | 7 | `SUMMARY.md` |
 
 Branch: `chore/global-audit-bw-refactor`.
+
+**Agent:** baca [`AGENT-RUNBOOK.md`](AGENT-RUNBOOK.md) sebelum setiap sesi.
