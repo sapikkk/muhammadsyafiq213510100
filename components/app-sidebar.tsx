@@ -18,6 +18,7 @@ import {
   FileDown,
   PieChart,
   LineChart,
+  Wallet,
   Receipt,
   Settings,
   Truck,
@@ -71,6 +72,7 @@ function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
       { label: "Dashboard", href: "/owner", icon: LayoutDashboard },
       { label: "Breakdown biaya", href: "/owner/biaya", icon: PieChart },
       { label: "Evaluasi margin", href: "/owner/evaluasi", icon: LineChart },
+      { label: "Arus kas", href: "/owner/arus-kas", icon: Wallet },
       { label: "Ekspor laporan", href: "/owner/laporan", icon: FileDown },
       { label: "Inventaris", href: "/owner/inventaris", icon: Box },
       {
