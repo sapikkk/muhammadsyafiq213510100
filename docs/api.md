@@ -176,3 +176,24 @@ UI: `/petani/siklus/[id]` — tombol besar + checkbox konfirmasi.
 
 Satu laporan per siklus. Hanya saat fase `PANEN`. Status awal `PENDING`.  
 UI Petani: form di `/petani/siklus/[id]`. Admin: `/admin/harvest` (baca).
+
+Approve/reject: `POST /api/harvest/[id]/approve`, `POST /api/harvest/[id]/reject` (Admin). Detail `/admin/harvest/[id]`.
+
+## `/api/petani` (US4.5, master Petani ERD)
+
+| Method | Peran | Body | Jawaban |
+| --- | --- | --- | --- |
+| GET | Admin, Owner | - | 200, array petani |
+| POST | Admin | `{ nama, gajiBulanan }` | 201 |
+| PUT | Admin | `{ id, nama, gajiBulanan }` | 200 |
+
+Bukan akun login (`User`). UI: `/admin/petani`, `/owner/petani` (baca).
+
+## `/api/biaya/langsung` · `/api/biaya/overhead` (US2.4)
+
+| Endpoint | Method | Peran | Catatan |
+| --- | --- | --- | --- |
+| `/api/biaya/langsung?siklusId=` | GET, PUT | Admin | Update nutrisi & listrik; subtotal dihitung ulang |
+| `/api/biaya/overhead` | GET, POST | Admin | Overhead periode; dipakai alokasi HPP saat approve |
+
+UI: `/admin/biaya`.
