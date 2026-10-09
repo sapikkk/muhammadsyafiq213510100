@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { StateScreen } from "@/components/state-screen";
+import { notify } from "@/lib/notify";
 
 export default function Error({
   error,
@@ -12,7 +13,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error(error);
+    notify.error("Gagal memuat halaman.", error.message);
   }, [error]);
 
   return (

@@ -1,12 +1,21 @@
 "use client";
 
+import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { submitPrive, type PriveState } from "@/app/actions/prive";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
+import { notify } from "@/lib/notify";
 
 export function PriveForm({ defaultTanggal }: { defaultTanggal: string }) {
   const [state, formAction] = useFormState(submitPrive, {} as PriveState);
+
+  useEffect(() => {
+    if (state.error) notify.error(state.error);
+    if (state.ok && state.jurnalId) {
+      notify.success(`Jurnal prive #${state.jurnalId} menunggu persetujuan Admin.`);
+    }
+  }, [state.error, state.ok, state.jurnalId]);
 
   return (
     <form action={formAction} className="max-w-md space-y-4 rounded-md border p-4">
