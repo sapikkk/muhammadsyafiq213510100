@@ -999,6 +999,14 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | `GET /api/export/income-statement` | Owner/Admin | PDF laba rugi periode |
 | `GET /api/export/balance-sheet` | Owner/Admin | PDF neraca saldo akun |
 
+### US6.4 Evaluasi margin, BEP, kapasitas
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/owner` | Owner | Kartu **bulan laba tertinggi** (6 bulan) tanpa buka jurnal mentah |
+| `/owner/evaluasi` | Owner | Kapasitas lubang idle, margin HPP vs harga curah/pack, BEP kg & lubang, rekomendasi |
+| `/owner/evaluasi` | Petani | Akses ditolak (middleware Owner) |
+
 ### Otomatisasi
 
 ```bash
