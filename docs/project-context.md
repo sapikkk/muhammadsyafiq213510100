@@ -22,17 +22,17 @@ Fakta yang dipakai di PRD dan naskah UCD. Cerita lengkap: `skenario-narasi-ucd-a
 
 ## Batasan
 
-- Lingkup skripsi: requirement, design, development, testing. **Pemeliharaan jangka panjang di luar lingkup.**
+- Lingkup produk v1: requirement, design, development, testing. **Pemeliharaan jangka panjang di luar lingkup rilis ini.**
 - IoT/sensor lingkungan **tidak** termasuk.
-- File format skripsi dan workbook kerangka **hanya dibaca**, tidak diubah.
-- Google Doc kerangka skripsi **hanya dibaca**, tidak diedit.
+- File format naskah akademik dan workbook kerangka **hanya dibaca**, tidak diubah di repo produk.
+- Google Doc studi kasus **hanya dibaca**, tidak diedit dari repo ini.
 - Website belum diimplementasi pada slice ini; yang diantar adalah PRD Agile + folder repositori.
 
 ## Hierarki sumber jika bentrok
 
 1. Workbook *Kebun Hijau — Agile & UCD Framework v1.0.0* → bentuk proses, epic, sprint, UCD, DoD, RBAC, API.
 2. Figma `x` (fileKey `vHP9l3QZucVlldDiDtk5RE`) → layar, alur, peran, state UI.
-3. Google Doc kerangka skripsi → konteks studi kasus, rumusan, batasan, HPP rakit apung.
+3. Google Doc studi kasus → konteks lapangan, rumusan, batasan, HPP rakit apung.
 
 Domain bisnis memakai nama **Kokonus Farm** dan metode **rakit apung**, bukan nama produk contoh “Kebun Hijau” / DWC pada workbook, kecuali sebagai analogi kerangka.
 
@@ -41,8 +41,8 @@ Domain bisnis memakai nama **Kokonus Farm** dan metode **rakit apung**, bukan na
 | Sumber | Lokasi | Perlakuan |
 | --- | --- | --- |
 | Figma (desain & arsitektur) | https://www.figma.com/design/vHP9l3QZucVlldDiDtk5RE/x?node-id=262-10298 | Inspect saja |
-| Google Doc (kerangka skripsi) | https://docs.google.com/document/d/1d5XGFNGALq00PRY-5H8FOd96UrXjW5aYcrNXScwWDN0/edit?tab=t.0 | Baca saja, jangan sunting |
-| Format skripsi SAPIK | `FORMAT_SKRIPSI_SAPIK.docx` (tidak disalin ke repo ini) | Acuan struktur naskah saja; jangan rewrite |
+| Google Doc (studi kasus) | https://docs.google.com/document/d/1d5XGFNGALq00PRY-5H8FOd96UrXjW5aYcrNXScwWDN0/edit?tab=t.0 | Baca saja, jangan sunting |
+| Format naskah SAPIK | `FORMAT_SKRIPSI_SAPIK.docx` (tidak disalin ke repo ini) | Referensi eksternal; repo fokus produk |
 | Kerangka Agile & UCD | `Kebun-Hijau-Agile-UCD-Framework-v1.0.0.xlsx` (tidak disalin ke repo ini) | Acuan backlog/sprint/UCD; jangan ubah xlsx |
 
 ## Deliverable terkait

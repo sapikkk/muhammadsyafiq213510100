@@ -50,6 +50,9 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 | US3.4 | `feat/us3.4-varietas` | #58 | Done |
 | US3.1 | `feat/us3.1-siklus-semai` | #59 | Done |
 | US3.2 | `feat/us3.2-pindah-fase` | #60 | Done |
+| US5.1–5.5 | stack penjualan | #69, #72 | Done |
+| US6.1–6.5 | stack laporan | #73–#77 | Done |
+| US1.9, US2.6 | owner keuangan & user | #78 | Done |
 
 ---
 
@@ -312,7 +315,7 @@ Sandi demo ada di `prisma/seed.js` dan tidak ditulis di sini.
 - Kode akun 4 digit angka, digit pertama mengikuti tipe (1 Aset, 2 Kewajiban, 3 Modal, 4 Pendapatan, 5 Beban). Akun x000 adalah induk pengelompokan.
 - Anak harus bertipe sama dengan induknya supaya laporan per tipe konsisten.
 - Soft delete memakai field `aktif`. Akun nonaktif tetap tampil (dicoret, badge Nonaktif) agar jurnal lama tidak putus saat US2.2.
-- Owner belum punya halaman COA (US2.6, Sprint 4), tetapi API GET sudah mengizinkan Owner membaca.
+- Owner: `/owner/akun` read-only COA (US2.6); API GET akun/jurnal tetap mengizinkan Owner.
 
 ### Acceptance criteria (PRD US2.1)
 
@@ -400,7 +403,7 @@ Sesi dibuat lewat `POST /api/auth/callback/credentials` untuk tiga akun demo.
 - Field `Akun.saldo` ditambah; hanya naik/turun saat jurnal `APPROVED`, dalam satu transaksi Prisma.
 - Normal balance: Aset/Beban bertambah di debit; Kewajiban/Modal/Pendapatan bertambah di kredit.
 - Hanya akun posting (aktif, tanpa anak) yang bisa dipilih di form jurnal.
-- Owner boleh GET `/api/transactions` dan filter; halaman Owner read-only jurnal (US2.6) ditunda Sprint 4.
+- Owner: `/owner/jurnal` filter + detail read-only; GET API jurnal/laporan sesuai RBAC.
 - Pengulangan query saat P2024 dipusatkan di `lib/prisma.ts` (mitigasi FINDING-01).
 
 ### Acceptance criteria (PRD US2.2)

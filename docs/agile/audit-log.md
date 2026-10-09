@@ -4,6 +4,15 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-09 — Sprint 4 selesai + sinkron Project #1
+
+- **Actor:** PO + tim dev  
+- **Perubahan:** Merge PR [#73](https://github.com/sapikkk/muhammadsyafiq213510100/pull/73)–[#78](https://github.com/sapikkk/muhammadsyafiq213510100/pull/78) (US6.1–6.5, US1.9, US2.6). Issue #10, #16, #30–#38 ditutup. Project #1: Status **Done** + Priority/Size/Estimate/dates untuk US Sprint 3–4. Footer “Made with Cursor” dihapus dari PR #65–#78.  
+- **Artefak:** `docs/progress-backlog.md`, `docs/agile/timeline-registry.md`, `docs/agile/sprints/sprint-03-penjualan.md`, `sprint-04-laporan.md`, `docs/agile/scripts/sync-project-sprint3-4-done.sh`  
+- **Board:** https://github.com/users/sapikkk/projects/1
+
+---
+
 ## 2026-10-09 — Keputusan PO (partial, actual start, retro S1)
 
 - **Actor:** PO sapikkk + agent  

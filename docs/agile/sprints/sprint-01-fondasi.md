@@ -100,11 +100,11 @@
 
 ---
 
-## US1.9 — Kelola user (Owner) — **TODO Sprint 4**
+## US1.9 — Kelola user (Owner) — **Done (Sprint 4)**
 
-| Issue | [#10](https://github.com/sapikkk/muhammadsyafiq213510100/issues/10) · Project: Todo |
-| **AC** | Owner CRUD user (PRD/Figma); terjadwal Sprint 4 |
-| **Tech** | Belum diimplementasi |
+| Issue | [#10](https://github.com/sapikkk/muhammadsyafiq213510100/issues/10) · Project: Done |
+| **AC** | Owner tambah Admin/Petani, reset sandi non-Owner |
+| **Tech** | `/owner/pengguna`, `lib/owner-users.ts` · PR [#78](https://github.com/sapikkk/muhammadsyafiq213510100/pull/78) |
 
 ---
 

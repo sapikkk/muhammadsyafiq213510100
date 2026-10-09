@@ -1,6 +1,6 @@
-# Sprint 3 — Penjualan & pengiriman (rencana)
+# Sprint 3 — Penjualan & pengiriman
 
-**Iteration:** 2026-11-04 → 2026-11-17 · **Epic:** EPIC-5
+**Iteration:** 2026-10-22 → 2026-11-04 · **Epic:** EPIC-5 · **Status: selesai**
 
 | US | Issue | Status | AC ringkas (PRD) |
 |----|-------|--------|------------------|
@@ -14,4 +14,4 @@
 
 **Tech target (PRD §11):** `/api/customers`, `/api/sales-orders`, confirm/deliver.
 
-DoD & blackbox: isi setelah sprint dimulai — salin template notulensi per US.
+**Uji:** `docs/uji-blackbox.md` (US5.x) · **PR:** [#69](https://github.com/sapikkk/muhammadsyafiq213510100/pull/69), [#72](https://github.com/sapikkk/muhammadsyafiq213510100/pull/72).

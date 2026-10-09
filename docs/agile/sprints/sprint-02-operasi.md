@@ -12,7 +12,7 @@ Legenda status: **Done** | **Partial** | **Todo**
 | US2.3 HPP | [#13](https://github.com/sapikkk/muhammadsyafiq213510100/issues/13) | In progress | **Partial** | `feat/ui-redesign` | approve+HPP; ABC/susut/plastik sisa |
 | US2.4 Biaya | [#14](https://github.com/sapikkk/muhammadsyafiq213510100/issues/14) | Done | Done | #64 stack | § 2026-10-09 notulensi |
 | US2.5 Susut | [#15](https://github.com/sapikkk/muhammadsyafiq213510100/issues/15) | Todo | Todo | — | — |
-| US2.6 Owner COA | [#16](https://github.com/sapikkk/muhammadsyafiq213510100/issues/16) | Todo | Todo (S4) | — | — |
+| US2.6 Owner COA | [#16](https://github.com/sapikkk/muhammadsyafiq213510100/issues/16) | Done | Done ([#78](https://github.com/sapikkk/muhammadsyafiq213510100/pull/78)) | `/owner/akun`, `/owner/jurnal`, `/owner/prive` | uji-blackbox US2.6 |
 | US3.1 Siklus | [#17](https://github.com/sapikkk/muhammadsyafiq213510100/issues/17) | Done | Done | #59 | § US3.1 |
 | US3.2 Fase | [#18](https://github.com/sapikkk/muhammadsyafiq213510100/issues/18) | Done | Done | #60 | § US3.2 |
 | US3.3 Harvest | [#19](https://github.com/sapikkk/muhammadsyafiq213510100/issues/19) | Done | Done | #62 | § US3.3 |

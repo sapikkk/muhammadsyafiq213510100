@@ -8,8 +8,8 @@ URL: https://github.com/users/sapikkk/projects/1
 |-------|------|------------------|
 | **Status** | Todo / In progress / Done | Open + `progress-partial` = partial; Done = AC issue selesai atau close dengan catatan partial |
 | **Iteration** | Sprint 1–5 + rentang tanggal | `docs/agile/timeline-registry.md` |
-| **Priority** | P0 / P1 / P2 | PRD (HIGHEST → P0) — *belum diisi massal* |
-| **Size** | XS–XL | Opsional story points |
+| **Priority** | P0 / P1 / P2 | PRD (HIGHEST → P0); **US produk #2–#38 + UX #61 diisi** |
+| **Size** | XS–XL | Dipetakan dari Estimate (5→M, 8→L, 13→XL) untuk US Sprint 3–4 |
 | **Labels (issue)** | `sprint-1`…`sprint-5`, `progress-partial`, `blackbox-test`, `finding` | Filter di repo |
 
 ## Iteration — actual start (PO 2026-10-09)
