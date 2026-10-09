@@ -102,7 +102,14 @@ export function OwnerUserPanel({ users }: { users: UserRow[] }) {
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">Daftar user</h2>
-        <DataTable columns={columns} data={users} pageSize={8} emptyMessage="Belum ada user." />
+        <DataTable
+          columns={columns}
+          data={users}
+          pageSize={8}
+          searchPlaceholder="Cari nama atau email…"
+          searchColumnIds={["nama", "email"]}
+          emptyMessage="Belum ada user."
+        />
       </section>
     </div>
   );

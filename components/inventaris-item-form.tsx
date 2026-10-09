@@ -2,6 +2,7 @@
 
 import { useFormState } from "react-dom";
 import { simpanItemInventaris } from "@/app/actions/inventaris";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { satuanInventarisLabel, satuanInventarisList } from "@/lib/inventaris-satuan";
@@ -11,6 +12,7 @@ const selectClass =
 
 export function InventarisItemForm() {
   const [state, formAction] = useFormState(simpanItemInventaris, {});
+  useActionToast({ error: state.error, ok: state.ok });
 
   return (
     <form

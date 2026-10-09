@@ -13,7 +13,9 @@ Append-only. Agent menambah baris per sesi.
 | Low | `/owner/pengguna` | `owner-user-panel` | List `<ul>` bukan tabel | **Fixed:** `DataTable` pilot |
 | Low | `/admin/pelanggan` | `pelanggan-daftar` | List `<ul>` | **Fixed:** `DataTable` |
 | Medium | Role layouts | `role-home` | Sidebar hilang di mobile | **Fixed:** `AppShellLayout` + menu Dialog |
-| Low | Forms | jurnal/akun/pengaturan | Tanpa toast | **Partial:** `useActionToast` |
+| Low | Forms | jurnal/akun/pengaturan/inventaris | Tanpa toast | **Partial:** `useActionToast` |
+| Low | Inventaris/varietas | `*-daftar` | List `<ul>` + Decimal ke client | **Fixed:** `DataTable` + `serializeItem` |
+| Low | Mobile nav | `app-sidebar` | Drawer tidak tutup setelah klik | **Fixed:** `onNavigate` |
 | Low | Many lists | various | `Card` untuk KPI/detail | **Partial** — bukan listing CRUD |
 
 ## Responsif (belum diuji sistematis)

@@ -69,6 +69,7 @@ export function AppShellLayout({
             userName={userName}
             stokRendahCount={stokRendahCount}
             auditShowAllNav={auditShowAllNav}
+            onNavigate={() => setMenuOpen(false)}
           />
         </DialogContent>
       </Dialog>

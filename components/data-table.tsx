@@ -3,6 +3,7 @@
 import {
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
@@ -11,6 +12,7 @@ import {
 } from "@tanstack/react-table";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -25,6 +27,9 @@ type DataTableProps<TData, TValue> = {
   data: TData[];
   pageSize?: number;
   emptyMessage?: string;
+  searchPlaceholder?: string;
+  /** Column ids to include in global filter; defaults to all columns. */
+  searchColumnIds?: string[];
 };
 
 export function DataTable<TData, TValue>({
@@ -32,22 +37,54 @@ export function DataTable<TData, TValue>({
   data,
   pageSize = 10,
   emptyMessage = "Belum ada data.",
+  searchPlaceholder,
+  searchColumnIds,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [globalFilter, setGlobalFilter] = useState("");
 
   const table = useReactTable({
     data,
     columns,
-    state: { sorting },
+    state: { sorting, globalFilter },
     onSortingChange: setSorting,
+    onGlobalFilterChange: setGlobalFilter,
+    globalFilterFn: searchColumnIds?.length
+      ? (row, _columnId, filterValue) => {
+          const q = String(filterValue).toLowerCase();
+          if (!q) return true;
+          const original = row.original as Record<string, unknown>;
+          return searchColumnIds.some((id) => {
+            const v = original[id] ?? row.getValue(id);
+            return String(v ?? "")
+              .toLowerCase()
+              .includes(q);
+          });
+        }
+      : undefined,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: { pagination: { pageSize } },
   });
 
+  const filteredCount = table.getFilteredRowModel().rows.length;
+
   return (
     <div className="space-y-3">
+      {searchPlaceholder ? (
+        <Input
+          value={globalFilter}
+          onChange={(e) => {
+            setGlobalFilter(e.target.value);
+            table.setPageIndex(0);
+          }}
+          placeholder={searchPlaceholder}
+          className="h-9 max-w-sm"
+          aria-label={searchPlaceholder}
+        />
+      ) : null}
       <div className="overflow-x-auto border">
         <Table>
           <TableHeader className="sticky top-0 bg-background">
@@ -76,7 +113,10 @@ export function DataTable<TData, TValue>({
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-20 text-center text-sm text-muted-foreground">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-20 text-center text-sm text-muted-foreground"
+                >
                   {emptyMessage}
                 </TableCell>
               </TableRow>
@@ -84,12 +124,14 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {table.getPageCount() > 1 ? (
-        <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <span>
-            Halaman {table.getState().pagination.pageIndex + 1} / {table.getPageCount()} ·{" "}
-            {data.length} baris
-          </span>
+      <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
+        <span>
+          {filteredCount} baris
+          {table.getPageCount() > 1
+            ? ` · halaman ${table.getState().pagination.pageIndex + 1}/${table.getPageCount()}`
+            : null}
+        </span>
+        {table.getPageCount() > 1 ? (
           <div className="flex gap-2">
             <Button
               type="button"
@@ -110,8 +152,8 @@ export function DataTable<TData, TValue>({
               Berikutnya
             </Button>
           </div>
-        </div>
-      ) : null}
+        ) : null}
+      </div>
     </div>
   );
 }
