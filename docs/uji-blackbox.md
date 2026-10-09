@@ -975,6 +975,13 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | Catat biaya packing | Admin | Field tersimpan; jurnal PENDING 5400/Kas jika nominal > 0 |
 | Batalkan SO (belum/sudah DELIVERED) | Admin | Status `CANCELLED`; jurnal PENDING ditolak; jurnal APPROVED → reversal PENDING |
 
+### US6.1 KPI & grafik Owner
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/owner` | Owner | 3 KPI bulan berjalan + grafik batang pendapatan vs beban (6 bulan) |
+| `GET /api/reports/monthly-summary` | Owner/Admin | JSON agregat dari jurnal APPROVED (tipe Pendapatan/Beban) |
+
 ### Otomatisasi
 
 ```bash

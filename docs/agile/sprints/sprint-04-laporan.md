@@ -4,7 +4,7 @@
 
 | US | Issue | Status |
 |----|-------|--------|
-| US6.1 KPI grafik | [#34](https://github.com/sapikkk/muhammadsyafiq213510100/issues/34) | Todo |
+| US6.1 KPI grafik | [#34](https://github.com/sapikkk/muhammadsyafiq213510100/issues/34) | In progress (PR) |
 | US6.2 Pie biaya | [#35](https://github.com/sapikkk/muhammadsyafiq213510100/issues/35) | Todo |
 | US6.3 Ekspor xlsx/PDF | [#36](https://github.com/sapikkk/muhammadsyafiq213510100/issues/36) | Todo |
 | US6.4 BEP, margin | [#37](https://github.com/sapikkk/muhammadsyafiq213510100/issues/37) | Todo |
