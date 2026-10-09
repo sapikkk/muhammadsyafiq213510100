@@ -1,6 +1,7 @@
 "use server";
 
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
@@ -17,7 +18,8 @@ export type JurnalFormState = { error?: string; saved?: string };
 
 async function adminId() {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") return null;
+  if (!session?.user?.id) return null;
+  if (!isRoleAllowed(session.user.role, "ADMIN")) return null;
   return Number(session.user.id);
 }
 

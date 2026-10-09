@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
 import {
   JurnalError,
   ajukanJurnal,
@@ -10,20 +9,6 @@ import {
   setujuiJurnal,
   tolakJurnal,
 } from "@/lib/jurnal";
-
-async function requireRole(allowed: string[]) {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) {
-    return { denied: NextResponse.json({ error: "Belum masuk." }, { status: 401 }) };
-  }
-  if (!allowed.includes(role)) {
-    return {
-      denied: NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 }),
-    };
-  }
-  return { userId: Number(session.user.id) };
-}
 
 function handleError(error: unknown) {
   if (error instanceof JurnalError) {
@@ -36,7 +21,7 @@ function handleError(error: unknown) {
 }
 
 export async function GET(request: Request) {
-  const auth = await requireRole(["ADMIN", "OWNER"]);
+  const auth = await requireApiRole(["ADMIN", "OWNER"]);
   if (auth.denied) return auth.denied;
   const q = new URL(request.url).searchParams;
   const rows = await listJurnal({
@@ -48,11 +33,11 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const auth = await requireRole(["ADMIN"]);
+  const auth = await requireApiRole(["ADMIN"]);
   if (auth.denied) return auth.denied;
   try {
     const input = parseJurnalInput(await request.json());
-    const jurnal = await createJurnal(input, auth.userId!);
+    const jurnal = await createJurnal(input, Number(auth.session!.user.id));
     return NextResponse.json(jurnal, { status: 201 });
   } catch (error) {
     return handleError(error);
@@ -61,7 +46,7 @@ export async function POST(request: Request) {
 
 // PUT mengubah status: { id, aksi: "AJUKAN" | "SETUJUI" | "TOLAK", alasan? }
 export async function PUT(request: Request) {
-  const auth = await requireRole(["ADMIN"]);
+  const auth = await requireApiRole(["ADMIN"]);
   if (auth.denied) return auth.denied;
   try {
     const body = (await request.json()) as Record<string, unknown>;
@@ -69,7 +54,7 @@ export async function PUT(request: Request) {
     if (!Number.isInteger(id) || id <= 0) {
       return NextResponse.json({ error: "id wajib diisi." }, { status: 400 });
     }
-    const olehId = auth.userId!;
+    const olehId = Number(auth.session!.user.id);
     switch (body.aksi) {
       case "AJUKAN":
         return NextResponse.json(await ajukanJurnal(id));

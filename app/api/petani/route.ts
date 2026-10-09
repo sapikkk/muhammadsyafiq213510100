@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import {
@@ -14,7 +15,7 @@ async function requireRead() {
   const session = await getServerSession(authOptions);
   const role = session?.user?.role;
   if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!["ADMIN", "OWNER"].includes(role)) {
+  if (!isRoleAllowed(role, ["ADMIN", "OWNER"])) {
     return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
   }
   return null;
@@ -22,7 +23,7 @@ async function requireRead() {
 
 async function requireWrite() {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") {
+  if (!isRoleAllowed(session?.user?.role, "ADMIN")) {
     return NextResponse.json({ error: "Hanya Admin yang boleh mengubah master petani." }, { status: 403 });
   }
   return null;

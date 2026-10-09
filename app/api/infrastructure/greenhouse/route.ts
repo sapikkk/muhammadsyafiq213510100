@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import {
@@ -11,7 +12,7 @@ async function requireAdmin() {
   const session = await getServerSession(authOptions);
   const role = session?.user?.role;
   if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (role !== "ADMIN") {
+  if (!isRoleAllowed(role, "ADMIN")) {
     return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
   }
   return null;

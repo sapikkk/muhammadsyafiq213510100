@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import {
@@ -17,7 +18,10 @@ export async function submitHarvestReport(
 ): Promise<FormState> {
   try {
     const session = await getServerSession(authOptions);
-    if (session?.user?.role !== "PEKERJA") {
+    if (!session?.user?.id) {
+      throw new HarvestError("Belum masuk.", 401);
+    }
+    if (!isRoleAllowed(session.user.role, "PEKERJA")) {
       throw new HarvestError("Peran Anda tidak berhak.", 403);
     }
     const userId = Number(session.user.id);

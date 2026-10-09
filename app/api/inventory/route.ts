@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
 import {
   InventarisError,
   createItem,
@@ -8,19 +7,6 @@ import {
   parseItemInput,
   serializeItem,
 } from "@/lib/inventaris";
-
-async function requireRole(allowed: string[]) {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!allowed.includes(role)) {
-    return NextResponse.json(
-      { error: "Peran Anda tidak berhak." },
-      { status: 403 },
-    );
-  }
-  return null;
-}
 
 function handleError(error: unknown) {
   if (error instanceof InventarisError) {
@@ -33,14 +19,14 @@ function handleError(error: unknown) {
 }
 
 export async function GET() {
-  const denied = await requireRole(["ADMIN", "OWNER", "PEKERJA"]);
+  const { denied } = await requireApiRole(["ADMIN", "OWNER", "PEKERJA"]);
   if (denied) return denied;
   const items = await listItemInventaris(true);
   return NextResponse.json(items.map(serializeItem));
 }
 
 export async function POST(request: Request) {
-  const denied = await requireRole(["ADMIN"]);
+  const { denied } = await requireApiRole(["ADMIN"]);
   if (denied) return denied;
   try {
     const item = await createItem(parseItemInput(await request.json()));

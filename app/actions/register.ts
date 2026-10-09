@@ -1,6 +1,7 @@
 "use server";
 
 import { Prisma } from "@prisma/client";
+import { isRoleAllowed } from "@/lib/rbac";
 import { hash } from "bcryptjs";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -28,7 +29,7 @@ export async function registerPetani(
   formData: FormData,
 ): Promise<RegisterState> {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") {
+  if (!isRoleAllowed(session?.user?.role, "ADMIN")) {
     return { error: "Hanya Admin yang bisa mendaftarkan petani." };
   }
 

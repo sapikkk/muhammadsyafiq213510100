@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { rejectLaporanPanen, HarvestError } from "@/lib/laporan-panen";
@@ -20,7 +21,7 @@ export async function POST(
   const session = await getServerSession(authOptions);
   const role = session?.user?.role;
   if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (role !== "ADMIN" && role !== "OWNER") {
+  if (!isRoleAllowed(role, ["ADMIN", "OWNER"])) {
     return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
   }
 

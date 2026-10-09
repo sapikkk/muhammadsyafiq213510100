@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { getServerSession } from "next-auth";
 import { AppSidebar } from "@/components/app-sidebar";
 import { authOptions } from "@/lib/auth";
+import { isAuditBypassRbac } from "@/lib/rbac";
 import { roleLabel, type Role } from "@/types/role";
 
 export async function RoleHome({
@@ -22,6 +23,7 @@ export async function RoleHome({
         role={role}
         userName={name}
         stokRendahCount={stokRendahCount}
+        auditShowAllNav={isAuditBypassRbac()}
       />
       <main className="flex flex-1 flex-col overflow-y-auto">
         {/* Top header bar */}

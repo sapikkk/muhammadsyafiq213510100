@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import {
@@ -18,7 +19,7 @@ async function requirePack() {
   if (!session?.user?.role || !userId) {
     throw new ActivePackError("Belum masuk.", 401);
   }
-  if (!["ADMIN", "PEKERJA"].includes(session.user.role)) {
+  if (!isRoleAllowed(session.user.role, ["ADMIN", "PEKERJA"])) {
     throw new ActivePackError("Peran Anda tidak berhak.", 403);
   }
   return userId;

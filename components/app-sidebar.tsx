@@ -38,7 +38,7 @@ type NavItem = {
   badge?: number;
 };
 
-function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
+export function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
   const alertItem: NavItem = {
     label: "Stok rendah",
     href: `/${role === "PEKERJA" ? "petani" : role === "ADMIN" ? "admin" : "owner"}/stok-rendah`,
@@ -104,17 +104,37 @@ function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
   ];
 }
 
+function getAuditNavItems(stokRendahCount: number): NavItem[] {
+  const seen = new Set<string>();
+  const items: NavItem[] = [];
+  for (const r of ["OWNER", "ADMIN", "PEKERJA"] as Role[]) {
+    for (const item of getNavItems(r, stokRendahCount)) {
+      if (seen.has(item.href)) continue;
+      seen.add(item.href);
+      items.push({
+        ...item,
+        label: `${roleLabel[r]} · ${item.label}`,
+      });
+    }
+  }
+  return items;
+}
+
 export function AppSidebar({
   role,
   userName,
   stokRendahCount = 0,
+  auditShowAllNav = false,
 }: {
   role: Role;
   userName: string;
   stokRendahCount?: number;
+  auditShowAllNav?: boolean;
 }) {
   const pathname = usePathname();
-  const navItems = getNavItems(role, stokRendahCount);
+  const navItems = auditShowAllNav
+    ? getAuditNavItems(stokRendahCount)
+    : getNavItems(role, stokRendahCount);
 
   return (
     <aside className="flex h-screen w-60 flex-col border-r bg-sidebar">
@@ -133,7 +153,7 @@ export function AppSidebar({
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto p-2">
         <p className="mb-1 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-          Menu
+          {auditShowAllNav ? "Menu (audit)" : "Menu"}
         </p>
         <ul className="space-y-0.5">
           {navItems.map((item) => {
