@@ -157,6 +157,7 @@ export async function listSalesOrders() {
     orderBy: { id: "desc" },
     include: {
       pelanggan: { select: { nama: true } },
+      jurnal_pendapatan: { select: { id: true, status: true, keterangan: true } },
       baris: {
         include: {
           siklus: { select: { kode_batch: true } },
@@ -166,7 +167,31 @@ export async function listSalesOrders() {
   });
 }
 
-export function serializeSalesOrder(row: Awaited<ReturnType<typeof listSalesOrders>>[number]) {
+type SoSerializeRow = {
+  id: number;
+  nomor_so: string;
+  pelanggan_id: number;
+  pelanggan: { nama: string };
+  status: string;
+  total: Prisma.Decimal;
+  catatan: string | null;
+  dibuat_pada: Date;
+  dikirim_pada?: Date | null;
+  terkirim_pada?: Date | null;
+  catatan_pengiriman?: string | null;
+  jurnal_pendapatan?: { id: number; status: string; keterangan: string } | null;
+  baris: {
+    id: number;
+    siklus_id: number;
+    jenis: string;
+    jumlah: Prisma.Decimal;
+    harga_satuan: Prisma.Decimal;
+    subtotal: Prisma.Decimal;
+    siklus: { kode_batch: string };
+  }[];
+};
+
+export function serializeSalesOrder(row: SoSerializeRow) {
   return {
     id: row.id,
     nomor_so: row.nomor_so,
@@ -176,6 +201,11 @@ export function serializeSalesOrder(row: Awaited<ReturnType<typeof listSalesOrde
     total: row.total.toString(),
     catatan: row.catatan,
     dibuat_pada: row.dibuat_pada.toISOString(),
+    dikirim_pada: row.dikirim_pada?.toISOString() ?? null,
+    terkirim_pada: row.terkirim_pada?.toISOString() ?? null,
+    catatan_pengiriman: row.catatan_pengiriman ?? null,
+    jurnal_pendapatan_id: row.jurnal_pendapatan?.id ?? null,
+    jurnal_pendapatan_status: row.jurnal_pendapatan?.status ?? null,
     baris: row.baris.map((b) => ({
       id: b.id,
       siklus_id: b.siklus_id,

@@ -29,7 +29,7 @@ export default async function AdminPenjualanPage() {
     <div className="flex flex-col gap-8">
       <PageHeader
         title="Sales order"
-        description="US5.1 — buat SO DRAFT, konfirmasi stok (US5.2). Nomor SO-YYYY-NNN."
+        description="US5.1–5.4 — SO DRAFT, konfirmasi stok, kirim/terkirim, jurnal PENDING saat DELIVERED."
       />
       <SalesOrderDaftar rows={orders.map(serializeSalesOrder)} />
       <SalesOrderForm
