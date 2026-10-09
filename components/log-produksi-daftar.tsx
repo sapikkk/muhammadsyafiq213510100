@@ -1,3 +1,8 @@
+"use client";
+
+import type { ColumnDef } from "@tanstack/react-table";
+import { useMemo } from "react";
+import { DataTable } from "@/components/data-table";
 import { faseLabel, isFaseProduksi } from "@/lib/siklus-fase";
 
 const waktu = new Intl.DateTimeFormat("id-ID", {
@@ -6,11 +11,11 @@ const waktu = new Intl.DateTimeFormat("id-ID", {
   timeZone: "Asia/Jakarta",
 });
 
-type LogBaris = {
+export type LogProduksiBaris = {
   fase_dari: string;
   fase_ke: string;
   catatan: string | null;
-  waktu: Date;
+  waktu: string;
   user: { nama: string };
 };
 
@@ -18,28 +23,42 @@ function labelFase(kode: string) {
   return isFaseProduksi(kode) ? faseLabel[kode] : kode;
 }
 
-export function LogProduksiDaftar({ rows }: { rows: LogBaris[] }) {
-  if (rows.length === 0) {
-    return (
-      <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-        Belum ada log pindah fase.
-      </p>
-    );
-  }
+export function LogProduksiDaftar({ rows }: { rows: LogProduksiBaris[] }) {
+  const columns = useMemo<ColumnDef<LogProduksiBaris>[]>(
+    () => [
+      {
+        id: "transisi",
+        header: "Fase",
+        accessorFn: (row) => `${row.fase_dari} ${row.fase_ke}`,
+        cell: ({ row }) => (
+          <span className="font-medium">
+            {labelFase(row.original.fase_dari)} → {labelFase(row.original.fase_ke)}
+          </span>
+        ),
+      },
+      { accessorKey: "user.nama", header: "Oleh" },
+      {
+        accessorKey: "waktu",
+        header: "Waktu",
+        cell: ({ row }) => waktu.format(new Date(row.original.waktu)),
+      },
+      {
+        accessorKey: "catatan",
+        header: "Catatan",
+        cell: ({ row }) => row.original.catatan ?? "—",
+      },
+    ],
+    [],
+  );
 
   return (
-    <ul className="divide-y rounded-md border">
-      {rows.map((row) => (
-        <li key={row.waktu.toISOString() + row.fase_ke} className="space-y-1 p-4 text-sm">
-          <p className="font-medium">
-            {labelFase(row.fase_dari)} → {labelFase(row.fase_ke)}
-          </p>
-          <p className="text-muted-foreground">
-            {row.user.nama} · {waktu.format(row.waktu)}
-          </p>
-          {row.catatan ? <p className="text-muted-foreground">{row.catatan}</p> : null}
-        </li>
-      ))}
-    </ul>
+    <DataTable
+      columns={columns}
+      data={rows}
+      pageSize={8}
+      searchPlaceholder="Cari fase atau catatan…"
+      searchColumnIds={["transisi", "catatan", "user.nama"]}
+      emptyMessage="Belum ada log pindah fase."
+    />
   );
 }

@@ -1,3 +1,9 @@
+"use client";
+
+import type { ColumnDef } from "@tanstack/react-table";
+import { useMemo } from "react";
+import { DataTable } from "@/components/data-table";
+import { formatRupiah } from "@/lib/format";
 import { labelTahap } from "@/lib/log-kegagalan";
 
 type Row = {
@@ -19,30 +25,53 @@ function labelKategori(value: string) {
 }
 
 export function LogKegagalanDaftar({ rows }: { rows: Row[] }) {
-  if (rows.length === 0) {
-    return (
-      <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-        Belum ada log kegagalan untuk batch ini.
-      </p>
-    );
-  }
+  const columns = useMemo<ColumnDef<Row>[]>(
+    () => [
+      {
+        accessorKey: "tahap",
+        header: "Tahap",
+        cell: ({ row }) => labelTahap(row.original.tahap),
+      },
+      {
+        accessorKey: "jumlah_gagal",
+        header: "Gagal",
+        cell: ({ row }) => <span className="tabular-nums">{row.original.jumlah_gagal}</span>,
+      },
+      {
+        accessorKey: "hari_hidup",
+        header: "Hari",
+        cell: ({ row }) => <span className="tabular-nums">{row.original.hari_hidup}</span>,
+      },
+      { accessorKey: "penyebab", header: "Penyebab" },
+      {
+        accessorKey: "kategori_susut",
+        header: "Susut",
+        cell: ({ row }) => labelKategori(row.original.kategori_susut),
+      },
+      {
+        id: "kerugian",
+        header: "Kerugian",
+        cell: ({ row }) =>
+          row.original.kategori_susut === "MENUNGGU" ? (
+            "—"
+          ) : (
+            <span className="text-xs text-muted-foreground">
+              {row.original.jenis_kerugian} · {formatRupiah(row.original.biaya_kerugian)}
+            </span>
+          ),
+      },
+    ],
+    [],
+  );
 
   return (
-    <ul className="divide-y rounded-md border">
-      {rows.map((row) => (
-        <li key={row.id} className="space-y-1 p-4 text-sm">
-          <p className="font-medium">
-            {labelTahap(row.tahap)} · {row.jumlah_gagal} gagal · hari {row.hari_hidup}
-          </p>
-          <p className="text-muted-foreground">{row.penyebab}</p>
-          <p className="text-xs text-muted-foreground">
-            Susut: {labelKategori(row.kategori_susut)}
-            {row.kategori_susut !== "MENUNGGU"
-              ? ` · ${row.jenis_kerugian} · Rp ${row.biaya_kerugian}`
-              : null}
-          </p>
-        </li>
-      ))}
-    </ul>
+    <DataTable
+      columns={columns}
+      data={rows}
+      pageSize={8}
+      searchPlaceholder="Cari tahap, penyebab…"
+      searchColumnIds={["tahap", "penyebab", "kategori_susut"]}
+      emptyMessage="Belum ada log kegagalan untuk batch ini."
+    />
   );
 }

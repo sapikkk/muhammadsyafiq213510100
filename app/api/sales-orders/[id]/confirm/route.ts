@@ -1,27 +1,31 @@
-import { getServerSession } from "next-auth";
-import { isRoleAllowed } from "@/lib/rbac";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
-import { SalesOrderError, confirmSalesOrder, serializeSalesOrder, listSalesOrders } from "@/lib/sales-order";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
+import {
+  SalesOrderError,
+  confirmSalesOrder,
+  listSalesOrders,
+  serializeSalesOrder,
+} from "@/lib/sales-order";
 
-export async function PUT(_request: Request, { params }: { params: { id: string } }) {
-  const session = await getServerSession(authOptions);
-  if (!isRoleAllowed(session?.user?.role, "ADMIN")) {
-    return NextResponse.json({ error: "Hanya Admin." }, { status: 403 });
-  }
+export const PUT = withApiHandler(async (_request: Request, context?: unknown) => {
+  const { denied } = await requireApiRole(["ADMIN"]);
+  if (denied) return denied;
+  const params = (context as { params: { id: string } }).params;
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) {
-    return NextResponse.json({ error: "ID tidak valid." }, { status: 400 });
+    return apiFail("INVALID_ID", "ID tidak valid.", 400);
   }
   try {
     const row = await confirmSalesOrder(id);
     const listed = await listSalesOrders();
     const fresh = listed.find((r) => r.id === row.id);
-    return NextResponse.json(fresh ? serializeSalesOrder(fresh) : { id: row.id, status: row.status });
+    return apiOk(
+      fresh ? serializeSalesOrder(fresh) : { id: row.id, status: row.status },
+    );
   } catch (error) {
     if (error instanceof SalesOrderError) {
-      return NextResponse.json({ error: error.message }, { status: error.status });
+      return apiFail("SALES_ORDER_ERROR", error.message, error.status);
     }
     throw error;
   }
-}
+});

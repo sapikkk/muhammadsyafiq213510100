@@ -1,7 +1,5 @@
-import { getServerSession } from "next-auth";
-import { isRoleAllowed } from "@/lib/rbac";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
 import {
   PetaniError,
   createPetani,
@@ -11,64 +9,46 @@ import {
   updatePetani,
 } from "@/lib/petani";
 
-async function requireRead() {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!isRoleAllowed(role, ["ADMIN", "OWNER"])) {
-    return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
-  }
-  return null;
-}
-
-async function requireWrite() {
-  const session = await getServerSession(authOptions);
-  if (!isRoleAllowed(session?.user?.role, "ADMIN")) {
-    return NextResponse.json({ error: "Hanya Admin yang boleh mengubah master petani." }, { status: 403 });
-  }
-  return null;
-}
-
 function handleError(error: unknown) {
   if (error instanceof PetaniError) {
-    return NextResponse.json({ error: error.message }, { status: error.status });
+    return apiFail("PETANI_ERROR", error.message, error.status);
   }
   if (error instanceof SyntaxError) {
-    return NextResponse.json({ error: "Body bukan JSON." }, { status: 400 });
+    return apiFail("INVALID_JSON", "Body bukan JSON.", 400);
   }
   throw error;
 }
 
-export async function GET() {
-  const denied = await requireRead();
+export const GET = withApiHandler(async () => {
+  const { denied } = await requireApiRole(["ADMIN", "OWNER"]);
   if (denied) return denied;
   const rows = await listPetani();
-  return NextResponse.json(rows.map(serializePetani));
-}
+  return apiOk(rows.map(serializePetani));
+});
 
-export async function POST(request: Request) {
-  const denied = await requireWrite();
+export const POST = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN"]);
   if (denied) return denied;
   try {
     const row = await createPetani(parsePetaniInput(await request.json()));
-    return NextResponse.json(serializePetani(row), { status: 201 });
+    return apiOk(serializePetani(row), { status: 201 });
   } catch (error) {
     return handleError(error);
   }
-}
+});
 
-export async function PUT(request: Request) {
-  const denied = await requireWrite();
+export const PUT = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN"]);
   if (denied) return denied;
   try {
     const body = await request.json();
     const id = Number(body.id);
     if (!Number.isInteger(id) || id <= 0) {
-      return NextResponse.json({ error: "ID petani tidak valid." }, { status: 400 });
+      return apiFail("INVALID_ID", "ID petani tidak valid.", 400);
     }
     const row = await updatePetani(id, parsePetaniInput(body));
-    return NextResponse.json(serializePetani(row));
+    return apiOk(serializePetani(row));
   } catch (error) {
     return handleError(error);
   }
-}
+});
