@@ -8,6 +8,7 @@ Dokumen pengerjaan ada di `docs/`:
 - `project-context.md` — fakta usaha dan batasan
 - `skenario-narasi-ucd-agile.md` — naskah UCD
 - `notes.md` — yang masih terbuka
+- `docs/agile/` — timeline sprint, AC/DoD, audit log (pelacakan seperti version control)
 
 Yang terpasang sekarang adalah fondasi Sprint 1 (US1.1): Next.js 14 App Router, TypeScript ketat, Tailwind, dan komponen Button, Card, Input, Badge, Dialog, Table, Select.
 
