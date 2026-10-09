@@ -25,6 +25,16 @@
 - Admin: biaya nutrisi/listrik untuk batch aktif, overhead periode, approve panen → cek `overhead_teralokasi` di detail HPP.
 - `npm run typecheck` · `npm run build` · `npm run test:e2e` (dev server jalan).
 
+## Pull request
+
+- [#64](https://github.com/sapikkk/muhammadsyafiq213510100/pull/64) — base `feat/ui-redesign`, head `chore/testing-references` (stack docs + US4.5 + US2.4 + testing)
+
+## GitHub Project
+
+- US4.5 (#28) → **Done**
+- US2.4 (#14) → **Done**
+- US2.3 (#13) → **In progress** (susut/plastik menunggu US2.5)
+
 ## Berikutnya
 
-US3.5, US2.5, push PR stack ke `main` setelah review.
+US3.5, US2.5, merge PR #64 setelah uji, lalu Sprint 3 US5.1.
