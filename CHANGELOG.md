@@ -1,3 +1,12 @@
+# [1.5.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.4.0...v1.5.0) (2026-10-09)
+
+
+### Features
+
+* **penjualan:** EPIC-5 US5.1–5.5 ([#72](https://github.com/sapikkk/muhammadsyafiq213510100/issues/72)) ([e1026b0](https://github.com/sapikkk/muhammadsyafiq213510100/commit/e1026b04fac70a1a2f114535835ea1c7bb33defe))
+* **penjualan:** US5.3 pengiriman SO dan US5.4 jurnal PENDING saat DELIVERED ([e243687](https://github.com/sapikkk/muhammadsyafiq213510100/commit/e2436870bcf4d1495ca2435c5b0a117b1a8aef85))
+* **penjualan:** US5.5 invoice, batal SO, dan biaya packing ([de25531](https://github.com/sapikkk/muhammadsyafiq213510100/commit/de25531ad96282d541646495573f900c97432790))
+
 # [1.4.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.3.0...v1.4.0) (2026-10-09)
 
 
