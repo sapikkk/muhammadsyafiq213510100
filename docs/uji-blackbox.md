@@ -882,3 +882,35 @@ POST /api/auth/callback/credentials 200 in 24253ms
 2. Jalankan `npm run dev:clean` (hapus `.next` lalu dev).
 3. Pastikan `NEXTAUTH_URL` di `.env` cocok dengan port (mis. `http://localhost:3000`).
 4. Setelah `prisma db push` / ganti schema: restart dev server.
+
+---
+
+## Notulensi 2026-10-09 — backlog, Graphify, US4.5, US2.4
+
+**Lingkup:** sinkron GitHub Project, dokumen sprint, agent stack (tanpa commit `.agents/`), master petani, biaya/overhead, Playwright smoke.
+
+### US4.5 Master petani
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| Buka `/admin/petani` | Admin | Daftar seed 4 petani PRD |
+| Form tambah petani | Admin | Baris baru di tabel |
+| Buka `/owner/petani` | Owner | Sama, tanpa form tulis |
+
+### US2.4 Biaya langsung & overhead
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| Pilih batch di `/admin/biaya` | Admin | Simpan nutrisi/listrik |
+| Post overhead periode | Admin | Muncul di daftar overhead |
+| Approve panen batch tersebut | Admin | HPP `overhead_teralokasi` > 0 jika overhead ada |
+
+### Otomatisasi
+
+```bash
+npm run typecheck && npm run build
+npm run test:e2e   # butuh dev server di :3000
+graphify update .  # setelah ubah kode
+```
+
+Rincian branch dan referensi testing: `docs/notulensi-2026-10-09.md`, `docs/sprint-backlog-agile.md`.

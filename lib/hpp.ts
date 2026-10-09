@@ -1,7 +1,10 @@
 import { Prisma } from "@prisma/client";
+import { allocateOverheadForSiklus } from "@/lib/biaya";
 import { prisma } from "@/lib/prisma";
 
-export async function calculateHPP(siklusId: number, tx: Prisma.TransactionClient) {
+type PrismaDb = typeof prisma;
+
+export async function calculateHPP(siklusId: number, tx: PrismaDb = prisma) {
   const siklus = await tx.siklus_Produksi.findUnique({
     where: { id: siklusId },
     include: {
@@ -19,10 +22,7 @@ export async function calculateHPP(siklusId: number, tx: Prisma.TransactionClien
   // 1. Biaya Langsung
   const biayaLangsungTotal = siklus.biaya_langsung?.subtotal || new Prisma.Decimal(0);
 
-  // 2. Overhead (Teralokasi)
-  // Untuk MVP, overhead kita set 0 jika belum ada logika alokasi spesifik
-  // Idealnya ini ditarik dari Biaya_Overhead dibagi total kolam
-  const overheadTeralokasi = new Prisma.Decimal(0);
+  const overheadTeralokasi = await allocateOverheadForSiklus(siklusId, tx);
 
   // 3. Biaya Plastik Packing (Asumsi: dari harga_pack di varietas, atau kita set statis untuk MVP)
   // PRD: "berat per pack ditambah biaya plastik"
