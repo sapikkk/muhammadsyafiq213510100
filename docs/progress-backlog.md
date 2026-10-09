@@ -15,7 +15,7 @@
 | EPIC-2 Akuntansi & HPP | 2 | 1 (US2.3) | 3 | 33%→50% dengan MVP 2.3 |
 | EPIC-3 Produksi | 4 | 0 | 3 | 57% (4/7) |
 | EPIC-4 Inventaris | 4 | 0 | 1 | 80% (4/5) |
-| EPIC-5 Penjualan | 1 | 1 | 3 | ~40% (US5.1 + konfirmasi stok) |
+| EPIC-5 Penjualan | 3 | 1 | 1 | ~60% (US5.1–5.4; US5.5 belum) |
 | EPIC-6 Dashboard & ekspor | 0 | 0 | 5 | 0% |
 
 **Sprint 2 (EPIC 2+3+4):** fondasi produksi + inventaris kuat; sisa = biaya/HPP lengkap, kegagalan, master petani.

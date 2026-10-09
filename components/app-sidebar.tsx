@@ -17,6 +17,7 @@ import {
   Package,
   Receipt,
   Settings,
+  Truck,
   Users,
   TriangleAlert,
 } from "lucide-react";
@@ -84,6 +85,7 @@ function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
     { label: "Active pack", href: "/petani/active-pack", icon: Package },
     { label: "Varietas", href: "/petani/varietas", icon: LeafyGreen },
     { label: "Siklus", href: "/petani/siklus", icon: Layers },
+    { label: "Pengiriman", href: "/petani/pengiriman", icon: Truck },
     alertItem,
   ];
 }

@@ -196,6 +196,13 @@ model Sales_Order {
   dibuat_pada    DateTime            @default(now())
   dibuat_oleh_id Int
   dibuat_oleh    User                @relation("SalesOrderDibuat", fields: [dibuat_oleh_id], references: [id])
+  dikirim_pada   DateTime?
+  dikirim_oleh_id Int?
+  terkirim_pada  DateTime?
+  terkirim_oleh_id Int?
+  catatan_pengiriman String?         @db.VarChar(500)
+  jurnal_pendapatan_id Int?          @unique
+  jurnal_pendapatan Jurnal?          @relation(fields: [jurnal_pendapatan_id], references: [id])
   baris          Sales_Order_Baris[]
 }
 
@@ -395,6 +402,7 @@ model Jurnal {
   diputusPada   DateTime?
   alasanTolak   String?       @db.Text
   baris         JurnalBaris[]
+  sales_order   Sales_Order?
 }
 
 model JurnalBaris {

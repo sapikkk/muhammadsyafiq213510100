@@ -953,6 +953,20 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | `/admin/penjualan` buat SO | Admin | Nomor `SO-YYYY-NNN`, status DRAFT, grand total |
 | Konfirmasi stok | Admin | Status CONFIRMED jika qty ≤ stok batch; error jika kurang |
 
+### US5.3 Packing & pengiriman
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/petani/pengiriman` atau `/admin/penjualan` | Petani / Admin | SO CONFIRMED → form SHIPPED + catatan opsional + timestamp |
+| Tandai terkirim | Petani / Admin | SO SHIPPED → DELIVERED; catatan opsional |
+
+### US5.4 Jurnal saat DELIVERED
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| DELIVERED | Sistem | Jurnal PENDING: Kas Dr, Penjualan curah/pack Cr; HPP Dr, Persediaan Cr; keterangan berisi nomor SO |
+| `/admin/jurnal` | Admin | Setujui jurnal → saldo akun berubah |
+
 ### Otomatisasi
 
 ```bash
