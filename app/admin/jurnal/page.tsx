@@ -62,10 +62,18 @@ export default async function JurnalPage({
             ))}
           </select>
         </label>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button type="submit" variant="outline" className="h-11">
             Terapkan
           </Button>
+          <a
+            href={`/api/export/journal?${new URLSearchParams(
+              Object.entries(searchParams).filter(([, v]) => v) as [string, string][],
+            ).toString()}`}
+            className="inline-flex h-11 items-center rounded-md border px-3 text-sm hover:bg-accent"
+          >
+            Ekspor xlsx
+          </a>
           {adaFilter ? (
             <Link
               href="/admin/jurnal"
