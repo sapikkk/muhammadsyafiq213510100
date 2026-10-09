@@ -1,44 +1,41 @@
-import { getServerSession } from "next-auth";
-import { isRoleAllowed } from "@/lib/rbac";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
-import { SiklusError, lanjutFase, serializeSiklus, getSiklusProduksi, listSiklusProduksi } from "@/lib/siklus-produksi";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
+import {
+  SiklusError,
+  lanjutFase,
+  serializeSiklus,
+  getSiklusProduksi,
+  listSiklusProduksi,
+} from "@/lib/siklus-produksi";
 
 function handleError(error: unknown) {
   if (error instanceof SiklusError) {
-    return NextResponse.json({ error: error.message }, { status: error.status });
+    return apiFail("SIKLUS_ERROR", error.message, error.status);
   }
   if (error instanceof SyntaxError) {
-    return NextResponse.json({ error: "Body bukan JSON." }, { status: 400 });
+    return apiFail("INVALID_JSON", "Body bukan JSON.", 400);
   }
   throw error;
 }
 
-export async function PUT(
-  request: Request,
-  { params }: { params: { id: string } },
-) {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
+export const PUT = withApiHandler(async (request: Request, context?: unknown) => {
+  const { denied, session } = await requireApiRole(["PEKERJA"]);
+  if (denied) return denied;
   const userId = session?.user?.id ? Number(session.user.id) : null;
-  if (!role || !userId) {
-    return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
+  if (!userId) {
+    return apiFail("UNAUTHORIZED", "Belum masuk.", 401);
   }
-  if (!isRoleAllowed(role, "PEKERJA")) {
-    return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
-  }
-
+  const params = (context as { params: { id: string } }).params;
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) {
-    return NextResponse.json({ error: "id tidak valid." }, { status: 400 });
+    return apiFail("INVALID_ID", "id tidak valid.", 400);
   }
-
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const hasil = await lanjutFase(id, userId, body);
     const rows = await listSiklusProduksi();
     const row = rows.find((r) => r.id === id);
-    return NextResponse.json({
+    return apiOk({
       fase_dari: hasil.fase_dari,
       fase_ke: hasil.fase_ke,
       label_ke: hasil.label_ke,
@@ -47,25 +44,21 @@ export async function PUT(
   } catch (error) {
     return handleError(error);
   }
-}
+});
 
-export async function GET(
-  _request: Request,
-  { params }: { params: { id: string } },
-) {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!isRoleAllowed(role, ["ADMIN", "OWNER", "PEKERJA"])) {
-    return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
-  }
+export const GET = withApiHandler(async (_request: Request, context?: unknown) => {
+  const { denied } = await requireApiRole(["ADMIN", "OWNER", "PEKERJA"]);
+  if (denied) return denied;
+  const params = (context as { params: { id: string } }).params;
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) {
-    return NextResponse.json({ error: "id tidak valid." }, { status: 400 });
+    return apiFail("INVALID_ID", "id tidak valid.", 400);
   }
   const siklus = await getSiklusProduksi(id);
-  if (!siklus) return NextResponse.json({ error: "Siklus tidak ditemukan." }, { status: 404 });
+  if (!siklus) {
+    return apiFail("NOT_FOUND", "Siklus tidak ditemukan.", 404);
+  }
   const rows = await listSiklusProduksi();
   const row = rows.find((r) => r.id === id)!;
-  return NextResponse.json(serializeSiklus(row));
-}
+  return apiOk(serializeSiklus(row));
+});

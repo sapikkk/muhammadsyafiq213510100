@@ -1,6 +1,11 @@
+"use client";
+
+import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
-import type { HistoriPetaniBaris, TugasPetani } from "@/lib/tugas-petani";
+import { useMemo } from "react";
+import type { TugasPetani } from "@/lib/tugas-petani";
 import { Badge } from "@/components/ui/badge";
+import { DataTable } from "@/components/data-table";
 
 const waktu = new Intl.DateTimeFormat("id-ID", {
   dateStyle: "medium",
@@ -14,64 +19,103 @@ function prioritasVariant(p: TugasPetani["prioritas"]) {
   return "outline" as const;
 }
 
+export type HistoriPetaniBarisClient = {
+  waktu: string;
+  jenis: "fase" | "monitor" | "tambal" | "kegagalan";
+  ringkasan: string;
+  siklus_kode: string;
+  href: string;
+};
+
 export function PetaniTugasPanel({
   tugas,
   histori,
 }: {
   tugas: TugasPetani[];
-  histori: HistoriPetaniBaris[];
+  histori: HistoriPetaniBarisClient[];
 }) {
+  const tugasColumns = useMemo<ColumnDef<TugasPetani>[]>(
+    () => [
+      {
+        accessorKey: "prioritas",
+        header: "Prioritas",
+        cell: ({ row }) => (
+          <Badge variant={prioritasVariant(row.original.prioritas)}>
+            {row.original.prioritas}
+          </Badge>
+        ),
+      },
+      { accessorKey: "judul", header: "Tugas" },
+      {
+        accessorKey: "deskripsi",
+        header: "Detail",
+        cell: ({ row }) => (
+          <span className="text-muted-foreground">{row.original.deskripsi}</span>
+        ),
+      },
+      {
+        id: "aksi",
+        header: "",
+        cell: ({ row }) => (
+          <Link
+            href={row.original.href}
+            className="font-medium text-primary underline-offset-4 hover:underline"
+          >
+            Buka
+          </Link>
+        ),
+      },
+    ],
+    [],
+  );
+
+  const historiColumns = useMemo<ColumnDef<HistoriPetaniBarisClient>[]>(
+    () => [
+      { accessorKey: "siklus_kode", header: "Batch" },
+      { accessorKey: "ringkasan", header: "Ringkasan" },
+      { accessorKey: "jenis", header: "Jenis" },
+      {
+        accessorKey: "waktu",
+        header: "Waktu",
+        cell: ({ row }) => waktu.format(new Date(row.original.waktu)),
+      },
+      {
+        id: "link",
+        header: "",
+        cell: ({ row }) => (
+          <Link href={row.original.href} className="text-primary underline-offset-4 hover:underline">
+            Detail
+          </Link>
+        ),
+      },
+    ],
+    [],
+  );
+
   return (
     <div className="grid gap-8 lg:grid-cols-2">
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">Tugas hari ini</h2>
-        {tugas.length === 0 ? (
-          <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-            Tidak ada tugas terbuka. Batch aktif sudah up to date.
-          </p>
-        ) : (
-          <ul className="divide-y rounded-md border">
-            {tugas.map((t) => (
-              <li key={t.id} className="space-y-2 p-4 text-sm">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant={prioritasVariant(t.prioritas)}>{t.prioritas}</Badge>
-                  <p className="font-medium">{t.judul}</p>
-                </div>
-                <p className="text-muted-foreground">{t.deskripsi}</p>
-                <Link
-                  href={t.href}
-                  className="inline-flex min-h-11 items-center font-medium text-primary underline-offset-4 hover:underline"
-                >
-                  Buka
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
+        <DataTable
+          columns={tugasColumns}
+          data={tugas}
+          pageSize={8}
+          searchPlaceholder="Cari tugas…"
+          searchColumnIds={["judul", "deskripsi", "prioritas"]}
+          emptyMessage="Tidak ada tugas terbuka. Batch aktif sudah up to date."
+        />
       </section>
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">Histori aktivitas</h2>
-        {histori.length === 0 ? (
-          <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-            Belum ada log produksi.
-          </p>
-        ) : (
-          <ul className="divide-y rounded-md border">
-            {histori.map((h, i) => (
-              <li key={`${h.siklus_kode}-${i}`} className="space-y-1 p-4 text-sm">
-                <p className="font-medium">{h.siklus_kode}</p>
-                <p className="text-muted-foreground">{h.ringkasan}</p>
-                <p className="text-xs text-muted-foreground">
-                  {waktu.format(h.waktu)} · {h.jenis}
-                </p>
-                <Link href={h.href} className="text-primary underline-offset-4 hover:underline">
-                  Detail siklus
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
+        <DataTable
+          columns={historiColumns}
+          data={histori}
+          pageSize={8}
+          searchPlaceholder="Cari batch atau ringkasan…"
+          searchColumnIds={["siklus_kode", "ringkasan", "jenis"]}
+          emptyMessage="Belum ada log produksi."
+        />
       </section>
     </div>
   );

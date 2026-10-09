@@ -5,7 +5,7 @@
 | 0 Inventory & baseline | **Done** | `00-inventory.md`, `01-baseline.md` |
 | 1 RBAC audit bypass | **Done** | `rbac.md`, `lib/rbac.ts`, CI env guard |
 | 2 Flat B&W UI | **Partial** | Token + `ui/*`; `SessionShell` on pengaturan/ganti-sandi/404/loading |
-| 3 DataTable / CRUD | **Partial** | + riwayat inventaris, log fase/kegagalan; SO ringkas + panel detail |
+| 3 DataTable / CRUD | **Partial** | + stok rendah, tugas/histori petani, reset sandi; SO ringkas + panel detail |
 | 4 Performance | **Partial** | `perf-before-after.md`; session warm ~300ms |
 | 5 Errors / toaster | **Partial** | + `global-error`, `NetworkStatus`, SO/active-pack forms; `lib/api-client.ts` |
 | 6 Dept audits | **Partial** | `frontend.md`, `backend.md`; qa/security pending |
