@@ -23,6 +23,8 @@ import {
   Settings,
   Truck,
   Users,
+  UserCog,
+  CircleDollarSign,
   TriangleAlert,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -70,6 +72,10 @@ function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
   if (role === "OWNER") {
     return [
       { label: "Dashboard", href: "/owner", icon: LayoutDashboard },
+      { label: "Bagan akun", href: "/owner/akun", icon: BookOpen },
+      { label: "Jurnal", href: "/owner/jurnal", icon: Layers },
+      { label: "Prive", href: "/owner/prive", icon: CircleDollarSign },
+      { label: "Kelola user", href: "/owner/pengguna", icon: UserCog },
       { label: "Breakdown biaya", href: "/owner/biaya", icon: PieChart },
       { label: "Evaluasi margin", href: "/owner/evaluasi", icon: LineChart },
       { label: "Arus kas", href: "/owner/arus-kas", icon: Wallet },
