@@ -852,7 +852,7 @@ POST /api/auth/callback/credentials 200 in 24253ms
 2. `registerPetani` (US1.6) mengulang sekali pada `P2024` dan memberi pesan "Database sedang sibuk. Coba simpan lagi."
 3. Parameter `pool_timeout` pada `DATABASE_URL` di `.env` lokal dinaikkan supaya permintaan menunggu lebih lama daripada gagal. Nilai tidak dicatat di repo karena `.env` berisi kredensial.
 
-### Rekomendasi sebelum demo sidang
+### Rekomendasi sebelum demo / go-live staging
 
 - Pakai Prisma Accelerate atau database di region yang lebih dekat.
 - Atau jalankan PostgreSQL lokal untuk demo, lalu `prisma db push` dan seed.

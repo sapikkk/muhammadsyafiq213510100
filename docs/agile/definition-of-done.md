@@ -7,7 +7,7 @@ Sumber: [PRD §10](../prd-agile-kokonus-farm.md#10-definition-of-done).
 | # | Kriteria | Verifikasi |
 |---|----------|------------|
 | 1 | Semua AC terpenuhi | Tabel AC di issue / sprint doc = Terpenuhi |
-| 2 | Review ≥ 1 developer | PR reviewed atau catatan PO |
+| 2 | Review ≥ 1 developer | **Wajib:** ≥1 *approving* review GitHub pada PR US sebelum merge |
 | 3 | TypeScript bersih | `npm run typecheck` |
 | 4 | ESLint + Prettier bersih | `npm run lint`, `npm run format:check` |
 | 5 | Tidak ada `console.error`/`warn` di production | Review diff / CI |
@@ -22,7 +22,7 @@ Sumber: [PRD §10](../prd-agile-kokonus-farm.md#10-definition-of-done).
 ## Per sprint
 
 - Demo ke PO (Sprint Review).
-- Retro tercatat (boleh di `audit-log.md`).
+- Retro tercatat di `docs/agile/retro/sprint-XX-retro.md` + ringkas di `audit-log.md`.
 - Velocity tercatat di [timeline-registry.md](./timeline-registry.md).
 - Staging/demo tanpa crash P1.
 - Tidak ada bug P1 terbuka untuk scope sprint.
