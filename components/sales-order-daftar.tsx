@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { SubmitButton } from "@/components/submit-button";
 import { Badge } from "@/components/ui/badge";
 import { formatRupiah } from "@/lib/format";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export type SoRow = {
   id: number;
@@ -34,20 +35,20 @@ export type SoRow = {
 
 function ConfirmButton({ id }: { id: number }) {
   const [state, formAction] = useFormState(confirmSalesOrderAction, {});
+  useActionToast({ error: state.error, ok: state.ok });
   return (
     <form action={formAction} className="inline-block">
       <input type="hidden" name="salesOrderId" value={id} />
       <SubmitButton className="h-9" pendingLabel="...">
         Konfirmasi stok
       </SubmitButton>
-      {state.error ? <p className="text-xs text-destructive">{state.error}</p> : null}
-      {state.ok ? <p className="text-xs text-primary">{state.ok}</p> : null}
     </form>
   );
 }
 
 function ShipForm({ id }: { id: number }) {
   const [state, formAction] = useFormState(shipSalesOrderAction, {});
+  useActionToast({ error: state.error, ok: state.ok });
   return (
     <form action={formAction} className="mt-2 space-y-2 rounded-md border border-dashed p-3">
       <input type="hidden" name="salesOrderId" value={id} />
@@ -55,14 +56,13 @@ function ShipForm({ id }: { id: number }) {
       <SubmitButton className="h-9" pendingLabel="...">
         Tandai dikirim (SHIPPED)
       </SubmitButton>
-      {state.error ? <p className="text-xs text-destructive">{state.error}</p> : null}
-      {state.ok ? <p className="text-xs text-primary">{state.ok}</p> : null}
     </form>
   );
 }
 
 function PackingCostForm({ id, defaultValue }: { id: number; defaultValue: string }) {
   const [state, formAction] = useFormState(recordPackingCostAction, {});
+  useActionToast({ error: state.error, ok: state.ok });
   return (
     <form action={formAction} className="mt-2 space-y-2 rounded-md border border-dashed p-3">
       <input type="hidden" name="salesOrderId" value={id} />
@@ -78,14 +78,13 @@ function PackingCostForm({ id, defaultValue }: { id: number; defaultValue: strin
         Catat biaya packing
       </SubmitButton>
       <p className="text-xs text-muted-foreground">Jurnal beban 5400 / Kas jika nominal &gt; 0.</p>
-      {state.error ? <p className="text-xs text-destructive">{state.error}</p> : null}
-      {state.ok ? <p className="text-xs text-primary">{state.ok}</p> : null}
     </form>
   );
 }
 
 function CancelForm({ id }: { id: number }) {
   const [state, formAction] = useFormState(cancelSalesOrderAction, {});
+  useActionToast({ error: state.error, ok: state.ok });
   return (
     <form action={formAction} className="mt-2 space-y-2 rounded-md border border-destructive/40 p-3">
       <input type="hidden" name="salesOrderId" value={id} />
@@ -93,14 +92,13 @@ function CancelForm({ id }: { id: number }) {
       <SubmitButton className="h-9" pendingLabel="..." variant="destructive">
         Batalkan SO
       </SubmitButton>
-      {state.error ? <p className="text-xs text-destructive">{state.error}</p> : null}
-      {state.ok ? <p className="text-xs text-primary">{state.ok}</p> : null}
     </form>
   );
 }
 
 function DeliverForm({ id }: { id: number }) {
   const [state, formAction] = useFormState(deliverSalesOrderAction, {});
+  useActionToast({ error: state.error, ok: state.ok });
   return (
     <form action={formAction} className="mt-2 space-y-2 rounded-md border border-dashed p-3">
       <input type="hidden" name="salesOrderId" value={id} />
@@ -111,8 +109,6 @@ function DeliverForm({ id }: { id: number }) {
       <p className="text-xs text-muted-foreground">
         Membuat jurnal pendapatan berstatus PENDING untuk persetujuan Admin.
       </p>
-      {state.error ? <p className="text-xs text-destructive">{state.error}</p> : null}
-      {state.ok ? <p className="text-xs text-primary">{state.ok}</p> : null}
     </form>
   );
 }

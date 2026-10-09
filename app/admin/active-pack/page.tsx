@@ -6,16 +6,23 @@ import {
 import { ActivePackDaftar } from "@/components/active-pack-daftar";
 import { ActivePackForm } from "@/components/active-pack-form";
 import { ActivePackPakaiForm } from "@/components/active-pack-pakai-form";
-import { listActivePack } from "@/lib/active-pack";
+import {
+  listActivePack,
+  serializeActivePack,
+  type ActivePackListRow,
+} from "@/lib/active-pack";
 import { listItemInventaris } from "@/lib/inventaris";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminActivePackPage() {
-  const [items, packs] = await Promise.all([
+  const [items, packsRaw] = await Promise.all([
     listItemInventaris(true),
     listActivePack(false),
   ]);
+  const packs: ActivePackListRow[] = packsRaw.map((p) =>
+    serializeActivePack(p),
+  ) as ActivePackListRow[];
 
   return (
     <div className="flex flex-col gap-8">

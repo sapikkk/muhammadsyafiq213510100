@@ -1,5 +1,10 @@
+"use client";
+
+import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
+import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
+import { DataTable } from "@/components/data-table";
 import { formatTanggal } from "@/lib/format";
 import { faseLabel, isFaseProduksi } from "@/lib/siklus-fase";
 
@@ -15,39 +20,69 @@ export type SiklusBaris = {
 };
 
 export function SiklusDaftar({ rows }: { rows: SiklusBaris[] }) {
-  if (rows.length === 0) {
-    return (
-      <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-        Belum ada siklus produksi.
-      </p>
-    );
-  }
-
-  return (
-    <ul className="divide-y rounded-md border">
-      {rows.map((row) => (
-        <li key={row.id} className="space-y-1 p-4 text-sm">
-          <div className="flex flex-wrap items-center gap-2">
-            <p className="font-medium">{row.kode_batch}</p>
-            <Badge variant="secondary">
-              {isFaseProduksi(row.status) ? faseLabel[row.status] : row.status}
-            </Badge>
-          </div>
-          <p className="text-muted-foreground">
-            {row.varietas_nama} · {row.greenhouse_nama} / {row.kolam_nama}
-          </p>
-          <p className="text-muted-foreground">
-            Semai {formatTanggal(new Date(`${row.tanggal_semai}T12:00:00.000Z`))} ·{" "}
-            {row.jumlah_disemai} bibit
-          </p>
+  const columns = useMemo<ColumnDef<SiklusBaris>[]>(
+    () => [
+      { accessorKey: "kode_batch", header: "Batch" },
+      {
+        accessorKey: "status",
+        header: "Fase",
+        cell: ({ row }) => (
+          <Badge variant="secondary">
+            {isFaseProduksi(row.original.status)
+              ? faseLabel[row.original.status]
+              : row.original.status}
+          </Badge>
+        ),
+      },
+      { accessorKey: "varietas_nama", header: "Varietas" },
+      {
+        id: "lokasi",
+        header: "Lokasi",
+        accessorFn: (row) => `${row.greenhouse_nama} ${row.kolam_nama}`,
+        cell: ({ row }) => (
+          <span className="text-muted-foreground">
+            {row.original.greenhouse_nama} / {row.original.kolam_nama}
+          </span>
+        ),
+      },
+      {
+        id: "semai",
+        header: "Semai",
+        accessorFn: (row) => row.tanggal_semai,
+        cell: ({ row }) =>
+          formatTanggal(new Date(`${row.original.tanggal_semai}T12:00:00.000Z`)),
+      },
+      {
+        accessorKey: "jumlah_disemai",
+        header: "Bibit",
+        cell: ({ row }) => (
+          <span className="tabular-nums">{row.original.jumlah_disemai}</span>
+        ),
+      },
+      {
+        id: "aksi",
+        header: "",
+        cell: ({ row }) => (
           <Link
-            href={`/petani/siklus/${row.id}`}
-            className="inline-flex min-h-11 items-center text-sm font-medium text-primary underline-offset-4 hover:underline"
+            href={`/petani/siklus/${row.original.id}`}
+            className="text-sm font-medium text-primary underline-offset-4 hover:underline"
           >
             Pindah fase
           </Link>
-        </li>
-      ))}
-    </ul>
+        ),
+      },
+    ],
+    [],
+  );
+
+  return (
+    <DataTable
+      columns={columns}
+      data={rows}
+      pageSize={12}
+      searchPlaceholder="Cari batch, varietas, lokasi…"
+      searchColumnIds={["kode_batch", "varietas_nama", "lokasi", "status"]}
+      emptyMessage="Belum ada siklus produksi."
+    />
   );
 }
