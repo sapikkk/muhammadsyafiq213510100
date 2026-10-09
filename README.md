@@ -30,3 +30,7 @@ npm run build
 ```
 
 PostgreSQL dan login belum dipakai. `DATABASE_URL` dan `NEXTAUTH_SECRET` di `.env.example` disiapkan untuk story berikutnya.
+
+## Cursor Agent (Superpowers)
+
+Plugin [Superpowers](https://github.com/obra/superpowers) ada di `.cursor/plugins/superpowers` (submodule). Setelah clone, jalankan `git submodule update --init --recursive`. Rincian: `docs/cursor-superpowers.md`.
