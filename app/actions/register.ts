@@ -69,5 +69,6 @@ export async function registerPetani(
 
   revalidatePath("/admin");
   revalidatePath("/owner");
+  revalidatePath("/owner/pengguna");
   return { nama, email };
 }
