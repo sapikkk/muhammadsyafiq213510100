@@ -54,8 +54,8 @@ export function FoundationPanel() {
         <CardHeader>
           <CardTitle>Fondasi terpasang</CardTitle>
           <CardDescription>
-            Next.js 14, TypeScript ketat, Tailwind, dan komponen dasar. Skema
-            16 tabel ada di PostgreSQL. Login tiga peran ada di halaman Masuk.
+            Next.js 14, TypeScript ketat, Tailwind, dan komponen dasar. Skema 16
+            tabel ada di PostgreSQL. Login tiga peran ada di halaman Masuk.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-wrap gap-2">
@@ -124,10 +124,10 @@ export function FoundationPanel() {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>US1.5 — lupa sandi</DialogTitle>
+                <DialogTitle>US1.6: daftar petani</DialogTitle>
                 <DialogDescription>
-                  Login sudah bisa dipakai. Berikutnya reset sandi lewat
-                  Admin, bukan tautan publik.
+                  Admin mendaftarkan akun petani di halaman Admin. Owner melihat
+                  daftarnya. Tidak ada pendaftaran publik.
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>

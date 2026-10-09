@@ -1,5 +1,10 @@
 const { PrismaClient } = require("@prisma/client");
 const { hash } = require("bcryptjs");
+const { seedAkun } = require("./seed-akun");
+const { seedInventaris } = require("./seed-inventaris");
+const { seedInfrastruktur } = require("./seed-infrastruktur");
+const { seedVarietas } = require("./seed-varietas");
+const { seedPetani } = require("./seed-petani");
 
 const prisma = new PrismaClient();
 const password = "KokonusDemo2026";
@@ -31,6 +36,14 @@ async function main() {
       create: { ...account, passwordHash },
     });
   }
+  const jumlahAkun = await seedAkun(prisma);
+  const jumlahItem = await seedInventaris(prisma);
+  const infra = await seedInfrastruktur(prisma);
+  const varietas = await seedVarietas(prisma);
+  const jumlahPetani = await seedPetani(prisma);
+  console.log(
+    `Seed selesai: ${accounts.length} akun login, ${jumlahAkun} akun COA, ${jumlahItem} item inventaris, infrastruktur ${infra.totalLubang ?? "?"} lubang, ${varietas.count} varietas (${varietas.created ?? 0} baru, ${varietas.updated ?? 0} diperbarui), ${jumlahPetani} petani master.`,
+  );
 }
 
 main()

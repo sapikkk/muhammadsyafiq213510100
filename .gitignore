@@ -7,3 +7,14 @@ dist
 !.env.example
 *.log
 .firecrawl
+
+.agents/
+skills-lock.json
+.DS_Store
+
+# Graphify — artefak lokal mesin (graph.json boleh di-commit jika tim setuju)
+graphify-out/.graphify_root
+graphify-out/.graphify_python
+graphify-out/.graphify_analysis.json
+graphify-out/cache/
+graphify-out/needs_update
