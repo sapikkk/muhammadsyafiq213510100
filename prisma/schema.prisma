@@ -57,21 +57,53 @@ model Varietas {
 
 model Siklus_Produksi {
   id                   Int             @id @default(autoincrement())
+  kode_batch           String          @unique @db.VarChar(40)
   varietas_id          Int
   varietas             Varietas        @relation(fields: [varietas_id], references: [id])
   kolam_id             Int
   kolam                Kolam           @relation(fields: [kolam_id], references: [id])
   tanggal_semai        DateTime        @db.Date
-  tanggal_pindah_kolam DateTime        @db.Date
-  tanggal_panen        DateTime        @db.Date
+  tanggal_pindah_kolam DateTime?       @db.Date
+  tanggal_panen        DateTime?       @db.Date
   jumlah_disemai       Int
-  jumlah_layak_jual    Int
-  total_susut          Int
+  jumlah_layak_jual    Int             @default(0)
+  total_susut          Int             @default(0)
   status               String          @db.VarChar(30)
   biaya_langsung       Biaya_Langsung?
   log_kegagalan        Log_Kegagalan[]
   hpp                  HPP?
   penjualan            Penjualan[]
+  logProduksi          Log_Produksi[]
+  laporanPanen         Laporan_Panen?
+}
+
+// Jejak pindah fase (ProductionLog, US3.2).
+model Log_Produksi {
+  id         Int             @id @default(autoincrement())
+  siklus_id  Int
+  siklus     Siklus_Produksi @relation(fields: [siklus_id], references: [id], onDelete: Cascade)
+  fase_dari  String          @db.VarChar(30)
+  fase_ke    String          @db.VarChar(30)
+  catatan    String?         @db.VarChar(255)
+  userId     Int
+  user       User            @relation(fields: [userId], references: [id])
+  waktu      DateTime        @default(now())
+}
+
+// US3.3 — harvest report (satu per siklus, menunggu approval Admin).
+model Laporan_Panen {
+  id                     Int             @id @default(autoincrement())
+  siklus_id              Int             @unique
+  siklus                 Siklus_Produksi @relation(fields: [siklus_id], references: [id], onDelete: Cascade)
+  berat_layak_gram       Decimal         @db.Decimal(12, 3)
+  berat_tidak_layak_gram Decimal         @db.Decimal(12, 3)
+  jumlah_layak           Int
+  jumlah_tidak_layak     Int
+  status                 String          @db.VarChar(30)
+  catatan                String?         @db.VarChar(500)
+  userId                 Int
+  user                   User            @relation(fields: [userId], references: [id])
+  waktu_kirim            DateTime        @default(now())
 }
 
 model Biaya_Langsung {
@@ -188,11 +220,156 @@ enum Role {
 }
 
 model User {
-  id           Int    @id @default(autoincrement())
-  nama         String @db.VarChar(100)
-  email        String @unique @db.VarChar(254)
-  passwordHash String @db.VarChar(100)
-  role         Role
+  id                 Int                    @id @default(autoincrement())
+  nama               String                 @db.VarChar(100)
+  email              String                 @unique @db.VarChar(254)
+  passwordHash       String                 @db.VarChar(100)
+  role               Role
+  mustChangePassword Boolean                @default(false)
+  resetRequests      PasswordResetRequest[] @relation("requester")
+  handledResets      PasswordResetRequest[] @relation("handler")
+  jurnalDibuat       Jurnal[]               @relation("jurnalPembuat")
+  jurnalDiputus      Jurnal[]               @relation("jurnalPemutus")
+  pergerakanInventaris PergerakanInventaris[]
+  activePackDibuat     ActivePack[]
+  logProduksi          Log_Produksi[]
+  laporanPanen         Laporan_Panen[]
+}
+
+// Epic 4 — inventaris bahan. Tidak ada di ERD Figma 16 tabel, ditambah untuk US4.1.
+enum SatuanInventaris {
+  GRAM
+  KG
+  PCS
+  PACK
+  LITER
+}
+
+enum TipePergerakan {
+  IN
+  OUT
+  ADJUST
+}
+
+model ItemInventaris {
+  id          Int                    @id @default(autoincrement())
+  kode        String                 @unique @db.VarChar(30)
+  nama        String                 @db.VarChar(100)
+  satuan      SatuanInventaris
+  stokSaatIni Decimal                @default(0) @db.Decimal(12, 3)
+  stokMinimum Decimal                @default(0) @db.Decimal(12, 3)
+  aktif       Boolean                @default(true)
+  pergerakan  PergerakanInventaris[]
+  activePack  ActivePack[]
+}
+
+enum StatusActivePack {
+  AKTIF
+  HABIS
+}
+
+// US4.2 — pack aktif untuk alokasi biaya per unit (F15).
+model ActivePack {
+  id           Int              @id @default(autoincrement())
+  kode         String           @unique @db.VarChar(30)
+  itemId       Int
+  item         ItemInventaris   @relation(fields: [itemId], references: [id])
+  hargaPack    Decimal          @db.Decimal(18, 2)
+  jumlahUnit   Decimal          @db.Decimal(12, 3)
+  sisaUnit     Decimal          @db.Decimal(12, 3)
+  biayaPerUnit Decimal          @db.Decimal(18, 4)
+  status       StatusActivePack @default(AKTIF)
+  keterangan   String?          @db.VarChar(255)
+  dibuatOlehId Int
+  dibuatOleh   User             @relation(fields: [dibuatOlehId], references: [id])
+  dibuatPada   DateTime         @default(now())
+}
+
+model PergerakanInventaris {
+  id          Int              @id @default(autoincrement())
+  itemId      Int
+  item        ItemInventaris   @relation(fields: [itemId], references: [id])
+  tipe        TipePergerakan
+  jumlah      Decimal          @db.Decimal(12, 3)
+  stokSebelum Decimal          @db.Decimal(12, 3)
+  stokSesudah Decimal          @db.Decimal(12, 3)
+  keterangan  String?          @db.VarChar(255)
+  userId      Int
+  user        User             @relation(fields: [userId], references: [id])
+  dibuatPada  DateTime         @default(now())
+}
+
+enum ResetStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// Satu baris per permintaan lupa sandi. Jadi jejak siapa menyetujui dan kapan.
+model PasswordResetRequest {
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  user        User        @relation("requester", fields: [userId], references: [id])
+  status      ResetStatus @default(PENDING)
+  requestedAt DateTime    @default(now())
+  handledById Int?
+  handledBy   User?       @relation("handler", fields: [handledById], references: [id])
+  handledAt   DateTime?
+}
+
+// Bagan akun (COA). Tidak ada di ERD Figma, ditambah untuk Epic 2 sesuai PRD US2.1.
+enum TipeAkun {
+  ASET
+  KEWAJIBAN
+  MODAL
+  PENDAPATAN
+  BEBAN
+}
+
+model Akun {
+  id       Int           @id @default(autoincrement())
+  kode     String        @unique @db.VarChar(20)
+  nama     String        @db.VarChar(100)
+  tipe     TipeAkun
+  parentId Int?
+  parent   Akun?         @relation("AkunInduk", fields: [parentId], references: [id])
+  anak     Akun[]        @relation("AkunInduk")
+  aktif    Boolean       @default(true)
+  // Saldo normal: Aset dan Beban bertambah di debit, lainnya di kredit. Hanya berubah saat jurnal APPROVED.
+  saldo    Decimal       @default(0) @db.Decimal(18, 2)
+  baris    JurnalBaris[]
+}
+
+enum StatusJurnal {
+  DRAFT
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Jurnal {
+  id            Int           @id @default(autoincrement())
+  tanggal       DateTime      @db.Date
+  keterangan    String        @db.VarChar(255)
+  status        StatusJurnal  @default(DRAFT)
+  dibuatOlehId  Int
+  dibuatOleh    User          @relation("jurnalPembuat", fields: [dibuatOlehId], references: [id])
+  dibuatPada    DateTime      @default(now())
+  diputusOlehId Int?
+  diputusOleh   User?         @relation("jurnalPemutus", fields: [diputusOlehId], references: [id])
+  diputusPada   DateTime?
+  alasanTolak   String?       @db.Text
+  baris         JurnalBaris[]
+}
+
+model JurnalBaris {
+  id       Int     @id @default(autoincrement())
+  jurnalId Int
+  jurnal   Jurnal  @relation(fields: [jurnalId], references: [id], onDelete: Cascade)
+  akunId   Int
+  akun     Akun    @relation(fields: [akunId], references: [id])
+  debit    Decimal @default(0) @db.Decimal(18, 2)
+  kredit   Decimal @default(0) @db.Decimal(18, 2)
 }
 
 model Arus_Kas {

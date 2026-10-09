@@ -1,6 +1,6 @@
 # Kokonus Farm
 
-Website tata kelola biaya produksi hidroponik untuk skripsi. Studi kasus: greenhouse rakit apung di Pekanbaru, 1.920 lubang tanam.
+Website tata kelola biaya produksi hidroponik (Kokonus Farm). Studi kasus: greenhouse rakit apung di Pekanbaru, 1.920 lubang tanam.
 
 Dokumen pengerjaan ada di `docs/`:
 
@@ -8,6 +8,7 @@ Dokumen pengerjaan ada di `docs/`:
 - `project-context.md` — fakta usaha dan batasan
 - `skenario-narasi-ucd-agile.md` — naskah UCD
 - `notes.md` — yang masih terbuka
+- `docs/agile/` — timeline sprint, AC/DoD, audit log (pelacakan seperti version control)
 
 Yang terpasang sekarang adalah fondasi Sprint 1 (US1.1): Next.js 14 App Router, TypeScript ketat, Tailwind, dan komponen Button, Card, Input, Badge, Dialog, Table, Select.
 
@@ -30,3 +31,7 @@ npm run build
 ```
 
 PostgreSQL dan login belum dipakai. `DATABASE_URL` dan `NEXTAUTH_SECRET` di `.env.example` disiapkan untuk story berikutnya.
+
+## Cursor Agent (Superpowers)
+
+Plugin [Superpowers](https://github.com/obra/superpowers) ada di `.cursor/plugins/superpowers` (submodule). Setelah clone, jalankan `git submodule update --init --recursive`. Rincian: `docs/cursor-superpowers.md`.

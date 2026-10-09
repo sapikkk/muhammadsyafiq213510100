@@ -1,0 +1,10 @@
+[submodule ".cursor/plugins/superpowers"]
+	path = .cursor/plugins/superpowers
+	url = https://github.com/obra/superpowers.git
+	branch = main
+[submodule "vendor/testing/javascript-testing-best-practices"]
+	path = vendor/testing/javascript-testing-best-practices
+	url = https://github.com/goldbergyoni/javascript-testing-best-practices.git
+[submodule "vendor/testing/test-automation-skills-agents"]
+	path = vendor/testing/test-automation-skills-agents
+	url = https://github.com/fugazi/test-automation-skills-agents.git

@@ -4,7 +4,28 @@
 - [x] US1.2 schema Prisma, 16 tabel kamus ERD (Sprint 1)
 - [x] US1.3 schema 16 tabel sudah di PostgreSQL (Prisma Postgres)
 - [x] US1.4 login email+sandi, tiga akun demo (Sprint 1). Sandi demo `KokonusDemo2026` untuk owner@kokonus.farm, admin@kokonus.farm, petani@kokonus.farm. Ganti sebelum production.
-- [ ] Item berikutnya skripsi: **US1.5** lupa sandi lewat Admin (Sprint 1)
+- [x] US1.5 lupa sandi lewat Admin: minta, setujui atau tolak, sandi sementara, wajib ganti. Tanpa OTP.
+- [x] US1.6 Admin mendaftarkan petani: nama, email, sandi awal, peran petani, tanpa signup publik. Owner melihat daftar di /owner. Email dipakai sebagai username login.
+- [x] US1.8 state global: /loading, /error (tombol coba lagi), /not-found, dan /akses-ditolak (403). Middleware mengarahkan peran salah ke 403, bukan diam-diam. Empty state nyata sudah ada di admin dan owner.
+- [x] US1.7 pengaturan: ubah nama, ubah sandi (wajib sandi lama), matrix peran, notifikasi nyata (jumlah permintaan reset untuk Admin). Halaman /pengaturan baca nama dari DB supaya langsung segar.
+- [x] Sprint 1 inti selesai (US1.1-US1.8). US1.9 kelola user dijadwalkan Sprint 4. Notulensi uji di [uji-blackbox.md](uji-blackbox.md).
+- [x] US2.1 bagan akun: model `Akun` (kode unik, 5 tipe, induk-anak, soft delete `aktif`), seed 38 akun UMKM hidroponik, halaman `/admin/akun` pohon + form tambah/ubah lewat `?edit=`, API `/api/accounts` GET/POST/PUT ([api.md](api.md)). Logika bersama di `lib/akun.ts`.
+- [x] US2.2 jurnal: model `Jurnal`/`JurnalBaris`, saldo akun saat APPROVED, `/admin/jurnal` + API `/api/transactions`, dialog tolak. Mitigasi P2024 di `lib/prisma.ts`.
+- [x] US4.1 inventaris: model `ItemInventaris` + `PergerakanInventaris`, API `/api/inventory` dan `/api/inventory/movement`, halaman `/admin/inventaris`, `/petani/inventaris`, `/owner/inventaris` (baca), seed 4 item bahan.
+- [x] US4.2 active pack: model `ActivePack`, biaya/unit = harga÷unit, status `HABIS` saat sisa 0, API `/api/inventory/active-pack`, halaman `/admin/active-pack` dan `/petani/active-pack`.
+- [x] US4.3 alert stok minimum: API `GET /api/inventory/alert` (+ alias `/alerts`), halaman stok rendah Admin/Owner/Petani, banner di beranda.
+- [x] US4.4 infrastruktur: pohon lahan/greenhouse/kolam, API `/api/infrastructure/*`, halaman Admin (CRUD) + Owner (baca), seed 1.920 lubang.
+- [x] US3.4 varietas: API `/api/varietas`, halaman Admin/Owner (tulis) + Petani (baca aktif), seed 2 varietas.
+- [x] US3.1 mulai siklus semai: `kode_batch` unik, fase SEMAI, potong active pack atomik, API `/api/production`, `/petani/siklus`.
+- [x] US3.2 pindah fase: `Log_Produksi`, PUT `/api/production/[id]/phase`, urutan fase maju saja, `/petani/siklus/[id]`.
+- [x] US3.3 submit harvest report (PR #62 `feat/us3.3-harvest`): `Laporan_Panen`, `/api/harvest`, form fase PANEN.
+- [x] UX form siklus gram vs bibit — perbaikan di #62 / issue [#61](https://github.com/sapikkk/muhammadsyafiq213510100/issues/61).
+- [x] UI redesign (`feat/ui-redesign`): layout sidebar Admin/Owner/Petani via `RoleHome`.
+- [x] US2.3 & F12 approve harvest/HPP: `HPP` model, `calculateHPP` library, `/admin/harvest/[id]`, API approve/reject, jurnal persediaan otomatis.
+- [x] US4.5 master petani (ERD): `/admin/petani`, `/owner/petani`, `/api/petani`, seed `prisma/seed-petani.js`.
+- [x] US2.4 form biaya langsung & overhead: `/admin/biaya`, `/api/biaya/*`, alokasi overhead ke `calculateHPP`.
+- [x] Agent stack dokumen: `AGENTS.md`, Graphify, `docs/sprint-backlog-agile.md`, testing Playwright + vendor refs.
+- [ ] Berikutnya: US3.5 log kegagalan, US2.5 susut normal/abnormal, US3.6–3.7.
 - [x] [Repo GitHub](https://github.com/sapikkk/muhammadsyafiq213510100) `main` berisi kode, rilis v1.0.0
 - [x] [Naskah UCD & Agile](skenario-narasi-ucd-agile.md) sudah di-humanizer
 - [x] [PRD Agile](prd-agile-kokonus-farm.md) 6 epic, 5 sprint, 24 flow
