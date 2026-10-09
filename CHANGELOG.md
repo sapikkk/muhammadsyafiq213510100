@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.9.0...v1.10.0) (2026-10-09)
+
+
+### Features
+
+* **laporan:** US6.5 arus kas Owner dengan filter periode dan PDF ([5299cec](https://github.com/sapikkk/muhammadsyafiq213510100/commit/5299cec119414f7a8c65462b8591caefcb437f9a))
+
 # [1.9.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.8.0...v1.9.0) (2026-10-09)
 
 
