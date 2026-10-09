@@ -1,3 +1,17 @@
+# [1.4.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.3.0...v1.4.0) (2026-10-09)
+
+
+### Features
+
+* **hpp:** US2.3 override + plastik + jurnal 5300 ([#68](https://github.com/sapikkk/muhammadsyafiq213510100/issues/68)) ([0669336](https://github.com/sapikkk/muhammadsyafiq213510100/commit/06693368d900aa3e07b7fb3b23da6243d175939f))
+* **hpp:** US2.3 override, plastik, jurnal susut abnormal (US2.5) ([9f4f97c](https://github.com/sapikkk/muhammadsyafiq213510100/commit/9f4f97ceea07c324430747794c1f13383fcce2fc))
+* **penjualan:** US5.1 pelanggan + sales order ([#69](https://github.com/sapikkk/muhammadsyafiq213510100/issues/69)) ([f38af92](https://github.com/sapikkk/muhammadsyafiq213510100/commit/f38af92d9e3614a4f97f8650ecaad012c7bc4591))
+* **penjualan:** US5.1 pelanggan + sales order DRAFT (US5.2 konfirmasi stok) ([e31effa](https://github.com/sapikkk/muhammadsyafiq213510100/commit/e31effae55ea0ed7b868780961922f1e3e023f9c))
+* **produksi:** US3.5 kegagalan + US2.5 susut ([#66](https://github.com/sapikkk/muhammadsyafiq213510100/issues/66)) ([02db815](https://github.com/sapikkk/muhammadsyafiq213510100/commit/02db8158a242b1a2b11cbea9606dab03c0df168d))
+* **produksi:** US3.5 log kegagalan dan US2.5 klasifikasi susut ([4f679be](https://github.com/sapikkk/muhammadsyafiq213510100/commit/4f679befabcc89193349185d85f5cdc01b018b83))
+* **produksi:** US3.6 timeline + US3.7 dashboard petani ([#67](https://github.com/sapikkk/muhammadsyafiq213510100/issues/67)) ([612c6df](https://github.com/sapikkk/muhammadsyafiq213510100/commit/612c6df5438d7867b4e7461c3fc3129a0ce4430f))
+* **produksi:** US3.6 timeline/tambal/monitor dan US3.7 dashboard petani ([765aa66](https://github.com/sapikkk/muhammadsyafiq213510100/commit/765aa66f5b9c2c457eae2690cb5307ddf0f97fab))
+
 # [1.3.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.2.0...v1.3.0) (2026-10-09)
 
 
