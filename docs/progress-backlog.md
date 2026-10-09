@@ -63,8 +63,8 @@
 | Status | Item |
 |--------|------|
 | ✅ | US3.1, US3.2, US3.4 |
-| ⬜ | US3.6 Tambal susulan, timeline |
-| ⬜ | US3.7 Dashboard tugas petani (RBAC + histori) |
+| ✅ | US3.6 Tambal susulan, timeline | Timeline + tambal + monitor di detail siklus |
+| ✅ | US3.7 Dashboard tugas petani | `/petani` tugas + histori |
 
 **Urutan:** US3.5 (kegagalan) sebelum atau paralel US3.6; US3.7 mengikat semua log.
 
@@ -131,7 +131,7 @@ T5.1–T5.6, T5.9 — bergantung fitur Sprint 2–4 selesai. T5.4 audit debit=kr
 | P1 | G1 | **US2.5** (lanjut) | Override HPP + jurnal kerugian abnormal opsional |
 | P2 | G2 | **US3.6**, **US3.7** | Lengkapi Sprint 2 produksi |
 | P1 | G3 | **US4.5** | Backlog `notes.md` |
-| P2 | G2 | US3.6, US3.7 | Lengkapi Sprint 2 produksi |
+| P1 | G1 | **US2.3** (override HPP) | AC penuh Sprint 2 |
 | P2 | — | Merge/push `feat/ui-redesign` | US2.3+F12 + submodule belum di origin |
 | P3 | G4 | US5.1→5.5 | Setelah G1 stabil |
 | P4 | G5 | US2.6, US6.x, US1.9 | Sprint 4 |

@@ -913,6 +913,21 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | Isi tahap, jumlah gagal, penyebab | Petani | Log muncul di daftar; `total_susut` batch naik |
 | Melebihi jumlah disemai | Petani | Pesan error validasi |
 
+### US3.6 Tambal, monitor, timeline
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| Detail siklus | Petani | **Timeline produksi** menampilkan fase |
+| Monitor pertumbuhan | Petani | Log dengan prefix `Monitor:` di log fase |
+| Tambal susulan + active pack | Petani | Log `Tambal:`; susut batch turun; pack berkurang |
+
+### US3.7 Dashboard petani
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| Buka `/petani` | Petani | Daftar **Tugas hari ini** + **Histori aktivitas** |
+| Klik tugas batch | Petani | Navigasi ke `/petani/siklus/[id]` |
+
 ### US2.5 Klasifikasi susut
 
 | Langkah | Peran | Hasil diharapkan |
