@@ -1,18 +1,10 @@
-import { getServerSession } from "next-auth";
-import { isRoleAllowed } from "@/lib/rbac";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiOk, withApiHandler } from "@/lib/api-response";
 import { listInfrastrukturPohon, serializeInfrastruktur } from "@/lib/infrastruktur";
 
-export async function GET() {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) {
-    return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  }
-  if (!isRoleAllowed(role, ["ADMIN", "OWNER"])) {
-    return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
-  }
+export const GET = withApiHandler(async () => {
+  const { denied } = await requireApiRole(["ADMIN", "OWNER"]);
+  if (denied) return denied;
   const pohon = await listInfrastrukturPohon();
-  return NextResponse.json(serializeInfrastruktur(pohon));
-}
+  return apiOk(serializeInfrastruktur(pohon));
+});

@@ -1,4 +1,10 @@
-import { Prisma, type ItemInventaris, type SatuanInventaris, type TipePergerakan } from "@prisma/client";
+import {
+  Prisma,
+  type ItemInventaris,
+  type PergerakanInventaris,
+  type SatuanInventaris,
+  type TipePergerakan,
+} from "@prisma/client";
 import { satuanInventarisList } from "@/lib/inventaris-satuan";
 import { tipePergerakanList } from "@/lib/inventaris-pergerakan";
 import { prisma } from "@/lib/prisma";
@@ -177,6 +183,20 @@ export function serializePergerakan(
 
 export type SerializedPergerakan = ReturnType<typeof serializePergerakan>;
 
+export function serializePergerakanBare(row: PergerakanInventaris) {
+  return {
+    id: row.id,
+    itemId: row.itemId,
+    tipe: row.tipe,
+    jumlah: row.jumlah.toString(),
+    stokSebelum: row.stokSebelum.toString(),
+    stokSesudah: row.stokSesudah.toString(),
+    keterangan: row.keterangan,
+    userId: row.userId,
+    dibuatPada: row.dibuatPada.toISOString(),
+  };
+}
+
 function hitungStokBaru(
   saatIni: Prisma.Decimal,
   tipe: TipePergerakan,
@@ -247,3 +267,5 @@ export function serializeAlertStok(item: ItemInventaris) {
     kekurangan: kekurangan.gt(0) ? kekurangan.toString() : "0",
   };
 }
+
+export type SerializedAlertStok = ReturnType<typeof serializeAlertStok>;
