@@ -1,5 +1,10 @@
+"use client";
+
+import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
+import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
+import { DataTable } from "@/components/data-table";
 
 type Row = {
   id: number;
@@ -12,34 +17,57 @@ type Row = {
 };
 
 export function HarvestAdminDaftar({ rows }: { rows: Row[] }) {
-  if (rows.length === 0) {
-    return (
-      <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-        Belum ada laporan panen.
-      </p>
-    );
-  }
+  const columns = useMemo<ColumnDef<Row>[]>(
+    () => [
+      {
+        accessorKey: "kode_batch",
+        header: "Batch",
+        cell: ({ row }) => (
+          <Link
+            href={`/admin/harvest/${row.original.id}`}
+            className="font-medium text-primary underline-offset-2 hover:underline"
+          >
+            {row.original.kode_batch}
+          </Link>
+        ),
+      },
+      { accessorKey: "varietas_nama", header: "Varietas" },
+      {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }) => (
+          <Badge variant={row.original.status === "PENDING" ? "default" : "secondary"}>
+            {row.original.status}
+          </Badge>
+        ),
+      },
+      {
+        id: "layak",
+        header: "Layak",
+        accessorKey: "jumlah_layak",
+        cell: ({ row }) => <span className="tabular-nums">{row.original.jumlah_layak}</span>,
+      },
+      {
+        id: "tidak_layak",
+        header: "Tidak layak",
+        accessorKey: "jumlah_tidak_layak",
+        cell: ({ row }) => (
+          <span className="tabular-nums">{row.original.jumlah_tidak_layak}</span>
+        ),
+      },
+      { accessorKey: "petani_nama", header: "Petani" },
+    ],
+    [],
+  );
 
   return (
-    <ul className="divide-y rounded-md border">
-      {rows.map((row) => (
-        <li key={row.id}>
-          <Link href={`/admin/harvest/${row.id}`} className="block space-y-1 px-4 py-3 text-sm hover:bg-muted/50 transition-colors">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="font-medium">{row.kode_batch}</p>
-              <Badge variant={row.status === "PENDING" ? "default" : "secondary"}>
-                {row.status}
-              </Badge>
-            </div>
-            <p className="text-muted-foreground">
-              {row.varietas_nama} · {row.petani_nama}
-            </p>
-            <p>
-              Layak {row.jumlah_layak} · Tidak layak {row.jumlah_tidak_layak}
-            </p>
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <DataTable
+      columns={columns}
+      data={rows}
+      pageSize={12}
+      searchPlaceholder="Cari batch, varietas, petani…"
+      searchColumnIds={["kode_batch", "varietas_nama", "petani_nama", "status"]}
+      emptyMessage="Belum ada laporan panen."
+    />
   );
 }

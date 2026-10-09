@@ -1,6 +1,7 @@
 import {
   Prisma,
   type ActivePack,
+  type SatuanInventaris,
   type StatusActivePack,
 } from "@prisma/client";
 import { prisma, type PrismaTransaction } from "@/lib/prisma";
@@ -177,3 +178,10 @@ export function serializeActivePack(
     depleted: row.status === "HABIS",
   };
 }
+
+export type SerializedActivePack = ReturnType<typeof serializeActivePack>;
+
+export type ActivePackListRow = SerializedActivePack & {
+  item: { kode: string; nama: string; satuan: SatuanInventaris };
+  dibuatOleh: { nama: string };
+};
