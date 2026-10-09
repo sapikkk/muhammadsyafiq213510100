@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/page-header";
 import { prisma } from "@/lib/prisma";
 import { formatRupiah, formatQty } from "@/lib/format";
 import { calculateHPP } from "@/lib/hpp";
+import { ringkasanSusutSiklus } from "@/lib/susut";
 import { ClientApproval } from "./client-approval";
 import { Badge } from "@/components/ui/badge";
 
@@ -26,6 +27,8 @@ export default async function HarvestDetailAdminPage({ params }: { params: { id:
   });
 
   if (!laporan) notFound();
+
+  const susut = await ringkasanSusutSiklus(laporan.siklus_id);
 
   // If status is PENDING, calculate provisional HPP to display
   // If status is APPROVED, fetch HPP record
@@ -98,6 +101,16 @@ export default async function HarvestDetailAdminPage({ params }: { params: { id:
                 <span className="text-muted-foreground">Overhead Teralokasi:</span>
                 <span>{formatRupiah(hppData.overhead_teralokasi.toString())}</span>
               </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Plastik packing:</span>
+                <span>{formatRupiah(hppData.biaya_plastik_packing.toString())}</span>
+              </div>
+              {susut.abnormal > 0 ? (
+                <div className="flex justify-between text-amber-800">
+                  <span>Susut abnormal (dikurangi dari HPP):</span>
+                  <span>{formatRupiah(susut.biaya_abnormal.toString())}</span>
+                </div>
+              ) : null}
               <div className="flex justify-between border-t pt-2 font-medium">
                 <span>Total Biaya Produksi:</span>
                 <span>{formatRupiah(hppData.total_biaya.toString())}</span>
@@ -118,11 +131,16 @@ export default async function HarvestDetailAdminPage({ params }: { params: { id:
                 </div>
               </div>
             </div>
-            {laporan.status === "PENDING" && (
-              <p className="text-xs text-muted-foreground mt-2">
-                *HPP akan disimpan dan Jurnal Persediaan akan terbentuk otomatis setelah Anda klik Approve.
+            {laporan.status === "PENDING" ? (
+              <p className="mt-2 text-xs text-muted-foreground">
+                HPP disimpan + jurnal persediaan (1350/5100) saat Approve. Susut abnormal → jurnal 5300.
               </p>
-            )}
+            ) : null}
+            {"is_override" in hppData && hppData.is_override ? (
+              <p className="mt-2 text-xs text-primary">
+                Override Admin: {(hppData as { override_justifikasi?: string | null }).override_justifikasi}
+              </p>
+            ) : null}
           </div>
         )}
 

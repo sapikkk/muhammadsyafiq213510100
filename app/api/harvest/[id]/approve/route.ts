@@ -28,7 +28,13 @@ export async function POST(
   }
 
   try {
-    const result = await approveLaporanPanen(id, userId);
+    let raw: Record<string, unknown> = {};
+    try {
+      raw = (await request.json()) as Record<string, unknown>;
+    } catch {
+      raw = {};
+    }
+    const result = await approveLaporanPanen(id, userId, raw);
     return NextResponse.json({ status: result.status }, { status: 200 });
   } catch (error) {
     return handleError(error);

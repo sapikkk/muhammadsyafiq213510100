@@ -28,7 +28,7 @@
 |----|----------------------|
 | US1.1–US1.8 | Sprint 1, issues #2–#9 Done di board |
 | US2.1–US2.2 | COA + jurnal approval |
-| US2.3 (MVP) | `lib/hpp.ts`, approve → `HPP` + jurnal 1350/5100 (`lib/laporan-panen.ts`); overhead/plastik/susut masih 0 atau belum |
+| US2.3 | `lib/hpp.ts`, plastik, override + justifikasi, jurnal 5300 susut abnormal |
 | F12 (alur PRD) | `POST` approve/reject, `/admin/harvest/[id]` — bagian dari journey panen |
 | US3.1–US3.4 | Siklus, fase, harvest submit, varietas |
 | US4.1–US4.4 | Stok, active pack, alert, infrastruktur |
@@ -47,9 +47,9 @@
 |--------|------|------------|
 | ✅ | US3.3 Submit harvest | Form PANEN, `Laporan_Panen` PENDING |
 | ✅ | F12 Approve/reject | API + UI admin detail |
-| 🟡 | US2.3 HPP ABC penuh | MVP on approve; nutrisi/listrik/overhead/plastik belum dari form |
+| ✅ | US2.3 HPP ABC | Approve + override + plastik + overhead (US2.4) |
 | ⬜ | US2.4 Biaya langsung & overhead | **Blok berikutnya** — isi `Biaya_Langsung` pasca-semai + `Biaya_Overhead` + alokasi ke `calculateHPP` |
-| 🟡 | US2.5 Susut normal vs abnormal | `/admin/susut` + alokasi HPP; override Admin belum |
+| ✅ | US2.5 Susut normal vs abnormal | Klasifikasi + jurnal 5300 on approve |
 | ✅ | US3.5 Log kegagalan | Form petani + `lib/log-kegagalan.ts` |
 
 **Urutan disarankan:** US2.4 → US3.5 → US2.5 → black-box ulang G1 di `uji-blackbox.md`.
@@ -143,6 +143,6 @@ T5.1–T5.6, T5.9 — bergantung fitur Sprint 2–4 selesai. T5.4 audit debit=kr
 Board diperbarui 2026-10-09:
 
 - **Done:** US3.3 (#19), UX #61, FINDING-02 #63
-- **In progress:** US2.3 (#13) — MVP approve+HPP; AC penuh menunggu US2.4/2.5
+- **Done (G1):** US2.3 (#13), US2.5 (#15) — PR stack #68
 
 Issue GitHub (#19, #61, #63) ditutup jika status board Done dan bukti ada di repo/PR.
