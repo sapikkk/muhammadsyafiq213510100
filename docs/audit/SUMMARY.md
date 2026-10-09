@@ -4,8 +4,8 @@
 |------|--------|---------|
 | 0 Inventory & baseline | **Done** | `00-inventory.md`, `01-baseline.md` |
 | 1 RBAC audit bypass | **Done** | `rbac.md`, `lib/rbac.ts`, CI env guard |
-| 2 Flat B&W UI | **Partial** | Token + `ui/*` + chart grayscale; sidebar global & error shell belum |
-| 3 DataTable / CRUD | **Blocked** | TanStack Table belum dipasang |
+| 2 Flat B&W UI | **Partial** | Token + `ui/*`; `SessionShell` on pengaturan/ganti-sandi/404/loading |
+| 3 DataTable / CRUD | **Partial** | `@tanstack/react-table` + `DataTable`; pilot `/owner/pengguna` |
 | 4 Performance | **Partial** | Session ~300ms setelah warm; belum `perf-before-after.md` |
 | 5 Errors / toaster | **Partial** | Sonner + `lib/notify`; belum wire semua form; `logger.ts` server only |
 | 6 Dept audits | **Partial** | `frontend.md` started; backend/qa/security pending |

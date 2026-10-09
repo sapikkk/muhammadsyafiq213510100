@@ -24,7 +24,7 @@ export default function GantiSandiPage() {
   }, [state.ok, update, router, session?.user?.role]);
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-sm flex-col justify-center px-4 py-10">
+    <div className="mx-auto flex w-full max-w-sm flex-col justify-center py-6">
       <p className="text-sm font-medium text-primary">Kokonus Farm</p>
       <h1 className="mt-2 text-2xl font-semibold tracking-tight">
         Ganti sandi
@@ -76,6 +76,6 @@ export default function GantiSandiPage() {
           Simpan sandi baru
         </SubmitButton>
       </form>
-    </main>
+    </div>
   );
 }
