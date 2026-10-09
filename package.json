@@ -18,7 +18,9 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test:e2e": "playwright test",
+    "test:testcafe": "testcafe chrome e2e/smoke.spec.ts --skip-js-errors"
   },
   "prisma": {
     "seed": "node --env-file=.env prisma/seed.js"
@@ -40,6 +42,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.0",
     "@semantic-release/changelog": "7.0.0",
     "@semantic-release/git": "11.0.1",
     "@types/bcryptjs": "^2.4.6",
@@ -55,6 +58,7 @@
     "prisma": "^6.19.3",
     "semantic-release": "25.0.9",
     "tailwindcss": "^3.4.17",
+    "testcafe": "^3.7.6",
     "typescript": "^5.7.3"
   }
 }
