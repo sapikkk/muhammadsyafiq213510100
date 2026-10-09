@@ -35,6 +35,8 @@ export function PelangganDaftar({ rows }: { rows: PelangganRow[] }) {
       columns={columns}
       data={rows}
       pageSize={10}
+      searchPlaceholder="Cari pelanggan…"
+      searchColumnIds={["nama", "alamat", "email"]}
       emptyMessage="Belum ada pelanggan."
     />
   );

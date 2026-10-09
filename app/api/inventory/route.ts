@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
 import {
   InventarisError,
   createItem,
@@ -10,28 +10,28 @@ import {
 
 function handleError(error: unknown) {
   if (error instanceof InventarisError) {
-    return NextResponse.json({ error: error.message }, { status: error.status });
+    return apiFail("INVENTARIS_ERROR", error.message, error.status);
   }
   if (error instanceof SyntaxError) {
-    return NextResponse.json({ error: "Body bukan JSON." }, { status: 400 });
+    return apiFail("INVALID_JSON", "Body bukan JSON.", 400);
   }
   throw error;
 }
 
-export async function GET() {
+export const GET = withApiHandler(async () => {
   const { denied } = await requireApiRole(["ADMIN", "OWNER", "PEKERJA"]);
   if (denied) return denied;
   const items = await listItemInventaris(true);
-  return NextResponse.json(items.map(serializeItem));
-}
+  return apiOk(items.map(serializeItem));
+});
 
-export async function POST(request: Request) {
+export const POST = withApiHandler(async (request: Request) => {
   const { denied } = await requireApiRole(["ADMIN"]);
   if (denied) return denied;
   try {
     const item = await createItem(parseItemInput(await request.json()));
-    return NextResponse.json(serializeItem(item), { status: 201 });
+    return apiOk(serializeItem(item), { status: 201 });
   } catch (error) {
     return handleError(error);
   }
-}
+});
