@@ -12,8 +12,10 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
   - Milestone Sprint 1–5 + label `sprint-1`, `sprint-3`, `sprint-4`, `sprint-5` di repo.  
   - Template issue **User story (US)** dengan blok AC/DoD/tech.  
   - Project #1: Iteration di-assign per US (via script `docs/agile/scripts/assign-project-iterations.sh`).  
-- **Artefak git:** branch `chore/agile-project-registry`  
-- **PR terkait produk:** [#64](https://github.com/sapikkk/muhammadsyafiq213510100/pull/64) (US4.5, US2.4, docs stack)
+- **Artefak git:** branch `chore/agile-project-registry` · commit `1ec2e6b`  
+- **PR registry:** [#65](https://github.com/sapikkk/muhammadsyafiq213510100/pull/65)  
+- **PR terkait produk:** [#64](https://github.com/sapikkk/muhammadsyafiq213510100/pull/64) (US4.5, US2.4, docs stack)  
+- **Milestone:** `assign-milestones.sh` selesai (verifikasi #2 → Sprint 1 — Fondasi)
 
 ---
 

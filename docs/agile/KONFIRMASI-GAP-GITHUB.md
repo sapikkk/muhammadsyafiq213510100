@@ -21,8 +21,8 @@ Dokumen ini untuk **Anda (PO)** menandai setuju / minta ubah. Centang di issue a
 | # | Gap | Rekomendasi | Konfirmasi PO |
 |---|-----|-------------|---------------|
 | 1 | **Body issue #2–#45** kebanyakan kosong (tanpa AC/DoD) | Backfill dari `docs/agile/sprints/*` per US, atau cukup puas dengan docs git saja? | ☐ Docs git cukup ☐ Isi ulang setiap issue |
-| 2 | **Milestone di issue** belum terpasang otomatis di semua # | Script `assign-milestones.sh` — jalankan setelah Anda setuju mapping | ☐ Setuju jalankan ☐ Manual |
-| 3 | **Iteration di Project** — belum semua item ter-assign | Jalankan `assign-project-iterations.sh` | ☐ Setuju ☐ Manual di UI |
+| 2 | **Milestone di issue** | Script `assign-milestones.sh` sudah dijalankan (contoh: #2 → Sprint 1 + label `sprint-1`) | ☐ OK ☐ Perlu cek ulang issue tertentu |
+| 3 | **Iteration di Project** | Script `assign-project-iterations.sh` sudah dijalankan | ☐ OK ☐ Manual di UI untuk pengecualian |
 | 4 | **Velocity & retro** Sprint 1 kosong | Isi tanggal demo + points di `timeline-registry.md` | ☐ PO isi sendiri ☐ Agent isi setelah demo |
 | 5 | **US2.3** — issue open, board In progress, AC penuh belum | Tutup issue hanya setelah US2.5 + override? | ☐ Tetap open ☐ Close dengan catatan partial |
 | 6 | **Review developer (DoD #2)** | Formal PR review di GitHub untuk setiap US? | ☐ Ya ☐ Cukup self-review skripsi |
