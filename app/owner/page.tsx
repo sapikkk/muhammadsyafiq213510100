@@ -2,8 +2,10 @@ import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { OwnerKpiCards } from "@/components/owner-kpi-cards";
 import { OwnerRevenueChart } from "@/components/owner-revenue-chart";
 import { PageHeader } from "@/components/page-header";
+import { formatRupiah } from "@/lib/format";
 import { listAlertStokMinimum } from "@/lib/inventaris";
-import { monthlySummary } from "@/lib/monthly-summary";
+import { bestProfitMonth, monthlySummary } from "@/lib/monthly-summary";
+import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import {
   Card,
@@ -26,6 +28,8 @@ export default async function OwnerPage() {
     monthlySummary(6),
   ]);
 
+  const labaTerbaik = bestProfitMonth(summary.months);
+
   return (
     <>
       <PageHeader
@@ -39,6 +43,22 @@ export default async function OwnerPage() {
         pengeluaran={summary.pengeluaranBulanIni}
         labaKasar={summary.labaKasarBulanIni}
       />
+
+      {labaTerbaik ? (
+        <Card className="border-primary/30 bg-primary/5">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base">Bulan laba tertinggi (6 bulan)</CardTitle>
+            <CardDescription>
+              {labaTerbaik.label} · laba kasar {formatRupiah(labaTerbaik.laba)} — US6.4 / uji T5.3
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/owner/evaluasi" className="text-sm text-primary hover:underline">
+              Lihat evaluasi margin, BEP, dan kapasitas →
+            </Link>
+          </CardContent>
+        </Card>
+      ) : null}
 
       <Card>
         <CardHeader>

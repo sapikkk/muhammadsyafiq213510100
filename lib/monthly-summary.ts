@@ -17,6 +17,25 @@ export type MonthlySummaryResult = {
   months: MonthPoint[];
 };
 
+export type BestProfitMonth = {
+  bulan: string;
+  label: string;
+  laba: string;
+};
+
+export function bestProfitMonth(months: MonthPoint[]): BestProfitMonth | null {
+  let best: BestProfitMonth | null = null;
+  let bestVal = Number.NEGATIVE_INFINITY;
+  for (const m of months) {
+    const laba = Number(m.pendapatan) - Number(m.pengeluaran);
+    if (laba > bestVal) {
+      bestVal = laba;
+      best = { bulan: m.bulan, label: m.label, laba: laba.toFixed(2) };
+    }
+  }
+  return best;
+}
+
 function monthKeyFromDate(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
 }
