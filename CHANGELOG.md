@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.10.0...v1.11.0) (2026-10-09)
+
+
+### Features
+
+* **owner:** US1.9 kelola user dan US2.6 COA/jurnal/prive ([26e11c6](https://github.com/sapikkk/muhammadsyafiq213510100/commit/26e11c6e4fc483d162d0d10fa0b38b7af1a62da2))
+
 # [1.10.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.9.0...v1.10.0) (2026-10-09)
 
 
