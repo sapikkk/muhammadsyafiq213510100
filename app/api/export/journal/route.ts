@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
-import { requireExportRole } from "@/lib/export-auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { withApiHandler } from "@/lib/api-response";
 import { buildJournalXlsxBuffer } from "@/lib/export-journal-xlsx";
 import type { FilterJurnal } from "@/lib/jurnal";
 
-export async function GET(request: Request) {
-  const session = await requireExportRole(["ADMIN"]);
-  if (!session) {
-    return NextResponse.json({ error: "Hanya Admin." }, { status: 403 });
-  }
+export const GET = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN"]);
+  if (denied) return denied;
   const url = new URL(request.url);
   const filter: FilterJurnal = {
     status: url.searchParams.get("status") ?? undefined,
@@ -23,4 +22,4 @@ export async function GET(request: Request) {
       "Content-Disposition": `attachment; filename="${filename}"`,
     },
   });
-}
+});
