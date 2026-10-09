@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.8.0...v1.9.0) (2026-10-09)
+
+
+### Features
+
+* **owner:** US6.4 evaluasi margin, BEP, dan kapasitas idle ([183831e](https://github.com/sapikkk/muhammadsyafiq213510100/commit/183831ed98886372a1d1842ed7968dd8c1c41f9a))
+
 # [1.8.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.7.0...v1.8.0) (2026-10-09)
 
 
