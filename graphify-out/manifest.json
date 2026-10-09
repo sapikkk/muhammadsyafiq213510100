@@ -342,9 +342,9 @@
     "semantic_hash": ""
   },
   "app/owner/page.tsx": {
-    "mtime": 1791548778.4137216,
-    "seen": 1791551832.64701,
-    "ast_hash": "d5aae89a81fce75a06bb0139a1f9f317",
+    "mtime": 1791553828.2695708,
+    "seen": 1791553874.389932,
+    "ast_hash": "de00174bf1ee31ab99a1be8f90cab707",
     "semantic_hash": ""
   },
   "app/owner/stok-rendah/page.tsx": {
@@ -462,8 +462,8 @@
     "semantic_hash": ""
   },
   "components/app-sidebar.tsx": {
-    "mtime": 1791551662.40176,
-    "seen": 1791551832.6470451,
+    "mtime": 1791553788.0609083,
+    "seen": 1791553874.389971,
     "ast_hash": "dd26cf153a39780cb852de3aa5841a40",
     "semantic_hash": ""
   },
@@ -840,9 +840,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1791551662.1576252,
-    "seen": 1791551832.647191,
-    "ast_hash": "8f02d27506f718fa077b5a6cfddfb58c",
+    "mtime": 1791553810.6915421,
+    "seen": 1791553874.390145,
+    "ast_hash": "b8fa056a2bbd5ba5dec0a41e4f53b6bc",
     "semantic_hash": ""
   },
   "postcss.config.js": {
@@ -972,8 +972,8 @@
     "semantic_hash": ""
   },
   "docs/progress-backlog.md": {
-    "mtime": 1791552022.502789,
-    "seen": 1791552105.893012,
+    "mtime": 1791553788.0672696,
+    "seen": 1791553874.390215,
     "ast_hash": "b6c3ca8a41d2fee3034236b318e6f1e0",
     "semantic_hash": ""
   },
@@ -990,9 +990,9 @@
     "semantic_hash": ""
   },
   "docs/uji-blackbox.md": {
-    "mtime": 1791552022.3122652,
-    "seen": 1791552105.8930209,
-    "ast_hash": "27bf4cb1bc9fe8e0ad11fe29d70d71a0",
+    "mtime": 1791553861.120032,
+    "seen": 1791553874.390223,
+    "ast_hash": "6d90f45b95dd66629310349f98d3137b",
     "semantic_hash": ""
   },
   "app/actions/biaya.ts": {
@@ -1242,8 +1242,8 @@
     "semantic_hash": ""
   },
   "app/actions/sales-order.ts": {
-    "mtime": 1791552060.2698603,
-    "seen": 1791552105.892504,
+    "mtime": 1791553788.0500174,
+    "seen": 1791553874.389812,
     "ast_hash": "dc4d33cd6a99027d8b02066c0481d07b",
     "semantic_hash": ""
   },
@@ -1254,8 +1254,8 @@
     "semantic_hash": ""
   },
   "app/admin/penjualan/page.tsx": {
-    "mtime": 1791552017.5378897,
-    "seen": 1791552105.892566,
+    "mtime": 1791553788.0522897,
+    "seen": 1791553874.3898501,
     "ast_hash": "469ce1c2b3aa163bdd0dca59017e7fa6",
     "semantic_hash": ""
   },
@@ -1290,8 +1290,8 @@
     "semantic_hash": ""
   },
   "components/sales-order-daftar.tsx": {
-    "mtime": 1791552010.0889194,
-    "seen": 1791552105.8928,
+    "mtime": 1791553788.0645308,
+    "seen": 1791553874.3900318,
     "ast_hash": "035a5e62e7b0f0ac104b4d3bf2403d95",
     "semantic_hash": ""
   },
@@ -1308,32 +1308,32 @@
     "semantic_hash": ""
   },
   "lib/sales-order.ts": {
-    "mtime": 1791551983.825501,
-    "seen": 1791552105.8929129,
+    "mtime": 1791553788.296805,
+    "seen": 1791553874.3901188,
     "ast_hash": "d524fa335479c37536d2501053dc6d0a",
     "semantic_hash": ""
   },
   "app/api/sales-orders/[id]/deliver/route.ts": {
-    "mtime": 1791551662.529725,
-    "seen": 1791551832.6469839,
+    "mtime": 1791553788.0542684,
+    "seen": 1791553874.389903,
     "ast_hash": "d201af46838149cd22a0c6d89c5b31df",
     "semantic_hash": ""
   },
   "app/api/sales-orders/[id]/ship/route.ts": {
-    "mtime": 1791551662.5306916,
-    "seen": 1791551832.646986,
+    "mtime": 1791553788.0579622,
+    "seen": 1791553874.389907,
     "ast_hash": "2a24f898fc8e384b79aef0d886288b5a",
     "semantic_hash": ""
   },
   "app/petani/pengiriman/page.tsx": {
-    "mtime": 1791551662.5320635,
-    "seen": 1791551832.6470258,
+    "mtime": 1791553788.0591354,
+    "seen": 1791553874.38995,
     "ast_hash": "617e1d21309b6643238bdd20f9a8bb37",
     "semantic_hash": ""
   },
   "lib/sales-order-delivery.ts": {
-    "mtime": 1791551662.6355152,
-    "seen": 1791551832.647168,
+    "mtime": 1791553788.2321625,
+    "seen": 1791553874.390114,
     "ast_hash": "fd296a4fa1a5af8efa65c8ca4d7fed63",
     "semantic_hash": ""
   },
@@ -1386,9 +1386,9 @@
     "semantic_hash": ""
   },
   "docs/agile/merge-stack.md": {
-    "mtime": 1791551864.2435265,
-    "seen": 1791552105.8929842,
-    "ast_hash": "ab4368bc5926ae0af82007e98b2d57a1",
+    "mtime": 1791553861.1104016,
+    "seen": 1791553874.390188,
+    "ast_hash": "09401679b624ec10a4a52277b80cea09",
     "semantic_hash": ""
   },
   "docs/agile/partial-delivery-policy.md": {
@@ -1416,15 +1416,15 @@
     "semantic_hash": ""
   },
   "docs/agile/sprints/sprint-03-penjualan.md": {
-    "mtime": 1791552022.8825405,
-    "seen": 1791552105.892993,
+    "mtime": 1791553788.0663366,
+    "seen": 1791553874.390197,
     "ast_hash": "58df7394fb400fd24577cbb844919f4f",
     "semantic_hash": ""
   },
   "docs/agile/sprints/sprint-04-laporan.md": {
-    "mtime": 1791548778.8196294,
-    "seen": 1791551832.647237,
-    "ast_hash": "48d036525b8e6a4a1ee7d5b30377a32d",
+    "mtime": 1791553832.3415046,
+    "seen": 1791553874.390199,
+    "ast_hash": "cc94ff01f4827381a3bc6b4c3d8616f2",
     "semantic_hash": ""
   },
   "docs/agile/sprints/sprint-05-qa.md": {
@@ -1440,45 +1440,69 @@
     "semantic_hash": ""
   },
   "app/admin/penjualan/[id]/invoice/page.tsx": {
-    "mtime": 1791551996.4460232,
-    "seen": 1791552105.892564,
+    "mtime": 1791553788.051214,
+    "seen": 1791553874.389848,
     "ast_hash": "4bf8c4f8851e25bb618ef6a571f437ff",
     "semantic_hash": ""
   },
   "app/api/sales-orders/[id]/cancel/route.ts": {
-    "mtime": 1791551986.9238186,
-    "seen": 1791552105.892639,
+    "mtime": 1791553788.0532708,
+    "seen": 1791553874.389899,
     "ast_hash": "2bc55f9461576074cc10df667046087a",
     "semantic_hash": ""
   },
   "app/api/sales-orders/[id]/packing-cost/route.ts": {
-    "mtime": 1791551988.3706377,
-    "seen": 1791552105.892647,
+    "mtime": 1791553788.0570037,
+    "seen": 1791553874.389905,
     "ast_hash": "0ba16a805d9368036fa7beb7bb3e1502",
     "semantic_hash": ""
   },
   "components/print-button.tsx": {
-    "mtime": 1791551996.2706907,
-    "seen": 1791552105.892781,
+    "mtime": 1791553788.061761,
+    "seen": 1791553874.390021,
     "ast_hash": "a5c769730bd58b3963c72e49f3bdada5",
     "semantic_hash": ""
   },
   "lib/sales-order-cancel.ts": {
-    "mtime": 1791551979.3499303,
-    "seen": 1791552105.892906,
+    "mtime": 1791553788.2213693,
+    "seen": 1791553874.390113,
     "ast_hash": "3c4869c8ca510d73e503d33d09a39f8b",
     "semantic_hash": ""
   },
   "lib/sales-order-invoice.ts": {
-    "mtime": 1791551968.279084,
-    "seen": 1791552105.892909,
+    "mtime": 1791553788.2352006,
+    "seen": 1791553874.3901162,
     "ast_hash": "a89e7792f066770098a3cc2f7bf79242",
     "semantic_hash": ""
   },
   "lib/sales-order-packing.ts": {
-    "mtime": 1791551968.5482967,
-    "seen": 1791552105.8929112,
+    "mtime": 1791553788.2493699,
+    "seen": 1791553874.390118,
     "ast_hash": "8ebc4f02fbbb39596d077c115d0784ec",
+    "semantic_hash": ""
+  },
+  "app/api/reports/monthly-summary/route.ts": {
+    "mtime": 1791553827.4821079,
+    "seen": 1791553874.3898969,
+    "ast_hash": "95942b0c78fe5f45c96464adc1f1da1c",
+    "semantic_hash": ""
+  },
+  "components/owner-kpi-cards.tsx": {
+    "mtime": 1791553827.5585322,
+    "seen": 1791553874.3900049,
+    "ast_hash": "b63f3d1a7ce9c967149d7f0a9cc0b731",
+    "semantic_hash": ""
+  },
+  "components/owner-revenue-chart.tsx": {
+    "mtime": 1791553827.4823844,
+    "seen": 1791553874.390007,
+    "ast_hash": "354b09dba8be31942f6e506d6300998d",
+    "semantic_hash": ""
+  },
+  "lib/monthly-summary.ts": {
+    "mtime": 1791553827.4821079,
+    "seen": 1791553874.390104,
+    "ast_hash": "da3800e27f2e7250d12f89805eb3a00e",
     "semantic_hash": ""
   }
 }
