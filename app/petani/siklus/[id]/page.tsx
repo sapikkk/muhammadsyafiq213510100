@@ -4,8 +4,13 @@ import { HarvestForm } from "@/components/harvest-form";
 import { KegagalanForm } from "@/components/kegagalan-form";
 import { LogKegagalanDaftar } from "@/components/log-kegagalan-daftar";
 import { LogProduksiDaftar } from "@/components/log-produksi-daftar";
+import { MonitorPertumbuhanForm } from "@/components/monitor-pertumbuhan-form";
 import { PageHeader } from "@/components/page-header";
 import { PindahFaseForm } from "@/components/pindah-fase-form";
+import { SiklusTimeline } from "@/components/siklus-timeline";
+import { TambalSusulanForm } from "@/components/tambal-susulan-form";
+import { listActivePack } from "@/lib/active-pack";
+import { buildTimelineSiklus } from "@/lib/timeline-siklus";
 import { Badge } from "@/components/ui/badge";
 import { formatTanggal } from "@/lib/format";
 import { serializeLaporanRingkas } from "@/lib/laporan-panen";
@@ -34,7 +39,11 @@ export default async function PetaniSiklusDetailPage({
   const siklus = await getSiklusProduksi(id);
   if (!siklus) notFound();
 
-  const [logs, kegagalan] = await Promise.all([listLogProduksi(id), listLogKegagalan(id)]);
+  const [logs, kegagalan, packs] = await Promise.all([
+    listLogProduksi(id),
+    listLogKegagalan(id),
+    listActivePack(true),
+  ]);
   const kegagalanRows = kegagalan.map(serializeLogKegagalan);
   const status = siklus.status;
   const faseAktif = isFaseProduksi(status) ? status : null;
@@ -42,6 +51,25 @@ export default async function PetaniSiklusDetailPage({
   const laporan = siklus.laporanPanen
     ? serializeLaporanRingkas(siklus.laporanPanen)
     : null;
+  const timeline = buildTimelineSiklus(siklus, logs.map((l) => ({ fase_ke: l.fase_ke, waktu: l.waktu })));
+  const packsAktif = packs
+    .filter((p) => p.status === "AKTIF")
+    .map((p) => ({
+      id: p.id,
+      kode: p.kode,
+      itemNama: p.item.nama,
+      satuan: p.item.satuan,
+      sisaUnit: p.sisaUnit.toString(),
+    }));
+  const canTambal =
+    faseAktif &&
+    (["SEMAI", "SPROUT_DAUN", "TAMBAL", "PINDAH_KOLAM", "PENDEWASAAN"] as string[]).includes(
+      faseAktif,
+    ) &&
+    status !== "SELESAI";
+  const canMonitor =
+    faseAktif &&
+    (["SPROUT_DAUN", "TAMBAL", "PINDAH_KOLAM", "PENDEWASAAN"] as string[]).includes(faseAktif);
 
   return (
     <div className="flex flex-col gap-8">
@@ -61,6 +89,11 @@ export default async function PetaniSiklusDetailPage({
         </Link>
       </div>
 
+      <section className="space-y-3 rounded-md border p-4">
+        <h2 className="text-lg font-semibold">Timeline produksi</h2>
+        <SiklusTimeline steps={timeline} />
+      </section>
+
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">Log fase</h2>
         <LogProduksiDaftar rows={logs} />
@@ -70,6 +103,12 @@ export default async function PetaniSiklusDetailPage({
         <h2 className="text-lg font-semibold">Log kegagalan</h2>
         <LogKegagalanDaftar rows={kegagalanRows} />
       </section>
+
+      {canMonitor ? <MonitorPertumbuhanForm siklusId={id} /> : null}
+
+      {canTambal && (!laporan || laporan.status !== "APPROVED") ? (
+        <TambalSusulanForm siklusId={id} packs={packsAktif} />
+      ) : null}
 
       {status !== "SELESAI" && (!laporan || laporan.status !== "APPROVED") ? (
         <KegagalanForm
