@@ -73,6 +73,7 @@ model Siklus_Produksi {
   log_kegagalan        Log_Kegagalan[]
   hpp                  HPP?
   penjualan            Penjualan[]
+  sales_order_baris    Sales_Order_Baris[]
   logProduksi          Log_Produksi[]
   laporanPanen         Laporan_Panen?
 }
@@ -174,12 +175,43 @@ model Penjualan {
 }
 
 model Pelanggan {
-  id         Int         @id @default(autoincrement())
-  nama       String      @db.VarChar(100)
-  alamat     String      @db.Text
-  no_telepon String      @db.VarChar(25)
-  email      String      @db.VarChar(254)
-  penjualan  Penjualan[]
+  id           Int           @id @default(autoincrement())
+  nama         String        @db.VarChar(100)
+  alamat       String        @db.Text
+  no_telepon   String        @db.VarChar(25)
+  email        String        @db.VarChar(254)
+  penjualan    Penjualan[]
+  sales_orders Sales_Order[]
+}
+
+// US5.1 — Sales order (SO-YYYY-NNN)
+model Sales_Order {
+  id             Int                 @id @default(autoincrement())
+  nomor_so       String              @unique @db.VarChar(20)
+  pelanggan_id   Int
+  pelanggan      Pelanggan           @relation(fields: [pelanggan_id], references: [id])
+  status         String              @default("DRAFT") @db.VarChar(20)
+  total          Decimal             @default(0) @db.Decimal(18, 2)
+  catatan        String?             @db.VarChar(500)
+  dibuat_pada    DateTime            @default(now())
+  dibuat_oleh_id Int
+  dibuat_oleh    User                @relation("SalesOrderDibuat", fields: [dibuat_oleh_id], references: [id])
+  baris          Sales_Order_Baris[]
+}
+
+model Sales_Order_Baris {
+  id             Int             @id @default(autoincrement())
+  sales_order_id Int
+  sales_order    Sales_Order     @relation(fields: [sales_order_id], references: [id], onDelete: Cascade)
+  siklus_id      Int
+  siklus         Siklus_Produksi @relation(fields: [siklus_id], references: [id])
+  jenis          String          @db.VarChar(30)
+  jumlah         Decimal         @db.Decimal(12, 3)
+  harga_satuan   Decimal         @db.Decimal(18, 2)
+  subtotal       Decimal         @db.Decimal(18, 2)
+
+  @@index([sales_order_id])
+  @@index([siklus_id])
 }
 
 model Laporan_LabaRugi {
@@ -236,6 +268,7 @@ model User {
   activePackDibuat     ActivePack[]
   logProduksi          Log_Produksi[]
   laporanPanen         Laporan_Panen[]
+  salesOrdersDibuat    Sales_Order[]   @relation("SalesOrderDibuat")
 }
 
 // Epic 4 — inventaris bahan. Tidak ada di ERD Figma 16 tabel, ditambah untuk US4.1.
