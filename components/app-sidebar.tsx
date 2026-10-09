@@ -179,7 +179,7 @@ export function AppSidebar({
                   <Icon className="h-4 w-4 shrink-0" />
                   <span className="flex-1 truncate">{item.label}</span>
                   {item.badge ? (
-                    <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-semibold text-destructive-foreground">
+                    <span className="flex h-5 min-w-5 items-center justify-center border border-foreground bg-background px-1 text-[10px] font-semibold">
                       {item.badge}
                     </span>
                   ) : null}
@@ -217,7 +217,7 @@ export function AppSidebar({
           <button
             type="button"
             onClick={() => signOut({ callbackUrl: "/login" })}
-            className="flex flex-1 items-center gap-2 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
+            className="flex flex-1 items-center gap-2 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             <LogOut className="h-4 w-4" />
             <span className="text-xs">Keluar</span>

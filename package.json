@@ -21,6 +21,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "check:audit-env": "bash scripts/check-audit-env.sh",
+    "check:banned-ui": "bash scripts/check-banned-ui.sh",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:e2e": "playwright test",
