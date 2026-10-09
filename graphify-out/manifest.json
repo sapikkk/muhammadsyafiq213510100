@@ -342,8 +342,8 @@
     "semantic_hash": ""
   },
   "app/owner/page.tsx": {
-    "mtime": 1791553828.2695708,
-    "seen": 1791553874.389932,
+    "mtime": 1791554350.523597,
+    "seen": 1791554400.6752992,
     "ast_hash": "de00174bf1ee31ab99a1be8f90cab707",
     "semantic_hash": ""
   },
@@ -462,9 +462,9 @@
     "semantic_hash": ""
   },
   "components/app-sidebar.tsx": {
-    "mtime": 1791553788.0609083,
-    "seen": 1791553874.389971,
-    "ast_hash": "dd26cf153a39780cb852de3aa5841a40",
+    "mtime": 1791554351.170845,
+    "seen": 1791554400.675355,
+    "ast_hash": "d21d2006e588be7011eb23b87ca7e943",
     "semantic_hash": ""
   },
   "components/foundation-panel.tsx": {
@@ -840,9 +840,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1791553810.6915421,
-    "seen": 1791553874.390145,
-    "ast_hash": "b8fa056a2bbd5ba5dec0a41e4f53b6bc",
+    "mtime": 1791554350.5686398,
+    "seen": 1791554400.675622,
+    "ast_hash": "d2a666c54ba6eb21c44a854ed8875d95",
     "semantic_hash": ""
   },
   "postcss.config.js": {
@@ -924,9 +924,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1791551662.150631,
-    "seen": 1791551832.647219,
-    "ast_hash": "c98c61425afc2a6a21f23803d490e083",
+    "mtime": 1791554350.5206847,
+    "seen": 1791554400.675667,
+    "ast_hash": "397f77e71f06a03c8d0e29b1511bb55b",
     "semantic_hash": ""
   },
   "README.md": {
@@ -990,9 +990,9 @@
     "semantic_hash": ""
   },
   "docs/uji-blackbox.md": {
-    "mtime": 1791553861.120032,
-    "seen": 1791553874.390223,
-    "ast_hash": "6d90f45b95dd66629310349f98d3137b",
+    "mtime": 1791554351.189359,
+    "seen": 1791554400.675738,
+    "ast_hash": "8394e62a69f167c52b617563d5ba8794",
     "semantic_hash": ""
   },
   "app/actions/biaya.ts": {
@@ -1386,8 +1386,8 @@
     "semantic_hash": ""
   },
   "docs/agile/merge-stack.md": {
-    "mtime": 1791553861.1104016,
-    "seen": 1791553874.390188,
+    "mtime": 1791554350.5263886,
+    "seen": 1791554400.675686,
     "ast_hash": "09401679b624ec10a4a52277b80cea09",
     "semantic_hash": ""
   },
@@ -1422,9 +1422,9 @@
     "semantic_hash": ""
   },
   "docs/agile/sprints/sprint-04-laporan.md": {
-    "mtime": 1791553832.3415046,
-    "seen": 1791553874.390199,
-    "ast_hash": "cc94ff01f4827381a3bc6b4c3d8616f2",
+    "mtime": 1791554351.1879668,
+    "seen": 1791554400.6757,
+    "ast_hash": "4d35623443870250909aa6137da261f6",
     "semantic_hash": ""
   },
   "docs/agile/sprints/sprint-05-qa.md": {
@@ -1482,27 +1482,51 @@
     "semantic_hash": ""
   },
   "app/api/reports/monthly-summary/route.ts": {
-    "mtime": 1791553827.4821079,
-    "seen": 1791553874.3898969,
+    "mtime": 1791554350.5221786,
+    "seen": 1791554400.6752582,
     "ast_hash": "95942b0c78fe5f45c96464adc1f1da1c",
     "semantic_hash": ""
   },
   "components/owner-kpi-cards.tsx": {
-    "mtime": 1791553827.5585322,
-    "seen": 1791553874.3900049,
+    "mtime": 1791554350.52446,
+    "seen": 1791554400.675415,
     "ast_hash": "b63f3d1a7ce9c967149d7f0a9cc0b731",
     "semantic_hash": ""
   },
   "components/owner-revenue-chart.tsx": {
-    "mtime": 1791553827.4823844,
-    "seen": 1791553874.390007,
+    "mtime": 1791554350.5253024,
+    "seen": 1791554400.6754172,
     "ast_hash": "354b09dba8be31942f6e506d6300998d",
     "semantic_hash": ""
   },
   "lib/monthly-summary.ts": {
-    "mtime": 1791553827.4821079,
-    "seen": 1791553874.390104,
+    "mtime": 1791554350.5599477,
+    "seen": 1791554400.6755672,
     "ast_hash": "da3800e27f2e7250d12f89805eb3a00e",
+    "semantic_hash": ""
+  },
+  "app/api/reports/cost-breakdown/route.ts": {
+    "mtime": 1791554351.2864254,
+    "seen": 1791554400.675255,
+    "ast_hash": "e022bf5d6690ac5c616d782a47466a43",
+    "semantic_hash": ""
+  },
+  "app/owner/biaya/page.tsx": {
+    "mtime": 1791554351.2871883,
+    "seen": 1791554400.67529,
+    "ast_hash": "817f6594cec11aeb87513dd997bf86a5",
+    "semantic_hash": ""
+  },
+  "components/owner-cost-pie.tsx": {
+    "mtime": 1791554351.2876496,
+    "seen": 1791554400.675412,
+    "ast_hash": "97097ac8b29dabbb21b9531fd349b4d8",
+    "semantic_hash": ""
+  },
+  "lib/cost-breakdown.ts": {
+    "mtime": 1791554378.8799078,
+    "seen": 1791554400.6755252,
+    "ast_hash": "2acb66ad5875f2054103f3e124d0994d",
     "semantic_hash": ""
   }
 }

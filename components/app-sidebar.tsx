@@ -15,6 +15,7 @@ import {
   LeafyGreen,
   LogOut,
   Package,
+  PieChart,
   Receipt,
   Settings,
   Truck,
@@ -66,6 +67,7 @@ function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
   if (role === "OWNER") {
     return [
       { label: "Dashboard", href: "/owner", icon: LayoutDashboard },
+      { label: "Breakdown biaya", href: "/owner/biaya", icon: PieChart },
       { label: "Inventaris", href: "/owner/inventaris", icon: Box },
       {
         label: "Infrastruktur",
