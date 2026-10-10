@@ -13,7 +13,7 @@
 
 ## Rekomendasi merge
 
-Gate CI lengkap. Checklist PO: [`MERGE-READINESS.md`](MERGE-READINESS.md). Buka PR `chore/global-audit-bw-refactor` → `main`.
+Gate CI lengkap. Checklist PO: [`MERGE-READINESS.md`](MERGE-READINESS.md). PR: [#80](https://github.com/sapikkk/muhammadsyafiq213510100/pull/80) (`chore/global-audit-bw-refactor` → `main`).
 
 ## Network Cursor
 
