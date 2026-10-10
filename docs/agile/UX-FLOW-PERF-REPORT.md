@@ -29,6 +29,7 @@
 
 - [x] `npm run typecheck`
 - [x] `npm run build`
-- [ ] Smoke prod setelah merge main (login 3 peran, buka dashboard + 1 halaman CRUD)
+- [x] CI smoke e2e (PR [#123](https://github.com/sapikkk/muhammadsyafiq213510100/pull/123))
+- [ ] Smoke prod manual (login 3 peran) — opsional post-deploy
 
 Terakhir diperbarui: **2026-10-10** (agent).
