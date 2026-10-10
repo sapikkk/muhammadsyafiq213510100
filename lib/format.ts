@@ -17,6 +17,17 @@ export function formatTanggal(value: Date) {
   return tanggalPanjang.format(value);
 }
 
+const waktuJakarta = new Intl.DateTimeFormat("id-ID", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: "Asia/Jakarta",
+});
+
+/** ISO UTC → tanggal + jam menit WIB (GitHub / agile timeline). */
+export function formatWaktuJakarta(iso: string) {
+  return waktuJakarta.format(new Date(iso));
+}
+
 // "YYYY-MM-DD" menurut zona Jakarta, untuk input type=date dan query string.
 const tanggalIso = new Intl.DateTimeFormat("en-CA", {
   dateStyle: "short",

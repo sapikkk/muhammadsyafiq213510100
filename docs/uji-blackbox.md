@@ -849,8 +849,9 @@ POST /api/auth/callback/credentials 200 in 24253ms
 ### Mitigasi yang sudah dilakukan
 
 1. `app/error.tsx` (US1.8) menangkap error dan menyediakan tombol "Coba lagi". Terbukti memulihkan halaman.
-2. `registerPetani` (US1.6) mengulang sekali pada `P2024` dan memberi pesan "Database sedang sibuk. Coba simpan lagi."
-3. Parameter `pool_timeout` pada `DATABASE_URL` di `.env` lokal dinaikkan supaya permintaan menunggu lebih lama daripada gagal. Nilai tidak dicatat di repo karena `.env` berisi kredensial.
+2. `lib/prisma.ts` (Sprint 5 / T5.5): semua query Prisma otomatis ulang sekali pada `P2024` dengan jeda 250 ms.
+3. `registerPetani` (US1.6) masih menerjemahkan `P2024` ke pesan "Database sedang sibuk. Coba simpan lagi."
+4. Parameter `pool_timeout` / `connection_limit` pada `DATABASE_URL` di `.env` lokal atau Vercel (lihat `docs/deployment/vercel-go-live.md`).
 
 ### Rekomendasi sebelum demo / go-live staging
 
@@ -1036,10 +1037,24 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | Approve prive | Admin | Saldo Kas & Prive berubah setelah approve |
 | `/owner/prive` | Admin | 403 (hanya Owner input prive) |
 
+### Sprint 5 — QA (T5.1–T5.4)
+
+**Branch:** `feat/sprint-5-qa` · **Data demo:** batch `E2E-S5-DEMO` (fase awal Semai) dari `prisma/seed-siklus-demo.js`
+
+| Task | Langkah blackbox | Hasil diharapkan |
+| --- | --- | --- |
+| T5.1 | Petani HP: `/petani/siklus` → batch demo → centang konfirmasi → **Lanjut fase** | Toast sukses; badge **Sprout / daun**; baris log fase baru |
+| T5.2 | Admin: `/admin/jurnal` filter tanggal + status; cari di DataTable | Judul “sesuai filter”; baris terfilter; placeholder cari aktif |
+| T5.3 | Owner: dashboard KPI + grafik; HP link **Pie biaya** → `/owner/biaya` | Bulan laba tertinggi terbaca; pie beban tampil |
+| T5.4 | `npm run check:jurnal-balance` setelah seed / staging | Exit 0; semua jurnal debit = kredit |
+
+Sample audit manual (T5.4): jurnal manual DRAFT/PENDING, jurnal approve panen, jurnal SO DELIVERED — cek total debit = kredit di detail masing-masing.
+
 ### Otomatisasi
 
 ```bash
 npm run typecheck && npm run build
+npm run check:jurnal-balance
 npm run test:e2e   # butuh dev server di :3000
 graphify update .  # setelah ubah kode
 ```

@@ -38,6 +38,30 @@ export default async function OwnerPage() {
       />
       <InventarisAlertBanner items={stokRendah} detailHref="/owner/stok-rendah" />
 
+      <nav
+        aria-label="Laporan cepat Owner"
+        className="flex flex-wrap gap-2 text-sm md:hidden"
+      >
+        <Link
+          href="/owner/biaya"
+          className="inline-flex min-h-11 items-center border px-3 font-medium hover:bg-accent"
+        >
+          Pie biaya
+        </Link>
+        <Link
+          href="/owner/evaluasi"
+          className="inline-flex min-h-11 items-center border px-3 font-medium hover:bg-accent"
+        >
+          Margin & BEP
+        </Link>
+        <Link
+          href="/owner/laporan"
+          className="inline-flex min-h-11 items-center border px-3 font-medium hover:bg-accent"
+        >
+          Ekspor laporan
+        </Link>
+      </nav>
+
       <OwnerKpiCards
         pendapatan={summary.pendapatanBulanIni}
         pengeluaran={summary.pengeluaranBulanIni}

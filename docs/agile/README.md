@@ -39,6 +39,7 @@ Pusat kontrol progres produk: **timeline sprint**, **issue GitHub**, **AC/DoD**,
 gh issue list --repo sapikkk/muhammadsyafiq213510100 --label sprint-2
 gh issue list --repo sapikkk/muhammadsyafiq213510100 --label progress-partial
 gh project item-list 1 --owner sapikkk --limit 50
+npm run sync:agile-progress   # → data/agile-progress.json (halaman depan /)
 ```
 
 Setelah ubah kode: `graphify update .` (lihat `AGENTS.md`).

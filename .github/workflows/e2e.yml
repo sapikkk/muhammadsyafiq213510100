@@ -40,6 +40,9 @@ jobs:
         run: |
           printf 'DATABASE_URL=%s\nDIRECT_URL=%s\n' "$DATABASE_URL" "$DIRECT_URL" > .env
       - run: npx prisma db seed
+      - run: npm run check:jurnal-balance
+      - name: ID siklus demo untuk Playwright
+        run: echo "E2E_DEMO_SIKLUS_ID=$(node scripts/reset-e2e-siklus.js)" >> "$GITHUB_ENV"
       - run: npm run build
       - run: npx playwright install chromium --with-deps
       - run: npm run test:e2e
