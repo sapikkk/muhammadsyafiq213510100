@@ -1050,6 +1050,18 @@ POST /api/auth/callback/credentials 200 in 24253ms
 
 Sample audit manual (T5.4): jurnal manual DRAFT/PENDING, jurnal approve panen, jurnal SO DELIVERED — cek total debit = kredit di detail masing-masing.
 
+### v2-A.1 — `Akun.is_system` (Epic A / #95)
+
+**Branch:** `feat/v2-a1-is-system` · Setelah `prisma db push` + `npm run seed` (atau seed akun saja): akun standar COA punya `isSystem: true`.
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| Buka `/admin/akun` | Admin | Akun standar menampil badge **Sistem** |
+| Edit akun sistem (mis. 1100 Kas) | Admin | Hanya **nama** bisa diubah; kode/tipe/induk terkunci; simpan sukses |
+| Coba ubah kode/tipe via API (curl) | Admin | 400 / pesan guard server |
+| Nonaktifkan akun sistem | Admin | Tombol **Nonaktifkan** tidak ada; API menolak |
+| Tambah akun custom | Admin | Tanpa badge Sistem; edit/nonaktif normal |
+
 ### Otomatisasi
 
 ```bash

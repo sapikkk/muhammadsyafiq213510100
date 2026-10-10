@@ -60,6 +60,14 @@ async function seedAkun(prisma) {
       parentId: byKode.get(kodeInduk).id,
     })),
   });
+  const kodeStandar = [
+    ...akunInduk.map((a) => a.kode),
+    ...akunAnak.map(([kode]) => kode),
+  ];
+  await prisma.akun.updateMany({
+    where: { kode: { in: kodeStandar } },
+    data: { isSystem: true },
+  });
   return akunInduk.length + akunAnak.length;
 }
 

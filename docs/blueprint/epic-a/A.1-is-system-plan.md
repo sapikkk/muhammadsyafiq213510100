@@ -6,22 +6,22 @@
 
 ## Checklist AC (centang saat PR siap merge)
 
-- [ ] Prisma: kolom `isSystem Boolean @default(false) @map("is_system")` pada `Akun`
-- [ ] `prisma db push` / migrate + seed: akun §7 blueprint → `isSystem: true`
-- [ ] `lib/akun.ts`: tolak ubah `kode` / hapus jika `isSystem`
-- [ ] UI owner/admin COA: disable edit kode & delete untuk akun sistem
-- [ ] `npm run typecheck` + `npm run check:jurnal-balance`
-- [ ] Catatan uji di `docs/uji-blackbox.md` (section v2-A.1)
+- [x] Prisma: kolom `isSystem Boolean @default(false) @map("is_system")` pada `Akun`
+- [x] `prisma db push` / migrate + seed: akun §7 blueprint → `isSystem: true` (standar v1 COA via `seed-akun.js`)
+- [x] `lib/akun.ts`: tolak ubah `kode` / tipe / parent / nonaktif jika `isSystem`
+- [x] UI admin COA: badge Sistem; lock edit kode/tipe/induk; sembunyikan nonaktif
+- [x] `npm run typecheck` + `npm run check:jurnal-balance`
+- [x] Catatan uji di `docs/uji-blackbox.md` (section v2-A.1)
 
 ## Keputusan PO (blokir seed)
 
 | Topik | v1 seed | blueprint v2 | Keputusan PO |
 | --- | --- | --- | --- |
-| 1350 | Sayur siap jual | WIP / sayur curah | _TBD_ |
-| 2200 | Pinjaman modal | Uang muka pelanggan | _TBD_ |
-| Akun baru 1300–1360, 2200 | — | daftar §7 | _TBD migrasi saldo_ |
+| 1350 | Sayur siap jual | WIP / sayur curah | **Tunda** — tetap v1 sampai story rename/migrasi |
+| 2200 | Pinjaman modal | Uang muka pelanggan | **Tunda** — tetap v1 sampai story rename/migrasi |
+| Akun baru 1300–1360, 2200 | — | daftar §7 | **Tunda** — di luar scope A.1 |
 
-Isi kolom **Keputusan PO** sebelum merge implementasi penuh.
+A.1 hanya menandai COA standar v1 sebagai `isSystem`; rename/migrasi saldo = story berikutnya.
 
 ## File yang akan disentuh
 

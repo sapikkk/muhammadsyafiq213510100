@@ -36,7 +36,7 @@ Klien browser/server action internal boleh tetap memakai bentuk lama `{ "error":
 Bentuk akun:
 
 ```json
-{ "id": 40, "kode": "1600", "nama": "Perlengkapan Kebun", "tipe": "ASET", "parentId": 1, "aktif": true }
+{ "id": 40, "kode": "1600", "nama": "Perlengkapan Kebun", "tipe": "ASET", "parentId": 1, "aktif": true, "isSystem": false }
 ```
 
 Aturan:
@@ -47,6 +47,7 @@ Aturan:
 - Akun tidak bisa menjadi induk dirinya sendiri (400).
 - Mengubah tipe akun yang punya anak bertipe lain ditolak (400).
 - Nonaktifkan akun yang masih punya anak aktif ditolak (400). Nonaktif adalah soft delete; baris tetap ada untuk jurnal lama.
+- Akun dengan `isSystem: true` (COA standar seed): ubah `kode`, `tipe`, `parentId`, atau nonaktif ditolak (400). Hanya `nama` boleh diubah.
 
 Contoh:
 
