@@ -30,7 +30,7 @@ npm run dev   # terminal 1
 npm run test:e2e
 ```
 
-Di CI: workflow `.github/workflows/e2e.yml` (Postgres 16, migrate, seed, `npm run start`, Playwright).
+Di CI: workflow `.github/workflows/e2e.yml` (Postgres 16, `db push`, seed, `npm run start`, Playwright).
 
 ## Hasil terakhir (agent)
 

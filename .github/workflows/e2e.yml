@@ -35,7 +35,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm clean-install
-      - run: npx prisma migrate deploy
+      - run: npx prisma db push --accept-data-loss
       - name: Env file for prisma seed
         run: |
           printf 'DATABASE_URL=%s\nDIRECT_URL=%s\n' "$DATABASE_URL" "$DIRECT_URL" > .env
