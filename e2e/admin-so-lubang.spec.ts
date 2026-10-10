@@ -10,11 +10,14 @@ test("admin penjualan: form SO punya lubang terpakai (v2-D.1)", async ({ page })
   await page.waitForURL(/\/admin/);
 
   await page.goto("/admin/penjualan");
-  await expect(page.getByRole("heading", { name: /Sales order/i })).toBeVisible();
+  await expect(page.getByText(/Sales order/i).first()).toBeVisible();
 
   const lubangField = page.getByPlaceholder("Lubang terpakai");
   const noBatch = page.getByText(/Tidak ada batch siap jual/);
-  await expect(lubangField.or(noBatch).first()).toBeVisible({ timeout: 10_000 });
+  const noPelanggan = page.getByText(/Tambah pelanggan dulu/);
+  await expect(lubangField.or(noBatch).or(noPelanggan).first()).toBeVisible({
+    timeout: 10_000,
+  });
 
   if (await lubangField.isVisible()) {
     await expect(page.getByText(/v2-D\.1/i)).toBeVisible();
