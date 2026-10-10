@@ -14,7 +14,11 @@ import {
   type SmartJurnalTipe,
 } from "@/lib/smart-jurnal-catalog";
 
-const NO_KAS: SmartJurnalTipe[] = ["PENYUSUTAN_GREENHOUSE", "PENYUSUTAN_INSTALASI"];
+const NO_KAS: SmartJurnalTipe[] = [
+  "PENYUSUTAN_GREENHOUSE",
+  "PENYUSUTAN_INSTALASI",
+  "PEMBELIAN_BAHAN_KREDIT",
+];
 
 export function SmartJurnalForm({
   tanggalAwal,
@@ -33,7 +37,7 @@ export function SmartJurnalForm({
   return (
     <form action={formAction} className="space-y-4 rounded-md border p-4">
       <p className="text-sm text-muted-foreground">
-        v2-F.2 — tipe terkunci debit/kredit. Jurnal <strong>SMART</strong>, status PENDING (saldo setelah
+        v2-F.3 — tipe terkunci debit/kredit. Jurnal <strong>SMART</strong>, status PENDING (saldo setelah
         approve).
       </p>
 
