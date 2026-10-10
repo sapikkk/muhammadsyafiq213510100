@@ -1,3 +1,17 @@
+# [1.25.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.24.0...v1.25.0) (2026-10-10)
+
+
+### Features
+
+* **v2-F.3:** Smart Jurnal +5 tipe (pembelian bahan tunai/kredit, pendapatan lain, gaji, terima piutang)
+
+# [1.24.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.23.0...v1.24.0) (2026-10-10)
+
+
+### Features
+
+* **v2-H.2:** penyusutan otomatis bulan + closeout docs
+
 # [1.23.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.22.0...v1.23.0) (2026-10-10)
 
 

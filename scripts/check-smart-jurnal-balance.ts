@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { Prisma } from "@prisma/client";
 import { AKUN_KODE } from "../lib/akun-kode";
-import { smartJurnalTipe } from "../lib/smart-jurnal-catalog";
+import { smartJurnalTipe, type SmartJurnalTipe } from "../lib/smart-jurnal-catalog";
 import { buildSmartJurnalBaris } from "../lib/smart-jurnal";
 
 const nominal = new Prisma.Decimal("100000");
@@ -25,6 +25,16 @@ const kasMap = new Map([
   ["1510", 10],
   ["5220", 11],
   ["1530", 12],
+  ["1330", 13],
+  ["4100", 14],
+  ["5200", 15],
+  ["1200", 16],
+]);
+
+const NO_KAS = new Set<SmartJurnalTipe>([
+  "PENYUSUTAN_GREENHOUSE",
+  "PENYUSUTAN_INSTALASI",
+  "PEMBELIAN_BAHAN_KREDIT",
 ]);
 
 for (const tipe of smartJurnalTipe) {
@@ -32,7 +42,7 @@ for (const tipe of smartJurnalTipe) {
     assertBalance(
       buildSmartJurnalBaris(tipe, nominal, kasMap, AKUN_KODE.KAS, AKUN_KODE.BANK),
     );
-  } else if (tipe === "PENYUSUTAN_GREENHOUSE" || tipe === "PENYUSUTAN_INSTALASI") {
+  } else if (NO_KAS.has(tipe)) {
     assertBalance(buildSmartJurnalBaris(tipe, nominal, kasMap, AKUN_KODE.KAS));
   } else if (tipe === "PRIVE") {
     assertBalance(buildSmartJurnalBaris(tipe, nominal, kasMap, AKUN_KODE.KAS));
