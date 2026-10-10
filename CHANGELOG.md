@@ -3,6 +3,13 @@
 
 ### Features
 
+* **v2-F.3:** Smart Jurnal +5 tipe v1.25.0 ([#119](https://github.com/sapikkk/muhammadsyafiq213510100/issues/119)) ([e9f5450](https://github.com/sapikkk/muhammadsyafiq213510100/commit/e9f54502918c29a486fdf281c7f9a395933d2d70)), closes [#92](https://github.com/sapikkk/muhammadsyafiq213510100/issues/92)
+
+# [1.25.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.24.0...v1.25.0) (2026-10-10)
+
+
+### Features
+
 * **v2-F.3:** Smart Jurnal +5 tipe (pembelian bahan tunai/kredit, pendapatan lain, gaji, terima piutang)
 
 # [1.24.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.23.0...v1.24.0) (2026-10-10)
