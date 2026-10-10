@@ -38,10 +38,16 @@ US berikutnya (2.4, 3.5, 4.5): form + server action atau route API tipis, logika
 
 Untuk `docs/` dan notulensi uji: jalankan humanizer — hindari pola AI (kontras “bukan X tapi Y”, triad paksa, bold berlebihan). Registry agile/README: tone produk profesional.
 
-## UCD increment v2 (draft, branch GitHub)
+## Versi rilis (`package.json` / tag Git)
 
-- **Branch:** `ucd/blueprint-v2-akuntansi` — blueprint akuntansi/logistik + draft epic GitHub (belum merge `main`).
-- **Hub:** `docs/ucd/README.md` · skill: `docs/skills/akuntansi-hidroponik/SKILL.md`
+- **Tetap linier 1.x** — increment produk “v2” (akuntansi/logistik blueprint) **bukan** semver major `2.0.0`.
+- **PO (2026-10-10):** tag berikutnya `1.14.0`, `1.15.0`, … saat merge epic v2; **jangan** `2.0.x`.
+- Saat ini: **1.13.0** = go-live v1 + Sprint 5.
+
+## UCD increment v2 (post go-live)
+
+- **Hub:** `docs/ucd/README.md` · `docs/blueprint/` · issue epic **#87–#94**
+- **Skill:** `docs/skills/akuntansi-hidroponik/SKILL.md`
 
 ## Backlog & pelacakan sprint
 
