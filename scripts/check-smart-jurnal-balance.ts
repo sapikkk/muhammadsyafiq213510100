@@ -23,6 +23,8 @@ const kasMap = new Map([
   ["5500", 8],
   ["5210", 9],
   ["1510", 10],
+  ["5220", 11],
+  ["1530", 12],
 ]);
 
 for (const tipe of smartJurnalTipe) {
@@ -30,7 +32,7 @@ for (const tipe of smartJurnalTipe) {
     assertBalance(
       buildSmartJurnalBaris(tipe, nominal, kasMap, AKUN_KODE.KAS, AKUN_KODE.BANK),
     );
-  } else if (tipe === "PENYUSUTAN_GREENHOUSE") {
+  } else if (tipe === "PENYUSUTAN_GREENHOUSE" || tipe === "PENYUSUTAN_INSTALASI") {
     assertBalance(buildSmartJurnalBaris(tipe, nominal, kasMap, AKUN_KODE.KAS));
   } else if (tipe === "PRIVE") {
     assertBalance(buildSmartJurnalBaris(tipe, nominal, kasMap, AKUN_KODE.KAS));

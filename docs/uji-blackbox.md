@@ -1092,11 +1092,28 @@ Sample audit manual (T5.4): jurnal manual DRAFT/PENDING, jurnal approve panen, j
 | Nonaktifkan akun sistem | Admin | Tombol **Nonaktifkan** tidak ada; API menolak |
 | Tambah akun custom | Admin | Tanpa badge Sistem; edit/nonaktif normal |
 
+### v2-E.2 — Pelunasan SO (#91 / v1.20+)
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| SO DELIVERED, status PIUTANG | Admin | Form pelunasan + pilih kas/bank |
+| Catat pelunasan ≤ sisa piutang | Admin | Jurnal AUTO APPROVED Dr kas Cr 1200; status LUNAS jika sisa 0 |
+| Pelunasan > sisa | Admin | Pesan error |
+
+### v2-H — Penyusutan otomatis (v1.24+)
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/admin/akuntansi` → Catat penyusutan | Admin | Jurnal GH + instalasi (jika nominal > 0) |
+| Ulangi bulan sama | Admin | 409 sudah dicatat |
+
 ### Otomatisasi
 
 ```bash
 npm run typecheck && npm run build
 npm run check:jurnal-balance
+npm run check:kas-sumber
+npm run check:smart-jurnal-balance
 npm run test:e2e   # butuh dev server di :3000
 graphify update .  # setelah ubah kode
 ```
