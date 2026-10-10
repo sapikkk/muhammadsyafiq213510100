@@ -5,6 +5,8 @@ import { PageHeader } from "@/components/page-header";
 import { formatRupiah } from "@/lib/format";
 import { listAlertStokMinimum } from "@/lib/inventaris";
 import { bestProfitMonth, monthlySummary } from "@/lib/monthly-summary";
+import { kpiHidroponikMvp } from "@/lib/kpi-hidroponik";
+import { OwnerHidroponikKpi } from "@/components/owner-hidroponik-kpi";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import {
@@ -18,7 +20,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function OwnerPage() {
-  const [petani, stokRendah, summary] = await Promise.all([
+  const [petani, stokRendah, summary, kpiV2] = await Promise.all([
     prisma.user.findMany({
       where: { role: "PEKERJA" },
       orderBy: { nama: "asc" },
@@ -26,6 +28,7 @@ export default async function OwnerPage() {
     }),
     listAlertStokMinimum(),
     monthlySummary(6),
+    kpiHidroponikMvp(),
   ]);
 
   const labaTerbaik = bestProfitMonth(summary.months);
@@ -66,6 +69,12 @@ export default async function OwnerPage() {
         pendapatan={summary.pendapatanBulanIni}
         pengeluaran={summary.pengeluaranBulanIni}
         labaKasar={summary.labaKasarBulanIni}
+      />
+
+      <OwnerHidroponikKpi
+        batchPanenApproved={kpiV2.batchPanenApproved}
+        avgHppPerLubang={kpiV2.avgHppPerLubang}
+        avgYieldPct={kpiV2.avgYieldPct}
       />
 
       {labaTerbaik ? (
