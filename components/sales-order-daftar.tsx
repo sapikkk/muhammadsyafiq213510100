@@ -4,6 +4,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useFormState } from "react-dom";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { KasSumberSelect } from "@/components/kas-sumber-select";
 import {
   cancelSalesOrderAction,
   catatDpSalesOrderAction,
@@ -58,14 +59,7 @@ function PelunasanForm({ id }: { id: number }) {
     <form action={formAction} className="mt-2 space-y-2 rounded-md border border-dashed p-3">
       <input type="hidden" name="salesOrderId" value={id} />
       <Input name="nominal" placeholder="Nominal pelunasan (Rp)" className="h-9 text-sm" required />
-      <select
-        name="sumberKas"
-        className="flex h-9 w-full rounded-md border px-2 text-sm"
-        defaultValue="1100"
-      >
-        <option value="1100">Kas tunai</option>
-        <option value="1110">Bank</option>
-      </select>
+      <KasSumberSelect />
       <SubmitButton className="h-9" pendingLabel="...">
         Catat pelunasan (Dr Kas · Cr piutang)
       </SubmitButton>
@@ -79,6 +73,7 @@ function CatatDpButton({ id }: { id: number }) {
   return (
     <form action={formAction} className="mt-2 space-y-2 rounded-md border border-dashed p-3">
       <input type="hidden" name="salesOrderId" value={id} />
+      <KasSumberSelect />
       <SubmitButton className="h-9" pendingLabel="...">
         Catat DP (Dr Kas · Cr uang muka)
       </SubmitButton>
@@ -130,10 +125,13 @@ function PackingCostForm({ id, defaultValue }: { id: number; defaultValue: strin
         placeholder="Biaya packing (Rp)"
         className="h-9 text-sm"
       />
+      <KasSumberSelect />
       <SubmitButton className="h-9" pendingLabel="...">
         Catat biaya packing
       </SubmitButton>
-      <p className="text-xs text-muted-foreground">Jurnal beban 5400 / Kas jika nominal &gt; 0.</p>
+      <p className="text-xs text-muted-foreground">
+        Jurnal beban 5400 / Kas atau Bank jika nominal &gt; 0.
+      </p>
     </form>
   );
 }
@@ -159,11 +157,12 @@ function DeliverForm({ id }: { id: number }) {
     <form action={formAction} className="mt-2 space-y-2 rounded-md border border-dashed p-3">
       <input type="hidden" name="salesOrderId" value={id} />
       <Input name="catatan" placeholder="Catatan serah terima (opsional)" className="h-9 text-sm" />
+      <KasSumberSelect />
       <SubmitButton className="h-9" pendingLabel="...">
         Tandai terkirim (DELIVERED)
       </SubmitButton>
       <p className="text-xs text-muted-foreground">
-        Membuat jurnal pendapatan berstatus PENDING untuk persetujuan Admin.
+        Tanpa DP: Dr kas/bank di jurnal pendapatan. Jurnal PENDING menunggu Admin.
       </p>
     </form>
   );
