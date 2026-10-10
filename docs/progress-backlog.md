@@ -47,8 +47,9 @@ Urutan coding PO: **A → B → C → D → E → F → G → H** — detail iss
 | — | Done | v2-F.1 Smart Jurnal MVP (3 tipe) | [#100](https://github.com/sapikkk/muhammadsyafiq213510100/issues/100) · **v1.19.0** |
 | — | Done | v2-G.1 KPI Owner HPP/lubang + yield | [#101](https://github.com/sapikkk/muhammadsyafiq213510100/issues/101) |
 | — | Done | v2-H.1 period lock + tolak backdate | [#102](https://github.com/sapikkk/muhammadsyafiq213510100/issues/102) |
-| P1 | Todo | Epic B sisa | [#88](https://github.com/sapikkk/muhammadsyafiq213510100/issues/88) |
-| P2 | Todo | Epic F–H + story F.1–H.1 | [#92](https://github.com/sapikkk/muhammadsyafiq213510100/issues/92)–[#94](https://github.com/sapikkk/muhammadsyafiq213510100/issues/94), [#100](https://github.com/sapikkk/muhammadsyafiq213510100/issues/100)–[#102](https://github.com/sapikkk/muhammadsyafiq213510100/issues/102) |
+| P1 | Todo | Epic B/C/D sisa (edge) | [#88](https://github.com/sapikkk/muhammadsyafiq213510100/issues/88)–[#90](https://github.com/sapikkk/muhammadsyafiq213510100/issues/90) |
+| P1 | In progress | Epic E pelunasan + COA A.2 | [#91](https://github.com/sapikkk/muhammadsyafiq213510100/issues/91) · [#87](https://github.com/sapikkk/muhammadsyafiq213510100/issues/87) |
+| P2 | Todo | Epic F/G/H sisa (tipe Smart penuh, laporan, depresiasi) | [#92](https://github.com/sapikkk/muhammadsyafiq213510100/issues/92)–[#94](https://github.com/sapikkk/muhammadsyafiq213510100/issues/94) |
 
 ---
 
