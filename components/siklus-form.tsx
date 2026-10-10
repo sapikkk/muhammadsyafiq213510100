@@ -13,6 +13,7 @@ import {
 } from "@/lib/hidroponik-asumsi";
 import { isItemBenih, isItemMedia } from "@/lib/siklus-pack";
 import type { SatuanInventaris } from "@prisma/client";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 const selectClass =
   "flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm";
@@ -40,6 +41,7 @@ export function SiklusForm({
   tanggalAwal: string;
 }) {
   const [state, formAction] = useFormState(mulaiSiklusSemai, {});
+  useActionToast({ error: state.error, ok: state.ok });
   const [varietasId, setVarietasId] = useState("");
   const [jumlahDisemaiRaw, setJumlahDisemaiRaw] = useState("");
   const [packBenihId, setPackBenihId] = useState("");
@@ -84,17 +86,6 @@ export function SiklusForm({
         <strong>gram</strong> dari pack. Media rockwool biasanya dalam{" "}
         <strong>slab (pcs)</strong>, bukan gram benih.
       </p>
-      {state.error ? (
-        <p className="rounded-md border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="text-sm text-primary" role="status">
-          {state.ok}
-        </p>
-      ) : null}
-
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Varietas aktif</span>
         <select
