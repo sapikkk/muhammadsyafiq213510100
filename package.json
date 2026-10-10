@@ -1,6 +1,6 @@
 {
   "name": "muhammadsyafiq213510100",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "private": true,
   "description": "Kokonus Farm — website tata kelola biaya produksi hidroponik (skripsi).",
   "repository": {
@@ -26,6 +26,7 @@
     "check:jurnal-balance": "node --env-file=.env scripts/audit-jurnal-balance.js",
     "check:pack-kapasitas": "npx --yes tsx scripts/check-pack-kapasitas.ts",
     "check:sales-order-hpp": "npx --yes tsx scripts/check-sales-order-hpp.ts",
+    "check:sales-order-dp": "npx --yes tsx scripts/check-sales-order-dp.ts",
     "check:production-env": "bash scripts/check-production-env.sh",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
