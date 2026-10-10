@@ -71,6 +71,33 @@ export default async function PetaniSiklusDetailPage({
     faseAktif &&
     (["SPROUT_DAUN", "TAMBAL", "PINDAH_KOLAM", "PENDEWASAAN"] as string[]).includes(faseAktif);
 
+  const pindahFaseBlock =
+    faseAktif && berikut ? (
+      <section
+        id="pindah-fase"
+        aria-labelledby="pindah-fase-title"
+        className="scroll-mt-4 space-y-3"
+      >
+        <h2 id="pindah-fase-title" className="text-lg font-semibold">
+          Lanjut fase
+        </h2>
+        <p className="text-sm text-muted-foreground">
+          Aksi utama di kolam — centang konfirmasi lalu tap tombol di bawah (uji T5.1).
+        </p>
+        <PindahFaseForm
+          siklusId={id}
+          faseSaatIni={faseAktif}
+          faseBerikutnya={berikut as FaseProduksi}
+        />
+      </section>
+    ) : (
+      <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
+        {berikut === null && faseAktif
+          ? "Siklus sudah selesai, tidak ada fase berikutnya."
+          : "Fase tidak dikenali."}
+      </p>
+    );
+
   return (
     <div className="flex flex-col gap-8">
       <PageHeader
@@ -88,6 +115,26 @@ export default async function PetaniSiklusDetailPage({
           Daftar siklus
         </Link>
       </div>
+
+      {pindahFaseBlock}
+
+      {faseAktif === "PANEN" && !laporan ? (
+        <HarvestForm siklusId={id} jumlahDisemai={siklus.jumlah_disemai} />
+      ) : null}
+
+      {canMonitor ? <MonitorPertumbuhanForm siklusId={id} /> : null}
+
+      {canTambal && (!laporan || laporan.status !== "APPROVED") ? (
+        <TambalSusulanForm siklusId={id} packs={packsAktif} />
+      ) : null}
+
+      {status !== "SELESAI" && (!laporan || laporan.status !== "APPROVED") ? (
+        <KegagalanForm
+          siklusId={id}
+          jumlahDisemai={siklus.jumlah_disemai}
+          totalSusut={siklus.total_susut}
+        />
+      ) : null}
 
       <section className="space-y-3 rounded-md border p-4">
         <h2 className="text-lg font-semibold">Timeline produksi</h2>
@@ -111,38 +158,6 @@ export default async function PetaniSiklusDetailPage({
         <h2 className="text-lg font-semibold">Log kegagalan</h2>
         <LogKegagalanDaftar rows={kegagalanRows} />
       </section>
-
-      {canMonitor ? <MonitorPertumbuhanForm siklusId={id} /> : null}
-
-      {canTambal && (!laporan || laporan.status !== "APPROVED") ? (
-        <TambalSusulanForm siklusId={id} packs={packsAktif} />
-      ) : null}
-
-      {status !== "SELESAI" && (!laporan || laporan.status !== "APPROVED") ? (
-        <KegagalanForm
-          siklusId={id}
-          jumlahDisemai={siklus.jumlah_disemai}
-          totalSusut={siklus.total_susut}
-        />
-      ) : null}
-
-      {faseAktif && berikut ? (
-        <PindahFaseForm
-          siklusId={id}
-          faseSaatIni={faseAktif}
-          faseBerikutnya={berikut as FaseProduksi}
-        />
-      ) : (
-        <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-          {berikut === null && faseAktif
-            ? "Siklus sudah selesai, tidak ada fase berikutnya."
-            : "Fase tidak dikenali."}
-        </p>
-      )}
-
-      {faseAktif === "PANEN" && !laporan ? (
-        <HarvestForm siklusId={id} jumlahDisemai={siklus.jumlah_disemai} />
-      ) : null}
 
       {laporan ? (
         <section className="space-y-2 rounded-md border bg-muted/20 p-4 text-sm">

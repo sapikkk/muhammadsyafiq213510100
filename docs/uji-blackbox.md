@@ -1036,10 +1036,24 @@ POST /api/auth/callback/credentials 200 in 24253ms
 | Approve prive | Admin | Saldo Kas & Prive berubah setelah approve |
 | `/owner/prive` | Admin | 403 (hanya Owner input prive) |
 
+### Sprint 5 — QA (T5.1–T5.4)
+
+**Branch:** `feat/sprint-5-qa` · **Data demo:** batch `E2E-S5-DEMO` (fase awal Semai) dari `prisma/seed-siklus-demo.js`
+
+| Task | Langkah blackbox | Hasil diharapkan |
+| --- | --- | --- |
+| T5.1 | Petani HP: `/petani/siklus` → batch demo → centang konfirmasi → **Lanjut fase** | Toast sukses; badge **Sprout / daun**; baris log fase baru |
+| T5.2 | Admin: `/admin/jurnal` filter tanggal + status; cari di DataTable | Judul “sesuai filter”; baris terfilter; placeholder cari aktif |
+| T5.3 | Owner: dashboard KPI + grafik; HP link **Pie biaya** → `/owner/biaya` | Bulan laba tertinggi terbaca; pie beban tampil |
+| T5.4 | `npm run check:jurnal-balance` setelah seed / staging | Exit 0; semua jurnal debit = kredit |
+
+Sample audit manual (T5.4): jurnal manual DRAFT/PENDING, jurnal approve panen, jurnal SO DELIVERED — cek total debit = kredit di detail masing-masing.
+
 ### Otomatisasi
 
 ```bash
 npm run typecheck && npm run build
+npm run check:jurnal-balance
 npm run test:e2e   # butuh dev server di :3000
 graphify update .  # setelah ubah kode
 ```
