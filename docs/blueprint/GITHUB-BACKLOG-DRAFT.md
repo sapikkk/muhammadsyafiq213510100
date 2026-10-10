@@ -26,23 +26,23 @@
 | ID | Issue | Epic |
 | --- | --- | --- |
 | v2-A.1 ✅ | [#95](https://github.com/sapikkk/muhammadsyafiq213510100/issues/95) **closed** · v1.14.0 | A |
-| v2-B.1 | [#96](https://github.com/sapikkk/muhammadsyafiq213510100/issues/96) | B |
-| v2-C.1 | [#97](https://github.com/sapikkk/muhammadsyafiq213510100/issues/97) | C |
-| v2-D.1 | [#98](https://github.com/sapikkk/muhammadsyafiq213510100/issues/98) | D |
-| v2-E.1 | [#99](https://github.com/sapikkk/muhammadsyafiq213510100/issues/99) | E |
-| v2-F.1 | [#100](https://github.com/sapikkk/muhammadsyafiq213510100/issues/100) | F |
-| v2-G.1 | [#101](https://github.com/sapikkk/muhammadsyafiq213510100/issues/101) | G |
-| v2-H.1 | [#102](https://github.com/sapikkk/muhammadsyafiq213510100/issues/102) | H |
+| v2-B.1 ✅ | [#96](https://github.com/sapikkk/muhammadsyafiq213510100/issues/96) **closed** | B |
+| v2-C.1 ✅ | [#97](https://github.com/sapikkk/muhammadsyafiq213510100/issues/97) **closed** | C |
+| v2-D.1 ✅ | [#98](https://github.com/sapikkk/muhammadsyafiq213510100/issues/98) **closed** | D |
+| v2-E.1 ✅ | [#99](https://github.com/sapikkk/muhammadsyafiq213510100/issues/99) **closed** · v1.18.0 | E |
+| v2-F.1 ✅ | [#100](https://github.com/sapikkk/muhammadsyafiq213510100/issues/100) **closed** · v1.19.x | F |
+| v2-G.1 ✅ | [#101](https://github.com/sapikkk/muhammadsyafiq213510100/issues/101) **closed** | G |
+| v2-H.1 ✅ | [#102](https://github.com/sapikkk/muhammadsyafiq213510100/issues/102) **closed** | H |
+| v2-A.2 / E.2 | branch `feat/v2-a2-e2-coa-pelunasan` | A · E |
 
 ---
 
 ## Urutan coding (PO)
 
-1. **Epic A** (#87) — `#95` **selesai**; lanjut sub-story COA (WIP, uang muka, kas split)  
-2. **Epic B** (#88 / #96) — **#96 in progress** di Project #1 — WIP + abort  
-3. **C → D → E** — operasi & SO  
-4. **F** — Smart Jurnal  
-5. **G → H** — laporan & tutup buku  
+1. **Story #95–#102** — **selesai** (starter increment v2)  
+2. **Epic A/E lanjutan** — branch `feat/v2-a2-e2-coa-pelunasan` (WIP 1360, uang muka, pelunasan)  
+3. **Epic #87–#94** — masih open (Smart tipe 4–17, moving avg, depresiasi otomatis, …)  
+4. **#50 / #81** — P2 ops  
 
 **Skill:** `docs/skills/akuntansi-hidroponik/SKILL.md`  
 **Board:** tambahkan kartu ke [Project #1](https://github.com/users/sapikkk/projects/1) (iteration v2 opsional).
