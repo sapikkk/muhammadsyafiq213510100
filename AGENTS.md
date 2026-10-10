@@ -42,7 +42,7 @@ Untuk `docs/` dan notulensi uji: jalankan humanizer — hindari pola AI (kontras
 
 - **Tetap linier 1.x** — increment produk “v2” (akuntansi/logistik blueprint) **bukan** semver major `2.0.0`.
 - **PO (2026-10-10):** tag berikutnya `1.14.0`, `1.15.0`, … saat merge epic v2; **jangan** `2.0.x`.
-- Saat ini: **1.13.0** = go-live v1 + Sprint 5.
+- Saat ini: **1.20.0** = v2 A.2/E.2 COA WIP + pelunasan SO + reversal UI (tag **v1.20.0**).
 
 ## UCD increment v2 (post go-live)
 

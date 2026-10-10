@@ -4,6 +4,15 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-10 — v2-A.2 / E.2 + reversal UI (#112)
+
+- **Actor:** agent  
+- **Deliverable:** COA 1360 WIP + `patch:coa-v2`; pelunasan SO (Dr kas Cr piutang); deliver dengan DP (Dr uang muka + piutang); UI jurnal pembalik APPROVED → PENDING; e2e Smart Jurnal strict locators  
+- **Release:** **v1.20.0** · PR [#112](https://github.com/sapikkk/muhammadsyafiq213510100/pull/112) merged · prod `npm run patch:coa-v2` OK (1360, 2200 label)  
+- **Board:** `sync:project-board` — #91 Epic E → In progress (UAT); #87 Epic A tetap In progress  
+
+---
+
 ## 2026-10-10 — v2-F/G/H (#100–#102) + board
 
 - **Actor:** agent  
