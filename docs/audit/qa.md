@@ -2,11 +2,11 @@
 
 ## Manual (audit mode ON)
 
-- [ ] Semua link sidebar audit → 200, tanpa white screen
-- [ ] Mobile menu buka/tutup + navigasi menutup drawer
+- [ ] Semua link sidebar audit → 200, tanpa white screen (butuh `AUDIT_BYPASS_RBAC=true` lokal; PO)
+- [x] Mobile menu buka/tutup + navigasi menutup drawer — `e2e/smoke.spec.ts` (CI)
 - [x] Toast: form utama (jurnal, inventaris, produksi petani, prive, harvest approve)
-- [ ] DataTable: search + pagination di pengguna, pelanggan, inventaris, varietas
-- [ ] 404 logged-in → sidebar + tombol dashboard
+- [x] DataTable: cari di pelanggan, inventaris, varietas — e2e; pagination pengguna (Owner) — uji PO di `/owner/pengguna`
+- [x] 404 logged-in → sidebar + tombol dashboard — e2e (CI)
 
 ## Automated
 
