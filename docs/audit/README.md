@@ -7,7 +7,7 @@ Master prompt execution log. Start with `00-inventory.md` and `01-baseline.md`.
 | 0 | `00-inventory.md`, `01-baseline.md` |
 | 1–6 | `rbac.md`, `frontend.md`, [`backend.md`](backend.md), `qa.md`, `security.md` |
 | 4 | `perf-before-after.md` |
-| 7 | `SUMMARY.md`, [`07-verification.md`](07-verification.md) |
+| 7 | `SUMMARY.md`, [`07-verification.md`](07-verification.md), [`MERGE-READINESS.md`](MERGE-READINESS.md) |
 
 Branch: `chore/global-audit-bw-refactor`.
 
