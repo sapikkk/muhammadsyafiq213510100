@@ -72,8 +72,8 @@
     "semantic_hash": ""
   },
   "app/actions/siklus.ts": {
-    "mtime": 1791637467.4339805,
-    "seen": 1791637594.8712718,
+    "mtime": 1791637806.973923,
+    "seen": 1791638091.742335,
     "ast_hash": "e12e1a37e329446ad4d18c3ff2115a38",
     "semantic_hash": ""
   },
@@ -132,8 +132,8 @@
     "semantic_hash": ""
   },
   "app/admin/jurnal/baru/page.tsx": {
-    "mtime": 1791637481.5165644,
-    "seen": 1791637594.8713028,
+    "mtime": 1791637806.9813287,
+    "seen": 1791638091.742388,
     "ast_hash": "d5dc9270446522a9b90a511fdc389894",
     "semantic_hash": ""
   },
@@ -264,8 +264,8 @@
     "semantic_hash": ""
   },
   "app/api/production/route.ts": {
-    "mtime": 1791637467.434001,
-    "seen": 1791637594.871373,
+    "mtime": 1791637806.9824986,
+    "seen": 1791638091.742508,
     "ast_hash": "092e2d04e4925a1fb0ed16454fb82a55",
     "semantic_hash": ""
   },
@@ -354,8 +354,8 @@
     "semantic_hash": ""
   },
   "app/owner/varietas/page.tsx": {
-    "mtime": 1791637468.0878065,
-    "seen": 1791637594.8714461,
+    "mtime": 1791637806.988392,
+    "seen": 1791638091.742636,
     "ast_hash": "c9fd48fe7cb9f368d780d4f2832620a2",
     "semantic_hash": ""
   },
@@ -672,8 +672,8 @@
     "semantic_hash": ""
   },
   "components/varietas-daftar.tsx": {
-    "mtime": 1791637467.434114,
-    "seen": 1791637594.871617,
+    "mtime": 1791637806.990497,
+    "seen": 1791638091.742939,
     "ast_hash": "4d90e857adb344953c746065733ad8b6",
     "semantic_hash": ""
   },
@@ -684,8 +684,8 @@
     "semantic_hash": ""
   },
   "lib/active-pack.ts": {
-    "mtime": 1791637453.1655564,
-    "seen": 1791637594.871645,
+    "mtime": 1791637807.626779,
+    "seen": 1791638091.742986,
     "ast_hash": "8e05fc4659f8429f1474ad5b881a7aad",
     "semantic_hash": ""
   },
@@ -774,9 +774,9 @@
     "semantic_hash": ""
   },
   "lib/prisma.ts": {
-    "mtime": 1791617799.614015,
-    "seen": 1791631123.352246,
-    "ast_hash": "01141e575ca76925a64b43983838df87",
+    "mtime": 1791637986.1944013,
+    "seen": 1791638091.743135,
+    "ast_hash": "933282b3edd4ca2875d2ca3da268966d",
     "semantic_hash": ""
   },
   "lib/role-home.ts": {
@@ -798,8 +798,8 @@
     "semantic_hash": ""
   },
   "lib/siklus-produksi.ts": {
-    "mtime": 1791637459.8314412,
-    "seen": 1791637594.871757,
+    "mtime": 1791637807.6488142,
+    "seen": 1791638091.743177,
     "ast_hash": "f8bbbd4396f37d4b0d9be55542889563",
     "semantic_hash": ""
   },
@@ -840,9 +840,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1791637495.0024247,
-    "seen": 1791637594.8717818,
-    "ast_hash": "38682ee6e0d7a2d6683aba6d303bd5dc",
+    "mtime": 1791637987.07671,
+    "seen": 1791638091.743219,
+    "ast_hash": "80e5522ccf38afea59c1fb97e5fe468f",
     "semantic_hash": ""
   },
   "postcss.config.js": {
@@ -924,9 +924,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1791637494.0354161,
-    "seen": 1791637594.872067,
-    "ast_hash": "d729ab5e27c2b53f178e12da2049d295",
+    "mtime": 1791637993.1473265,
+    "seen": 1791638091.743747,
+    "ast_hash": "bb2c9b6bc8a9f3f92eb3e62ce07d15ad",
     "semantic_hash": ""
   },
   "README.md": {
@@ -936,8 +936,8 @@
     "semantic_hash": ""
   },
   "docs/api.md": {
-    "mtime": 1791637496.0834627,
-    "seen": 1791637594.8720949,
+    "mtime": 1791637806.9944463,
+    "seen": 1791638091.7438002,
     "ast_hash": "db34e2bfab9b2c4101e37747a74aa3b9",
     "semantic_hash": ""
   },
@@ -972,9 +972,9 @@
     "semantic_hash": ""
   },
   "docs/progress-backlog.md": {
-    "mtime": 1791637493.429801,
-    "seen": 1791637594.872146,
-    "ast_hash": "1adad5adf95115e2834531d58780c66e",
+    "mtime": 1791637990.768033,
+    "seen": 1791638091.743904,
+    "ast_hash": "0e6f3aa984c91959b28bd232a741f6b6",
     "semantic_hash": ""
   },
   "docs/project-context.md": {
@@ -990,8 +990,8 @@
     "semantic_hash": ""
   },
   "docs/uji-blackbox.md": {
-    "mtime": 1791637494.7615757,
-    "seen": 1791637594.872162,
+    "mtime": 1791637806.9976947,
+    "seen": 1791638091.743937,
     "ast_hash": "451b4dde48a0be2e5a2820e9757c02ea",
     "semantic_hash": ""
   },
@@ -1146,9 +1146,9 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1791637493.626072,
-    "seen": 1791637594.872066,
-    "ast_hash": "1a8a5ec2d081abe3c321cc358f40ab32",
+    "mtime": 1791637992.0950248,
+    "seen": 1791638091.743744,
+    "ast_hash": "6dd69e4faaf9dfcebf8067bdf4c516fa",
     "semantic_hash": ""
   },
   "docs/notulensi-2026-10-09.md": {
@@ -1164,9 +1164,9 @@
     "semantic_hash": ""
   },
   "docs/testing/README.md": {
-    "mtime": 1791617799.4327488,
-    "seen": 1791631123.3529139,
-    "ast_hash": "15f2b56c332ab23650817e09ea9b4f80",
+    "mtime": 1791637991.2294438,
+    "seen": 1791638091.743923,
+    "ast_hash": "91e3ad6e39db8bcd5e5b0b7d26941b6f",
     "semantic_hash": ""
   },
   "app/actions/monitor.ts": {
@@ -1212,8 +1212,8 @@
     "semantic_hash": ""
   },
   "lib/tambal-susulan.ts": {
-    "mtime": 1791637458.9851558,
-    "seen": 1791637594.871764,
+    "mtime": 1791637807.6681302,
+    "seen": 1791638091.743188,
     "ast_hash": "16a32256880f94502c347c3462e5fe03",
     "semantic_hash": ""
   },
@@ -1308,8 +1308,8 @@
     "semantic_hash": ""
   },
   "lib/sales-order.ts": {
-    "mtime": 1791637461.4760582,
-    "seen": 1791637594.8717508,
+    "mtime": 1791637807.631541,
+    "seen": 1791638091.743166,
     "ast_hash": "567113ed2223e5879d58eb8b2a2ebb6b",
     "semantic_hash": ""
   },
@@ -1368,9 +1368,9 @@
     "semantic_hash": ""
   },
   "docs/agile/audit-log.md": {
-    "mtime": 1791637493.8349721,
-    "seen": 1791637594.872076,
-    "ast_hash": "67d74180b018d61964490868c8e9c19c",
+    "mtime": 1791637992.5210745,
+    "seen": 1791638091.743764,
+    "ast_hash": "4681077d5e1841f33745018390092e0c",
     "semantic_hash": ""
   },
   "docs/agile/definition-of-done.md": {
@@ -3288,8 +3288,8 @@
     "semantic_hash": ""
   },
   "lib/sales-order-hpp.ts": {
-    "mtime": 1791637453.9903753,
-    "seen": 1791637594.871744,
+    "mtime": 1791637807.6283195,
+    "seen": 1791638091.7431538,
     "ast_hash": "9610d9ebaffa6fc49de4fd732b5d81d0",
     "semantic_hash": ""
   },
@@ -3372,9 +3372,9 @@
     "semantic_hash": ""
   },
   "scripts/sync-project-board.mjs": {
-    "mtime": 1791637492.1541877,
-    "seen": 1791637594.871834,
-    "ast_hash": "167130520d1f6686b4f84d7a942ae245",
+    "mtime": 1791637987.3380544,
+    "seen": 1791638091.743319,
+    "ast_hash": "3dcf28820bb1829315f5959d46697eef",
     "semantic_hash": ""
   },
   "scripts/vercel-go-live.sh": {
@@ -4206,9 +4206,9 @@
     "semantic_hash": ""
   },
   "docs/deployment/vercel-go-live.md": {
-    "mtime": 1791617799.4264681,
-    "seen": 1791631123.352879,
-    "ast_hash": "206e141a4315c9a789e5501bf51b30e7",
+    "mtime": 1791637991.7598817,
+    "seen": 1791638091.743883,
+    "ast_hash": "99615f8401ba265b5b81a4ad70951e46",
     "semantic_hash": ""
   },
   "docs/deployment/vercel.md": {
@@ -4458,14 +4458,14 @@
     "semantic_hash": ""
   },
   "components/smart-jurnal-form.tsx": {
-    "mtime": 1791637481.352631,
-    "seen": 1791637594.871593,
+    "mtime": 1791637806.9895368,
+    "seen": 1791638091.742892,
     "ast_hash": "d3f4344d4b175cf766105448c0343c9b",
     "semantic_hash": ""
   },
   "e2e/admin-smart-jurnal.spec.ts": {
-    "mtime": 1791637481.5163672,
-    "seen": 1791637594.8716302,
+    "mtime": 1791637807.000508,
+    "seen": 1791638091.7429602,
     "ast_hash": "48c10dca756ac625bd81a1c205bd9e42",
     "semantic_hash": ""
   },
@@ -4494,8 +4494,8 @@
     "semantic_hash": ""
   },
   "lib/smart-jurnal.ts": {
-    "mtime": 1791637452.5515149,
-    "seen": 1791637594.8717608,
+    "mtime": 1791637807.6668599,
+    "seen": 1791638091.7431831,
     "ast_hash": "11348968f981fd64beb2e9e0ad40a410",
     "semantic_hash": ""
   },
@@ -4512,8 +4512,8 @@
     "semantic_hash": ""
   },
   "scripts/check-smart-jurnal-balance.ts": {
-    "mtime": 1791637454.257075,
-    "seen": 1791637594.871823,
+    "mtime": 1791637807.7913866,
+    "seen": 1791638091.743299,
     "ast_hash": "250b54a97a8b5f9fd07c715f88663b2d",
     "semantic_hash": ""
   },
@@ -4572,8 +4572,8 @@
     "semantic_hash": ""
   },
   "lib/smart-jurnal-catalog.ts": {
-    "mtime": 1791637453.165917,
-    "seen": 1791637594.8717592,
+    "mtime": 1791637807.6651688,
+    "seen": 1791638091.74318,
     "ast_hash": "24634093d1be4809e8cb51b2196be195",
     "semantic_hash": ""
   },
@@ -4584,21 +4584,39 @@
     "semantic_hash": ""
   },
   "lib/active-pack-habis-jurnal.ts": {
-    "mtime": 1791637482.357185,
-    "seen": 1791637594.8716428,
+    "mtime": 1791637807.6252527,
+    "seen": 1791638091.7429829,
     "ast_hash": "aa85eb33d47c75366590949ff3b1be85",
     "semantic_hash": ""
   },
   "lib/varietas-hpp-rata.ts": {
-    "mtime": 1791637448.956975,
-    "seen": 1791637594.8717718,
+    "mtime": 1791637807.6688159,
+    "seen": 1791638091.7432,
     "ast_hash": "9f09c2ee77b8241be3a120d72e7e1d53",
     "semantic_hash": ""
   },
   "scripts/check-varietas-hpp-rata.ts": {
-    "mtime": 1791637481.3508503,
-    "seen": 1791637594.871825,
+    "mtime": 1791637807.7921844,
+    "seen": 1791638091.7433028,
     "ast_hash": "509f5a829df418bbb1ce0073689abe99",
+    "semantic_hash": ""
+  },
+  "prisma/seed-demo-flow.js": {
+    "mtime": 1791637981.6147668,
+    "seen": 1791638091.743232,
+    "ast_hash": "a6c82f250a90d888a0b60fd533c9a964",
+    "semantic_hash": ""
+  },
+  "docs/deployment/FINDING-01-db-pool.md": {
+    "mtime": 1791637985.669624,
+    "seen": 1791638091.7438788,
+    "ast_hash": "9811eadfdc473ee4b15fee109c4d963b",
+    "semantic_hash": ""
+  },
+  "docs/testing/DEMO-DATA.md": {
+    "mtime": 1791637983.2681372,
+    "seen": 1791638091.74392,
+    "ast_hash": "69bbdcfa23ab53488421ebfecaeb961a",
     "semantic_hash": ""
   }
 }

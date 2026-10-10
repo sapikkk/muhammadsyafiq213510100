@@ -42,7 +42,7 @@ Untuk `docs/` dan notulensi uji: jalankan humanizer — hindari pola AI (kontras
 
 - **Tetap linier 1.x** — increment produk “v2” (akuntansi/logistik blueprint) **bukan** semver major `2.0.0`.
 - **PO (2026-10-10):** tag berikutnya `1.14.0`, `1.15.0`, … saat merge epic v2; **jangan** `2.0.x`.
-- Saat ini: **1.26.0** = v2 closeout (Smart 17 tipe, pack habis jurnal, HPP rata varietas, epic #87–#94 kode selesai).
+- Saat ini: **1.27.0** = v2 + ops sidang (#50 FINDING-01 doc/retry, #81 seed:demo + DEMO-DATA).
 
 ## UCD increment v2 (post go-live)
 

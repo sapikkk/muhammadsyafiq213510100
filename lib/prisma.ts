@@ -18,7 +18,13 @@ function buildClient() {
         } catch (error) {
           if (!isPoolTimeout(error)) throw error;
           await new Promise((r) => setTimeout(r, 250));
-          return query(args);
+          try {
+            return await query(args);
+          } catch (retry1) {
+            if (!isPoolTimeout(retry1)) throw retry1;
+            await new Promise((r) => setTimeout(r, 500));
+            return query(args);
+          }
         }
       },
     },
