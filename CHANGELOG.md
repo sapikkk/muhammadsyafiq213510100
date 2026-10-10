@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.14.0...v1.14.1) (2026-10-10)
+
+
+### Bug Fixes
+
+* **seed:** jalankan seed-akun.js langsung untuk set isSystem ([0200f51](https://github.com/sapikkk/muhammadsyafiq213510100/commit/0200f517320888aee00f7e522f1e5c013557331f))
+
 # [1.14.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.13.0...v1.14.0) (2026-10-10)
 
 
