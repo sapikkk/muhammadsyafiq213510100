@@ -16,12 +16,20 @@ test("login admin mengarah ke dashboard", async ({ page }) => {
   await expect(page.getByText(/Admin/i).first()).toBeVisible();
 });
 
-async function loginAdmin(page: import("@playwright/test").Page) {
+async function loginAs(page: import("@playwright/test").Page, email: string, home: RegExp) {
   await page.goto("/login");
-  await page.locator('input[name="email"]').fill("admin@kokonus.farm");
+  await page.locator('input[name="email"]').fill(email);
   await page.locator('input[name="password"]').fill(demoPassword);
   await page.getByRole("button", { name: /masuk/i }).click();
-  await page.waitForURL(/\/admin/);
+  await page.waitForURL(home);
+}
+
+async function loginAdmin(page: import("@playwright/test").Page) {
+  await loginAs(page, "admin@kokonus.farm", /\/admin/);
+}
+
+async function loginOwner(page: import("@playwright/test").Page) {
+  await loginAs(page, "owner@kokonus.farm", /\/owner/);
 }
 
 test("admin stok rendah memuat tabel", async ({ page }) => {
@@ -59,6 +67,16 @@ test("404 saat login menampilkan shell dan tombol dashboard", async ({ page }) =
   await expect(page.getByRole("heading", { name: /Halaman tidak ada/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Kembali ke dashboard/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /^Jurnal$/ })).toBeVisible();
+});
+
+test("owner pengguna DataTable cari", async ({ page }) => {
+  await loginOwner(page);
+  await page.goto("/owner/pengguna");
+  await expect(page.getByRole("heading", { name: /Kelola user/i })).toBeVisible();
+  const search = page.getByPlaceholder(/Cari nama atau email/i);
+  await expect(search).toBeVisible();
+  await search.fill("admin@kokonus");
+  await expect(page.getByText(/admin@kokonus\.farm/i)).toBeVisible();
 });
 
 test("mobile menu: buka navigasi lalu tutup setelah pilih link", async ({ page }) => {

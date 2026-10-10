@@ -35,3 +35,11 @@
 - `npm run typecheck` — pass
 - `npm run check:audit-env` — pass
 - Produksi: tanpa flag, perilaku RBAC sama seperti sebelum Phase 1
+
+## Uji manual sidebar audit (PO)
+
+1. Di `.env` lokal (gitignored): `AUDIT_BYPASS_RBAC=true`, restart dev server.
+2. Login salah satu akun demo; sidebar label **Menu (audit)** — gabungan route Owner/Admin/Petani.
+3. Klik tiap link sekali; halaman harus **200**, tanpa layar putih atau error boundary.
+4. Matikan flag; login ulang — menu kembali sesuai peran saja.
+5. Centang item di `docs/audit/qa.md` setelah selesai.
