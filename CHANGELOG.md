@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.13.0...v1.14.0) (2026-10-10)
+
+
+### Features
+
+* **v2-A.1:** Akun.is_system + guard COA standar ([#95](https://github.com/sapikkk/muhammadsyafiq213510100/issues/95)) ([2338522](https://github.com/sapikkk/muhammadsyafiq213510100/commit/2338522e5fb104f8bfaaa2ba91dc70068ff7c060))
+
 # [1.13.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.12.0...v1.13.0) (2026-10-10)
 
 
