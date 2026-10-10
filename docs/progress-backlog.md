@@ -40,7 +40,8 @@ Urutan coding PO: **A → B → C → D → E → F → G → H** — detail iss
 |---|--------------|------|-------|
 | — | Done | v2-A.1 `Akun.is_system` + guard COA | [#95](https://github.com/sapikkk/muhammadsyafiq213510100/issues/95) · PR #104 · **v1.14.0** |
 | — | Done | v2-A.2 COA 1360 WIP + patch + abort WIP | PR [#112](https://github.com/sapikkk/muhammadsyafiq213510100/pull/112) · **v1.20.0** |
-| P1 | In progress | Epic A (sisa: WIP panen, kas split penuh) | [#87](https://github.com/sapikkk/muhammadsyafiq213510100/issues/87) |
+| — | Done | v2-A.3 panen approve Dr 1350 Cr WIP | PR [#114](https://github.com/sapikkk/muhammadsyafiq213510100/pull/114) · **v1.21.0** |
+| P1 | In progress | Epic A (sisa: kas split penuh) | [#87](https://github.com/sapikkk/muhammadsyafiq213510100/issues/87) |
 | — | Done | v2-B.1 Abort → jurnal 5300 | [#96](https://github.com/sapikkk/muhammadsyafiq213510100/issues/96) · PR #105 |
 | — | Done | v2-C.1 kapasitas lubang / pack | [#97](https://github.com/sapikkk/muhammadsyafiq213510100/issues/97) · PR #106 |
 | — | Done | v2-D.1 SO lubang + HPP order | [#98](https://github.com/sapikkk/muhammadsyafiq213510100/issues/98) · PR #107 |
