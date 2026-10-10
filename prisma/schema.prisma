@@ -221,10 +221,12 @@ model Sales_Order_Baris {
   sales_order    Sales_Order     @relation(fields: [sales_order_id], references: [id], onDelete: Cascade)
   siklus_id      Int
   siklus         Siklus_Produksi @relation(fields: [siklus_id], references: [id])
-  jenis          String          @db.VarChar(30)
-  jumlah         Decimal         @db.Decimal(12, 3)
-  harga_satuan   Decimal         @db.Decimal(18, 2)
-  subtotal       Decimal         @db.Decimal(18, 2)
+  jenis            String          @db.VarChar(30)
+  jumlah           Decimal         @db.Decimal(12, 3)
+  lubang_terpakai  Int             @default(0)
+  hpp_order        Decimal         @default(0) @db.Decimal(18, 2)
+  harga_satuan     Decimal         @db.Decimal(18, 2)
+  subtotal         Decimal         @db.Decimal(18, 2)
 
   @@index([sales_order_id])
   @@index([siklus_id])

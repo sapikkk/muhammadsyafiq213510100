@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { hitungHppOrderBaris } from "@/lib/sales-order-hpp";
 
 type Db = typeof prisma;
 
@@ -19,6 +20,7 @@ export type SoBarisInput = {
   siklusId: number;
   jenis: JenisSo;
   jumlah: Prisma.Decimal;
+  lubangTerpakai: number;
   hargaSatuan: Prisma.Decimal;
 };
 
@@ -46,6 +48,14 @@ function parseMoney(raw: unknown, label: string): Prisma.Decimal {
   const v = new Prisma.Decimal(text);
   if (v.lte(0)) throw new SalesOrderError(`${label} harus > 0.`, 400);
   return v;
+}
+
+function parseLubang(raw: unknown, label: string): number {
+  const value = Number(raw);
+  if (!Number.isInteger(value) || value <= 0) {
+    throw new SalesOrderError(`${label} harus bilangan bulat lebih dari nol.`, 400);
+  }
+  return value;
 }
 
 function parseQty(raw: unknown, label: string): Prisma.Decimal {
@@ -81,6 +91,7 @@ export function parseSalesOrderInput(raw: Record<string, unknown>): SalesOrderIn
       siklusId,
       jenis: parseJenis(r.jenis),
       jumlah: parseQty(r.jumlah, `Baris ${i + 1} jumlah`),
+      lubangTerpakai: parseLubang(r.lubangTerpakai, `Baris ${i + 1} lubang terpakai`),
       hargaSatuan: parseMoney(r.hargaSatuan, `Baris ${i + 1} harga`),
     };
   });
@@ -116,6 +127,28 @@ export async function listSiklusSiapJual() {
       laporanPanen: { select: { jumlah_layak: true, berat_layak_gram: true } },
     },
   });
+}
+
+export async function lubangSudahDipesan(siklusId: number, tx: Db = prisma) {
+  const rows = await tx.sales_Order_Baris.findMany({
+    where: {
+      siklus_id: siklusId,
+      sales_order: { status: { in: [...STATUS_AKTIF_STOK] } },
+    },
+    select: { lubang_terpakai: true },
+  });
+  return rows.reduce((acc, r) => acc + r.lubang_terpakai, 0);
+}
+
+export async function stokLubangTersedia(siklusId: number, tx: Db = prisma) {
+  const siklus = await tx.siklus_Produksi.findUnique({
+    where: { id: siklusId },
+    include: { laporanPanen: true },
+  });
+  if (!siklus?.laporanPanen || siklus.status !== "SELESAI") return 0;
+  const layak = siklus.laporanPanen.jumlah_layak;
+  const terpakai = await lubangSudahDipesan(siklusId, tx);
+  return Math.max(0, layak - terpakai);
 }
 
 export async function jumlahSudahDipesan(siklusId: number, jenis: JenisSo, tx: typeof prisma = prisma) {
@@ -190,6 +223,8 @@ type SoSerializeRow = {
     siklus_id: number;
     jenis: string;
     jumlah: Prisma.Decimal;
+    lubang_terpakai: number;
+    hpp_order: Prisma.Decimal;
     harga_satuan: Prisma.Decimal;
     subtotal: Prisma.Decimal;
     siklus: { kode_batch: string };
@@ -222,6 +257,8 @@ export function serializeSalesOrder(row: SoSerializeRow) {
       kode_batch: b.siklus.kode_batch,
       jenis: b.jenis,
       jumlah: b.jumlah.toString(),
+      lubang_terpakai: b.lubang_terpakai,
+      hpp_order: b.hpp_order.toString(),
       harga_satuan: b.harga_satuan.toString(),
       subtotal: b.subtotal.toString(),
     })),
@@ -239,17 +276,35 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
     for (const line of input.baris) {
       const siklus = await tx.siklus_Produksi.findUnique({
         where: { id: line.siklusId },
-        include: { laporanPanen: true },
+        include: { laporanPanen: true, hpp: true },
       });
       if (!siklus || siklus.status !== "SELESAI" || siklus.laporanPanen?.status !== "APPROVED") {
         throw new SalesOrderError(`Batch #${line.siklusId} belum siap jual.`, 400);
       }
+      if (!siklus.hpp) {
+        throw new SalesOrderError(`Batch #${line.siklusId} belum punya HPP (approve panen).`, 400);
+      }
+      const lubangTersedia = await stokLubangTersedia(line.siklusId, tx as Db);
+      if (line.lubangTerpakai > lubangTersedia) {
+        throw new SalesOrderError(
+          `Lubang batch tidak cukup (tersedia ${lubangTersedia}, minta ${line.lubangTerpakai}).`,
+          400,
+        );
+      }
+      const hppOrder = hitungHppOrderBaris(
+        siklus.hpp.hpp_per_lubang,
+        line.jenis,
+        line.lubangTerpakai,
+        line.jumlah,
+      );
       const subtotal = line.jumlah.mul(line.hargaSatuan);
       total = total.add(subtotal);
       barisData.push({
         siklus_id: line.siklusId,
         jenis: line.jenis,
         jumlah: line.jumlah,
+        lubang_terpakai: line.lubangTerpakai,
+        hpp_order: hppOrder,
         harga_satuan: line.hargaSatuan,
         subtotal,
       });
@@ -290,6 +345,13 @@ export async function confirmSalesOrder(id: number) {
       if (line.jumlah.gt(tersedia)) {
         throw new SalesOrderError(
           `Stok ${line.jenis} batch tidak cukup (tersedia ${tersedia.toString()}, minta ${line.jumlah.toString()}).`,
+          400,
+        );
+      }
+      const lubangTersedia = await stokLubangTersedia(line.siklus_id, tx as Db);
+      if (line.lubang_terpakai > lubangTersedia) {
+        throw new SalesOrderError(
+          `Lubang batch tidak cukup (tersedia ${lubangTersedia}, minta ${line.lubang_terpakai}).`,
           400,
         );
       }

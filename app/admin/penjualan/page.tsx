@@ -23,6 +23,7 @@ export default async function AdminPenjualanPage() {
     varietas_nama: s.varietas.nama,
     harga_curah: s.varietas.harga_jual_curah.toString(),
     harga_pack: s.varietas.harga_jual_pack.toString(),
+    jumlah_layak: s.laporanPanen?.jumlah_layak ?? 0,
   }));
 
   return (
