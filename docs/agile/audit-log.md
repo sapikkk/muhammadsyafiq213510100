@@ -4,6 +4,23 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-10 — v2-F/G/H (#100–#102) + board
+
+- **Actor:** agent  
+- **Deliverable:** Smart Jurnal MVP (`sumber=SMART`, 3 tipe), KPI Owner HPP/lubang + yield, period lock + override Admin  
+- **Release:** **v1.19.0** (PR TBD) · board #100–#102 → Done via `sync:project-board`  
+- **Ops:** `prisma db push` wajib setelah deploy schema; e2e `admin-smart-jurnal.spec.ts`  
+- **Kendala terminal (catat di Project):** push tag `v1.18.0` ditolak remote (tag sudah ada) — non-blocking; `check:*` via tsx kadang EPERM di sandbox → jalankan dengan permission penuh  
+
+---
+
+## 2026-10-10 — v2-E.1 (#99) DP SO
+
+- **Actor:** agent  
+- **Merge:** PR #108 · issue #99 closed · **v1.18.0** · prod DB push OK (unique `jurnal_dp_id`)  
+
+---
+
 ## 2026-10-10 — Project #1 + backlog v2 (sinkron board)
 
 - **Actor:** agent + PO sapikkk  
