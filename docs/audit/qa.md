@@ -13,7 +13,7 @@
 - [x] `npm run typecheck` / `lint` / `check:banned-ui` / `check:audit-env` / `check:legacy-api-json` (lokal 2026-10-10)
 - [x] `npm run build`
 - [x] `e2e/smoke.spec.ts` — login admin + jurnal + stok rendah (butuh DB seed & dev server)
-- [x] `npm run test:e2e` di CI — workflow `.github/workflows/e2e.yml` (verifikasi hijau setelah push)
+- [x] `npm run test:e2e` di CI — workflow `.github/workflows/e2e.yml` (hijau run 38010555738)
 
 ## Failure paths (todo)
 

@@ -39,6 +39,6 @@ Di CI: workflow `.github/workflows/e2e.yml` (Postgres 16, `db push`, seed, `npm 
 | lint / typecheck / check:* / build | lulus lokal (2026-10-10) |
 | check:legacy-api-json | lulus |
 | check:banned-ui | lulus setelah filter animasi slide Radix |
-| e2e CI | menunggu run GitHub Actions setelah push |
+| e2e CI | hijau (db push + seed + smoke Playwright) |
 
 Catatan PO: isi tanggal uji manual di baris bawah setelah review.
