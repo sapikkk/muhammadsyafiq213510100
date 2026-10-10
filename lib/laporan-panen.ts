@@ -3,7 +3,8 @@ import { keTanggalIso } from "@/lib/format";
 import { applyHppOverride, parseHppOverride } from "@/lib/hpp-override";
 import { calculateHPP, yieldContextFromSiklus } from "@/lib/hpp";
 import { prisma } from "@/lib/prisma";
-import { STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort";
+import { AKUN_KODE } from "@/lib/akun-kode";
+import { resolveAkunWip, STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort";
 import { totalBiayaAbnormalSiklus } from "@/lib/susut";
 
 export class HarvestError extends Error {
@@ -249,71 +250,65 @@ export async function approveLaporanPanen(
         update: hppData,
       });
 
-      // Jurnal Otomatis Persediaan
-      const akunPersediaan = await tx.akun.findUnique({ where: { kode: "1350" } });
-      const akunHPP = await tx.akun.findUnique({ where: { kode: "5100" } });
+      const biayaAbnormal = await totalBiayaAbnormalSiklus(laporan.siklus_id, tx as typeof prisma);
+      const nilaiPersediaan = hppCalc.total_biaya;
+      const kreditWip = nilaiPersediaan.add(biayaAbnormal);
 
-      if (akunPersediaan && akunHPP) {
-        const jurnal = await tx.jurnal.create({
+      if (kreditWip.gt(0)) {
+        const akunPersediaan = await tx.akun.findUnique({
+          where: { kode: AKUN_KODE.PERSEDIAAN_SAYUR },
+        });
+        const akunWip = await resolveAkunWip(tx);
+        const akunKerugian = biayaAbnormal.gt(0)
+          ? await tx.akun.findUnique({ where: { kode: AKUN_KODE.KERUGIAN_SUSUT } })
+          : null;
+
+        if (!akunPersediaan || !akunWip) {
+          throw new HarvestError("Akun 1350 atau WIP (1360) tidak ditemukan.", 500);
+        }
+        if (biayaAbnormal.gt(0) && !akunKerugian) {
+          throw new HarvestError("Akun 5300 tidak ditemukan.", 500);
+        }
+
+        const baris: { akunId: number; debit: Prisma.Decimal; kredit: Prisma.Decimal }[] = [
+          { akunId: akunPersediaan.id, debit: nilaiPersediaan, kredit: new Prisma.Decimal(0) },
+        ];
+        if (biayaAbnormal.gt(0) && akunKerugian) {
+          baris.push({
+            akunId: akunKerugian.id,
+            debit: biayaAbnormal,
+            kredit: new Prisma.Decimal(0),
+          });
+        }
+        baris.push({ akunId: akunWip.id, debit: new Prisma.Decimal(0), kredit: kreditWip });
+
+        await tx.jurnal.create({
           data: {
             tanggal: new Date(),
-            keterangan: `Harvest Report Approved: Batch ${laporan.siklus.kode_batch}`,
+            keterangan: `Panen disetujui ${laporan.siklus.kode_batch} (Dr persediaan, Cr WIP)`,
             status: "APPROVED",
+            sumber: "AUTO",
             dibuatOlehId: userId,
             diputusOlehId: userId,
             diputusPada: new Date(),
-            baris: {
-              create: [
-                { akunId: akunPersediaan.id, debit: hppCalc.total_biaya, kredit: 0 },
-                { akunId: akunHPP.id, debit: 0, kredit: hppCalc.total_biaya },
-              ]
-            }
-          }
+            baris: { create: baris },
+          },
         });
 
-        // Update saldo akun
         await tx.akun.update({
           where: { id: akunPersediaan.id },
-          data: { saldo: { increment: hppCalc.total_biaya } }
+          data: { saldo: { increment: nilaiPersediaan } },
         });
-        
-        // Saldo akun HPP dikurangi (Kredit = pengurangan saldo normal beban)
-        await tx.akun.update({
-          where: { id: akunHPP.id },
-          data: { saldo: { decrement: hppCalc.total_biaya } }
-        });
-      }
-
-      const biayaAbnormal = await totalBiayaAbnormalSiklus(laporan.siklus_id, tx as typeof prisma);
-      if (biayaAbnormal.gt(0)) {
-        const akunKerugian = await tx.akun.findUnique({ where: { kode: "5300" } });
-        const akunPersediaanAb = await tx.akun.findUnique({ where: { kode: "1350" } });
-        if (akunKerugian && akunPersediaanAb) {
-          await tx.jurnal.create({
-            data: {
-              tanggal: new Date(),
-              keterangan: `Susut abnormal batch ${laporan.siklus.kode_batch}`,
-              status: "APPROVED",
-              dibuatOlehId: userId,
-              diputusOlehId: userId,
-              diputusPada: new Date(),
-              baris: {
-                create: [
-                  { akunId: akunKerugian.id, debit: biayaAbnormal, kredit: 0 },
-                  { akunId: akunPersediaanAb.id, debit: 0, kredit: biayaAbnormal },
-                ],
-              },
-            },
-          });
+        if (biayaAbnormal.gt(0) && akunKerugian) {
           await tx.akun.update({
             where: { id: akunKerugian.id },
             data: { saldo: { increment: biayaAbnormal } },
           });
-          await tx.akun.update({
-            where: { id: akunPersediaanAb.id },
-            data: { saldo: { decrement: biayaAbnormal } },
-          });
         }
+        await tx.akun.update({
+          where: { id: akunWip.id },
+          data: { saldo: { decrement: kreditWip } },
+        });
       }
 
       return updatedLaporan;
