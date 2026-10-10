@@ -10,7 +10,7 @@
 | US v1 (US1.1–US6.5) | **37 / 37** closed (#2–#38) |
 | Sprint 1–4 fitur | **Selesai** (release **v1.12.0**) |
 | Sprint 5 QA / go-live | **Selesai** — #39–#45 closed · prod **kokonusfarm.vercel.app** · tag **v1.13.0** → **v1.14.0** (v2-A.1) |
-| Increment v2 | Epic **#87–#94** open · **#95–#97** done · **#98** next di board |
+| Increment v2 | Epic **#87–#94** open · **#95–#98** done · **#99** next di board |
 | Temuan terbuka | [#50](https://github.com/sapikkk/muhammadsyafiq213510100/issues/50) FINDING-01 (DB pool) — Todo P2 |
 | Backlog opsional | [#81](https://github.com/sapikkk/muhammadsyafiq213510100/issues/81) demo seed + skills docs — Todo P2 |
 
@@ -42,8 +42,9 @@ Urutan coding PO: **A → B → C → D → E → F → G → H** — detail iss
 | P1 | In progress | Epic A (sisa: WIP, uang muka, kas split) | [#87](https://github.com/sapikkk/muhammadsyafiq213510100/issues/87) |
 | — | Done | v2-B.1 Abort → jurnal 5300 | [#96](https://github.com/sapikkk/muhammadsyafiq213510100/issues/96) · PR #105 |
 | — | Done | v2-C.1 kapasitas lubang / pack | [#97](https://github.com/sapikkk/muhammadsyafiq213510100/issues/97) · PR #106 |
-| P0 | In progress | v2-D.1 SO lubang + HPP order | [#98](https://github.com/sapikkk/muhammadsyafiq213510100/issues/98) |
-| P1 | Todo | Epic B sisa + story E.1 | [#88](https://github.com/sapikkk/muhammadsyafiq213510100/issues/88), [#99](https://github.com/sapikkk/muhammadsyafiq213510100/issues/99) |
+| — | Done | v2-D.1 SO lubang + HPP order | [#98](https://github.com/sapikkk/muhammadsyafiq213510100/issues/98) · PR #107 |
+| P0 | In progress | v2-E.1 schema DP SO | [#99](https://github.com/sapikkk/muhammadsyafiq213510100/issues/99) |
+| P1 | Todo | Epic B sisa | [#88](https://github.com/sapikkk/muhammadsyafiq213510100/issues/88) |
 | P2 | Todo | Epic F–H + story F.1–H.1 | [#92](https://github.com/sapikkk/muhammadsyafiq213510100/issues/92)–[#94](https://github.com/sapikkk/muhammadsyafiq213510100/issues/94), [#100](https://github.com/sapikkk/muhammadsyafiq213510100/issues/100)–[#102](https://github.com/sapikkk/muhammadsyafiq213510100/issues/102) |
 
 ---
