@@ -1,17 +1,17 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import { AgileProgressDashboard } from "@/components/agile-progress-dashboard";
 import { FoundationPanel } from "@/components/foundation-panel";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
+import { loadAgileProgress } from "@/lib/agile-progress";
 import { roleHome } from "@/lib/role-home";
 import type { Role } from "@/types/role";
 
 export default async function HomePage() {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role) {
-    redirect(roleHome[session.user.role as Role]);
-  }
+  const progress = loadAgileProgress();
+  const role = session?.user?.role as Role | undefined;
 
   return (
     <main className="flex min-h-screen flex-col bg-background">
@@ -22,24 +22,36 @@ export default async function HomePage() {
           </div>
           <span className="text-sm font-semibold">Kokonus Farm</span>
         </div>
-        <Button asChild size="sm">
-          <Link href="/login">Masuk</Link>
-        </Button>
+        <div className="flex items-center gap-2">
+          {role ? (
+            <Button asChild size="sm" variant="secondary">
+              <Link href={roleHome[role]}>Dashboard aplikasi</Link>
+            </Button>
+          ) : null}
+          <Button asChild size="sm">
+            <Link href="/login">{role ? "Ganti akun" : "Masuk"}</Link>
+          </Button>
+        </div>
       </header>
 
-      <section className="mx-auto w-full max-w-3xl px-6 py-12">
+      <section className="mx-auto w-full max-w-6xl px-6 py-10">
         <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          Sistem manajemen
+          Progres proyek
         </p>
         <h1 className="mt-2 text-3xl font-bold tracking-tight">Kokonus Farm</h1>
-        <p className="mt-2 text-muted-foreground">
-          Tata kelola biaya produksi hidroponik. Satu siklus, satu HPP, satu laba.
+        <p className="mt-2 max-w-2xl text-muted-foreground">
+          Tata kelola biaya produksi hidroponik. Ringkasan agile live dari GitHub Project —
+          semua kartu sprint, status, dan riwayat waktu kerja (WIB).
         </p>
-      </section>
 
-      <div className="mx-auto w-full max-w-3xl px-6 pb-12">
-        <FoundationPanel />
-      </div>
+        <div className="mt-10">
+          <AgileProgressDashboard data={progress} />
+        </div>
+
+        <div className="mt-16 border-t pt-10">
+          <FoundationPanel />
+        </div>
+      </section>
     </main>
   );
 }
