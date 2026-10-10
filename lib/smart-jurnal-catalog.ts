@@ -10,6 +10,11 @@ export const smartJurnalTipe = [
   "BAYAR_BUNGA",
   "PENYUSUTAN_GREENHOUSE",
   "PENYUSUTAN_INSTALASI",
+  "PEMBELIAN_BAHAN_TUNAI",
+  "PEMBELIAN_BAHAN_KREDIT",
+  "PENDAPATAN_LAIN",
+  "GAJI_PETANI",
+  "TERIMA_PIUTANG",
 ] as const;
 export type SmartJurnalTipe = (typeof smartJurnalTipe)[number];
 
@@ -24,4 +29,9 @@ export const smartJurnalTipeLabel: Record<SmartJurnalTipe, string> = {
   BAYAR_BUNGA: "Beban bunga pinjaman (5500)",
   PENYUSUTAN_GREENHOUSE: "Penyusutan greenhouse (5210 · 1510)",
   PENYUSUTAN_INSTALASI: "Penyusutan instalasi listrik (5220 · 1530)",
+  PEMBELIAN_BAHAN_TUNAI: "Beli nutrisi/bahan tunai (1330)",
+  PEMBELIAN_BAHAN_KREDIT: "Beli nutrisi/bahan kredit (1330 · 2100)",
+  PENDAPATAN_LAIN: "Pendapatan lain (4100)",
+  GAJI_PETANI: "Gaji petani (5200)",
+  TERIMA_PIUTANG: "Terima piutang (Dr kas · Cr 1200)",
 };

@@ -4,6 +4,14 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-10 — v2-F.3 Smart +5 tipe (v1.25.0)
+
+- **Actor:** agent  
+- **Deliverable:** `PEMBELIAN_BAHAN_TUNAI/KREDIT`, `PENDAPATAN_LAIN`, `GAJI_PETANI`, `TERIMA_PIUTANG` — katalog + posting + UI v2-F.3; backlog **15/17** (#92)  
+- **Artefak:** `lib/smart-jurnal-catalog.ts`, `check:smart-jurnal-balance`
+
+---
+
 ## 2026-10-10 — v2 closeout (A.4, F.2, H penyusutan, docs)
 
 - **Actor:** agent  
