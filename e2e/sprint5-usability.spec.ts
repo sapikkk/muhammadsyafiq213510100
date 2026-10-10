@@ -1,8 +1,24 @@
 import { test, expect } from "@playwright/test";
+import { execSync } from "child_process";
+import fs from "fs";
+import path from "path";
 
 test.describe.configure({ mode: "serial" });
 
 const demoPassword = process.env.E2E_PASSWORD ?? "KokonusDemo2026";
+const root = path.join(__dirname, "..");
+
+function demoSiklusId() {
+  return fs.readFileSync(path.join(__dirname, ".demo-siklus-id"), "utf8").trim();
+}
+
+function resetDemoSiklus() {
+  execSync("node scripts/reset-e2e-siklus.js", {
+    cwd: root,
+    encoding: "utf8",
+    env: process.env,
+  });
+}
 
 async function loginAs(
   page: import("@playwright/test").Page,
@@ -16,20 +32,20 @@ async function loginAs(
   await page.waitForURL(home);
 }
 
+test.beforeEach(() => {
+  resetDemoSiklus();
+});
+
 test("T5.1 petani HP: pindah fase batch demo", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await loginAs(page, "petani@kokonus.farm", /\/petani/);
-  await page.goto("/petani/siklus");
-  await expect(page.getByText("E2E-S5-DEMO")).toBeVisible();
-  await page
-    .locator("tr", { hasText: "E2E-S5-DEMO" })
-    .getByRole("link", { name: "Pindah fase" })
-    .click();
-  await page.waitForURL(/\/petani\/siklus\/\d+/);
+  await page.goto(`/petani/siklus/${demoSiklusId()}`);
 
-  await expect(page.getByRole("heading", { name: /^Lanjut fase$/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /^Lanjut fase$/ })).toBeVisible({
+    timeout: 15_000,
+  });
   const lanjut = page.getByRole("button", { name: /Lanjut ke/i });
-  await expect(lanjut).toBeVisible({ timeout: 15_000 });
+  await expect(lanjut).toBeVisible();
   await page.getByRole("checkbox").check();
   await lanjut.click();
 
