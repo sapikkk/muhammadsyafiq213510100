@@ -67,7 +67,9 @@ export async function catatTambalSusulan(userId: number, input: TambalInput) {
       throw new TambalError("Tambal susulan hanya sebelum fase panen.", 400);
     }
 
-    const pack = await pakaiActivePackDalamTx(tx, input.activePackId, input.jumlahPakai);
+    const pack = await pakaiActivePackDalamTx(tx, input.activePackId, input.jumlahPakai, {
+      userId,
+    });
     const biayaTambal = input.jumlahPakai.mul(pack.biayaPerUnit);
 
     const susutBaru = Math.max(0, siklus.total_susut - input.jumlahBibit);

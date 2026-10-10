@@ -37,7 +37,7 @@ export function SmartJurnalForm({
   return (
     <form action={formAction} className="space-y-4 rounded-md border p-4">
       <p className="text-sm text-muted-foreground">
-        v2-F.3 — tipe terkunci debit/kredit. Jurnal <strong>SMART</strong>, status PENDING (saldo setelah
+        v2-F.4 — 17 tipe terkunci debit/kredit. Jurnal <strong>SMART</strong>, status PENDING (saldo setelah
         approve).
       </p>
 

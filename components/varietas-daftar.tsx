@@ -40,6 +40,17 @@ export function VarietasDaftar({ rows }: { rows: Row[] }) {
           </span>
         ),
       },
+      {
+        id: "rataHpp",
+        header: "HPP rata/lubang",
+        cell: ({ row }) => (
+          <span className="text-muted-foreground">
+            {"rataHppPerLubang" in row.original && row.original.rataHppPerLubang
+              ? `Rp ${row.original.rataHppPerLubang}`
+              : "—"}
+          </span>
+        ),
+      },
     ],
     [],
   );

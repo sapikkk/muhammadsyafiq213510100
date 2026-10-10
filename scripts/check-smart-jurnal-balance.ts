@@ -29,6 +29,8 @@ const kasMap = new Map([
   ["4100", 14],
   ["5200", 15],
   ["1200", 16],
+  ["5400", 17],
+  ["1310", 18],
 ]);
 
 const NO_KAS = new Set<SmartJurnalTipe>([

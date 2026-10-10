@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.25.0...v1.26.0) (2026-10-10)
+
+
+### Features
+
+* **v2 closeout:** Smart 17 tipe, jurnal penyesuaian active pack habis, HPP rata varietas (moving avg) + fallback SO
+
 # [1.25.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.24.0...v1.25.0) (2026-10-10)
 
 

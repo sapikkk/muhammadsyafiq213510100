@@ -4,6 +4,14 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-10 — v2 closeout (v1.26.0)
+
+- **Actor:** agent  
+- **Deliverable:** Smart **17/17** (#92); jurnal pack habis (#89); HPP moving avg varietas + SO fallback (#90); board epic **#87–#94 Done**; backlog closeout  
+- **Artefak:** `lib/active-pack-habis-jurnal.ts`, `lib/varietas-hpp-rata.ts`, `check:varietas-hpp-rata`
+
+---
+
 ## 2026-10-10 — v2-F.3 Smart +5 tipe (v1.25.0)
 
 - **Actor:** agent  

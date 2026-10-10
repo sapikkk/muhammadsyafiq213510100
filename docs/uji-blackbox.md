@@ -1107,6 +1107,18 @@ Sample audit manual (T5.4): jurnal manual DRAFT/PENDING, jurnal approve panen, j
 | `/admin/akuntansi` → Catat penyusutan | Admin | Jurnal GH + instalasi (jika nominal > 0) |
 | Ulangi bulan sama | Admin | 409 sudah dicatat |
 
+### v2 closeout — verifikasi otomatis (2026-10-10)
+
+| Area | Perintah / artefak |
+| --- | --- |
+| Smart 17 tipe | `npm run check:smart-jurnal-balance` |
+| Kas split / pelunasan / DP | `check:kas-sumber`, `check:sales-order-pelunasan`, `check:sales-order-dp` |
+| Panen WIP / penyusutan | `check:harvest-wip-jurnal`, `check:penyusutan-otomatis` |
+| HPP rata varietas + pack selisih | `npm run check:varietas-hpp-rata` |
+| E2E smoke | `npm run test:e2e` (dev server :3000) |
+
+UAT manual prod (pelunasan UI, penyusutan bulan) tetap disarankan PO sebelum skripsi final.
+
 ### Otomatisasi
 
 ```bash
@@ -1114,6 +1126,7 @@ npm run typecheck && npm run build
 npm run check:jurnal-balance
 npm run check:kas-sumber
 npm run check:smart-jurnal-balance
+npm run check:varietas-hpp-rata
 npm run test:e2e   # butuh dev server di :3000
 graphify update .  # setelah ubah kode
 ```

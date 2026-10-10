@@ -250,7 +250,7 @@ UI: `/admin/penjualan` — form DP + tombol **Catat DP** setelah konfirmasi SO.
 
 Deliver SO dengan DP: jurnal pendapatan Dr uang muka + Dr piutang. Tanpa DP: Dr kas/bank (`sumberKas` di PUT deliver & form UI). Packing & prive: pilih 1100/1110 sama.
 
-## `/api/jurnal/smart` (v2-F.3, Smart Jurnal)
+## `/api/jurnal/smart` (v2-F.4, Smart Jurnal — 17 tipe)
 
 | Method | Peran | Body | Jawaban |
 | --- | --- | --- | --- |
@@ -258,7 +258,7 @@ Deliver SO dengan DP: jurnal pendapatan Dr uang muka + Dr piutang. Tanpa DP: Dr 
 
 Field POST: `tipe` (enum di `lib/smart-jurnal-catalog.ts`), `nominal`, `sumberKas` (`1100` \| `1110`, kecuali penyusutan & pembelian kredit), `tujuanKas` (wajib jika `TRANSFER_KAS`), `tanggal`, `catatan?`, `status?`, `adminOverridePeriod?`.
 
-Tipe (15/17 blueprint): beban 5230, prive, modal, transfer kas, pinjaman/hutang 2100, beli aset 1500, bunga 5500, penyusutan 5210/5220, **beli bahan 1330** (tunai/kredit), **pendapatan 4100**, **gaji 5200**, **terima piutang 1200**.
+Tipe (**17/17** blueprint): beban 5230, prive, modal, transfer kas, pinjaman/hutang 2100, beli aset 1500, bunga 5500, penyusutan 5210/5220, beli bahan 1330 (tunai/kredit), pendapatan 4100, gaji 5200, terima piutang 1200, **beban pengiriman 5400**, **beli benih 1310**.
 
 UI: `/admin/jurnal/baru` tab **Smart Jurnal**; jurnal manual tetap di tab kedua.
 

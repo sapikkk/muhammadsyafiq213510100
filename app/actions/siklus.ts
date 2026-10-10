@@ -24,7 +24,7 @@ export async function mulaiSiklusSemai(
       throw new SiklusError("Peran Anda tidak berhak.", 403);
     }
     const raw = Object.fromEntries(formData.entries());
-    const siklus = await buatSiklusSemai(parseSiklusInput(raw));
+    const siklus = await buatSiklusSemai(parseSiklusInput(raw), Number(session!.user!.id));
     revalidatePath("/petani/siklus");
     return { ok: `Siklus ${siklus.kode_batch} tersimpan. Fase ${siklus.status}.` };
   } catch (error) {

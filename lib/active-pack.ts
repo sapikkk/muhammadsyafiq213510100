@@ -4,7 +4,10 @@ import {
   type SatuanInventaris,
   type StatusActivePack,
 } from "@prisma/client";
+import { maybeJurnalPenyesuaianPackHabis } from "@/lib/active-pack-habis-jurnal";
 import { prisma, type PrismaTransaction } from "@/lib/prisma";
+
+export type PakaiActivePackOpts = { userId?: number; tanggal?: Date };
 
 export class ActivePackError extends Error {
   constructor(
@@ -132,10 +135,11 @@ export async function pakaiActivePackDalamTx(
   tx: PrismaTransaction,
   id: number,
   jumlah: Prisma.Decimal,
+  opts?: PakaiActivePackOpts,
 ): Promise<ActivePack> {
   const pack = await tx.activePack.findUnique({
     where: { id },
-    include: { item: { select: { satuan: true } } },
+    include: { item: { select: { satuan: true, kode: true } } },
   });
   if (!pack) throw new ActivePackError("Active pack tidak ditemukan.", 404);
   if (pack.status !== "AKTIF") {
@@ -149,10 +153,20 @@ export async function pakaiActivePackDalamTx(
     );
   }
   const status: StatusActivePack = sisaBaru.eq(0) ? "HABIS" : "AKTIF";
-  return tx.activePack.update({
+  const row = await tx.activePack.update({
     where: { id },
     data: { sisaUnit: sisaBaru, status },
   });
+  if (status === "HABIS" && opts?.userId) {
+    await maybeJurnalPenyesuaianPackHabis(
+      tx,
+      pack,
+      pack.item.kode,
+      opts.userId,
+      opts.tanggal,
+    );
+  }
+  return row;
 }
 
 export async function pakaiActivePack(

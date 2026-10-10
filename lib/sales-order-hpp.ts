@@ -4,9 +4,17 @@ import type { JenisSo } from "@/lib/sales-order";
 
 const round2 = (d: Prisma.Decimal) => d.toDecimalPlaces(2, Prisma.Decimal.ROUND_HALF_UP);
 
+/** Batch HPP prioritas; fallback rata varietas jika batch nol (v2-D moving avg). */
+export function resolveHppPerLubangUntukOrder(
+  batchHppPerLubang: Prisma.Decimal,
+  rataVarietas: Prisma.Decimal | null,
+): Prisma.Decimal {
+  if (batchHppPerLubang.gt(0)) return batchHppPerLubang;
+  return rataVarietas ?? batchHppPerLubang;
+}
+
 /**
- * HPP order MVP (v2-D.1): lubang × HPP/lubang batch + plastik per pack.
- * Moving average varietas = story berikutnya; pakai HPP batch saat DELIVERED.
+ * HPP order (v2-D): lubang × HPP/lubang + plastik per pack.
  */
 export function hitungHppOrderBaris(
   hppPerLubang: Prisma.Decimal,

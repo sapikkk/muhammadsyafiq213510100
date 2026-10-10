@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import { hitungHppOrderBaris } from "@/lib/sales-order-hpp";
+import { hitungHppOrderBaris, resolveHppPerLubangUntukOrder } from "@/lib/sales-order-hpp";
+import { rataHppPerLubangVarietas } from "@/lib/varietas-hpp-rata";
 import {
   defaultAkunDpId,
   parseJumlahDp,
@@ -304,6 +305,7 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
 
     let total = new Prisma.Decimal(0);
     const barisData = [];
+    const rataVarietasCache = new Map<number, Prisma.Decimal | null>();
 
     for (const line of input.baris) {
       const siklus = await tx.siklus_Produksi.findUnique({
@@ -323,8 +325,18 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
           400,
         );
       }
-      const hppOrder = hitungHppOrderBaris(
+      if (!rataVarietasCache.has(siklus.varietas_id)) {
+        rataVarietasCache.set(
+          siklus.varietas_id,
+          await rataHppPerLubangVarietas(siklus.varietas_id),
+        );
+      }
+      const hppLubang = resolveHppPerLubangUntukOrder(
         siklus.hpp.hpp_per_lubang,
+        rataVarietasCache.get(siklus.varietas_id) ?? null,
+      );
+      const hppOrder = hitungHppOrderBaris(
+        hppLubang,
         line.jenis,
         line.lubangTerpakai,
         line.jumlah,
