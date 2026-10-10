@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.15.0...v1.16.0) (2026-10-10)
+
+
+### Features
+
+* **v2-C.1:** kapasitas lubang pack + semai proporsional ([#97](https://github.com/sapikkk/muhammadsyafiq213510100/issues/97)) ([8712a25](https://github.com/sapikkk/muhammadsyafiq213510100/commit/8712a2537f45b31e4cac685c049f98fee79c3959))
+
 # [1.15.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.14.1...v1.15.0) (2026-10-10)
 
 
