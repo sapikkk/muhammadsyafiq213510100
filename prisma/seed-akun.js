@@ -72,3 +72,13 @@ async function seedAkun(prisma) {
 }
 
 module.exports = { seedAkun };
+
+if (require.main === module) {
+  const { PrismaClient } = require("@prisma/client");
+  const prisma = new PrismaClient();
+  seedAkun(prisma)
+    .then((n) => {
+      console.log(`seed-akun: ${n} akun standar, isSystem di-set untuk kode COA v1`);
+    })
+    .finally(() => prisma.$disconnect());
+}
