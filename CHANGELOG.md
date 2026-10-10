@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.18.0...v1.19.0) (2026-10-10)
+
+
+### Features
+
+* **v2-F/G/H:** Smart Jurnal, KPI Owner, period lock ([#109](https://github.com/sapikkk/muhammadsyafiq213510100/issues/109)) ([5485d2d](https://github.com/sapikkk/muhammadsyafiq213510100/commit/5485d2d4ddd6a2438a48444fc4b17a51262d0361))
+
 # [1.18.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.17.0...v1.18.0) (2026-10-10)
 
 
