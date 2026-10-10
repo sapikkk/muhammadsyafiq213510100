@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.14.1...v1.15.0) (2026-10-10)
+
+
+### Features
+
+* **v2-B.1:** abort siklus gagal total ([#96](https://github.com/sapikkk/muhammadsyafiq213510100/issues/96)) ([dbe8a2b](https://github.com/sapikkk/muhammadsyafiq213510100/commit/dbe8a2bcf576c40a8629ea785728de8be3645f84))
+
 ## [1.14.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.14.0...v1.14.1) (2026-10-10)
 
 
