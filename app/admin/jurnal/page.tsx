@@ -29,12 +29,20 @@ export default async function JurnalPage({
             Saldo akun hanya berubah setelah jurnal disetujui.
           </p>
         </div>
-        <Link
-          href="/admin/jurnal/baru"
-          className="inline-flex h-11 items-center justify-center border border-foreground bg-foreground px-4 text-sm font-medium text-background"
-        >
-          Jurnal baru
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href="/admin/jurnal/baru"
+            className="inline-flex h-11 items-center justify-center border border-foreground bg-foreground px-4 text-sm font-medium text-background"
+          >
+            Jurnal baru
+          </Link>
+          <Link
+            href="/admin/akuntansi"
+            className="inline-flex h-11 items-center justify-center border px-4 text-sm font-medium hover:bg-accent"
+          >
+            Period lock
+          </Link>
+        </div>
       </header>
 
       <form

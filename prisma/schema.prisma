@@ -412,10 +412,23 @@ enum StatusJurnal {
   REJECTED
 }
 
+enum SumberJurnal {
+  MANUAL
+  SMART
+  AUTO
+}
+
+model Akuntansi_Setting {
+  id              Int       @id @default(1)
+  periode_tutup   DateTime? @db.Date
+  diperbarui_pada DateTime  @updatedAt
+}
+
 model Jurnal {
   id            Int           @id @default(autoincrement())
   tanggal       DateTime      @db.Date
   keterangan    String        @db.VarChar(255)
+  sumber        SumberJurnal  @default(MANUAL)
   status        StatusJurnal  @default(DRAFT)
   dibuatOlehId  Int
   dibuatOleh    User          @relation("jurnalPembuat", fields: [dibuatOlehId], references: [id])

@@ -241,3 +241,28 @@ Aturan DP:
 | POST | Admin | `/api/sales-orders/[id]/dp` | 200, `status_pembayaran` = `DP_DITERIMA`, jurnal DP APPROVED |
 
 UI: `/admin/penjualan` — form DP + tombol **Catat DP** setelah konfirmasi SO.
+
+## `/api/jurnal/smart` (v2-F.1, Smart Jurnal MVP)
+
+| Method | Peran | Body | Jawaban |
+| --- | --- | --- | --- |
+| POST | Admin | lihat di bawah | 201, `{ id, status, sumber: "SMART" }` |
+
+Field POST: `tipe` (`BEBAN_OPERASIONAL` \| `PRIVE` \| `SUNTIKAN_MODAL`), `nominal`, `sumberKas` (`1100` \| `1110`), `tanggal` (YYYY-MM-DD), `catatan?`, `status?` (`PENDING` default), `adminOverridePeriod?` (boolean).
+
+Pasangan terkunci:
+
+- Beban operasional: Dr 5230 Cr kas
+- Prive: Dr 3200 Cr kas
+- Suntikan modal: Dr kas Cr 3100
+
+UI: `/admin/jurnal/baru` tab **Smart Jurnal**; jurnal manual tetap di tab kedua.
+
+## Period lock (v2-H.1)
+
+| UI | Peran | Catatan |
+| --- | --- | --- |
+| `/admin/akuntansi` | Admin | Set `periode_tutup`; POST jurnal dengan tanggal lebih awal ditolak |
+| Form jurnal / Smart | Admin | Checkbox **override period lock** (keputusan PO) |
+
+Lib: `lib/period-lock.ts` — dipanggil dari `createJurnal` dan Smart Jurnal.

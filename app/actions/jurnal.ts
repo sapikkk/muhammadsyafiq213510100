@@ -49,7 +49,8 @@ export async function simpanJurnal(
       status: formData.get("status"),
       baris: barisDariForm(formData),
     });
-    jurnalId = (await createJurnal(input, id)).id;
+    const adminOverridePeriod = formData.get("adminOverridePeriod") === "on";
+    jurnalId = (await createJurnal(input, id, { adminOverridePeriod })).id;
   } catch (error) {
     if (error instanceof JurnalError) return { error: error.message };
     throw error;

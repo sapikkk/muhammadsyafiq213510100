@@ -28,9 +28,11 @@ function jumlah(baris: Baris[], field: "debit" | "kredit") {
 export function JurnalForm({
   akun,
   tanggalAwal,
+  periodeTutup = null,
 }: {
   akun: AkunPosting[];
   tanggalAwal: string;
+  periodeTutup?: string | null;
 }) {
   const [state, formAction] = useFormState(simpanJurnal, {});
   useActionToast({ error: state.error, saved: state.saved });
@@ -166,6 +168,13 @@ export function JurnalForm({
         <p role="alert" className="text-sm text-destructive">
           {state.error}
         </p>
+      ) : null}
+
+      {periodeTutup ? (
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" name="adminOverridePeriod" className="h-4 w-4" />
+          Override period lock — tutup periode {periodeTutup}
+        </label>
       ) : null}
 
       <div className="flex flex-wrap items-center gap-3">
