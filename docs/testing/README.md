@@ -12,7 +12,7 @@ npm run test:e2e
 
 Spec awal: `e2e/smoke.spec.ts` (login, dashboard admin, jurnal, stok rendah).
 
-CI: workflow `e2e.yml` (Postgres service, migrate, seed, `next start` + Playwright).
+CI: workflow `e2e.yml` (Postgres service, `prisma db push`, seed, `next start` + Playwright).
 
 ## TestCafe (opsional)
 

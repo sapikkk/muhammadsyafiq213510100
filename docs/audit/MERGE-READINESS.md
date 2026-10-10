@@ -5,7 +5,7 @@ Branch: `chore/global-audit-bw-refactor` → `main`.
 ## Gate otomatis (harus hijau)
 
 - `check.yml`: lint, typecheck, `check:audit-env`, `check:banned-ui`, `check:legacy-api-json`, build
-- `e2e.yml`: Postgres 16, migrate, seed, Playwright smoke
+- `e2e.yml`: Postgres 16, `db push`, seed, Playwright smoke
 
 ## Sebelum merge (PO / dev)
 
