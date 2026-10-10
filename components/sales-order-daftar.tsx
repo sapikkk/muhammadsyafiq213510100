@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import {
   cancelSalesOrderAction,
   catatDpSalesOrderAction,
+  catatPelunasanSalesOrderAction,
   confirmSalesOrderAction,
   deliverSalesOrderAction,
   recordPackingCostAction,
@@ -36,6 +37,7 @@ export type SoRow = {
   alasan_batal?: string | null;
   jurnal_packing_id?: number | null;
   jumlah_dp?: string;
+  jumlah_pelunasan?: string;
   akun_dp_kode?: string | null;
   status_pembayaran?: string;
   jurnal_dp_id?: number | null;
@@ -48,6 +50,28 @@ export type SoRow = {
     subtotal: string;
   }[];
 };
+
+function PelunasanForm({ id }: { id: number }) {
+  const [state, formAction] = useFormState(catatPelunasanSalesOrderAction, {});
+  useActionToast({ error: state.error, ok: state.ok });
+  return (
+    <form action={formAction} className="mt-2 space-y-2 rounded-md border border-dashed p-3">
+      <input type="hidden" name="salesOrderId" value={id} />
+      <Input name="nominal" placeholder="Nominal pelunasan (Rp)" className="h-9 text-sm" required />
+      <select
+        name="sumberKas"
+        className="flex h-9 w-full rounded-md border px-2 text-sm"
+        defaultValue="1100"
+      >
+        <option value="1100">Kas tunai</option>
+        <option value="1110">Bank</option>
+      </select>
+      <SubmitButton className="h-9" pendingLabel="...">
+        Catat pelunasan (Dr Kas · Cr piutang)
+      </SubmitButton>
+    </form>
+  );
+}
 
 function CatatDpButton({ id }: { id: number }) {
   const [state, formAction] = useFormState(catatDpSalesOrderAction, {});
@@ -208,6 +232,11 @@ function SalesOrderDetail({
         </Link>
       ) : null}
       {mode === "admin" && row.status === "DRAFT" ? <ConfirmButton id={row.id} /> : null}
+      {mode === "admin" &&
+      row.status === "DELIVERED" &&
+      row.status_pembayaran === "PIUTANG" ? (
+        <PelunasanForm id={row.id} />
+      ) : null}
       {mode === "admin" &&
       row.status_pembayaran === "BELUM_BAYAR" &&
       row.jumlah_dp &&

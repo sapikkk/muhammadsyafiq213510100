@@ -13,6 +13,7 @@ import {
   setujuiJurnal,
   tolakJurnal,
 } from "@/lib/jurnal";
+import { createJurnalReversal } from "@/lib/jurnal-reversal";
 
 export type JurnalFormState = { error?: string; saved?: string };
 
@@ -102,4 +103,24 @@ export async function tolakJurnalAction(
   formData: FormData,
 ) {
   return putuskan(formData, tolakJurnal, "Jurnal ditolak.");
+}
+
+export async function balikJurnalAction(
+  _prev: JurnalFormState,
+  formData: FormData,
+): Promise<JurnalFormState> {
+  const id = await adminId();
+  if (!id) return bukanAdmin;
+  const jurnalId = Number(formData.get("id"));
+  const alasan = String(formData.get("alasan") ?? "");
+  let baruId: number;
+  try {
+    baruId = (await createJurnalReversal(jurnalId, id, alasan)).id;
+  } catch (error) {
+    if (error instanceof JurnalError) return { error: error.message };
+    throw error;
+  }
+  revalidatePath("/admin/jurnal");
+  revalidatePath(`/admin/jurnal/${jurnalId}`);
+  redirect(`/admin/jurnal/${baruId}`);
 }

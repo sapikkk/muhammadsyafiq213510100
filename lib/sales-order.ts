@@ -238,6 +238,7 @@ type SoSerializeRow = {
   jurnal_pendapatan?: { id: number; status: string; keterangan: string } | null;
   jurnal_packing?: { id: number; status: string } | null;
   jumlah_dp?: Prisma.Decimal;
+  jumlah_pelunasan?: Prisma.Decimal;
   akun_dp_id?: number | null;
   akun_dp?: { id: number; kode: string; nama: string } | null;
   status_pembayaran?: string;
@@ -276,6 +277,7 @@ export function serializeSalesOrder(row: SoSerializeRow) {
     jurnal_packing_id: row.jurnal_packing?.id ?? null,
     jurnal_packing_status: row.jurnal_packing?.status ?? null,
     jumlah_dp: row.jumlah_dp?.toString() ?? "0",
+    jumlah_pelunasan: row.jumlah_pelunasan?.toString() ?? "0",
     akun_dp_id: row.akun_dp_id ?? null,
     akun_dp_kode: row.akun_dp?.kode ?? null,
     status_pembayaran: row.status_pembayaran ?? "BELUM_BAYAR",

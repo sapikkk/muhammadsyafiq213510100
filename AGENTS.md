@@ -47,7 +47,8 @@ Untuk `docs/` dan notulensi uji: jalankan humanizer — hindari pola AI (kontras
 ## UCD increment v2 (post go-live)
 
 - **Hub:** `docs/ucd/README.md` · `docs/blueprint/` · issue epic **#87–#94**
-- **Skill:** `docs/skills/akuntansi-hidroponik/SKILL.md`
+- **Skill domain:** `docs/skills/akuntansi-hidroponik/SKILL.md`
+- **Skill keuangan umum (lokal, gitignore):** `npx skills add openaccountant/skills -y` → `.agents/skills/` ([openaccountant/skills](https://github.com/openaccountant/skills)); adaptasi COA Indonesia, bukan IRS/US mentah.
 
 ## Backlog & pelacakan sprint
 

@@ -1,12 +1,14 @@
 import { Prisma } from "@prisma/client";
+import { AKUN_KODE } from "@/lib/akun-kode";
 import { allocateOverheadForSiklus } from "@/lib/biaya";
 import { prisma, type PrismaTransaction } from "@/lib/prisma";
 
 /** Siklus dihentikan total — tidak lanjut fase / panen (v2-B.1). */
 export const STATUS_GAGAL_TOTAL = "GAGAL_TOTAL";
 
-/** Sementara pakai 1350 sebagai proxy WIP sampai COA v2 (akun WIP terpisah). */
-export const WIP_AKUN_KODE = "1350";
+/** WIP terpisah (1360); fallback 1350 jika DB belum di-patch. */
+export const WIP_AKUN_KODE = AKUN_KODE.WIP;
+export const WIP_AKUN_FALLBACK = AKUN_KODE.PERSEDIAAN_SAYUR;
 export const KERUGIAN_ABORT_KODE = "5300";
 
 export class SiklusAbortError extends Error {
@@ -60,9 +62,12 @@ async function postingJurnalAbort(
   if (nominal.lte(0)) return null;
 
   const akunKerugian = await tx.akun.findUnique({ where: { kode: KERUGIAN_ABORT_KODE } });
-  const akunWip = await tx.akun.findUnique({ where: { kode: WIP_AKUN_KODE } });
+  let akunWip = await tx.akun.findUnique({ where: { kode: WIP_AKUN_KODE } });
+  if (!akunWip?.aktif) {
+    akunWip = await tx.akun.findUnique({ where: { kode: WIP_AKUN_FALLBACK } });
+  }
   if (!akunKerugian || !akunWip) {
-    throw new SiklusAbortError("Akun 5300 atau WIP (1350) tidak ditemukan.", 500);
+    throw new SiklusAbortError("Akun 5300 atau WIP (1360/1350) tidak ditemukan.", 500);
   }
 
   const keterangan = `Abort gagal total ${kodeBatch}: ${alasan.slice(0, 180)}`;

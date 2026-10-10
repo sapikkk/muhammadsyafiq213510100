@@ -13,7 +13,7 @@ import {
 import { cancelSalesOrder } from "@/lib/sales-order-cancel";
 import { deliverSalesOrder, shipSalesOrder } from "@/lib/sales-order-delivery";
 import { recordPackingCost } from "@/lib/sales-order-packing";
-import { catatDpSalesOrder } from "@/lib/sales-order-pembayaran";
+import { catatDpSalesOrder, catatPelunasanSalesOrder } from "@/lib/sales-order-pembayaran";
 
 type FormState = { error?: string; ok?: string };
 
@@ -35,6 +35,31 @@ export async function submitSalesOrder(_prev: FormState, formData: FormData): Pr
   } catch (err) {
     if (err instanceof SalesOrderError) return { error: err.message };
     if (err instanceof SyntaxError) return { error: "Format baris pesanan tidak valid." };
+    throw err;
+  }
+}
+
+export async function catatPelunasanSalesOrderAction(
+  _prev: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) return { error: "Belum masuk." };
+  if (!isRoleAllowed(session.user.role, "ADMIN")) return { error: "Hanya Admin." };
+  try {
+    const id = Number(formData.get("salesOrderId"));
+    if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
+    const row = await catatPelunasanSalesOrder(id, Number(session.user.id), {
+      nominal: formData.get("nominal"),
+      sumberKas: formData.get("sumberKas"),
+    });
+    revalidatePath("/admin/penjualan");
+    revalidatePath("/admin/jurnal");
+    return {
+      ok: `Pelunasan ${row.nomor_so} tercatat. Status: ${row.status_pembayaran}.`,
+    };
+  } catch (err) {
+    if (err instanceof SalesOrderError) return { error: err.message };
     throw err;
   }
 }

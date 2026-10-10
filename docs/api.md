@@ -242,6 +242,12 @@ Aturan DP:
 
 UI: `/admin/penjualan` — form DP + tombol **Catat DP** setelah konfirmasi SO.
 
+| Method | Peran | Path | Jawaban |
+| --- | --- | --- | --- |
+| POST | Admin | `/api/sales-orders/[id]/pelunasan` | 200, `{ nominal, sumberKas? }` → Dr Kas Cr piutang, status `LUNAS` jika sisa 0 |
+
+Deliver SO dengan DP: jurnal pendapatan Dr uang muka + Dr piutang (bukan Dr kas penuh). Tanpa DP: Dr kas (legacy tunai).
+
 ## `/api/jurnal/smart` (v2-F.1, Smart Jurnal MVP)
 
 | Method | Peran | Body | Jawaban |

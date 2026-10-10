@@ -4,6 +4,7 @@ import { useFormState } from "react-dom";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 import {
   ajukanJurnalAction,
+  balikJurnalAction,
   setujuiJurnalAction,
   tolakJurnalAction,
 } from "@/app/actions/jurnal";
@@ -29,8 +30,9 @@ export function JurnalActions({
   const [ajukan, ajukanAction] = useFormState(ajukanJurnalAction, {});
   const [setujui, setujuiAction] = useFormState(setujuiJurnalAction, {});
   const [tolak, tolakAction] = useFormState(tolakJurnalAction, {});
-  const pesan = ajukan.saved ?? setujui.saved ?? tolak.saved;
-  const error = ajukan.error ?? setujui.error ?? tolak.error;
+  const [balik, balikAction] = useFormState(balikJurnalAction, {});
+  const pesan = ajukan.saved ?? setujui.saved ?? tolak.saved ?? balik.saved;
+  const error = ajukan.error ?? setujui.error ?? tolak.error ?? balik.error;
 
   useActionToast({ error, saved: pesan });
 
@@ -104,9 +106,49 @@ export function JurnalActions({
         </div>
       ) : null}
 
-      {status === "APPROVED" || status === "REJECTED" ? (
+      {status === "APPROVED" ? (
+        <div className="space-y-2">
+          <p className="text-sm text-muted-foreground">
+            Jurnal disetujui tidak bisa diedit. Buat jurnal pembalik (PENDING)
+            jika perlu koreksi setelah disetujui.
+          </p>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button type="button" variant="outline" className="h-11">
+                Buat jurnal pembalik
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Pembalikan jurnal #{id}</DialogTitle>
+                <DialogDescription>
+                  Debit dan kredit ditukar pada jurnal baru berstatus PENDING.
+                  Setujui jurnal pembalik untuk mengoreksi saldo akun.
+                </DialogDescription>
+              </DialogHeader>
+              <form action={balikAction} className="space-y-3">
+                <input type="hidden" name="id" value={id} />
+                <label className="block space-y-1.5 text-sm">
+                  <span className="font-medium">Alasan</span>
+                  <textarea
+                    name="alasan"
+                    rows={3}
+                    required
+                    className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  />
+                </label>
+                <SubmitButton className="h-11" pendingLabel="Membuat pembalik...">
+                  Buat jurnal pembalik
+                </SubmitButton>
+              </form>
+            </DialogContent>
+          </Dialog>
+        </div>
+      ) : null}
+
+      {status === "REJECTED" ? (
         <p className="text-sm text-muted-foreground">
-          Jurnal ini sudah final dan tidak bisa diubah.
+          Jurnal ditolak dan tidak bisa diubah.
         </p>
       ) : null}
     </section>

@@ -1,8 +1,14 @@
 import { Prisma } from "@prisma/client";
+import { AKUN_KODE } from "@/lib/akun-kode";
 import { prisma } from "@/lib/prisma";
 import { SalesOrderError } from "@/lib/sales-order";
 
-export const statusPembayaranSo = ["BELUM_BAYAR", "DP_DITERIMA", "LUNAS"] as const;
+export const statusPembayaranSo = [
+  "BELUM_BAYAR",
+  "DP_DITERIMA",
+  "PIUTANG",
+  "LUNAS",
+] as const;
 export type StatusPembayaranSo = (typeof statusPembayaranSo)[number];
 
 const nol = new Prisma.Decimal(0);
@@ -34,11 +40,21 @@ export async function resolveAkunDpId(akunDpIdRaw: unknown): Promise<number | nu
   return id;
 }
 
-/** Default v1: kode 2200 (label seed masih pinjaman; dipakai sebagai akun kewajiban DP sementara). */
 export async function defaultAkunDpId(): Promise<number> {
-  const akun = await prisma.akun.findUnique({ where: { kode: "2200" } });
-  if (!akun?.aktif) throw new SalesOrderError("Akun 2200 tidak siap untuk DP.", 500);
+  const akun = await prisma.akun.findUnique({ where: { kode: AKUN_KODE.UANG_MUKA } });
+  if (!akun?.aktif) throw new SalesOrderError("Akun uang muka (2200) tidak siap untuk DP.", 500);
   return akun.id;
+}
+
+export function sisaPiutangSo(so: {
+  total: Prisma.Decimal;
+  jumlah_dp: Prisma.Decimal;
+  jumlah_pelunasan: Prisma.Decimal;
+}): Prisma.Decimal {
+  return Prisma.Decimal.max(
+    nol,
+    so.total.sub(so.jumlah_dp).sub(so.jumlah_pelunasan),
+  );
 }
 
 type Db = typeof prisma;
@@ -81,6 +97,7 @@ export async function catatDpSalesOrder(soId: number, userId: number) {
         tanggal: new Date(),
         keterangan: `DP ${so.nomor_so}`.slice(0, 255),
         status: "APPROVED",
+        sumber: "AUTO",
         dibuatOlehId: userId,
         diputusOlehId: userId,
         diputusPada: new Date(),
@@ -105,6 +122,95 @@ export async function catatDpSalesOrder(soId: number, userId: number) {
         status_pembayaran: "DP_DITERIMA",
         jurnal_dp_id: jurnal.id,
         akun_dp_id: akunDpId,
+      },
+      include: {
+        pelanggan: { select: { nama: true } },
+        baris: { include: { siklus: { select: { kode_batch: true } } } },
+      },
+    });
+  });
+}
+
+function parsePelunasanNominal(raw: unknown): Prisma.Decimal {
+  const text = String(raw ?? "").trim().replace(",", ".");
+  if (!/^\d+(\.\d{1,2})?$/.test(text)) {
+    throw new SalesOrderError("Nominal pelunasan tidak valid.", 400);
+  }
+  const v = new Prisma.Decimal(text);
+  if (v.lte(0)) throw new SalesOrderError("Nominal pelunasan harus > 0.", 400);
+  return v;
+}
+
+export async function catatPelunasanSalesOrder(
+  soId: number,
+  userId: number,
+  raw: { nominal: unknown; sumberKas?: unknown },
+) {
+  const nominal = parsePelunasanNominal(raw.nominal);
+  const kasKode =
+    String(raw.sumberKas ?? AKUN_KODE.KAS).trim() === AKUN_KODE.BANK
+      ? AKUN_KODE.BANK
+      : AKUN_KODE.KAS;
+
+  return prisma.$transaction(async (tx) => {
+    const so = await tx.sales_Order.findUnique({ where: { id: soId } });
+    if (!so) throw new SalesOrderError("Sales order tidak ditemukan.", 404);
+    if (so.status !== "DELIVERED") {
+      throw new SalesOrderError("Pelunasan hanya setelah SO DELIVERED.", 400);
+    }
+    if (so.status_pembayaran === "LUNAS") {
+      throw new SalesOrderError("SO sudah lunas.", 400);
+    }
+    const sisa = sisaPiutangSo(so);
+    if (sisa.lte(0)) {
+      throw new SalesOrderError("Tidak ada piutang tersisa.", 400);
+    }
+    if (nominal.gt(sisa)) {
+      throw new SalesOrderError(`Pelunasan melebihi sisa piutang (${sisa.toString()}).`, 400);
+    }
+
+    const kasId = await requireKasPosting(tx as Db, kasKode);
+    const piutang = await tx.akun.findUnique({
+      where: { kode: AKUN_KODE.PIUTANG },
+      select: { id: true, aktif: true, _count: { select: { anak: true } } },
+    });
+    if (!piutang?.aktif || piutang._count.anak > 0) {
+      throw new SalesOrderError("Akun piutang (1200) tidak siap.", 500);
+    }
+
+    const jurnal = await tx.jurnal.create({
+      data: {
+        tanggal: new Date(),
+        keterangan: `Pelunasan ${so.nomor_so}`.slice(0, 255),
+        status: "APPROVED",
+        sumber: "AUTO",
+        dibuatOlehId: userId,
+        diputusOlehId: userId,
+        diputusPada: new Date(),
+        baris: {
+          create: [
+            { akunId: kasId, debit: nominal, kredit: 0 },
+            { akunId: piutang.id, debit: 0, kredit: nominal },
+          ],
+        },
+      },
+    });
+
+    await tx.akun.update({ where: { id: kasId }, data: { saldo: { increment: nominal } } });
+    await tx.akun.update({
+      where: { id: piutang.id },
+      data: { saldo: { decrement: nominal } },
+    });
+
+    const jumlah_pelunasan = so.jumlah_pelunasan.add(nominal);
+    const lunas = sisaPiutangSo({ ...so, jumlah_pelunasan }).lte(0);
+
+    return tx.sales_Order.update({
+      where: { id: soId },
+      data: {
+        jumlah_pelunasan,
+        akun_pelunasan_id: kasId,
+        status_pembayaran: lunas ? "LUNAS" : "PIUTANG",
       },
       include: {
         pelanggan: { select: { nama: true } },

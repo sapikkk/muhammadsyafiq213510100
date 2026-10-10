@@ -10,7 +10,9 @@ test("admin jurnal baru: tab Smart Jurnal v2-F.1", async ({ page }) => {
   await page.waitForURL(/\/admin/);
 
   await page.goto("/admin/jurnal/baru");
-  await expect(page.getByRole("button", { name: "Smart Jurnal" })).toBeVisible();
-  await expect(page.getByText(/v2-F\.1/i)).toBeVisible();
+  await expect(page.getByRole("button", { name: "Smart Jurnal", exact: true })).toBeVisible();
+  await expect(
+    page.getByText("Smart Jurnal (v2-F.1) atau jurnal manual", { exact: false }),
+  ).toBeVisible();
   await expect(page.getByRole("button", { name: "Jurnal manual" })).toBeVisible();
 });

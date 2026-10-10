@@ -1,4 +1,6 @@
 import { Prisma } from "@prisma/client";
+import { AKUN_KODE } from "@/lib/akun-kode";
+import { sisaPiutangSo } from "@/lib/sales-order-pembayaran";
 import { prisma } from "@/lib/prisma";
 import { SalesOrderError, type JenisSo } from "@/lib/sales-order";
 
@@ -51,6 +53,9 @@ async function createJurnalPenjualanPending(
     id: number;
     nomor_so: string;
     total: Prisma.Decimal;
+    jumlah_dp: Prisma.Decimal;
+    status_pembayaran: string;
+    akun_dp_id: number | null;
     baris: {
       jenis: string;
       subtotal: Prisma.Decimal;
@@ -62,13 +67,16 @@ async function createJurnalPenjualanPending(
   },
   userId: number,
 ) {
-  const [kasId, curahId, packId, hppId, persediaanId] = await Promise.all([
-    requireAkunPosting(tx, "1100"),
-    requireAkunPosting(tx, "4100"),
-    requireAkunPosting(tx, "4200"),
-    requireAkunPosting(tx, "5100"),
-    requireAkunPosting(tx, "1350"),
-  ]);
+  const [kasId, curahId, packId, hppId, persediaanId, piutangId, uangMukaId] =
+    await Promise.all([
+      requireAkunPosting(tx, AKUN_KODE.KAS),
+      requireAkunPosting(tx, AKUN_KODE.PENDAPATAN_CURAH),
+      requireAkunPosting(tx, AKUN_KODE.PENDAPATAN_PACK),
+      requireAkunPosting(tx, AKUN_KODE.HPP),
+      requireAkunPosting(tx, AKUN_KODE.PERSEDIAAN_SAYUR),
+      requireAkunPosting(tx, AKUN_KODE.PIUTANG),
+      requireAkunPosting(tx, AKUN_KODE.UANG_MUKA),
+    ]);
 
   let pendapatanCurah = nol;
   let pendapatanPack = nol;
@@ -87,7 +95,21 @@ async function createJurnalPenjualanPending(
   const total = round2(so.total);
 
   type Baris = { akunId: number; debit: Prisma.Decimal; kredit: Prisma.Decimal };
-  const baris: Baris[] = [{ akunId: kasId, debit: total, kredit: nol }];
+  const baris: Baris[] = [];
+
+  const dpDiterima =
+    so.status_pembayaran === "DP_DITERIMA" && so.jumlah_dp.gt(0) ? so.jumlah_dp : nol;
+  const sisaPiutang = round2(total.sub(dpDiterima));
+
+  if (dpDiterima.gt(0)) {
+    const umId = so.akun_dp_id ?? uangMukaId;
+    baris.push({ akunId: umId, debit: dpDiterima, kredit: nol });
+    if (sisaPiutang.gt(0)) {
+      baris.push({ akunId: piutangId, debit: sisaPiutang, kredit: nol });
+    }
+  } else {
+    baris.push({ akunId: kasId, debit: total, kredit: nol });
+  }
   if (pendapatanCurah.gt(nol)) {
     baris.push({ akunId: curahId, debit: nol, kredit: pendapatanCurah });
   }
@@ -114,6 +136,7 @@ async function createJurnalPenjualanPending(
       tanggal,
       keterangan,
       status: "PENDING",
+      sumber: "AUTO",
       dibuatOlehId: userId,
       baris: {
         create: baris.map((b) => ({
@@ -179,6 +202,21 @@ export async function deliverSalesOrder(id: number, userId: number, catatanRaw?:
 
     const jurnal = await createJurnalPenjualanPending(tx, so, userId);
 
+    const dpDiterima =
+      so.status_pembayaran === "DP_DITERIMA" && so.jumlah_dp.gt(0) ? so.jumlah_dp : nol;
+    let status_pembayaran = so.status_pembayaran;
+    if (dpDiterima.gt(0)) {
+      status_pembayaran = sisaPiutangSo({
+        total: so.total,
+        jumlah_dp: so.jumlah_dp,
+        jumlah_pelunasan: so.jumlah_pelunasan,
+      }).lte(0)
+        ? "LUNAS"
+        : "PIUTANG";
+    } else {
+      status_pembayaran = "LUNAS";
+    }
+
     return tx.sales_Order.update({
       where: { id },
       data: {
@@ -186,6 +224,7 @@ export async function deliverSalesOrder(id: number, userId: number, catatanRaw?:
         terkirim_pada: new Date(),
         terkirim_oleh_id: userId,
         jurnal_pendapatan_id: jurnal.id,
+        status_pembayaran,
         ...(catatan != null ? { catatan_pengiriman: catatan } : {}),
       },
       include: {
