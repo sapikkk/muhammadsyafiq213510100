@@ -14,12 +14,14 @@ type SiklusOpt = {
   varietas_nama: string;
   harga_curah: string;
   harga_pack: string;
+  jumlah_layak: number;
 };
 
 type Line = {
   siklusId: string;
   jenis: "CURAH" | "PACK";
   jumlah: string;
+  lubangTerpakai: string;
   hargaSatuan: string;
 };
 
@@ -33,7 +35,13 @@ export function SalesOrderForm({
   const [state, formAction] = useFormState(submitSalesOrder, {});
   useActionToast({ error: state.error, ok: state.ok });
   const [lines, setLines] = useState<Line[]>([
-    { siklusId: siklus[0]?.id ? String(siklus[0].id) : "", jenis: "CURAH", jumlah: "", hargaSatuan: "" },
+    {
+      siklusId: siklus[0]?.id ? String(siklus[0].id) : "",
+      jenis: "CURAH",
+      jumlah: "",
+      lubangTerpakai: "",
+      hargaSatuan: "",
+    },
   ]);
 
   const grandTotal = useMemo(() => {
@@ -47,11 +55,12 @@ export function SalesOrderForm({
 
   const barisJson = JSON.stringify(
     lines
-      .filter((l) => l.siklusId && l.jumlah && l.hargaSatuan)
+      .filter((l) => l.siklusId && l.jumlah && l.lubangTerpakai && l.hargaSatuan)
       .map((l) => ({
         siklusId: Number(l.siklusId),
         jenis: l.jenis,
         jumlah: l.jumlah,
+        lubangTerpakai: Number(l.lubangTerpakai),
         hargaSatuan: l.hargaSatuan,
       })),
   );
@@ -70,7 +79,13 @@ export function SalesOrderForm({
   function addLine() {
     setLines((prev) => [
       ...prev,
-      { siklusId: siklus[0]?.id ? String(siklus[0].id) : "", jenis: "CURAH", jumlah: "", hargaSatuan: "" },
+      {
+        siklusId: siklus[0]?.id ? String(siklus[0].id) : "",
+        jenis: "CURAH",
+        jumlah: "",
+        lubangTerpakai: "",
+        hargaSatuan: "",
+      },
     ]);
   }
 
@@ -94,6 +109,10 @@ export function SalesOrderForm({
     <form action={formAction} className="space-y-4 rounded-md border p-4">
       <input type="hidden" name="barisJson" value={barisJson} readOnly />
       <h3 className="text-lg font-semibold">Buat sales order (DRAFT)</h3>
+      <p className="text-sm text-muted-foreground">
+        v2-D.1: setiap baris wajib <strong>lubang terpakai</strong> (bundling) + qty jual (kg curah /
+        jumlah pack). HPP order dihitung saat simpan dari HPP/lubang batch.
+      </p>
 
       <label className="block space-y-1 text-sm">
         <span className="font-medium">Pelanggan</span>
@@ -112,7 +131,7 @@ export function SalesOrderForm({
 
       <div className="space-y-3">
         {lines.map((line, index) => (
-          <div key={index} className="grid gap-2 rounded border p-3 sm:grid-cols-4">
+          <div key={index} className="grid gap-2 rounded border p-3 sm:grid-cols-2 lg:grid-cols-5">
             <select
               value={line.siklusId}
               onChange={(e) => onSiklusChange(index, e.target.value)}
@@ -120,7 +139,7 @@ export function SalesOrderForm({
             >
               {siklus.map((s) => (
                 <option key={s.id} value={s.id}>
-                  {s.kode_batch} · {s.varietas_nama}
+                  {s.kode_batch} · {s.varietas_nama} ({s.jumlah_layak} lubang layak)
                 </option>
               ))}
             </select>
@@ -138,11 +157,20 @@ export function SalesOrderForm({
               <option value="PACK">Pack</option>
             </select>
             <Input
-              placeholder="Qty"
+              placeholder={line.jenis === "PACK" ? "Jumlah pack" : "Kg curah"}
               value={line.jumlah}
               onChange={(e) => updateLine(index, { jumlah: e.target.value })}
               inputMode="decimal"
               className="h-10"
+              aria-label="Jumlah jual"
+            />
+            <Input
+              placeholder="Lubang terpakai"
+              value={line.lubangTerpakai}
+              onChange={(e) => updateLine(index, { lubangTerpakai: e.target.value })}
+              inputMode="numeric"
+              className="h-10"
+              aria-label="Lubang terpakai"
             />
             <Input
               placeholder="Harga satuan"

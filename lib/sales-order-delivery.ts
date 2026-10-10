@@ -24,18 +24,25 @@ async function requireAkunPosting(tx: SalesOrderTx, kode: string) {
   return akun.id;
 }
 
-async function cogsForBaris(
-  tx: SalesOrderTx,
-  siklusId: number,
-  jenis: JenisSo,
-  jumlah: Prisma.Decimal,
-): Promise<Prisma.Decimal> {
-  const hpp = await tx.hPP.findUnique({ where: { siklus_id: siklusId } });
-  if (!hpp) {
-    throw new SalesOrderError(`HPP batch #${siklusId} belum ada — approve panen dulu.`, 400);
+type BarisCogs = {
+  siklus_id: number;
+  jenis: string;
+  jumlah: Prisma.Decimal;
+  lubang_terpakai: number;
+  hpp_order: Prisma.Decimal;
+};
+
+async function cogsForBaris(tx: SalesOrderTx, line: BarisCogs): Promise<Prisma.Decimal> {
+  if (line.hpp_order.gt(0) && line.lubang_terpakai > 0) {
+    return round2(line.hpp_order);
   }
+  const hpp = await tx.hPP.findUnique({ where: { siklus_id: line.siklus_id } });
+  if (!hpp) {
+    throw new SalesOrderError(`HPP batch #${line.siklus_id} belum ada — approve panen dulu.`, 400);
+  }
+  const jenis = line.jenis as JenisSo;
   const unit = jenis === "CURAH" ? hpp.hpp_per_kg : hpp.hpp_per_pack;
-  return round2(jumlah.mul(unit));
+  return round2(line.jumlah.mul(unit));
 }
 
 async function createJurnalPenjualanPending(
@@ -44,7 +51,14 @@ async function createJurnalPenjualanPending(
     id: number;
     nomor_so: string;
     total: Prisma.Decimal;
-    baris: { jenis: string; subtotal: Prisma.Decimal; siklus_id: number; jumlah: Prisma.Decimal }[];
+    baris: {
+      jenis: string;
+      subtotal: Prisma.Decimal;
+      siklus_id: number;
+      jumlah: Prisma.Decimal;
+      lubang_terpakai: number;
+      hpp_order: Prisma.Decimal;
+    }[];
   },
   userId: number,
 ) {
@@ -64,7 +78,7 @@ async function createJurnalPenjualanPending(
     const jenis = line.jenis as JenisSo;
     if (jenis === "CURAH") pendapatanCurah = pendapatanCurah.add(line.subtotal);
     else pendapatanPack = pendapatanPack.add(line.subtotal);
-    cogsTotal = cogsTotal.add(await cogsForBaris(tx, line.siklus_id, jenis, line.jumlah));
+    cogsTotal = cogsTotal.add(await cogsForBaris(tx, line));
   }
 
   pendapatanCurah = round2(pendapatanCurah);

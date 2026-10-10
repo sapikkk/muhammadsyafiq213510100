@@ -34,7 +34,14 @@ export type SoRow = {
   biaya_packing?: string;
   alasan_batal?: string | null;
   jurnal_packing_id?: number | null;
-  baris: { kode_batch: string; jenis: string; jumlah: string; subtotal: string }[];
+  baris: {
+    kode_batch: string;
+    jenis: string;
+    jumlah: string;
+    lubang_terpakai?: number;
+    hpp_order?: string;
+    subtotal: string;
+  }[];
 };
 
 function ConfirmButton({ id }: { id: number }) {
@@ -136,7 +143,10 @@ function SalesOrderDetail({
       <ul className="text-xs text-muted-foreground">
         {row.baris.map((b, i) => (
           <li key={i}>
-            {b.kode_batch} · {b.jenis} {b.jumlah} → {formatRupiah(b.subtotal)}
+            {b.kode_batch} · {b.jenis} {b.jumlah}
+            {b.lubang_terpakai ? ` · ${b.lubang_terpakai} lubang` : ""}
+            {b.hpp_order && b.hpp_order !== "0" ? ` · HPP ${formatRupiah(b.hpp_order)}` : ""} →{" "}
+            {formatRupiah(b.subtotal)}
           </li>
         ))}
       </ul>
