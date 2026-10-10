@@ -1,14 +1,14 @@
 {
-  "syncedAt": "2026-10-10T07:13:29.937Z",
+  "syncedAt": "2026-10-10T07:21:34.788Z",
   "timezone": "Asia/Jakarta",
   "project": {
     "title": "kerangka kerja sapik",
     "url": "https://github.com/users/sapikkk/projects/1",
-    "totalItems": 84,
+    "totalItems": 85,
     "byStatus": {
-      "Done": 70,
-      "Todo": 13,
-      "In progress": 1
+      "Done": 80,
+      "In progress": 1,
+      "Todo": 4
     }
   },
   "iterations": [
@@ -162,6 +162,21 @@
           "at": "2026-10-10T03:54:39Z",
           "kind": "CrossReferencedEvent",
           "detail": "Referensi silang"
+        },
+        {
+          "at": "2026-10-10T07:14:07Z",
+          "kind": "CrossReferencedEvent",
+          "detail": "Referensi silang"
+        },
+        {
+          "at": "2026-10-10T07:19:09Z",
+          "kind": "ReferencedEvent",
+          "detail": "Referensi commit/PR"
+        },
+        {
+          "at": "2026-10-10T07:19:57Z",
+          "kind": "ReferencedEvent",
+          "detail": "Referensi commit/PR"
         }
       ]
     },
@@ -2229,7 +2244,7 @@
     {
       "projectItemId": "PVTI_lAHOBFQUR84BmFnBzg_MZZE",
       "contentType": "Issue",
-      "status": "Todo",
+      "status": "Done",
       "priority": "P1",
       "size": "S",
       "estimate": 4,
@@ -2243,14 +2258,14 @@
       "number": 39,
       "title": "[T5.1] Usability petani: pindah fase di HP",
       "url": "https://github.com/sapikkk/muhammadsyafiq213510100/issues/39",
-      "state": "OPEN",
+      "state": "CLOSED",
       "labels": [
         "sprint-5"
       ],
       "milestone": "Sprint 5 — QA",
       "createdAt": "2026-10-07T16:47:40Z",
-      "updatedAt": "2026-10-09T11:38:14Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-10T07:20:40Z",
+      "closedAt": "2026-10-10T07:20:40Z",
       "events": [
         {
           "kind": "AddedToProjectV2Event",
@@ -2265,13 +2280,23 @@
           "at": "2026-10-09T11:38:14Z",
           "kind": "LabeledEvent",
           "detail": "Label +sprint-5"
+        },
+        {
+          "at": "2026-10-10T07:20:39Z",
+          "kind": "IssueComment",
+          "detail": "Komentar"
+        },
+        {
+          "at": "2026-10-10T07:20:40Z",
+          "kind": "ClosedEvent",
+          "detail": "Issue ditutup"
         }
       ]
     },
     {
       "projectItemId": "PVTI_lAHOBFQUR84BmFnBzg_Mc6w",
       "contentType": "Issue",
-      "status": "Todo",
+      "status": "Done",
       "priority": null,
       "size": "S",
       "estimate": null,
@@ -2285,14 +2310,14 @@
       "number": 40,
       "title": "[T5.2] Usability Admin: filter jurnal",
       "url": "https://github.com/sapikkk/muhammadsyafiq213510100/issues/40",
-      "state": "OPEN",
+      "state": "CLOSED",
       "labels": [
         "sprint-5"
       ],
       "milestone": "Sprint 5 — QA",
       "createdAt": "2026-10-07T16:47:47Z",
-      "updatedAt": "2026-10-09T11:38:17Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-10T07:20:44Z",
+      "closedAt": "2026-10-10T07:20:44Z",
       "events": [
         {
           "kind": "RemovedFromProjectV2Event",
@@ -2311,13 +2336,23 @@
           "at": "2026-10-09T11:38:17Z",
           "kind": "LabeledEvent",
           "detail": "Label +sprint-5"
+        },
+        {
+          "at": "2026-10-10T07:20:43Z",
+          "kind": "IssueComment",
+          "detail": "Komentar"
+        },
+        {
+          "at": "2026-10-10T07:20:45Z",
+          "kind": "ClosedEvent",
+          "detail": "Issue ditutup"
         }
       ]
     },
     {
       "projectItemId": "PVTI_lAHOBFQUR84BmFnBzg_MZmk",
       "contentType": "Issue",
-      "status": "Todo",
+      "status": "Done",
       "priority": "P1",
       "size": "XS",
       "estimate": 2,
@@ -2331,14 +2366,14 @@
       "number": 41,
       "title": "[T5.3] Usability Owner: baca laba dari grafik",
       "url": "https://github.com/sapikkk/muhammadsyafiq213510100/issues/41",
-      "state": "OPEN",
+      "state": "CLOSED",
       "labels": [
         "sprint-5"
       ],
       "milestone": "Sprint 5 — QA",
       "createdAt": "2026-10-07T16:47:54Z",
-      "updatedAt": "2026-10-09T11:38:19Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-10T07:20:47Z",
+      "closedAt": "2026-10-10T07:20:47Z",
       "events": [
         {
           "kind": "AddedToProjectV2Event",
@@ -2353,13 +2388,23 @@
           "at": "2026-10-09T11:38:19Z",
           "kind": "LabeledEvent",
           "detail": "Label +sprint-5"
+        },
+        {
+          "at": "2026-10-10T07:20:47Z",
+          "kind": "IssueComment",
+          "detail": "Komentar"
+        },
+        {
+          "at": "2026-10-10T07:20:48Z",
+          "kind": "ClosedEvent",
+          "detail": "Issue ditutup"
         }
       ]
     },
     {
       "projectItemId": "PVTI_lAHOBFQUR84BmFnBzg_MZso",
       "contentType": "Issue",
-      "status": "Todo",
+      "status": "Done",
       "priority": "P0",
       "size": "S",
       "estimate": 4,
@@ -2373,14 +2418,14 @@
       "number": 42,
       "title": "[T5.4] Audit debit sama dengan kredit",
       "url": "https://github.com/sapikkk/muhammadsyafiq213510100/issues/42",
-      "state": "OPEN",
+      "state": "CLOSED",
       "labels": [
         "sprint-5"
       ],
       "milestone": "Sprint 5 — QA",
       "createdAt": "2026-10-07T16:48:02Z",
-      "updatedAt": "2026-10-09T11:38:22Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-10T07:20:51Z",
+      "closedAt": "2026-10-10T07:20:51Z",
       "events": [
         {
           "kind": "AddedToProjectV2Event",
@@ -2395,13 +2440,23 @@
           "at": "2026-10-09T11:38:22Z",
           "kind": "MilestonedEvent",
           "detail": "Milestone Sprint 5 — QA"
+        },
+        {
+          "at": "2026-10-10T07:20:50Z",
+          "kind": "IssueComment",
+          "detail": "Komentar"
+        },
+        {
+          "at": "2026-10-10T07:20:52Z",
+          "kind": "ClosedEvent",
+          "detail": "Issue ditutup"
         }
       ]
     },
     {
       "projectItemId": "PVTI_lAHOBFQUR84BmFnBzg_MdBA",
       "contentType": "Issue",
-      "status": "Todo",
+      "status": "Done",
       "priority": null,
       "size": "M",
       "estimate": null,
@@ -2415,14 +2470,14 @@
       "number": 43,
       "title": "[T5.5] Perbaikan bug hasil uji",
       "url": "https://github.com/sapikkk/muhammadsyafiq213510100/issues/43",
-      "state": "OPEN",
+      "state": "CLOSED",
       "labels": [
         "sprint-5"
       ],
       "milestone": "Sprint 5 — QA",
       "createdAt": "2026-10-07T16:48:10Z",
-      "updatedAt": "2026-10-09T11:38:26Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-10T07:20:55Z",
+      "closedAt": "2026-10-10T07:20:55Z",
       "events": [
         {
           "kind": "AddedToProjectV2Event",
@@ -2437,13 +2492,23 @@
           "at": "2026-10-09T11:38:26Z",
           "kind": "MilestonedEvent",
           "detail": "Milestone Sprint 5 — QA"
+        },
+        {
+          "at": "2026-10-10T07:20:54Z",
+          "kind": "IssueComment",
+          "detail": "Komentar"
+        },
+        {
+          "at": "2026-10-10T07:20:55Z",
+          "kind": "ClosedEvent",
+          "detail": "Issue ditutup"
         }
       ]
     },
     {
       "projectItemId": "PVTI_lAHOBFQUR84BmFnBzg_MZ4k",
       "contentType": "Issue",
-      "status": "Todo",
+      "status": "Done",
       "priority": "P1",
       "size": "L",
       "estimate": 8,
@@ -2457,14 +2522,14 @@
       "number": 44,
       "title": "[T5.6] Deploy Vercel, Postgres cloud, dan security",
       "url": "https://github.com/sapikkk/muhammadsyafiq213510100/issues/44",
-      "state": "OPEN",
+      "state": "CLOSED",
       "labels": [
         "sprint-5"
       ],
       "milestone": "Sprint 5 — QA",
       "createdAt": "2026-10-07T16:48:17Z",
-      "updatedAt": "2026-10-09T11:38:28Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-10T07:20:58Z",
+      "closedAt": "2026-10-10T07:20:58Z",
       "events": [
         {
           "kind": "AddedToProjectV2Event",
@@ -2479,13 +2544,23 @@
           "at": "2026-10-09T11:38:28Z",
           "kind": "MilestonedEvent",
           "detail": "Milestone Sprint 5 — QA"
+        },
+        {
+          "at": "2026-10-10T07:20:57Z",
+          "kind": "IssueComment",
+          "detail": "Komentar"
+        },
+        {
+          "at": "2026-10-10T07:20:58Z",
+          "kind": "ClosedEvent",
+          "detail": "Issue ditutup"
         }
       ]
     },
     {
       "projectItemId": "PVTI_lAHOBFQUR84BmFnBzg_MZ-k",
       "contentType": "Issue",
-      "status": "Todo",
+      "status": "Done",
       "priority": "P1",
       "size": "S",
       "estimate": 3,
@@ -2499,14 +2574,14 @@
       "number": 45,
       "title": "[T5.9] Go-live dan pelatihan 6 pengguna",
       "url": "https://github.com/sapikkk/muhammadsyafiq213510100/issues/45",
-      "state": "OPEN",
+      "state": "CLOSED",
       "labels": [
         "sprint-5"
       ],
       "milestone": "Sprint 5 — QA",
       "createdAt": "2026-10-07T16:48:25Z",
-      "updatedAt": "2026-10-09T11:38:31Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-10T07:21:02Z",
+      "closedAt": "2026-10-10T07:21:01Z",
       "events": [
         {
           "kind": "AddedToProjectV2Event",
@@ -2521,6 +2596,16 @@
           "at": "2026-10-09T11:38:31Z",
           "kind": "MilestonedEvent",
           "detail": "Milestone Sprint 5 — QA"
+        },
+        {
+          "at": "2026-10-10T07:21:00Z",
+          "kind": "IssueComment",
+          "detail": "Komentar"
+        },
+        {
+          "at": "2026-10-10T07:21:02Z",
+          "kind": "ClosedEvent",
+          "detail": "Issue ditutup"
         }
       ]
     },
@@ -3443,7 +3528,7 @@
     {
       "projectItemId": "PVTI_lAHOBFQUR84BmFnBzg_y4fA",
       "contentType": "PullRequest",
-      "status": "Todo",
+      "status": "Done",
       "priority": null,
       "size": null,
       "estimate": null,
@@ -3453,19 +3538,19 @@
       "number": 82,
       "title": "docs(agile): sinkron status 37 US closed + Sprint 5",
       "url": "https://github.com/sapikkk/muhammadsyafiq213510100/pull/82",
-      "state": "OPEN",
+      "state": "MERGED",
       "labels": [],
       "milestone": null,
       "createdAt": "2026-10-10T03:54:38Z",
-      "updatedAt": "2026-10-10T03:54:38Z",
-      "closedAt": null,
-      "mergedAt": null,
+      "updatedAt": "2026-10-10T07:21:24Z",
+      "closedAt": "2026-10-10T07:21:21Z",
+      "mergedAt": "2026-10-10T07:21:21Z",
       "events": []
     },
     {
       "projectItemId": "PVTI_lAHOBFQUR84BmFnBzg_y7fQ",
       "contentType": "PullRequest",
-      "status": "Todo",
+      "status": "Done",
       "priority": null,
       "size": null,
       "estimate": null,
@@ -3475,13 +3560,13 @@
       "number": 83,
       "title": "feat(sprint-5): T5.1–T5.4 usability, audit jurnal, e2e",
       "url": "https://github.com/sapikkk/muhammadsyafiq213510100/pull/83",
-      "state": "OPEN",
+      "state": "MERGED",
       "labels": [],
       "milestone": null,
       "createdAt": "2026-10-10T04:01:14Z",
-      "updatedAt": "2026-10-10T04:40:15Z",
-      "closedAt": null,
-      "mergedAt": null,
+      "updatedAt": "2026-10-10T07:20:03Z",
+      "closedAt": "2026-10-10T07:19:23Z",
+      "mergedAt": "2026-10-10T07:19:23Z",
       "events": []
     },
     {
@@ -3504,6 +3589,28 @@
       "updatedAt": "2026-10-10T05:43:44Z",
       "closedAt": null,
       "mergedAt": null,
+      "events": []
+    },
+    {
+      "projectItemId": "PVTI_lAHOBFQUR84BmFnBzg_0CH0",
+      "contentType": "PullRequest",
+      "status": "Done",
+      "priority": null,
+      "size": null,
+      "estimate": null,
+      "iteration": null,
+      "startDate": null,
+      "targetDate": null,
+      "number": 85,
+      "title": "feat(home): progress Project #1 + deploy Vercel tooling",
+      "url": "https://github.com/sapikkk/muhammadsyafiq213510100/pull/85",
+      "state": "MERGED",
+      "labels": [],
+      "milestone": null,
+      "createdAt": "2026-10-10T07:14:06Z",
+      "updatedAt": "2026-10-10T07:20:06Z",
+      "closedAt": "2026-10-10T07:19:08Z",
+      "mergedAt": "2026-10-10T07:19:08Z",
       "events": []
     }
   ],
@@ -3603,15 +3710,6 @@
       "issueNumber": 3,
       "title": "[US1.2] Schema Prisma sesuai ERD Kokonus Farm",
       "detail": "#3 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 1 · Fondasi & autentikasi"
-    },
-    {
-      "at": "2026-10-07T17:46:16Z",
-      "kind": "IssueComment",
-      "issueNumber": 3,
-      "title": "[US1.2] Schema Prisma sesuai ERD Kokonus Farm",
-      "detail": "#3: Komentar",
       "status": "Done",
       "iteration": "Sprint 1 · Fondasi & autentikasi"
     },
@@ -3787,19 +3885,46 @@
       "iteration": "Sprint 1 · Fondasi & autentikasi"
     },
     {
-      "kind": "AddedToProjectV2Event",
-      "issueNumber": 2,
-      "title": "[US1.1] Setup Next.js 14 + TypeScript + Tailwind + shadcn",
-      "detail": "#2: AddedToProjectV2",
-      "status": "Done",
-      "iteration": "Sprint 1 · Fondasi & autentikasi"
-    },
-    {
       "at": "2026-10-10T03:54:39Z",
       "kind": "CrossReferencedEvent",
       "issueNumber": 2,
       "title": "[US1.1] Setup Next.js 14 + TypeScript + Tailwind + shadcn",
       "detail": "#2: Referensi silang",
+      "status": "Done",
+      "iteration": "Sprint 1 · Fondasi & autentikasi"
+    },
+    {
+      "at": "2026-10-10T07:14:07Z",
+      "kind": "CrossReferencedEvent",
+      "issueNumber": 1,
+      "title": "[DOC] Halaman Architecture dan kamus ERD masuk PRD",
+      "detail": "#1: Referensi silang",
+      "status": "Done",
+      "iteration": "Sprint 1 · Fondasi & autentikasi"
+    },
+    {
+      "at": "2026-10-10T07:19:09Z",
+      "kind": "ReferencedEvent",
+      "issueNumber": 1,
+      "title": "[DOC] Halaman Architecture dan kamus ERD masuk PRD",
+      "detail": "#1: Referensi commit/PR",
+      "status": "Done",
+      "iteration": "Sprint 1 · Fondasi & autentikasi"
+    },
+    {
+      "at": "2026-10-10T07:19:57Z",
+      "kind": "ReferencedEvent",
+      "issueNumber": 1,
+      "title": "[DOC] Halaman Architecture dan kamus ERD masuk PRD",
+      "detail": "#1: Referensi commit/PR",
+      "status": "Done",
+      "iteration": "Sprint 1 · Fondasi & autentikasi"
+    },
+    {
+      "kind": "AddedToProjectV2Event",
+      "issueNumber": 2,
+      "title": "[US1.1] Setup Next.js 14 + TypeScript + Tailwind + shadcn",
+      "detail": "#2: AddedToProjectV2",
       "status": "Done",
       "iteration": "Sprint 1 · Fondasi & autentikasi"
     },
@@ -3844,6 +3969,15 @@
       "issueNumber": 7,
       "title": "[US1.6] Register petani oleh Admin",
       "detail": "#7 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 1 · Fondasi & autentikasi"
+    },
+    {
+      "at": "2026-10-07T17:46:16Z",
+      "kind": "IssueComment",
+      "issueNumber": 3,
+      "title": "[US1.2] Schema Prisma sesuai ERD Kokonus Farm",
+      "detail": "#3: Komentar",
       "status": "Done",
       "iteration": "Sprint 1 · Fondasi & autentikasi"
     },
@@ -4151,6 +4285,51 @@
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
+      "at": "2026-10-07T16:44:05Z",
+      "kind": "Created",
+      "issueNumber": 11,
+      "title": "[US2.1] COA hierarki parent-child",
+      "detail": "#11 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T16:44:11Z",
+      "kind": "Created",
+      "issueNumber": 12,
+      "title": "[US2.2] Jurnal double-entry dengan approval",
+      "detail": "#12 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T16:44:18Z",
+      "kind": "Created",
+      "issueNumber": 13,
+      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
+      "detail": "#13 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T16:44:27Z",
+      "kind": "Created",
+      "issueNumber": 14,
+      "title": "[US2.4] Form biaya langsung dan overhead",
+      "detail": "#14 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T16:44:35Z",
+      "kind": "Created",
+      "issueNumber": 15,
+      "title": "[US2.5] Klasifikasi susut normal vs abnormal",
+      "detail": "#15 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
       "at": "2026-10-07T18:50:04Z",
       "kind": "ClosedEvent",
       "issueNumber": 7,
@@ -4250,15 +4429,6 @@
       "iteration": "Sprint 1 · Fondasi & autentikasi"
     },
     {
-      "at": "2026-10-07T19:21:12Z",
-      "kind": "CrossReferencedEvent",
-      "issueNumber": 9,
-      "title": "[US1.8] State global loading, error, empty, dan 403",
-      "detail": "#9: Referensi silang",
-      "status": "Done",
-      "iteration": "Sprint 1 · Fondasi & autentikasi"
-    },
-    {
       "at": "2026-10-07T19:21:37Z",
       "kind": "CrossReferencedEvent",
       "issueNumber": 7,
@@ -4277,13 +4447,94 @@
       "iteration": "Sprint 1 · Fondasi & autentikasi"
     },
     {
-      "at": "2026-10-07T19:21:37Z",
+      "at": "2026-10-07T19:43:58Z",
       "kind": "CrossReferencedEvent",
-      "issueNumber": 9,
-      "title": "[US1.8] State global loading, error, empty, dan 403",
-      "detail": "#9: Referensi silang",
+      "issueNumber": 11,
+      "title": "[US2.1] COA hierarki parent-child",
+      "detail": "#11: Referensi silang",
       "status": "Done",
-      "iteration": "Sprint 1 · Fondasi & autentikasi"
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T19:44:23Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 11,
+      "title": "[US2.1] COA hierarki parent-child",
+      "detail": "#11: Label +blackbox-test",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T19:44:27Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 11,
+      "title": "[US2.1] COA hierarki parent-child",
+      "detail": "#11 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T19:44:28Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 11,
+      "title": "[US2.1] COA hierarki parent-child",
+      "detail": "#11: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T20:07:48Z",
+      "kind": "CrossReferencedEvent",
+      "issueNumber": 12,
+      "title": "[US2.2] Jurnal double-entry dengan approval",
+      "detail": "#12: Referensi silang",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T20:07:51Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 12,
+      "title": "[US2.2] Jurnal double-entry dengan approval",
+      "detail": "#12: Label +sprint-2",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T20:07:54Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 12,
+      "title": "[US2.2] Jurnal double-entry dengan approval",
+      "detail": "#12 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:09:35Z",
+      "kind": "IssueComment",
+      "issueNumber": 13,
+      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
+      "detail": "#13: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:28:30Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 14,
+      "title": "[US2.4] Form biaya langsung dan overhead",
+      "detail": "#14: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:28:30Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 14,
+      "title": "[US2.4] Form biaya langsung dan overhead",
+      "detail": "#14 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
       "at": "2026-10-09T11:36:45Z",
@@ -4317,6 +4568,24 @@
       "issueNumber": 8,
       "title": "[US1.7] Settings profil, notifikasi, dan matrix peran",
       "detail": "#8: AddedToProjectV2",
+      "status": "Done",
+      "iteration": "Sprint 1 · Fondasi & autentikasi"
+    },
+    {
+      "at": "2026-10-07T19:21:12Z",
+      "kind": "CrossReferencedEvent",
+      "issueNumber": 9,
+      "title": "[US1.8] State global loading, error, empty, dan 403",
+      "detail": "#9: Referensi silang",
+      "status": "Done",
+      "iteration": "Sprint 1 · Fondasi & autentikasi"
+    },
+    {
+      "at": "2026-10-07T19:21:37Z",
+      "kind": "CrossReferencedEvent",
+      "issueNumber": 9,
+      "title": "[US1.8] State global loading, error, empty, dan 403",
+      "detail": "#9: Referensi silang",
       "status": "Done",
       "iteration": "Sprint 1 · Fondasi & autentikasi"
     },
@@ -4391,159 +4660,6 @@
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
-      "at": "2026-10-07T16:44:05Z",
-      "kind": "Created",
-      "issueNumber": 11,
-      "title": "[US2.1] COA hierarki parent-child",
-      "detail": "#11 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T16:44:11Z",
-      "kind": "Created",
-      "issueNumber": 12,
-      "title": "[US2.2] Jurnal double-entry dengan approval",
-      "detail": "#12 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T16:44:18Z",
-      "kind": "Created",
-      "issueNumber": 13,
-      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
-      "detail": "#13 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T16:44:27Z",
-      "kind": "Created",
-      "issueNumber": 14,
-      "title": "[US2.4] Form biaya langsung dan overhead",
-      "detail": "#14 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T19:43:58Z",
-      "kind": "CrossReferencedEvent",
-      "issueNumber": 11,
-      "title": "[US2.1] COA hierarki parent-child",
-      "detail": "#11: Referensi silang",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T19:44:23Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 11,
-      "title": "[US2.1] COA hierarki parent-child",
-      "detail": "#11: Label +blackbox-test",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T19:44:23Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 11,
-      "title": "[US2.1] COA hierarki parent-child",
-      "detail": "#11: Label +sprint-2",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T19:44:27Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 11,
-      "title": "[US2.1] COA hierarki parent-child",
-      "detail": "#11 closedAt resmi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T19:44:28Z",
-      "kind": "ClosedEvent",
-      "issueNumber": 11,
-      "title": "[US2.1] COA hierarki parent-child",
-      "detail": "#11: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T20:07:48Z",
-      "kind": "CrossReferencedEvent",
-      "issueNumber": 12,
-      "title": "[US2.2] Jurnal double-entry dengan approval",
-      "detail": "#12: Referensi silang",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T20:07:51Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 12,
-      "title": "[US2.2] Jurnal double-entry dengan approval",
-      "detail": "#12: Label +blackbox-test",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T20:07:51Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 12,
-      "title": "[US2.2] Jurnal double-entry dengan approval",
-      "detail": "#12: Label +sprint-2",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T20:07:54Z",
-      "kind": "ClosedEvent",
-      "issueNumber": 12,
-      "title": "[US2.2] Jurnal double-entry dengan approval",
-      "detail": "#12: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T20:07:54Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 12,
-      "title": "[US2.2] Jurnal double-entry dengan approval",
-      "detail": "#12 closedAt resmi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:09:35Z",
-      "kind": "IssueComment",
-      "issueNumber": 13,
-      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
-      "detail": "#13: Komentar",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:28:30Z",
-      "kind": "ClosedEvent",
-      "issueNumber": 14,
-      "title": "[US2.4] Form biaya langsung dan overhead",
-      "detail": "#14: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:36:54Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 11,
-      "title": "[US2.1] COA hierarki parent-child",
-      "detail": "#11: Milestone Sprint 2 — Operasi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
       "at": "2026-10-09T11:36:54Z",
       "kind": "IssueUpdated",
       "issueNumber": 11,
@@ -4553,38 +4669,29 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
-      "at": "2026-10-09T11:36:56Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 12,
-      "title": "[US2.2] Jurnal double-entry dengan approval",
-      "detail": "#12: Milestone Sprint 2 — Operasi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:36:56Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 12,
-      "title": "[US2.2] Jurnal double-entry dengan approval",
-      "detail": "#12 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:00Z",
+      "at": "2026-10-09T11:37:02Z",
       "kind": "LabeledEvent",
-      "issueNumber": 13,
-      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
-      "detail": "#13: Label +sprint-2",
+      "issueNumber": 14,
+      "title": "[US2.4] Form biaya langsung dan overhead",
+      "detail": "#14: Label +sprint-2",
       "status": "Done",
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
-      "at": "2026-10-09T11:37:00Z",
+      "at": "2026-10-09T11:37:02Z",
       "kind": "MilestonedEvent",
-      "issueNumber": 13,
-      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
-      "detail": "#13: Milestone Sprint 2 — Operasi",
+      "issueNumber": 14,
+      "title": "[US2.4] Form biaya langsung dan overhead",
+      "detail": "#14: Milestone Sprint 2 — Operasi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:02Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 14,
+      "title": "[US2.4] Form biaya langsung dan overhead",
+      "detail": "#14 diperbarui (metadata issue)",
       "status": "Done",
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
@@ -4607,15 +4714,6 @@
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
-      "at": "2026-10-09T11:44:52Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 13,
-      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
-      "detail": "#13: Label +progress-partial",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
       "at": "2026-10-09T12:03:00Z",
       "kind": "IssueComment",
       "issueNumber": 13,
@@ -4626,28 +4724,10 @@
     },
     {
       "at": "2026-10-09T12:03:01Z",
-      "kind": "ClosedEvent",
-      "issueNumber": 13,
-      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
-      "detail": "#13: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T12:03:01Z",
       "kind": "IssueUpdated",
       "issueNumber": 13,
       "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
       "detail": "#13 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T12:03:01Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 13,
-      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
-      "detail": "#13 closedAt resmi",
       "status": "Done",
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
@@ -4688,19 +4768,28 @@
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
-      "at": "2026-10-09T14:53:23Z",
-      "kind": "CrossReferencedEvent",
-      "issueNumber": 10,
-      "title": "[US1.9] Kelola user oleh Owner",
-      "detail": "#10: Referensi silang",
-      "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
-    },
-    {
       "kind": "AddedToProjectV2Event",
       "issueNumber": 11,
       "title": "[US2.1] COA hierarki parent-child",
       "detail": "#11: AddedToProjectV2",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T19:44:23Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 11,
+      "title": "[US2.1] COA hierarki parent-child",
+      "detail": "#11: Label +sprint-2",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:36:54Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 11,
+      "title": "[US2.1] COA hierarki parent-child",
+      "detail": "#11: Milestone Sprint 2 — Operasi",
       "status": "Done",
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
@@ -4713,6 +4802,96 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
+      "at": "2026-10-07T20:07:51Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 12,
+      "title": "[US2.2] Jurnal double-entry dengan approval",
+      "detail": "#12: Label +blackbox-test",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T20:07:54Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 12,
+      "title": "[US2.2] Jurnal double-entry dengan approval",
+      "detail": "#12: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:36:56Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 12,
+      "title": "[US2.2] Jurnal double-entry dengan approval",
+      "detail": "#12: Milestone Sprint 2 — Operasi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:36:56Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 12,
+      "title": "[US2.2] Jurnal double-entry dengan approval",
+      "detail": "#12 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:00Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 13,
+      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
+      "detail": "#13: Label +sprint-2",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:00Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 13,
+      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
+      "detail": "#13: Milestone Sprint 2 — Operasi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:44:52Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 13,
+      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
+      "detail": "#13: Label +progress-partial",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T12:03:01Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 13,
+      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
+      "detail": "#13: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T12:03:01Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 13,
+      "title": "[US2.3] HPP otomatis per lubang, per kg, per pack",
+      "detail": "#13 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T14:53:23Z",
+      "kind": "CrossReferencedEvent",
+      "issueNumber": 10,
+      "title": "[US1.9] Kelola user oleh Owner",
+      "detail": "#10: Referensi silang",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
+    },
+    {
       "kind": "AddedToProjectV2Event",
       "issueNumber": 14,
       "title": "[US2.4] Form biaya langsung dan overhead",
@@ -4721,11 +4900,10 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
-      "at": "2026-10-07T16:44:35Z",
-      "kind": "Created",
+      "kind": "AddedToProjectV2Event",
       "issueNumber": 15,
       "title": "[US2.5] Klasifikasi susut normal vs abnormal",
-      "detail": "#15 dibuat",
+      "detail": "#15: AddedToProjectV2",
       "status": "Done",
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
@@ -4811,6 +4989,42 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
+      "at": "2026-10-07T22:16:02Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 18,
+      "title": "[US3.2] Pindah fase di HP",
+      "detail": "#18: Label +blackbox-test",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T22:16:02Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 18,
+      "title": "[US3.2] Pindah fase di HP",
+      "detail": "#18: Label +sprint-2",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T22:16:08Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 18,
+      "title": "[US3.2] Pindah fase di HP",
+      "detail": "#18 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T22:16:09Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 18,
+      "title": "[US3.2] Pindah fase di HP",
+      "detail": "#18: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
       "at": "2026-10-08T01:47:52Z",
       "kind": "CrossReferencedEvent",
       "issueNumber": 17,
@@ -4820,46 +5034,11 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
-      "at": "2026-10-09T11:28:30Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 14,
-      "title": "[US2.4] Form biaya langsung dan overhead",
-      "detail": "#14 closedAt resmi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:02Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 14,
-      "title": "[US2.4] Form biaya langsung dan overhead",
-      "detail": "#14: Label +sprint-2",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:02Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 14,
-      "title": "[US2.4] Form biaya langsung dan overhead",
-      "detail": "#14: Milestone Sprint 2 — Operasi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:02Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 14,
-      "title": "[US2.4] Form biaya langsung dan overhead",
-      "detail": "#14 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "kind": "AddedToProjectV2Event",
-      "issueNumber": 15,
-      "title": "[US2.5] Klasifikasi susut normal vs abnormal",
-      "detail": "#15: AddedToProjectV2",
+      "at": "2026-10-08T01:47:52Z",
+      "kind": "CrossReferencedEvent",
+      "issueNumber": 18,
+      "title": "[US3.2] Pindah fase di HP",
+      "detail": "#18: Referensi silang",
       "status": "Done",
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
@@ -4896,6 +5075,24 @@
       "issueNumber": 17,
       "title": "[US3.1] Buat siklus semai",
       "detail": "#17 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:11Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 18,
+      "title": "[US3.2] Pindah fase di HP",
+      "detail": "#18: Milestone Sprint 2 — Operasi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:11Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 18,
+      "title": "[US3.2] Pindah fase di HP",
+      "detail": "#18 diperbarui (metadata issue)",
       "status": "Done",
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
@@ -5033,6 +5230,14 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
+      "kind": "AddedToProjectV2Event",
+      "issueNumber": 19,
+      "title": "[US3.3] Submit harvest report",
+      "detail": "#19: AddedToProjectV2",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
       "at": "2026-10-07T16:45:20Z",
       "kind": "Created",
       "issueNumber": 20,
@@ -5065,6 +5270,41 @@
       "issueNumber": 20,
       "title": "[US3.4] Master varietas dan asumsi",
       "detail": "#20: Referensi silang",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-08T01:43:37Z",
+      "kind": "AssignedEvent",
+      "issueNumber": 19,
+      "title": "[US3.3] Submit harvest report",
+      "detail": "#19: Assignee sapikkk",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-08T01:47:51Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 19,
+      "title": "[US3.3] Submit harvest report",
+      "detail": "#19: Label +sprint-2",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "kind": "MentionedEvent",
+      "issueNumber": 19,
+      "title": "[US3.3] Submit harvest report",
+      "detail": "#19: Mentioned",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T16:45:42Z",
+      "kind": "Created",
+      "issueNumber": 23,
+      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
+      "detail": "#23 dibuat",
       "status": "Done",
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
@@ -5105,69 +5345,6 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
-      "at": "2026-10-07T22:16:02Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 18,
-      "title": "[US3.2] Pindah fase di HP",
-      "detail": "#18: Label +blackbox-test",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T22:16:02Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 18,
-      "title": "[US3.2] Pindah fase di HP",
-      "detail": "#18: Label +sprint-2",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T22:16:08Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 18,
-      "title": "[US3.2] Pindah fase di HP",
-      "detail": "#18 closedAt resmi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T22:16:09Z",
-      "kind": "ClosedEvent",
-      "issueNumber": 18,
-      "title": "[US3.2] Pindah fase di HP",
-      "detail": "#18: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-08T01:43:37Z",
-      "kind": "AssignedEvent",
-      "issueNumber": 19,
-      "title": "[US3.3] Submit harvest report",
-      "detail": "#19: Assignee sapikkk",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-08T01:47:51Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 19,
-      "title": "[US3.3] Submit harvest report",
-      "detail": "#19: Label +sprint-2",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-08T01:47:52Z",
-      "kind": "CrossReferencedEvent",
-      "issueNumber": 18,
-      "title": "[US3.2] Pindah fase di HP",
-      "detail": "#18: Referensi silang",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
       "at": "2026-10-08T01:48:12Z",
       "kind": "SubscribedEvent",
       "issueNumber": 19,
@@ -5177,54 +5354,20 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
-      "at": "2026-10-09T11:09:31Z",
-      "kind": "ClosedEvent",
-      "issueNumber": 19,
-      "title": "[US3.3] Submit harvest report",
-      "detail": "#19: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:11Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 18,
-      "title": "[US3.2] Pindah fase di HP",
-      "detail": "#18: Milestone Sprint 2 — Operasi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:11Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 18,
-      "title": "[US3.2] Pindah fase di HP",
-      "detail": "#18 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "kind": "AddedToProjectV2Event",
-      "issueNumber": 19,
-      "title": "[US3.3] Submit harvest report",
-      "detail": "#19: AddedToProjectV2",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "kind": "MentionedEvent",
-      "issueNumber": 19,
-      "title": "[US3.3] Submit harvest report",
-      "detail": "#19: Mentioned",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
       "at": "2026-10-09T11:09:30Z",
       "kind": "IssueClosedAt",
       "issueNumber": 19,
       "title": "[US3.3] Submit harvest report",
       "detail": "#19 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:09:31Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 19,
+      "title": "[US3.3] Submit harvest report",
+      "detail": "#19: Issue ditutup",
       "status": "Done",
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
@@ -5291,6 +5434,24 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
+      "at": "2026-10-09T11:37:21Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 22,
+      "title": "[US3.6] Tambal susulan, monitor pertumbuhan, timeline",
+      "detail": "#22: Label +sprint-2",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:21Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 22,
+      "title": "[US3.6] Tambal susulan, monitor pertumbuhan, timeline",
+      "detail": "#22: Milestone Sprint 2 — Operasi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
       "at": "2026-10-09T11:53:04Z",
       "kind": "IssueComment",
       "issueNumber": 21,
@@ -5335,11 +5496,46 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
-      "at": "2026-10-07T16:45:42Z",
-      "kind": "Created",
+      "at": "2026-10-09T11:58:58Z",
+      "kind": "IssueComment",
+      "issueNumber": 22,
+      "title": "[US3.6] Tambal susulan, monitor pertumbuhan, timeline",
+      "detail": "#22: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:58:59Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 22,
+      "title": "[US3.6] Tambal susulan, monitor pertumbuhan, timeline",
+      "detail": "#22 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:58:59Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 22,
+      "title": "[US3.6] Tambal susulan, monitor pertumbuhan, timeline",
+      "detail": "#22 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:59:00Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 22,
+      "title": "[US3.6] Tambal susulan, monitor pertumbuhan, timeline",
+      "detail": "#22: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "kind": "AddedToProjectV2Event",
       "issueNumber": 23,
       "title": "[US3.7] Alur tugas petani: tugas, log, histori",
-      "detail": "#23 dibuat",
+      "detail": "#23: AddedToProjectV2",
       "status": "Done",
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
@@ -5367,6 +5563,15 @@
       "issueNumber": 26,
       "title": "[US4.3] Alert stok minimum",
       "detail": "#26 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T16:46:06Z",
+      "kind": "Created",
+      "issueNumber": 27,
+      "title": "[US4.4] Master kolam, greenhouse, dan lahan",
+      "detail": "#27 dibuat",
       "status": "Done",
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
@@ -5461,210 +5666,6 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
-      "at": "2026-10-09T11:37:21Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 22,
-      "title": "[US3.6] Tambal susulan, monitor pertumbuhan, timeline",
-      "detail": "#22: Label +sprint-2",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:21Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 22,
-      "title": "[US3.6] Tambal susulan, monitor pertumbuhan, timeline",
-      "detail": "#22: Milestone Sprint 2 — Operasi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:24Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 23,
-      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
-      "detail": "#23: Milestone Sprint 2 — Operasi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:24Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 23,
-      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
-      "detail": "#23: Label +sprint-2",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:27Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 24,
-      "title": "[US4.1] Stok dan movement log",
-      "detail": "#24: Milestone Sprint 2 — Operasi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:27Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 24,
-      "title": "[US4.1] Stok dan movement log",
-      "detail": "#24 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:30Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 25,
-      "title": "[US4.2] Active Pack cost per unit",
-      "detail": "#25: Milestone Sprint 2 — Operasi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:30Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 25,
-      "title": "[US4.2] Active Pack cost per unit",
-      "detail": "#25 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:58:58Z",
-      "kind": "IssueComment",
-      "issueNumber": 22,
-      "title": "[US3.6] Tambal susulan, monitor pertumbuhan, timeline",
-      "detail": "#22: Komentar",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:58:59Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 22,
-      "title": "[US3.6] Tambal susulan, monitor pertumbuhan, timeline",
-      "detail": "#22 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:58:59Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 22,
-      "title": "[US3.6] Tambal susulan, monitor pertumbuhan, timeline",
-      "detail": "#22 closedAt resmi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:59:00Z",
-      "kind": "ClosedEvent",
-      "issueNumber": 22,
-      "title": "[US3.6] Tambal susulan, monitor pertumbuhan, timeline",
-      "detail": "#22: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "kind": "AddedToProjectV2Event",
-      "issueNumber": 23,
-      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
-      "detail": "#23: AddedToProjectV2",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:59:01Z",
-      "kind": "IssueComment",
-      "issueNumber": 23,
-      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
-      "detail": "#23: Komentar",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:59:02Z",
-      "kind": "ClosedEvent",
-      "issueNumber": 23,
-      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
-      "detail": "#23: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:59:02Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 23,
-      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
-      "detail": "#23 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:59:02Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 23,
-      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
-      "detail": "#23 closedAt resmi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "kind": "AddedToProjectV2Event",
-      "issueNumber": 24,
-      "title": "[US4.1] Stok dan movement log",
-      "detail": "#24: AddedToProjectV2",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "kind": "AddedToProjectV2Event",
-      "issueNumber": 26,
-      "title": "[US4.3] Alert stok minimum",
-      "detail": "#26: AddedToProjectV2",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T16:46:06Z",
-      "kind": "Created",
-      "issueNumber": 27,
-      "title": "[US4.4] Master kolam, greenhouse, dan lahan",
-      "detail": "#27 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T16:46:12Z",
-      "kind": "Created",
-      "issueNumber": 28,
-      "title": "[US4.5] Master petani",
-      "detail": "#28 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-07T16:46:19Z",
-      "kind": "Created",
-      "issueNumber": 29,
-      "title": "[US5.1] Pelanggan dan sales order",
-      "detail": "#29 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-07T16:46:26Z",
-      "kind": "Created",
-      "issueNumber": 30,
-      "title": "[US5.2] Item sales order dinamis dan cek stok",
-      "detail": "#30 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
       "at": "2026-10-07T20:46:46Z",
       "kind": "CrossReferencedEvent",
       "issueNumber": 26,
@@ -5737,6 +5738,175 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
+      "at": "2026-10-09T11:37:24Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 23,
+      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
+      "detail": "#23: Milestone Sprint 2 — Operasi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:24Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 23,
+      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
+      "detail": "#23: Label +sprint-2",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:27Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 24,
+      "title": "[US4.1] Stok dan movement log",
+      "detail": "#24: Milestone Sprint 2 — Operasi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:27Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 24,
+      "title": "[US4.1] Stok dan movement log",
+      "detail": "#24 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:30Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 25,
+      "title": "[US4.2] Active Pack cost per unit",
+      "detail": "#25: Milestone Sprint 2 — Operasi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:30Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 25,
+      "title": "[US4.2] Active Pack cost per unit",
+      "detail": "#25 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:33Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 26,
+      "title": "[US4.3] Alert stok minimum",
+      "detail": "#26: Milestone Sprint 2 — Operasi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:37:33Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 26,
+      "title": "[US4.3] Alert stok minimum",
+      "detail": "#26 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:59:01Z",
+      "kind": "IssueComment",
+      "issueNumber": 23,
+      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
+      "detail": "#23: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:59:02Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 23,
+      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
+      "detail": "#23: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:59:02Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 23,
+      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
+      "detail": "#23 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-09T11:59:02Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 23,
+      "title": "[US3.7] Alur tugas petani: tugas, log, histori",
+      "detail": "#23 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "kind": "AddedToProjectV2Event",
+      "issueNumber": 24,
+      "title": "[US4.1] Stok dan movement log",
+      "detail": "#24: AddedToProjectV2",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "kind": "AddedToProjectV2Event",
+      "issueNumber": 26,
+      "title": "[US4.3] Alert stok minimum",
+      "detail": "#26: AddedToProjectV2",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T16:46:12Z",
+      "kind": "Created",
+      "issueNumber": 28,
+      "title": "[US4.5] Master petani",
+      "detail": "#28 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-07T16:46:19Z",
+      "kind": "Created",
+      "issueNumber": 29,
+      "title": "[US5.1] Pelanggan dan sales order",
+      "detail": "#29 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-07T16:46:26Z",
+      "kind": "Created",
+      "issueNumber": 30,
+      "title": "[US5.2] Item sales order dinamis dan cek stok",
+      "detail": "#30 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-07T16:46:33Z",
+      "kind": "Created",
+      "issueNumber": 31,
+      "title": "[US5.3] Status packing dan pengiriman oleh petani",
+      "detail": "#31 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-07T16:46:39Z",
+      "kind": "Created",
+      "issueNumber": 32,
+      "title": "[US5.4] Jurnal otomatis saat pesanan terkirim",
+      "detail": "#32 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
       "at": "2026-10-07T21:35:32Z",
       "kind": "IssueClosedAt",
       "issueNumber": 27,
@@ -5760,24 +5930,6 @@
       "issueNumber": 28,
       "title": "[US4.5] Master petani",
       "detail": "#28: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:33Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 26,
-      "title": "[US4.3] Alert stok minimum",
-      "detail": "#26: Milestone Sprint 2 — Operasi",
-      "status": "Done",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-09T11:37:33Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 26,
-      "title": "[US4.3] Alert stok minimum",
-      "detail": "#26 diperbarui (metadata issue)",
       "status": "Done",
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
@@ -5915,20 +6067,117 @@
       "iteration": "Sprint 3 · Penjualan & pengiriman"
     },
     {
-      "at": "2026-10-07T16:46:33Z",
-      "kind": "Created",
+      "at": "2026-10-09T11:37:46Z",
+      "kind": "LabeledEvent",
       "issueNumber": 31,
       "title": "[US5.3] Status packing dan pengiriman oleh petani",
-      "detail": "#31 dibuat",
+      "detail": "#31: Label +sprint-3",
       "status": "Done",
       "iteration": "Sprint 3 · Penjualan & pengiriman"
     },
     {
-      "at": "2026-10-07T16:46:39Z",
-      "kind": "Created",
+      "at": "2026-10-09T11:37:46Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 31,
+      "title": "[US5.3] Status packing dan pengiriman oleh petani",
+      "detail": "#31: Milestone Sprint 3 — Penjualan",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:42Z",
+      "kind": "IssueComment",
+      "issueNumber": 30,
+      "title": "[US5.2] Item sales order dinamis dan cek stok",
+      "detail": "#30: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:43Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 30,
+      "title": "[US5.2] Item sales order dinamis dan cek stok",
+      "detail": "#30: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:43Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 30,
+      "title": "[US5.2] Item sales order dinamis dan cek stok",
+      "detail": "#30 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:43Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 30,
+      "title": "[US5.2] Item sales order dinamis dan cek stok",
+      "detail": "#30 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:46Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 31,
+      "title": "[US5.3] Status packing dan pengiriman oleh petani",
+      "detail": "#31 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:46Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 31,
+      "title": "[US5.3] Status packing dan pengiriman oleh petani",
+      "detail": "#31 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:53:23Z",
+      "kind": "CrossReferencedEvent",
+      "issueNumber": 30,
+      "title": "[US5.2] Item sales order dinamis dan cek stok",
+      "detail": "#30: Referensi silang",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "kind": "AddedToProjectV2Event",
+      "issueNumber": 31,
+      "title": "[US5.3] Status packing dan pengiriman oleh petani",
+      "detail": "#31: AddedToProjectV2",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:45Z",
+      "kind": "IssueComment",
+      "issueNumber": 31,
+      "title": "[US5.3] Status packing dan pengiriman oleh petani",
+      "detail": "#31: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:46Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 31,
+      "title": "[US5.3] Status packing dan pengiriman oleh petani",
+      "detail": "#31: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "kind": "AddedToProjectV2Event",
       "issueNumber": 32,
       "title": "[US5.4] Jurnal otomatis saat pesanan terkirim",
-      "detail": "#32 dibuat",
+      "detail": "#32: AddedToProjectV2",
       "status": "Done",
       "iteration": "Sprint 3 · Penjualan & pengiriman"
     },
@@ -5951,22 +6200,31 @@
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
-      "at": "2026-10-07T16:47:40Z",
+      "at": "2026-10-07T16:46:59Z",
       "kind": "Created",
-      "issueNumber": 39,
-      "title": "[T5.1] Usability petani: pindah fase di HP",
-      "detail": "#39 dibuat",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
+      "issueNumber": 35,
+      "title": "[US6.2] Pie breakdown biaya",
+      "detail": "#35 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
-      "at": "2026-10-07T16:47:47Z",
+      "at": "2026-10-07T16:47:17Z",
       "kind": "Created",
-      "issueNumber": 40,
-      "title": "[T5.2] Usability Admin: filter jurnal",
-      "detail": "#40 dibuat",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
+      "issueNumber": 36,
+      "title": "[US6.3] Ekspor jurnal xlsx serta neraca dan laba rugi PDF",
+      "detail": "#36 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
+    },
+    {
+      "at": "2026-10-07T16:47:24Z",
+      "kind": "Created",
+      "issueNumber": 37,
+      "title": "[US6.4] Evaluasi margin, BEP, dan kapasitas menganggur",
+      "detail": "#37 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
       "at": "2026-10-07T16:47:54Z",
@@ -5974,62 +6232,8 @@
       "issueNumber": 41,
       "title": "[T5.3] Usability Owner: baca laba dari grafik",
       "detail": "#41 dibuat",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-07T16:48:02Z",
-      "kind": "Created",
-      "issueNumber": 42,
-      "title": "[T5.4] Audit debit sama dengan kredit",
-      "detail": "#42 dibuat",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-07T16:48:10Z",
-      "kind": "Created",
-      "issueNumber": 43,
-      "title": "[T5.5] Perbaikan bug hasil uji",
-      "detail": "#43 dibuat",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-07T16:48:17Z",
-      "kind": "Created",
-      "issueNumber": 44,
-      "title": "[T5.6] Deploy Vercel, Postgres cloud, dan security",
-      "detail": "#44 dibuat",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-07T16:48:25Z",
-      "kind": "Created",
-      "issueNumber": 45,
-      "title": "[T5.9] Go-live dan pelatihan 6 pengguna",
-      "detail": "#45 dibuat",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T11:37:46Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 31,
-      "title": "[US5.3] Status packing dan pengiriman oleh petani",
-      "detail": "#31: Label +sprint-3",
       "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T11:37:46Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 31,
-      "title": "[US5.3] Status packing dan pengiriman oleh petani",
-      "detail": "#31: Milestone Sprint 3 — Penjualan",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
+      "iteration": "Sprint 5 · QA & go-live"
     },
     {
       "at": "2026-10-09T11:37:49Z",
@@ -6086,352 +6290,6 @@
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
-      "at": "2026-10-09T11:38:14Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 39,
-      "title": "[T5.1] Usability petani: pindah fase di HP",
-      "detail": "#39: Milestone Sprint 5 — QA",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T11:38:14Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 39,
-      "title": "[T5.1] Usability petani: pindah fase di HP",
-      "detail": "#39: Label +sprint-5",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T11:38:17Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 40,
-      "title": "[T5.2] Usability Admin: filter jurnal",
-      "detail": "#40: Milestone Sprint 5 — QA",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T11:38:17Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 40,
-      "title": "[T5.2] Usability Admin: filter jurnal",
-      "detail": "#40: Label +sprint-5",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T11:38:19Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 41,
-      "title": "[T5.3] Usability Owner: baca laba dari grafik",
-      "detail": "#41: Milestone Sprint 5 — QA",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T11:38:19Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 41,
-      "title": "[T5.3] Usability Owner: baca laba dari grafik",
-      "detail": "#41 diperbarui (metadata issue)",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T11:38:22Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 42,
-      "title": "[T5.4] Audit debit sama dengan kredit",
-      "detail": "#42: Milestone Sprint 5 — QA",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T11:38:26Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 43,
-      "title": "[T5.5] Perbaikan bug hasil uji",
-      "detail": "#43: Label +sprint-5",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T11:38:26Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 43,
-      "title": "[T5.5] Perbaikan bug hasil uji",
-      "detail": "#43 diperbarui (metadata issue)",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T11:38:28Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 44,
-      "title": "[T5.6] Deploy Vercel, Postgres cloud, dan security",
-      "detail": "#44: Milestone Sprint 5 — QA",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T14:50:11Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 38,
-      "title": "[US6.5] Arus kas dan filter periode laporan",
-      "detail": "#38 closedAt resmi",
-      "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
-    },
-    {
-      "kind": "AddedToProjectV2Event",
-      "issueNumber": 39,
-      "title": "[T5.1] Usability petani: pindah fase di HP",
-      "detail": "#39: AddedToProjectV2",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T11:38:14Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 39,
-      "title": "[T5.1] Usability petani: pindah fase di HP",
-      "detail": "#39 diperbarui (metadata issue)",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T14:49:43Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 30,
-      "title": "[US5.2] Item sales order dinamis dan cek stok",
-      "detail": "#30 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:43Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 30,
-      "title": "[US5.2] Item sales order dinamis dan cek stok",
-      "detail": "#30 closedAt resmi",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:45Z",
-      "kind": "IssueComment",
-      "issueNumber": 31,
-      "title": "[US5.3] Status packing dan pengiriman oleh petani",
-      "detail": "#31: Komentar",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:46Z",
-      "kind": "ClosedEvent",
-      "issueNumber": 31,
-      "title": "[US5.3] Status packing dan pengiriman oleh petani",
-      "detail": "#31: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:46Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 31,
-      "title": "[US5.3] Status packing dan pengiriman oleh petani",
-      "detail": "#31 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:46Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 31,
-      "title": "[US5.3] Status packing dan pengiriman oleh petani",
-      "detail": "#31 closedAt resmi",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:50Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 32,
-      "title": "[US5.4] Jurnal otomatis saat pesanan terkirim",
-      "detail": "#32 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:50Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 32,
-      "title": "[US5.4] Jurnal otomatis saat pesanan terkirim",
-      "detail": "#32 closedAt resmi",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:51Z",
-      "kind": "ClosedEvent",
-      "issueNumber": 32,
-      "title": "[US5.4] Jurnal otomatis saat pesanan terkirim",
-      "detail": "#32: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:54Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 33,
-      "title": "[US5.5] Invoice, batal pesanan, dan biaya packing",
-      "detail": "#33 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:54Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 33,
-      "title": "[US5.5] Invoice, batal pesanan, dan biaya packing",
-      "detail": "#33 closedAt resmi",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:56Z",
-      "kind": "IssueComment",
-      "issueNumber": 34,
-      "title": "[US6.1] Grafik pendapatan vs pengeluaran dan KPI",
-      "detail": "#34: Komentar",
-      "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
-    },
-    {
-      "at": "2026-10-09T14:49:57Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 34,
-      "title": "[US6.1] Grafik pendapatan vs pengeluaran dan KPI",
-      "detail": "#34 diperbarui (metadata issue)",
-      "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
-    },
-    {
-      "at": "2026-10-09T14:49:57Z",
-      "kind": "IssueClosedAt",
-      "issueNumber": 34,
-      "title": "[US6.1] Grafik pendapatan vs pengeluaran dan KPI",
-      "detail": "#34 closedAt resmi",
-      "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
-    },
-    {
-      "at": "2026-10-09T14:53:23Z",
-      "kind": "CrossReferencedEvent",
-      "issueNumber": 30,
-      "title": "[US5.2] Item sales order dinamis dan cek stok",
-      "detail": "#30: Referensi silang",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "kind": "AddedToProjectV2Event",
-      "issueNumber": 31,
-      "title": "[US5.3] Status packing dan pengiriman oleh petani",
-      "detail": "#31: AddedToProjectV2",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "kind": "AddedToProjectV2Event",
-      "issueNumber": 32,
-      "title": "[US5.4] Jurnal otomatis saat pesanan terkirim",
-      "detail": "#32: AddedToProjectV2",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:48Z",
-      "kind": "IssueComment",
-      "issueNumber": 32,
-      "title": "[US5.4] Jurnal otomatis saat pesanan terkirim",
-      "detail": "#32: Komentar",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:53Z",
-      "kind": "IssueComment",
-      "issueNumber": 33,
-      "title": "[US5.5] Invoice, batal pesanan, dan biaya packing",
-      "detail": "#33: Komentar",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:54Z",
-      "kind": "ClosedEvent",
-      "issueNumber": 33,
-      "title": "[US5.5] Invoice, batal pesanan, dan biaya packing",
-      "detail": "#33: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "kind": "AddedToProjectV2Event",
-      "issueNumber": 34,
-      "title": "[US6.1] Grafik pendapatan vs pengeluaran dan KPI",
-      "detail": "#34: AddedToProjectV2",
-      "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
-    },
-    {
-      "at": "2026-10-07T16:46:59Z",
-      "kind": "Created",
-      "issueNumber": 35,
-      "title": "[US6.2] Pie breakdown biaya",
-      "detail": "#35 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
-    },
-    {
-      "kind": "AddedToProjectV2Event",
-      "issueNumber": 35,
-      "title": "[US6.2] Pie breakdown biaya",
-      "detail": "#35: AddedToProjectV2",
-      "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
-    },
-    {
-      "at": "2026-10-07T16:47:17Z",
-      "kind": "Created",
-      "issueNumber": 36,
-      "title": "[US6.3] Ekspor jurnal xlsx serta neraca dan laba rugi PDF",
-      "detail": "#36 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
-    },
-    {
-      "at": "2026-10-07T16:47:24Z",
-      "kind": "Created",
-      "issueNumber": 37,
-      "title": "[US6.4] Evaluasi margin, BEP, dan kapasitas menganggur",
-      "detail": "#37 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
-    },
-    {
-      "at": "2026-10-07T16:47:32Z",
-      "kind": "Created",
-      "issueNumber": 38,
-      "title": "[US6.5] Arus kas dan filter periode laporan",
-      "detail": "#38 dibuat",
-      "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
-    },
-    {
       "at": "2026-10-09T11:38:03Z",
       "kind": "LabeledEvent",
       "issueNumber": 35,
@@ -6468,38 +6326,127 @@
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
-      "at": "2026-10-09T11:38:08Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 37,
-      "title": "[US6.4] Evaluasi margin, BEP, dan kapasitas menganggur",
-      "detail": "#37: Label +sprint-4",
-      "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
-    },
-    {
-      "at": "2026-10-09T11:38:08Z",
+      "at": "2026-10-09T11:38:19Z",
       "kind": "MilestonedEvent",
-      "issueNumber": 37,
-      "title": "[US6.4] Evaluasi margin, BEP, dan kapasitas menganggur",
-      "detail": "#37: Milestone Sprint 4 — Laporan",
+      "issueNumber": 41,
+      "title": "[T5.3] Usability Owner: baca laba dari grafik",
+      "detail": "#41: Milestone Sprint 5 — QA",
       "status": "Done",
-      "iteration": "Sprint 4 · Dashboard & ekspor"
+      "iteration": "Sprint 5 · QA & go-live"
     },
     {
-      "at": "2026-10-09T11:38:11Z",
+      "at": "2026-10-09T11:38:19Z",
       "kind": "LabeledEvent",
-      "issueNumber": 38,
-      "title": "[US6.5] Arus kas dan filter periode laporan",
-      "detail": "#38: Label +sprint-4",
+      "issueNumber": 41,
+      "title": "[T5.3] Usability Owner: baca laba dari grafik",
+      "detail": "#41: Label +sprint-5",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-09T14:49:48Z",
+      "kind": "IssueComment",
+      "issueNumber": 32,
+      "title": "[US5.4] Jurnal otomatis saat pesanan terkirim",
+      "detail": "#32: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:50Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 32,
+      "title": "[US5.4] Jurnal otomatis saat pesanan terkirim",
+      "detail": "#32 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:50Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 32,
+      "title": "[US5.4] Jurnal otomatis saat pesanan terkirim",
+      "detail": "#32 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:51Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 32,
+      "title": "[US5.4] Jurnal otomatis saat pesanan terkirim",
+      "detail": "#32: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:53Z",
+      "kind": "IssueComment",
+      "issueNumber": 33,
+      "title": "[US5.5] Invoice, batal pesanan, dan biaya packing",
+      "detail": "#33: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:54Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 33,
+      "title": "[US5.5] Invoice, batal pesanan, dan biaya packing",
+      "detail": "#33: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:54Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 33,
+      "title": "[US5.5] Invoice, batal pesanan, dan biaya packing",
+      "detail": "#33 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "at": "2026-10-09T14:49:54Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 33,
+      "title": "[US5.5] Invoice, batal pesanan, dan biaya packing",
+      "detail": "#33 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 3 · Penjualan & pengiriman"
+    },
+    {
+      "kind": "AddedToProjectV2Event",
+      "issueNumber": 34,
+      "title": "[US6.1] Grafik pendapatan vs pengeluaran dan KPI",
+      "detail": "#34: AddedToProjectV2",
       "status": "Done",
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
-      "at": "2026-10-09T11:38:11Z",
-      "kind": "MilestonedEvent",
-      "issueNumber": 38,
-      "title": "[US6.5] Arus kas dan filter periode laporan",
-      "detail": "#38: Milestone Sprint 4 — Laporan",
+      "at": "2026-10-09T14:49:56Z",
+      "kind": "IssueComment",
+      "issueNumber": 34,
+      "title": "[US6.1] Grafik pendapatan vs pengeluaran dan KPI",
+      "detail": "#34: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
+    },
+    {
+      "at": "2026-10-09T14:49:57Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 34,
+      "title": "[US6.1] Grafik pendapatan vs pengeluaran dan KPI",
+      "detail": "#34 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
+    },
+    {
+      "at": "2026-10-09T14:49:57Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 34,
+      "title": "[US6.1] Grafik pendapatan vs pengeluaran dan KPI",
+      "detail": "#34 closedAt resmi",
       "status": "Done",
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
@@ -6509,6 +6456,14 @@
       "issueNumber": 34,
       "title": "[US6.1] Grafik pendapatan vs pengeluaran dan KPI",
       "detail": "#34: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
+    },
+    {
+      "kind": "AddedToProjectV2Event",
+      "issueNumber": 35,
+      "title": "[US6.2] Pie breakdown biaya",
+      "detail": "#35: AddedToProjectV2",
       "status": "Done",
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
@@ -6557,6 +6512,33 @@
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
+      "at": "2026-10-09T11:38:08Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 37,
+      "title": "[US6.4] Evaluasi margin, BEP, dan kapasitas menganggur",
+      "detail": "#37: Label +sprint-4",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
+    },
+    {
+      "at": "2026-10-09T11:38:08Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 37,
+      "title": "[US6.4] Evaluasi margin, BEP, dan kapasitas menganggur",
+      "detail": "#37: Milestone Sprint 4 — Laporan",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
+    },
+    {
+      "at": "2026-10-09T11:38:11Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 38,
+      "title": "[US6.5] Arus kas dan filter periode laporan",
+      "detail": "#38: Label +sprint-4",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
+    },
+    {
       "at": "2026-10-09T14:50:03Z",
       "kind": "IssueComment",
       "issueNumber": 36,
@@ -6599,6 +6581,78 @@
       "detail": "#37: AddedToProjectV2",
       "status": "Done",
       "iteration": "Sprint 4 · Dashboard & ekspor"
+    },
+    {
+      "at": "2026-10-07T16:47:32Z",
+      "kind": "Created",
+      "issueNumber": 38,
+      "title": "[US6.5] Arus kas dan filter periode laporan",
+      "detail": "#38 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
+    },
+    {
+      "at": "2026-10-07T16:47:40Z",
+      "kind": "Created",
+      "issueNumber": 39,
+      "title": "[T5.1] Usability petani: pindah fase di HP",
+      "detail": "#39 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-07T16:47:47Z",
+      "kind": "Created",
+      "issueNumber": 40,
+      "title": "[T5.2] Usability Admin: filter jurnal",
+      "detail": "#40 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-09T11:38:11Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 38,
+      "title": "[US6.5] Arus kas dan filter periode laporan",
+      "detail": "#38: Milestone Sprint 4 — Laporan",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
+    },
+    {
+      "at": "2026-10-09T11:38:14Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 39,
+      "title": "[T5.1] Usability petani: pindah fase di HP",
+      "detail": "#39: Milestone Sprint 5 — QA",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-09T11:38:14Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 39,
+      "title": "[T5.1] Usability petani: pindah fase di HP",
+      "detail": "#39: Label +sprint-5",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-09T11:38:17Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 40,
+      "title": "[T5.2] Usability Admin: filter jurnal",
+      "detail": "#40: Milestone Sprint 5 — QA",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-09T11:38:17Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 40,
+      "title": "[T5.2] Usability Admin: filter jurnal",
+      "detail": "#40: Label +sprint-5",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
     },
     {
       "at": "2026-10-09T14:50:06Z",
@@ -6680,6 +6734,15 @@
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
+      "at": "2026-10-09T14:50:11Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 38,
+      "title": "[US6.5] Arus kas dan filter periode laporan",
+      "detail": "#38 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 4 · Dashboard & ekspor"
+    },
+    {
       "at": "2026-10-09T14:53:23Z",
       "kind": "CrossReferencedEvent",
       "issueNumber": 38,
@@ -6698,11 +6761,55 @@
       "iteration": "Sprint 4 · Dashboard & ekspor"
     },
     {
+      "kind": "AddedToProjectV2Event",
+      "issueNumber": 39,
+      "title": "[T5.1] Usability petani: pindah fase di HP",
+      "detail": "#39: AddedToProjectV2",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:39Z",
+      "kind": "IssueComment",
+      "issueNumber": 39,
+      "title": "[T5.1] Usability petani: pindah fase di HP",
+      "detail": "#39: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:40Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 39,
+      "title": "[T5.1] Usability petani: pindah fase di HP",
+      "detail": "#39: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:40Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 39,
+      "title": "[T5.1] Usability petani: pindah fase di HP",
+      "detail": "#39 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:40Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 39,
+      "title": "[T5.1] Usability petani: pindah fase di HP",
+      "detail": "#39 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
       "kind": "RemovedFromProjectV2Event",
       "issueNumber": 40,
       "title": "[T5.2] Usability Admin: filter jurnal",
       "detail": "#40: RemovedFromProjectV2",
-      "status": "Todo",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
@@ -6710,16 +6817,34 @@
       "issueNumber": 40,
       "title": "[T5.2] Usability Admin: filter jurnal",
       "detail": "#40: AddedToProjectV2",
-      "status": "Todo",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
-      "at": "2026-10-09T11:38:17Z",
+      "at": "2026-10-10T07:20:43Z",
+      "kind": "IssueComment",
+      "issueNumber": 40,
+      "title": "[T5.2] Usability Admin: filter jurnal",
+      "detail": "#40: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:44Z",
       "kind": "IssueUpdated",
       "issueNumber": 40,
       "title": "[T5.2] Usability Admin: filter jurnal",
       "detail": "#40 diperbarui (metadata issue)",
-      "status": "Todo",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:44Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 40,
+      "title": "[T5.2] Usability Admin: filter jurnal",
+      "detail": "#40 closedAt resmi",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
@@ -6727,24 +6852,43 @@
       "issueNumber": 41,
       "title": "[T5.3] Usability Owner: baca laba dari grafik",
       "detail": "#41: AddedToProjectV2",
-      "status": "Todo",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
-      "at": "2026-10-09T11:38:19Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 41,
-      "title": "[T5.3] Usability Owner: baca laba dari grafik",
-      "detail": "#41: Label +sprint-5",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "kind": "AddedToProjectV2Event",
+      "at": "2026-10-07T16:48:02Z",
+      "kind": "Created",
       "issueNumber": 42,
       "title": "[T5.4] Audit debit sama dengan kredit",
-      "detail": "#42: AddedToProjectV2",
-      "status": "Todo",
+      "detail": "#42 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-07T16:48:10Z",
+      "kind": "Created",
+      "issueNumber": 43,
+      "title": "[T5.5] Perbaikan bug hasil uji",
+      "detail": "#43 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-07T16:48:17Z",
+      "kind": "Created",
+      "issueNumber": 44,
+      "title": "[T5.6] Deploy Vercel, Postgres cloud, dan security",
+      "detail": "#44 dibuat",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-07T16:48:25Z",
+      "kind": "Created",
+      "issueNumber": 45,
+      "title": "[T5.9] Go-live dan pelatihan 6 pengguna",
+      "detail": "#45 dibuat",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
@@ -6753,24 +6897,25 @@
       "issueNumber": 42,
       "title": "[T5.4] Audit debit sama dengan kredit",
       "detail": "#42: Label +sprint-5",
-      "status": "Todo",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
       "at": "2026-10-09T11:38:22Z",
-      "kind": "IssueUpdated",
+      "kind": "MilestonedEvent",
       "issueNumber": 42,
       "title": "[T5.4] Audit debit sama dengan kredit",
-      "detail": "#42 diperbarui (metadata issue)",
-      "status": "Todo",
+      "detail": "#42: Milestone Sprint 5 — QA",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
-      "kind": "AddedToProjectV2Event",
+      "at": "2026-10-09T11:38:26Z",
+      "kind": "LabeledEvent",
       "issueNumber": 43,
       "title": "[T5.5] Perbaikan bug hasil uji",
-      "detail": "#43: AddedToProjectV2",
-      "status": "Todo",
+      "detail": "#43: Label +sprint-5",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
@@ -6779,15 +6924,7 @@
       "issueNumber": 43,
       "title": "[T5.5] Perbaikan bug hasil uji",
       "detail": "#43: Milestone Sprint 5 — QA",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "kind": "AddedToProjectV2Event",
-      "issueNumber": 44,
-      "title": "[T5.6] Deploy Vercel, Postgres cloud, dan security",
-      "detail": "#44: AddedToProjectV2",
-      "status": "Todo",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
@@ -6796,16 +6933,193 @@
       "issueNumber": 44,
       "title": "[T5.6] Deploy Vercel, Postgres cloud, dan security",
       "detail": "#44: Label +sprint-5",
-      "status": "Todo",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
       "at": "2026-10-09T11:38:28Z",
+      "kind": "MilestonedEvent",
+      "issueNumber": 44,
+      "title": "[T5.6] Deploy Vercel, Postgres cloud, dan security",
+      "detail": "#44: Milestone Sprint 5 — QA",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-09T11:38:30Z",
+      "kind": "LabeledEvent",
+      "issueNumber": 45,
+      "title": "[T5.9] Go-live dan pelatihan 6 pengguna",
+      "detail": "#45: Label +sprint-5",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:47Z",
+      "kind": "IssueComment",
+      "issueNumber": 41,
+      "title": "[T5.3] Usability Owner: baca laba dari grafik",
+      "detail": "#41: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:47Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 41,
+      "title": "[T5.3] Usability Owner: baca laba dari grafik",
+      "detail": "#41 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:47Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 41,
+      "title": "[T5.3] Usability Owner: baca laba dari grafik",
+      "detail": "#41 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:48Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 41,
+      "title": "[T5.3] Usability Owner: baca laba dari grafik",
+      "detail": "#41: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "kind": "AddedToProjectV2Event",
+      "issueNumber": 42,
+      "title": "[T5.4] Audit debit sama dengan kredit",
+      "detail": "#42: AddedToProjectV2",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:50Z",
+      "kind": "IssueComment",
+      "issueNumber": 42,
+      "title": "[T5.4] Audit debit sama dengan kredit",
+      "detail": "#42: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:51Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 42,
+      "title": "[T5.4] Audit debit sama dengan kredit",
+      "detail": "#42 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:51Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 42,
+      "title": "[T5.4] Audit debit sama dengan kredit",
+      "detail": "#42 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:52Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 42,
+      "title": "[T5.4] Audit debit sama dengan kredit",
+      "detail": "#42: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "kind": "AddedToProjectV2Event",
+      "issueNumber": 43,
+      "title": "[T5.5] Perbaikan bug hasil uji",
+      "detail": "#43: AddedToProjectV2",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:54Z",
+      "kind": "IssueComment",
+      "issueNumber": 43,
+      "title": "[T5.5] Perbaikan bug hasil uji",
+      "detail": "#43: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:55Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 43,
+      "title": "[T5.5] Perbaikan bug hasil uji",
+      "detail": "#43: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:55Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 43,
+      "title": "[T5.5] Perbaikan bug hasil uji",
+      "detail": "#43 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:55Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 43,
+      "title": "[T5.5] Perbaikan bug hasil uji",
+      "detail": "#43 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "kind": "AddedToProjectV2Event",
+      "issueNumber": 44,
+      "title": "[T5.6] Deploy Vercel, Postgres cloud, dan security",
+      "detail": "#44: AddedToProjectV2",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:57Z",
+      "kind": "IssueComment",
+      "issueNumber": 44,
+      "title": "[T5.6] Deploy Vercel, Postgres cloud, dan security",
+      "detail": "#44: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:58Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 44,
+      "title": "[T5.6] Deploy Vercel, Postgres cloud, dan security",
+      "detail": "#44: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:58Z",
       "kind": "IssueUpdated",
       "issueNumber": 44,
       "title": "[T5.6] Deploy Vercel, Postgres cloud, dan security",
       "detail": "#44 diperbarui (metadata issue)",
-      "status": "Todo",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:20:58Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 44,
+      "title": "[T5.6] Deploy Vercel, Postgres cloud, dan security",
+      "detail": "#44 closedAt resmi",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
@@ -6813,7 +7127,7 @@
       "issueNumber": 45,
       "title": "[T5.9] Go-live dan pelatihan 6 pengguna",
       "detail": "#45: AddedToProjectV2",
-      "status": "Todo",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
@@ -6957,30 +7271,12 @@
       "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
     },
     {
-      "at": "2026-10-09T11:38:30Z",
-      "kind": "LabeledEvent",
-      "issueNumber": 45,
-      "title": "[T5.9] Go-live dan pelatihan 6 pengguna",
-      "detail": "#45: Label +sprint-5",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
       "at": "2026-10-09T11:38:31Z",
       "kind": "MilestonedEvent",
       "issueNumber": 45,
       "title": "[T5.9] Go-live dan pelatihan 6 pengguna",
       "detail": "#45: Milestone Sprint 5 — QA",
-      "status": "Todo",
-      "iteration": "Sprint 5 · QA & go-live"
-    },
-    {
-      "at": "2026-10-09T11:38:31Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 45,
-      "title": "[T5.9] Go-live dan pelatihan 6 pengguna",
-      "detail": "#45 diperbarui (metadata issue)",
-      "status": "Todo",
+      "status": "Done",
       "iteration": "Sprint 5 · QA & go-live"
     },
     {
@@ -7078,6 +7374,69 @@
       "title": "feat: global states loading, error, 404, 403 (US1.8)",
       "detail": "#48 PR merged",
       "status": "Done"
+    },
+    {
+      "at": "2026-10-10T03:54:39Z",
+      "kind": "CrossReferencedEvent",
+      "issueNumber": 50,
+      "title": "FINDING-01: Database Prisma Postgres lambat dan pool timeout saat uji",
+      "detail": "#50: Referensi silang",
+      "status": "In progress",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-10T04:01:15Z",
+      "kind": "CrossReferencedEvent",
+      "issueNumber": 50,
+      "title": "FINDING-01: Database Prisma Postgres lambat dan pool timeout saat uji",
+      "detail": "#50: Referensi silang",
+      "status": "In progress",
+      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+    },
+    {
+      "at": "2026-10-10T07:20:45Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 40,
+      "title": "[T5.2] Usability Admin: filter jurnal",
+      "detail": "#40: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:21:00Z",
+      "kind": "IssueComment",
+      "issueNumber": 45,
+      "title": "[T5.9] Go-live dan pelatihan 6 pengguna",
+      "detail": "#45: Komentar",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:21:01Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 45,
+      "title": "[T5.9] Go-live dan pelatihan 6 pengguna",
+      "detail": "#45 closedAt resmi",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:21:02Z",
+      "kind": "ClosedEvent",
+      "issueNumber": 45,
+      "title": "[T5.9] Go-live dan pelatihan 6 pengguna",
+      "detail": "#45: Issue ditutup",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
+    },
+    {
+      "at": "2026-10-10T07:21:02Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 45,
+      "title": "[T5.9] Go-live dan pelatihan 6 pengguna",
+      "detail": "#45 diperbarui (metadata issue)",
+      "status": "Done",
+      "iteration": "Sprint 5 · QA & go-live"
     },
     {
       "kind": "AddedToProjectV2Event",
@@ -7313,11 +7672,11 @@
       "status": "Done"
     },
     {
-      "at": "2026-10-09T11:58:55Z",
+      "at": "2026-10-09T12:02:58Z",
       "kind": "Created",
-      "issueNumber": 67,
-      "title": "feat(produksi): US3.6 timeline/tambal + US3.7 dashboard petani",
-      "detail": "#67 dibuat",
+      "issueNumber": 68,
+      "title": "feat(hpp): US2.3 override + plastik + jurnal susut abnormal",
+      "detail": "#68 dibuat",
       "status": "Done"
     },
     {
@@ -7584,11 +7943,11 @@
       "status": "Done"
     },
     {
-      "at": "2026-10-09T12:02:58Z",
+      "at": "2026-10-09T11:58:55Z",
       "kind": "Created",
-      "issueNumber": 68,
-      "title": "feat(hpp): US2.3 override + plastik + jurnal susut abnormal",
-      "detail": "#68 dibuat",
+      "issueNumber": 67,
+      "title": "feat(produksi): US3.6 timeline/tambal + US3.7 dashboard petani",
+      "detail": "#67 dibuat",
       "status": "Done"
     },
     {
@@ -7921,29 +8280,11 @@
     },
     {
       "at": "2026-10-09T14:49:42Z",
-      "kind": "IssueComment",
-      "issueNumber": 30,
-      "title": "[US5.2] Item sales order dinamis dan cek stok",
-      "detail": "#30: Komentar",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
-    },
-    {
-      "at": "2026-10-09T14:49:42Z",
       "kind": "IssueUpdated",
       "issueNumber": 66,
       "title": "feat(produksi): US3.5 kegagalan + US2.5 klasifikasi susut",
       "detail": "#66 diperbarui (metadata issue)",
       "status": "Done"
-    },
-    {
-      "at": "2026-10-09T14:49:43Z",
-      "kind": "ClosedEvent",
-      "issueNumber": 30,
-      "title": "[US5.2] Item sales order dinamis dan cek stok",
-      "detail": "#30: Issue ditutup",
-      "status": "Done",
-      "iteration": "Sprint 3 · Penjualan & pengiriman"
     },
     {
       "at": "2026-10-09T14:49:46Z",
@@ -8087,16 +8428,7 @@
       "issueNumber": 82,
       "title": "docs(agile): sinkron status 37 US closed + Sprint 5",
       "detail": "#82 dibuat",
-      "status": "Todo"
-    },
-    {
-      "at": "2026-10-10T03:54:39Z",
-      "kind": "CrossReferencedEvent",
-      "issueNumber": 50,
-      "title": "FINDING-01: Database Prisma Postgres lambat dan pool timeout saat uji",
-      "detail": "#50: Referensi silang",
-      "status": "In progress",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
+      "status": "Done"
     },
     {
       "at": "2026-10-10T04:01:14Z",
@@ -8104,24 +8436,7 @@
       "issueNumber": 83,
       "title": "feat(sprint-5): T5.1–T5.4 usability, audit jurnal, e2e",
       "detail": "#83 dibuat",
-      "status": "Todo"
-    },
-    {
-      "at": "2026-10-10T04:01:15Z",
-      "kind": "CrossReferencedEvent",
-      "issueNumber": 50,
-      "title": "FINDING-01: Database Prisma Postgres lambat dan pool timeout saat uji",
-      "detail": "#50: Referensi silang",
-      "status": "In progress",
-      "iteration": "Sprint 2 · Akuntansi, produksi, inventaris"
-    },
-    {
-      "at": "2026-10-10T04:40:15Z",
-      "kind": "IssueUpdated",
-      "issueNumber": 83,
-      "title": "feat(sprint-5): T5.1–T5.4 usability, audit jurnal, e2e",
-      "detail": "#83 diperbarui (metadata issue)",
-      "status": "Todo"
+      "status": "Done"
     },
     {
       "at": "2026-10-10T05:43:44Z",
@@ -8130,6 +8445,86 @@
       "title": "docs(ucd): increment v2 akuntansi & logistik (blueprint, belum coding)",
       "detail": "#84 dibuat",
       "status": "Todo"
+    },
+    {
+      "at": "2026-10-10T07:14:06Z",
+      "kind": "Created",
+      "issueNumber": 85,
+      "title": "feat(home): progress Project #1 + deploy Vercel tooling",
+      "detail": "#85 dibuat",
+      "status": "Done"
+    },
+    {
+      "at": "2026-10-10T07:19:08Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 85,
+      "title": "feat(home): progress Project #1 + deploy Vercel tooling",
+      "detail": "#85 closedAt resmi",
+      "status": "Done"
+    },
+    {
+      "at": "2026-10-10T07:19:08Z",
+      "kind": "Merged",
+      "issueNumber": 85,
+      "title": "feat(home): progress Project #1 + deploy Vercel tooling",
+      "detail": "#85 PR merged",
+      "status": "Done"
+    },
+    {
+      "at": "2026-10-10T07:19:23Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 83,
+      "title": "feat(sprint-5): T5.1–T5.4 usability, audit jurnal, e2e",
+      "detail": "#83 closedAt resmi",
+      "status": "Done"
+    },
+    {
+      "at": "2026-10-10T07:19:23Z",
+      "kind": "Merged",
+      "issueNumber": 83,
+      "title": "feat(sprint-5): T5.1–T5.4 usability, audit jurnal, e2e",
+      "detail": "#83 PR merged",
+      "status": "Done"
+    },
+    {
+      "at": "2026-10-10T07:20:03Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 83,
+      "title": "feat(sprint-5): T5.1–T5.4 usability, audit jurnal, e2e",
+      "detail": "#83 diperbarui (metadata issue)",
+      "status": "Done"
+    },
+    {
+      "at": "2026-10-10T07:20:06Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 85,
+      "title": "feat(home): progress Project #1 + deploy Vercel tooling",
+      "detail": "#85 diperbarui (metadata issue)",
+      "status": "Done"
+    },
+    {
+      "at": "2026-10-10T07:21:21Z",
+      "kind": "IssueClosedAt",
+      "issueNumber": 82,
+      "title": "docs(agile): sinkron status 37 US closed + Sprint 5",
+      "detail": "#82 closedAt resmi",
+      "status": "Done"
+    },
+    {
+      "at": "2026-10-10T07:21:21Z",
+      "kind": "Merged",
+      "issueNumber": 82,
+      "title": "docs(agile): sinkron status 37 US closed + Sprint 5",
+      "detail": "#82 PR merged",
+      "status": "Done"
+    },
+    {
+      "at": "2026-10-10T07:21:24Z",
+      "kind": "IssueUpdated",
+      "issueNumber": 82,
+      "title": "docs(agile): sinkron status 37 US closed + Sprint 5",
+      "detail": "#82 diperbarui (metadata issue)",
+      "status": "Done"
     }
   ]
 }
