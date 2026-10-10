@@ -11,6 +11,10 @@ import {
   estimasiSlabRockwool,
   formatAngkaSingkat,
 } from "@/lib/hidroponik-asumsi";
+import {
+  kapasitasLubangBenihPack,
+  kapasitasLubangMediaPack,
+} from "@/lib/pack-kapasitas-lubang";
 import { isItemBenih, isItemMedia } from "@/lib/siklus-pack";
 import type { SatuanInventaris } from "@prisma/client";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
@@ -71,6 +75,18 @@ export function SiklusForm({
   const packMedia = packs.find((p) => String(p.id) === packMediaId);
   const packSama = packBenihId && packMediaId && packBenihId === packMediaId;
 
+  const kapBenih =
+    packBenih && varietasPilih
+      ? kapasitasLubangBenihPack(Number(packBenih.sisaUnit), varietasPilih.bijiPerGram)
+      : null;
+  const kapMedia = packMedia
+    ? kapasitasLubangMediaPack(Number(packMedia.sisaUnit), packMedia.itemKode)
+    : null;
+  const gramPakai =
+    gramEstimasi != null && Number.isFinite(gramEstimasi) ? formatAngkaSingkat(gramEstimasi, 4) : "";
+  const mediaPakai =
+    slabEstimasi != null && packMediaId ? String(slabEstimasi) : "";
+
   const satuanBenihLabel = packBenih
     ? satuanInventarisLabel[packBenih.satuan as SatuanInventaris]
     : "gram";
@@ -82,9 +98,8 @@ export function SiklusForm({
     <form action={formAction} className="space-y-4 rounded-md border p-4">
       <h2 className="text-lg font-semibold">Mulai siklus semai</h2>
       <p className="text-sm text-muted-foreground">
-        <strong>Jumlah disemai = bibit (pohon).</strong> Benih diisi dalam{" "}
-        <strong>gram</strong> dari pack. Media rockwool biasanya dalam{" "}
-        <strong>slab (pcs)</strong>, bukan gram benih.
+        <strong>Jumlah disemai = lubang/bibit.</strong> Sistem hitung potong proporsional pack
+        (gram benih &amp; slab media) dari varietas + kapasitas lubang pack (v2-C.1).
       </p>
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Varietas aktif</span>
@@ -135,10 +150,12 @@ export function SiklusForm({
           placeholder="mis. 480"
           onChange={(e) => setJumlahDisemaiRaw(e.target.value)}
         />
-        {gramEstimasi != null ? (
+        {kapBenih != null && Number.isFinite(jumlahDisemai) && jumlahDisemai > 0 ? (
           <p className="text-xs text-muted-foreground">
-            Estimasi benih: ±{formatAngkaSingkat(gramEstimasi, 2)} gram (bukan {jumlahDisemai}{" "}
-            gram kecuali Anda sengaja).
+            Pack benih: max {kapBenih} lubang
+            {jumlahDisemai > kapBenih ? (
+              <span className="text-destructive"> — melebihi sisa pack</span>
+            ) : null}
           </p>
         ) : null}
       </label>
@@ -163,23 +180,31 @@ export function SiklusForm({
                 Belum ada pack benih — buat di Active pack
               </option>
             ) : null}
-            {packsBenih.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.kode} — {p.itemNama} (sisa {p.sisaUnit}{" "}
-                {satuanInventarisLabel[p.satuan as SatuanInventaris]})
-              </option>
-            ))}
+            {packsBenih.map((p) => {
+              const kap =
+                varietasPilih && p.satuan === "GRAM"
+                  ? kapasitasLubangBenihPack(Number(p.sisaUnit), varietasPilih.bijiPerGram)
+                  : null;
+              return (
+                <option key={p.id} value={p.id}>
+                  {p.kode} — {p.itemNama} (sisa {p.sisaUnit}{" "}
+                  {satuanInventarisLabel[p.satuan as SatuanInventaris]}
+                  {kap != null ? ` · ~${kap} lubang` : ""})
+                </option>
+              );
+            })}
           </select>
         </label>
 
         <label className="block space-y-1.5 text-sm">
-          <span className="font-medium">Jumlah benih dari pack ({satuanBenihLabel})</span>
+          <span className="font-medium">Potong proporsional benih ({satuanBenihLabel})</span>
           <Input
             name="jumlahBenihPakai"
             required
-            className="h-11"
-            inputMode="decimal"
-            placeholder={gramEstimasi != null ? String(formatAngkaSingkat(gramEstimasi, 2)) : "gram"}
+            readOnly
+            className="h-11 bg-muted/40"
+            value={gramPakai}
+            placeholder="Isi jumlah lubang + pilih varietas/pack"
           />
         </label>
       </fieldset>
@@ -196,12 +221,16 @@ export function SiklusForm({
             onChange={(e) => setPackMediaId(e.target.value)}
           >
             <option value="">Tidak dipakai</option>
-            {packsMedia.map((p) => (
-              <option key={`m-${p.id}`} value={p.id}>
-                {p.kode} — {p.itemNama} (sisa {p.sisaUnit}{" "}
-                {satuanInventarisLabel[p.satuan as SatuanInventaris]})
-              </option>
-            ))}
+            {packsMedia.map((p) => {
+              const kap = kapasitasLubangMediaPack(Number(p.sisaUnit), p.itemKode);
+              return (
+                <option key={`m-${p.id}`} value={p.id}>
+                  {p.kode} — {p.itemNama} (sisa {p.sisaUnit}{" "}
+                  {satuanInventarisLabel[p.satuan as SatuanInventaris]}
+                  {kap > 0 ? ` · ~${kap} lubang` : ""})
+                </option>
+              );
+            })}
           </select>
           {packsMedia.length === 0 ? (
             <p className="text-xs text-muted-foreground">
@@ -217,22 +246,21 @@ export function SiklusForm({
         ) : null}
 
         <label className="block space-y-1.5 text-sm">
-          <span className="font-medium">Jumlah media dari pack ({satuanMediaLabel})</span>
+          <span className="font-medium">Potong proporsional media ({satuanMediaLabel})</span>
           <Input
             name="jumlahMediaPakai"
-            className="h-11"
-            inputMode="decimal"
-            placeholder={
-              slabEstimasi != null && packMedia?.itemKode.startsWith("RW-")
-                ? String(slabEstimasi)
-                : undefined
-            }
+            className="h-11 bg-muted/40"
+            readOnly
+            value={mediaPakai}
             disabled={!packMediaId}
+            placeholder={packMediaId ? "0" : "—"}
           />
-          {slabEstimasi != null && packMediaId ? (
+          {kapMedia != null && Number.isFinite(jumlahDisemai) && jumlahDisemai > 0 ? (
             <p className="text-xs text-muted-foreground">
-              Untuk rockwool slab: ±{slabEstimasi} pcs untuk {jumlahDisemai || "?"} bibit (1 bibit ≈ 1
-              dadu).
+              Pack media: max {kapMedia} lubang
+              {jumlahDisemai > kapMedia ? (
+                <span className="text-destructive"> — melebihi sisa pack</span>
+              ) : null}
             </p>
           ) : null}
         </label>

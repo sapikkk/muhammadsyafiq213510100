@@ -9,6 +9,12 @@ import {
   type FaseProduksi,
 } from "@/lib/siklus-fase";
 import { STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort";
+import {
+  gramBenihUntukLubang,
+  mediaUnitUntukLubang,
+  validasiKapasitasPackBenih,
+  validasiKapasitasPackMedia,
+} from "@/lib/pack-kapasitas-lubang";
 
 export class SiklusError extends Error {
   constructor(
@@ -172,13 +178,64 @@ export async function buatSiklusSemai(input: SiklusInput) {
         );
       }
 
-      const activeBenih = await pakaiActivePackDalamTx(tx, input.activePackBenihId, input.jumlahBenihPakai);
-      let biayaRockwool = new Prisma.Decimal(0);
-      if (input.activePackMediaId !== null && input.jumlahMediaPakai !== null) {
-        const activeMedia = await pakaiActivePackDalamTx(tx, input.activePackMediaId, input.jumlahMediaPakai);
-        biayaRockwool = input.jumlahMediaPakai.mul(activeMedia.biayaPerUnit);
+      const packBenihRow = await tx.activePack.findUnique({
+        where: { id: input.activePackBenihId },
+        include: { item: { select: { kode: true } } },
+      });
+      if (!packBenihRow || packBenihRow.status !== "AKTIF") {
+        throw new SiklusError("Active pack benih tidak ditemukan atau nonaktif.", 400);
       }
-      const biayaBenih = input.jumlahBenihPakai.mul(activeBenih.biayaPerUnit);
+
+      const jumlahBenihPakai = gramBenihUntukLubang(input.jumlahDisemai, varietas.biji_per_gram);
+      const cekBenih = validasiKapasitasPackBenih(
+        input.jumlahDisemai,
+        packBenihRow.sisaUnit,
+        varietas.biji_per_gram,
+      );
+      if (!cekBenih.ok) throw new SiklusError(cekBenih.message, 400);
+
+      if (input.jumlahBenihPakai.sub(jumlahBenihPakai).abs().gt(new Prisma.Decimal("0.05"))) {
+        throw new SiklusError(
+          `Jumlah benih dari pack harus ±${jumlahBenihPakai.toString()} g untuk ${input.jumlahDisemai} lubang.`,
+          400,
+        );
+      }
+
+      let jumlahMediaPakai = input.jumlahMediaPakai;
+      if (input.activePackMediaId !== null) {
+        const packMediaRow = await tx.activePack.findUnique({
+          where: { id: input.activePackMediaId },
+          include: { item: { select: { kode: true } } },
+        });
+        if (!packMediaRow || packMediaRow.status !== "AKTIF") {
+          throw new SiklusError("Active pack media tidak ditemukan atau nonaktif.", 400);
+        }
+        const mediaExpected = mediaUnitUntukLubang(input.jumlahDisemai);
+        jumlahMediaPakai = mediaExpected;
+        const cekMedia = validasiKapasitasPackMedia(
+          input.jumlahDisemai,
+          packMediaRow.sisaUnit,
+          packMediaRow.item.kode,
+        );
+        if (!cekMedia.ok) throw new SiklusError(cekMedia.message, 400);
+        if (
+          input.jumlahMediaPakai !== null &&
+          input.jumlahMediaPakai.sub(mediaExpected).abs().gt(new Prisma.Decimal("0.001"))
+        ) {
+          throw new SiklusError(
+            `Jumlah media harus ${mediaExpected.toString()} unit untuk ${input.jumlahDisemai} lubang.`,
+            400,
+          );
+        }
+      }
+
+      const activeBenih = await pakaiActivePackDalamTx(tx, input.activePackBenihId, jumlahBenihPakai);
+      let biayaRockwool = new Prisma.Decimal(0);
+      if (input.activePackMediaId !== null && jumlahMediaPakai !== null) {
+        const activeMedia = await pakaiActivePackDalamTx(tx, input.activePackMediaId, jumlahMediaPakai);
+        biayaRockwool = jumlahMediaPakai.mul(activeMedia.biayaPerUnit);
+      }
+      const biayaBenih = jumlahBenihPakai.mul(activeBenih.biayaPerUnit);
       const subtotal = biayaBenih.add(biayaRockwool);
 
       const kode_batch = await generateKodeBatch(input.kolamId, input.tanggalSemai, tx);

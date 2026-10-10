@@ -1050,6 +1050,15 @@ POST /api/auth/callback/credentials 200 in 24253ms
 
 Sample audit manual (T5.4): jurnal manual DRAFT/PENDING, jurnal approve panen, jurnal SO DELIVERED — cek total debit = kredit di detail masing-masing.
 
+### v2-C.1 — Kapasitas lubang active pack (Epic C / #97)
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/petani/siklus` pilih varietas + pack benih | Petani | Opsi pack menampil **~N lubang** |
+| Isi jumlah disemai | Petani | Field gram benih & media terisi otomatis (read-only) |
+| Simpan melebihi kapasitas pack | Petani | Error jelas (sisa pack / lubang) |
+| Simpan valid | Petani | `sisaUnit` pack berkurang proporsional; biaya langsung siklus terisi |
+
 ### v2-B.1 — Abort siklus gagal total (Epic B / #96)
 
 **Branch:** `feat/v2-b1-abort-siklus` · WIP sementara = akun **1350** (proxy sampai COA v2).
