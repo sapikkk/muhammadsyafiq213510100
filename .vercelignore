@@ -1,0 +1,10 @@
+graphify-out
+.agents
+.cursor
+docs
+e2e
+playwright-report
+test-results
+graphify-out/**
+*.md
+!README.md
