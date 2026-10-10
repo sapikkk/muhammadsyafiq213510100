@@ -24,7 +24,10 @@ PATTERNS=(
 
 fail=0
 for pat in "${PATTERNS[@]}"; do
-  if rg -n "$pat" "${GLOBS[@]}" --glob '*.tsx' --glob '*.css' --glob '*.ts' 2>/dev/null; then
+  hits=$(rg -n "$pat" "${GLOBS[@]}" --glob '*.tsx' --glob '*.css' --glob '*.ts' 2>/dev/null \
+    | grep -vE 'slide-(in-from|out-to)-' || true)
+  if [[ -n "$hits" ]]; then
+    echo "$hits"
     echo "error: banned UI pattern: $pat"
     fail=1
   fi

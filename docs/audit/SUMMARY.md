@@ -9,11 +9,11 @@
 | 4 Performance | **Partial** | `perf-before-after.md`; session warm ~300ms |
 | 5 Errors / toaster | **Done** | Form produksi/petani + harvest approve API client + `api-parse-client` |
 | 6 Dept audits | **Partial** | + `07-verification.md`; qa/security diperbarui |
-| 7 Verification | **Partial** | CI + `check:legacy-api-json`; export auth JSON; e2e belum di CI |
+| 7 Verification | **Done** (CI) | `check.yml` + workflow `e2e.yml` (Postgres + smoke) |
 
 ## Rekomendasi merge
 
-Setelah Phase 2 sidebar + minimal toaster wiring + 1 e2e smoke: buka PR dari `chore/global-audit-bw-refactor`.
+Gate CI lengkap. Checklist PO: [`MERGE-READINESS.md`](MERGE-READINESS.md). Buka PR `chore/global-audit-bw-refactor` → `main`.
 
 ## Network Cursor
 

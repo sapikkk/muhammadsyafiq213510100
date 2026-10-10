@@ -10,7 +10,9 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Spec awal: `e2e/smoke.spec.ts` (halaman login).
+Spec awal: `e2e/smoke.spec.ts` (login, dashboard admin, jurnal, stok rendah).
+
+CI: workflow `e2e.yml` (Postgres service, migrate, seed, `next start` + Playwright).
 
 ## TestCafe (opsional)
 
