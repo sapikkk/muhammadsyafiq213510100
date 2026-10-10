@@ -1,3 +1,20 @@
+# [1.12.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.11.0...v1.12.0) (2026-10-10)
+
+
+### Bug Fixes
+
+* **audit:** typecheck audit-nav spec (Array.from Set) ([c9eb810](https://github.com/sapikkk/muhammadsyafiq213510100/commit/c9eb810537c5246cc5af43c02b457f024adc1ae6))
+
+
+### Features
+
+* **audit:** DataTable search, inventaris/varietas, API contract ([25feace](https://github.com/sapikkk/muhammadsyafiq213510100/commit/25feaceef7bd0ccbfe2b5b4f450c97c14d3abab9))
+* **audit:** jurnal DataTable, transactions API, e2e, CI build ([60c4d3a](https://github.com/sapikkk/muhammadsyafiq213510100/commit/60c4d3ac5af26596a83c5c13c2afc4a14b8a4028))
+* **audit:** mobile shell, API contract, toasts, pelanggan table ([9e34ab9](https://github.com/sapikkk/muhammadsyafiq213510100/commit/9e34ab9c168b9de30bac6583fe142a580fcae4e7))
+* **audit:** PHASE 1 dev-only RBAC bypass ([886f0cd](https://github.com/sapikkk/muhammadsyafiq213510100/commit/886f0cd136e911a3e18ed9715a7b7d70df50ab3e))
+* **audit:** runbook, fixes, toaster, pengaturan shell ([3964628](https://github.com/sapikkk/muhammadsyafiq213510100/commit/3964628f5180eaac122c2da33f3ca12b5f635020))
+* **audit:** SessionShell, segment errors, DataTable pilot ([a8bc5d0](https://github.com/sapikkk/muhammadsyafiq213510100/commit/a8bc5d063c4275e68d61039cea59d6b534e03d21))
+
 # [1.11.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.10.0...v1.11.0) (2026-10-09)
 
 
