@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.16.0...v1.17.0) (2026-10-10)
+
+
+### Features
+
+* **v2-D.1:** SO lubang terpakai + hpp_order ([#98](https://github.com/sapikkk/muhammadsyafiq213510100/issues/98)) ([ef15239](https://github.com/sapikkk/muhammadsyafiq213510100/commit/ef15239f3e6872192cbd0edd8453168189fbb775))
+
 # [1.16.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.15.0...v1.16.0) (2026-10-10)
 
 
