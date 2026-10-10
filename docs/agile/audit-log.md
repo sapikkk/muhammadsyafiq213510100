@@ -4,6 +4,14 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-10 — v2-A.3 panen WIP (#114)
+
+- **Actor:** agent  
+- **Deliverable:** Approve panen → jurnal AUTO Dr 1350 (+5300 abnormal) Cr 1360 WIP; `resolveAkunWip()`  
+- **Release:** **v1.21.0** · PR [#114](https://github.com/sapikkk/muhammadsyafiq213510100/pull/114)  
+
+---
+
 ## 2026-10-10 — v2-A.2 / E.2 + reversal UI (#112)
 
 - **Actor:** agent  
