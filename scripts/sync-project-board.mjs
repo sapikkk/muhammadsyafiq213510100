@@ -33,7 +33,7 @@ const PLAN = {
   88: { status: "Todo", priority: "P1", iteration: "v2" },
   89: { status: "Todo", priority: "P1", iteration: "v2" },
   90: { status: "Todo", priority: "P1", iteration: "v2" },
-  91: { status: "Todo", priority: "P1", iteration: "v2" },
+  91: { status: "In progress", priority: "P1", iteration: "v2" },
   92: { status: "Todo", priority: "P2", iteration: "v2" },
   93: { status: "Todo", priority: "P2", iteration: "v2" },
   94: { status: "Todo", priority: "P2", iteration: "v2" },

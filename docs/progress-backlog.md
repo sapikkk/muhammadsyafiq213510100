@@ -10,7 +10,7 @@
 | US v1 (US1.1–US6.5) | **37 / 37** closed (#2–#38) |
 | Sprint 1–4 fitur | **Selesai** (release **v1.12.0**) |
 | Sprint 5 QA / go-live | **Selesai** — #39–#45 closed · prod **kokonusfarm.vercel.app** · tag **v1.13.0** → **v1.14.0** (v2-A.1) |
-| Increment v2 | Story **#95–#102** done · Epic **#87–#94** sisa (COA/WIP, pelunasan, Smart penuh, …) |
+| Increment v2 | Story **#95–#102** done + **A.2/E.2** (PR #112 · **v1.20.0**) · Epic **#87–#94** sisa (WIP panen, edge B–D, Smart penuh, …) |
 | Temuan terbuka | [#50](https://github.com/sapikkk/muhammadsyafiq213510100/issues/50) FINDING-01 (DB pool) — Todo P2 |
 | Backlog opsional | [#81](https://github.com/sapikkk/muhammadsyafiq213510100/issues/81) demo seed + skills docs — Todo P2 |
 
@@ -39,17 +39,19 @@ Urutan coding PO: **A → B → C → D → E → F → G → H** — detail iss
 | P | Status board | Item | Issue |
 |---|--------------|------|-------|
 | — | Done | v2-A.1 `Akun.is_system` + guard COA | [#95](https://github.com/sapikkk/muhammadsyafiq213510100/issues/95) · PR #104 · **v1.14.0** |
-| P1 | In progress | Epic A (sisa: WIP, uang muka, kas split) | [#87](https://github.com/sapikkk/muhammadsyafiq213510100/issues/87) |
+| — | Done | v2-A.2 COA 1360 WIP + patch + abort WIP | PR [#112](https://github.com/sapikkk/muhammadsyafiq213510100/pull/112) · **v1.20.0** |
+| P1 | In progress | Epic A (sisa: WIP panen, kas split penuh) | [#87](https://github.com/sapikkk/muhammadsyafiq213510100/issues/87) |
 | — | Done | v2-B.1 Abort → jurnal 5300 | [#96](https://github.com/sapikkk/muhammadsyafiq213510100/issues/96) · PR #105 |
 | — | Done | v2-C.1 kapasitas lubang / pack | [#97](https://github.com/sapikkk/muhammadsyafiq213510100/issues/97) · PR #106 |
 | — | Done | v2-D.1 SO lubang + HPP order | [#98](https://github.com/sapikkk/muhammadsyafiq213510100/issues/98) · PR #107 |
 | — | Done | v2-E.1 schema DP SO + posting uang muka | [#99](https://github.com/sapikkk/muhammadsyafiq213510100/issues/99) · **v1.18.0** |
+| — | Done | v2-E.2 pelunasan SO + deliver Dr piutang/uang muka | PR [#112](https://github.com/sapikkk/muhammadsyafiq213510100/pull/112) · **v1.20.0** |
 | — | Done | v2-F.1 Smart Jurnal MVP (3 tipe) | [#100](https://github.com/sapikkk/muhammadsyafiq213510100/issues/100) · **v1.19.0** |
 | — | Done | v2-G.1 KPI Owner HPP/lubang + yield | [#101](https://github.com/sapikkk/muhammadsyafiq213510100/issues/101) |
 | — | Done | v2-H.1 period lock + tolak backdate | [#102](https://github.com/sapikkk/muhammadsyafiq213510100/issues/102) |
 | P1 | Todo | Epic B/C/D sisa (edge) | [#88](https://github.com/sapikkk/muhammadsyafiq213510100/issues/88)–[#90](https://github.com/sapikkk/muhammadsyafiq213510100/issues/90) |
-| P1 | In progress | Epic E pelunasan + COA A.2 | [#91](https://github.com/sapikkk/muhammadsyafiq213510100/issues/91) · [#87](https://github.com/sapikkk/muhammadsyafiq213510100/issues/87) |
-| P2 | Todo | Epic F/G/H sisa (tipe Smart penuh, laporan, depresiasi) | [#92](https://github.com/sapikkk/muhammadsyafiq213510100/issues/92)–[#94](https://github.com/sapikkk/muhammadsyafiq213510100/issues/94) |
+| P1 | In progress | Epic E (UAT pelunasan / tutup epic) | [#91](https://github.com/sapikkk/muhammadsyafiq213510100/issues/91) |
+| P2 | Todo | Epic F/G/H sisa (tipe Smart penuh, laporan, depresiasi otomatis) | [#92](https://github.com/sapikkk/muhammadsyafiq213510100/issues/92)–[#94](https://github.com/sapikkk/muhammadsyafiq213510100/issues/94) |
 
 ---
 
