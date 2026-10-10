@@ -1,5 +1,7 @@
 import { test, expect } from "@playwright/test";
 
+test.describe.configure({ mode: "serial" });
+
 const demoPassword = process.env.E2E_PASSWORD ?? "KokonusDemo2026";
 
 async function loginAs(
@@ -25,8 +27,9 @@ test("T5.1 petani HP: pindah fase batch demo", async ({ page }) => {
     .click();
   await page.waitForURL(/\/petani\/siklus\/\d+/);
 
+  await expect(page.getByRole("heading", { name: /^Lanjut fase$/ })).toBeVisible();
   const lanjut = page.getByRole("button", { name: /Lanjut ke/i });
-  await expect(lanjut).toBeVisible();
+  await expect(lanjut).toBeVisible({ timeout: 15_000 });
   await page.getByRole("checkbox").check();
   await lanjut.click();
 
@@ -50,7 +53,7 @@ test("T5.2 admin: filter jurnal tanggal + cari", async ({ page }) => {
 test("T5.3 owner: KPI, grafik, pie biaya", async ({ page }) => {
   await loginAs(page, "owner@kokonus.farm", /\/owner/);
   await page.goto("/owner");
-  await expect(page.getByText(/Pendapatan vs beban/i)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Pendapatan vs beban" })).toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByRole("link", { name: /Pie biaya/i })).toBeVisible();
   await page.getByRole("link", { name: /Pie biaya/i }).click();
