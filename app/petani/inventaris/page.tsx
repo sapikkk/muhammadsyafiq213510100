@@ -1,8 +1,9 @@
 import { catatPergerakanPetani } from "@/app/actions/inventaris";
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import { InventarisDaftar } from "@/components/inventaris-daftar";
 import { InventarisMovementForm } from "@/components/inventaris-movement-form";
 import { InventarisRiwayat } from "@/components/inventaris-riwayat";
-import { PageHeader } from "@/components/page-header";
+import { PageSection } from "@/components/page-section";
 import {
   listItemInventaris,
   listPergerakan,
@@ -19,21 +20,25 @@ export default async function PetaniInventarisPage() {
   ]);
 
   return (
-    <div className="flex flex-col gap-8">
-      <PageHeader
-        title="Inventaris"
-        description="Lihat stok dan catat keluar/masuk bahan di lapangan."
-      />
-
-      <InventarisDaftar items={items.map(serializeItem)} />
-      <InventarisMovementForm items={items} action={catatPergerakanPetani} />
-
-      <section aria-labelledby="riwayat-petani" className="space-y-3">
-        <h2 id="riwayat-petani" className="text-lg font-semibold">
-          Riwayat terbaru
-        </h2>
-        <InventarisRiwayat rows={riwayat.map(serializePergerakan)} />
-      </section>
-    </div>
+    <CrudPageLayout
+      eyebrow="Produksi"
+      title="Inventaris"
+      description="Lihat stok dan catat keluar/masuk bahan di lapangan."
+      flowSteps={[
+        { label: "Cek stok", detail: "Pastikan bahan semai cukup sebelum buka Siklus." },
+        { label: "Catat OUT", detail: "Saat pakai bahan — stok berkurang langsung." },
+        { label: "Active pack", detail: "Buat pack dari stok yang sama di menu Active pack." },
+      ]}
+      list={<InventarisDaftar items={items.map(serializeItem)} />}
+      listTitle="Stok saat ini"
+      create={<InventarisMovementForm items={items} action={catatPergerakanPetani} />}
+      createTitle="Pergerakan stok"
+      createDescription="Create — OUT dipakai saat semai; laporkan stok rendah ke Admin."
+      extra={
+        <PageSection title="Riwayat terbaru" badge="Read">
+          <InventarisRiwayat rows={riwayat.map(serializePergerakan)} />
+        </PageSection>
+      }
+    />
   );
 }

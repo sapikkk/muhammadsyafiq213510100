@@ -1,5 +1,5 @@
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import { HarvestAdminDaftar } from "@/components/harvest-admin-daftar";
-import { PageHeader } from "@/components/page-header";
 import { listLaporanPanen, serializeLaporanPanen } from "@/lib/laporan-panen";
 
 export const dynamic = "force-dynamic";
@@ -9,16 +9,22 @@ export default async function AdminHarvestPage() {
   const pending = rows.filter((r) => r.status === "PENDING").length;
 
   return (
-    <div className="flex flex-col gap-8">
-      <PageHeader
-        title="Laporan panen"
-        description={
-          pending > 0
-            ? `${pending} laporan menunggu review — buka detail untuk setujui atau tolak.`
-            : "Daftar laporan panen dari petani."
-        }
-      />
-      <HarvestAdminDaftar rows={rows.map(serializeLaporanPanen)} />
-    </div>
+    <CrudPageLayout
+      eyebrow="Produksi & stok"
+      title="Laporan panen"
+      description={
+        pending > 0
+          ? `${pending} laporan menunggu review Admin.`
+          : "Semua laporan sudah diproses atau belum ada pengajuan."
+      }
+      flowSteps={[
+        { label: "Petani kirim", detail: "Dari detail batch — status PENDING." },
+        { label: "Admin review", detail: "Buka baris → cek berat & susut." },
+        { label: "Approve", detail: "HPP + jurnal Dr 1350 Cr WIP; batch siap jual." },
+      ]}
+      list={<HarvestAdminDaftar rows={rows.map(serializeLaporanPanen)} />}
+      listTitle="Daftar laporan"
+      listDescription="Update — approve/tolak per baris."
+    />
   );
 }

@@ -1,11 +1,12 @@
+import { OwnerFlowDashboard } from "@/components/owner-flow-dashboard";
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { OwnerKpiCards } from "@/components/owner-kpi-cards";
 import { OwnerRevenueChart } from "@/components/owner-revenue-chart";
 import { PageHeader } from "@/components/page-header";
 import { formatRupiah } from "@/lib/format";
 import { listAlertStokMinimum } from "@/lib/inventaris";
-import { bestProfitMonth, monthlySummary } from "@/lib/monthly-summary";
-import { kpiHidroponikMvp } from "@/lib/kpi-hidroponik";
+import { kpiHidroponikMvpCached, monthlySummaryCached } from "@/lib/cached-queries";
+import { bestProfitMonth } from "@/lib/monthly-summary";
 import { OwnerHidroponikKpi } from "@/components/owner-hidroponik-kpi";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
@@ -27,8 +28,8 @@ export default async function OwnerPage() {
       select: { id: true, nama: true, email: true },
     }),
     listAlertStokMinimum(),
-    monthlySummary(6),
-    kpiHidroponikMvp(),
+    monthlySummaryCached(6),
+    kpiHidroponikMvpCached(),
   ]);
 
   const labaTerbaik = bestProfitMonth(summary.months);
@@ -36,10 +37,12 @@ export default async function OwnerPage() {
   return (
     <>
       <PageHeader
-        title="Dashboard Owner"
-        description="US6.1 — KPI dan grafik pendapatan vs beban (jurnal APPROVED)."
+        eyebrow="Owner"
+        title="Dashboard"
+        description="KPI keuangan, alur approve jurnal, dan ekspor laporan sidang."
       />
       <InventarisAlertBanner items={stokRendah} detailHref="/owner/stok-rendah" />
+      <OwnerFlowDashboard />
 
       <nav
         aria-label="Laporan cepat Owner"

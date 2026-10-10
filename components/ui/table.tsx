@@ -1,18 +1,24 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-const Table = React.forwardRef<
-  HTMLTableElement,
-  React.HTMLAttributes<HTMLTableElement>
->(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto">
-    <table
-      ref={ref}
-      className={cn("w-full caption-bottom text-sm", className)}
-      {...props}
-    />
-  </div>
-));
+type TableProps = React.HTMLAttributes<HTMLTableElement> & {
+  /** Lewati wrapper scroll — dipakai DataTable agar tidak double overflow. */
+  noContainer?: boolean;
+};
+
+const Table = React.forwardRef<HTMLTableElement, TableProps>(
+  ({ className, noContainer, ...props }, ref) => {
+    const table = (
+      <table
+        ref={ref}
+        className={cn("w-full caption-bottom text-sm", className)}
+        {...props}
+      />
+    );
+    if (noContainer) return table;
+    return <div className="relative w-full overflow-auto">{table}</div>;
+  },
+);
 Table.displayName = "Table";
 
 const TableHeader = React.forwardRef<
@@ -41,7 +47,7 @@ const TableRow = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tr
     ref={ref}
-    className={cn("border-b transition-colors", className)}
+    className={cn("border-b transition-colors hover:bg-muted/30", className)}
     {...props}
   />
 ));

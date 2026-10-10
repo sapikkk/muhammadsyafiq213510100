@@ -3,106 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import {
-  BookOpen,
-  Box,
-  Contact,
-  ChevronRight,
-  ClipboardList,
-  Home,
-  Layers,
-  LayoutDashboard,
-  LeafyGreen,
-  LogOut,
-  Package,
-  FileDown,
-  PieChart,
-  LineChart,
-  Wallet,
-  Receipt,
-  Settings,
-  Truck,
-  Users,
-  UserCog,
-  CircleDollarSign,
-  TriangleAlert,
-} from "lucide-react";
+import { ChevronRight, LeafyGreen, LogOut, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getNavFlowGroups } from "@/lib/nav-flow";
+import { getNavItems, type NavItem } from "@/lib/nav-items";
 import type { Role } from "@/types/role";
 import { roleLabel } from "@/types/role";
-
-type NavItem = {
-  label: string;
-  href: string;
-  icon: React.ElementType;
-  badge?: number;
-};
-
-export function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
-  const alertItem: NavItem = {
-    label: "Stok rendah",
-    href: `/${role === "PEKERJA" ? "petani" : role === "ADMIN" ? "admin" : "owner"}/stok-rendah`,
-    icon: TriangleAlert,
-    badge: stokRendahCount > 0 ? stokRendahCount : undefined,
-  };
-
-  if (role === "ADMIN") {
-    return [
-      { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
-      { label: "Bagan akun", href: "/admin/akun", icon: BookOpen },
-      { label: "Jurnal", href: "/admin/jurnal", icon: Layers },
-      { label: "Inventaris", href: "/admin/inventaris", icon: Box },
-      { label: "Active pack", href: "/admin/active-pack", icon: Package },
-      {
-        label: "Infrastruktur",
-        href: "/admin/infrastruktur",
-        icon: Home,
-      },
-      { label: "Varietas", href: "/admin/varietas", icon: LeafyGreen },
-      { label: "Master petani", href: "/admin/petani", icon: Users },
-      { label: "Biaya & overhead", href: "/admin/biaya", icon: Receipt },
-      { label: "Klasifikasi susut", href: "/admin/susut", icon: Layers },
-      { label: "Pelanggan", href: "/admin/pelanggan", icon: Contact },
-      { label: "Sales order", href: "/admin/penjualan", icon: Receipt },
-      { label: "Laporan panen", href: "/admin/harvest", icon: ClipboardList },
-      alertItem,
-    ];
-  }
-
-  if (role === "OWNER") {
-    return [
-      { label: "Dashboard", href: "/owner", icon: LayoutDashboard },
-      { label: "Bagan akun", href: "/owner/akun", icon: BookOpen },
-      { label: "Jurnal", href: "/owner/jurnal", icon: Layers },
-      { label: "Prive", href: "/owner/prive", icon: CircleDollarSign },
-      { label: "Kelola user", href: "/owner/pengguna", icon: UserCog },
-      { label: "Breakdown biaya", href: "/owner/biaya", icon: PieChart },
-      { label: "Evaluasi margin", href: "/owner/evaluasi", icon: LineChart },
-      { label: "Arus kas", href: "/owner/arus-kas", icon: Wallet },
-      { label: "Ekspor laporan", href: "/owner/laporan", icon: FileDown },
-      { label: "Inventaris", href: "/owner/inventaris", icon: Box },
-      {
-        label: "Infrastruktur",
-        href: "/owner/infrastruktur",
-        icon: Home,
-      },
-      { label: "Varietas", href: "/owner/varietas", icon: LeafyGreen },
-      { label: "Master petani", href: "/owner/petani", icon: Users },
-      alertItem,
-    ];
-  }
-
-  // PEKERJA
-  return [
-    { label: "Dashboard", href: "/petani", icon: LayoutDashboard },
-    { label: "Inventaris", href: "/petani/inventaris", icon: Box },
-    { label: "Active pack", href: "/petani/active-pack", icon: Package },
-    { label: "Varietas", href: "/petani/varietas", icon: LeafyGreen },
-    { label: "Siklus", href: "/petani/siklus", icon: Layers },
-    { label: "Pengiriman", href: "/petani/pengiriman", icon: Truck },
-    alertItem,
-  ];
-}
 
 function getAuditNavItems(stokRendahCount: number): NavItem[] {
   const seen = new Set<string>();
@@ -120,6 +26,14 @@ function getAuditNavItems(stokRendahCount: number): NavItem[] {
   return items;
 }
 
+function isNavActive(pathname: string, href: string) {
+  if (href === pathname) return true;
+  if (href === "/admin" || href === "/owner" || href === "/petani") {
+    return pathname === href;
+  }
+  return pathname.startsWith(href);
+}
+
 export function AppSidebar({
   role,
   userName,
@@ -134,101 +48,119 @@ export function AppSidebar({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
-  const navItems = auditShowAllNav
-    ? getAuditNavItems(stokRendahCount)
-    : getNavItems(role, stokRendahCount);
+  const groups = auditShowAllNav ? null : getNavFlowGroups(role, stokRendahCount);
+  const flatAudit = auditShowAllNav ? getAuditNavItems(stokRendahCount) : null;
 
   return (
-    <aside className="flex h-screen w-60 flex-col border-r bg-sidebar">
-      {/* Logo / Brand */}
-      <div className="flex h-14 items-center border-b px-4">
-        <Link href="/" className="flex items-center gap-2">
+    <aside className="flex h-screen w-64 flex-col border-r bg-sidebar">
+      <div className="flex h-14 shrink-0 items-center border-b px-4">
+        <Link href="/" className="flex items-center gap-2" onClick={() => onNavigate?.()}>
           <div className="flex h-7 w-7 items-center justify-center rounded-md bg-foreground">
             <LeafyGreen className="h-4 w-4 text-background" />
           </div>
-          <span className="text-sm font-semibold tracking-tight">
-            Kokonus Farm
-          </span>
+          <span className="text-sm font-semibold tracking-tight">Kokonus Farm</span>
         </Link>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto p-2">
-        <p className="mb-1 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-          {auditShowAllNav ? "Menu (audit)" : "Menu"}
-        </p>
-        <ul className="space-y-0.5">
-          {navItems.map((item) => {
-            const isActive =
-              item.href === pathname ||
-              (item.href !== "/admin" &&
-                item.href !== "/owner" &&
-                item.href !== "/petani" &&
-                pathname.startsWith(item.href));
-            const Icon = item.icon;
-
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={() => onNavigate?.()}
-                  className={cn(
-                    "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                    isActive
-                      ? "bg-sidebar-primary text-sidebar-primary-foreground"
-                      : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                  )}
-                >
-                  <Icon className="h-4 w-4 shrink-0" />
-                  <span className="flex-1 truncate">{item.label}</span>
-                  {item.badge ? (
-                    <span className="flex h-5 min-w-5 items-center justify-center border border-foreground bg-background px-1 text-[10px] font-semibold">
-                      {item.badge}
-                    </span>
-                  ) : null}
-                  {isActive && (
-                    <ChevronRight className="h-3 w-3 opacity-50" />
-                  )}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+      <nav className="flex-1 overflow-y-auto px-2 py-3" aria-label="Menu utama">
+        {flatAudit ? (
+          <ul className="space-y-0.5">
+            {flatAudit.map((item) => (
+              <NavLink
+                key={item.href}
+                item={item}
+                active={isNavActive(pathname, item.href)}
+                onNavigate={onNavigate}
+              />
+            ))}
+          </ul>
+        ) : (
+          groups!.map((group) => (
+            <div key={group.id} className="mb-5 last:mb-2">
+              <div className="mb-1.5 px-2">
+                <p className="text-xs font-semibold tracking-tight text-foreground">{group.title}</p>
+                <p className="text-[11px] leading-snug text-muted-foreground">{group.hint}</p>
+              </div>
+              <ul className="space-y-0.5">
+                {group.items.map((item) => (
+                  <NavLink
+                    key={item.href}
+                    item={item}
+                    active={isNavActive(pathname, item.href)}
+                    onNavigate={onNavigate}
+                  />
+                ))}
+              </ul>
+            </div>
+          ))
+        )}
       </nav>
 
-      {/* Footer: user info + settings + logout */}
-      <div className="border-t p-2">
+      <div className="shrink-0 border-t p-2">
         <div className="mb-1 flex items-center gap-3 rounded-md px-3 py-2">
-          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold uppercase text-muted-foreground">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-muted text-xs font-semibold uppercase">
             {userName.charAt(0)}
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-xs font-medium">{userName}</p>
-            <p className="truncate text-[10px] text-muted-foreground">
-              {roleLabel[role]}
-            </p>
+            <p className="truncate text-[11px] text-muted-foreground">{roleLabel[role]}</p>
           </div>
         </div>
         <div className="flex gap-1">
           <Link
             href="/pengaturan"
             onClick={() => onNavigate?.()}
-            className="flex flex-1 items-center gap-2 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+            className="flex min-h-10 flex-1 items-center justify-center gap-2 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
-            <Settings className="h-4 w-4" />
-            <span className="text-xs">Pengaturan</span>
+            <Settings className="h-4 w-4 shrink-0" />
+            Pengaturan
           </Link>
           <button
             type="button"
             onClick={() => signOut({ callbackUrl: "/login" })}
-            className="flex flex-1 items-center gap-2 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="flex min-h-10 flex-1 items-center justify-center gap-2 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
-            <LogOut className="h-4 w-4" />
-            <span className="text-xs">Keluar</span>
+            <LogOut className="h-4 w-4 shrink-0" />
+            Keluar
           </button>
         </div>
       </div>
     </aside>
+  );
+}
+
+function NavLink({
+  item,
+  active,
+  onNavigate,
+}: {
+  item: NavItem;
+  active: boolean;
+  onNavigate?: () => void;
+}) {
+  const Icon = item.icon;
+  return (
+    <li>
+      <Link
+        href={item.href}
+        onClick={() => onNavigate?.()}
+        className={cn(
+          "flex min-h-10 items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+          active
+            ? "bg-sidebar-primary text-sidebar-primary-foreground"
+            : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+        )}
+      >
+        <Icon className="h-4 w-4 shrink-0 opacity-90" />
+        <span className="flex-1 truncate">{item.label}</span>
+        {item.badge ? (
+          <span className="flex h-5 min-w-5 items-center justify-center border border-current px-1 text-[10px] font-semibold">
+            {item.badge}
+          </span>
+        ) : null}
+        {active ? <ChevronRight className="h-3 w-3 shrink-0 opacity-60" /> : null}
+      </Link>
+    </li>
   );
 }
 
@@ -243,11 +175,7 @@ export function AppSidebarUsers({
 }) {
   return (
     <div className="hidden md:flex">
-      <AppSidebar
-        role={role}
-        userName={userName}
-        stokRendahCount={stokRendahCount}
-      />
+      <AppSidebar role={role} userName={userName} stokRendahCount={stokRendahCount} />
     </div>
   );
 }

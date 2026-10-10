@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
 import { RoleHome } from "@/components/role-home";
-import { listAlertStokMinimum } from "@/lib/inventaris";
+import { getStokRendahCount } from "@/lib/cached-queries";
 
 export default async function OwnerLayout({ children }: { children: ReactNode }) {
-  const stokRendah = await listAlertStokMinimum();
+  const stokRendahCount = await getStokRendahCount();
   return (
-    <RoleHome role="OWNER" stokRendahCount={stokRendah.length}>
+    <RoleHome role="OWNER" stokRendahCount={stokRendahCount}>
       {children}
     </RoleHome>
   );

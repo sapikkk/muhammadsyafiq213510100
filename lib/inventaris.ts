@@ -255,8 +255,8 @@ export type SerializedItemInventaris = ReturnType<typeof serializeItem>;
 
 /** Item aktif dengan stok saat ini di bawah stok minimum (US4.3). */
 export async function listAlertStokMinimum() {
-  const items = await listItemInventaris(true);
-  return items.filter((item) => item.stokSaatIni.lt(item.stokMinimum));
+  const { listAlertStokMinimumCached } = await import("@/lib/cached-queries");
+  return listAlertStokMinimumCached();
 }
 
 export function serializeAlertStok(item: ItemInventaris) {

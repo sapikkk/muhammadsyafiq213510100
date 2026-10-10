@@ -90,9 +90,9 @@
     "semantic_hash": ""
   },
   "app/admin/akun/page.tsx": {
-    "mtime": 1791639022.4320095,
-    "seen": 1791639170.201607,
-    "ast_hash": "518b90ccc431da85f3b240061d69b6d6",
+    "mtime": 1791603503.009098,
+    "seen": 1791631123.3513868,
+    "ast_hash": "f829abc5ae155cdb0bd75048b48c0109",
     "semantic_hash": ""
   },
   "app/admin/harvest/[id]/client-approval.tsx": {
@@ -114,9 +114,9 @@
     "semantic_hash": ""
   },
   "app/admin/infrastruktur/page.tsx": {
-    "mtime": 1791639017.417835,
-    "seen": 1791639170.201621,
-    "ast_hash": "f506c5a37ad8e237b0d0761d4c88378b",
+    "mtime": 1791548778.1957262,
+    "seen": 1791551832.646913,
+    "ast_hash": "c88fa7f502c51f014be2bb9192a38ac2",
     "semantic_hash": ""
   },
   "app/admin/inventaris/page.tsx": {
@@ -144,9 +144,9 @@
     "semantic_hash": ""
   },
   "app/admin/layout.tsx": {
-    "mtime": 1791639004.1329753,
-    "seen": 1791639170.2016299,
-    "ast_hash": "97e3b8bbb443396499b810bc4074f95d",
+    "mtime": 1791548778.242815,
+    "seen": 1791551832.646934,
+    "ast_hash": "abf3245a61ed973c13ad12247bda87ce",
     "semantic_hash": ""
   },
   "app/admin/page.tsx": {
@@ -156,15 +156,15 @@
     "semantic_hash": ""
   },
   "app/admin/stok-rendah/page.tsx": {
-    "mtime": 1791639014.8691998,
-    "seen": 1791639170.201642,
-    "ast_hash": "631e25731218666196732652b5adec4b",
+    "mtime": 1791603503.0240436,
+    "seen": 1791631123.351597,
+    "ast_hash": "ff21eb9ea7939495e93a65aacddeeaeb",
     "semantic_hash": ""
   },
   "app/admin/varietas/page.tsx": {
-    "mtime": 1791639014.5588388,
-    "seen": 1791639170.2016451,
-    "ast_hash": "59e5b76f886ed8eb9d3932fbbb685270",
+    "mtime": 1791548778.270355,
+    "seen": 1791551832.6469471,
+    "ast_hash": "09c8a3af09d6af4a8519ea792a41baa0",
     "semantic_hash": ""
   },
   "app/akses-ditolak/page.tsx": {
@@ -324,39 +324,39 @@
     "semantic_hash": ""
   },
   "app/owner/infrastruktur/page.tsx": {
-    "mtime": 1791639027.2740219,
-    "seen": 1791639170.201748,
-    "ast_hash": "f401fe98abf16a18e03edae9fdbf3dd2",
+    "mtime": 1791548778.319713,
+    "seen": 1791551832.6470048,
+    "ast_hash": "e337418c748f6bb54fd852779ef9af41",
     "semantic_hash": ""
   },
   "app/owner/inventaris/page.tsx": {
-    "mtime": 1791639022.433526,
-    "seen": 1791639170.20175,
-    "ast_hash": "157e9d48131ddd4b9931929e8fe36a18",
+    "mtime": 1791603503.0901573,
+    "seen": 1791631123.351779,
+    "ast_hash": "44a15434e10480864cf67866978cfc3e",
     "semantic_hash": ""
   },
   "app/owner/layout.tsx": {
-    "mtime": 1791639004.1238275,
-    "seen": 1791639170.201757,
-    "ast_hash": "e40532505e7df87de3ca49e1d7d4265c",
+    "mtime": 1791548778.4087546,
+    "seen": 1791551832.647008,
+    "ast_hash": "ca3bbadb02d7771390aaecdbec2240ce",
     "semantic_hash": ""
   },
   "app/owner/page.tsx": {
-    "mtime": 1791639005.0136151,
-    "seen": 1791639170.2017589,
-    "ast_hash": "7c926768b104fdd1a275b127b84ec487",
+    "mtime": 1791638595.1495323,
+    "seen": 1791638689.924999,
+    "ast_hash": "64dc540801dcf22eed53f5e23b62617b",
     "semantic_hash": ""
   },
   "app/owner/stok-rendah/page.tsx": {
-    "mtime": 1791639023.0639246,
-    "seen": 1791639170.201765,
-    "ast_hash": "3b63826b143613ee318a5876b7814b47",
+    "mtime": 1791603503.0937493,
+    "seen": 1791631123.351809,
+    "ast_hash": "b9dac78844e3d4ea8b0c6235faa21eb5",
     "semantic_hash": ""
   },
   "app/owner/varietas/page.tsx": {
-    "mtime": 1791639024.226561,
-    "seen": 1791639170.201767,
-    "ast_hash": "4f1d832a8779ce331b95e72021e4f750",
+    "mtime": 1791637806.988392,
+    "seen": 1791638091.742636,
+    "ast_hash": "c9fd48fe7cb9f368d780d4f2832620a2",
     "semantic_hash": ""
   },
   "app/page.tsx": {
@@ -372,21 +372,21 @@
     "semantic_hash": ""
   },
   "app/petani/active-pack/page.tsx": {
-    "mtime": 1791639033.528875,
-    "seen": 1791639170.2017741,
-    "ast_hash": "1c5ae69abe79f65b37c30bab66ba3254",
+    "mtime": 1791603503.098683,
+    "seen": 1791631123.351825,
+    "ast_hash": "b8045f7d6c452f256c0d8a35ccca8af7",
     "semantic_hash": ""
   },
   "app/petani/inventaris/page.tsx": {
-    "mtime": 1791639032.230305,
-    "seen": 1791639170.201778,
-    "ast_hash": "b049cffe2498b3a8e01903d97ee7f3db",
+    "mtime": 1791603503.1011221,
+    "seen": 1791631123.351831,
+    "ast_hash": "70579d4bff40ba92931c6abcf7b965e0",
     "semantic_hash": ""
   },
   "app/petani/layout.tsx": {
-    "mtime": 1791639004.4884636,
-    "seen": 1791639170.201779,
-    "ast_hash": "f6de072291070e9ecdfe47ff887afc70",
+    "mtime": 1791548778.5110207,
+    "seen": 1791551832.6470232,
+    "ast_hash": "26501da61672c774c0507d0824d10b5f",
     "semantic_hash": ""
   },
   "app/petani/page.tsx": {
@@ -408,15 +408,15 @@
     "semantic_hash": ""
   },
   "app/petani/stok-rendah/page.tsx": {
-    "mtime": 1791639034.7153978,
-    "seen": 1791639170.201789,
-    "ast_hash": "4a6aeab6d719ab6ad56c971d807f1627",
+    "mtime": 1791603503.1053827,
+    "seen": 1791631123.351852,
+    "ast_hash": "68136b68c87821759f955fd1cdf5289b",
     "semantic_hash": ""
   },
   "app/petani/varietas/page.tsx": {
-    "mtime": 1791639034.017119,
-    "seen": 1791639170.201791,
-    "ast_hash": "d88aeed68347a702c05134c5d1219267",
+    "mtime": 1791548778.524643,
+    "seen": 1791551832.647032,
+    "ast_hash": "54e1bcef3aa0797f7dc86ef3e7aa2bd5",
     "semantic_hash": ""
   },
   "components.json": {
@@ -666,9 +666,9 @@
     "semantic_hash": ""
   },
   "components/ui/table.tsx": {
-    "mtime": 1791639008.0849228,
-    "seen": 1791639170.201948,
-    "ast_hash": "03f9f2d25f0146b030c8f4e3d6774632",
+    "mtime": 1791388406.6688933,
+    "seen": 1791544431.544999,
+    "ast_hash": "79309480391a70414303dc074f051282",
     "semantic_hash": ""
   },
   "components/varietas-daftar.tsx": {
@@ -750,9 +750,9 @@
     "semantic_hash": ""
   },
   "lib/inventaris.ts": {
-    "mtime": 1791638935.4139047,
-    "seen": 1791639170.202037,
-    "ast_hash": "ac81d91d6fae0e880f0f1012f6323ded",
+    "mtime": 1791603505.229728,
+    "seen": 1791631123.352201,
+    "ast_hash": "8add2c4f61f9e41b001b34022563d8d4",
     "semantic_hash": ""
   },
   "lib/jurnal-status.ts": {
@@ -1020,21 +1020,21 @@
     "semantic_hash": ""
   },
   "app/admin/biaya/page.tsx": {
-    "mtime": 1791639020.3077579,
-    "seen": 1791639170.201612,
-    "ast_hash": "20e5dc69d1bf5679b7135eed02401b59",
+    "mtime": 1791621003.1322014,
+    "seen": 1791631123.35139,
+    "ast_hash": "ab189d7ffa0f36c47fe6c5f83b479ede",
     "semantic_hash": ""
   },
   "app/admin/petani/page.tsx": {
-    "mtime": 1791639019.007906,
-    "seen": 1791639170.20164,
-    "ast_hash": "1b863a9d9285bbb146f20d3c880fa78a",
+    "mtime": 1791548778.2675571,
+    "seen": 1791551832.646942,
+    "ast_hash": "320dd5b852702ede8428cc36f2001af1",
     "semantic_hash": ""
   },
   "app/admin/susut/page.tsx": {
-    "mtime": 1791639018.337818,
-    "seen": 1791639170.201643,
-    "ast_hash": "5d9af29d243fbf77a6bd3a7483246637",
+    "mtime": 1791548778.2688158,
+    "seen": 1791551832.646945,
+    "ast_hash": "802c8dde21607f9723e7cc29833d9b24",
     "semantic_hash": ""
   },
   "app/api/biaya/langsung/route.ts": {
@@ -1056,9 +1056,9 @@
     "semantic_hash": ""
   },
   "app/owner/petani/page.tsx": {
-    "mtime": 1791639027.3757446,
-    "seen": 1791639170.201762,
-    "ast_hash": "af608bce52f4390e0f9f94cd918b97e5",
+    "mtime": 1791548778.4205165,
+    "seen": 1791551832.647011,
+    "ast_hash": "6aaa3c03697855232957feb3be67f6ff",
     "semantic_hash": ""
   },
   "components/biaya-admin-panel.tsx": {
@@ -1224,9 +1224,9 @@
     "semantic_hash": ""
   },
   "lib/tugas-petani.ts": {
-    "mtime": 1791638936.3154318,
-    "seen": 1791639170.202116,
-    "ast_hash": "12ae0a3407e77804dab66746f4787ad1",
+    "mtime": 1791621003.1506965,
+    "seen": 1791631123.352302,
+    "ast_hash": "0384f6b677363ccaa3842b773d5876d8",
     "semantic_hash": ""
   },
   "lib/hpp-override.ts": {
@@ -1326,9 +1326,9 @@
     "semantic_hash": ""
   },
   "app/petani/pengiriman/page.tsx": {
-    "mtime": 1791639035.6697123,
-    "seen": 1791639170.201783,
-    "ast_hash": "4c36d44cadf0b9701315b89ca8147dea",
+    "mtime": 1791553788.0591354,
+    "seen": 1791553874.38995,
+    "ast_hash": "617e1d21309b6643238bdd20f9a8bb37",
     "semantic_hash": ""
   },
   "lib/sales-order-delivery.ts": {
@@ -1512,9 +1512,9 @@
     "semantic_hash": ""
   },
   "app/owner/biaya/page.tsx": {
-    "mtime": 1791639093.3534074,
-    "seen": 1791639170.2017422,
-    "ast_hash": "0fbb384cc94108745a3c42bb385eab14",
+    "mtime": 1791554883.9955595,
+    "seen": 1791555055.1878028,
+    "ast_hash": "817f6594cec11aeb87513dd997bf86a5",
     "semantic_hash": ""
   },
   "components/owner-cost-pie.tsx": {
@@ -1548,9 +1548,9 @@
     "semantic_hash": ""
   },
   "app/owner/laporan/page.tsx": {
-    "mtime": 1791639090.642302,
-    "seen": 1791639170.2017548,
-    "ast_hash": "24565effeae636107a788ed09bed36cf",
+    "mtime": 1791556599.8941696,
+    "seen": 1791556840.511335,
+    "ast_hash": "f452f166c8a9859a9a312e14e9134e5d",
     "semantic_hash": ""
   },
   "lib/balance-sheet.ts": {
@@ -1632,9 +1632,9 @@
     "semantic_hash": ""
   },
   "app/owner/akun/page.tsx": {
-    "mtime": 1791639027.627243,
-    "seen": 1791639170.201739,
-    "ast_hash": "4c3282e99966ab9d391892898edd321d",
+    "mtime": 1791603503.0885022,
+    "seen": 1791631123.3517592,
+    "ast_hash": "92a6e88b4c60d36738b325b041858284",
     "semantic_hash": ""
   },
   "app/owner/jurnal/[id]/page.tsx": {
@@ -1644,21 +1644,21 @@
     "semantic_hash": ""
   },
   "app/owner/jurnal/page.tsx": {
-    "mtime": 1791639039.8757064,
-    "seen": 1791639170.201754,
-    "ast_hash": "856c5f8e7e9926e21c897c7d7e467f06",
+    "mtime": 1791603503.0912702,
+    "seen": 1791631123.351786,
+    "ast_hash": "84f5da0f26dd1d8b1b41fedda3a2a89f",
     "semantic_hash": ""
   },
   "app/owner/pengguna/page.tsx": {
-    "mtime": 1791639028.9189484,
-    "seen": 1791639170.201761,
-    "ast_hash": "b3a8a1b2c2eee498bb8287aa08eae5c0",
+    "mtime": 1791557252.1892045,
+    "seen": 1791559453.061292,
+    "ast_hash": "f51bc0df70fc1fed12eab1f194cec4cc",
     "semantic_hash": ""
   },
   "app/owner/prive/page.tsx": {
-    "mtime": 1791639028.2762444,
-    "seen": 1791639170.201764,
-    "ast_hash": "d4832d5defc25a095daf4f6601fcb883",
+    "mtime": 1791557252.1985583,
+    "seen": 1791559453.061298,
+    "ast_hash": "a7589a3abca5d21c4f9f67883f451c5e",
     "semantic_hash": ""
   },
   "components/owner-user-panel.tsx": {
@@ -3174,9 +3174,9 @@
     "semantic_hash": ""
   },
   "components/data-table.tsx": {
-    "mtime": 1791639011.5770912,
-    "seen": 1791639170.201823,
-    "ast_hash": "3682b12f65f2164892f7278dad8333f6",
+    "mtime": 1791603503.116749,
+    "seen": 1791631123.351896,
+    "ast_hash": "a909c7936d49a23ef8d59fbdee429bb8",
     "semantic_hash": ""
   },
   "components/jurnal-daftar.tsx": {
@@ -4134,9 +4134,9 @@
     "semantic_hash": ""
   },
   "docs/audit/frontend.md": {
-    "mtime": 1791639088.3839064,
-    "seen": 1791639170.202482,
-    "ast_hash": "6d5e0beead7271e1fc6f84554fe48210",
+    "mtime": 1791603504.3227167,
+    "seen": 1791631123.35284,
+    "ast_hash": "25fc678a9f37f1abdd30f8baf74486c3",
     "semantic_hash": ""
   },
   "docs/audit/perf-before-after.md": {
@@ -4665,12 +4665,6 @@
     "mtime": 1791638648.539558,
     "seen": 1791638689.925675,
     "ast_hash": "de664a450a6943ffa859ca0ad818fe7c",
-    "semantic_hash": ""
-  },
-  "lib/cached-queries.ts": {
-    "mtime": 1791639004.442517,
-    "seen": 1791639170.202008,
-    "ast_hash": "b4367f287991b674b3aed710da6f57a0",
     "semantic_hash": ""
   }
 }
