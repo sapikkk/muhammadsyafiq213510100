@@ -28,9 +28,11 @@ type Line = {
 export function SalesOrderForm({
   pelanggan,
   siklus,
+  akunDp = [],
 }: {
   pelanggan: { id: number; nama: string }[];
   siklus: SiklusOpt[];
+  akunDp?: { id: number; kode: string; nama: string }[];
 }) {
   const [state, formAction] = useFormState(submitSalesOrder, {});
   useActionToast({ error: state.error, ok: state.ok });
@@ -187,6 +189,38 @@ export function SalesOrderForm({
       </div>
 
       <p className="text-sm font-medium">Grand total estimasi: {formatRupiah(String(grandTotal))}</p>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <label className="block space-y-1 text-sm">
+          <span className="font-medium">Down payment (opsional)</span>
+          <Input
+            name="jumlahDp"
+            type="text"
+            inputMode="decimal"
+            placeholder="0"
+            className="h-11"
+          />
+          <p className="text-xs text-muted-foreground">
+            Maksimal sama dengan total SO. Posting DP setelah SO dikonfirmasi.
+          </p>
+        </label>
+        {akunDp.length > 0 ? (
+          <label className="block space-y-1 text-sm">
+            <span className="font-medium">Akun uang muka</span>
+            <select
+              name="akunDpId"
+              defaultValue={akunDp.find((a) => a.kode === "2200")?.id ?? akunDp[0]?.id}
+              className="flex h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+            >
+              {akunDp.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.kode} · {a.nama}
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
+      </div>
 
       <label className="block space-y-1 text-sm">
         <span className="font-medium">Catatan (opsional)</span>
