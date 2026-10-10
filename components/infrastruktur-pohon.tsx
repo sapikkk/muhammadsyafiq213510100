@@ -4,9 +4,9 @@ import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { kolamStatusLabel, type KolamStatus } from "@/lib/infrastruktur-kolam-status";
-import { type serializeInfrastruktur } from "@/lib/infrastruktur";
+import type { SerializedInfrastrukturPohon } from "@/lib/infrastruktur-types";
 
-type Pohon = ReturnType<typeof serializeInfrastruktur>;
+type Pohon = SerializedInfrastrukturPohon;
 
 function filterPohon(data: Pohon, query: string): Pohon {
   const q = query.trim().toLowerCase();

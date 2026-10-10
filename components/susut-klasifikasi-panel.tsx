@@ -3,8 +3,8 @@
 import { useFormState } from "react-dom";
 import { klasifikasiSusut } from "@/app/actions/susut";
 import { SubmitButton } from "@/components/submit-button";
-import { kategoriSusutOptions } from "@/lib/susut";
-import { labelTahap } from "@/lib/log-kegagalan";
+import { labelTahap } from "@/lib/kegagalan-labels";
+import { kategoriSusutOptions } from "@/lib/susut-labels";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export type LogMenunggu = {

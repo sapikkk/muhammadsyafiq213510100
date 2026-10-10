@@ -1,13 +1,14 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
 import { KegagalanError } from "@/lib/log-kegagalan";
 import { prisma } from "@/lib/prisma";
+import {
+  kategoriSusutOptions,
+  type KategoriSusut,
+} from "@/lib/susut-labels";
 
-export const kategoriSusutOptions = [
-  { value: "NORMAL", label: "Susut normal (masuk HPP)" },
-  { value: "ABNORMAL", label: "Susut abnormal (kerugian operasional)" },
-] as const;
-
-export type KategoriSusut = (typeof kategoriSusutOptions)[number]["value"];
+export { kategoriSusutOptions, type KategoriSusut };
 
 export type KlasifikasiInput = {
   logId: number;

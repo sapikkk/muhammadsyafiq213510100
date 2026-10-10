@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
 import { formatRupiah, formatTanggal } from "@/lib/format";
 import { statusJurnalLabel, type StatusJurnalKey } from "@/lib/jurnal-status";
-import type { SerializedJurnalListRow } from "@/lib/jurnal";
+import type { SerializedJurnalListRow } from "@/lib/jurnal-types";
 
 export type JurnalDaftarRow = SerializedJurnalListRow;
 

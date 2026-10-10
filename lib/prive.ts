@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
 import { createJurnal, JurnalError } from "@/lib/jurnal";
 import { KasSumberError, parseSumberKasKode, resolveKasAkunId } from "@/lib/kas-sumber";

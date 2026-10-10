@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
-import type { CostSlice } from "@/lib/cost-breakdown";
+import type { CostSlice } from "@/lib/cost-breakdown-types";
 import { formatRupiah } from "@/lib/format";
 
 const COLORS = [

@@ -1,7 +1,19 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
-import { faseLabel, isFaseProduksi } from "@/lib/siklus-fase";
-import { STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort";
+import {
+  labelTahap,
+  tahapKegagalanOptions,
+  type TahapKegagalan,
+} from "@/lib/kegagalan-labels";
+import { STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort-status";
 import { prisma } from "@/lib/prisma";
+
+export {
+  labelTahap,
+  tahapKegagalanOptions,
+  type TahapKegagalan,
+};
 
 export class KegagalanError extends Error {
   constructor(
@@ -12,24 +24,7 @@ export class KegagalanError extends Error {
   }
 }
 
-/** Tahap kegagalan (F11 / US3.5) — selaras alur produksi. */
-export const tahapKegagalanOptions = [
-  { value: "SEMAI", label: "Semai awal" },
-  { value: "SPROUT_DAUN", label: "Sprout sampai daun ke-4" },
-  { value: "PINDAH_KOLAM", label: "Pindah kolam" },
-  { value: "PENDEWASAAN", label: "Di kolam / pendewasaan" },
-  { value: "PANEN_SORTASI", label: "Tidak layak saat panen" },
-] as const;
-
-export type TahapKegagalan = (typeof tahapKegagalanOptions)[number]["value"];
-
 const MENUNGGU = "MENUNGGU";
-
-export function labelTahap(tahap: string) {
-  const found = tahapKegagalanOptions.find((o) => o.value === tahap);
-  if (found) return found.label;
-  return isFaseProduksi(tahap) ? faseLabel[tahap] : tahap;
-}
 
 export type KegagalanInput = {
   siklusId: number;

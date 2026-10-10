@@ -4,7 +4,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
 import { formatRupiah } from "@/lib/format";
-import { labelTahap } from "@/lib/log-kegagalan";
+import { labelTahap } from "@/lib/kegagalan-labels";
 
 type Row = {
   id: number;

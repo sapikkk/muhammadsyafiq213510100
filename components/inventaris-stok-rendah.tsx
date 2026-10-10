@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
 import { formatQty } from "@/lib/format";
-import type { SerializedAlertStok } from "@/lib/inventaris";
+import type { SerializedAlertStok } from "@/lib/inventaris-types";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
 
 type Props = {

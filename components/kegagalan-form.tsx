@@ -4,7 +4,7 @@ import { useFormState } from "react-dom";
 import { submitLogKegagalan } from "@/app/actions/kegagalan";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
-import { tahapKegagalanOptions } from "@/lib/log-kegagalan";
+import { tahapKegagalanOptions } from "@/lib/kegagalan-labels";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export function KegagalanForm({

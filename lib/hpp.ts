@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
 import { allocateOverheadForSiklus } from "@/lib/biaya";
 import { prisma } from "@/lib/prisma";

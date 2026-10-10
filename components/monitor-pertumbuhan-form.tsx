@@ -4,7 +4,7 @@ import { useFormState } from "react-dom";
 import { submitMonitorPertumbuhan } from "@/app/actions/monitor";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
-import { kondisiMonitorOptions } from "@/lib/monitor-produksi";
+import { kondisiMonitorOptions } from "@/lib/monitor-produksi-labels";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export function MonitorPertumbuhanForm({ siklusId }: { siklusId: number }) {

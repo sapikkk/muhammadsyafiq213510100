@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
 import { createJurnal, JurnalError, type JurnalInput } from "@/lib/jurnal";
 import { AKUN_KODE } from "@/lib/akun-kode";
