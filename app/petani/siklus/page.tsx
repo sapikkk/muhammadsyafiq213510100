@@ -1,4 +1,4 @@
-import { PageHeader } from "@/components/page-header";
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import { SiklusAsumsiPanel } from "@/components/siklus-asumsi-panel";
 import { SiklusDaftar } from "@/components/siklus-daftar";
 import { SiklusForm } from "@/components/siklus-form";
@@ -24,22 +24,29 @@ export default async function PetaniSiklusPage() {
   const packsAktif = packs.filter((p) => p.status === "AKTIF");
 
   return (
-    <div className="flex flex-col gap-8">
-      <PageHeader title="Siklus produksi" description="Mulai semai dan pantau batch aktif." />
-
-      <SiklusDaftar rows={siklusRows.map(serializeSiklus)} />
-
-      <SiklusAsumsiPanel
-        varietas={varietasRows
-          .filter((v) => v.status === "AKTIF")
-          .map((v) => ({
-            id: v.id,
-            nama: v.nama,
-            bijiPerGram: Number(v.biji_per_gram),
-          }))}
-      />
-
-      <SiklusForm
+    <CrudPageLayout
+      eyebrow="Di lapangan"
+      title="Siklus produksi"
+      description="Satu batch = satu baris di daftar. Detail batch untuk pindah fase & panen."
+      flowSteps={[
+        { label: "Buat semai", detail: "Form bawah — pilih varietas, kolam, pack benih/media." },
+        { label: "Buka batch", detail: "Klik kode batch → timeline fase." },
+        { label: "Panen", detail: "Kirim laporan panen → Admin approve & HPP." },
+      ]}
+      list={<SiklusDaftar rows={siklusRows.map(serializeSiklus)} />}
+      listTitle="Batch aktif & selesai"
+      create={
+        <>
+          <SiklusAsumsiPanel
+            varietas={varietasRows
+              .filter((v) => v.status === "AKTIF")
+              .map((v) => ({
+                id: v.id,
+                nama: v.nama,
+                bijiPerGram: Number(v.biji_per_gram),
+              }))}
+          />
+          <SiklusForm
         varietas={varietasRows
           .filter((v) => v.status === "AKTIF")
           .map((v) => ({
@@ -61,7 +68,11 @@ export default async function PetaniSiklusPage() {
           sisaUnit: p.sisaUnit.toString(),
         }))}
         tanggalAwal={keTanggalIso(new Date())}
-      />
-    </div>
+          />
+        </>
+      }
+      createTitle="Mulai semai baru"
+      createDescription="Create — pack benih/media otomatis berkurang."
+    />
   );
 }

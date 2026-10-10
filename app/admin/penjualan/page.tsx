@@ -1,6 +1,6 @@
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import { SalesOrderDaftar } from "@/components/sales-order-daftar";
 import { SalesOrderForm } from "@/components/sales-order-form";
-import { PageHeader } from "@/components/page-header";
 import { listPelanggan } from "@/lib/pelanggan";
 import { prisma } from "@/lib/prisma";
 import {
@@ -33,17 +33,29 @@ export default async function AdminPenjualanPage() {
   }));
 
   return (
-    <div className="flex flex-col gap-8">
-      <PageHeader
-        title="Sales order"
-        description="EPIC-5 — SO, pengiriman, jurnal, invoice, batal, biaya packing."
-      />
-      <SalesOrderDaftar rows={orders.map(serializeSalesOrder)} />
-      <SalesOrderForm
-        pelanggan={pelanggan.map((p) => ({ id: p.id, nama: p.nama }))}
-        siklus={siklusOpts}
-        akunDp={akunDpRows}
-      />
-    </div>
+    <CrudPageLayout
+      eyebrow="Penjualan"
+      title="Sales order"
+      description="Dari draft SO sampai kirim, jurnal pendapatan/HPP, dan pelunasan piutang."
+      flowSteps={[
+        { label: "Buat draft", detail: "Pilih pelanggan + batch panen + lubang/pack." },
+        { label: "Konfirmasi", detail: "Status CONFIRMED — stok lubang ter-reserve." },
+        { label: "DP (opsional)", detail: "Catat uang muka → jurnal Dr kas Cr uang muka." },
+        { label: "Kirim / deliver", detail: "Jurnal pendapatan + HPP; status DELIVERED." },
+        { label: "Pelunasan", detail: "Jika piutang: catat bayar di baris SO." },
+      ]}
+      list={<SalesOrderDaftar rows={orders.map(serializeSalesOrder)} />}
+      listTitle="Semua sales order"
+      listDescription="Read & Update — aksi per baris (konfirmasi, kirim, pelunasan, batal)."
+      create={
+        <SalesOrderForm
+          pelanggan={pelanggan.map((p) => ({ id: p.id, nama: p.nama }))}
+          siklus={siklusOpts}
+          akunDp={akunDpRows}
+        />
+      }
+      createTitle="Buat SO baru"
+      createDescription="Create — isi baris batch; total & HPP dihitung otomatis."
+    />
   );
 }

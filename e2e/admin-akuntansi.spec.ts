@@ -11,5 +11,7 @@ test("admin akuntansi: period lock + penyusutan form", async ({ page }) => {
 
   await page.goto("/admin/akuntansi");
   await expect(page.getByRole("heading", { name: /Pengaturan akuntansi/i })).toBeVisible();
-  await expect(page.getByText(/Catat penyusutan bulan/i)).toBeVisible();
+  await expect(page.getByRole("button", { name: /Catat penyusutan bulan/i })).toBeVisible({
+    timeout: 15_000,
+  });
 });

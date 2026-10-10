@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import { VarietasDaftar } from "@/components/varietas-daftar";
 import { VarietasForm } from "@/components/varietas-form";
 import { listVarietas, serializeVarietas } from "@/lib/varietas";
@@ -11,23 +11,20 @@ export default async function AdminVarietasPage() {
   const options = serialized.map((r) => ({ id: r.id, label: `${r.nama} (${r.status})` }));
 
   return (
-    <div className="flex flex-col gap-8">
-      <header className="space-y-2">
-        <p className="text-sm font-medium text-primary">Admin</p>
-        <h1 className="text-3xl font-semibold tracking-tight">Varietas & asumsi</h1>
-        <p className="text-muted-foreground">
-          Parameter benih, pertumbuhan, dan harga jual untuk perhitungan HPP dan siklus.
-        </p>
-        <Link
-          href="/admin"
-          className="inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline"
-        >
-          Kembali ke beranda Admin
-        </Link>
-      </header>
-
-      <VarietasDaftar rows={serialized} />
-      <VarietasForm varietasOptions={options} />
-    </div>
+    <CrudPageLayout
+      eyebrow="Produksi & stok"
+      title="Varietas & asumsi"
+      description="Parameter benih, pertumbuhan, dan harga jual untuk perhitungan HPP dan siklus."
+      flowSteps={[
+        { label: "Lihat daftar", detail: "Semua varietas — aktif/nonaktif." },
+        { label: "Tambah / ubah", detail: "Form di bawah — asumsi benih & media mengikuti PRD." },
+        { label: "Pakai di siklus", detail: "Petani pilih varietas aktif saat semai batch baru." },
+      ]}
+      list={<VarietasDaftar rows={serialized} />}
+      listTitle="Master varietas"
+      create={<VarietasForm varietasOptions={options} />}
+      createTitle="Form varietas"
+      createDescription="Create/Update — nonaktifkan varietas lama alih-alih hapus jika sudah dipakai siklus."
+    />
   );
 }

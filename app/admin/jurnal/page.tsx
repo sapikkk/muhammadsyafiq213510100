@@ -1,5 +1,8 @@
 import Link from "next/link";
+import { FlowSteps } from "@/components/flow-steps";
 import { JurnalDaftar } from "@/components/jurnal-daftar";
+import { PageHeader } from "@/components/page-header";
+import { PageSection } from "@/components/page-section";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { listJurnal, serializeJurnalListRow, type FilterJurnal } from "@/lib/jurnal";
@@ -21,14 +24,12 @@ export default async function JurnalPage({
 
   return (
     <div className="flex flex-col gap-8">
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-primary">Admin</p>
-          <h1 className="text-3xl font-semibold tracking-tight">Jurnal</h1>
-          <p className="text-muted-foreground">
-            Saldo akun hanya berubah setelah jurnal disetujui.
-          </p>
-        </div>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <PageHeader
+          eyebrow="Akuntansi"
+          title="Jurnal"
+          description="Create di Jurnal baru · Read di tabel · Update lewat approve/tolak (Owner/Admin)."
+        />
         <div className="flex flex-wrap gap-2">
           <Link
             href="/admin/jurnal/baru"
@@ -43,7 +44,15 @@ export default async function JurnalPage({
             Period lock
           </Link>
         </div>
-      </header>
+      </div>
+
+      <FlowSteps
+        steps={[
+          { label: "Buat", detail: "Smart Jurnal atau manual — status DRAFT/PENDING." },
+          { label: "Seimbang", detail: "Total debit = kredit sebelum ajukan." },
+          { label: "Approve", detail: "Owner/Admin — saldo akun baru berubah." },
+        ]}
+      />
 
       <form
         method="get"
@@ -92,23 +101,23 @@ export default async function JurnalPage({
         </div>
       </form>
 
-      <section aria-labelledby="daftar-title" className="space-y-3">
-        <div className="space-y-1">
-          <h2 id="daftar-title" className="text-lg font-semibold">
-            {`${rows.length} jurnal${adaFilter ? " sesuai filter" : ""}`}
-          </h2>
-          {adaFilter ? (
-            <p className="text-sm text-muted-foreground">
-              {searchParams.dari ? `Dari ${searchParams.dari}` : null}
-              {searchParams.dari && searchParams.sampai ? " · " : null}
-              {searchParams.sampai ? `Sampai ${searchParams.sampai}` : null}
-              {(searchParams.dari || searchParams.sampai) && searchParams.status ? " · " : null}
-              {searchParams.status
-                ? `Status ${statusJurnalLabel[searchParams.status as keyof typeof statusJurnalLabel] ?? searchParams.status}`
-                : null}
-            </p>
-          ) : null}
-        </div>
+      <PageSection
+        title={`${rows.length} jurnal${adaFilter ? " sesuai filter" : ""}`}
+        description={
+          adaFilter
+            ? [
+                searchParams.dari ? `Dari ${searchParams.dari}` : "",
+                searchParams.sampai ? `Sampai ${searchParams.sampai}` : "",
+                searchParams.status
+                  ? `Status ${statusJurnalLabel[searchParams.status as keyof typeof statusJurnalLabel] ?? searchParams.status}`
+                  : "",
+              ]
+                .filter(Boolean)
+                .join(" · ")
+            : "Read — klik baris untuk detail, edit draft, atau ajukan approve."
+        }
+        badge="Read"
+      >
         <JurnalDaftar
           rows={serialized}
           detailPrefix="/admin/jurnal"
@@ -118,11 +127,7 @@ export default async function JurnalPage({
               : "Belum ada jurnal. Buat jurnal pertama lewat tombol Jurnal baru."
           }
         />
-      </section>
-
-      <Link href="/admin" className="text-sm underline underline-offset-4">
-        Kembali ke beranda Admin
-      </Link>
+      </PageSection>
     </div>
   );
 }

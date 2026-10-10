@@ -56,8 +56,8 @@ export function AppShellLayout({
           </div>
         </header>
 
-        <div className="flex-1 p-4 md:p-6">
-          <div className="mx-auto w-full max-w-5xl space-y-6">{children}</div>
+        <div className="flex-1 p-4 md:p-8">
+          <div className="mx-auto w-full max-w-6xl space-y-8">{children}</div>
         </div>
       </main>
 

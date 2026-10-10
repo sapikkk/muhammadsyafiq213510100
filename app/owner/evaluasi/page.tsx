@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { PageHeader } from "@/components/page-header";
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatQty, formatRupiah } from "@/lib/format";
 import { ownerEvaluation } from "@/lib/owner-evaluation";
@@ -10,12 +9,17 @@ export default async function OwnerEvaluasiPage() {
   const data = await ownerEvaluation();
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        title="Evaluasi margin & BEP"
-        description="US6.4 — HPP vs harga jual, titik impas, dan kapasitas kolam menganggur."
-      />
-
+    <CrudPageLayout
+      eyebrow="Keuangan"
+      title="Evaluasi margin & BEP"
+      description="US6.4 — HPP vs harga jual, titik impas, dan kapasitas kolam menganggur."
+      flowSteps={[
+        { label: "Kapasitas", detail: "Kolam idle vs terpakai — pengaruh overhead." },
+        { label: "Margin", detail: "Bandingkan HPP dengan harga master varietas." },
+        { label: "BEP", detail: "Target kg/bulan dari overhead & kontribusi." },
+      ]}
+      list={
+        <div className="space-y-6">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader className="pb-2">
@@ -143,13 +147,12 @@ export default async function OwnerEvaluasiPage() {
         </section>
       ) : (
         <p className="text-sm text-muted-foreground">
-          Belum ada baris margin —{" "}
-          <Link href="/owner" className="text-primary hover:underline">
-            kembali ke dashboard
-          </Link>
-          .
+          Belum ada baris margin — approve panen & HPP di Admin untuk mengisi tabel.
         </p>
       )}
-    </div>
+        </div>
+      }
+      listTitle="Analisis"
+    />
   );
 }

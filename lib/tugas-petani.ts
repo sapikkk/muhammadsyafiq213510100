@@ -1,7 +1,6 @@
-import { listAlertStokMinimum } from "@/lib/inventaris";
+import { listAlertStokMinimumCached, listSiklusAktifCached } from "@/lib/cached-queries";
 import { prisma } from "@/lib/prisma";
 import { faseBerikutnya, faseLabel, isFaseProduksi } from "@/lib/siklus-fase";
-import { listSiklusProduksi } from "@/lib/siklus-produksi";
 
 export type TugasPetani = {
   id: string;
@@ -12,7 +11,10 @@ export type TugasPetani = {
 };
 
 export async function daftarTugasPetani(): Promise<TugasPetani[]> {
-  const [siklus, stokRendah] = await Promise.all([listSiklusProduksi(), listAlertStokMinimum()]);
+  const [siklus, stokRendah] = await Promise.all([
+    listSiklusAktifCached(),
+    listAlertStokMinimumCached(),
+  ]);
   const tugas: TugasPetani[] = [];
 
   for (const row of stokRendah.slice(0, 5)) {

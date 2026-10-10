@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import { InventarisStokRendah } from "@/components/inventaris-stok-rendah";
 import { listAlertStokMinimum, serializeAlertStok } from "@/lib/inventaris";
 
@@ -8,20 +8,16 @@ export default async function OwnerStokRendahPage() {
   const items = await listAlertStokMinimum();
 
   return (
-    <div className="flex flex-col gap-8">
-      <header className="space-y-2">
-        <p className="text-sm font-medium text-primary">Owner</p>
-        <h1 className="text-3xl font-semibold tracking-tight">Alert stok minimum</h1>
-        <p className="text-muted-foreground">Hanya baca. Pembelian dicatat Admin.</p>
-        <Link
-          href="/owner"
-          className="inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline"
-        >
-          Kembali ke beranda Owner
-        </Link>
-      </header>
-
-      <InventarisStokRendah items={items.map(serializeAlertStok)} />
-    </div>
+    <CrudPageLayout
+      eyebrow="Operasi"
+      title="Alert stok minimum"
+      description="Monitoring stok kritis — pergerakan stok hanya Admin/Petani."
+      flowSteps={[
+        { label: "Review", detail: "Daftar item di bawah minimum." },
+        { label: "Eskalasi", detail: "Hubungi Admin untuk restock inventaris." },
+      ]}
+      list={<InventarisStokRendah items={items.map(serializeAlertStok)} />}
+      listTitle="Item di bawah minimum"
+    />
   );
 }

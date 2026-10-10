@@ -1,5 +1,5 @@
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import { SusutKlasifikasiPanel } from "@/components/susut-klasifikasi-panel";
-import { PageHeader } from "@/components/page-header";
 import { listLogKegagalanMenunggu } from "@/lib/log-kegagalan";
 
 export const dynamic = "force-dynamic";
@@ -19,12 +19,16 @@ export default async function AdminSusutPage() {
   }));
 
   return (
-    <div className="flex flex-col gap-8">
-      <PageHeader
-        title="Klasifikasi susut"
-        description="US2.5 — tentukan susut normal (masuk HPP) vs abnormal (kerugian operasional)."
-      />
-      <SusutKlasifikasiPanel rows={rows} />
-    </div>
+    <CrudPageLayout
+      eyebrow="Produksi & stok"
+      title="Klasifikasi susut"
+      description="US2.5 — tentukan susut normal (masuk HPP) vs abnormal (kerugian operasional)."
+      flowSteps={[
+        { label: "Antrian", detail: "Log kegagalan dari petani menunggu klasifikasi." },
+        { label: "Klasifikasi", detail: "Pilih normal/abnormal per baris — mempengaruhi HPP." },
+      ]}
+      list={<SusutKlasifikasiPanel rows={rows} />}
+      listTitle="Menunggu klasifikasi"
+    />
   );
 }

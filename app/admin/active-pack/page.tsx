@@ -1,11 +1,12 @@
-import Link from "next/link";
 import {
   pakaiActivePackAdmin,
   simpanActivePackAdmin,
 } from "@/app/actions/active-pack";
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import { ActivePackDaftar } from "@/components/active-pack-daftar";
 import { ActivePackForm } from "@/components/active-pack-form";
 import { ActivePackPakaiForm } from "@/components/active-pack-pakai-form";
+import { PageSection } from "@/components/page-section";
 import {
   listActivePack,
   serializeActivePack,
@@ -25,24 +26,24 @@ export default async function AdminActivePackPage() {
   ) as ActivePackListRow[];
 
   return (
-    <div className="flex flex-col gap-8">
-      <header className="space-y-2">
-        <p className="text-sm font-medium text-primary">Admin</p>
-        <h1 className="text-3xl font-semibold tracking-tight">Active pack</h1>
-        <p className="text-muted-foreground">
-          Biaya per unit untuk alokasi HPP nanti (F15).
-        </p>
-        <Link
-          href="/admin"
-          className="inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline"
-        >
-          Kembali ke beranda Admin
-        </Link>
-      </header>
-
-      <ActivePackDaftar rows={packs} />
-      <ActivePackForm items={items} action={simpanActivePackAdmin} />
-      <ActivePackPakaiForm packs={packs} action={pakaiActivePackAdmin} />
-    </div>
+    <CrudPageLayout
+      eyebrow="Produksi & stok"
+      title="Active pack"
+      description="Alokasi biaya benih/media per unit — dipakai saat semai & tambal."
+      flowSteps={[
+        { label: "Buat pack", detail: "Pilih item inventaris + harga total pack." },
+        { label: "Pakai unit", detail: "Kurangi sisa — otomatis saat petani semai." },
+        { label: "Habis", detail: "Status HABIS + jurnal penyesuaian pembulatan (v2)." },
+      ]}
+      list={<ActivePackDaftar rows={packs} />}
+      listTitle="Daftar pack"
+      create={<ActivePackForm items={items} action={simpanActivePackAdmin} />}
+      createTitle="Pack baru"
+      extra={
+        <PageSection title="Pakai manual (Admin)" description="Update — kurangi sisa pack tanpa siklus.">
+          <ActivePackPakaiForm packs={packs} action={pakaiActivePackAdmin} />
+        </PageSection>
+      }
+    />
   );
 }

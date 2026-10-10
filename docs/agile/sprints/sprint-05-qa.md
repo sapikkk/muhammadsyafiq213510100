@@ -14,6 +14,7 @@
 | T5.5 | [#43](https://github.com/sapikkk/muhammadsyafiq213510100/issues/43) | Done | Retry P2024 + jeda di `lib/prisma.ts`; [#50](https://github.com/sapikkk/muhammadsyafiq213510100/issues/50) doc |
 | T5.6 | [#44](https://github.com/sapikkk/muhammadsyafiq213510100/issues/44) | Done | [`docs/deployment/vercel-go-live.md`](../../deployment/vercel-go-live.md), [`docs/deployment/vercel.md`](../../deployment/vercel.md), `check:production-env` |
 | T5.9 | [#45](https://github.com/sapikkk/muhammadsyafiq213510100/issues/45) | Done* | [`docs/testing/pelatihan-6-pengguna.md`](../../testing/pelatihan-6-pengguna.md) |
+| T5.10 | — | Done | UX flow + perf **v1.28.0** — [`UX-FLOW-PERF-REPORT.md`](../UX-FLOW-PERF-REPORT.md), [`FLOW-NAV.md`](../../ux/FLOW-NAV.md) |
 
 \* T5.9: materi pelatihan siap; sesi live 6 pengguna = aktivitas PO (post-merge).
 

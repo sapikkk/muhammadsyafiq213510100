@@ -24,6 +24,11 @@ Append-only. Agent menambah baris per sesi.
 | Low | `/` | `app/page.tsx` | User login masih landing | **Fixed:** redirect ke dashboard |
 | Low | `/admin/petani` | `petani-master-daftar` | Table statis | **Fixed:** `DataTable` + search |
 | Low | Many lists | various | `Card` untuk KPI/detail | **Partial** — bukan listing CRUD |
+| High | `admin/owner/petani` layouts | `listAlertStokMinimum` | Setiap navigasi: load semua item inventaris + filter JS; duplikat dengan dashboard/banner/tugas | **Fixed:** `lib/cached-queries.ts` (`React.cache`, query select lean); layout pakai `getStokRendahCount` |
+| Medium | `/petani` dashboard | `daftarTugasPetani` | `listSiklusProduksi()` full history | **Fixed:** `listSiklusAktifCached` (take 80, status aktif) |
+| Medium | `/owner` | KPI chart | `monthlySummary` + `kpiHidroponikMvp` tanpa dedup request | **Fixed:** `monthlySummaryCached`, `kpiHidroponikMvpCached` |
+| Low | CRUD pages | `app/**/page.tsx` | Header custom + link “Kembali ke beranda” | **Fixed:** `CrudPageLayout` + `FlowSteps` Admin/Owner/Petani (mirror halaman operasi) |
+| Low | Semua `DataTable` | `components/data-table.tsx` | Double scroll wrapper; header tidak sortable | **Fixed:** `Table noContainer`, sort UI, zebra rows, default page 12 |
 
 ## Responsif (belum diuji sistematis)
 

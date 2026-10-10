@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import { InventarisDaftar } from "@/components/inventaris-daftar";
 import { listItemInventaris, serializeItem } from "@/lib/inventaris";
 
@@ -8,22 +8,16 @@ export default async function OwnerInventarisPage() {
   const items = await listItemInventaris(true);
 
   return (
-    <div className="flex flex-col gap-8">
-      <header className="space-y-2">
-        <p className="text-sm font-medium text-primary">Owner</p>
-        <h1 className="text-3xl font-semibold tracking-tight">Inventaris</h1>
-        <p className="text-muted-foreground">
-          Hanya baca stok bahan. Pergerakan di Admin atau Petani.
-        </p>
-        <Link
-          href="/owner"
-          className="inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline"
-        >
-          Kembali ke beranda Owner
-        </Link>
-      </header>
-
-      <InventarisDaftar items={items.map(serializeItem)} />
-    </div>
+    <CrudPageLayout
+      eyebrow="Operasi"
+      title="Inventaris"
+      description="Hanya baca stok bahan. Pergerakan di Admin atau Petani."
+      flowSteps={[
+        { label: "Cek stok", detail: "Sortir kolom stok — bandingkan dengan alert stok rendah." },
+        { label: "Tindak lanjut", detail: "Koordinasi Admin untuk pembelian jika ada alert." },
+      ]}
+      list={<InventarisDaftar items={items.map(serializeItem)} />}
+      listTitle="Stok bahan baku"
+    />
   );
 }
