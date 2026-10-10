@@ -20,13 +20,22 @@ export function PindahFaseForm({
   useActionToast({ error: state.error, ok: state.ok });
 
   return (
-    <form action={formAction} className="space-y-4 rounded-md border p-4">
+    <form
+      action={formAction}
+      className="space-y-4 rounded-md border-2 border-foreground p-4 shadow-sm"
+      aria-label={`Lanjut fase ke ${faseLabel[faseBerikutnya]}`}
+    >
       <input type="hidden" name="siklusId" value={siklusId} />
       <p className="text-sm text-muted-foreground">
         Fase sekarang: <span className="font-medium text-foreground">{faseLabel[faseSaatIni]}</span>
       </p>
-      <label className="flex min-h-11 items-center gap-3 text-sm">
-        <input type="checkbox" name="konfirmasi" required className="h-5 w-5 shrink-0" />
+      <label className="flex min-h-12 items-center gap-3 text-sm">
+        <input
+          type="checkbox"
+          name="konfirmasi"
+          required
+          className="h-6 w-6 shrink-0 accent-foreground"
+        />
         <span>Saya yakin ingin lanjut ke fase {faseLabel[faseBerikutnya]}.</span>
       </label>
       <label className="block space-y-1.5 text-sm">

@@ -23,6 +23,7 @@
     "check:audit-env": "bash scripts/check-audit-env.sh",
     "check:banned-ui": "bash scripts/check-banned-ui.sh",
     "check:legacy-api-json": "bash scripts/check-legacy-api-json.sh",
+    "check:jurnal-balance": "node --env-file=.env scripts/audit-jurnal-balance.js",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:e2e": "playwright test",
