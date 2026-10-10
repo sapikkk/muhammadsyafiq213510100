@@ -82,7 +82,25 @@ export async function createAkun(input: AkunInput): Promise<Akun> {
   return prisma.akun.create({ data: input }).catch(translatePrismaError);
 }
 
+async function loadAkunOrThrow(id: number) {
+  const row = await prisma.akun.findUnique({ where: { id } });
+  if (!row) throw new AkunError("Akun tidak ditemukan.", 404);
+  return row;
+}
+
 export async function updateAkun(id: number, input: AkunInput): Promise<Akun> {
+  const existing = await loadAkunOrThrow(id);
+  if (existing.isSystem) {
+    if (input.kode !== existing.kode) {
+      throw new AkunError("Kode akun sistem tidak boleh diubah.", 400);
+    }
+    if (input.tipe !== existing.tipe) {
+      throw new AkunError("Tipe akun sistem tidak boleh diubah.", 400);
+    }
+    if (input.parentId !== existing.parentId) {
+      throw new AkunError("Induk akun sistem tidak boleh diubah.", 400);
+    }
+  }
   if (input.parentId === id) {
     throw new AkunError("Akun tidak bisa menjadi induk dirinya sendiri.", 400);
   }
@@ -100,6 +118,10 @@ export async function updateAkun(id: number, input: AkunInput): Promise<Akun> {
 
 // Soft delete. Baris tetap ada agar jurnal lama (US2.2) tetap merujuk akun ini.
 export async function setAkunAktif(id: number, aktif: boolean): Promise<Akun> {
+  const existing = await loadAkunOrThrow(id);
+  if (existing.isSystem && !aktif) {
+    throw new AkunError("Akun sistem tidak boleh dinonaktifkan.", 400);
+  }
   if (!aktif) {
     const anakAktif = await prisma.akun.count({
       where: { parentId: id, aktif: true },
@@ -135,6 +157,7 @@ export type AkunClientNode = {
   nama: string;
   tipe: TipeAkunKey;
   aktif: boolean;
+  isSystem: boolean;
   anak: AkunClientNode[];
 };
 
@@ -148,6 +171,7 @@ export function buildClientTree(rows: Akun[]): AkunClientNode[] {
         nama: row.nama,
         tipe: row.tipe as TipeAkunKey,
         aktif: row.aktif,
+        isSystem: row.isSystem,
         anak: [],
       },
     ]),
@@ -167,6 +191,7 @@ export function toAkunEdit(row: Akun): {
   nama: string;
   tipe: string;
   parentId: number | null;
+  isSystem: boolean;
 } {
   return {
     id: row.id,
@@ -174,6 +199,7 @@ export function toAkunEdit(row: Akun): {
     nama: row.nama,
     tipe: row.tipe,
     parentId: row.parentId,
+    isSystem: row.isSystem,
   };
 }
 

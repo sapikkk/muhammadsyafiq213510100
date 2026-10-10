@@ -18,6 +18,7 @@ function serializeAkun(row: Akun) {
     tipe: row.tipe,
     parentId: row.parentId,
     aktif: row.aktif,
+    isSystem: row.isSystem,
     saldo: row.saldo.toString(),
   };
 }

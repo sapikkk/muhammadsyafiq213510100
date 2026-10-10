@@ -16,6 +16,7 @@ export type AkunEdit = {
   nama: string;
   tipe: string;
   parentId: number | null;
+  isSystem?: boolean;
 };
 
 const selectClass =
@@ -29,6 +30,7 @@ export function AkunForm({
   edit?: AkunEdit;
 }) {
   const [state, formAction] = useFormState(saveAkun, {});
+  const locked = Boolean(edit?.isSystem);
 
   useActionToast({ error: state.error, saved: state.saved });
 
@@ -45,16 +47,32 @@ export function AkunForm({
         className="space-y-4"
       >
         {edit ? <input type="hidden" name="id" value={edit.id} /> : null}
+        {locked && edit ? (
+          <>
+            <input type="hidden" name="kode" value={edit.kode} />
+            <input type="hidden" name="tipe" value={edit.tipe} />
+            <input type="hidden" name="parentId" value={edit.parentId ?? ""} />
+          </>
+        ) : null}
+        {locked ? (
+          <p className="text-sm text-muted-foreground">
+            Akun sistem: hanya nama yang boleh diubah. Kode, tipe, dan induk terkunci.
+          </p>
+        ) : null}
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block space-y-1.5 text-sm">
             <span className="font-medium">Kode</span>
-            <Input
-              name="kode"
-              inputMode="numeric"
-              defaultValue={edit?.kode}
-              className="h-11"
-              aria-describedby="aturan-kode"
-            />
+            {locked ? (
+              <p className="flex h-11 items-center font-mono text-sm">{edit?.kode}</p>
+            ) : (
+              <Input
+                name="kode"
+                inputMode="numeric"
+                defaultValue={edit?.kode}
+                className="h-11"
+                aria-describedby="aturan-kode"
+              />
+            )}
             <span id="aturan-kode" className="block text-xs text-muted-foreground">
               Angka saja, unik. Digit pertama mengikuti tipe, contoh 1xxx Aset.
             </span>
@@ -66,9 +84,10 @@ export function AkunForm({
           <label className="block space-y-1.5 text-sm">
             <span className="font-medium">Tipe</span>
             <select
-              name="tipe"
+              name={locked ? undefined : "tipe"}
               defaultValue={edit?.tipe ?? ""}
               className={selectClass}
+              disabled={locked}
             >
               <option value="">Pilih tipe</option>
               {tipeAkunList.map((tipe) => (
@@ -81,9 +100,10 @@ export function AkunForm({
           <label className="block space-y-1.5 text-sm">
             <span className="font-medium">Akun induk</span>
             <select
-              name="parentId"
+              name={locked ? undefined : "parentId"}
               defaultValue={edit?.parentId ?? ""}
               className={selectClass}
+              disabled={locked}
             >
               <option value="">Tanpa induk (akun utama)</option>
               {parents
