@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.17.0...v1.18.0) (2026-10-10)
+
+
+### Features
+
+* **v2-E.1:** sales order DP schema and uang muka posting ([#108](https://github.com/sapikkk/muhammadsyafiq213510100/issues/108)) ([77142b2](https://github.com/sapikkk/muhammadsyafiq213510100/commit/77142b24ce2f10abe0a20a01b69ba6009e4e3cd7))
+
 # [1.17.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.16.0...v1.17.0) (2026-10-10)
 
 
