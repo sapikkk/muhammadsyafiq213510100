@@ -1,3 +1,10 @@
+## [1.28.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.28.0...v1.28.1) (2026-10-10)
+
+
+### Bug Fixes
+
+* **client:** cegah Prisma masuk bundle browser (v1.28.1) ([#125](https://github.com/sapikkk/muhammadsyafiq213510100/issues/125)) ([94c843f](https://github.com/sapikkk/muhammadsyafiq213510100/commit/94c843f6d5a1179e8ffd3e5639969dd2ca51f677))
+
 # [1.28.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.27.0...v1.28.0) (2026-10-10)
 
 
