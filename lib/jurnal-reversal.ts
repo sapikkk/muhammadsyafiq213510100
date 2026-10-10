@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { JurnalError } from "@/lib/jurnal";
+import { assertJurnalTanggalAllowed, PeriodLockError } from "@/lib/period-lock";
 
 /** Jurnal pembalik PENDING (v2-H epic) — baris debit/kredit ditukar. */
 export async function createJurnalReversal(jurnalId: number, userId: number, alasan: string) {
@@ -16,10 +17,19 @@ export async function createJurnalReversal(jurnalId: number, userId: number, ala
   }
 
   const keterangan = `Reversal #${jurnalId}: ${teks}`.slice(0, 255);
+  const tanggal = new Date();
+  try {
+    await assertJurnalTanggalAllowed(tanggal);
+  } catch (error) {
+    if (error instanceof PeriodLockError) {
+      throw new JurnalError(error.message, error.status);
+    }
+    throw error;
+  }
 
   return prisma.jurnal.create({
     data: {
-      tanggal: new Date(),
+      tanggal,
       keterangan,
       status: "PENDING",
       sumber: "AUTO",
