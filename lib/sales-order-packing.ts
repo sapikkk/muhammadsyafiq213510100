@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import { KasSumberError, parseSumberKasKode, resolveKasAkunId } from "@/lib/kas-sumber";
 import { prisma } from "@/lib/prisma";
 import { SalesOrderError } from "@/lib/sales-order";
 
@@ -29,8 +30,23 @@ async function requireAkunPosting(tx: SalesOrderTx, kode: string) {
 
 const PACKING_OK = new Set(["CONFIRMED", "SHIPPED", "DELIVERED"]);
 
-export async function recordPackingCost(id: number, userId: number, rawAmount: unknown) {
+export async function recordPackingCost(
+  id: number,
+  userId: number,
+  rawAmount: unknown,
+  raw: { sumberKas?: unknown } = {},
+) {
   const amount = parsePackingAmount(rawAmount);
+  let kasKode;
+  try {
+    kasKode = parseSumberKasKode(raw.sumberKas);
+  } catch (error) {
+    if (error instanceof KasSumberError) {
+      throw new SalesOrderError(error.message, error.status);
+    }
+    throw error;
+  }
+
   return prisma.$transaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({ where: { id } });
     if (!so) throw new SalesOrderError("Sales order tidak ditemukan.", 404);
@@ -46,10 +62,16 @@ export async function recordPackingCost(id: number, userId: number, rawAmount: u
 
     let jurnalPackingId = so.jurnal_packing_id;
     if (amount.gt(nol) && !jurnalPackingId) {
-      const [bebanId, kasId] = await Promise.all([
-        requireAkunPosting(tx, "5400"),
-        requireAkunPosting(tx, "1100"),
-      ]);
+      const bebanId = await requireAkunPosting(tx, "5400");
+      let kasId: number;
+      try {
+        kasId = await resolveKasAkunId(tx, kasKode);
+      } catch (error) {
+        if (error instanceof KasSumberError) {
+          throw new SalesOrderError(error.message, error.status);
+        }
+        throw error;
+      }
       const tanggal = new Date();
       tanggal.setHours(0, 0, 0, 0);
       const jurnal = await tx.jurnal.create({
@@ -57,6 +79,7 @@ export async function recordPackingCost(id: number, userId: number, rawAmount: u
           tanggal,
           keterangan: `Biaya packing ${so.nomor_so}`.slice(0, 255),
           status: "PENDING",
+          sumber: "AUTO",
           dibuatOlehId: userId,
           baris: {
             create: [

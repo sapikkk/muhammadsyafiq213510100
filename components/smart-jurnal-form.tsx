@@ -2,6 +2,7 @@
 
 import { useFormState } from "react-dom";
 import { submitSmartJurnal, type SmartJurnalState } from "@/app/actions/smart-jurnal";
+import { KasSumberSelect } from "@/components/kas-sumber-select";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
@@ -50,14 +51,7 @@ export function SmartJurnalForm({
 
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Sumber kas</span>
-        <select
-          name="sumberKas"
-          className="flex h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
-          defaultValue="1100"
-        >
-          <option value="1100">1100 · Kas</option>
-          <option value="1110">1110 · Bank</option>
-        </select>
+        <KasSumberSelect className="flex h-11 w-full rounded-md border border-input bg-background px-3 text-sm" />
       </label>
 
       <label className="block space-y-1.5 text-sm">

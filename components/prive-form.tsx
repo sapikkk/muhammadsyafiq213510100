@@ -2,6 +2,7 @@
 
 import { useFormState } from "react-dom";
 import { submitPrive, type PriveState } from "@/app/actions/prive";
+import { KasSumberSelect } from "@/components/kas-sumber-select";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
@@ -19,7 +20,7 @@ export function PriveForm({ defaultTanggal }: { defaultTanggal: string }) {
   return (
     <form action={formAction} className="max-w-md space-y-4 rounded-md border p-4">
       <p className="text-sm text-muted-foreground">
-        Mencatat jurnal PENDING: debit Prive (3200), kredit Kas (1100). Admin menyetujui seperti jurnal lain.
+        Jurnal PENDING: debit Prive (3200), kredit Kas tunai atau Bank. Admin menyetujui seperti jurnal lain.
       </p>
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Tanggal</span>
@@ -28,6 +29,10 @@ export function PriveForm({ defaultTanggal }: { defaultTanggal: string }) {
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Nominal (Rp)</span>
         <Input name="nominal" inputMode="decimal" className="h-11" required placeholder="500000" />
+      </label>
+      <label className="block space-y-1.5 text-sm">
+        <span className="font-medium">Sumber kas</span>
+        <KasSumberSelect className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm" />
       </label>
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Catatan (opsional)</span>

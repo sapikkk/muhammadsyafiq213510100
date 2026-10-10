@@ -5,7 +5,7 @@ import { catatDpSalesOrder } from "@/lib/sales-order-pembayaran";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-export const POST = withApiHandler(async (_request: Request, context?: unknown) => {
+export const POST = withApiHandler(async (request: Request, context?: unknown) => {
   const { denied } = await requireApiRole(["ADMIN"]);
   if (denied) return denied;
   const session = await getServerSession(authOptions);
@@ -18,7 +18,14 @@ export const POST = withApiHandler(async (_request: Request, context?: unknown) 
     return apiFail("INVALID_ID", "ID tidak valid.", 400);
   }
   try {
-    await catatDpSalesOrder(id, Number(session.user.id));
+    let sumberKas: unknown;
+    try {
+      const body = (await request.json()) as Record<string, unknown>;
+      sumberKas = body.sumberKas;
+    } catch {
+      sumberKas = undefined;
+    }
+    await catatDpSalesOrder(id, Number(session.user.id), { sumberKas });
     const listed = await listSalesOrders();
     const fresh = listed.find((r) => r.id === id);
     return apiOk(fresh ? serializeSalesOrder(fresh) : { id });

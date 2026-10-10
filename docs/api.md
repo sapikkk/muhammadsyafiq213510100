@@ -235,12 +235,12 @@ Field POST (camelCase): `pelangganId`, `catatan?`, `jumlahDp?` (default 0), `aku
 Aturan DP:
 
 - `jumlahDp` ≤ total SO; jika &gt; 0 wajib ada akun kewajiban uang muka.
-- Posting DP **bukan** pendapatan: Dr Kas (1100) Cr akun DP.
+- Posting DP **bukan** pendapatan: Dr Kas/Bank (`sumberKas`: 1100|1110) Cr akun DP.
 
 | Method | Peran | Path | Jawaban |
 | --- | --- | --- | --- |
 | PUT | Admin | `/api/sales-orders/[id]/confirm` | 200, status CONFIRMED |
-| POST | Admin | `/api/sales-orders/[id]/dp` | 200, `status_pembayaran` = `DP_DITERIMA`, jurnal DP APPROVED |
+| POST | Admin | `/api/sales-orders/[id]/dp` | 200, body opsional `{ sumberKas?: "1100"|"1110" }` |
 
 UI: `/admin/penjualan` — form DP + tombol **Catat DP** setelah konfirmasi SO.
 
@@ -248,7 +248,7 @@ UI: `/admin/penjualan` — form DP + tombol **Catat DP** setelah konfirmasi SO.
 | --- | --- | --- | --- |
 | POST | Admin | `/api/sales-orders/[id]/pelunasan` | 200, `{ nominal, sumberKas? }` → Dr Kas Cr piutang, status `LUNAS` jika sisa 0 |
 
-Deliver SO dengan DP: jurnal pendapatan Dr uang muka + Dr piutang (bukan Dr kas penuh). Tanpa DP: Dr kas (legacy tunai).
+Deliver SO dengan DP: jurnal pendapatan Dr uang muka + Dr piutang. Tanpa DP: Dr kas/bank (`sumberKas` di PUT deliver & form UI). Packing & prive: pilih 1100/1110 sama.
 
 ## `/api/jurnal/smart` (v2-F.1, Smart Jurnal MVP)
 

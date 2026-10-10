@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { createJurnal, JurnalError } from "@/lib/jurnal";
+import { KasSumberError, parseSumberKasKode, resolveKasAkunId } from "@/lib/kas-sumber";
 import { prisma } from "@/lib/prisma";
 
 export class PriveError extends Error {
@@ -34,12 +35,28 @@ export async function createPriveJurnal(
       ? `Prive Owner — ${catatan}`.slice(0, 255)
       : "Prive Owner";
 
-  const [akunPrive, akunKas] = await Promise.all([
-    prisma.akun.findUnique({ where: { kode: "3200" } }),
-    prisma.akun.findUnique({ where: { kode: "1100" } }),
-  ]);
-  if (!akunPrive?.aktif || !akunKas?.aktif) {
-    throw new PriveError("Akun Prive (3200) atau Kas (1100) belum siap.", 400);
+  let kasKode;
+  try {
+    kasKode = parseSumberKasKode(raw.sumberKas);
+  } catch (error) {
+    if (error instanceof KasSumberError) {
+      throw new PriveError(error.message, error.status);
+    }
+    throw error;
+  }
+
+  const akunPrive = await prisma.akun.findUnique({ where: { kode: "3200" } });
+  if (!akunPrive?.aktif) {
+    throw new PriveError("Akun Prive (3200) belum siap.", 400);
+  }
+  let kasId: number;
+  try {
+    kasId = await resolveKasAkunId(prisma, kasKode);
+  } catch (error) {
+    if (error instanceof KasSumberError) {
+      throw new PriveError(error.message, error.status);
+    }
+    throw error;
   }
 
   try {
@@ -50,7 +67,7 @@ export async function createPriveJurnal(
         status: "PENDING",
         baris: [
           { akunId: akunPrive.id, debit: nominal, kredit: new Prisma.Decimal(0) },
-          { akunId: akunKas.id, debit: new Prisma.Decimal(0), kredit: nominal },
+          { akunId: kasId, debit: new Prisma.Decimal(0), kredit: nominal },
         ],
       },
       ownerUserId,

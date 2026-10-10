@@ -1,7 +1,36 @@
 import { Prisma } from "@prisma/client";
 import { AKUN_KODE } from "@/lib/akun-kode";
+import {
+  KasSumberError,
+  parseSumberKasKode,
+  resolveKasAkunId,
+  type SumberKasKode,
+} from "@/lib/kas-sumber";
 import { prisma } from "@/lib/prisma";
 import { SalesOrderError } from "@/lib/sales-order";
+
+function fromKasError(error: unknown): never {
+  if (error instanceof KasSumberError) {
+    throw new SalesOrderError(error.message, error.status);
+  }
+  throw error;
+}
+
+function parseKasForSo(raw: unknown): SumberKasKode {
+  try {
+    return parseSumberKasKode(raw);
+  } catch (error) {
+    fromKasError(error);
+  }
+}
+
+async function resolveKasInTx(tx: Db, kode: SumberKasKode): Promise<number> {
+  try {
+    return await resolveKasAkunId(tx, kode);
+  } catch (error) {
+    fromKasError(error);
+  }
+}
 
 export const statusPembayaranSo = [
   "BELUM_BAYAR",
@@ -59,18 +88,13 @@ export function sisaPiutangSo(so: {
 
 type Db = typeof prisma;
 
-async function requireKasPosting(tx: Db, kode = "1100") {
-  const akun = await tx.akun.findUnique({
-    where: { kode },
-    select: { id: true, aktif: true, _count: { select: { anak: true } } },
-  });
-  if (!akun?.aktif || akun._count.anak > 0) {
-    throw new SalesOrderError(`Akun kas ${kode} tidak siap posting.`, 500);
-  }
-  return akun.id;
-}
+export async function catatDpSalesOrder(
+  soId: number,
+  userId: number,
+  raw: { sumberKas?: unknown } = {},
+) {
+  const kasKode = parseKasForSo(raw.sumberKas);
 
-export async function catatDpSalesOrder(soId: number, userId: number) {
   return prisma.$transaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({
       where: { id: soId },
@@ -90,7 +114,7 @@ export async function catatDpSalesOrder(soId: number, userId: number) {
       throw new SalesOrderError("Jumlah DP melebihi total SO.", 400);
     }
     const akunDpId = so.akun_dp_id ?? (await defaultAkunDpId());
-    const kasId = await requireKasPosting(tx as Db);
+    const kasId = await resolveKasInTx(tx as Db, kasKode);
 
     const jurnal = await tx.jurnal.create({
       data: {
@@ -147,10 +171,7 @@ export async function catatPelunasanSalesOrder(
   raw: { nominal: unknown; sumberKas?: unknown },
 ) {
   const nominal = parsePelunasanNominal(raw.nominal);
-  const kasKode =
-    String(raw.sumberKas ?? AKUN_KODE.KAS).trim() === AKUN_KODE.BANK
-      ? AKUN_KODE.BANK
-      : AKUN_KODE.KAS;
+  const kasKode = parseKasForSo(raw.sumberKas);
 
   return prisma.$transaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({ where: { id: soId } });
@@ -169,7 +190,7 @@ export async function catatPelunasanSalesOrder(
       throw new SalesOrderError(`Pelunasan melebihi sisa piutang (${sisa.toString()}).`, 400);
     }
 
-    const kasId = await requireKasPosting(tx as Db, kasKode);
+    const kasId = await resolveKasInTx(tx as Db, kasKode);
     const piutang = await tx.akun.findUnique({
       where: { kode: AKUN_KODE.PIUTANG },
       select: { id: true, aktif: true, _count: { select: { anak: true } } },

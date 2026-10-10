@@ -15,15 +15,19 @@ export const PUT = withApiHandler(async (request: Request, context?: unknown) =>
   if (!Number.isInteger(id) || id <= 0) {
     return apiFail("INVALID_ID", "ID tidak valid.", 400);
   }
-  let biayaPacking: unknown;
+  let body: Record<string, unknown> = {};
   try {
-    const body = (await request.json()) as Record<string, unknown>;
-    biayaPacking = body.biayaPacking ?? body.amount;
+    body = (await request.json()) as Record<string, unknown>;
   } catch {
-    biayaPacking = undefined;
+    body = {};
   }
   try {
-    await recordPackingCost(id, Number(userId), biayaPacking);
+    await recordPackingCost(
+      id,
+      Number(userId),
+      body.biayaPacking ?? body.amount,
+      { sumberKas: body.sumberKas },
+    );
     const listed = await listSalesOrders();
     const fresh = listed.find((r) => r.id === id);
     return apiOk(fresh ? serializeSalesOrder(fresh) : { id });

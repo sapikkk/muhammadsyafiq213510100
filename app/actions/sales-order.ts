@@ -74,7 +74,9 @@ export async function catatDpSalesOrderAction(
   try {
     const id = Number(formData.get("salesOrderId"));
     if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
-    const row = await catatDpSalesOrder(id, Number(session.user.id));
+    const row = await catatDpSalesOrder(id, Number(session.user.id), {
+      sumberKas: formData.get("sumberKas"),
+    });
     revalidatePath("/admin/penjualan");
     revalidatePath("/admin/jurnal");
     return {
@@ -143,7 +145,10 @@ export async function deliverSalesOrderAction(
     const id = Number(formData.get("salesOrderId"));
     if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
     const catatan = formData.get("catatan");
-    const row = await deliverSalesOrder(id, Number(session.user.id), catatan);
+    const row = await deliverSalesOrder(id, Number(session.user.id), {
+      catatan,
+      sumberKas: formData.get("sumberKas"),
+    });
     revalidatePath("/admin/penjualan");
     revalidatePath("/petani/pengiriman");
     revalidatePath("/admin/jurnal");
@@ -166,7 +171,12 @@ export async function recordPackingCostAction(
   try {
     const id = Number(formData.get("salesOrderId"));
     if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
-    const row = await recordPackingCost(id, Number(session.user.id), formData.get("biayaPacking"));
+    const row = await recordPackingCost(
+      id,
+      Number(session.user.id),
+      formData.get("biayaPacking"),
+      { sumberKas: formData.get("sumberKas") },
+    );
     revalidatePath("/admin/penjualan");
     const jId = row.jurnal_packing?.id;
     return {
