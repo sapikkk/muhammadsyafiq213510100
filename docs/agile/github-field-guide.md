@@ -7,7 +7,7 @@ URL: https://github.com/users/sapikkk/projects/1
 | Field | Arti | Sumber kebenaran |
 |-------|------|------------------|
 | **Status** | Todo / In progress / Done | Open + `progress-partial` = partial; Done = AC issue selesai atau close dengan catatan partial |
-| **Iteration** | Sprint 1–5 + rentang tanggal | `docs/agile/timeline-registry.md` |
+| **Iteration** | Sprint 1–5 (v1) + **Increment v2 · Post go-live** | `docs/agile/timeline-registry.md`, `docs/progress-backlog.md` |
 | **Priority** | P0 / P1 / P2 | PRD (HIGHEST → P0) — *belum diisi massal* |
 | **Size** | XS–XL | Opsional story points |
 | **Labels (issue)** | `sprint-1`…`sprint-5`, `progress-partial`, `blackbox-test`, `finding` | Filter di repo |
@@ -25,13 +25,21 @@ Sesuaikan **start date** setiap Iteration di Project settings ke [timeline-regis
 | sprint-3 | #29–#33 |
 | sprint-4 | #34–#38, #10, #16 |
 | sprint-5 | #39–#45 |
+| milestone *Increment v2* | #87–#102 (epic + story starter) |
+
+**Sinkron field board (Status / Iteration / Priority):**
+
+```bash
+npm run sync:project-board
+```
 
 ## Views disarankan
 
-1. **By Iteration** — progres per sprint (actual start).  
-2. **Board by Status** — daily standup.  
-3. **Filter `label:progress-partial`** — US belum 100% AC.  
-4. **Filter `label:blackbox-test`** — notulensi uji.
+1. **By Iteration** — Sprint 1–5 (v1 selesai) atau **Increment v2** untuk backlog aktif.  
+2. **Board by Status** — daily standup; **In progress:** #87 (Epic A), #96 (v2-B.1).  
+3. **Roadmap** — timeline sprint + v2.  
+4. **Filter `label:progress-partial`** — US belum 100% AC.  
+5. **Filter `label:ucd-v2` / `epic-v2`** — kartu increment v2.
 
 ## Repo vs Project
 

@@ -41,6 +41,7 @@ gh issue list --repo sapikkk/muhammadsyafiq213510100 --label sprint-2
 gh issue list --repo sapikkk/muhammadsyafiq213510100 --label progress-partial
 gh project item-list 1 --owner sapikkk --limit 50
 npm run sync:agile-progress   # → data/agile-progress.json (halaman depan /)
+npm run sync:project-board    # Status / Iteration / Priority Project #1
 ```
 
 Setelah ubah kode: `graphify update .` (lihat `AGENTS.md`).

@@ -25,7 +25,7 @@
 
 | ID | Issue | Epic |
 | --- | --- | --- |
-| v2-A.1 | [#95](https://github.com/sapikkk/muhammadsyafiq213510100/issues/95) | A |
+| v2-A.1 ✅ | [#95](https://github.com/sapikkk/muhammadsyafiq213510100/issues/95) **closed** · v1.14.0 | A |
 | v2-B.1 | [#96](https://github.com/sapikkk/muhammadsyafiq213510100/issues/96) | B |
 | v2-C.1 | [#97](https://github.com/sapikkk/muhammadsyafiq213510100/issues/97) | C |
 | v2-D.1 | [#98](https://github.com/sapikkk/muhammadsyafiq213510100/issues/98) | D |
@@ -38,8 +38,8 @@
 
 ## Urutan coding (PO)
 
-1. **Epic A** (#87 / #95) — COA + `is_system`  
-2. **Epic B** (#88 / #96) — WIP + abort (butuh A)  
+1. **Epic A** (#87) — `#95` **selesai**; lanjut sub-story COA (WIP, uang muka, kas split)  
+2. **Epic B** (#88 / #96) — **#96 in progress** di Project #1 — WIP + abort  
 3. **C → D → E** — operasi & SO  
 4. **F** — Smart Jurnal  
 5. **G → H** — laporan & tutup buku  
