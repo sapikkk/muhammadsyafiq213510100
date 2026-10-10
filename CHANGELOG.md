@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.27.0...v1.28.0) (2026-10-10)
+
+
+### Features
+
+* **ux:** flow nav, cache & tables v1.28.0 ([#122](https://github.com/sapikkk/muhammadsyafiq213510100/issues/122)) ([#123](https://github.com/sapikkk/muhammadsyafiq213510100/issues/123)) ([e82a9b5](https://github.com/sapikkk/muhammadsyafiq213510100/commit/e82a9b58006c90db446ab633722ccc8362f8e835))
+
 # [1.27.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.26.0...v1.27.0) (2026-10-10)
 
 
