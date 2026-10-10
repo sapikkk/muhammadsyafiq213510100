@@ -1,13 +1,14 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { BiayaError, createOverhead, updateBiayaLangsung } from "@/lib/biaya";
 
 async function assertAdmin() {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") throw new BiayaError("Hanya Admin.", 403);
+  if (!isRoleAllowed(session?.user?.role, "ADMIN")) throw new BiayaError("Hanya Admin.", 403);
 }
 
 export async function simpanBiayaLangsung(

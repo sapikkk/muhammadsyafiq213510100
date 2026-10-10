@@ -45,7 +45,7 @@ export default async function OwnerPage() {
       />
 
       {labaTerbaik ? (
-        <Card className="border-primary/30 bg-primary/5">
+        <Card className="border-foreground">
           <CardHeader className="pb-2">
             <CardTitle className="text-base">Bulan laba tertinggi (6 bulan)</CardTitle>
             <CardDescription>

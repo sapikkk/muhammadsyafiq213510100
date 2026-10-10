@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { InventarisStokRendah } from "@/components/inventaris-stok-rendah";
-import { listAlertStokMinimum } from "@/lib/inventaris";
+import { listAlertStokMinimum, serializeAlertStok } from "@/lib/inventaris";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +24,7 @@ export default async function AdminStokRendahPage() {
         </Link>
       </header>
 
-      <InventarisStokRendah items={items} showRestockHint />
+      <InventarisStokRendah items={items.map(serializeAlertStok)} showRestockHint />
     </div>
   );
 }

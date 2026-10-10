@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { requireExportRole, parsePeriodParams } from "@/lib/export-auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { withApiHandler } from "@/lib/api-response";
+import { parsePeriodParams } from "@/lib/export-auth";
 import { buildBalanceSheet } from "@/lib/balance-sheet";
 import { balanceSheetPdfLines, pdfBufferFromReport } from "@/lib/pdf-simple";
 
-export async function GET(request: Request) {
-  const session = await requireExportRole(["ADMIN", "OWNER"]);
-  if (!session) {
-    return NextResponse.json({ error: "Akses ditolak." }, { status: 403 });
-  }
+export const GET = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN", "OWNER"]);
+  if (denied) return denied;
   const url = new URL(request.url);
   const { end } = parsePeriodParams(url);
   const sheet = await buildBalanceSheet(end);
@@ -23,4 +23,4 @@ export async function GET(request: Request) {
       "Content-Disposition": `attachment; filename="${filename}"`,
     },
   });
-}
+});

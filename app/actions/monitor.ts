@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import {
@@ -17,7 +18,7 @@ export async function submitMonitorPertumbuhan(
 ): Promise<FormState> {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) return { error: "Belum masuk." };
-  if (session.user.role !== "PEKERJA") {
+  if (!isRoleAllowed(session.user.role, "PEKERJA")) {
     return { error: "Hanya petani yang boleh catat monitor." };
   }
 

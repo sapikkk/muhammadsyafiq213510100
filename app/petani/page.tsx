@@ -20,7 +20,10 @@ export default async function PetaniPage() {
         description="Tugas lapangan, batch aktif, dan histori log produksi."
       />
       <InventarisAlertBanner items={stokRendah} detailHref="/petani/stok-rendah" />
-      <PetaniTugasPanel tugas={tugas} histori={histori} />
+      <PetaniTugasPanel
+        tugas={tugas}
+        histori={histori.map((h) => ({ ...h, waktu: h.waktu.toISOString() }))}
+      />
     </div>
   );
 }

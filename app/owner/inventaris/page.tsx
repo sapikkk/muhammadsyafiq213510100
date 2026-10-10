@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { InventarisDaftar } from "@/components/inventaris-daftar";
-import { listItemInventaris } from "@/lib/inventaris";
+import { listItemInventaris, serializeItem } from "@/lib/inventaris";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +23,7 @@ export default async function OwnerInventarisPage() {
         </Link>
       </header>
 
-      <InventarisDaftar items={items} />
+      <InventarisDaftar items={items.map(serializeItem)} />
     </div>
   );
 }

@@ -16,3 +16,7 @@ jobs:
       - run: npm clean-install
       - run: npm run lint
       - run: npm run typecheck
+      - run: npm run check:audit-env
+      - run: npm run check:banned-ui
+      - run: npm run check:legacy-api-json
+      - run: npm run build

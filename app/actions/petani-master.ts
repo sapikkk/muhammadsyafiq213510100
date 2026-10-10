@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { PetaniError, createPetani, parsePetaniInput } from "@/lib/petani";
@@ -10,7 +11,7 @@ export async function simpanPetaniMaster(
   formData: FormData,
 ) {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") {
+  if (!isRoleAllowed(session?.user?.role, "ADMIN")) {
     return { error: "Hanya Admin." };
   }
   try {

@@ -1,6 +1,7 @@
 "use server";
 
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
@@ -16,7 +17,7 @@ export type AkunFormState = { error?: string; saved?: string };
 
 async function requireAdmin() {
   const session = await getServerSession(authOptions);
-  return session?.user?.role === "ADMIN";
+  return isRoleAllowed(session?.user?.role, "ADMIN");
 }
 
 function formToRecord(formData: FormData) {

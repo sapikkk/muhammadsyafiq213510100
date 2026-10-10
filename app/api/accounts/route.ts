@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
 import {
   AkunError,
   createAkun,
@@ -9,61 +8,62 @@ import {
   setAkunAktif,
   updateAkun,
 } from "@/lib/akun";
+import type { Akun } from "@prisma/client";
 
-async function requireRole(allowed: string[]) {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!allowed.includes(role)) {
-    return NextResponse.json(
-      { error: "Peran Anda tidak berhak." },
-      { status: 403 },
-    );
-  }
-  return null;
+function serializeAkun(row: Akun) {
+  return {
+    id: row.id,
+    kode: row.kode,
+    nama: row.nama,
+    tipe: row.tipe,
+    parentId: row.parentId,
+    aktif: row.aktif,
+    saldo: row.saldo.toString(),
+  };
 }
 
 function handleError(error: unknown) {
   if (error instanceof AkunError) {
-    return NextResponse.json({ error: error.message }, { status: error.status });
+    return apiFail("AKUN_ERROR", error.message, error.status);
   }
   if (error instanceof SyntaxError) {
-    return NextResponse.json({ error: "Body bukan JSON." }, { status: 400 });
+    return apiFail("INVALID_JSON", "Body bukan JSON.", 400);
   }
   throw error;
 }
 
-export async function GET() {
-  const denied = await requireRole(["ADMIN", "OWNER"]);
+export const GET = withApiHandler(async () => {
+  const { denied } = await requireApiRole(["ADMIN", "OWNER"]);
   if (denied) return denied;
-  return NextResponse.json(await listAkun());
-}
+  const rows = await listAkun();
+  return apiOk(rows.map(serializeAkun));
+});
 
-export async function POST(request: Request) {
-  const denied = await requireRole(["ADMIN"]);
+export const POST = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN"]);
   if (denied) return denied;
   try {
     const akun = await createAkun(parseAkunInput(await request.json()));
-    return NextResponse.json(akun, { status: 201 });
+    return apiOk(serializeAkun(akun), { status: 201 });
   } catch (error) {
     return handleError(error);
   }
-}
+});
 
-export async function PUT(request: Request) {
-  const denied = await requireRole(["ADMIN"]);
+export const PUT = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN"]);
   if (denied) return denied;
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const id = Number(body.id);
     if (!Number.isInteger(id) || id <= 0) {
-      return NextResponse.json({ error: "id wajib diisi." }, { status: 400 });
+      return apiFail("VALIDATION", "id wajib diisi.", 400);
     }
     if (typeof body.aktif === "boolean" && body.kode === undefined) {
-      return NextResponse.json(await setAkunAktif(id, body.aktif));
+      return apiOk(serializeAkun(await setAkunAktif(id, body.aktif)));
     }
-    return NextResponse.json(await updateAkun(id, parseAkunInput(body)));
+    return apiOk(serializeAkun(await updateAkun(id, parseAkunInput(body))));
   } catch (error) {
     return handleError(error);
   }
-}
+});

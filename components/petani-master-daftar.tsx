@@ -1,35 +1,35 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+"use client";
+
+import type { ColumnDef } from "@tanstack/react-table";
+import { useMemo } from "react";
+import { DataTable } from "@/components/data-table";
 import { formatRupiah } from "@/lib/format";
 
 type Row = { id: number; nama: string; gaji_bulanan: string };
 
 export function PetaniMasterDaftar({ rows }: { rows: Row[] }) {
-  if (rows.length === 0) {
-    return <p className="text-sm text-muted-foreground">Belum ada data petani (ERD).</p>;
-  }
+  const columns = useMemo<ColumnDef<Row>[]>(
+    () => [
+      { accessorKey: "nama", header: "Nama" },
+      {
+        accessorKey: "gaji_bulanan",
+        header: "Gaji bulanan",
+        cell: ({ row }) => (
+          <span className="tabular-nums">{formatRupiah(row.original.gaji_bulanan)}</span>
+        ),
+      },
+    ],
+    [],
+  );
+
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Nama</TableHead>
-          <TableHead className="text-right">Gaji bulanan</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {rows.map((row) => (
-          <TableRow key={row.id}>
-            <TableCell>{row.nama}</TableCell>
-            <TableCell className="text-right">{formatRupiah(row.gaji_bulanan)}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <DataTable
+      columns={columns}
+      data={rows}
+      pageSize={12}
+      searchPlaceholder="Cari petani…"
+      searchColumnIds={["nama"]}
+      emptyMessage="Belum ada data petani (ERD)."
+    />
   );
 }

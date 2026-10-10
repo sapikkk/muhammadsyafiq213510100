@@ -1,13 +1,17 @@
 "use client";
 
+import { useEffect, useMemo } from "react";
 import { useFormState } from "react-dom";
+import type { ColumnDef } from "@tanstack/react-table";
 import {
   createOwnerUser,
   resetOwnerUserPassword,
   type OwnerUserState,
 } from "@/app/actions/owner-users";
+import { DataTable } from "@/components/data-table";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
+import { notify } from "@/lib/notify";
 import { roleLabel, type Role } from "@/types/role";
 
 type UserRow = {
@@ -21,21 +25,52 @@ type UserRow = {
 export function OwnerUserPanel({ users }: { users: UserRow[] }) {
   const [createState, createAction] = useFormState(createOwnerUser, {} as OwnerUserState);
 
+  useEffect(() => {
+    if (createState.error) notify.error(createState.error);
+    if (createState.ok && createState.message) notify.success(createState.message);
+  }, [createState.error, createState.ok, createState.message]);
+
+  const columns = useMemo<ColumnDef<UserRow>[]>(
+    () => [
+      {
+        accessorKey: "nama",
+        header: "Nama",
+        cell: ({ row }) => (
+          <div>
+            <p className="font-medium">{row.original.nama}</p>
+            <p className="text-xs text-muted-foreground">{row.original.email}</p>
+          </div>
+        ),
+      },
+      {
+        accessorKey: "role",
+        header: "Peran",
+        cell: ({ row }) => (
+          <span className="text-sm">
+            {roleLabel[row.original.role]}
+            {row.original.mustChangePassword ? " · wajib ganti sandi" : ""}
+          </span>
+        ),
+      },
+      {
+        id: "actions",
+        header: "Aksi",
+        cell: ({ row }) =>
+          row.original.role !== "OWNER" ? (
+            <ResetPasswordForm userId={row.original.id} />
+          ) : (
+            <span className="text-xs text-muted-foreground">—</span>
+          ),
+      },
+    ],
+    [],
+  );
+
   return (
     <div className="space-y-8">
       <section className="space-y-4">
         <h2 className="text-lg font-semibold">Tambah akun login</h2>
-        <form action={createAction} className="grid max-w-lg gap-3 rounded-md border p-4 sm:grid-cols-2">
-          {createState.error ? (
-            <p className="sm:col-span-2 rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm">
-              {createState.error}
-            </p>
-          ) : null}
-          {createState.ok ? (
-            <p className="sm:col-span-2 rounded-md border border-primary/30 bg-primary/5 p-3 text-sm">
-              {createState.message}
-            </p>
-          ) : null}
+        <form action={createAction} className="grid max-w-lg gap-3 border p-4 sm:grid-cols-2">
           <label className="space-y-1 text-sm sm:col-span-2">
             <span className="font-medium">Nama</span>
             <Input name="nama" className="h-11" required />
@@ -46,7 +81,11 @@ export function OwnerUserPanel({ users }: { users: UserRow[] }) {
           </label>
           <label className="space-y-1 text-sm">
             <span className="font-medium">Peran</span>
-            <select name="role" className="flex h-11 w-full rounded-md border bg-background px-3 text-sm" defaultValue="PEKERJA">
+            <select
+              name="role"
+              className="flex h-11 w-full border border-input bg-background px-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
+              defaultValue="PEKERJA"
+            >
               <option value="PEKERJA">{roleLabel.PEKERJA}</option>
               <option value="ADMIN">{roleLabel.ADMIN}</option>
             </select>
@@ -63,21 +102,14 @@ export function OwnerUserPanel({ users }: { users: UserRow[] }) {
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">Daftar user</h2>
-        <ul className="divide-y rounded-md border">
-          {users.map((u) => (
-            <li key={u.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-start sm:justify-between">
-              <div>
-                <p className="font-medium">{u.nama}</p>
-                <p className="text-sm text-muted-foreground">{u.email}</p>
-                <p className="text-xs text-muted-foreground">
-                  {roleLabel[u.role]}
-                  {u.mustChangePassword ? " · wajib ganti sandi" : ""}
-                </p>
-              </div>
-              {u.role !== "OWNER" ? <ResetPasswordForm userId={u.id} /> : null}
-            </li>
-          ))}
-        </ul>
+        <DataTable
+          columns={columns}
+          data={users}
+          pageSize={8}
+          searchPlaceholder="Cari nama atau email…"
+          searchColumnIds={["nama", "email"]}
+          emptyMessage="Belum ada user."
+        />
       </section>
     </div>
   );
@@ -86,18 +118,21 @@ export function OwnerUserPanel({ users }: { users: UserRow[] }) {
 function ResetPasswordForm({ userId }: { userId: number }) {
   const [state, action] = useFormState(resetOwnerUserPassword, {} as OwnerUserState);
 
+  useEffect(() => {
+    if (state.error) notify.error(state.error);
+    if (state.ok && state.message) notify.success(state.message);
+  }, [state.error, state.ok, state.message]);
+
   return (
     <form action={action} className="flex flex-wrap items-end gap-2">
       <input type="hidden" name="userId" value={userId} />
       <label className="space-y-1 text-xs">
         <span className="text-muted-foreground">Sandi baru</span>
-        <Input name="password" type="password" className="h-9 w-40" minLength={8} required />
+        <Input name="password" type="password" className="h-9 w-36" minLength={8} required />
       </label>
       <SubmitButton pendingLabel="…" className="h-9">
         Reset
       </SubmitButton>
-      {state.error ? <p className="w-full text-xs text-destructive">{state.error}</p> : null}
-      {state.ok ? <p className="w-full text-xs text-primary">{state.message}</p> : null}
     </form>
   );
 }

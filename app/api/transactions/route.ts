@@ -1,42 +1,28 @@
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
 import {
   JurnalError,
   ajukanJurnal,
   createJurnal,
   listJurnal,
   parseJurnalInput,
+  serializeJurnalListRow,
   setujuiJurnal,
   tolakJurnal,
 } from "@/lib/jurnal";
 
-async function requireRole(allowed: string[]) {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) {
-    return { denied: NextResponse.json({ error: "Belum masuk." }, { status: 401 }) };
-  }
-  if (!allowed.includes(role)) {
-    return {
-      denied: NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 }),
-    };
-  }
-  return { userId: Number(session.user.id) };
-}
-
 function handleError(error: unknown) {
   if (error instanceof JurnalError) {
-    return NextResponse.json({ error: error.message }, { status: error.status });
+    return apiFail("JURNAL_ERROR", error.message, error.status);
   }
   if (error instanceof SyntaxError) {
-    return NextResponse.json({ error: "Body bukan JSON." }, { status: 400 });
+    return apiFail("INVALID_JSON", "Body bukan JSON.", 400);
   }
   throw error;
 }
 
-export async function GET(request: Request) {
-  const auth = await requireRole(["ADMIN", "OWNER"]);
+export const GET = withApiHandler(async (request: Request) => {
+  const auth = await requireApiRole(["ADMIN", "OWNER"]);
   if (auth.denied) return auth.denied;
   const q = new URL(request.url).searchParams;
   const rows = await listJurnal({
@@ -44,48 +30,42 @@ export async function GET(request: Request) {
     dari: q.get("dari") ?? undefined,
     sampai: q.get("sampai") ?? undefined,
   });
-  return NextResponse.json(rows);
-}
+  return apiOk(rows.map(serializeJurnalListRow));
+});
 
-export async function POST(request: Request) {
-  const auth = await requireRole(["ADMIN"]);
+export const POST = withApiHandler(async (request: Request) => {
+  const auth = await requireApiRole(["ADMIN"]);
   if (auth.denied) return auth.denied;
   try {
     const input = parseJurnalInput(await request.json());
-    const jurnal = await createJurnal(input, auth.userId!);
-    return NextResponse.json(jurnal, { status: 201 });
+    const jurnal = await createJurnal(input, Number(auth.session!.user.id));
+    return apiOk({ id: jurnal.id }, { status: 201 });
   } catch (error) {
     return handleError(error);
   }
-}
+});
 
-// PUT mengubah status: { id, aksi: "AJUKAN" | "SETUJUI" | "TOLAK", alasan? }
-export async function PUT(request: Request) {
-  const auth = await requireRole(["ADMIN"]);
+export const PUT = withApiHandler(async (request: Request) => {
+  const auth = await requireApiRole(["ADMIN"]);
   if (auth.denied) return auth.denied;
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const id = Number(body.id);
     if (!Number.isInteger(id) || id <= 0) {
-      return NextResponse.json({ error: "id wajib diisi." }, { status: 400 });
+      return apiFail("VALIDATION", "id wajib diisi.", 400);
     }
-    const olehId = auth.userId!;
+    const olehId = Number(auth.session!.user.id);
     switch (body.aksi) {
       case "AJUKAN":
-        return NextResponse.json(await ajukanJurnal(id));
+        return apiOk(await ajukanJurnal(id));
       case "SETUJUI":
-        return NextResponse.json(await setujuiJurnal(id, olehId));
+        return apiOk(await setujuiJurnal(id, olehId));
       case "TOLAK":
-        return NextResponse.json(
-          await tolakJurnal(id, olehId, String(body.alasan ?? "")),
-        );
+        return apiOk(await tolakJurnal(id, olehId, String(body.alasan ?? "")));
       default:
-        return NextResponse.json(
-          { error: "aksi harus AJUKAN, SETUJUI, atau TOLAK." },
-          { status: 400 },
-        );
+        return apiFail("VALIDATION", "aksi harus AJUKAN, SETUJUI, atau TOLAK.", 400);
     }
   } catch (error) {
     return handleError(error);
   }
-}
+});

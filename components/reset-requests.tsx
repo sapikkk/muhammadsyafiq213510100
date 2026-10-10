@@ -1,11 +1,15 @@
 "use client";
 
+import type { ColumnDef } from "@tanstack/react-table";
 import { useFormState } from "react-dom";
+import { useMemo } from "react";
 import {
   approvePasswordReset,
   rejectPasswordReset,
 } from "@/app/actions/password";
+import { DataTable } from "@/components/data-table";
 import { SubmitButton } from "@/components/submit-button";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export type PendingReset = {
   id: number;
@@ -14,8 +18,56 @@ export type PendingReset = {
   requestedAt: string;
 };
 
+function ResetActions({
+  id,
+  approveAction,
+}: {
+  id: number;
+  approveAction: (payload: FormData) => void;
+}) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      <form action={approveAction}>
+        <input type="hidden" name="id" value={id} />
+        <SubmitButton className="h-9" pendingLabel="Memproses...">
+          Setujui
+        </SubmitButton>
+      </form>
+      <form action={rejectPasswordReset}>
+        <input type="hidden" name="id" value={id} />
+        <SubmitButton variant="outline" className="h-9" pendingLabel="Memproses...">
+          Tolak
+        </SubmitButton>
+      </form>
+    </div>
+  );
+}
+
 export function ResetRequests({ requests }: { requests: PendingReset[] }) {
   const [state, approveAction] = useFormState(approvePasswordReset, {});
+  useActionToast({ error: state.error });
+
+  const columns = useMemo<ColumnDef<PendingReset>[]>(
+    () => [
+      { accessorKey: "nama", header: "Nama" },
+      { accessorKey: "email", header: "Email" },
+      {
+        accessorKey: "requestedAt",
+        header: "Diminta",
+        cell: ({ row }) => (
+          <span className="text-muted-foreground">{row.original.requestedAt}</span>
+        ),
+      },
+      {
+        id: "aksi",
+        header: "Aksi",
+        cell: ({ row }) => (
+          <ResetActions id={row.original.id} approveAction={approveAction} />
+        ),
+      },
+    ],
+    [approveAction],
+  );
 
   return (
     <section aria-labelledby="reset-title" className="space-y-3">
@@ -33,58 +85,20 @@ export function ResetRequests({ requests }: { requests: PendingReset[] }) {
             {state.tempPassword}
           </p>
           <p className="text-muted-foreground">
-            Berikan langsung ke orangnya. Sandi ini hanya tampil sekali, dan
-            wajib diganti saat ia masuk.
+            Berikan langsung ke orangnya. Sandi ini hanya tampil sekali, dan wajib diganti saat ia
+            masuk.
           </p>
         </div>
       ) : null}
 
-      {state.error ? (
-        <p role="alert" className="text-sm text-destructive">
-          {state.error}
-        </p>
-      ) : null}
-
-      {requests.length === 0 ? (
-        <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-          Belum ada permintaan reset sandi.
-        </p>
-      ) : (
-        <ul className="divide-y rounded-md border">
-          {requests.map((request) => (
-            <li
-              key={request.id}
-              className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between"
-            >
-              <div className="text-sm">
-                <p className="font-medium">{request.nama}</p>
-                <p className="text-muted-foreground">{request.email}</p>
-                <p className="text-xs text-muted-foreground">
-                  Diminta {request.requestedAt}
-                </p>
-              </div>
-              <div className="flex gap-2">
-                <form action={approveAction}>
-                  <input type="hidden" name="id" value={request.id} />
-                  <SubmitButton className="h-11" pendingLabel="Memproses...">
-                    Setujui
-                  </SubmitButton>
-                </form>
-                <form action={rejectPasswordReset}>
-                  <input type="hidden" name="id" value={request.id} />
-                  <SubmitButton
-                    variant="outline"
-                    className="h-11"
-                    pendingLabel="Memproses..."
-                  >
-                    Tolak
-                  </SubmitButton>
-                </form>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+      <DataTable
+        columns={columns}
+        data={requests}
+        pageSize={8}
+        searchPlaceholder="Cari nama atau email…"
+        searchColumnIds={["nama", "email"]}
+        emptyMessage="Belum ada permintaan reset sandi."
+      />
     </section>
   );
 }

@@ -4,6 +4,7 @@ import { useFormState } from "react-dom";
 import { submitTambalSusulan } from "@/app/actions/tambal";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 type PackOption = {
   id: number;
@@ -21,6 +22,7 @@ export function TambalSusulanForm({
   packs: PackOption[];
 }) {
   const [state, formAction] = useFormState(submitTambalSusulan, {});
+  useActionToast({ error: state.error, ok: state.ok });
 
   if (packs.length === 0) {
     return (
@@ -37,17 +39,6 @@ export function TambalSusulanForm({
       <p className="text-sm text-muted-foreground">
         Ganti bibit/media gagal dari active pack. Susut batch disesuaikan otomatis.
       </p>
-      {state.error ? (
-        <p className="text-sm text-destructive" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="text-sm text-primary" role="status">
-          {state.ok}
-        </p>
-      ) : null}
-
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Active pack</span>
         <select

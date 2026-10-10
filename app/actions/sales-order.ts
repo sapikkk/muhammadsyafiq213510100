@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import {
@@ -18,7 +19,7 @@ type FormState = { error?: string; ok?: string };
 export async function submitSalesOrder(_prev: FormState, formData: FormData): Promise<FormState> {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) return { error: "Belum masuk." };
-  if (session.user.role !== "ADMIN") return { error: "Hanya Admin." };
+  if (!isRoleAllowed(session.user.role, "ADMIN")) return { error: "Hanya Admin." };
 
   try {
     const barisJson = formData.get("barisJson");
@@ -42,7 +43,7 @@ export async function confirmSalesOrderAction(
   formData: FormData,
 ): Promise<FormState> {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") return { error: "Hanya Admin." };
+  if (!isRoleAllowed(session?.user?.role, "ADMIN")) return { error: "Hanya Admin." };
 
   try {
     const id = Number(formData.get("salesOrderId"));
@@ -57,7 +58,7 @@ export async function confirmSalesOrderAction(
 }
 
 function deliveryRoleOk(role: string | undefined) {
-  return role === "ADMIN" || role === "PEKERJA";
+  return isRoleAllowed(role, ["ADMIN", "PEKERJA"]);
 }
 
 export async function shipSalesOrderAction(
@@ -112,8 +113,8 @@ export async function recordPackingCostAction(
   formData: FormData,
 ): Promise<FormState> {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") return { error: "Hanya Admin." };
-  if (!session.user.id) return { error: "Belum masuk." };
+  if (!session?.user?.id) return { error: "Belum masuk." };
+  if (!isRoleAllowed(session.user.role, "ADMIN")) return { error: "Hanya Admin." };
   try {
     const id = Number(formData.get("salesOrderId"));
     if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
@@ -136,8 +137,8 @@ export async function cancelSalesOrderAction(
   formData: FormData,
 ): Promise<FormState> {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") return { error: "Hanya Admin." };
-  if (!session.user.id) return { error: "Belum masuk." };
+  if (!session?.user?.id) return { error: "Belum masuk." };
+  if (!isRoleAllowed(session.user.role, "ADMIN")) return { error: "Hanya Admin." };
   try {
     const id = Number(formData.get("salesOrderId"));
     if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };

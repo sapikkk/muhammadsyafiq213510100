@@ -5,11 +5,8 @@ import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { formatQty, formatRupiah } from "@/lib/format";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
-import type { ActivePack, ItemInventaris } from "@prisma/client";
-
-type PackAktif = ActivePack & {
-  item: Pick<ItemInventaris, "kode" | "nama" | "satuan">;
-};
+import { useActionToast } from "@/lib/hooks/use-action-toast";
+import type { ActivePackListRow } from "@/lib/active-pack";
 
 const selectClass =
   "flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm";
@@ -18,13 +15,14 @@ export function ActivePackPakaiForm({
   packs,
   action,
 }: {
-  packs: PackAktif[];
+  packs: ActivePackListRow[];
   action: (
     prev: { error?: string; ok?: string },
     formData: FormData,
   ) => Promise<{ error?: string; ok?: string }>;
 }) {
   const [state, formAction] = useFormState(action, {});
+  useActionToast({ error: state.error, ok: state.ok });
   const aktif = packs.filter((p) => p.status === "AKTIF");
 
   if (aktif.length === 0) {
@@ -38,16 +36,6 @@ export function ActivePackPakaiForm({
   return (
     <form action={formAction} className="space-y-4 rounded-md border p-4">
       <h2 className="text-lg font-semibold">Pakai unit dari pack</h2>
-      {state.error ? (
-        <p className="text-sm text-destructive" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="text-sm text-primary" role="status">
-          {state.ok}
-        </p>
-      ) : null}
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Pack</span>
         <select name="id" required className={selectClass} defaultValue="">

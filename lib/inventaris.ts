@@ -1,4 +1,10 @@
-import { Prisma, type ItemInventaris, type SatuanInventaris, type TipePergerakan } from "@prisma/client";
+import {
+  Prisma,
+  type ItemInventaris,
+  type PergerakanInventaris,
+  type SatuanInventaris,
+  type TipePergerakan,
+} from "@prisma/client";
 import { satuanInventarisList } from "@/lib/inventaris-satuan";
 import { tipePergerakanList } from "@/lib/inventaris-pergerakan";
 import { prisma } from "@/lib/prisma";
@@ -159,6 +165,38 @@ export async function listPergerakan(itemId?: number, limit = 50) {
   });
 }
 
+export function serializePergerakan(
+  row: Awaited<ReturnType<typeof listPergerakan>>[number],
+) {
+  return {
+    id: row.id,
+    tipe: row.tipe,
+    jumlah: row.jumlah.toString(),
+    stokSebelum: row.stokSebelum.toString(),
+    stokSesudah: row.stokSesudah.toString(),
+    keterangan: row.keterangan,
+    dibuatPada: row.dibuatPada.toISOString(),
+    item: row.item,
+    user: row.user,
+  };
+}
+
+export type SerializedPergerakan = ReturnType<typeof serializePergerakan>;
+
+export function serializePergerakanBare(row: PergerakanInventaris) {
+  return {
+    id: row.id,
+    itemId: row.itemId,
+    tipe: row.tipe,
+    jumlah: row.jumlah.toString(),
+    stokSebelum: row.stokSebelum.toString(),
+    stokSesudah: row.stokSesudah.toString(),
+    keterangan: row.keterangan,
+    userId: row.userId,
+    dibuatPada: row.dibuatPada.toISOString(),
+  };
+}
+
 function hitungStokBaru(
   saatIni: Prisma.Decimal,
   tipe: TipePergerakan,
@@ -213,6 +251,8 @@ export function serializeItem(item: ItemInventaris) {
   };
 }
 
+export type SerializedItemInventaris = ReturnType<typeof serializeItem>;
+
 /** Item aktif dengan stok saat ini di bawah stok minimum (US4.3). */
 export async function listAlertStokMinimum() {
   const items = await listItemInventaris(true);
@@ -227,3 +267,5 @@ export function serializeAlertStok(item: ItemInventaris) {
     kekurangan: kekurangan.gt(0) ? kekurangan.toString() : "0",
   };
 }
+
+export type SerializedAlertStok = ReturnType<typeof serializeAlertStok>;

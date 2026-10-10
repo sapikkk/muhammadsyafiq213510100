@@ -4,7 +4,12 @@ import { InventarisDaftar } from "@/components/inventaris-daftar";
 import { InventarisItemForm } from "@/components/inventaris-item-form";
 import { InventarisMovementForm } from "@/components/inventaris-movement-form";
 import { InventarisRiwayat } from "@/components/inventaris-riwayat";
-import { listItemInventaris, listPergerakan } from "@/lib/inventaris";
+import {
+  listItemInventaris,
+  listPergerakan,
+  serializeItem,
+  serializePergerakan,
+} from "@/lib/inventaris";
 
 export const dynamic = "force-dynamic";
 
@@ -34,7 +39,7 @@ export default async function AdminInventarisPage() {
         <h2 id="stok-title" className="text-lg font-semibold">
           Stok saat ini
         </h2>
-        <InventarisDaftar items={items} />
+        <InventarisDaftar items={items.map(serializeItem)} />
       </section>
 
       <InventarisItemForm />
@@ -44,7 +49,7 @@ export default async function AdminInventarisPage() {
         <h2 id="riwayat-title" className="text-lg font-semibold">
           Riwayat pergerakan
         </h2>
-        <InventarisRiwayat rows={riwayat} />
+        <InventarisRiwayat rows={riwayat.map(serializePergerakan)} />
       </section>
     </div>
   );

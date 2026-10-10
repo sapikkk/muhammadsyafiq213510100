@@ -38,7 +38,8 @@ export default async function HarvestDetailAdminPage({ params }: { params: { id:
     try {
       hppData = await calculateHPP(laporan.siklus_id, prisma);
     } catch (error) {
-      console.error(error);
+      const { logger } = await import("@/lib/logger");
+      logger.error("calculateHPP gagal", error);
     }
   } else if (laporan.status === "APPROVED") {
     hppData = await prisma.hPP.findUnique({ where: { siklus_id: laporan.siklus_id } });

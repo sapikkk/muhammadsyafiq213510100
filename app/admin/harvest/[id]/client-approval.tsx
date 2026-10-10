@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { isApiFailure, parseApiErrorMessage } from "@/lib/api-parse-client";
+import { notify } from "@/lib/notify";
 
 export function ClientApproval({ laporanId }: { laporanId: number }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [mode, setMode] = useState<"IDLE" | "REJECT">("IDLE");
   const [alasan, setAlasan] = useState("");
   const [useOverride, setUseOverride] = useState(false);
@@ -20,7 +21,6 @@ export function ClientApproval({ laporanId }: { laporanId: number }) {
 
   const handleApprove = async () => {
     setLoading(true);
-    setError("");
     try {
       const body: Record<string, unknown> = {};
       if (useOverride) {
@@ -35,61 +35,66 @@ export function ClientApproval({ laporanId }: { laporanId: number }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Gagal approve.");
+      const data: unknown = await res.json();
+      if (isApiFailure(data, res.ok)) {
+        throw new Error(parseApiErrorMessage(data, "Gagal approve."));
+      }
+      notify.success("Laporan panen disetujui.");
       router.refresh();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Gagal approve.");
+      notify.error(err instanceof Error ? err.message : "Gagal approve.");
+    } finally {
       setLoading(false);
     }
   };
 
   const handleReject = async () => {
     if (!alasan.trim()) {
-      setError("Alasan wajib diisi.");
+      notify.error("Alasan wajib diisi.");
       return;
     }
     setLoading(true);
-    setError("");
     try {
       const res = await fetch(`/api/harvest/${laporanId}/reject`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ alasan }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Gagal reject.");
+      const data: unknown = await res.json();
+      if (isApiFailure(data, res.ok)) {
+        throw new Error(parseApiErrorMessage(data, "Gagal reject."));
+      }
+      notify.success("Laporan panen ditolak.");
       router.refresh();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Gagal reject.");
+      notify.error(err instanceof Error ? err.message : "Gagal reject.");
+    } finally {
       setLoading(false);
     }
   };
 
   if (mode === "REJECT") {
     return (
-      <div className="space-y-4 rounded-md bg-red-50 p-4">
-        <h4 className="font-medium text-red-900">Tolak Laporan Panen</h4>
+      <div className="space-y-4 rounded-md border border-destructive/40 p-4">
+        <h4 className="font-medium">Tolak laporan panen</h4>
         <Textarea
           placeholder="Berikan alasan penolakan..."
           value={alasan}
           onChange={(e) => setAlasan(e.target.value)}
           disabled={loading}
         />
-        {error ? <p className="text-sm text-red-600">{error}</p> : null}
         <div className="flex justify-end gap-2">
           <Button
             variant="ghost"
             disabled={loading}
             onClick={() => {
               setMode("IDLE");
-              setError("");
             }}
           >
             Batal
           </Button>
           <Button variant="destructive" disabled={loading} onClick={handleReject}>
-            Konfirmasi Tolak
+            Konfirmasi tolak
           </Button>
         </div>
       </div>
@@ -98,8 +103,6 @@ export function ClientApproval({ laporanId }: { laporanId: number }) {
 
   return (
     <div className="space-y-4">
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
-
       <label className="flex min-h-11 items-start gap-3 text-sm">
         <input
           type="checkbox"
@@ -154,13 +157,13 @@ export function ClientApproval({ laporanId }: { laporanId: number }) {
 
       <div className="flex flex-wrap gap-4">
         <Button onClick={handleApprove} disabled={loading} className="w-full sm:w-auto">
-          Approve & Generate HPP
+          Approve & generate HPP
         </Button>
         <Button
           onClick={() => setMode("REJECT")}
           disabled={loading}
           variant="outline"
-          className="w-full border-red-200 text-red-600 hover:bg-red-50 sm:w-auto"
+          className="w-full sm:w-auto"
         >
           Tolak
         </Button>

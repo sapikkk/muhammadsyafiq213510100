@@ -5,6 +5,7 @@ import { klasifikasiSusut } from "@/app/actions/susut";
 import { SubmitButton } from "@/components/submit-button";
 import { kategoriSusutOptions } from "@/lib/susut";
 import { labelTahap } from "@/lib/log-kegagalan";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export type LogMenunggu = {
   id: number;
@@ -19,6 +20,7 @@ export type LogMenunggu = {
 
 function KlasifikasiBaris({ row }: { row: LogMenunggu }) {
   const [state, formAction] = useFormState(klasifikasiSusut, {});
+  useActionToast({ error: state.error, ok: state.ok });
 
   return (
     <li className="space-y-3 rounded-md border p-4 text-sm">
@@ -51,16 +53,6 @@ function KlasifikasiBaris({ row }: { row: LogMenunggu }) {
           Klasifikasi
         </SubmitButton>
       </form>
-      {state.error ? (
-        <p className="text-destructive" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="text-primary" role="status">
-          {state.ok}
-        </p>
-      ) : null}
     </li>
   );
 }

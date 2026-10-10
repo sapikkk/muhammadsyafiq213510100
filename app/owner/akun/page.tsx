@@ -1,6 +1,6 @@
 import { AkunTree } from "@/components/akun-tree";
 import { PageHeader } from "@/components/page-header";
-import { buildTree, listAkun } from "@/lib/akun";
+import { buildClientTree, listAkun } from "@/lib/akun";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +17,7 @@ export default async function OwnerAkunPage() {
       <p className="text-sm text-muted-foreground">
         {aktif.length} akun aktif dari {rows.length} total.
       </p>
-      <AkunTree tree={buildTree(rows)} />
+      <AkunTree tree={buildClientTree(rows)} />
     </div>
   );
 }

@@ -145,6 +145,23 @@ export function listJurnal(filter: FilterJurnal) {
   });
 }
 
+export type JurnalListRow = Awaited<ReturnType<typeof listJurnal>>[number];
+
+export function serializeJurnalListRow(j: JurnalListRow) {
+  const total = j.baris.reduce((sum, b) => sum.add(b.debit), nol);
+  return {
+    id: j.id,
+    tanggalIso: j.tanggal.toISOString(),
+    keterangan: j.keterangan,
+    status: j.status,
+    dibuatOlehNama: j.dibuatOleh.nama,
+    barisCount: j.baris.length,
+    totalDebit: total.toString(),
+  };
+}
+
+export type SerializedJurnalListRow = ReturnType<typeof serializeJurnalListRow>;
+
 export function getJurnal(id: number) {
   return prisma.jurnal.findUnique({
     where: { id },

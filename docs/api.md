@@ -1,6 +1,28 @@
 # Dokumentasi API
 
-Semua endpoint JSON, butuh sesi NextAuth (cookie). Peran dicek di setiap handler. Jawaban error selalu `{ "error": "pesan" }` dengan status HTTP yang sesuai: 400 masukan salah, 401 belum masuk, 403 peran tidak berhak, 404 tidak ditemukan, 409 bentrok data unik.
+Semua endpoint butuh sesi NextAuth (cookie). Peran dicek di setiap handler.
+
+## Kontrak JSON (route CRUD & laporan)
+
+Sukses:
+
+```json
+{ "ok": true, "data": … }
+```
+
+Gagal:
+
+```json
+{ "ok": false, "error": { "code": "FORBIDDEN", "message": "…", "fields": {} } }
+```
+
+Status HTTP: 400 masukan salah, 401 belum masuk, 403 peran tidak berhak, 404 tidak ditemukan, 409 bentrok data unik, 500 kesalahan server.
+
+Klien browser/server action internal boleh tetap memakai bentuk lama `{ "error": "pesan" }` sampai diseragamkan. Untuk fetch dari front-end gunakan `lib/api-client.ts`.
+
+## Export file
+
+`GET /api/export/*` mengembalikan PDF atau XLSX jika berhasil. Jika ditolak (auth/RBAC), respons JSON memakai kontrak `ok: false` di atas, bukan file.
 
 ## `/api/accounts` (US2.1, bagan akun)
 

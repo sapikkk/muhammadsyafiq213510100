@@ -4,23 +4,15 @@ import { useFormState } from "react-dom";
 import { submitPelanggan } from "@/app/actions/pelanggan";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export function PelangganForm() {
   const [state, formAction] = useFormState(submitPelanggan, {});
+  useActionToast({ error: state.error, ok: state.ok });
 
   return (
     <form action={formAction} className="max-w-lg space-y-4 rounded-md border p-4">
       <h3 className="text-lg font-semibold">Tambah pelanggan</h3>
-      {state.error ? (
-        <p className="text-sm text-destructive" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="text-sm text-primary" role="status">
-          {state.ok}
-        </p>
-      ) : null}
       <label className="block space-y-1 text-sm">
         <span className="font-medium">Nama</span>
         <Input name="nama" required maxLength={100} className="h-11" />

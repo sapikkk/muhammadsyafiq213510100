@@ -1,49 +1,83 @@
+"use client";
+
+import type { ColumnDef } from "@tanstack/react-table";
+import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
+import { DataTable } from "@/components/data-table";
 import { formatQty, formatRupiah } from "@/lib/format";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
-import type { ActivePack, ItemInventaris, User } from "@prisma/client";
+import type { ActivePackListRow } from "@/lib/active-pack";
 
-type Row = ActivePack & {
-  item: Pick<ItemInventaris, "kode" | "nama" | "satuan">;
-  dibuatOleh: Pick<User, "nama">;
-};
+export type { ActivePackListRow };
 
-export function ActivePackDaftar({ rows }: { rows: Row[] }) {
-  if (rows.length === 0) {
-    return (
-      <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-        Belum ada active pack.
-      </p>
-    );
-  }
+export function ActivePackDaftar({ rows }: { rows: ActivePackListRow[] }) {
+  const columns = useMemo<ColumnDef<ActivePackListRow>[]>(
+    () => [
+      { accessorKey: "kode", header: "Kode" },
+      {
+        id: "item",
+        header: "Item",
+        accessorFn: (row) => `${row.item.kode} ${row.item.nama}`,
+        cell: ({ row }) => (
+          <span>
+            {row.original.item.kode} {row.original.item.nama}
+          </span>
+        ),
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }) =>
+          row.original.status === "HABIS" ? (
+            <Badge variant="outline" className="border-muted-foreground">
+              Habis
+            </Badge>
+          ) : (
+            <Badge variant="secondary">Aktif</Badge>
+          ),
+      },
+      {
+        accessorKey: "biayaPerUnit",
+        header: "Biaya/unit",
+        cell: ({ row }) => (
+          <span className="tabular-nums">{formatRupiah(row.original.biayaPerUnit)}</span>
+        ),
+      },
+      {
+        accessorKey: "hargaPack",
+        header: "Harga pack",
+        cell: ({ row }) => (
+          <span className="tabular-nums">{formatRupiah(row.original.hargaPack)}</span>
+        ),
+      },
+      {
+        id: "sisa",
+        header: "Sisa",
+        accessorFn: (row) => `${row.sisaUnit} ${row.item.satuan}`,
+        cell: ({ row }) => (
+          <span className="tabular-nums">
+            {formatQty(row.original.sisaUnit)} / {formatQty(row.original.jumlahUnit)}{" "}
+            {satuanInventarisLabel[row.original.item.satuan]}
+          </span>
+        ),
+      },
+      {
+        accessorKey: "dibuatOleh.nama",
+        header: "Dibuat oleh",
+        cell: ({ row }) => row.original.dibuatOleh.nama,
+      },
+    ],
+    [],
+  );
 
   return (
-    <ul className="divide-y rounded-md border">
-      {rows.map((row) => (
-        <li key={row.id} className="space-y-1 p-4 text-sm">
-          <div className="flex flex-wrap items-center gap-2">
-            <p className="font-medium">
-              {row.kode} · {row.item.kode} {row.item.nama}
-            </p>
-            {row.status === "HABIS" ? (
-              <Badge variant="outline" className="border-muted-foreground">
-                Habis
-              </Badge>
-            ) : (
-              <Badge variant="secondary">Aktif</Badge>
-            )}
-          </div>
-          <p className="text-muted-foreground">
-            Biaya/unit: {formatRupiah(row.biayaPerUnit)} · Harga pack:{" "}
-            {formatRupiah(row.hargaPack)} · Sisa: {formatQty(row.sisaUnit)} /{" "}
-            {formatQty(row.jumlahUnit)}{" "}
-            {satuanInventarisLabel[row.item.satuan]}
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Dibuat {row.dibuatOleh.nama}
-          </p>
-        </li>
-      ))}
-    </ul>
+    <DataTable
+      columns={columns}
+      data={rows}
+      pageSize={10}
+      searchPlaceholder="Cari pack atau item…"
+      searchColumnIds={["kode", "item", "dibuatOleh.nama"]}
+      emptyMessage="Belum ada active pack."
+    />
   );
 }
