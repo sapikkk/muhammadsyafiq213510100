@@ -1,3 +1,10 @@
+## [1.19.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.19.0...v1.19.1) (2026-10-10)
+
+
+### Bug Fixes
+
+* **v2-G.1:** wire KPI hidroponik on owner dashboard ([#110](https://github.com/sapikkk/muhammadsyafiq213510100/issues/110)) ([159e141](https://github.com/sapikkk/muhammadsyafiq213510100/commit/159e14169bdf1a390f89938ebcd5b6dc58b3e44d))
+
 # [1.19.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.18.0...v1.19.0) (2026-10-10)
 
 
