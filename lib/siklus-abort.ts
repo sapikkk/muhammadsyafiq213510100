@@ -52,6 +52,14 @@ function parseAlasan(raw: unknown): string {
   return text;
 }
 
+export async function resolveAkunWip(tx: PrismaTransaction) {
+  let akun = await tx.akun.findUnique({ where: { kode: WIP_AKUN_KODE } });
+  if (!akun?.aktif) {
+    akun = await tx.akun.findUnique({ where: { kode: WIP_AKUN_FALLBACK } });
+  }
+  return akun;
+}
+
 async function postingJurnalAbort(
   tx: PrismaTransaction,
   userId: number,
@@ -62,10 +70,7 @@ async function postingJurnalAbort(
   if (nominal.lte(0)) return null;
 
   const akunKerugian = await tx.akun.findUnique({ where: { kode: KERUGIAN_ABORT_KODE } });
-  let akunWip = await tx.akun.findUnique({ where: { kode: WIP_AKUN_KODE } });
-  if (!akunWip?.aktif) {
-    akunWip = await tx.akun.findUnique({ where: { kode: WIP_AKUN_FALLBACK } });
-  }
+  const akunWip = await resolveAkunWip(tx);
   if (!akunKerugian || !akunWip) {
     throw new SiklusAbortError("Akun 5300 atau WIP (1360/1350) tidak ditemukan.", 500);
   }

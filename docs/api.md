@@ -202,6 +202,8 @@ UI Petani: form di `/petani/siklus/[id]`. Admin: `/admin/harvest` (baca).
 
 Approve/reject: `POST /api/harvest/[id]/approve`, `POST /api/harvest/[id]/reject` (Admin). Detail `/admin/harvest/[id]`.
 
+Saat approve (v2): jurnal otomatis `sumber=AUTO` — **Dr 1350** persediaan sayur, **Dr 5300** (jika susut abnormal), **Cr 1360** WIP; HPP per lubang di `HPP`; pengakuan **5100** tetap saat SO delivered.
+
 ## `/api/petani` (US4.5, master Petani ERD)
 
 | Method | Peran | Body | Jawaban |
