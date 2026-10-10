@@ -1,14 +1,11 @@
+import "server-only";
+
 import { listAlertStokMinimumCached, listSiklusAktifCached } from "@/lib/cached-queries";
 import { prisma } from "@/lib/prisma";
 import { faseBerikutnya, faseLabel, isFaseProduksi } from "@/lib/siklus-fase";
+import type { TugasPetani } from "@/lib/tugas-petani-types";
 
-export type TugasPetani = {
-  id: string;
-  prioritas: "tinggi" | "sedang" | "rendah";
-  judul: string;
-  deskripsi: string;
-  href: string;
-};
+export type { TugasPetani } from "@/lib/tugas-petani-types";
 
 export async function daftarTugasPetani(): Promise<TugasPetani[]> {
   const [siklus, stokRendah] = await Promise.all([

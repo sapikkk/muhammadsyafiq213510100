@@ -1,11 +1,19 @@
+import "server-only";
+
 import {
   Prisma,
   type ActivePack,
-  type SatuanInventaris,
   type StatusActivePack,
 } from "@prisma/client";
+import type {
+  ActivePackListRow,
+  SerializedActivePack,
+} from "@/lib/active-pack-types";
 import { maybeJurnalPenyesuaianPackHabis } from "@/lib/active-pack-habis-jurnal";
+import type { SatuanInventaris } from "@/lib/inventaris-satuan";
 import { prisma, type PrismaTransaction } from "@/lib/prisma";
+
+export type { ActivePackListRow, SerializedActivePack } from "@/lib/active-pack-types";
 
 export type PakaiActivePackOpts = { userId?: number; tanggal?: Date };
 
@@ -182,7 +190,7 @@ export function serializeActivePack(
     item?: { kode: string; nama: string; satuan: string };
     dibuatOleh?: { nama: string };
   },
-) {
+): SerializedActivePack {
   return {
     ...row,
     hargaPack: row.hargaPack.toString(),
@@ -193,9 +201,3 @@ export function serializeActivePack(
   };
 }
 
-export type SerializedActivePack = ReturnType<typeof serializeActivePack>;
-
-export type ActivePackListRow = SerializedActivePack & {
-  item: { kode: string; nama: string; satuan: SatuanInventaris };
-  dibuatOleh: { nama: string };
-};

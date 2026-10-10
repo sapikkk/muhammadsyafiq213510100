@@ -4,9 +4,9 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
 import { varietasStatusLabel, type VarietasStatus } from "@/lib/varietas-status";
-import type { serializeVarietas } from "@/lib/varietas";
+import type { SerializedVarietas } from "@/lib/varietas-types";
 
-type Row = ReturnType<typeof serializeVarietas>;
+type Row = SerializedVarietas;
 
 export function VarietasDaftar({ rows }: { rows: Row[] }) {
   const columns = useMemo<ColumnDef<Row>[]>(

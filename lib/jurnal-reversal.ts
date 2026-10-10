@@ -1,3 +1,5 @@
+import "server-only";
+
 import { prisma } from "@/lib/prisma";
 import { JurnalError } from "@/lib/jurnal";
 import { assertJurnalTanggalAllowed, PeriodLockError } from "@/lib/period-lock";

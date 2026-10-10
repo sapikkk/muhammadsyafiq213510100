@@ -14,7 +14,7 @@ import {
 import {
   kapasitasLubangBenihPack,
   kapasitasLubangMediaPack,
-} from "@/lib/pack-kapasitas-lubang";
+} from "@/lib/pack-kapasitas-lubang-math";
 import { isItemBenih, isItemMedia } from "@/lib/siklus-pack";
 import type { SatuanInventaris } from "@prisma/client";
 import { useActionToast } from "@/lib/hooks/use-action-toast";

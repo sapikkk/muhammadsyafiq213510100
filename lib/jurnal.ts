@@ -1,7 +1,12 @@
+import "server-only";
+
 import { Prisma, type StatusJurnal, type SumberJurnal } from "@prisma/client";
+import type { SerializedJurnalListRow } from "@/lib/jurnal-types";
 import { statusJurnalList } from "@/lib/jurnal-status";
 import { assertJurnalTanggalAllowed, PeriodLockError } from "@/lib/period-lock";
 import { prisma } from "@/lib/prisma";
+
+export type { SerializedJurnalListRow } from "@/lib/jurnal-types";
 
 export class JurnalError extends Error {
   constructor(
@@ -167,7 +172,7 @@ export function listJurnal(filter: FilterJurnal) {
 
 export type JurnalListRow = Awaited<ReturnType<typeof listJurnal>>[number];
 
-export function serializeJurnalListRow(j: JurnalListRow) {
+export function serializeJurnalListRow(j: JurnalListRow): SerializedJurnalListRow {
   const total = j.baris.reduce((sum, b) => sum.add(b.debit), nol);
   return {
     id: j.id,
@@ -180,8 +185,6 @@ export function serializeJurnalListRow(j: JurnalListRow) {
     totalDebit: total.toString(),
   };
 }
-
-export type SerializedJurnalListRow = ReturnType<typeof serializeJurnalListRow>;
 
 export function getJurnal(id: number) {
   return prisma.jurnal.findUnique({

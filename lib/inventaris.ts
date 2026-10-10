@@ -1,13 +1,24 @@
+import "server-only";
+
 import {
   Prisma,
   type ItemInventaris,
   type PergerakanInventaris,
-  type SatuanInventaris,
-  type TipePergerakan,
 } from "@prisma/client";
-import { satuanInventarisList } from "@/lib/inventaris-satuan";
-import { tipePergerakanList } from "@/lib/inventaris-pergerakan";
+import type {
+  SerializedAlertStok,
+  SerializedItemInventaris,
+  SerializedPergerakan,
+} from "@/lib/inventaris-types";
+import { satuanInventarisList, type SatuanInventaris } from "@/lib/inventaris-satuan";
+import { tipePergerakanList, type TipePergerakan } from "@/lib/inventaris-pergerakan";
 import { prisma } from "@/lib/prisma";
+
+export type {
+  SerializedAlertStok,
+  SerializedItemInventaris,
+  SerializedPergerakan,
+} from "@/lib/inventaris-types";
 
 export class InventarisError extends Error {
   constructor(
@@ -60,11 +71,11 @@ function parseStokMinimum(raw: unknown): Prisma.Decimal {
 }
 
 function isSatuan(value: string): value is SatuanInventaris {
-  return (satuanInventarisList as string[]).includes(value);
+  return (satuanInventarisList as readonly string[]).includes(value);
 }
 
 function isTipe(value: string): value is TipePergerakan {
-  return (tipePergerakanList as string[]).includes(value);
+  return (tipePergerakanList as readonly string[]).includes(value);
 }
 
 export function parseItemInput(raw: Record<string, unknown>): ItemInput {
@@ -167,7 +178,7 @@ export async function listPergerakan(itemId?: number, limit = 50) {
 
 export function serializePergerakan(
   row: Awaited<ReturnType<typeof listPergerakan>>[number],
-) {
+): SerializedPergerakan {
   return {
     id: row.id,
     tipe: row.tipe,
@@ -180,8 +191,6 @@ export function serializePergerakan(
     user: row.user,
   };
 }
-
-export type SerializedPergerakan = ReturnType<typeof serializePergerakan>;
 
 export function serializePergerakanBare(row: PergerakanInventaris) {
   return {
@@ -242,7 +251,7 @@ export async function catatPergerakan(input: MovementInput) {
   });
 }
 
-export function serializeItem(item: ItemInventaris) {
+export function serializeItem(item: ItemInventaris): SerializedItemInventaris {
   return {
     ...item,
     stokSaatIni: item.stokSaatIni.toString(),
@@ -251,15 +260,13 @@ export function serializeItem(item: ItemInventaris) {
   };
 }
 
-export type SerializedItemInventaris = ReturnType<typeof serializeItem>;
-
 /** Item aktif dengan stok saat ini di bawah stok minimum (US4.3). */
 export async function listAlertStokMinimum() {
   const { listAlertStokMinimumCached } = await import("@/lib/cached-queries");
   return listAlertStokMinimumCached();
 }
 
-export function serializeAlertStok(item: ItemInventaris) {
+export function serializeAlertStok(item: ItemInventaris): SerializedAlertStok {
   const base = serializeItem(item);
   const kekurangan = item.stokMinimum.sub(item.stokSaatIni);
   return {
@@ -268,4 +275,3 @@ export function serializeAlertStok(item: ItemInventaris) {
   };
 }
 
-export type SerializedAlertStok = ReturnType<typeof serializeAlertStok>;

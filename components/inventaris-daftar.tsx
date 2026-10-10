@@ -4,7 +4,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
 import { formatQty } from "@/lib/format";
-import type { SerializedItemInventaris } from "@/lib/inventaris";
+import type { SerializedItemInventaris } from "@/lib/inventaris-types";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
 
 export function InventarisDaftar({ items }: { items: SerializedItemInventaris[] }) {

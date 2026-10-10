@@ -29,6 +29,7 @@ Append-only. Agent menambah baris per sesi.
 | Medium | `/owner` | KPI chart | `monthlySummary` + `kpiHidroponikMvp` tanpa dedup request | **Fixed:** `monthlySummaryCached`, `kpiHidroponikMvpCached` |
 | Low | CRUD pages | `app/**/page.tsx` | Header custom + link “Kembali ke beranda” | **Fixed:** `CrudPageLayout` + `FlowSteps` Admin/Owner/Petani (mirror halaman operasi) |
 | Low | Semua `DataTable` | `components/data-table.tsx` | Double scroll wrapper; header tidak sortable | **Fixed:** `Table noContainer`, sort UI, zebra rows, default page 12 |
+| High | `/petani/siklus/[id]` | `monitor-pertumbuhan-form`, dll. | Import `lib/*` ber-Prisma → `PrismaClient` di browser | **Fixed:** `*-types.ts`, `*-labels.ts`, `pack-kapasitas-lubang-math.ts`, `import "server-only"` di `lib/prisma` + modul DB; `npm run check:client-prisma` |
 
 ## Responsif (belum diuji sistematis)
 

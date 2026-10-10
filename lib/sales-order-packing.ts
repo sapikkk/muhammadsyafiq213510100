@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
 import { KasSumberError, parseSumberKasKode, resolveKasAkunId } from "@/lib/kas-sumber";
 import { prisma } from "@/lib/prisma";

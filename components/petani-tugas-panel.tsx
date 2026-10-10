@@ -3,7 +3,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import { useMemo } from "react";
-import type { TugasPetani } from "@/lib/tugas-petani";
+import type { TugasPetani } from "@/lib/tugas-petani-types";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
 

@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { MonthPoint } from "@/lib/monthly-summary";
+import type { MonthPoint } from "@/lib/monthly-summary-types";
 import { formatRupiah } from "@/lib/format";
 
 export function OwnerRevenueChart({ months }: { months: MonthPoint[] }) {

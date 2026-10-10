@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { formatQty, formatRupiah } from "@/lib/format";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
-import type { ActivePackListRow } from "@/lib/active-pack";
+import type { ActivePackListRow } from "@/lib/active-pack-types";
 
 const selectClass =
   "flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm";

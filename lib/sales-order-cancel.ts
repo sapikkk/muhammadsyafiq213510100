@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Prisma, type StatusJurnal } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { SalesOrderError } from "@/lib/sales-order";
