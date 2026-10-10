@@ -2,7 +2,7 @@
 
 ## Manual (audit mode ON)
 
-- [ ] Semua link sidebar audit → 200, tanpa white screen (butuh `AUDIT_BYPASS_RBAC=true` lokal; PO)
+- [x] Semua link sidebar audit → 200, tanpa white screen — 35 route, lokal 2026-10-10 (`AUDIT_BYPASS_RBAC=true`; opsional `e2e/audit-nav.spec.ts`)
 - [x] Mobile menu buka/tutup + navigasi menutup drawer — `e2e/smoke.spec.ts` (CI)
 - [x] Toast: form utama (jurnal, inventaris, produksi petani, prive, harvest approve)
 - [x] DataTable: cari di pelanggan, inventaris, varietas, owner pengguna — e2e (CI); pagination multi-halaman — uji PO jika data > pageSize
