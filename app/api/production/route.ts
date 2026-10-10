@@ -26,11 +26,11 @@ export const GET = withApiHandler(async () => {
 });
 
 export const POST = withApiHandler(async (request: Request) => {
-  const { denied } = await requireApiRole(["PEKERJA"]);
+  const { denied, session } = await requireApiRole(["PEKERJA"]);
   if (denied) return denied;
   try {
     const body = (await request.json()) as Record<string, unknown>;
-    const created = await buatSiklusSemai(parseSiklusInput(body));
+    const created = await buatSiklusSemai(parseSiklusInput(body), Number(session!.user!.id));
     const rows = await listSiklusProduksi();
     const row = rows.find((r) => r.id === created.id)!;
     return apiOk(serializeSiklus(row), { status: 201 });

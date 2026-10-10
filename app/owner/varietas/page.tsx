@@ -2,12 +2,17 @@ import Link from "next/link";
 import { VarietasDaftar } from "@/components/varietas-daftar";
 import { VarietasForm } from "@/components/varietas-form";
 import { listVarietas, serializeVarietas } from "@/lib/varietas";
+import { mapRataHppPerLubangSemuaVarietas } from "@/lib/varietas-hpp-rata";
 
 export const dynamic = "force-dynamic";
 
 export default async function OwnerVarietasPage() {
-  const rows = await listVarietas(false);
-  const serialized = rows.map(serializeVarietas);
+  const [rows, rataHppMap] = await Promise.all([listVarietas(false), mapRataHppPerLubangSemuaVarietas()]);
+  const serialized = rows.map((r) => {
+    const base = serializeVarietas(r);
+    const rata = rataHppMap.get(r.id);
+    return { ...base, rataHppPerLubang: rata ?? null };
+  });
   const options = serialized.map((r) => ({ id: r.id, label: `${r.nama} (${r.status})` }));
 
   return (

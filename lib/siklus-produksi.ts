@@ -153,7 +153,7 @@ export async function listSiklusProduksi() {
   });
 }
 
-export async function buatSiklusSemai(input: SiklusInput) {
+export async function buatSiklusSemai(input: SiklusInput, userId?: number) {
   try {
     return await prisma.$transaction(
       async (tx) => {
@@ -229,10 +229,23 @@ export async function buatSiklusSemai(input: SiklusInput) {
         }
       }
 
-      const activeBenih = await pakaiActivePackDalamTx(tx, input.activePackBenihId, jumlahBenihPakai);
+      const packOpts = userId
+        ? { userId, tanggal: input.tanggalSemai }
+        : undefined;
+      const activeBenih = await pakaiActivePackDalamTx(
+        tx,
+        input.activePackBenihId,
+        jumlahBenihPakai,
+        packOpts,
+      );
       let biayaRockwool = new Prisma.Decimal(0);
       if (input.activePackMediaId !== null && jumlahMediaPakai !== null) {
-        const activeMedia = await pakaiActivePackDalamTx(tx, input.activePackMediaId, jumlahMediaPakai);
+        const activeMedia = await pakaiActivePackDalamTx(
+          tx,
+          input.activePackMediaId,
+          jumlahMediaPakai,
+          packOpts,
+        );
         biayaRockwool = jumlahMediaPakai.mul(activeMedia.biayaPerUnit);
       }
       const biayaBenih = jumlahBenihPakai.mul(activeBenih.biayaPerUnit);
