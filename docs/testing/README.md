@@ -2,6 +2,8 @@
 
 Referensi dan alat uji proyek. Skill agent ada di `.agents/` (lokal, tidak di-push).
 
+Data demo & akun uji: [`DEMO-DATA.md`](DEMO-DATA.md).
+
 ## Playwright (E2E)
 
 ```bash

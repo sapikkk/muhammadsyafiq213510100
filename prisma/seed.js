@@ -5,6 +5,7 @@ const { seedInventaris } = require("./seed-inventaris");
 const { seedInfrastruktur } = require("./seed-infrastruktur");
 const { seedVarietas } = require("./seed-varietas");
 const { seedPetani } = require("./seed-petani");
+const { seedDemoFlow } = require("./seed-demo-flow");
 
 const prisma = new PrismaClient();
 const password = "KokonusDemo2026";
@@ -41,8 +42,9 @@ async function main() {
   const infra = await seedInfrastruktur(prisma);
   const varietas = await seedVarietas(prisma);
   const jumlahPetani = await seedPetani(prisma);
+  const demo = await seedDemoFlow(prisma);
   console.log(
-    `Seed selesai: ${accounts.length} akun login, ${jumlahAkun} akun COA, ${jumlahItem} item inventaris, infrastruktur ${infra.totalLubang ?? "?"} lubang, ${varietas.count} varietas (${varietas.created ?? 0} baru, ${varietas.updated ?? 0} diperbarui), ${jumlahPetani} petani master.`,
+    `Seed selesai: ${accounts.length} akun login, ${jumlahAkun} akun COA, ${jumlahItem} item inventaris, infrastruktur ${infra.totalLubang ?? "?"} lubang, ${varietas.count} varietas (${varietas.created ?? 0} baru, ${varietas.updated ?? 0} diperbarui), ${jumlahPetani} petani master, demo ${demo.pelanggan} pelanggan + ${demo.jurnal} jurnal.`,
   );
 }
 

@@ -1,5 +1,15 @@
 # Kokonus Farm — panduan agent
 
+## Agent Skills Platform (Cursor)
+
+Skill marketplace terpasang di `.cursor/skills/agent-skills-platform` (symlink global lewat `install.sh`). Panggil di chat:
+
+```
+/agent-skills-platform <jelaskan workflow>
+```
+
+Panduan upstream: [INSTALL.md](https://github.com/FrancyJGLisboa/agent-skills-platform/blob/main/docs/INSTALL.md).
+
 ## Graphify (wajib untuk eksplorasi kode)
 
 Graf pengetahuan ada di `graphify-out/` (commit `9868c5af` saat terakhir di-build).
