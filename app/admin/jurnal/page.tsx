@@ -85,9 +85,22 @@ export default async function JurnalPage({
       </form>
 
       <section aria-labelledby="daftar-title" className="space-y-3">
-        <h2 id="daftar-title" className="text-lg font-semibold">
-          {`${rows.length} jurnal${adaFilter ? " sesuai filter" : ""}`}
-        </h2>
+        <div className="space-y-1">
+          <h2 id="daftar-title" className="text-lg font-semibold">
+            {`${rows.length} jurnal${adaFilter ? " sesuai filter" : ""}`}
+          </h2>
+          {adaFilter ? (
+            <p className="text-sm text-muted-foreground">
+              {searchParams.dari ? `Dari ${searchParams.dari}` : null}
+              {searchParams.dari && searchParams.sampai ? " · " : null}
+              {searchParams.sampai ? `Sampai ${searchParams.sampai}` : null}
+              {(searchParams.dari || searchParams.sampai) && searchParams.status ? " · " : null}
+              {searchParams.status
+                ? `Status ${statusJurnalLabel[searchParams.status as keyof typeof statusJurnalLabel] ?? searchParams.status}`
+                : null}
+            </p>
+          ) : null}
+        </div>
         <JurnalDaftar
           rows={serialized}
           detailPrefix="/admin/jurnal"
