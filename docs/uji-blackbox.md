@@ -1050,6 +1050,19 @@ POST /api/auth/callback/credentials 200 in 24253ms
 
 Sample audit manual (T5.4): jurnal manual DRAFT/PENDING, jurnal approve panen, jurnal SO DELIVERED — cek total debit = kredit di detail masing-masing.
 
+### v2-B.1 — Abort siklus gagal total (Epic B / #96)
+
+**Branch:** `feat/v2-b1-abort-siklus` · WIP sementara = akun **1350** (proxy sampai COA v2).
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| Buka siklus aktif `/petani/siklus/[id]` | Petani | Form **Abort gagal total** tampil |
+| Isi alasan + centang konfirmasi → Abort | Petani | Status **Gagal total**; lanjut fase / kegagalan baru ditolak |
+| `/admin/biaya` — panel abort | Admin | Abort untuk batch aktif (sama) |
+| `/admin/jurnal` | Admin | Jurnal APPROVED Dr **5300** Cr **1350** = biaya langsung + overhead siklus |
+| Approve panen batch yang di-abort | Admin | Ditolak |
+| Log kegagalan partial pada batch abort | Petani | Ditolak (tidak double-count vs jurnal abort) |
+
 ### v2-A.1 — `Akun.is_system` (Epic A / #95)
 
 **Branch:** `feat/v2-a1-is-system` · Setelah `prisma db push` + `npm run seed` (atau seed akun saja): akun standar COA punya `isSystem: true`.

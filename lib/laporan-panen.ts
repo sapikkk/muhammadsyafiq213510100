@@ -3,6 +3,7 @@ import { keTanggalIso } from "@/lib/format";
 import { applyHppOverride, parseHppOverride } from "@/lib/hpp-override";
 import { calculateHPP, yieldContextFromSiklus } from "@/lib/hpp";
 import { prisma } from "@/lib/prisma";
+import { STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort";
 import { totalBiayaAbnormalSiklus } from "@/lib/susut";
 
 export class HarvestError extends Error {
@@ -85,6 +86,9 @@ export async function kirimLaporanPanen(userId: number, input: HarvestInput) {
         include: { laporanPanen: true },
       });
       if (!siklus) throw new HarvestError("Siklus tidak ditemukan.", 404);
+      if (siklus.status === STATUS_GAGAL_TOTAL) {
+        throw new HarvestError("Siklus sudah di-abort gagal total.", 400);
+      }
       if (siklus.status !== "PANEN") {
         throw new HarvestError("Laporan panen hanya saat fase Panen & sortasi.", 400);
       }
@@ -199,6 +203,9 @@ export async function approveLaporanPanen(
       });
 
       if (!laporan) throw new HarvestError("Laporan tidak ditemukan.", 404);
+      if (laporan.siklus.status === STATUS_GAGAL_TOTAL) {
+        throw new HarvestError("Siklus sudah di-abort gagal total.", 400);
+      }
       if (laporan.status !== "PENDING") {
         throw new HarvestError("Laporan tidak dalam status PENDING.", 400);
       }

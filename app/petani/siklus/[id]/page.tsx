@@ -8,6 +8,7 @@ import { MonitorPertumbuhanForm } from "@/components/monitor-pertumbuhan-form";
 import { PageHeader } from "@/components/page-header";
 import { PindahFaseForm } from "@/components/pindah-fase-form";
 import { SiklusTimeline } from "@/components/siklus-timeline";
+import { SiklusAbortForm } from "@/components/siklus-abort-form";
 import { TambalSusulanForm } from "@/components/tambal-susulan-form";
 import { listActivePack } from "@/lib/active-pack";
 import { buildTimelineSiklus } from "@/lib/timeline-siklus";
@@ -25,6 +26,7 @@ import {
   getSiklusProduksi,
   listLogProduksi,
 } from "@/lib/siklus-produksi";
+import { siklusBolehAbort, STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort";
 
 export const dynamic = "force-dynamic";
 
@@ -70,6 +72,7 @@ export default async function PetaniSiklusDetailPage({
   const canMonitor =
     faseAktif &&
     (["SPROUT_DAUN", "TAMBAL", "PINDAH_KOLAM", "PENDEWASAAN"] as string[]).includes(faseAktif);
+  const canAbort = siklusBolehAbort(status, laporan?.status);
 
   const pindahFaseBlock =
     faseAktif && berikut ? (
@@ -105,8 +108,12 @@ export default async function PetaniSiklusDetailPage({
         description={`${siklus.varietas.nama} · ${siklus.kolam.greenhouse.nama} / ${siklus.kolam.nama}`}
       />
       <div className="flex flex-wrap items-center gap-2">
-        <Badge variant="secondary">
-          {faseAktif ? faseLabel[faseAktif] : status}
+        <Badge variant={status === STATUS_GAGAL_TOTAL ? "outline" : "secondary"}>
+          {status === STATUS_GAGAL_TOTAL
+            ? "Gagal total (abort)"
+            : faseAktif
+              ? faseLabel[faseAktif]
+              : status}
         </Badge>
         <Link
           href="/petani/siklus"
@@ -116,7 +123,17 @@ export default async function PetaniSiklusDetailPage({
         </Link>
       </div>
 
-      {pindahFaseBlock}
+      {status === STATUS_GAGAL_TOTAL ? (
+        <p className="rounded-md border border-destructive/30 bg-destructive/5 p-4 text-sm">
+          Siklus dihentikan (abort). Tidak ada lanjut fase atau panen.
+        </p>
+      ) : (
+        pindahFaseBlock
+      )}
+
+      {canAbort ? (
+        <SiklusAbortForm siklusId={id} kodeBatch={siklus.kode_batch} />
+      ) : null}
 
       {faseAktif === "PANEN" && !laporan ? (
         <HarvestForm siklusId={id} jumlahDisemai={siklus.jumlah_disemai} />

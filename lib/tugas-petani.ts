@@ -26,7 +26,7 @@ export async function daftarTugasPetani(): Promise<TugasPetani[]> {
   }
 
   for (const s of siklus) {
-    if (s.status === "SELESAI") continue;
+    if (s.status === "SELESAI" || s.status === "GAGAL_TOTAL") continue;
     const href = `/petani/siklus/${s.id}`;
     const batch = s.kode_batch;
 

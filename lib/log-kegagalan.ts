@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { faseLabel, isFaseProduksi } from "@/lib/siklus-fase";
+import { STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort";
 import { prisma } from "@/lib/prisma";
 
 export class KegagalanError extends Error {
@@ -134,6 +135,9 @@ export async function catatLogKegagalan(input: KegagalanInput) {
     if (!siklus) throw new KegagalanError("Siklus tidak ditemukan.", 404);
     if (siklus.status === "SELESAI") {
       throw new KegagalanError("Siklus sudah selesai, tidak bisa catat kegagalan baru.", 400);
+    }
+    if (siklus.status === STATUS_GAGAL_TOTAL) {
+      throw new KegagalanError("Siklus sudah di-abort gagal total.", 400);
     }
     if (siklus.laporanPanen?.status === "APPROVED") {
       throw new KegagalanError("Panen sudah disetujui.", 400);
