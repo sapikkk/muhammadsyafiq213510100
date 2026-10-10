@@ -4,7 +4,7 @@
 
 - [ ] Semua link sidebar audit → 200, tanpa white screen
 - [ ] Mobile menu buka/tutup + navigasi menutup drawer
-- [ ] Toast: prive, pengguna, jurnal, inventaris item, profil
+- [x] Toast: form utama (jurnal, inventaris, produksi petani, prive, harvest approve)
 - [ ] DataTable: search + pagination di pengguna, pelanggan, inventaris, varietas
 - [ ] 404 logged-in → sidebar + tombol dashboard
 

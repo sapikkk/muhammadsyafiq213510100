@@ -13,7 +13,8 @@ Append-only. Agent menambah baris per sesi.
 | Low | `/owner/pengguna` | `owner-user-panel` | List `<ul>` bukan tabel | **Fixed:** `DataTable` pilot |
 | Low | `/admin/pelanggan` | `pelanggan-daftar` | List `<ul>` | **Fixed:** `DataTable` |
 | Medium | Role layouts | `role-home` | Sidebar hilang di mobile | **Fixed:** `AppShellLayout` + menu Dialog |
-| Low | Forms | admin CRUD utama | Tanpa toast | **Partial:** SO, pelanggan, varietas, infra, biaya, akun tree, login |
+| Low | Forms | server actions | Tanpa toast | **Done:** `useActionToast` di form utama |
+| Low | Harvest approve | `client-approval` | API legacy + warna merah | **Fixed:** `apiFail` parse + Sonner |
 | Low | `/admin/akun` | `akun-tree` | Tanpa filter | **Fixed:** cari kode/nama + toast toggle |
 | Low | `/admin/infrastruktur` | `infrastruktur-pohon` | Tanpa filter | **Fixed:** cari GH/kolam |
 | Low | Root `error.tsx` | Tanpa navigasi keluar | **Fixed:** link dashboard/login + toast |

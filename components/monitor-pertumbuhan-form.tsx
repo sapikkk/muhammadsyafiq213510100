@@ -5,25 +5,16 @@ import { submitMonitorPertumbuhan } from "@/app/actions/monitor";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { kondisiMonitorOptions } from "@/lib/monitor-produksi";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export function MonitorPertumbuhanForm({ siklusId }: { siklusId: number }) {
   const [state, formAction] = useFormState(submitMonitorPertumbuhan, {});
+  useActionToast({ error: state.error, ok: state.ok });
 
   return (
     <form action={formAction} className="space-y-4 rounded-md border p-4">
       <input type="hidden" name="siklusId" value={siklusId} />
       <h2 className="text-lg font-semibold">Monitor pertumbuhan</h2>
-      {state.error ? (
-        <p className="text-sm text-destructive" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="text-sm text-primary" role="status">
-          {state.ok}
-        </p>
-      ) : null}
-
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Kondisi</span>
         <select

@@ -4,9 +4,11 @@ import { useFormState } from "react-dom";
 import { submitHarvestReport } from "@/app/actions/harvest";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export function HarvestForm({ siklusId, jumlahDisemai }: { siklusId: number; jumlahDisemai: number }) {
   const [state, formAction] = useFormState(submitHarvestReport, {});
+  useActionToast({ error: state.error, ok: state.ok });
 
   return (
     <form action={formAction} className="space-y-4 rounded-md border p-4">
@@ -16,17 +18,6 @@ export function HarvestForm({ siklusId, jumlahDisemai }: { siklusId: number; jum
         Batch disemai {jumlahDisemai} bibit. Isi hasil sortasi layak vs tidak layak (satu laporan
         per batch).
       </p>
-      {state.error ? (
-        <p className="text-sm text-destructive" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="text-sm text-primary" role="status">
-          {state.ok}
-        </p>
-      ) : null}
-
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block space-y-1.5 text-sm">
           <span className="font-medium">Jumlah layak jual (pohon)</span>
