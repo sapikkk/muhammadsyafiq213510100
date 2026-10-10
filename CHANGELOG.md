@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.21.0...v1.22.0) (2026-10-10)
+
+
+### Features
+
+* **v2-A.4:** kas split 1100/1110 ([#116](https://github.com/sapikkk/muhammadsyafiq213510100/issues/116)) ([5bc06c4](https://github.com/sapikkk/muhammadsyafiq213510100/commit/5bc06c4208b4c31a71f4986ea4a3e2899b55d48e))
+
 # [1.21.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.20.0...v1.21.0) (2026-10-10)
 
 
