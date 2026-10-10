@@ -9,7 +9,7 @@
 | US6.3 Ekspor xlsx/PDF | [#36](https://github.com/sapikkk/muhammadsyafiq213510100/issues/36) | Done (#75) |
 | US6.4 BEP, margin | [#37](https://github.com/sapikkk/muhammadsyafiq213510100/issues/37) | Done (#76) |
 | US6.5 Arus kas | [#38](https://github.com/sapikkk/muhammadsyafiq213510100/issues/38) | Done (#77) |
-| US1.9 Kelola user | [#10](https://github.com/sapikkk/muhammadsyafiq213510100/issues/10) | In progress (PR) |
-| US2.6 Owner COA/jurnal | [#16](https://github.com/sapikkk/muhammadsyafiq213510100/issues/16) | In progress (PR) |
+| US1.9 Kelola user | [#10](https://github.com/sapikkk/muhammadsyafiq213510100/issues/10) | Done (#78) |
+| US2.6 Owner COA/jurnal | [#16](https://github.com/sapikkk/muhammadsyafiq213510100/issues/16) | Done (#78) |
 
 **Prasyarat:** transaksi jurnal + SO sampel dari Sprint 3.

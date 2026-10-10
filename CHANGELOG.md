@@ -1,3 +1,18 @@
+# [1.13.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.12.0...v1.13.0) (2026-10-10)
+
+
+### Bug Fixes
+
+* **e2e:** T5.1 via API phase + daftar HP; E2E_DEMO_SIKLUS_ID di CI ([9152f75](https://github.com/sapikkk/muhammadsyafiq213510100/commit/9152f754a3f66e3fbf8bfc03c32827efd1cf2273))
+* **sprint-5:** reset batch demo seed + perbaiki e2e T5.1/T5.3 ([1a168ef](https://github.com/sapikkk/muhammadsyafiq213510100/commit/1a168ef3372a3653a0678eb472784a9d30d43906))
+
+
+### Features
+
+* **home:** dashboard progress GitHub Project + tooling deploy Vercel ([b779904](https://github.com/sapikkk/muhammadsyafiq213510100/commit/b779904feb44914490d34128624b4d752c870475)), closes [#1](https://github.com/sapikkk/muhammadsyafiq213510100/issues/1)
+* **sprint-5:** selesaikan T5.5–T5.9 — deploy doc, pelatihan, perbaiki e2e ([df65431](https://github.com/sapikkk/muhammadsyafiq213510100/commit/df654310603a873db8d914e1da762ca928719ca9))
+* **sprint-5:** T5.1–T5.4 usability, seed demo, audit jurnal, e2e ([773757d](https://github.com/sapikkk/muhammadsyafiq213510100/commit/773757d85c83982e0c489c83d2d13dd39a05279b))
+
 # [1.12.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.11.0...v1.12.0) (2026-10-10)
 
 
