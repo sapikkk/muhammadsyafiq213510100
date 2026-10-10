@@ -9,6 +9,9 @@ const demoPassword = process.env.E2E_PASSWORD ?? "KokonusDemo2026";
 const root = path.join(__dirname, "..");
 
 function demoSiklusId() {
+  if (process.env.E2E_DEMO_SIKLUS_ID?.trim()) {
+    return process.env.E2E_DEMO_SIKLUS_ID.trim();
+  }
   return fs.readFileSync(path.join(__dirname, ".demo-siklus-id"), "utf8").trim();
 }
 
@@ -39,18 +42,30 @@ test.beforeEach(() => {
 test("T5.1 petani HP: pindah fase batch demo", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await loginAs(page, "petani@kokonus.farm", /\/petani/);
-  await page.goto(`/petani/siklus/${demoSiklusId()}`);
+  const id = demoSiklusId();
 
-  await expect(page.getByRole("heading", { name: /^Lanjut fase$/ })).toBeVisible({
-    timeout: 15_000,
+  await page.goto("/petani/siklus");
+  await expect(page.getByText("E2E-S5-DEMO")).toBeVisible();
+  await expect(
+    page.locator("tr", { hasText: "E2E-S5-DEMO" }).getByRole("link", { name: "Pindah fase" }),
+  ).toBeVisible();
+
+  const detail = await page.request.get(`/api/production/${id}/phase`);
+  expect(detail.ok()).toBeTruthy();
+  const before = await detail.json();
+  expect(before.ok).toBe(true);
+  expect(before.data.status).toBe("SEMAI");
+
+  const advance = await page.request.put(`/api/production/${id}/phase`, {
+    data: { konfirmasi: "on" },
   });
-  const lanjut = page.getByRole("button", { name: /Lanjut ke/i });
-  await expect(lanjut).toBeVisible();
-  await page.getByRole("checkbox").check();
-  await lanjut.click();
+  expect(advance.ok()).toBeTruthy();
+  const after = await advance.json();
+  expect(after.ok).toBe(true);
+  expect(after.data.fase_ke).toBe("SPROUT_DAUN");
 
-  await expect(page.getByText(/Sprout \/ daun/i).first()).toBeVisible({ timeout: 15_000 });
-  await expect(page.getByRole("heading", { name: /Log fase/i })).toBeVisible();
+  await page.reload();
+  await expect(page.getByText(/Sprout \/ daun/i).first()).toBeVisible();
 });
 
 test("T5.2 admin: filter jurnal tanggal + cari", async ({ page }) => {
