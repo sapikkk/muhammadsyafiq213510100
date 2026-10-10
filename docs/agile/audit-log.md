@@ -4,6 +4,14 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-10 — Backlog GitHub increment v2
+
+- **Actor:** PO sapikkk + agent  
+- **Issue:** Epic **#87–#94** + story starter **#95–#102** · milestone *Increment v2 — Post go-live* · label `ucd-v2`  
+- **Artefak:** `docs/blueprint/GITHUB-BACKLOG-DRAFT.md`, `scripts/create-v2-epic-issues.sh`  
+
+---
+
 ## 2026-10-10 — Go-live v1 + Sprint 5 + progress board
 
 - **Actor:** PO sapikkk + agent  
