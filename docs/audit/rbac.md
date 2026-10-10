@@ -43,3 +43,5 @@
 3. Klik tiap link sekali; halaman harus **200**, tanpa layar putih atau error boundary.
 4. Matikan flag; login ulang — menu kembali sesuai peran saja.
 5. Centang item di `docs/audit/qa.md` setelah selesai.
+
+**Hasil agent (2026-10-10):** 35 href unik di Menu (audit), semua HTTP 200, tanpa teks error boundary (sesi Admin + bypass ON).
