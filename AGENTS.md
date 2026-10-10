@@ -38,6 +38,11 @@ US berikutnya (2.4, 3.5, 4.5): form + server action atau route API tipis, logika
 
 Untuk `docs/` dan notulensi uji: jalankan humanizer — hindari pola AI (kontras “bukan X tapi Y”, triad paksa, bold berlebihan). Registry agile/README: tone produk profesional.
 
+## UCD increment v2 (draft, branch GitHub)
+
+- **Branch:** `ucd/blueprint-v2-akuntansi` — blueprint akuntansi/logistik + draft epic GitHub (belum merge `main`).
+- **Hub:** `docs/ucd/README.md` · skill: `docs/skills/akuntansi-hidroponik/SKILL.md`
+
 ## Backlog & pelacakan sprint
 
 - **Registry Agile (AC, DoD, timeline, audit log):** `docs/agile/README.md`

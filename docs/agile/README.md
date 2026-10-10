@@ -21,7 +21,8 @@ Pusat kontrol progres produk: **timeline sprint**, **issue GitHub**, **AC/DoD**,
 
 **Board live:** [GitHub Project #1](https://github.com/users/sapikkk/projects/1)  
 **PRD:** [docs/prd-agile-kokonus-farm.md](../prd-agile-kokonus-farm.md)  
-**Blackbox:** [docs/uji-blackbox.md](../uji-blackbox.md)
+**Blackbox:** [docs/uji-blackbox.md](../uji-blackbox.md)  
+**UCD increment v2 (draft, branch):** [docs/ucd/](../ucd/) · [blueprint](../blueprint/) — akuntansi WIP, Smart Jurnal, DP
 
 ## Alur kerja (acuan `sw-agiledevelopment`)
 
