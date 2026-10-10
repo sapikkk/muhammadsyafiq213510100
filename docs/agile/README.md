@@ -7,6 +7,7 @@ Pusat kontrol progres produk: **timeline sprint**, **issue GitHub**, **AC/DoD**,
 | Dokumen | Isi |
 |---------|-----|
 | [timeline-registry.md](./timeline-registry.md) | 5 sprint: **actual start**, goal, velocity, retro |
+| [AC-VERIFIKASI-RISIKO.md](./AC-VERIFIKASI-RISIKO.md) | US closed — yang perlu uji AC ulang (Sprint 5) |
 | [partial-delivery-policy.md](./partial-delivery-policy.md) | Issue open, catatan partial, filter GitHub |
 | [definition-of-done.md](./definition-of-done.md) | DoD story & sprint (PR review **wajib**) |
 | [sprints/sprint-01-fondasi.md](./sprints/sprint-01-fondasi.md) | Sprint 1 — detail per US |
@@ -22,7 +23,8 @@ Pusat kontrol progres produk: **timeline sprint**, **issue GitHub**, **AC/DoD**,
 **Board live:** [GitHub Project #1](https://github.com/users/sapikkk/projects/1)  
 **PRD:** [docs/prd-agile-kokonus-farm.md](../prd-agile-kokonus-farm.md)  
 **Blackbox:** [docs/uji-blackbox.md](../uji-blackbox.md)  
-**UCD increment v2 (draft, branch):** [docs/ucd/](../ucd/) · [blueprint](../blueprint/) — akuntansi WIP, Smart Jurnal, DP
+**Backlog ringkas:** [docs/progress-backlog.md](../progress-backlog.md)  
+**UCD increment v2 (post go-live):** [docs/ucd/](../ucd/) · [blueprint](../blueprint/) — WIP, Smart Jurnal, DP
 
 ## Alur kerja (acuan `sw-agiledevelopment`)
 
@@ -38,6 +40,7 @@ Pusat kontrol progres produk: **timeline sprint**, **issue GitHub**, **AC/DoD**,
 gh issue list --repo sapikkk/muhammadsyafiq213510100 --label sprint-2
 gh issue list --repo sapikkk/muhammadsyafiq213510100 --label progress-partial
 gh project item-list 1 --owner sapikkk --limit 50
+npm run sync:agile-progress   # → data/agile-progress.json (halaman depan /)
 ```
 
 Setelah ubah kode: `graphify update .` (lihat `AGENTS.md`).
