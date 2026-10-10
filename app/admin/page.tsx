@@ -1,15 +1,10 @@
+import { AdminFlowDashboard } from "@/components/admin-flow-dashboard";
 import { RegisterPetani } from "@/components/register-petani";
 import { ResetRequests } from "@/components/reset-requests";
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
+import { PageSection } from "@/components/page-section";
 import { listAlertStokMinimum } from "@/lib/inventaris";
 import { prisma } from "@/lib/prisma";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 export const dynamic = "force-dynamic";
 
@@ -30,41 +25,34 @@ export default async function AdminPage() {
   ]);
 
   return (
-    <>
+    <div className="flex flex-col gap-8">
       <InventarisAlertBanner items={stokRendah} detailHref="/admin/stok-rendah" />
+      <AdminFlowDashboard />
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Daftarkan petani</CardTitle>
-          <CardDescription>
-            Buat akun baru untuk petani yang akan menggunakan sistem.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <RegisterPetani />
-        </CardContent>
-      </Card>
+      <PageSection
+        title="Daftarkan petani"
+        description="Create — akun baru untuk petani (login email + sandi)."
+        badge="Create"
+      >
+        <RegisterPetani />
+      </PageSection>
 
-      {pending.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Permintaan reset sandi</CardTitle>
-            <CardDescription>
-              {pending.length} permintaan menunggu persetujuan.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResetRequests
-              requests={pending.map((request) => ({
-                id: request.id,
-                nama: request.user.nama,
-                email: request.user.email,
-                requestedAt: formatter.format(request.requestedAt),
-              }))}
-            />
-          </CardContent>
-        </Card>
-      )}
-    </>
+      {pending.length > 0 ? (
+        <PageSection
+          title="Permintaan reset sandi"
+          description={`Update — ${pending.length} permintaan menunggu persetujuan Admin.`}
+          badge="Update"
+        >
+          <ResetRequests
+            requests={pending.map((request) => ({
+              id: request.id,
+              nama: request.user.nama,
+              email: request.user.email,
+              requestedAt: formatter.format(request.requestedAt),
+            }))}
+          />
+        </PageSection>
+      ) : null}
+    </div>
   );
 }

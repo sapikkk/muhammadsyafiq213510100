@@ -10,6 +10,7 @@ import {
   type ColumnDef,
   type SortingState,
 } from "@tanstack/react-table";
+import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
@@ -38,7 +40,7 @@ type DataTableProps<TData, TValue> = {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  pageSize = 10,
+  pageSize = 12,
   emptyMessage = "Belum ada data.",
   searchPlaceholder,
   searchColumnIds,
@@ -83,6 +85,7 @@ export function DataTable<TData, TValue>({
     state: { sorting, globalFilter },
     onSortingChange: setSorting,
     onGlobalFilterChange: setGlobalFilter,
+    defaultColumn: { enableSorting: true },
     globalFilterFn: searchColumnIds?.length
       ? (row, _columnId, filterValue) => {
           const q = String(filterValue).toLowerCase();
@@ -119,37 +122,62 @@ export function DataTable<TData, TValue>({
           aria-label={searchPlaceholder}
         />
       ) : null}
-      <div className="overflow-x-auto border">
-        <Table>
-          <TableHeader className="sticky top-0 bg-background">
+      <div className="overflow-x-auto rounded-md border bg-card">
+        <Table noContainer>
+          <TableHeader className="sticky top-0 z-10 bg-muted/80 backdrop-blur-sm">
             {table.getHeaderGroups().map((hg) => (
-              <TableRow key={hg.id}>
-                {hg.headers.map((header) => (
-                  <TableHead key={header.id} className="h-9 px-3 text-xs">
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                  </TableHead>
-                ))}
+              <TableRow key={hg.id} className="hover:bg-transparent">
+                {hg.headers.map((header) => {
+                  const canSort = header.column.getCanSort();
+                  const sorted = header.column.getIsSorted();
+                  return (
+                    <TableHead
+                      key={header.id}
+                      className={cn(
+                        "h-10 whitespace-nowrap px-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground",
+                        canSort && "cursor-pointer select-none",
+                      )}
+                      onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
+                    >
+                      <span className="inline-flex items-center gap-1">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                        {canSort ? (
+                          sorted === "asc" ? (
+                            <ArrowUp className="size-3.5 opacity-70" aria-hidden />
+                          ) : sorted === "desc" ? (
+                            <ArrowDown className="size-3.5 opacity-70" aria-hidden />
+                          ) : (
+                            <ChevronsUpDown className="size-3.5 opacity-40" aria-hidden />
+                          )
+                        ) : null}
+                      </span>
+                    </TableHead>
+                  );
+                })}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+              table.getRowModel().rows.map((row, index) => (
+                <TableRow
+                  key={row.id}
+                  className={cn(index % 2 === 1 && "bg-muted/20")}
+                >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="px-3 py-2 text-sm">
+                    <TableCell key={cell.id} className="px-3 py-2.5 text-sm align-middle">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
-              <TableRow>
+              <TableRow className="hover:bg-transparent">
                 <TableCell
                   colSpan={columns.length}
-                  className="h-20 text-center text-sm text-muted-foreground"
+                  className="h-24 text-center text-sm text-muted-foreground"
                 >
                   {emptyMessage}
                 </TableCell>

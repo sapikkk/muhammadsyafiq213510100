@@ -1,4 +1,4 @@
-import { PageHeader } from "@/components/page-header";
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { buildCashFlow } from "@/lib/cash-flow";
 import { formatRupiah } from "@/lib/format";
@@ -21,12 +21,17 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
   const exportQ = `dari=${encodeURIComponent(data.dari)}&sampai=${encodeURIComponent(data.sampai)}`;
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        title="Arus kas"
-        description="US6.5 — pergerakan Kas/Bank dari jurnal APPROVED, filter periode YYYY-MM."
-      />
-
+    <CrudPageLayout
+      eyebrow="Keuangan"
+      title="Arus kas"
+      description="US6.5 — pergerakan Kas/Bank dari jurnal APPROVED, filter periode YYYY-MM."
+      flowSteps={[
+        { label: "Filter", detail: "Pilih rentang bulan lalu terapkan." },
+        { label: "Mutasi", detail: "Tabel bawah — link ke detail jurnal." },
+        { label: "PDF", detail: "Unduh arus kas resmi untuk arsip." },
+      ]}
+      list={
+        <div className="space-y-6">
       <form method="get" className="flex flex-wrap items-end gap-3 text-sm">
         <label className="flex flex-col gap-1">
           <span className="text-muted-foreground">Dari (YYYY-MM)</span>
@@ -152,6 +157,9 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
           Belum ada mutasi kas pada periode ini (jurnal APPROVED yang menyentuh Kas/Bank).
         </p>
       )}
-    </div>
+        </div>
+      }
+      listTitle="Ringkasan & mutasi"
+    />
   );
 }

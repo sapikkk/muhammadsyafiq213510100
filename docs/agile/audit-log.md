@@ -4,6 +4,15 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-10 — UX flow + perf (v1.28.0)
+
+- **Actor:** agent  
+- **Deliverable:** `CrudPageLayout` / sidebar grup / `DataTable` sort+zebra; `lib/cached-queries.ts` (stok, KPI, siklus); laporan [`UX-FLOW-PERF-REPORT.md`](./UX-FLOW-PERF-REPORT.md)  
+- **Artefak:** `docs/ux/FLOW-NAV.md`, `docs/audit/frontend.md` (baris perf)  
+- **Belum opsional:** viewport matrix e2e; `DataTable` arus kas/evaluasi  
+
+---
+
 ## 2026-10-10 — ops sidang #50 #81 (v1.27.0)
 
 - **Actor:** agent  

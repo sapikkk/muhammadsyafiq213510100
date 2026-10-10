@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import { InfrastrukturForm } from "@/components/infrastruktur-form";
 import { InfrastrukturPohon } from "@/components/infrastruktur-pohon";
 import { listInfrastrukturPohon, serializeInfrastruktur } from "@/lib/infrastruktur";
@@ -31,27 +31,25 @@ export default async function AdminInfrastrukturPage() {
   );
 
   return (
-    <div className="flex flex-col gap-8">
-      <header className="space-y-2">
-        <p className="text-sm font-medium text-primary">Admin</p>
-        <h1 className="text-3xl font-semibold tracking-tight">Infrastruktur</h1>
-        <p className="text-muted-foreground">
-          Master lahan, greenhouse, dan kolam untuk alokasi kapasitas produksi.
-        </p>
-        <Link
-          href="/admin"
-          className="inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline"
-        >
-          Kembali ke beranda Admin
-        </Link>
-      </header>
-
-      <InfrastrukturPohon data={data} />
-      <InfrastrukturForm
-        lahanOptions={lahanOptions}
-        greenhouseOptions={greenhouseOptions}
-        kolamOptions={kolamOptions}
-      />
-    </div>
+    <CrudPageLayout
+      eyebrow="Produksi & stok"
+      title="Infrastruktur"
+      description="Master lahan, greenhouse, dan kolam untuk alokasi kapasitas produksi."
+      flowSteps={[
+        { label: "Lihat pohon", detail: "Lahan → GH → kolam — kapasitas lubang per kolam." },
+        { label: "Tambah entitas", detail: "Form di bawah — pilih induk yang sesuai." },
+        { label: "Siklus", detail: "Petani/Admin pilih kolam kosong saat semai." },
+      ]}
+      list={<InfrastrukturPohon data={data} />}
+      listTitle="Pohon infrastruktur"
+      create={
+        <InfrastrukturForm
+          lahanOptions={lahanOptions}
+          greenhouseOptions={greenhouseOptions}
+          kolamOptions={kolamOptions}
+        />
+      }
+      createTitle="Form lahan / GH / kolam"
+    />
   );
 }

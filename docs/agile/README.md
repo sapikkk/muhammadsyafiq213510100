@@ -17,6 +17,7 @@ Pusat kontrol progres produk: **timeline sprint**, **issue GitHub**, **AC/DoD**,
 | [sprints/sprint-05-qa.md](./sprints/sprint-05-qa.md) | Sprint 5 — QA & go-live |
 | [retro/sprint-01-retro.md](./retro/sprint-01-retro.md) | Retro Sprint 1 |
 | [audit-log.md](./audit-log.md) | **Log kronologis** (commit di git) |
+| [UX-FLOW-PERF-REPORT.md](./UX-FLOW-PERF-REPORT.md) | Closeout UX flow + perf **v1.28.0** (sudah / belum) |
 | [KONFIRMASI-GAP-GITHUB.md](./KONFIRMASI-GAP-GITHUB.md) | Keputusan PO + gap opsional |
 | [github-field-guide.md](./github-field-guide.md) | Project #1: Status, Iteration, filter |
 

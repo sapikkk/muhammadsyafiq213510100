@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   pakaiActivePackPetani,
   simpanActivePackPetani,
@@ -6,6 +5,7 @@ import {
 import { ActivePackDaftar } from "@/components/active-pack-daftar";
 import { ActivePackForm } from "@/components/active-pack-form";
 import { ActivePackPakaiForm } from "@/components/active-pack-pakai-form";
+import { CrudPageLayout } from "@/components/crud-page-layout";
 import {
   listActivePack,
   serializeActivePack,
@@ -25,21 +25,26 @@ export default async function PetaniActivePackPage() {
   ) as ActivePackListRow[];
 
   return (
-    <div className="flex flex-col gap-8">
-      <header className="space-y-2">
-        <p className="text-sm font-medium text-primary">Petani</p>
-        <h1 className="text-3xl font-semibold tracking-tight">Active pack</h1>
-        <Link
-          href="/petani"
-          className="inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline"
-        >
-          Kembali ke beranda Petani
-        </Link>
-      </header>
-
-      <ActivePackDaftar rows={packs} />
-      <ActivePackForm items={items} action={simpanActivePackPetani} />
-      <ActivePackPakaiForm packs={packs} action={pakaiActivePackPetani} />
-    </div>
+    <CrudPageLayout
+      eyebrow="Produksi"
+      title="Active pack"
+      description="Rakit pack jual dari stok inventaris — pakai saat fase produksi membutuhkan pack."
+      flowSteps={[
+        { label: "Lihat pack", detail: "Stok pack siap pakai vs habis." },
+        { label: "Buat pack", detail: "Form komposisi — kurangi stok bahan otomatis." },
+        { label: "Pakai", detail: "Form pakai — kurangi qty pack aktif." },
+      ]}
+      list={<ActivePackDaftar rows={packs} />}
+      listTitle="Daftar pack"
+      create={
+        <>
+          <ActivePackForm items={items} action={simpanActivePackPetani} />
+          <div className="mt-8 border-t pt-8">
+            <ActivePackPakaiForm packs={packs} action={pakaiActivePackPetani} />
+          </div>
+        </>
+      }
+      createTitle="Buat & pakai pack"
+    />
   );
 }
