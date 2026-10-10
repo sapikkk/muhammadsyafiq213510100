@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { createJurnal, JurnalError, type JurnalInput } from "@/lib/jurnal";
+import { KasSumberError, parseSumberKasKode } from "@/lib/kas-sumber";
 import { assertJurnalTanggalAllowed } from "@/lib/period-lock";
 import { prisma } from "@/lib/prisma";
 
@@ -14,8 +15,6 @@ export class SmartJurnalError extends Error {
 
 export const smartJurnalTipe = ["BEBAN_OPERASIONAL", "PRIVE", "SUNTIKAN_MODAL"] as const;
 export type SmartJurnalTipe = (typeof smartJurnalTipe)[number];
-
-const kasKode = ["1100", "1110"] as const;
 
 const tipeMeta: Record<
   SmartJurnalTipe,
@@ -53,14 +52,6 @@ function parseTipe(raw: unknown): SmartJurnalTipe {
     throw new SmartJurnalError("Pilih tipe Smart Jurnal.", 400);
   }
   return t as SmartJurnalTipe;
-}
-
-function parseKasKode(raw: unknown): (typeof kasKode)[number] {
-  const k = String(raw ?? "1100").trim();
-  if (!kasKode.includes(k as (typeof kasKode)[number])) {
-    throw new SmartJurnalError("Sumber kas harus 1100 atau 1110.", 400);
-  }
-  return k as (typeof kasKode)[number];
 }
 
 async function akunPostingKode(kode: string) {
@@ -111,7 +102,15 @@ export async function createSmartJurnal(
 
   const tipe = parseTipe(raw.tipe);
   const nominal = parseNominal(raw.nominal);
-  const kasKodeVal = parseKasKode(raw.sumberKas);
+  let kasKodeVal;
+  try {
+    kasKodeVal = parseSumberKasKode(raw.sumberKas);
+  } catch (error) {
+    if (error instanceof KasSumberError) {
+      throw new SmartJurnalError(error.message, error.status);
+    }
+    throw error;
+  }
   const statusRaw = String(raw.status ?? "PENDING").trim();
   if (statusRaw !== "DRAFT" && statusRaw !== "PENDING") {
     throw new SmartJurnalError("Status awal hanya DRAFT atau PENDING.", 400);

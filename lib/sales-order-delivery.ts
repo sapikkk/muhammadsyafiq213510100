@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { AKUN_KODE } from "@/lib/akun-kode";
+import { KasSumberError, parseSumberKasKode, resolveKasAkunId, type SumberKasKode } from "@/lib/kas-sumber";
 import { sisaPiutangSo } from "@/lib/sales-order-pembayaran";
 import { prisma } from "@/lib/prisma";
 import { SalesOrderError, type JenisSo } from "@/lib/sales-order";
@@ -66,17 +67,26 @@ async function createJurnalPenjualanPending(
     }[];
   },
   userId: number,
+  kasKode: SumberKasKode,
 ) {
-  const [kasId, curahId, packId, hppId, persediaanId, piutangId, uangMukaId] =
-    await Promise.all([
-      requireAkunPosting(tx, AKUN_KODE.KAS),
+  let kasId: number;
+  try {
+    kasId = await resolveKasAkunId(tx, kasKode);
+  } catch (error) {
+    if (error instanceof KasSumberError) {
+      throw new SalesOrderError(error.message, error.status);
+    }
+    throw error;
+  }
+
+  const [curahId, packId, hppId, persediaanId, piutangId, uangMukaId] = await Promise.all([
       requireAkunPosting(tx, AKUN_KODE.PENDAPATAN_CURAH),
       requireAkunPosting(tx, AKUN_KODE.PENDAPATAN_PACK),
       requireAkunPosting(tx, AKUN_KODE.HPP),
       requireAkunPosting(tx, AKUN_KODE.PERSEDIAAN_SAYUR),
       requireAkunPosting(tx, AKUN_KODE.PIUTANG),
       requireAkunPosting(tx, AKUN_KODE.UANG_MUKA),
-    ]);
+  ]);
 
   let pendapatanCurah = nol;
   let pendapatanPack = nol;
@@ -185,8 +195,27 @@ export async function shipSalesOrder(id: number, userId: number, catatanRaw?: un
   });
 }
 
-export async function deliverSalesOrder(id: number, userId: number, catatanRaw?: unknown) {
-  const catatan = parseCatatan(catatanRaw);
+export type DeliverSalesOrderOpts = {
+  catatan?: unknown;
+  sumberKas?: unknown;
+};
+
+export async function deliverSalesOrder(
+  id: number,
+  userId: number,
+  opts: DeliverSalesOrderOpts = {},
+) {
+  const catatan = parseCatatan(opts.catatan);
+  let kasKode: SumberKasKode;
+  try {
+    kasKode = parseSumberKasKode(opts.sumberKas);
+  } catch (error) {
+    if (error instanceof KasSumberError) {
+      throw new SalesOrderError(error.message, error.status);
+    }
+    throw error;
+  }
+
   return prisma.$transaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({
       where: { id },
@@ -200,7 +229,7 @@ export async function deliverSalesOrder(id: number, userId: number, catatanRaw?:
       throw new SalesOrderError("Jurnal penjualan untuk SO ini sudah dibuat.", 409);
     }
 
-    const jurnal = await createJurnalPenjualanPending(tx, so, userId);
+    const jurnal = await createJurnalPenjualanPending(tx, so, userId, kasKode);
 
     const dpDiterima =
       so.status_pembayaran === "DP_DITERIMA" && so.jumlah_dp.gt(0) ? so.jumlah_dp : nol;
