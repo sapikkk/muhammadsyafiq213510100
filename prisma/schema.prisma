@@ -386,6 +386,7 @@ model Akun {
   parent   Akun?         @relation("AkunInduk", fields: [parentId], references: [id])
   anak     Akun[]        @relation("AkunInduk")
   aktif    Boolean       @default(true)
+  isSystem Boolean       @default(false) @map("is_system")
   // Saldo normal: Aset dan Beban bertambah di debit, lainnya di kredit. Hanya berubah saat jurnal APPROVED.
   saldo    Decimal       @default(0) @db.Decimal(18, 2)
   baris    JurnalBaris[]

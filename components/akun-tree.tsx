@@ -16,6 +16,7 @@ export type AkunRow = {
   nama: string;
   tipe: TipeAkunKey;
   aktif: boolean;
+  isSystem: boolean;
   anak: AkunRow[];
 };
 
@@ -62,6 +63,7 @@ function Node({
             <Badge variant="secondary">{tipeAkunLabel[akun.tipe]}</Badge>
           ) : null}
           {akun.aktif ? null : <Badge variant="outline">Nonaktif</Badge>}
+          {akun.isSystem ? <Badge variant="secondary">Sistem</Badge> : null}
         </div>
         <div className="flex gap-2">
           <Link
@@ -70,18 +72,20 @@ function Node({
           >
             Ubah
           </Link>
-          <form action={toggleAction}>
-            <input type="hidden" name="id" value={akun.id} />
-            <input type="hidden" name="aktif" value={String(!akun.aktif)} />
-            <SubmitButton
-              variant="outline"
-              size="sm"
-              className="h-9"
-              pendingLabel="Memproses..."
-            >
-              {akun.aktif ? "Nonaktifkan" : "Aktifkan"}
-            </SubmitButton>
-          </form>
+          {akun.isSystem ? null : (
+            <form action={toggleAction}>
+              <input type="hidden" name="id" value={akun.id} />
+              <input type="hidden" name="aktif" value={String(!akun.aktif)} />
+              <SubmitButton
+                variant="outline"
+                size="sm"
+                className="h-9"
+                pendingLabel="Memproses..."
+              >
+                {akun.aktif ? "Nonaktifkan" : "Aktifkan"}
+              </SubmitButton>
+            </form>
+          )}
         </div>
       </div>
       {akun.anak.length > 0 ? (

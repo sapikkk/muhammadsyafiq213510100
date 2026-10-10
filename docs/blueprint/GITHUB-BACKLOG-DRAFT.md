@@ -47,4 +47,6 @@
 **Skill:** `docs/skills/akuntansi-hidroponik/SKILL.md`  
 **Board:** tambahkan kartu ke [Project #1](https://github.com/users/sapikkk/projects/1) (iteration v2 opsional).
 
+**Versi npm/tag:** increment v2 = epic produk; rilis Git tetap **1.14+** (bukan 2.0.0) — lihat `AGENTS.md`.
+
 Terakhir diperbarui: **2026-10-10**.
