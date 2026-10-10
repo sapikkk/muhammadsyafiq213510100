@@ -8,7 +8,7 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 - **Actor:** agent  
 - **Deliverable:** Smart Jurnal MVP (`sumber=SMART`, 3 tipe), KPI Owner HPP/lubang + yield, period lock + override Admin  
-- **Release:** **v1.19.0** (PR TBD) · board #100–#102 → Done via `sync:project-board`  
+- **Release:** **v1.19.0** · PR [#109](https://github.com/sapikkk/muhammadsyafiq213510100/pull/109) + hotfix [#110](https://github.com/sapikkk/muhammadsyafiq213510100/pull/110) (KPI `/owner`) · board #100–#102 Done  
 - **Ops:** `prisma db push` wajib setelah deploy schema; e2e `admin-smart-jurnal.spec.ts`  
 - **Kendala terminal (catat di Project):** push tag `v1.18.0` ditolak remote (tag sudah ada) — non-blocking; `check:*` via tsx kadang EPERM di sandbox → jalankan dengan permission penuh  
 
