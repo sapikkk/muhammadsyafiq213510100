@@ -15,7 +15,7 @@ export default async function JurnalBaruPage() {
         <p className="text-sm font-medium text-primary">Admin</p>
         <h1 className="text-3xl font-semibold tracking-tight">Jurnal baru</h1>
         <p className="text-muted-foreground">
-          Smart Jurnal (v2-F.1) atau jurnal manual. Saldo berubah setelah approve.
+          Smart Jurnal (v2-F.2) atau jurnal manual. Saldo berubah setelah approve.
         </p>
       </header>
       <JurnalBaruPanel
