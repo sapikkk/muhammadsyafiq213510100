@@ -37,6 +37,7 @@ const AKUN_BY_TIPE: Partial<
   BELI_ASET_TUNAI: { debit: "1500", kredit: "KAS", needsKas: true },
   BAYAR_BUNGA: { debit: "5500", kredit: "KAS", needsKas: true },
   PENYUSUTAN_GREENHOUSE: { debit: "5210", kredit: "1510", needsKas: false },
+  PENYUSUTAN_INSTALASI: { debit: "5220", kredit: "1530", needsKas: false },
 };
 
 function parseNominal(raw: unknown): Prisma.Decimal {

@@ -14,7 +14,7 @@ import {
   type SmartJurnalTipe,
 } from "@/lib/smart-jurnal-catalog";
 
-const NO_KAS: SmartJurnalTipe[] = ["PENYUSUTAN_GREENHOUSE"];
+const NO_KAS: SmartJurnalTipe[] = ["PENYUSUTAN_GREENHOUSE", "PENYUSUTAN_INSTALASI"];
 
 export function SmartJurnalForm({
   tanggalAwal,

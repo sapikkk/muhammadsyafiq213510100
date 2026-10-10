@@ -4,6 +4,14 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-10 — v2 closeout (A.4, F.2, H penyusutan, docs)
+
+- **Actor:** agent  
+- **Deliverable:** Kas split (#116 · v1.22.0); Smart 10 tipe (#117 · v1.23.0); penyusutan otomatis bulan + e2e akuntansi (**v1.24.0**); backlog/UAT/blackbox/board PLAN (#87 Done, #92/#94 In progress)  
+- **Defer:** epic edge #88–#90, Smart 11–17, laporan §8 penuh — post-MVP skripsi  
+
+---
+
 ## 2026-10-10 — v2-A.3 panen WIP (#114)
 
 - **Actor:** agent  

@@ -270,3 +270,11 @@ UI: `/admin/jurnal/baru` tab **Smart Jurnal**; jurnal manual tetap di tab kedua.
 | Form jurnal / Smart | Admin | Checkbox **override period lock** (keputusan PO) |
 
 Lib: `lib/period-lock.ts` — dipanggil dari `createJurnal` dan Smart Jurnal.
+
+## Penyusutan otomatis (v2-H.2)
+
+| UI | Peran | Catatan |
+| --- | --- | --- |
+| `/admin/akuntansi` | Admin | Form **Catat penyusutan bulan** → `catatPenyusutanBulan` |
+
+Σ `Greenhouse.depresiasi_per_bulan` → Dr 5210 Cr 1510; `Biaya_Overhead` terakhir `depresiasi_listrik` → Dr 5220 Cr 1530. Idempotent per bulan.
