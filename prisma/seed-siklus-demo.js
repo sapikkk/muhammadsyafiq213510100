@@ -7,7 +7,16 @@ async function seedSiklusDemo(prisma) {
     where: { kode_batch: DEMO_BATCH },
   });
   if (existing) {
-    return { skipped: true, siklusId: existing.id };
+    await prisma.log_Produksi.deleteMany({ where: { siklus_id: existing.id } });
+    await prisma.siklus_Produksi.update({
+      where: { id: existing.id },
+      data: {
+        status: "SEMAI",
+        tanggal_pindah_kolam: null,
+        tanggal_panen: null,
+      },
+    });
+    return { skipped: true, reset: true, siklusId: existing.id };
   }
 
   const admin = await prisma.user.findUnique({ where: { email: "admin@kokonus.farm" } });
