@@ -68,13 +68,13 @@ export default async function OwnerJurnalPage({
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">{`${rows.length} jurnal${adaFilter ? " sesuai filter" : ""}`}</h2>
-        {rows.length === 0 ? (
-          <p className="border border-dashed p-4 text-sm text-muted-foreground">
-            Tidak ada jurnal untuk filter ini.
-          </p>
-        ) : (
-          <JurnalDaftar rows={serialized} detailPrefix="/owner/jurnal" />
-        )}
+        <JurnalDaftar
+          rows={serialized}
+          detailPrefix="/owner/jurnal"
+          emptyMessage={
+            adaFilter ? "Tidak ada jurnal untuk filter ini." : "Belum ada jurnal."
+          }
+        />
       </section>
     </div>
   );

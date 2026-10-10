@@ -13,9 +13,11 @@ export type JurnalDaftarRow = SerializedJurnalListRow;
 export function JurnalDaftar({
   rows,
   detailPrefix,
+  emptyMessage = "Belum ada jurnal.",
 }: {
   rows: JurnalDaftarRow[];
   detailPrefix: "/admin/jurnal" | "/owner/jurnal";
+  emptyMessage?: string;
 }) {
   const columns = useMemo<ColumnDef<JurnalDaftarRow>[]>(
     () => [
@@ -72,7 +74,7 @@ export function JurnalDaftar({
       searchPlaceholder="Cari keterangan atau pembuat…"
       searchColumnIds={["keterangan", "dibuatOlehNama"]}
       syncSearchParam="q"
-      emptyMessage="Belum ada jurnal."
+      emptyMessage={emptyMessage}
     />
   );
 }
