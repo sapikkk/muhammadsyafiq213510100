@@ -8,6 +8,7 @@ import {
   isFaseProduksi,
   type FaseProduksi,
 } from "@/lib/siklus-fase";
+import { STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort";
 
 export class SiklusError extends Error {
   constructor(
@@ -266,6 +267,9 @@ export async function lanjutFase(
     async (tx) => {
       const siklus = await tx.siklus_Produksi.findUnique({ where: { id: siklusId } });
       if (!siklus) throw new SiklusError("Siklus tidak ditemukan.", 404);
+      if (siklus.status === STATUS_GAGAL_TOTAL) {
+        throw new SiklusError("Siklus sudah di-abort gagal total.", 400);
+      }
       if (!isFaseProduksi(siklus.status)) {
         throw new SiklusError("Fase siklus tidak dikenali.", 400);
       }
