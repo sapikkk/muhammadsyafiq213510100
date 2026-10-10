@@ -1,3 +1,4 @@
+import { AdminSiklusAbortPanel } from "@/components/admin-siklus-abort-panel";
 import { BiayaAdminPanel } from "@/components/biaya-admin-panel";
 import { PageHeader } from "@/components/page-header";
 import { listOverhead, serializeOverhead } from "@/lib/biaya";
@@ -18,6 +19,17 @@ export default async function AdminBiayaPage() {
         siklusOptions={siklus.map((s) => ({ id: s.id, kode_batch: s.kode_batch }))}
         overheadRows={overhead.map(serializeOverhead)}
       />
+      <section className="space-y-3">
+        <h2 className="text-lg font-semibold">Abort siklus gagal total (v2-B.1)</h2>
+        <AdminSiklusAbortPanel
+          siklus={siklus.map((s) => ({
+            id: s.id,
+            kode_batch: s.kode_batch,
+            status: s.status,
+            laporan_status: s.laporanPanen?.status ?? null,
+          }))}
+        />
+      </section>
     </div>
   );
 }
