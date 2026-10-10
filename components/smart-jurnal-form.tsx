@@ -8,7 +8,11 @@ import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { AKUN_KODE } from "@/lib/akun-kode";
-import { smartJurnalTipe, smartJurnalTipeLabel, type SmartJurnalTipe } from "@/lib/smart-jurnal";
+import {
+  smartJurnalTipe,
+  smartJurnalTipeLabel,
+  type SmartJurnalTipe,
+} from "@/lib/smart-jurnal-catalog";
 
 const NO_KAS: SmartJurnalTipe[] = ["PENYUSUTAN_GREENHOUSE"];
 

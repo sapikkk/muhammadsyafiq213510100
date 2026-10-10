@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { Prisma } from "@prisma/client";
 import { AKUN_KODE } from "../lib/akun-kode";
-import { buildSmartJurnalBaris, smartJurnalTipe } from "../lib/smart-jurnal";
+import { smartJurnalTipe } from "../lib/smart-jurnal-catalog";
+import { buildSmartJurnalBaris } from "../lib/smart-jurnal";
 
 const nominal = new Prisma.Decimal("100000");
 

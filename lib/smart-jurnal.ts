@@ -8,6 +8,13 @@ import {
 } from "@/lib/kas-sumber";
 import { assertJurnalTanggalAllowed } from "@/lib/period-lock";
 import { prisma } from "@/lib/prisma";
+import {
+  smartJurnalTipe,
+  smartJurnalTipeLabel,
+  type SmartJurnalTipe,
+} from "@/lib/smart-jurnal-catalog";
+
+export { smartJurnalTipe, smartJurnalTipeLabel, type SmartJurnalTipe } from "@/lib/smart-jurnal-catalog";
 
 export class SmartJurnalError extends Error {
   constructor(
@@ -17,32 +24,6 @@ export class SmartJurnalError extends Error {
     super(message);
   }
 }
-
-/** MVP v2-F.1 + perluasan F.2 (subset blueprint tipe 1–9). */
-export const smartJurnalTipe = [
-  "BEBAN_OPERASIONAL",
-  "PRIVE",
-  "SUNTIKAN_MODAL",
-  "TRANSFER_KAS",
-  "PINJAMAN_MASUK",
-  "BAYAR_HUTANG",
-  "BELI_ASET_TUNAI",
-  "BAYAR_BUNGA",
-  "PENYUSUTAN_GREENHOUSE",
-] as const;
-export type SmartJurnalTipe = (typeof smartJurnalTipe)[number];
-
-export const smartJurnalTipeLabel: Record<SmartJurnalTipe, string> = {
-  BEBAN_OPERASIONAL: "Beban operasional (5230)",
-  PRIVE: "Prive pemilik (3200)",
-  SUNTIKAN_MODAL: "Suntikan modal (3100)",
-  TRANSFER_KAS: "Transfer antar kas/bank",
-  PINJAMAN_MASUK: "Pinjaman masuk (Dr kas · Cr hutang)",
-  BAYAR_HUTANG: "Bayar hutang usaha (2100)",
-  BELI_ASET_TUNAI: "Beli aset tunai (1500 greenhouse)",
-  BAYAR_BUNGA: "Beban bunga pinjaman (5500)",
-  PENYUSUTAN_GREENHOUSE: "Penyusutan greenhouse (5210 · 1510)",
-};
 
 const AKUN_BY_TIPE: Partial<
   Record<SmartJurnalTipe, { debit?: string; kredit?: string; needsKas?: boolean; needsKasTujuan?: boolean }>
