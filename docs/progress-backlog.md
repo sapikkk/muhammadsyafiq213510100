@@ -1,72 +1,64 @@
 # Progress & backlog — Kokonus Farm
 
-**Sumber kebenaran issue:** GitHub [#2–#38](https://github.com/sapikkk/muhammadsyafiq213510100/issues) (status **closed** per 2026-10-10).  
-**Board:** [Project #1](https://github.com/users/sapikkk/projects/1) · **Registry:** `docs/agile/` · **Blackbox:** `docs/uji-blackbox.md`
+**Board live:** [GitHub Project #1](https://github.com/users/sapikkk/projects/1) · **Registry:** `docs/agile/` · **Blackbox:** `docs/uji-blackbox.md`  
+**Sinkron board:** `npm run sync:project-board` · **Dashboard `/`:** `npm run sync:agile-progress`
 
-## Ringkasan
+## Ringkasan (2026-10-10)
 
 | Metrik | Nilai |
 |--------|--------|
-| US produk (US1.1–US6.5) | **37 / 37** issue closed |
-| Sprint fitur (1–4) | **Selesai** (merge stack #65–#78, audit #80 → v1.12.0) |
-| Sprint 5 (QA / go-live) | **Belum** — #39–#45 open |
-| Temuan terbuka | [#50](https://github.com/sapikkk/muhammadsyafiq213510100/issues/50) FINDING-01 (DB pool) |
+| US v1 (US1.1–US6.5) | **37 / 37** closed (#2–#38) |
+| Sprint 1–4 fitur | **Selesai** (release **v1.12.0**) |
+| Sprint 5 QA / go-live | **Selesai** — #39–#45 closed · prod **kokonusfarm.vercel.app** · tag **v1.13.0** → **v1.14.0** (v2-A.1) |
+| Increment v2 | Epic **#87–#94** open · story **#95** done · **#96** in progress di board |
+| Temuan terbuka | [#50](https://github.com/sapikkk/muhammadsyafiq213510100/issues/50) FINDING-01 (DB pool) — Todo P2 |
+| Backlog opsional | [#81](https://github.com/sapikkk/muhammadsyafiq213510100/issues/81) demo seed + skills docs — Todo P2 |
 
-Verifikasi AC penuh (bukan sekadar issue closed): [`docs/agile/AC-VERIFIKASI-RISIKO.md`](./agile/AC-VERIFIKASI-RISIKO.md).
+Verifikasi AC penuh: [`docs/agile/AC-VERIFIKASI-RISIKO.md`](./agile/AC-VERIFIKASI-RISIKO.md).
 
 ---
 
-## Progress per epic (issue closed)
+## v1 — selesai
 
-| Epic | US | Status issue |
-|------|-----|----------------|
+| Epic | US | Status |
+|------|-----|--------|
 | EPIC-1 Auth | US1.1–1.9 (#2–#10) | Closed |
 | EPIC-2 Akuntansi | US2.1–2.6 (#11–#16) | Closed |
 | EPIC-3 Produksi | US3.1–3.7 (#17–#23) | Closed |
 | EPIC-4 Inventaris | US4.1–4.5 (#24–#28) | Closed |
 | EPIC-5 Penjualan | US5.1–5.5 (#29–#33) | Closed |
 | EPIC-6 Laporan | US6.1–6.5 (#34–#38) | Closed |
+| Sprint 5 | T5.1–T5.9 (#39–#45) | Closed |
 
 ---
 
-## Kelompok alur (referensi integrasi)
+## v2 — backlog aktif (Project iteration: **Increment v2 · Post go-live**)
 
-### G1 — Panen → HPP → jurnal
+Urutan coding PO: **A → B → C → D → E → F → G → H** — detail issue: [`docs/blueprint/GITHUB-BACKLOG-DRAFT.md`](./blueprint/GITHUB-BACKLOG-DRAFT.md).
 
-US3.3 → approve harvest → US2.3 HPP → US2.2 jurnal → laporan US6.x.  
-Implementasi: PR #66–#68, #70; audit API/UI #80.
-
-### G4 — Penjualan
-
-US5.1 → … → US5.5. PR [#69](https://github.com/sapikkk/muhammadsyafiq213510100/pull/69), [#72](https://github.com/sapikkk/muhammadsyafiq213510100/pull/72).
-
-### G5 — Owner & laporan
-
-US2.6, US1.9, US6.1–6.5. PR [#73](https://github.com/sapikkk/muhammadsyafiq213510100/pull/73)–[#78](https://github.com/sapikkk/muhammadsyafiq213510100/pull/78).
-
-### G6 — QA (Sprint 5)
-
-Rencana eksekusi: [`docs/agile/sprints/sprint-05-qa.md`](./agile/sprints/sprint-05-qa.md).
+| P | Status board | Item | Issue |
+|---|--------------|------|-------|
+| — | Done | v2-A.1 `Akun.is_system` + guard COA | [#95](https://github.com/sapikkk/muhammadsyafiq213510100/issues/95) · PR #104 · **v1.14.0** |
+| P1 | In progress | Epic A (sisa: WIP, uang muka, kas split) | [#87](https://github.com/sapikkk/muhammadsyafiq213510100/issues/87) |
+| P0 | In progress | v2-B.1 Abort gagal total → jurnal 5300 | [#96](https://github.com/sapikkk/muhammadsyafiq213510100/issues/96) |
+| P1 | Todo | Epic B + story C.1–E.1 | [#88](https://github.com/sapikkk/muhammadsyafiq213510100/issues/88)–[#99](https://github.com/sapikkk/muhammadsyafiq213510100/issues/99) |
+| P2 | Todo | Epic F–H + story F.1–H.1 | [#92](https://github.com/sapikkk/muhammadsyafiq213510100/issues/92)–[#94](https://github.com/sapikkk/muhammadsyafiq213510100/issues/94), [#100](https://github.com/sapikkk/muhammadsyafiq213510100/issues/100)–[#102](https://github.com/sapikkk/muhammadsyafiq213510100/issues/102) |
 
 ---
 
-## Prioritas sekarang
+## Project #1 — views
 
-| P | Item | Issue |
-|---|------|-------|
-| P0 | Sprint 5 usability + audit debit=kredit | #39–#42 |
-| P0 | Bugfix hasil uji | #43 |
-| P1 | Deploy staging/prod | #44 |
-| P1 | Go-live & pelatihan | #45 |
-| P2 | Mitigasi DB pool (uji beban) | #50 |
-| P2 | Sinkron Project #1 iteration dates | manual (lihat timeline-registry) |
+| View | Isi |
+|------|-----|
+| **Board / Status** | v1 US → Done; backlog v2 + #50 + #81 di Todo / In progress |
+| **Current iteration** | Pilih **Increment v2 · Post go-live** untuk sprint v2 |
+| **Roadmap** | Sprint 1–5 (historis v1) + bar v2 dari 2026-10-10 |
+| **Prioritas** | P0 = #96; P1 = epic/story inti A–E; P2 = F–H, #50, #81 |
 
 ---
 
 ## Refactor audit (bukan US baru)
 
-Global audit merged **2026-10-10** — `docs/audit/SUMMARY.md` (UI B&W partial, DataTable, CI e2e).
+Global audit merged **2026-10-10** — `docs/audit/SUMMARY.md`.
 
----
-
-Terakhir diperbarui: **2026-10-10** (sinkron issue GitHub).
+Terakhir diperbarui: **2026-10-10** (sinkron GitHub issue + Project #1).

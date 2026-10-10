@@ -4,6 +4,16 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-10 — Project #1 + backlog v2 (sinkron board)
+
+- **Actor:** agent + PO sapikkk  
+- **GitHub:** Iteration **Increment v2 · Post go-live** di Project #1; field Status/Priority/Iteration untuk #50, #81, #87–#104 via `npm run sync:project-board`  
+- **Sub-issue:** story #95–#102 di-link ke epic #87–#94  
+- **Merge v2-A.1:** PR #104 · issue #95 closed · release **v1.14.0**  
+- **Docs:** `docs/progress-backlog.md`, `docs/agile/github-field-guide.md`, `scripts/sync-project-board.mjs`  
+
+---
+
 ## 2026-10-10 — Backlog GitHub increment v2
 
 - **Actor:** PO sapikkk + agent  
