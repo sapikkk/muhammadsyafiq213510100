@@ -102,7 +102,7 @@ export default async function JurnalPage({
       </form>
 
       <PageSection
-        title={`${rows.length} jurnal${adaFilter ? " (filter)" : ""}`}
+        title={`${rows.length} jurnal${adaFilter ? " sesuai filter" : ""}`}
         description={
           adaFilter
             ? [
