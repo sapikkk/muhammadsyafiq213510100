@@ -1050,6 +1050,14 @@ POST /api/auth/callback/credentials 200 in 24253ms
 
 Sample audit manual (T5.4): jurnal manual DRAFT/PENDING, jurnal approve panen, jurnal SO DELIVERED — cek total debit = kredit di detail masing-masing.
 
+### v2-D.1 — SO lubang + HPP order (Epic D / #98)
+
+| Langkah | Peran | Hasil diharapkan |
+| --- | --- | --- |
+| `/admin/penjualan` buat SO DRAFT | Admin | Baris punya **lubang terpakai** + qty (kg/pack) |
+| Simpan dengan lubang > stok batch | Admin | Error stok lubang |
+| Konfirmasi → kirim → DELIVERED | Admin | Jurnal COGS memakai **hpp_order** (lubang × HPP/lubang + plastik pack) |
+
 ### v2-C.1 — Kapasitas lubang active pack (Epic C / #97)
 
 | Langkah | Peran | Hasil diharapkan |
