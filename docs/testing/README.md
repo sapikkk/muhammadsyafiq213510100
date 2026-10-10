@@ -10,7 +10,8 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Spec: `e2e/smoke.spec.ts` — login, jurnal/stok rendah, DataTable cari, 404 + shell, menu mobile.
+Spec: `e2e/smoke.spec.ts` — login, jurnal/stok rendah, DataTable cari, 404 + shell, menu mobile.  
+Sprint 5: `e2e/sprint5-usability.spec.ts` (T5.1–T5.3); `globalSetup` reset batch `E2E-S5-DEMO`.
 
 Opsional (lokal, **bukan CI**): `AUDIT_BYPASS_RBAC=true npm run test:e2e -- e2e/audit-nav.spec.ts` — crawl Menu (audit).
 
