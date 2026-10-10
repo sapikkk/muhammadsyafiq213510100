@@ -4,6 +4,16 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-10 — Go-live v1 + Sprint 5 + progress board
+
+- **Actor:** PO sapikkk + agent  
+- **Merge:** [#85](https://github.com/sapikkk/muhammadsyafiq213510100/pull/85) home progress Project #1 + deploy CLI · [#83](https://github.com/sapikkk/muhammadsyafiq213510100/pull/83) T5.1–T5.9 (e2e, audit jurnal, Vercel prod)  
+- **Production:** kokonusfarm.vercel.app — Postgres Prisma, seed demo, login 3 peran  
+- **Docs:** `docs/agile/sprints/sprint-05-qa.md`, `docs/deployment/vercel.md`, `npm run sync:agile-progress`  
+- **Issue T5:** #39–#45 siap ditutup setelah verifikasi PO  
+
+---
+
 ## 2026-10-09 — Keputusan PO (partial, actual start, retro S1)
 
 - **Actor:** PO sapikkk + agent  
@@ -39,6 +49,15 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 - US1.1–US1.8 issues #2–#9 closed  
 - Notulensi: `docs/uji-blackbox.md` US1.4–1.8
+
+---
+
+## 2026-10-10 — Sinkron registry ↔ GitHub (37/37 US closed)
+
+- **Actor:** PO + agent  
+- **Fakta:** Issue #2–#38 **closed**; Sprint 5 (#39–#45) + #50 masih open; `main` @ v1.12.0 (audit #80 merged).  
+- **Artefak:** `progress-backlog.md`, `timeline-registry.md`, `sprint-02-operasi.md`, `sprint-05-qa.md` (urutan T5), `AC-VERIFIKASI-RISIKO.md`, `docs/audit/SUMMARY.md`.  
+- **Branch docs:** _(PR docs/agile-sync)_  
 
 ---
 
