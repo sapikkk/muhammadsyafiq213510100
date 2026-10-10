@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
   cancelSalesOrderAction,
+  catatDpSalesOrderAction,
   confirmSalesOrderAction,
   deliverSalesOrderAction,
   recordPackingCostAction,
@@ -34,6 +35,10 @@ export type SoRow = {
   biaya_packing?: string;
   alasan_batal?: string | null;
   jurnal_packing_id?: number | null;
+  jumlah_dp?: string;
+  akun_dp_kode?: string | null;
+  status_pembayaran?: string;
+  jurnal_dp_id?: number | null;
   baris: {
     kode_batch: string;
     jenis: string;
@@ -43,6 +48,22 @@ export type SoRow = {
     subtotal: string;
   }[];
 };
+
+function CatatDpButton({ id }: { id: number }) {
+  const [state, formAction] = useFormState(catatDpSalesOrderAction, {});
+  useActionToast({ error: state.error, ok: state.ok });
+  return (
+    <form action={formAction} className="mt-2 space-y-2 rounded-md border border-dashed p-3">
+      <input type="hidden" name="salesOrderId" value={id} />
+      <SubmitButton className="h-9" pendingLabel="...">
+        Catat DP (Dr Kas · Cr uang muka)
+      </SubmitButton>
+      <p className="text-xs text-muted-foreground">
+        Jurnal langsung APPROVED; bukan pendapatan. Pelunasan di story berikutnya.
+      </p>
+    </form>
+  );
+}
 
 function ConfirmButton({ id }: { id: number }) {
   const [state, formAction] = useFormState(confirmSalesOrderAction, {});
@@ -139,7 +160,16 @@ function SalesOrderDetail({
       </div>
       <p className="text-muted-foreground">
         {row.pelanggan_nama} · Total {formatRupiah(row.total)}
+        {row.jumlah_dp && row.jumlah_dp !== "0"
+          ? ` · DP ${formatRupiah(row.jumlah_dp)}${row.akun_dp_kode ? ` → akun ${row.akun_dp_kode}` : ""}`
+          : ""}
       </p>
+      {row.status_pembayaran && row.status_pembayaran !== "BELUM_BAYAR" ? (
+        <p className="text-xs text-muted-foreground">
+          Pembayaran: {row.status_pembayaran}
+          {row.jurnal_dp_id ? ` · Jurnal DP #${row.jurnal_dp_id}` : ""}
+        </p>
+      ) : null}
       <ul className="text-xs text-muted-foreground">
         {row.baris.map((b, i) => (
           <li key={i}>
@@ -178,6 +208,14 @@ function SalesOrderDetail({
         </Link>
       ) : null}
       {mode === "admin" && row.status === "DRAFT" ? <ConfirmButton id={row.id} /> : null}
+      {mode === "admin" &&
+      row.status_pembayaran === "BELUM_BAYAR" &&
+      row.jumlah_dp &&
+      row.jumlah_dp !== "0" &&
+      row.status !== "DRAFT" &&
+      row.status !== "CANCELLED" ? (
+        <CatatDpButton id={row.id} />
+      ) : null}
       {mode === "admin" &&
       ["CONFIRMED", "SHIPPED", "DELIVERED"].includes(row.status) &&
       !row.jurnal_packing_id ? (

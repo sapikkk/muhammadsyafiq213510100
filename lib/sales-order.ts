@@ -1,6 +1,11 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { hitungHppOrderBaris } from "@/lib/sales-order-hpp";
+import {
+  defaultAkunDpId,
+  parseJumlahDp,
+  resolveAkunDpId,
+} from "@/lib/sales-order-pembayaran";
 
 type Db = typeof prisma;
 
@@ -27,6 +32,8 @@ export type SoBarisInput = {
 export type SalesOrderInput = {
   pelangganId: number;
   catatan: string | null;
+  jumlahDp: Prisma.Decimal;
+  akunDpId: number | null;
   baris: SoBarisInput[];
 };
 
@@ -96,7 +103,17 @@ export function parseSalesOrderInput(raw: Record<string, unknown>): SalesOrderIn
     };
   });
 
-  return { pelangganId, catatan, baris };
+  const jumlahDp = parseJumlahDp(raw.jumlahDp);
+  let akunDpId: number | null = null;
+  if (raw.akunDpId !== undefined && raw.akunDpId !== null && raw.akunDpId !== "") {
+    const id = Number(raw.akunDpId);
+    if (!Number.isInteger(id) || id <= 0) {
+      throw new SalesOrderError("Akun DP tidak valid.", 400);
+    }
+    akunDpId = id;
+  }
+
+  return { pelangganId, catatan, jumlahDp, akunDpId, baris };
 }
 
 async function generateNomorSo(tx: Db): Promise<string> {
@@ -192,6 +209,8 @@ export async function listSalesOrders() {
       pelanggan: { select: { nama: true } },
       jurnal_pendapatan: { select: { id: true, status: true, keterangan: true } },
       jurnal_packing: { select: { id: true, status: true } },
+      jurnal_dp: { select: { id: true, status: true } },
+      akun_dp: { select: { id: true, kode: true, nama: true } },
       baris: {
         include: {
           siklus: { select: { kode_batch: true } },
@@ -218,6 +237,11 @@ type SoSerializeRow = {
   alasan_batal?: string | null;
   jurnal_pendapatan?: { id: number; status: string; keterangan: string } | null;
   jurnal_packing?: { id: number; status: string } | null;
+  jumlah_dp?: Prisma.Decimal;
+  akun_dp_id?: number | null;
+  akun_dp?: { id: number; kode: string; nama: string } | null;
+  status_pembayaran?: string;
+  jurnal_dp?: { id: number; status: string } | null;
   baris: {
     id: number;
     siklus_id: number;
@@ -251,6 +275,12 @@ export function serializeSalesOrder(row: SoSerializeRow) {
     alasan_batal: row.alasan_batal ?? null,
     jurnal_packing_id: row.jurnal_packing?.id ?? null,
     jurnal_packing_status: row.jurnal_packing?.status ?? null,
+    jumlah_dp: row.jumlah_dp?.toString() ?? "0",
+    akun_dp_id: row.akun_dp_id ?? null,
+    akun_dp_kode: row.akun_dp?.kode ?? null,
+    status_pembayaran: row.status_pembayaran ?? "BELUM_BAYAR",
+    jurnal_dp_id: row.jurnal_dp?.id ?? null,
+    jurnal_dp_status: row.jurnal_dp?.status ?? null,
     baris: row.baris.map((b) => ({
       id: b.id,
       siklus_id: b.siklus_id,
@@ -310,6 +340,18 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
       });
     }
 
+    if (input.jumlahDp.gt(total)) {
+      throw new SalesOrderError("Jumlah DP tidak boleh melebihi total SO.", 400);
+    }
+    let akun_dp_id: number | null = null;
+    if (input.jumlahDp.gt(0)) {
+      if (input.akunDpId) {
+        akun_dp_id = await resolveAkunDpId(input.akunDpId);
+      } else {
+        akun_dp_id = await defaultAkunDpId();
+      }
+    }
+
     const nomor_so = await generateNomorSo(tx as Db);
     return tx.sales_Order.create({
       data: {
@@ -318,6 +360,9 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
         status: "DRAFT",
         total,
         catatan: input.catatan,
+        jumlah_dp: input.jumlahDp,
+        akun_dp_id,
+        status_pembayaran: "BELUM_BAYAR",
         dibuat_oleh_id: userId,
         baris: { create: barisData },
       },

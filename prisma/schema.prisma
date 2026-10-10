@@ -212,6 +212,15 @@ model Sales_Order {
   jurnal_packing    Jurnal?          @relation("JurnalPackingSO", fields: [jurnal_packing_id], references: [id])
   jurnal_reversal_id Int?            @unique
   jurnal_reversal    Jurnal?          @relation("JurnalReversalSO", fields: [jurnal_reversal_id], references: [id])
+  jumlah_dp          Decimal          @default(0) @db.Decimal(18, 2)
+  akun_dp_id         Int?
+  akun_dp            Akun?            @relation("SoAkunDp", fields: [akun_dp_id], references: [id])
+  jumlah_pelunasan   Decimal          @default(0) @db.Decimal(18, 2)
+  akun_pelunasan_id  Int?
+  akun_pelunasan     Akun?            @relation("SoAkunPelunasan", fields: [akun_pelunasan_id], references: [id])
+  status_pembayaran  String           @default("BELUM_BAYAR") @db.VarChar(30)
+  jurnal_dp_id       Int?             @unique
+  jurnal_dp          Jurnal?          @relation("JurnalDpSO", fields: [jurnal_dp_id], references: [id])
   baris          Sales_Order_Baris[]
 }
 
@@ -392,6 +401,8 @@ model Akun {
   // Saldo normal: Aset dan Beban bertambah di debit, lainnya di kredit. Hanya berubah saat jurnal APPROVED.
   saldo    Decimal       @default(0) @db.Decimal(18, 2)
   baris    JurnalBaris[]
+  sales_orders_dp        Sales_Order[] @relation("SoAkunDp")
+  sales_orders_pelunasan Sales_Order[] @relation("SoAkunPelunasan")
 }
 
 enum StatusJurnal {
@@ -417,6 +428,7 @@ model Jurnal {
   sales_order_pendapatan Sales_Order? @relation("JurnalPendapatanSO")
   sales_order_packing    Sales_Order? @relation("JurnalPackingSO")
   sales_order_reversal   Sales_Order? @relation("JurnalReversalSO")
+  sales_order_dp         Sales_Order? @relation("JurnalDpSO")
 }
 
 model JurnalBaris {

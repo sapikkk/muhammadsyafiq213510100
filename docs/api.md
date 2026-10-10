@@ -220,3 +220,24 @@ Bukan akun login (`User`). UI: `/admin/petani`, `/owner/petani` (baca).
 | `/api/biaya/overhead` | GET, POST | Admin | Overhead periode; dipakai alokasi HPP saat approve |
 
 UI: `/admin/biaya`.
+
+## `/api/sales-orders` (v2-E.1, DP & pembayaran SO)
+
+| Method | Peran | Body / path | Jawaban |
+| --- | --- | --- | --- |
+| GET | Admin, Owner | - | 200, daftar SO (termasuk `jumlah_dp`, `status_pembayaran`, `jurnal_dp_id`) |
+| POST | Admin | lihat field di bawah | 201, SO DRAFT |
+
+Field POST (camelCase): `pelangganId`, `catatan?`, `jumlahDp?` (default 0), `akunDpId?` (akun KEWAJIBAN; default 2200 jika DP &gt; 0), `baris[]` dengan `siklusId`, `jenis` (`CURAH`/`PACK`), `jumlah`, `lubangTerpakai`, `hargaSatuan`.
+
+Aturan DP:
+
+- `jumlahDp` ≤ total SO; jika &gt; 0 wajib ada akun kewajiban uang muka.
+- Posting DP **bukan** pendapatan: Dr Kas (1100) Cr akun DP.
+
+| Method | Peran | Path | Jawaban |
+| --- | --- | --- | --- |
+| PUT | Admin | `/api/sales-orders/[id]/confirm` | 200, status CONFIRMED |
+| POST | Admin | `/api/sales-orders/[id]/dp` | 200, `status_pembayaran` = `DP_DITERIMA`, jurnal DP APPROVED |
+
+UI: `/admin/penjualan` — form DP + tombol **Catat DP** setelah konfirmasi SO.
