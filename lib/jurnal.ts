@@ -1,5 +1,6 @@
-import { Prisma, type StatusJurnal } from "@prisma/client";
+import { Prisma, type StatusJurnal, type SumberJurnal } from "@prisma/client";
 import { statusJurnalList } from "@/lib/jurnal-status";
+import { assertJurnalTanggalAllowed, PeriodLockError } from "@/lib/period-lock";
 import { prisma } from "@/lib/prisma";
 
 export class JurnalError extends Error {
@@ -21,8 +22,11 @@ export type JurnalInput = {
   tanggal: Date;
   keterangan: string;
   status: Extract<StatusJurnal, "DRAFT" | "PENDING">;
+  sumber?: SumberJurnal;
   baris: BarisInput[];
 };
+
+export type CreateJurnalOpts = { adminOverridePeriod?: boolean };
 
 const nol = new Prisma.Decimal(0);
 
@@ -84,7 +88,8 @@ export function parseJurnalInput(raw: Record<string, unknown>): JurnalInput {
     );
   }
 
-  return { tanggal: new Date(tanggalText), keterangan, status, baris };
+  const tanggal = new Date(tanggalText);
+  return { tanggal, keterangan, status, baris };
 }
 
 // Hanya akun aktif tanpa anak yang boleh dipakai di jurnal.
@@ -106,13 +111,28 @@ async function assertAkunPosting(akunIds: number[]) {
   }
 }
 
-export async function createJurnal(input: JurnalInput, dibuatOlehId: number) {
+export async function createJurnal(
+  input: JurnalInput,
+  dibuatOlehId: number,
+  opts?: CreateJurnalOpts,
+) {
+  try {
+    await assertJurnalTanggalAllowed(input.tanggal, {
+      adminOverride: opts?.adminOverridePeriod,
+    });
+  } catch (error) {
+    if (error instanceof PeriodLockError) {
+      throw new JurnalError(error.message, error.status);
+    }
+    throw error;
+  }
   await assertAkunPosting(input.baris.map((b) => b.akunId));
   return prisma.jurnal.create({
     data: {
       tanggal: input.tanggal,
       keterangan: input.keterangan,
       status: input.status,
+      sumber: input.sumber ?? "MANUAL",
       dibuatOlehId,
       baris: { create: input.baris },
     },
@@ -154,6 +174,7 @@ export function serializeJurnalListRow(j: JurnalListRow) {
     tanggalIso: j.tanggal.toISOString(),
     keterangan: j.keterangan,
     status: j.status,
+    sumber: j.sumber,
     dibuatOlehNama: j.dibuatOleh.nama,
     barisCount: j.baris.length,
     totalDebit: total.toString(),

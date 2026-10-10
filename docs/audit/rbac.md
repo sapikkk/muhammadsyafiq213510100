@@ -28,6 +28,7 @@
 | Medium | Cek peran tersebar di ~35 API + ~20 actions (copy-paste) | **Dibenahi** — semua API/actions memakai `isRoleAllowed` / `requireApiRole` |
 | Medium | UI sidebar menyembunyikan route; API harus tetap enforce | Tetap: bypass hanya dev; produksi unchanged |
 | Low | `middleware` matcher tidak mencakup `/api/*` | By design — auth API per handler (OK jika semua handler guard) |
+| Low | v2-H.1 period lock override hanya Admin (`adminOverridePeriod` di form jurnal) | Owner/petani tidak bisa backdate saat periode tutup |
 | Low | `/pengaturan` di matcher middleware tapi tidak cek prefix peran | OK — semua role login boleh |
 
 ## Verifikasi

@@ -10,7 +10,7 @@
 | US v1 (US1.1–US6.5) | **37 / 37** closed (#2–#38) |
 | Sprint 1–4 fitur | **Selesai** (release **v1.12.0**) |
 | Sprint 5 QA / go-live | **Selesai** — #39–#45 closed · prod **kokonusfarm.vercel.app** · tag **v1.13.0** → **v1.14.0** (v2-A.1) |
-| Increment v2 | Epic **#87–#94** open · **#95–#99** done · **#100** next di board |
+| Increment v2 | Story **#95–#102** done · Epic **#87–#94** sisa (COA/WIP, pelunasan, Smart penuh, …) |
 | Temuan terbuka | [#50](https://github.com/sapikkk/muhammadsyafiq213510100/issues/50) FINDING-01 (DB pool) — Todo P2 |
 | Backlog opsional | [#81](https://github.com/sapikkk/muhammadsyafiq213510100/issues/81) demo seed + skills docs — Todo P2 |
 
@@ -44,7 +44,9 @@ Urutan coding PO: **A → B → C → D → E → F → G → H** — detail iss
 | — | Done | v2-C.1 kapasitas lubang / pack | [#97](https://github.com/sapikkk/muhammadsyafiq213510100/issues/97) · PR #106 |
 | — | Done | v2-D.1 SO lubang + HPP order | [#98](https://github.com/sapikkk/muhammadsyafiq213510100/issues/98) · PR #107 |
 | — | Done | v2-E.1 schema DP SO + posting uang muka | [#99](https://github.com/sapikkk/muhammadsyafiq213510100/issues/99) · **v1.18.0** |
-| P2 | In progress | v2-F.1 (board) | [#100](https://github.com/sapikkk/muhammadsyafiq213510100/issues/100) |
+| — | Done | v2-F.1 Smart Jurnal MVP (3 tipe) | [#100](https://github.com/sapikkk/muhammadsyafiq213510100/issues/100) · **v1.19.0** |
+| — | Done | v2-G.1 KPI Owner HPP/lubang + yield | [#101](https://github.com/sapikkk/muhammadsyafiq213510100/issues/101) |
+| — | Done | v2-H.1 period lock + tolak backdate | [#102](https://github.com/sapikkk/muhammadsyafiq213510100/issues/102) |
 | P1 | Todo | Epic B sisa | [#88](https://github.com/sapikkk/muhammadsyafiq213510100/issues/88) |
 | P2 | Todo | Epic F–H + story F.1–H.1 | [#92](https://github.com/sapikkk/muhammadsyafiq213510100/issues/92)–[#94](https://github.com/sapikkk/muhammadsyafiq213510100/issues/94), [#100](https://github.com/sapikkk/muhammadsyafiq213510100/issues/100)–[#102](https://github.com/sapikkk/muhammadsyafiq213510100/issues/102) |
 
