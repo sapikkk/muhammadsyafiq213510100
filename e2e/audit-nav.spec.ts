@@ -26,7 +26,7 @@ test.describe("sidebar audit (lokal only)", () => {
         const href = a.getAttribute("href");
         if (href?.startsWith("/")) set.add(href);
       }
-      return [...set].sort();
+      return Array.from(set).sort();
     });
 
     expect(hrefs.length).toBeGreaterThan(15);
