@@ -27,8 +27,8 @@ const ITER = {
 
 /** @type {Record<number, { status?: keyof typeof STATUS; priority?: keyof typeof PRIORITY; iteration?: keyof typeof ITER }>} */
 const PLAN = {
-  50: { status: "Todo", priority: "P2", iteration: "sprint5" },
-  81: { status: "Todo", priority: "P2" },
+  50: { status: "Done", priority: "P2", iteration: "sprint5" },
+  81: { status: "Done", priority: "P2" },
   87: { status: "Done", priority: "P1", iteration: "v2" },
   88: { status: "Done", priority: "P1", iteration: "v2" },
   89: { status: "Done", priority: "P1", iteration: "v2" },

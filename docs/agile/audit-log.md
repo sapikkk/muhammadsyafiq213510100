@@ -4,6 +4,13 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-10 — ops sidang #50 #81 (v1.27.0)
+
+- **Actor:** agent  
+- **Deliverable:** `seed:demo`, `docs/testing/DEMO-DATA.md`, `docs/deployment/FINDING-01-db-pool.md`, retry P2024 ganda di `lib/prisma.ts`; board #50/#81 Done  
+
+---
+
 ## 2026-10-10 — v2 closeout (v1.26.0)
 
 - **Actor:** agent  
