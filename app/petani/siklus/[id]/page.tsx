@@ -96,7 +96,15 @@ export default async function PetaniSiklusDetailPage({
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">Log fase</h2>
-        <LogProduksiDaftar rows={logs} />
+        <LogProduksiDaftar
+          rows={logs.map((l) => ({
+            fase_dari: l.fase_dari,
+            fase_ke: l.fase_ke,
+            catatan: l.catatan,
+            waktu: l.waktu.toISOString(),
+            user: l.user,
+          }))}
+        />
       </section>
 
       <section className="space-y-3">

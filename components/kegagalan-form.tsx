@@ -5,6 +5,7 @@ import { submitLogKegagalan } from "@/app/actions/kegagalan";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { tahapKegagalanOptions } from "@/lib/log-kegagalan";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export function KegagalanForm({
   siklusId,
@@ -16,6 +17,7 @@ export function KegagalanForm({
   totalSusut: number;
 }) {
   const [state, formAction] = useFormState(submitLogKegagalan, {});
+  useActionToast({ error: state.error, ok: state.ok });
   const sisa = jumlahDisemai - totalSusut;
 
   return (
@@ -26,17 +28,6 @@ export function KegagalanForm({
         Disemai {jumlahDisemai} bibit · susut terkumpul {totalSusut} · sisa kapasitas catat{" "}
         {sisa}.
       </p>
-      {state.error ? (
-        <p className="text-sm text-destructive" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="text-sm text-primary" role="status">
-          {state.ok}
-        </p>
-      ) : null}
-
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Tahap</span>
         <select

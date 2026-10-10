@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import {
@@ -14,7 +15,7 @@ type FormState = { error?: string; ok?: string };
 
 export async function submitPelanggan(_prev: FormState, formData: FormData): Promise<FormState> {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") return { error: "Hanya Admin." };
+  if (!isRoleAllowed(session?.user?.role, "ADMIN")) return { error: "Hanya Admin." };
 
   try {
     const raw = Object.fromEntries(formData.entries());

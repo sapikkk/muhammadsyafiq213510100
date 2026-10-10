@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
 import { isVarietasStatus } from "@/lib/varietas-status";
 import {
   VarietasError,
@@ -11,58 +10,38 @@ import {
   setVarietasStatus,
 } from "@/lib/varietas";
 
-async function requireRead() {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!["ADMIN", "OWNER", "PEKERJA"].includes(role)) {
-    return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
-  }
-  return null;
-}
-
-async function requireWrite() {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!["ADMIN", "OWNER"].includes(role)) {
-    return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
-  }
-  return null;
-}
-
 function handleError(error: unknown) {
   if (error instanceof VarietasError) {
-    return NextResponse.json({ error: error.message }, { status: error.status });
+    return apiFail("VARIETAS_ERROR", error.message, error.status);
   }
   if (error instanceof SyntaxError) {
-    return NextResponse.json({ error: "Body bukan JSON." }, { status: 400 });
+    return apiFail("INVALID_JSON", "Body bukan JSON.", 400);
   }
   throw error;
 }
 
-export async function GET(request: Request) {
-  const denied = await requireRead();
+export const GET = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN", "OWNER", "PEKERJA"]);
   if (denied) return denied;
   const url = new URL(request.url);
   const onlyAktif = url.searchParams.get("aktif") === "1";
   const rows = await listVarietas(onlyAktif);
-  return NextResponse.json(rows.map(serializeVarietas));
-}
+  return apiOk(rows.map(serializeVarietas));
+});
 
-export async function POST(request: Request) {
-  const denied = await requireWrite();
+export const POST = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN", "OWNER"]);
   if (denied) return denied;
   try {
     const row = await createVarietas(parseVarietasInput(await request.json()));
-    return NextResponse.json(serializeVarietas(row), { status: 201 });
+    return apiOk(serializeVarietas(row), { status: 201 });
   } catch (error) {
     return handleError(error);
   }
-}
+});
 
-export async function PUT(request: Request) {
-  const denied = await requireWrite();
+export const PUT = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN", "OWNER"]);
   if (denied) return denied;
   try {
     const raw = await request.json();
@@ -75,8 +54,8 @@ export async function PUT(request: Request) {
       throw new VarietasError("Status harus AKTIF atau NONAKTIF.", 400);
     }
     const row = await setVarietasStatus(id, status);
-    return NextResponse.json(serializeVarietas(row));
+    return apiOk(serializeVarietas(row));
   } catch (error) {
     return handleError(error);
   }
-}
+});

@@ -1,6 +1,7 @@
 "use client";
 
 import { useFormState } from "react-dom";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 import {
   ajukanJurnalAction,
   setujuiJurnalAction,
@@ -30,6 +31,8 @@ export function JurnalActions({
   const [tolak, tolakAction] = useFormState(tolakJurnalAction, {});
   const pesan = ajukan.saved ?? setujui.saved ?? tolak.saved;
   const error = ajukan.error ?? setujui.error ?? tolak.error;
+
+  useActionToast({ error, saved: pesan });
 
   return (
     <section aria-labelledby="aksi-title" className="space-y-3">

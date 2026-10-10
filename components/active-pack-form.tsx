@@ -4,6 +4,7 @@ import { useFormState } from "react-dom";
 import type { ItemInventaris } from "@prisma/client";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
 
 const selectClass =
@@ -20,6 +21,7 @@ export function ActivePackForm({
   ) => Promise<{ error?: string; ok?: string }>;
 }) {
   const [state, formAction] = useFormState(action, {});
+  useActionToast({ error: state.error, ok: state.ok });
 
   return (
     <form action={formAction} className="space-y-4 rounded-md border p-4">
@@ -28,16 +30,6 @@ export function ActivePackForm({
         Biaya per unit = harga pack ÷ jumlah unit. Status Habis otomatis saat
         sisa 0.
       </p>
-      {state.error ? (
-        <p className="text-sm text-destructive" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="text-sm text-primary" role="status">
-          {state.ok}
-        </p>
-      ) : null}
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Kode pack</span>
         <Input name="kode" required className="h-11" placeholder="AP-BNH-01" />

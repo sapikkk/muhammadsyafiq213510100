@@ -1,36 +1,31 @@
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
 import { BiayaError, createOverhead, listOverhead, serializeOverhead } from "@/lib/biaya";
 
-async function requireAdmin() {
-  const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") {
-    return NextResponse.json({ error: "Hanya Admin." }, { status: 403 });
+function handleError(error: unknown) {
+  if (error instanceof BiayaError) {
+    return apiFail("BIAYA_ERROR", error.message, error.status);
   }
-  return null;
+  if (error instanceof SyntaxError) {
+    return apiFail("INVALID_JSON", "Body bukan JSON.", 400);
+  }
+  throw error;
 }
 
-export async function GET() {
-  const denied = await requireAdmin();
+export const GET = withApiHandler(async () => {
+  const { denied } = await requireApiRole(["ADMIN"]);
   if (denied) return denied;
   const rows = await listOverhead();
-  return NextResponse.json(rows.map(serializeOverhead));
-}
+  return apiOk(rows.map(serializeOverhead));
+});
 
-export async function POST(request: Request) {
-  const denied = await requireAdmin();
+export const POST = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN"]);
   if (denied) return denied;
   try {
     const row = await createOverhead(await request.json());
-    return NextResponse.json(serializeOverhead(row), { status: 201 });
+    return apiOk(serializeOverhead(row), { status: 201 });
   } catch (error) {
-    if (error instanceof BiayaError) {
-      return NextResponse.json({ error: error.message }, { status: error.status });
-    }
-    if (error instanceof SyntaxError) {
-      return NextResponse.json({ error: "Body bukan JSON." }, { status: 400 });
-    }
-    throw error;
+    return handleError(error);
   }
-}
+});

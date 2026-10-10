@@ -2,6 +2,7 @@
 
 import { useFormState } from "react-dom";
 import type { ItemInventaris } from "@prisma/client";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
@@ -21,6 +22,7 @@ export function InventarisMovementForm({
   ) => Promise<{ error?: string; ok?: string }>;
 }) {
   const [state, formAction] = useFormState(action, {});
+  useActionToast({ error: state.error, ok: state.ok });
 
   return (
     <form

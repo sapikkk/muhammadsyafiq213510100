@@ -17,7 +17,7 @@ export default async function AksesDitolakPage() {
     >
       <Link
         href={home}
-        className="inline-flex h-11 w-full items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground"
+        className="inline-flex h-11 w-full items-center justify-center border border-foreground bg-foreground px-4 text-sm font-medium text-background"
       >
         Kembali ke halaman Anda
       </Link>

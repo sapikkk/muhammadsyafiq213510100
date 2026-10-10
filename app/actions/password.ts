@@ -1,6 +1,7 @@
 "use server";
 
 import { randomBytes } from "crypto";
+import { isRoleAllowed } from "@/lib/rbac";
 import { compare, hash } from "bcryptjs";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -40,7 +41,8 @@ export async function requestPasswordReset(
 
 async function requireAdmin() {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN") return null;
+  if (!session?.user?.id) return null;
+  if (!isRoleAllowed(session.user.role, "ADMIN")) return null;
   return Number(session.user.id);
 }
 

@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
 import {
   InventarisError,
   createItem,
@@ -9,43 +8,30 @@ import {
   serializeItem,
 } from "@/lib/inventaris";
 
-async function requireRole(allowed: string[]) {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!allowed.includes(role)) {
-    return NextResponse.json(
-      { error: "Peran Anda tidak berhak." },
-      { status: 403 },
-    );
-  }
-  return null;
-}
-
 function handleError(error: unknown) {
   if (error instanceof InventarisError) {
-    return NextResponse.json({ error: error.message }, { status: error.status });
+    return apiFail("INVENTARIS_ERROR", error.message, error.status);
   }
   if (error instanceof SyntaxError) {
-    return NextResponse.json({ error: "Body bukan JSON." }, { status: 400 });
+    return apiFail("INVALID_JSON", "Body bukan JSON.", 400);
   }
   throw error;
 }
 
-export async function GET() {
-  const denied = await requireRole(["ADMIN", "OWNER", "PEKERJA"]);
+export const GET = withApiHandler(async () => {
+  const { denied } = await requireApiRole(["ADMIN", "OWNER", "PEKERJA"]);
   if (denied) return denied;
   const items = await listItemInventaris(true);
-  return NextResponse.json(items.map(serializeItem));
-}
+  return apiOk(items.map(serializeItem));
+});
 
-export async function POST(request: Request) {
-  const denied = await requireRole(["ADMIN"]);
+export const POST = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN"]);
   if (denied) return denied;
   try {
     const item = await createItem(parseItemInput(await request.json()));
-    return NextResponse.json(serializeItem(item), { status: 201 });
+    return apiOk(serializeItem(item), { status: 201 });
   } catch (error) {
     return handleError(error);
   }
-}
+});

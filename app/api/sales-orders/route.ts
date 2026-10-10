@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
 import {
   SalesOrderError,
   createSalesOrderDraft,
@@ -9,42 +8,44 @@ import {
   serializeSalesOrder,
 } from "@/lib/sales-order";
 
-async function requireRead() {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!["ADMIN", "OWNER"].includes(role)) {
-    return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
+function handleError(error: unknown) {
+  if (error instanceof SalesOrderError) {
+    return apiFail("SALES_ORDER_ERROR", error.message, error.status);
   }
-  return null;
+  if (error instanceof SyntaxError) {
+    return apiFail("INVALID_JSON", "Body bukan JSON.", 400);
+  }
+  throw error;
 }
 
-export async function GET() {
-  const denied = await requireRead();
+export const GET = withApiHandler(async () => {
+  const { denied } = await requireApiRole(["ADMIN", "OWNER"]);
   if (denied) return denied;
   const rows = await listSalesOrders();
-  return NextResponse.json(rows.map(serializeSalesOrder));
-}
+  return apiOk(rows.map(serializeSalesOrder));
+});
 
-export async function POST(request: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id || session.user.role !== "ADMIN") {
-    return NextResponse.json({ error: "Hanya Admin." }, { status: 403 });
+export const POST = withApiHandler(async (request: Request) => {
+  const { denied, session } = await requireApiRole(["ADMIN"]);
+  if (denied) return denied;
+  const userId = session?.user?.id;
+  if (!userId) {
+    return apiFail("UNAUTHORIZED", "Belum masuk.", 401);
   }
   try {
     const row = await createSalesOrderDraft(
-      Number(session.user.id),
+      Number(userId),
       parseSalesOrderInput(await request.json()),
     );
     const listed = await listSalesOrders();
     const fresh = listed.find((r) => r.id === row.id);
-    return NextResponse.json(fresh ? serializeSalesOrder(fresh) : { id: row.id, nomor_so: row.nomor_so }, {
-      status: 201,
-    });
+    return apiOk(
+      fresh
+        ? serializeSalesOrder(fresh)
+        : { id: row.id, nomor_so: row.nomor_so },
+      { status: 201 },
+    );
   } catch (error) {
-    if (error instanceof SalesOrderError) {
-      return NextResponse.json({ error: error.message }, { status: error.status });
-    }
-    throw error;
+    return handleError(error);
   }
-}
+});

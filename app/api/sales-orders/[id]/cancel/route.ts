@@ -1,17 +1,19 @@
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
 import { cancelSalesOrder } from "@/lib/sales-order-cancel";
 import { SalesOrderError, listSalesOrders, serializeSalesOrder } from "@/lib/sales-order";
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
-  const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "ADMIN" || !session.user.id) {
-    return NextResponse.json({ error: "Hanya Admin." }, { status: 403 });
+export const PUT = withApiHandler(async (request: Request, context?: unknown) => {
+  const { denied, session } = await requireApiRole(["ADMIN"]);
+  if (denied) return denied;
+  const userId = session?.user?.id;
+  if (!userId) {
+    return apiFail("UNAUTHORIZED", "Belum masuk.", 401);
   }
+  const params = (context as { params: { id: string } }).params;
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) {
-    return NextResponse.json({ error: "ID tidak valid." }, { status: 400 });
+    return apiFail("INVALID_ID", "ID tidak valid.", 400);
   }
   let alasan: unknown;
   try {
@@ -21,14 +23,14 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     alasan = undefined;
   }
   try {
-    await cancelSalesOrder(id, Number(session.user.id), alasan);
+    await cancelSalesOrder(id, Number(userId), alasan);
     const listed = await listSalesOrders();
     const fresh = listed.find((r) => r.id === id);
-    return NextResponse.json(fresh ? serializeSalesOrder(fresh) : { id, status: "CANCELLED" });
+    return apiOk(fresh ? serializeSalesOrder(fresh) : { id, status: "CANCELLED" });
   } catch (error) {
     if (error instanceof SalesOrderError) {
-      return NextResponse.json({ error: error.message }, { status: error.status });
+      return apiFail("SALES_ORDER_ERROR", error.message, error.status);
     }
     throw error;
   }
-}
+});

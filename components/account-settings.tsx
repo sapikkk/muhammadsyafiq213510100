@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { changeOwnPassword, updateProfile } from "@/app/actions/profile";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export function AccountSettings({ nama }: { nama: string }) {
   const [profile, profileAction] = useFormState(updateProfile, {});
@@ -17,6 +18,9 @@ export function AccountSettings({ nama }: { nama: string }) {
   useEffect(() => {
     if (profile.ok) update().then(() => router.refresh());
   }, [profile.ok, update, router]);
+
+  useActionToast(profile);
+  useActionToast(password);
 
   return (
     <div className="space-y-8">

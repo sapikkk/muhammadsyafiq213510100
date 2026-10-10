@@ -1,6 +1,7 @@
 "use server";
 
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { revalidatePath } from "next/cache";
 import { authOptions } from "@/lib/auth";
 import {
@@ -13,7 +14,8 @@ export type OwnerUserState = { ok?: boolean; error?: string; message?: string };
 
 async function requireOwnerId() {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "OWNER") return null;
+  if (!session?.user?.id) return null;
+  if (!isRoleAllowed(session.user.role, "OWNER")) return null;
   const id = Number(session.user.id);
   return Number.isInteger(id) ? { id, session } : null;
 }

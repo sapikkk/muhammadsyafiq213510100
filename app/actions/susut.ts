@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { KegagalanError } from "@/lib/log-kegagalan";
@@ -11,7 +12,7 @@ type FormState = { error?: string; ok?: string };
 export async function klasifikasiSusut(_prev: FormState, formData: FormData): Promise<FormState> {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) return { error: "Belum masuk." };
-  if (session.user.role !== "ADMIN") {
+  if (!isRoleAllowed(session.user.role, "ADMIN")) {
     return { error: "Hanya Admin yang boleh klasifikasi susut." };
   }
 

@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { useFormState } from "react-dom";
+import { useMemo, useState } from "react";
 import { toggleAkun } from "@/app/actions/akun";
 import { SubmitButton } from "@/components/submit-button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { tipeAkunLabel, type TipeAkunKey } from "@/lib/akun-tipe";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export type AkunRow = {
   id: number;
@@ -17,6 +20,23 @@ export type AkunRow = {
 };
 
 type ToggleAction = (formData: FormData) => void;
+
+function filterAkunTree(nodes: AkunRow[], query: string): AkunRow[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return nodes;
+
+  function walk(node: AkunRow): AkunRow | null {
+    const selfMatch =
+      node.kode.toLowerCase().includes(q) || node.nama.toLowerCase().includes(q);
+    const anak = node.anak.map(walk).filter((n): n is AkunRow => n !== null);
+    if (selfMatch || anak.length > 0) {
+      return { ...node, anak: selfMatch ? node.anak : anak };
+    }
+    return null;
+  }
+
+  return nodes.map(walk).filter((n): n is AkunRow => n !== null);
+}
 
 function Node({
   akun,
@@ -35,9 +55,7 @@ function Node({
       >
         <div className="flex flex-wrap items-center gap-2 text-sm">
           <span className="font-mono font-medium">{akun.kode}</span>
-          <span
-            className={akun.aktif ? "" : "text-muted-foreground line-through"}
-          >
+          <span className={akun.aktif ? "" : "text-muted-foreground line-through"}>
             {akun.nama}
           </span>
           {depth === 0 ? (
@@ -84,35 +102,37 @@ function Node({
 
 export function AkunTree({ tree }: { tree: AkunRow[] }) {
   const [state, toggleAction] = useFormState(toggleAkun, {});
+  const [filter, setFilter] = useState("");
+  useActionToast({ error: state.error, saved: state.saved });
+
+  const visible = useMemo(() => filterAkunTree(tree, filter), [tree, filter]);
 
   return (
     <section aria-labelledby="akun-tree-title" className="space-y-3">
       <h2 id="akun-tree-title" className="text-lg font-semibold">
         Daftar akun
       </h2>
-      {state.error ? (
-        <p role="alert" className="text-sm text-destructive">
-          {state.error}
-        </p>
-      ) : null}
-      {state.saved ? (
-        <p role="status" className="text-sm">
-          {state.saved}
-        </p>
+      {tree.length > 0 ? (
+        <Input
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          placeholder="Cari kode atau nama akun…"
+          className="h-9 max-w-sm"
+          aria-label="Cari akun"
+        />
       ) : null}
       {tree.length === 0 ? (
         <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
           Belum ada akun. Tambahkan akun utama dulu, misalnya 1000 Aset.
         </p>
+      ) : visible.length === 0 ? (
+        <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
+          Tidak ada akun yang cocok dengan pencarian.
+        </p>
       ) : (
         <ul className="divide-y rounded-md border px-4">
-          {tree.map((akun) => (
-            <Node
-              key={akun.id}
-              akun={akun}
-              depth={0}
-              toggleAction={toggleAction}
-            />
+          {visible.map((akun) => (
+            <Node key={akun.id} akun={akun} depth={0} toggleAction={toggleAction} />
           ))}
         </ul>
       )}

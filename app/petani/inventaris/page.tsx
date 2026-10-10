@@ -3,7 +3,12 @@ import { InventarisDaftar } from "@/components/inventaris-daftar";
 import { InventarisMovementForm } from "@/components/inventaris-movement-form";
 import { InventarisRiwayat } from "@/components/inventaris-riwayat";
 import { PageHeader } from "@/components/page-header";
-import { listItemInventaris, listPergerakan } from "@/lib/inventaris";
+import {
+  listItemInventaris,
+  listPergerakan,
+  serializeItem,
+  serializePergerakan,
+} from "@/lib/inventaris";
 
 export const dynamic = "force-dynamic";
 
@@ -20,14 +25,14 @@ export default async function PetaniInventarisPage() {
         description="Lihat stok dan catat keluar/masuk bahan di lapangan."
       />
 
-      <InventarisDaftar items={items} />
+      <InventarisDaftar items={items.map(serializeItem)} />
       <InventarisMovementForm items={items} action={catatPergerakanPetani} />
 
       <section aria-labelledby="riwayat-petani" className="space-y-3">
         <h2 id="riwayat-petani" className="text-lg font-semibold">
           Riwayat terbaru
         </h2>
-        <InventarisRiwayat rows={riwayat} />
+        <InventarisRiwayat rows={riwayat.map(serializePergerakan)} />
       </section>
     </div>
   );

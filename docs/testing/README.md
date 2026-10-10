@@ -10,7 +10,11 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Spec awal: `e2e/smoke.spec.ts` (halaman login).
+Spec: `e2e/smoke.spec.ts` — login, jurnal/stok rendah, DataTable cari, 404 + shell, menu mobile.
+
+Opsional (lokal, **bukan CI**): `AUDIT_BYPASS_RBAC=true npm run test:e2e -- e2e/audit-nav.spec.ts` — crawl Menu (audit).
+
+CI: workflow `e2e.yml` (Postgres service, `prisma db push`, seed, `next start` + Playwright).
 
 ## TestCafe (opsional)
 

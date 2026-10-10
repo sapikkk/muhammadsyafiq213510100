@@ -42,7 +42,7 @@ export default async function SalesOrderInvoicePage({ params }: { params: { id: 
         </div>
       </div>
 
-      <article className="rounded-md border bg-card p-6 text-sm shadow-sm print:border-0 print:shadow-none">
+      <article className="rounded-md border bg-card p-6 text-sm print:border-0">
         <header className="mb-6 border-b pb-4">
           <p className="text-lg font-semibold">Kokonus Farm</p>
           <p className="text-muted-foreground">Invoice {invoice.nomor_invoice}</p>

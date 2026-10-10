@@ -1,10 +1,11 @@
+import { SessionShell } from "@/components/session-shell";
+
 export default function Loading() {
   return (
-    <main
-      aria-busy="true"
-      className="mx-auto flex min-h-screen w-full max-w-sm flex-col justify-center px-4 py-10 text-center"
-    >
-      <p className="text-sm text-muted-foreground">Memuat...</p>
-    </main>
+    <SessionShell>
+      <div aria-busy="true" className="flex min-h-[40vh] flex-col items-center justify-center text-center">
+        <p className="text-sm text-muted-foreground">Memuat…</p>
+      </div>
+    </SessionShell>
   );
 }

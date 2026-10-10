@@ -1,6 +1,7 @@
 "use server";
 
 import { getServerSession } from "next-auth";
+import { isRoleAllowed } from "@/lib/rbac";
 import { revalidatePath } from "next/cache";
 import { authOptions } from "@/lib/auth";
 import {
@@ -16,7 +17,7 @@ type FormState = { error?: string; ok?: string };
 async function requireAdmin() {
   const session = await getServerSession(authOptions);
   if (!session?.user?.role) throw new InventarisError("Belum masuk.", 401);
-  if (session.user.role !== "ADMIN") {
+  if (!isRoleAllowed(session.user.role, "ADMIN")) {
     throw new InventarisError("Peran Anda tidak berhak.", 403);
   }
 }
@@ -27,7 +28,7 @@ async function requireMovement() {
   if (!session?.user?.role || !userId) {
     throw new InventarisError("Belum masuk.", 401);
   }
-  if (!["ADMIN", "PEKERJA"].includes(session.user.role)) {
+  if (!isRoleAllowed(session.user.role, ["ADMIN", "PEKERJA"])) {
     throw new InventarisError("Peran Anda tidak berhak.", 403);
   }
   return userId;

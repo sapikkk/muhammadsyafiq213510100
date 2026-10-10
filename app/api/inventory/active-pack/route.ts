@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
 import {
   ActivePackError,
   buatActivePack,
@@ -10,75 +9,56 @@ import {
   serializeActivePack,
 } from "@/lib/active-pack";
 
-async function requirePackRole() {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  const userId = session?.user?.id ? Number(session.user.id) : null;
-  if (!role || !userId) {
-    return { response: NextResponse.json({ error: "Belum masuk." }, { status: 401 }) };
-  }
-  if (!["ADMIN", "PEKERJA"].includes(role)) {
-    return {
-      response: NextResponse.json(
-        { error: "Peran Anda tidak berhak." },
-        { status: 403 },
-      ),
-    };
-  }
-  return { userId };
-}
-
 function handleError(error: unknown) {
   if (error instanceof ActivePackError) {
-    return NextResponse.json({ error: error.message }, { status: error.status });
+    return apiFail("ACTIVE_PACK_ERROR", error.message, error.status);
   }
   if (error instanceof SyntaxError) {
-    return NextResponse.json({ error: "Body bukan JSON." }, { status: 400 });
+    return apiFail("INVALID_JSON", "Body bukan JSON.", 400);
   }
   throw error;
 }
 
-export async function GET(request: Request) {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  if (!["ADMIN", "PEKERJA"].includes(role)) {
-    return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
-  }
-  const url = new URL(request.url);
-  const hanyaAktif = url.searchParams.get("aktif") === "1";
+export const GET = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN", "PEKERJA"]);
+  if (denied) return denied;
+  const hanyaAktif = new URL(request.url).searchParams.get("aktif") === "1";
   const rows = await listActivePack(hanyaAktif);
-  return NextResponse.json(rows.map(serializeActivePack));
-}
+  return apiOk(rows.map(serializeActivePack));
+});
 
-export async function POST(request: Request) {
-  const auth = await requirePackRole();
-  if ("response" in auth) return auth.response;
+export const POST = withApiHandler(async (request: Request) => {
+  const { denied, session } = await requireApiRole(["ADMIN", "PEKERJA"]);
+  if (denied) return denied;
+  const userId = session?.user?.id ? Number(session.user.id) : null;
+  if (!userId) {
+    return apiFail("UNAUTHORIZED", "Belum masuk.", 401);
+  }
   try {
     const body = (await request.json()) as Record<string, unknown>;
-    const pack = await buatActivePack(parseActivePackInput(body, auth.userId));
-    return NextResponse.json(serializeActivePack(pack), { status: 201 });
+    const pack = await buatActivePack(parseActivePackInput(body, userId));
+    return apiOk(serializeActivePack(pack), { status: 201 });
   } catch (error) {
     return handleError(error);
   }
-}
+});
 
-export async function PUT(request: Request) {
-  const auth = await requirePackRole();
-  if ("response" in auth) return auth.response;
+export const PUT = withApiHandler(async (request: Request) => {
+  const { denied } = await requireApiRole(["ADMIN", "PEKERJA"]);
+  if (denied) return denied;
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const id = Number(body.id);
     const aksi = String(body.aksi ?? "").trim();
     if (!Number.isInteger(id) || id <= 0) {
-      return NextResponse.json({ error: "id wajib diisi." }, { status: 400 });
+      return apiFail("INVALID_ID", "id wajib diisi.", 400);
     }
     if (aksi !== "PAKAI") {
-      return NextResponse.json({ error: "Aksi tidak dikenal." }, { status: 400 });
+      return apiFail("INVALID_ACTION", "Aksi tidak dikenal.", 400);
     }
     const pack = await pakaiActivePack(id, body.jumlah);
-    return NextResponse.json(serializeActivePack(pack));
+    return apiOk(serializeActivePack(pack));
   } catch (error) {
     return handleError(error);
   }
-}
+});

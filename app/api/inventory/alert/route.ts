@@ -1,22 +1,11 @@
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiOk, withApiHandler } from "@/lib/api-response";
 import { listAlertStokMinimum, serializeAlertStok } from "@/lib/inventaris";
 
-export async function GET() {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!role) {
-    return NextResponse.json({ error: "Belum masuk." }, { status: 401 });
-  }
-  if (!["ADMIN", "OWNER", "PEKERJA"].includes(role)) {
-    return NextResponse.json({ error: "Peran Anda tidak berhak." }, { status: 403 });
-  }
-
+export const GET = withApiHandler(async () => {
+  const { denied } = await requireApiRole(["ADMIN", "OWNER", "PEKERJA"]);
+  if (denied) return denied;
   const items = await listAlertStokMinimum();
   const serialized = items.map(serializeAlertStok);
-  return NextResponse.json({
-    jumlah: serialized.length,
-    items: serialized,
-  });
-}
+  return apiOk({ jumlah: serialized.length, items: serialized });
+});

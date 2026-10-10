@@ -10,6 +10,7 @@ import {
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { kolamStatusLabel, kolamStatusList } from "@/lib/infrastruktur-kolam-status";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 const selectClass =
   "flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
@@ -135,19 +136,10 @@ function FormShell({
   action: (payload: FormData) => void;
   children: React.ReactNode;
 }) {
+  useActionToast({ error: state.error, ok: state.ok });
   return (
     <form action={action} className="space-y-4 rounded-md border p-4">
       <h2 className="text-lg font-semibold">{title}</h2>
-      {state.error ? (
-        <p className="text-sm text-destructive" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="text-sm text-primary" role="status">
-          {state.ok}
-        </p>
-      ) : null}
       {children}
       <SubmitButton className="h-11" pendingLabel="Menyimpan...">
         Simpan

@@ -5,6 +5,7 @@ import { simpanVarietas, ubahStatusVarietas } from "@/app/actions/varietas";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { varietasStatusLabel, varietasStatusList } from "@/lib/varietas-status";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 const selectClass =
   "flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
@@ -14,12 +15,13 @@ type Option = { id: number; label: string };
 export function VarietasForm({ varietasOptions }: { varietasOptions: Option[] }) {
   const [createState, createAction] = useFormState(simpanVarietas, {});
   const [statusState, statusAction] = useFormState(ubahStatusVarietas, {});
+  useActionToast({ error: createState.error, ok: createState.ok });
+  useActionToast({ error: statusState.error, ok: statusState.ok });
 
   return (
     <div className="space-y-6">
       <form action={createAction} className="space-y-4 rounded-md border p-4">
         <h2 className="text-lg font-semibold">Tambah varietas</h2>
-        <FormMessages state={createState} />
         <Field label="Nama">
           <Input name="nama" className="h-11" required />
         </Field>
@@ -69,7 +71,6 @@ export function VarietasForm({ varietasOptions }: { varietasOptions: Option[] })
       {varietasOptions.length > 0 ? (
         <form action={statusAction} className="space-y-4 rounded-md border p-4">
           <h2 className="text-lg font-semibold">Aktifkan / nonaktifkan</h2>
-          <FormMessages state={statusState} />
           <Field label="Varietas">
             <select name="varietasId" className={selectClass} required defaultValue="">
               <option value="" disabled>
@@ -101,23 +102,6 @@ export function VarietasForm({ varietasOptions }: { varietasOptions: Option[] })
         </form>
       ) : null}
     </div>
-  );
-}
-
-function FormMessages({ state }: { state: { error?: string; ok?: string } }) {
-  return (
-    <>
-      {state.error ? (
-        <p className="text-sm text-destructive" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="text-sm text-primary" role="status">
-          {state.ok}
-        </p>
-      ) : null}
-    </>
   );
 }
 

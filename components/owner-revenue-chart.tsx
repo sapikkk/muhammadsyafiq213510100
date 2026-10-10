@@ -41,8 +41,8 @@ export function OwnerRevenueChart({ months }: { months: MonthPoint[] }) {
             labelStyle={{ fontSize: 12 }}
           />
           <Legend />
-          <Bar dataKey="pendapatan" name="Pendapatan" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="pengeluaran" name="Beban" fill="hsl(var(--muted-foreground))" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="pendapatan" name="Pendapatan" fill="hsl(0 0% 9%)" radius={[0, 0, 0, 0]} />
+          <Bar dataKey="pengeluaran" name="Beban" fill="hsl(0 0% 55%)" radius={[0, 0, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

@@ -1,19 +1,19 @@
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
-import { SalesOrderError } from "@/lib/sales-order";
-import { listSalesOrders, serializeSalesOrder } from "@/lib/sales-order";
+import { requireApiRole } from "@/lib/api-auth";
+import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
+import { SalesOrderError, listSalesOrders, serializeSalesOrder } from "@/lib/sales-order";
 import { shipSalesOrder } from "@/lib/sales-order-delivery";
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
-  const session = await getServerSession(authOptions);
-  const role = session?.user?.role;
-  if (!session?.user?.id || !role || !["ADMIN", "PEKERJA"].includes(role)) {
-    return NextResponse.json({ error: "Akses ditolak." }, { status: 403 });
+export const PUT = withApiHandler(async (request: Request, context?: unknown) => {
+  const { denied, session } = await requireApiRole(["ADMIN", "PEKERJA"]);
+  if (denied) return denied;
+  const userId = session?.user?.id;
+  if (!userId) {
+    return apiFail("UNAUTHORIZED", "Belum masuk.", 401);
   }
+  const params = (context as { params: { id: string } }).params;
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) {
-    return NextResponse.json({ error: "ID tidak valid." }, { status: 400 });
+    return apiFail("INVALID_ID", "ID tidak valid.", 400);
   }
   let catatan: unknown;
   try {
@@ -23,14 +23,14 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     catatan = undefined;
   }
   try {
-    await shipSalesOrder(id, Number(session.user.id), catatan);
+    await shipSalesOrder(id, Number(userId), catatan);
     const listed = await listSalesOrders();
     const fresh = listed.find((r) => r.id === id);
-    return NextResponse.json(fresh ? serializeSalesOrder(fresh) : { id, status: "SHIPPED" });
+    return apiOk(fresh ? serializeSalesOrder(fresh) : { id, status: "SHIPPED" });
   } catch (error) {
     if (error instanceof SalesOrderError) {
-      return NextResponse.json({ error: error.message }, { status: error.status });
+      return apiFail("SALES_ORDER_ERROR", error.message, error.status);
     }
     throw error;
   }
-}
+});

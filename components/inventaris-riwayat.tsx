@@ -1,7 +1,12 @@
+"use client";
+
+import type { ColumnDef } from "@tanstack/react-table";
+import { useMemo } from "react";
+import { DataTable } from "@/components/data-table";
 import { formatQty } from "@/lib/format";
+import type { SerializedPergerakan } from "@/lib/inventaris";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
 import { tipePergerakanLabel } from "@/lib/inventaris-pergerakan";
-import type { PergerakanInventaris, ItemInventaris, User } from "@prisma/client";
 
 const waktu = new Intl.DateTimeFormat("id-ID", {
   dateStyle: "medium",
@@ -9,37 +14,61 @@ const waktu = new Intl.DateTimeFormat("id-ID", {
   timeZone: "Asia/Jakarta",
 });
 
-type Row = PergerakanInventaris & {
-  item: Pick<ItemInventaris, "kode" | "nama" | "satuan">;
-  user: Pick<User, "nama" | "role">;
-};
-
-export function InventarisRiwayat({ rows }: { rows: Row[] }) {
-  if (rows.length === 0) {
-    return (
-      <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-        Belum ada pergerakan stok.
-      </p>
-    );
-  }
+export function InventarisRiwayat({ rows }: { rows: SerializedPergerakan[] }) {
+  const columns = useMemo<ColumnDef<SerializedPergerakan>[]>(
+    () => [
+      {
+        accessorKey: "tipe",
+        header: "Tipe",
+        cell: ({ row }) => tipePergerakanLabel[row.original.tipe],
+      },
+      {
+        id: "item",
+        header: "Item",
+        accessorFn: (row) => `${row.item.kode} ${row.item.nama}`,
+      },
+      {
+        id: "jumlah",
+        header: "Jumlah",
+        cell: ({ row }) => (
+          <span className="tabular-nums">
+            {formatQty(row.original.jumlah)}{" "}
+            {satuanInventarisLabel[row.original.item.satuan]}
+          </span>
+        ),
+      },
+      {
+        id: "stok",
+        header: "Stok",
+        cell: ({ row }) => (
+          <span className="tabular-nums text-muted-foreground">
+            {formatQty(row.original.stokSebelum)} → {formatQty(row.original.stokSesudah)}
+          </span>
+        ),
+      },
+      { accessorKey: "user.nama", header: "Oleh" },
+      {
+        accessorKey: "dibuatPada",
+        header: "Waktu",
+        cell: ({ row }) => waktu.format(new Date(row.original.dibuatPada)),
+      },
+      {
+        accessorKey: "keterangan",
+        header: "Keterangan",
+        cell: ({ row }) => row.original.keterangan ?? "—",
+      },
+    ],
+    [],
+  );
 
   return (
-    <ul className="divide-y rounded-md border">
-      {rows.map((row) => (
-        <li key={row.id} className="space-y-1 p-4 text-sm">
-          <p className="font-medium">
-            {tipePergerakanLabel[row.tipe]} · {row.item.kode} {row.item.nama}
-          </p>
-          <p className="text-muted-foreground">
-            {formatQty(row.jumlah)} {satuanInventarisLabel[row.item.satuan]} ·{" "}
-            {formatQty(row.stokSebelum)} → {formatQty(row.stokSesudah)} ·{" "}
-            {row.user.nama} · {waktu.format(row.dibuatPada)}
-          </p>
-          {row.keterangan ? (
-            <p className="text-muted-foreground">{row.keterangan}</p>
-          ) : null}
-        </li>
-      ))}
-    </ul>
+    <DataTable
+      columns={columns}
+      data={rows}
+      pageSize={10}
+      searchPlaceholder="Cari item, user, keterangan…"
+      searchColumnIds={["item", "user.nama", "keterangan", "tipe"]}
+      emptyMessage="Belum ada pergerakan stok."
+    />
   );
 }
