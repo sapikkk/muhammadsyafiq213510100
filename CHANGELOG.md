@@ -1,3 +1,14 @@
+# [1.27.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.26.0...v1.27.0) (2026-10-10)
+
+
+### Features
+
+* **ops:** demo seed flow (`npm run seed:demo`), DEMO-DATA docs, FINDING-01 runbook (#50 · #81)
+
+### Bug Fixes
+
+* **FINDING-01:** second P2024 retry on Prisma client extension
+
 # [1.26.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.25.0...v1.26.0) (2026-10-10)
 
 

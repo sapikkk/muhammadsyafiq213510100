@@ -58,6 +58,6 @@ Lihat [`docs/testing/pelatihan-6-pengguna.md`](../testing/pelatihan-6-pengguna.m
 
 ## FINDING-01 (pool DB)
 
-Gejala timeout P2024 pada dev remote DB — mitigasi kode: retry di `lib/prisma.ts`. Production: pilih region dekat, batasi `connection_limit` di serverless, atau Postgres lokal untuk demo sidang.
+Gejala timeout P2024 pada dev remote DB — mitigasi kode: retry di `lib/prisma.ts`. Runbook lengkap: [`FINDING-01-db-pool.md`](./FINDING-01-db-pool.md). Production: pilih region dekat, batasi `connection_limit` di serverless, atau Postgres lokal untuk demo sidang.
 
 Terakhir diperbarui: 2026-10-10 · Sprint 5.

@@ -1,6 +1,6 @@
 {
   "name": "muhammadsyafiq213510100",
-  "version": "1.26.0",
+  "version": "1.27.0",
   "private": true,
   "description": "Kokonus Farm — website tata kelola biaya produksi hidroponik (skripsi).",
   "repository": {
@@ -40,6 +40,7 @@
     "format:check": "prettier --check .",
     "sync:agile-progress": "node scripts/sync-agile-progress.mjs",
     "sync:project-board": "node scripts/sync-project-board.mjs",
+    "seed:demo": "node --env-file=.env prisma/seed-demo-flow.js",
     "test:e2e": "playwright test",
     "test:testcafe": "testcafe chrome e2e/smoke.spec.ts --skip-js-errors"
   },
