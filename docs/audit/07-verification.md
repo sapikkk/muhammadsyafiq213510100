@@ -30,13 +30,15 @@ npm run dev   # terminal 1
 npm run test:e2e
 ```
 
-Belum di CI karena belum ada service database di workflow.
+Di CI: workflow `.github/workflows/e2e.yml` (Postgres 16, migrate, seed, `npm run start`, Playwright).
 
 ## Hasil terakhir (agent)
 
 | Perintah | Status |
 |----------|--------|
-| typecheck | lulus setelah commit export + CI guard |
-| check:legacy-api-json | lulus setelah migrasi `/api/export/*` |
+| lint / typecheck / check:* / build | lulus lokal (2026-10-10) |
+| check:legacy-api-json | lulus |
+| check:banned-ui | lulus setelah filter animasi slide Radix |
+| e2e CI | menunggu run GitHub Actions setelah push |
 
 Catatan PO: isi tanggal uji manual di baris bawah setelah review.
