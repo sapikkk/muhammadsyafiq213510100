@@ -11,9 +11,9 @@
 | 6 Dept audits | **Partial** | + `07-verification.md`; qa/security diperbarui |
 | 7 Verification | **Done** (CI) | `check.yml` + workflow `e2e.yml` (Postgres + smoke) |
 
-## Rekomendasi merge
+## Merge
 
-Gate CI lengkap. Checklist PO: [`MERGE-READINESS.md`](MERGE-READINESS.md). PR: [#80](https://github.com/sapikkk/muhammadsyafiq213510100/pull/80) (`chore/global-audit-bw-refactor` → `main`).
+Merged ke `main` **2026-10-10** (PR [#80](https://github.com/sapikkk/muhammadsyafiq213510100/pull/80), tag **v1.12.0**). Checklist PO: [`MERGE-READINESS.md`](MERGE-READINESS.md).
 
 ## Network Cursor
 

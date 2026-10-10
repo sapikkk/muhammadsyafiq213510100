@@ -7,6 +7,7 @@ Pusat kontrol progres produk: **timeline sprint**, **issue GitHub**, **AC/DoD**,
 | Dokumen | Isi |
 |---------|-----|
 | [timeline-registry.md](./timeline-registry.md) | 5 sprint: **actual start**, goal, velocity, retro |
+| [AC-VERIFIKASI-RISIKO.md](./AC-VERIFIKASI-RISIKO.md) | US closed — yang perlu uji AC ulang (Sprint 5) |
 | [partial-delivery-policy.md](./partial-delivery-policy.md) | Issue open, catatan partial, filter GitHub |
 | [definition-of-done.md](./definition-of-done.md) | DoD story & sprint (PR review **wajib**) |
 | [sprints/sprint-01-fondasi.md](./sprints/sprint-01-fondasi.md) | Sprint 1 — detail per US |
@@ -21,7 +22,8 @@ Pusat kontrol progres produk: **timeline sprint**, **issue GitHub**, **AC/DoD**,
 
 **Board live:** [GitHub Project #1](https://github.com/users/sapikkk/projects/1)  
 **PRD:** [docs/prd-agile-kokonus-farm.md](../prd-agile-kokonus-farm.md)  
-**Blackbox:** [docs/uji-blackbox.md](../uji-blackbox.md)
+**Blackbox:** [docs/uji-blackbox.md](../uji-blackbox.md)  
+**Backlog ringkas:** [docs/progress-backlog.md](../progress-backlog.md)
 
 ## Alur kerja (acuan `sw-agiledevelopment`)
 
