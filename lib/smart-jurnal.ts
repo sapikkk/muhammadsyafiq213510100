@@ -1,6 +1,11 @@
 import { Prisma } from "@prisma/client";
 import { createJurnal, JurnalError, type JurnalInput } from "@/lib/jurnal";
-import { KasSumberError, parseSumberKasKode } from "@/lib/kas-sumber";
+import { AKUN_KODE } from "@/lib/akun-kode";
+import {
+  KasSumberError,
+  parseSumberKasKode,
+  type SumberKasKode,
+} from "@/lib/kas-sumber";
 import { assertJurnalTanggalAllowed } from "@/lib/period-lock";
 import { prisma } from "@/lib/prisma";
 
@@ -13,29 +18,44 @@ export class SmartJurnalError extends Error {
   }
 }
 
-export const smartJurnalTipe = ["BEBAN_OPERASIONAL", "PRIVE", "SUNTIKAN_MODAL"] as const;
+/** MVP v2-F.1 + perluasan F.2 (subset blueprint tipe 1–9). */
+export const smartJurnalTipe = [
+  "BEBAN_OPERASIONAL",
+  "PRIVE",
+  "SUNTIKAN_MODAL",
+  "TRANSFER_KAS",
+  "PINJAMAN_MASUK",
+  "BAYAR_HUTANG",
+  "BELI_ASET_TUNAI",
+  "BAYAR_BUNGA",
+  "PENYUSUTAN_GREENHOUSE",
+] as const;
 export type SmartJurnalTipe = (typeof smartJurnalTipe)[number];
 
-const tipeMeta: Record<
-  SmartJurnalTipe,
-  { label: string; bebanKode?: string; debitKode: string; kreditKode: string }
+export const smartJurnalTipeLabel: Record<SmartJurnalTipe, string> = {
+  BEBAN_OPERASIONAL: "Beban operasional (5230)",
+  PRIVE: "Prive pemilik (3200)",
+  SUNTIKAN_MODAL: "Suntikan modal (3100)",
+  TRANSFER_KAS: "Transfer antar kas/bank",
+  PINJAMAN_MASUK: "Pinjaman masuk (Dr kas · Cr hutang)",
+  BAYAR_HUTANG: "Bayar hutang usaha (2100)",
+  BELI_ASET_TUNAI: "Beli aset tunai (1500 greenhouse)",
+  BAYAR_BUNGA: "Beban bunga pinjaman (5500)",
+  PENYUSUTAN_GREENHOUSE: "Penyusutan greenhouse (5210 · 1510)",
+};
+
+const AKUN_BY_TIPE: Partial<
+  Record<SmartJurnalTipe, { debit?: string; kredit?: string; needsKas?: boolean; needsKasTujuan?: boolean }>
 > = {
-  BEBAN_OPERASIONAL: {
-    label: "Beban operasional",
-    bebanKode: "5230",
-    debitKode: "5230",
-    kreditKode: "KAS",
-  },
-  PRIVE: {
-    label: "Prive pemilik",
-    debitKode: "3200",
-    kreditKode: "KAS",
-  },
-  SUNTIKAN_MODAL: {
-    label: "Suntikan modal",
-    debitKode: "KAS",
-    kreditKode: "3100",
-  },
+  BEBAN_OPERASIONAL: { debit: "5230", kredit: "KAS", needsKas: true },
+  PRIVE: { debit: "3200", kredit: "KAS", needsKas: true },
+  SUNTIKAN_MODAL: { debit: "KAS", kredit: "3100", needsKas: true },
+  TRANSFER_KAS: { debit: "KAS_TUJUAN", kredit: "KAS", needsKas: true, needsKasTujuan: true },
+  PINJAMAN_MASUK: { debit: "KAS", kredit: "2100", needsKas: true },
+  BAYAR_HUTANG: { debit: "2100", kredit: "KAS", needsKas: true },
+  BELI_ASET_TUNAI: { debit: "1500", kredit: "KAS", needsKas: true },
+  BAYAR_BUNGA: { debit: "5500", kredit: "KAS", needsKas: true },
+  PENYUSUTAN_GREENHOUSE: { debit: "5210", kredit: "1510", needsKas: false },
 };
 
 function parseNominal(raw: unknown): Prisma.Decimal {
@@ -46,12 +66,28 @@ function parseNominal(raw: unknown): Prisma.Decimal {
   return new Prisma.Decimal(text);
 }
 
-function parseTipe(raw: unknown): SmartJurnalTipe {
+export function parseSmartJurnalTipe(raw: unknown): SmartJurnalTipe {
   const t = String(raw ?? "").trim().toUpperCase();
   if (!smartJurnalTipe.includes(t as SmartJurnalTipe)) {
     throw new SmartJurnalError("Pilih tipe Smart Jurnal.", 400);
   }
   return t as SmartJurnalTipe;
+}
+
+function parseTujuanKas(raw: unknown, sumber: SumberKasKode): SumberKasKode {
+  let tujuan: SumberKasKode;
+  try {
+    tujuan = parseSumberKasKode(raw);
+  } catch (error) {
+    if (error instanceof KasSumberError) {
+      throw new SmartJurnalError(error.message, error.status);
+    }
+    throw error;
+  }
+  if (tujuan === sumber) {
+    throw new SmartJurnalError("Transfer: pilih rekening tujuan berbeda dari sumber.", 400);
+  }
+  return tujuan;
 }
 
 async function akunPostingKode(kode: string) {
@@ -65,27 +101,56 @@ async function akunPostingKode(kode: string) {
   return akun.id;
 }
 
+function resolveSideKode(side: string, kasKode: SumberKasKode, tujuanKode?: SumberKasKode): string {
+  if (side === "KAS") return kasKode;
+  if (side === "KAS_TUJUAN") return tujuanKode ?? kasKode;
+  return side;
+}
+
 export function buildSmartJurnalBaris(
   tipe: SmartJurnalTipe,
   nominal: Prisma.Decimal,
-  kasAkunId: number,
-  akunIds: { beban?: number; prive?: number; modal?: number },
+  akunIds: Map<string, number>,
+  kasKode: SumberKasKode,
+  tujuanKode?: SumberKasKode,
 ): JurnalInput["baris"] {
-  const meta = tipeMeta[tipe];
-  const nol = new Prisma.Decimal(0);
-  if (tipe === "SUNTIKAN_MODAL") {
-    const modalId = akunIds.modal!;
-    return [
-      { akunId: kasAkunId, debit: nominal, kredit: nol },
-      { akunId: modalId, debit: nol, kredit: nominal },
-    ];
+  const spec = AKUN_BY_TIPE[tipe];
+  if (!spec?.debit || !spec.kredit) {
+    throw new SmartJurnalError("Tipe Smart Jurnal belum dikonfigurasi.", 500);
   }
-  const debitId =
-    tipe === "PRIVE" ? akunIds.prive! : akunIds.beban!;
+  const nol = new Prisma.Decimal(0);
+  const debitKode = resolveSideKode(spec.debit, kasKode, tujuanKode);
+  const kreditKode = resolveSideKode(spec.kredit, kasKode, tujuanKode);
+  const debitId = akunIds.get(debitKode);
+  const kreditId = akunIds.get(kreditKode);
+  if (!debitId || !kreditId) {
+    throw new SmartJurnalError("Akun untuk tipe ini belum tersedia di COA.", 400);
+  }
   return [
     { akunId: debitId, debit: nominal, kredit: nol },
-    { akunId: kasAkunId, debit: nol, kredit: nominal },
+    { akunId: kreditId, debit: nol, kredit: nominal },
   ];
+}
+
+async function loadAkunIdsForTipe(
+  tipe: SmartJurnalTipe,
+  kasKode: SumberKasKode,
+  tujuanKode?: SumberKasKode,
+): Promise<Map<string, number>> {
+  const spec = AKUN_BY_TIPE[tipe]!;
+  const kodes = new Set<string>();
+  for (const side of [spec.debit!, spec.kredit!]) {
+    const k = resolveSideKode(side, kasKode, tujuanKode);
+    if (k !== "KAS" && k !== "KAS_TUJUAN") kodes.add(k);
+  }
+  kodes.add(kasKode);
+  if (tujuanKode) kodes.add(tujuanKode);
+
+  const map = new Map<string, number>();
+  for (const kode of Array.from(kodes)) {
+    map.set(kode, await akunPostingKode(kode));
+  }
+  return map;
 }
 
 export async function createSmartJurnal(
@@ -100,37 +165,37 @@ export async function createSmartJurnal(
   const tanggal = new Date(tanggalText);
   await assertJurnalTanggalAllowed(tanggal, { adminOverride: opts?.adminOverridePeriod });
 
-  const tipe = parseTipe(raw.tipe);
+  const tipe = parseSmartJurnalTipe(raw.tipe);
   const nominal = parseNominal(raw.nominal);
-  let kasKodeVal;
-  try {
-    kasKodeVal = parseSumberKasKode(raw.sumberKas);
-  } catch (error) {
-    if (error instanceof KasSumberError) {
-      throw new SmartJurnalError(error.message, error.status);
+  const spec = AKUN_BY_TIPE[tipe]!;
+
+  let kasKodeVal: SumberKasKode = AKUN_KODE.KAS;
+  let tujuanKode: SumberKasKode | undefined;
+  if (spec.needsKas) {
+    try {
+      kasKodeVal = parseSumberKasKode(raw.sumberKas);
+    } catch (error) {
+      if (error instanceof KasSumberError) {
+        throw new SmartJurnalError(error.message, error.status);
+      }
+      throw error;
     }
-    throw error;
   }
+  if (spec.needsKasTujuan) {
+    tujuanKode = parseTujuanKas(raw.tujuanKas, kasKodeVal);
+  }
+
   const statusRaw = String(raw.status ?? "PENDING").trim();
   if (statusRaw !== "DRAFT" && statusRaw !== "PENDING") {
     throw new SmartJurnalError("Status awal hanya DRAFT atau PENDING.", 400);
   }
 
   const catatan = String(raw.catatan ?? "").trim();
-  const label = tipeMeta[tipe].label;
+  const label = smartJurnalTipeLabel[tipe];
   const keterangan = (catatan ? `${label} — ${catatan}` : label).slice(0, 255);
 
-  const kasId = await akunPostingKode(kasKodeVal);
-  const bebanId =
-    tipe === "BEBAN_OPERASIONAL" ? await akunPostingKode("5230") : undefined;
-  const priveId = tipe === "PRIVE" ? await akunPostingKode("3200") : undefined;
-  const modalId = tipe === "SUNTIKAN_MODAL" ? await akunPostingKode("3100") : undefined;
-
-  const baris = buildSmartJurnalBaris(tipe, nominal, kasId, {
-    beban: bebanId,
-    prive: priveId,
-    modal: modalId,
-  });
+  const akunIds = await loadAkunIdsForTipe(tipe, kasKodeVal, tujuanKode);
+  const baris = buildSmartJurnalBaris(tipe, nominal, akunIds, kasKodeVal, tujuanKode);
 
   try {
     return await createJurnal(
