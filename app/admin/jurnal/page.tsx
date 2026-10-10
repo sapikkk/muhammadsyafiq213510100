@@ -88,15 +88,15 @@ export default async function JurnalPage({
         <h2 id="daftar-title" className="text-lg font-semibold">
           {`${rows.length} jurnal${adaFilter ? " sesuai filter" : ""}`}
         </h2>
-        {rows.length === 0 ? (
-          <p className="border border-dashed p-4 text-sm text-muted-foreground">
-            {adaFilter
+        <JurnalDaftar
+          rows={serialized}
+          detailPrefix="/admin/jurnal"
+          emptyMessage={
+            adaFilter
               ? "Tidak ada jurnal yang cocok dengan filter ini."
-              : "Belum ada jurnal. Buat jurnal pertama lewat tombol Jurnal baru."}
-          </p>
-        ) : (
-          <JurnalDaftar rows={serialized} detailPrefix="/admin/jurnal" />
-        )}
+              : "Belum ada jurnal. Buat jurnal pertama lewat tombol Jurnal baru."
+          }
+        />
       </section>
 
       <Link href="/admin" className="text-sm underline underline-offset-4">
