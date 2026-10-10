@@ -1,6 +1,11 @@
+import "server-only";
+
 import { Prisma, type Varietas } from "@prisma/client";
 import { isVarietasStatus, type VarietasStatus } from "@/lib/varietas-status";
+import type { SerializedVarietas } from "@/lib/varietas-types";
 import { prisma } from "@/lib/prisma";
+
+export type { SerializedVarietas } from "@/lib/varietas-types";
 
 export class VarietasError extends Error {
   constructor(
@@ -146,7 +151,7 @@ export async function setVarietasStatus(id: number, status: VarietasStatus) {
 
 export function serializeVarietas(
   row: Varietas & { _count?: { siklus: number } },
-) {
+): SerializedVarietas {
   return {
     id: row.id,
     nama: row.nama,
@@ -159,7 +164,7 @@ export function serializeVarietas(
     beratPerPack: row.berat_per_pack.toString(),
     hargaJualCurah: row.harga_jual_curah.toString(),
     hargaJualPack: row.harga_jual_pack.toString(),
-    status: row.status,
+    status: row.status as VarietasStatus,
     jumlahSiklus: row._count?.siklus ?? 0,
   };
 }

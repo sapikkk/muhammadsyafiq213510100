@@ -1,3 +1,5 @@
+import "server-only";
+
 import { AKUN_KODE } from "@/lib/akun-kode";
 import { prisma } from "@/lib/prisma";
 

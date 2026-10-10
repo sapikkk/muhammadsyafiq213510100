@@ -26,7 +26,7 @@ import {
   getSiklusProduksi,
   listLogProduksi,
 } from "@/lib/siklus-produksi";
-import { siklusBolehAbort, STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort";
+import { siklusBolehAbort, STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort-status";
 
 export const dynamic = "force-dynamic";
 

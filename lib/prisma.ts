@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Prisma, PrismaClient } from "@prisma/client";
 
 // FINDING-01: pool Prisma Postgres sering habis (P2024). Ulang sekali untuk semua query

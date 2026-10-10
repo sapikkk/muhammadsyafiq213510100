@@ -1,3 +1,5 @@
+import "server-only";
+
 import * as XLSX from "xlsx";
 import { prisma } from "@/lib/prisma";
 import { parseFilter, type FilterJurnal } from "@/lib/jurnal";

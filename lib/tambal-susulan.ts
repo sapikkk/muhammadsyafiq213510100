@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
 import { pakaiActivePackDalamTx } from "@/lib/active-pack";
 import { isFaseProduksi, type FaseProduksi } from "@/lib/siklus-fase";

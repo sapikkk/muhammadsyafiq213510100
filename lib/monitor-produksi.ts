@@ -1,5 +1,10 @@
+import "server-only";
+
 import { isFaseProduksi, type FaseProduksi } from "@/lib/siklus-fase";
+import { kondisiMonitorOptions, type KondisiMonitor } from "@/lib/monitor-produksi-labels";
 import { prisma } from "@/lib/prisma";
+
+export { kondisiMonitorOptions } from "@/lib/monitor-produksi-labels";
 
 export class MonitorError extends Error {
   constructor(
@@ -10,12 +15,6 @@ export class MonitorError extends Error {
   }
 }
 
-export const kondisiMonitorOptions = [
-  { value: "BAIK", label: "Baik" },
-  { value: "PERHATIAN", label: "Perlu perhatian" },
-  { value: "BURUK", label: "Buruk / risiko gagal" },
-] as const;
-
 const FASE_MONITOR: FaseProduksi[] = [
   "SPROUT_DAUN",
   "TAMBAL",
@@ -25,7 +24,7 @@ const FASE_MONITOR: FaseProduksi[] = [
 
 export type MonitorInput = {
   siklusId: number;
-  kondisi: (typeof kondisiMonitorOptions)[number]["value"];
+  kondisi: KondisiMonitor;
   catatan: string | null;
 };
 

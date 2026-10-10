@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
 import { ActivePackError, pakaiActivePackDalamTx } from "@/lib/active-pack";
 import { keTanggalIso } from "@/lib/format";
@@ -8,7 +10,7 @@ import {
   isFaseProduksi,
   type FaseProduksi,
 } from "@/lib/siklus-fase";
-import { STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort";
+import { STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort-status";
 import {
   gramBenihUntukLubang,
   mediaUnitUntukLubang,

@@ -1,5 +1,18 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
+import type {
+  CostBreakdownResult,
+  CostSlice,
+  DrilldownRow,
+} from "@/lib/cost-breakdown-types";
 import { prisma } from "@/lib/prisma";
+
+export type {
+  CostBreakdownResult,
+  CostSlice,
+  DrilldownRow,
+} from "@/lib/cost-breakdown-types";
 
 const nol = new Prisma.Decimal(0);
 
@@ -11,29 +24,6 @@ export class CostBreakdownError extends Error {
     super(message);
   }
 }
-
-export type CostSlice = {
-  akunId: number;
-  kode: string;
-  nama: string;
-  total: string;
-  persen: number;
-};
-
-export type DrilldownRow = {
-  jurnalId: number;
-  tanggal: string;
-  keterangan: string;
-  nominal: string;
-};
-
-export type CostBreakdownResult = {
-  dari: string;
-  sampai: string;
-  totalBeban: string;
-  slices: CostSlice[];
-  drilldown: DrilldownRow[] | null;
-};
 
 function parseMonthParam(raw: string | null, label: string): Date {
   const text = String(raw ?? "").trim();

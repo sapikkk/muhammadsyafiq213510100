@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Prisma, type TipeAkun } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 

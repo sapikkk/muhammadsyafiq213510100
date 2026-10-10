@@ -1,27 +1,20 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
+import type {
+  BestProfitMonth,
+  MonthPoint,
+  MonthlySummaryResult,
+} from "@/lib/monthly-summary-types";
 import { prisma } from "@/lib/prisma";
 
+export type {
+  BestProfitMonth,
+  MonthPoint,
+  MonthlySummaryResult,
+} from "@/lib/monthly-summary-types";
+
 const nol = new Prisma.Decimal(0);
-
-export type MonthPoint = {
-  bulan: string;
-  label: string;
-  pendapatan: string;
-  pengeluaran: string;
-};
-
-export type MonthlySummaryResult = {
-  pendapatanBulanIni: string;
-  pengeluaranBulanIni: string;
-  labaKasarBulanIni: string;
-  months: MonthPoint[];
-};
-
-export type BestProfitMonth = {
-  bulan: string;
-  label: string;
-  laba: string;
-};
 
 export function bestProfitMonth(months: MonthPoint[]): BestProfitMonth | null {
   let best: BestProfitMonth | null = null;

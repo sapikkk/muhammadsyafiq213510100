@@ -1,10 +1,15 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
 import { AKUN_KODE } from "@/lib/akun-kode";
 import { allocateOverheadForSiklus } from "@/lib/biaya";
 import { prisma, type PrismaTransaction } from "@/lib/prisma";
+import {
+  STATUS_GAGAL_TOTAL,
+  siklusBolehAbort,
+} from "@/lib/siklus-abort-status";
 
-/** Siklus dihentikan total — tidak lanjut fase / panen (v2-B.1). */
-export const STATUS_GAGAL_TOTAL = "GAGAL_TOTAL";
+export { STATUS_GAGAL_TOTAL, siklusBolehAbort };
 
 /** WIP terpisah (1360); fallback 1350 jika DB belum di-patch. */
 export const WIP_AKUN_KODE = AKUN_KODE.WIP;
@@ -164,8 +169,3 @@ export async function abortSiklusGagalTotal(
   );
 }
 
-export function siklusBolehAbort(status: string, laporanStatus?: string | null) {
-  if (status === STATUS_GAGAL_TOTAL || status === "SELESAI") return false;
-  if (laporanStatus === "APPROVED") return false;
-  return true;
-}

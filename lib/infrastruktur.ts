@@ -1,6 +1,11 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
+import type { SerializedInfrastrukturPohon } from "@/lib/infrastruktur-types";
 import { isKolamStatus, type KolamStatus } from "@/lib/infrastruktur-kolam-status";
 import { prisma } from "@/lib/prisma";
+
+export type { SerializedInfrastrukturPohon } from "@/lib/infrastruktur-types";
 
 export class InfrastrukturError extends Error {
   constructor(
@@ -200,7 +205,7 @@ function dec(value: Prisma.Decimal) {
 
 export function serializeInfrastruktur(
   pohon: Awaited<ReturnType<typeof listInfrastrukturPohon>>,
-) {
+): SerializedInfrastrukturPohon {
   let totalKapasitasLubang = 0;
   const lahan = pohon.map((row) => {
     const greenhouse = row.greenhouse.map((gh) => {

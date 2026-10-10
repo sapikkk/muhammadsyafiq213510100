@@ -6,9 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
 import { formatQty, formatRupiah } from "@/lib/format";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
-import type { ActivePackListRow } from "@/lib/active-pack";
+import type { ActivePackListRow } from "@/lib/active-pack-types";
 
-export type { ActivePackListRow };
+export type { ActivePackListRow } from "@/lib/active-pack-types";
 
 export function ActivePackDaftar({ rows }: { rows: ActivePackListRow[] }) {
   const columns = useMemo<ColumnDef<ActivePackListRow>[]>(

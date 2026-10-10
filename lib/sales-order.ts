@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { hitungHppOrderBaris, resolveHppPerLubangUntukOrder } from "@/lib/sales-order-hpp";

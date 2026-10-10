@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Prisma } from "@prisma/client";
 import { keTanggalIso } from "@/lib/format";
 import { applyHppOverride, parseHppOverride } from "@/lib/hpp-override";

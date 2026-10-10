@@ -1,3 +1,5 @@
+import "server-only";
+
 import { cache } from "react";
 import { kpiHidroponikMvp as kpiHidroponikMvpImpl } from "@/lib/kpi-hidroponik";
 import { monthlySummary as monthlySummaryImpl } from "@/lib/monthly-summary";

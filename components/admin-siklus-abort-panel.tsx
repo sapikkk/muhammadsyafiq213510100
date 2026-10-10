@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SiklusAbortForm } from "@/components/siklus-abort-form";
-import { siklusBolehAbort } from "@/lib/siklus-abort";
+import { siklusBolehAbort } from "@/lib/siklus-abort-status";
 
 type SiklusRow = {
   id: number;
