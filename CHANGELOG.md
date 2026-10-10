@@ -1,3 +1,10 @@
+# [1.23.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.22.0...v1.23.0) (2026-10-10)
+
+
+### Features
+
+* **v2-F.2:** Smart Jurnal 9 tipe ([#117](https://github.com/sapikkk/muhammadsyafiq213510100/issues/117)) ([faba7e3](https://github.com/sapikkk/muhammadsyafiq213510100/commit/faba7e3ef21683fa87c99e22f837ee1ceed96506))
+
 # [1.22.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.21.0...v1.22.0) (2026-10-10)
 
 
