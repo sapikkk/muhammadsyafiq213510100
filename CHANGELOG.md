@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.20.0...v1.21.0) (2026-10-10)
+
+
+### Features
+
+* **v2-A.3:** jurnal panen Dr 1350 Cr WIP ([#114](https://github.com/sapikkk/muhammadsyafiq213510100/issues/114)) ([dd88b8d](https://github.com/sapikkk/muhammadsyafiq213510100/commit/dd88b8df14aee94c09ea42dc81daaacd24a4301c))
+
 ## [1.19.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.19.0...v1.19.1) (2026-10-10)
 
 
