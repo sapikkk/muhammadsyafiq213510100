@@ -12,6 +12,11 @@ export default async function OwnerPetaniPage() {
       eyebrow="Operasi"
       title="Master petani"
       description="Hanya baca. Perubahan lewat Admin."
+      coachKey="owner-petani"
+      flowSteps={[
+        { label: "Daftar master", detail: "Nama dan gaji lapangan — bukan akun login." },
+        { label: "Perubahan", detail: "Admin mengubah data; Owner hanya memantau." },
+      ]}
       list={<PetaniMasterDaftar rows={rows.map(serializePetani)} mode="owner" />}
       listTitle="Daftar petani lapangan"
     />

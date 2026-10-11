@@ -156,6 +156,42 @@ export const COACH_TIPS: Record<string, string[]> = {
   "pengaturan": [
     "Ganti sandi dan profil — wajib setelah reset Owner.",
   ],
+  "admin-jurnal-baru": [
+    "Smart Jurnal atau manual — pastikan debit = kredit sebelum simpan.",
+    "Periode tutup memblokir tanggal sebelum lock.",
+  ],
+  "admin-penjualan-baru": [
+    "Pilih pelanggan aktif dan batch panen yang masih tersedia.",
+    "Simpan sebagai draft — konfirmasi stok di halaman detail SO.",
+  ],
+  "petani-siklus-baru": [
+    "Pack benih/media berkurang otomatis saat batch dibuat.",
+    "Varietas nonaktif tidak muncul di daftar pilihan.",
+  ],
+  "ganti-sandi": [
+    "Wajib setelah Admin/Owner memberi sandi sementara.",
+    "Setelah sukses, Anda diarahkan kembali ke dashboard peran.",
+  ],
+  "lupa-sandi": [
+    "Tidak ada reset otomatis lewat email — Admin memproses antrian.",
+    "Gunakan email yang terdaftar pada akun petani.",
+  ],
+  "akses-ditolak": [
+    "URL atau menu bukan untuk peran Anda — gunakan sidebar yang tersedia.",
+    "Tombol kembali mengarah ke dashboard peran saat ini.",
+  ],
+  "admin-penjualan-invoice": [
+    "Pratinjau di layar — gunakan Cetak untuk PDF atau kertas.",
+    "Kembali ke detail SO untuk ubah status atau pelunasan.",
+  ],
+  "petani-pengiriman-detail": [
+    "Konfirmasi kirim/terima sesuai peran logistik.",
+    "Status SO menentukan aksi yang boleh dilakukan.",
+  ],
+  home: [
+    "Halaman registry progres — bukan operasional harian.",
+    "Setelah login, buka dashboard peran lewat tombol di kanan atas.",
+  ],
 };
 
 const COACH_KEY_ALIASES: Record<string, string> = {
