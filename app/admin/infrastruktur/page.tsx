@@ -1,5 +1,5 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
-import { InfrastrukturForm } from "@/components/infrastruktur-form";
+import { InfrastrukturTambahActions } from "@/components/infrastruktur-form";
 import { InfrastrukturPohon } from "@/components/infrastruktur-pohon";
 import { listInfrastrukturPohon, serializeInfrastruktur } from "@/lib/infrastruktur";
 
@@ -21,15 +21,6 @@ export default async function AdminInfrastrukturPage() {
     })),
   );
 
-  const kolamOptions = data.lahan.flatMap((l) =>
-    l.greenhouse.flatMap((gh) =>
-      gh.kolam.map((k) => ({
-        id: k.id,
-        label: `${k.nama} · ${gh.nama}`,
-      })),
-    ),
-  );
-
   return (
     <CrudPageLayout
       eyebrow="Produksi & stok"
@@ -37,19 +28,18 @@ export default async function AdminInfrastrukturPage() {
       description="Master lahan, greenhouse, dan kolam untuk alokasi kapasitas produksi."
       flowSteps={[
         { label: "Lihat pohon", detail: "Lahan → GH → kolam — kapasitas lubang per kolam." },
-        { label: "Tambah entitas", detail: "Form di bawah — pilih induk yang sesuai." },
+        { label: "Tambah", detail: "Tombol lahan / GH / kolam — Sheet di kanan." },
+        { label: "Status kolam", detail: "Dialog per baris kolam di pohon." },
         { label: "Siklus", detail: "Petani/Admin pilih kolam kosong saat semai." },
       ]}
-      list={<InfrastrukturPohon data={data} />}
-      listTitle="Pohon infrastruktur"
-      create={
-        <InfrastrukturForm
+      actions={
+        <InfrastrukturTambahActions
           lahanOptions={lahanOptions}
           greenhouseOptions={greenhouseOptions}
-          kolamOptions={kolamOptions}
         />
       }
-      createTitle="Form lahan / GH / kolam"
+      list={<InfrastrukturPohon data={data} mode="admin" />}
+      listTitle="Pohon infrastruktur"
     />
   );
 }
