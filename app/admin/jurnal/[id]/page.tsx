@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 import { JurnalActions } from "@/components/jurnal-actions";
-import { JurnalDetailView } from "@/components/jurnal-detail-view";
+import { JurnalDetailScreen } from "@/components/jurnal-detail-screen";
 import { getJurnal } from "@/lib/jurnal";
 
 export const dynamic = "force-dynamic";
 
-export default async function JurnalDetailPage({
+export default async function AdminJurnalDetailPage({
   params,
 }: {
   params: { id: string };
@@ -15,8 +15,8 @@ export default async function JurnalDetailPage({
   if (!jurnal) notFound();
 
   return (
-    <JurnalDetailView
-      jurnal={jurnal}
+    <JurnalDetailScreen
+      id={id}
       backHref="/admin/jurnal"
       actions={<JurnalActions id={jurnal.id} status={jurnal.status} />}
     />

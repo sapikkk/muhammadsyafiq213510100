@@ -20,10 +20,12 @@ export function JurnalDetailView({
   jurnal,
   backHref,
   actions,
+  surface = "page",
 }: {
   jurnal: JurnalDetail;
   backHref: string;
   actions?: ReactNode;
+  surface?: "page" | "sheet";
 }) {
   const nol = new Prisma.Decimal(0);
   const totalDebit = jurnal.baris.reduce((s, b) => s.add(b.debit), nol);
@@ -44,6 +46,7 @@ export function JurnalDetailView({
   return (
     <DetailLayout
       backHref={backHref}
+      surface={surface}
       eyebrow={`Jurnal #${jurnal.id}`}
       title={jurnal.keterangan}
       badge={<Badge variant="secondary">{statusJurnalLabel[jurnal.status]}</Badge>}

@@ -13,11 +13,13 @@ export async function InventarisDetail({
   listHref,
   writableMode,
   requireAktif = false,
+  surface = "page",
 }: {
   id: number;
   listHref: string;
   writableMode?: "admin" | "petani";
   requireAktif?: boolean;
+  surface?: "page" | "sheet";
 }) {
   if (!Number.isInteger(id) || id <= 0) notFound();
 
@@ -31,6 +33,7 @@ export async function InventarisDetail({
   return (
     <DetailLayout
       backHref={listHref}
+      surface={surface}
       eyebrow="Inventaris"
       title={`${serialized.kode} · ${serialized.nama}`}
       badge={
