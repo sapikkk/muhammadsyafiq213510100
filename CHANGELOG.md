@@ -1,3 +1,10 @@
+# [1.33.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.32.0...v1.33.0) (2026-10-11)
+
+
+### Features
+
+* **audit:** riwayat perubahan pelanggan, inventaris, petani, user, pack ([de3e966](https://github.com/sapikkk/muhammadsyafiq213510100/commit/de3e966799d3f10f60b5d39f84ed4835e395be74))
+
 # [1.32.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.31.1...v1.32.0) (2026-10-11)
 
 
