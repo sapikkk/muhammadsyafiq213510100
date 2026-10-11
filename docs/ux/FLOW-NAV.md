@@ -22,7 +22,7 @@ Komponen:
 - `PageSection` — judul + badge **Read / Create / Update**
 - `CrudPageLayout` — header + daftar; form lewat `actions` (Sheet) bila sudah dimigrasi
 - `FormSheet`, `ConfirmDialog`, `RowActions` — Tingkat A (pelanggan, petani master, owner pengguna)
-- `DetailLayout` + `getRowHref` — Tingkat B varietas: daftar → `/…/varietas/[id]`, Tambah Sheet, Ubah/status di detail
+- `DetailLayout` + `getRowHref` — Tingkat B varietas & inventaris: daftar → `[id]`, Tambah Sheet (admin), aksi di detail
 - `admin-flow-dashboard.tsx` / `owner-flow-dashboard.tsx` — hub Admin/Owner
 
 ## Cakupan halaman (v1.28.0)
@@ -33,7 +33,7 @@ Komponen:
 
 **Petani:** dashboard, siklus, inventaris, active pack, varietas, stok rendah, pengiriman.
 
-Halaman **detail** (`jurnal/[id]`, harvest `[id]`, invoice, siklus `[id]`, **varietas `[id]`**) — drill-down dengan “Kembali ke daftar”.
+Halaman **detail** (`jurnal/[id]`, harvest `[id]`, invoice, siklus `[id]`, varietas/inventaris `[id]`) — drill-down dengan “Kembali ke daftar”.
 
 ## Performa (request dedup)
 

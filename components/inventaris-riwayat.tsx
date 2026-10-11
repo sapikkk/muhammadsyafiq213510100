@@ -14,7 +14,13 @@ const waktu = new Intl.DateTimeFormat("id-ID", {
   timeZone: "Asia/Jakarta",
 });
 
-export function InventarisRiwayat({ rows }: { rows: SerializedPergerakan[] }) {
+export function InventarisRiwayat({
+  rows,
+  hideItemColumn = false,
+}: {
+  rows: SerializedPergerakan[];
+  hideItemColumn?: boolean;
+}) {
   const columns = useMemo<ColumnDef<SerializedPergerakan>[]>(
     () => [
       {
@@ -22,11 +28,15 @@ export function InventarisRiwayat({ rows }: { rows: SerializedPergerakan[] }) {
         header: "Tipe",
         cell: ({ row }) => tipePergerakanLabel[row.original.tipe],
       },
-      {
-        id: "item",
-        header: "Item",
-        accessorFn: (row) => `${row.item.kode} ${row.item.nama}`,
-      },
+      ...(hideItemColumn
+        ? []
+        : [
+            {
+              id: "item",
+              header: "Item",
+              accessorFn: (row: SerializedPergerakan) => `${row.item.kode} ${row.item.nama}`,
+            } satisfies ColumnDef<SerializedPergerakan>,
+          ]),
       {
         id: "jumlah",
         header: "Jumlah",
@@ -58,7 +68,7 @@ export function InventarisRiwayat({ rows }: { rows: SerializedPergerakan[] }) {
         cell: ({ row }) => row.original.keterangan ?? "—",
       },
     ],
-    [],
+    [hideItemColumn],
   );
 
   return (
