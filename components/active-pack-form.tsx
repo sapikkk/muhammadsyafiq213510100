@@ -1,67 +1,112 @@
 "use client";
 
+import { useEffect, useState, type ReactNode } from "react";
 import { useFormState } from "react-dom";
 import type { ItemInventaris } from "@prisma/client";
+import { FormSheet } from "@/components/form-sheet";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
 
-const selectClass =
-  "flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+type PackSaveAction = (
+  prev: { error?: string; ok?: string },
+  formData: FormData,
+) => Promise<{ error?: string; ok?: string }>;
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block space-y-1 text-sm">
+      <span className="font-medium">{label}</span>
+      {children}
+    </label>
+  );
+}
 
 export function ActivePackForm({
   items,
   action,
+  onSuccess,
 }: {
   items: ItemInventaris[];
-  action: (
-    prev: { error?: string; ok?: string },
-    formData: FormData,
-  ) => Promise<{ error?: string; ok?: string }>;
+  action: PackSaveAction;
+  onSuccess?: () => void;
 }) {
+  const [itemId, setItemId] = useState(items[0] ? String(items[0].id) : "");
   const [state, formAction] = useFormState(action, {});
   useActionToast({ error: state.error, ok: state.ok });
 
+  useEffect(() => {
+    if (state.ok) onSuccess?.();
+  }, [state.ok, onSuccess]);
+
   return (
-    <form action={formAction} className="space-y-4 rounded-md border p-4">
-      <h2 className="text-lg font-semibold">Buka active pack baru</h2>
+    <form action={formAction} className="space-y-4">
+      <input type="hidden" name="itemId" value={itemId} />
       <p className="text-sm text-muted-foreground">
-        Biaya per unit = harga pack ÷ jumlah unit. Status Habis otomatis saat
-        sisa 0.
+        Biaya per unit = harga pack ÷ jumlah unit. Status habis otomatis saat sisa 0.
       </p>
-      <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Kode pack</span>
+      <Field label="Kode pack">
         <Input name="kode" required className="h-11" placeholder="AP-BNH-01" />
-      </label>
-      <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Item</span>
-        <select name="itemId" required className={selectClass} defaultValue="">
-          <option value="" disabled>
-            Pilih item
-          </option>
-          {items.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.kode} — {item.nama} ({satuanInventarisLabel[item.satuan]})
-            </option>
-          ))}
-        </select>
-      </label>
-      <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Harga pack (Rp)</span>
+      </Field>
+      <Field label="Item">
+        <Select value={itemId} onValueChange={setItemId} required>
+          <SelectTrigger className="h-11">
+            <SelectValue placeholder="Pilih item" />
+          </SelectTrigger>
+          <SelectContent>
+            {items.map((item) => (
+              <SelectItem key={item.id} value={String(item.id)}>
+                {item.kode} — {item.nama} ({satuanInventarisLabel[item.satuan]})
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </Field>
+      <Field label="Harga pack (Rp)">
         <Input name="hargaPack" required className="h-11" inputMode="decimal" />
-      </label>
-      <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Jumlah unit dalam pack</span>
+      </Field>
+      <Field label="Jumlah unit dalam pack">
         <Input name="jumlahUnit" required className="h-11" inputMode="decimal" />
-      </label>
-      <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Keterangan (opsional)</span>
+      </Field>
+      <Field label="Keterangan (opsional)">
         <Input name="keterangan" className="h-11" maxLength={255} />
-      </label>
+      </Field>
       <SubmitButton className="h-11" pendingLabel="Menyimpan...">
         Simpan pack
       </SubmitButton>
     </form>
+  );
+}
+
+export function ActivePackFormSheet({
+  trigger,
+  items,
+  action,
+}: {
+  trigger: ReactNode;
+  items: ItemInventaris[];
+  action: PackSaveAction;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <FormSheet
+      title="Buka active pack baru"
+      description="Alokasi biaya benih/media per unit — dipakai saat semai & tambal."
+      trigger={trigger}
+      open={open}
+      onOpenChange={setOpen}
+    >
+      {open ? (
+        <ActivePackForm items={items} action={action} onSuccess={() => setOpen(false)} />
+      ) : null}
+    </FormSheet>
   );
 }

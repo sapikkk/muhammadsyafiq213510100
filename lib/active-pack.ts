@@ -103,14 +103,23 @@ function translatePrisma(error: unknown): never {
   throw error;
 }
 
+const activePackInclude = {
+  item: { select: { kode: true, nama: true, satuan: true } },
+  dibuatOleh: { select: { nama: true } },
+} as const;
+
 export async function listActivePack(onlyAktif = false) {
   return prisma.activePack.findMany({
     where: onlyAktif ? { status: "AKTIF" } : undefined,
     orderBy: [{ status: "asc" }, { dibuatPada: "desc" }],
-    include: {
-      item: { select: { kode: true, nama: true, satuan: true } },
-      dibuatOleh: { select: { nama: true } },
-    },
+    include: activePackInclude,
+  });
+}
+
+export async function getActivePack(id: number) {
+  return prisma.activePack.findUnique({
+    where: { id },
+    include: activePackInclude,
   });
 }
 
