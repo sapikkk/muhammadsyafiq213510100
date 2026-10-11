@@ -1,3 +1,10 @@
+# [1.32.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.31.1...v1.32.0) (2026-10-11)
+
+
+### Features
+
+* **ui:** sheet detail lebar, coachmark alur, sidebar collapse ([78ba21b](https://github.com/sapikkk/muhammadsyafiq213510100/commit/78ba21b79527a46e9fc909954a04c9c0ef2cb3ee))
+
 ## [1.31.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.31.0...v1.31.1) (2026-10-11)
 
 
