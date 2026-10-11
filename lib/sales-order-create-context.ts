@@ -7,7 +7,7 @@ import { listSiklusSiapJual } from "@/lib/sales-order";
 /** Data untuk halaman buat SO (admin). */
 export async function loadSalesOrderCreateContext() {
   const [pelanggan, siklusRows, akunDpRows] = await Promise.all([
-    listPelanggan(),
+    listPelanggan(true),
     listSiklusSiapJual(),
     prisma.akun.findMany({
       where: { tipe: "KEWAJIBAN", aktif: true, anak: { none: {} } },

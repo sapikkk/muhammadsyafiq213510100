@@ -6,8 +6,10 @@ import type { ColumnDef } from "@tanstack/react-table";
 import {
   createOwnerUser,
   resetOwnerUserPassword,
+  ubahStatusOwnerUser,
   type OwnerUserState,
 } from "@/app/actions/owner-users";
+import { AktifToggleDialog } from "@/components/aktif-toggle-dialog";
 import { DataTable } from "@/components/data-table";
 import { FormSheet } from "@/components/form-sheet";
 import { SubmitButton } from "@/components/submit-button";
@@ -28,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { roleLabel, type Role } from "@/types/role";
 
@@ -37,6 +40,7 @@ export type OwnerUserRow = {
   email: string;
   role: Role;
   mustChangePassword: boolean;
+  aktif: boolean;
 };
 
 export function OwnerUserDaftar({ users }: { users: OwnerUserRow[] }) {
@@ -47,7 +51,14 @@ export function OwnerUserDaftar({ users }: { users: OwnerUserRow[] }) {
         header: "Nama",
         cell: ({ row }) => (
           <div>
-            <p className="font-medium">{row.original.nama}</p>
+            <p className="flex items-center gap-2 font-medium">
+              {row.original.nama}
+              {!row.original.aktif ? (
+                <Badge variant="outline" className="text-xs font-normal">
+                  Nonaktif
+                </Badge>
+              ) : null}
+            </p>
             <p className="text-xs text-muted-foreground">{row.original.email}</p>
           </div>
         ),
@@ -68,7 +79,18 @@ export function OwnerUserDaftar({ users }: { users: OwnerUserRow[] }) {
         enableSorting: false,
         cell: ({ row }) =>
           row.original.role !== "OWNER" ? (
-            <ResetPasswordDialog userId={row.original.id} email={row.original.email} />
+            <div className="flex justify-end gap-1.5">
+              <ResetPasswordDialog userId={row.original.id} email={row.original.email} />
+              <AktifToggleDialog
+                id={row.original.id}
+                aktif={row.original.aktif}
+                idFieldName="userId"
+                action={ubahStatusOwnerUser}
+                label={row.original.email}
+                offDescription="User nonaktif tidak bisa login; sesi JWT yang sudah ada tetap sampai habis."
+                onDescription="User aktif kembali bisa login dengan sandi yang ada."
+              />
+            </div>
           ) : (
             <span className="text-xs text-muted-foreground">—</span>
           ),

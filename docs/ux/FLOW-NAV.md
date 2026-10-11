@@ -21,7 +21,7 @@ Komponen:
 - `FlowSteps` — langkah 1–n di atas konten
 - `PageSection` — judul + badge **Read / Create / Update**
 - `CrudPageLayout` — header + daftar; form lewat `actions` (Sheet) bila sudah dimigrasi
-- `FormSheet`, `ConfirmDialog`, `RowActions` — Tingkat A (pelanggan, petani master, owner pengguna)
+- `FormSheet`, `ConfirmDialog`, `RowActions`, `AktifToggleDialog` — Tingkat A (pelanggan, petani master, owner pengguna): Tambah/Ubah Sheet + Nonaktifkan Dialog
 - `DetailLayout` + `getRowHref` — Tingkat B varietas, inventaris, active pack: daftar → `[id]`, Tambah Sheet, aksi di detail (inventaris: Ubah Sheet + Nonaktifkan Dialog admin)
 - **Akun (Tingkat B pohon):** Tambah Sheet di header; Ubah/Nonaktifkan per node (Dialog); tanpa `?edit=`; Owner `mode="owner"`
 - **Infrastruktur (Tingkat B pohon):** Tambah lahan/GH/kolam Sheet; status kolam Dialog per baris; Owner baca saja

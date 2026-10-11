@@ -59,8 +59,25 @@ export function parsePelangganInput(raw: Record<string, unknown>): PelangganInpu
   };
 }
 
-export async function listPelanggan(): Promise<Pelanggan[]> {
-  return prisma.pelanggan.findMany({ orderBy: { nama: "asc" } });
+export async function listPelanggan(onlyAktif = false): Promise<Pelanggan[]> {
+  return prisma.pelanggan.findMany({
+    where: onlyAktif ? { aktif: true } : undefined,
+    orderBy: { nama: "asc" },
+  });
+}
+
+export async function setPelangganAktif(id: number, aktif: boolean): Promise<Pelanggan> {
+  try {
+    return await prisma.pelanggan.update({
+      where: { id },
+      data: { aktif },
+    });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") {
+      throw new PelangganError("Pelanggan tidak ditemukan.", 404);
+    }
+    throw error;
+  }
 }
 
 export async function createPelanggan(input: PelangganInput): Promise<Pelanggan> {
@@ -100,5 +117,6 @@ export function serializePelanggan(row: Pelanggan) {
     alamat: row.alamat,
     no_telepon: row.no_telepon,
     email: row.email,
+    aktif: row.aktif,
   };
 }
