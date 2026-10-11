@@ -69,7 +69,7 @@ export function FoundationPanel() {
         <CardHeader>
           <CardTitle>Peran</CardTitle>
           <CardDescription>
-            Tiga peran di sistem. Akun demo masuk lewat halaman Masuk.
+            Tiga peran di sistem. Masuk lewat halaman Masuk dengan email dan sandi yang diberikan administrador.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -124,10 +124,10 @@ export function FoundationPanel() {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>US1.6: daftar petani</DialogTitle>
+                <DialogTitle>Daftar petani</DialogTitle>
                 <DialogDescription>
-                  Admin mendaftarkan akun petani di halaman Admin. Owner melihat
-                  daftarnya. Tidak ada pendaftaran publik.
+                  Admin mendaftarkan akun petani di halaman Admin. Owner melihat daftarnya.
+                  Tidak ada pendaftaran publik.
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>

@@ -23,8 +23,8 @@ export function OwnerRevenueChart({ months }: { months: MonthPoint[] }) {
   if (data.every((d) => d.pendapatan === 0 && d.pengeluaran === 0)) {
     return (
       <p className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
-        Belum ada jurnal APPROVED dengan pendapatan/beban pada periode ini. Setujui jurnal penjualan
-        (US5.4) untuk mengisi grafik.
+        Belum ada jurnal APPROVED dengan pendapatan atau beban pada periode ini. Setujui jurnal
+        penjualan untuk mengisi grafik.
       </p>
     );
   }

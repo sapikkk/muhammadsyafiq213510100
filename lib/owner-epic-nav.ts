@@ -2,7 +2,7 @@ import { LayoutDashboard } from "lucide-react";
 import type { NavFlowGroup } from "@/lib/nav-flow";
 import { getNavItems } from "@/lib/nav-items";
 
-/** Sidebar Owner — struktur epik skripsi (1.0–7.0) Kokonus Farm. */
+/** Sidebar Owner — modul keuangan dan operasi (grup bernomor 1.0–7.0). */
 export function getOwnerEpicNavGroups(stokRendahCount: number): NavFlowGroup[] {
   const catalog = getNavItems("OWNER", stokRendahCount);
   const pick = (href: string) => catalog.find((i) => i.href === href);

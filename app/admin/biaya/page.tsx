@@ -14,7 +14,7 @@ export default async function AdminBiayaPage() {
     <CrudPageLayout
       eyebrow="Akuntansi"
       title="Biaya langsung & overhead"
-      description="Input US2.4. Overhead terbaru dialokasikan ke kolam saat approve panen (HPP)."
+      description="Input overhead. Overhead terbaru dialokasikan ke kolam saat panen disetujui (HPP)."
       flowSteps={[
         { label: "Overhead", detail: "Catat beban tidak langsung per periode." },
         { label: "Biaya langsung", detail: "Tautkan ke batch siklus jika perlu." },

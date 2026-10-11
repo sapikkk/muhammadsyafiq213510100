@@ -22,7 +22,7 @@ export default async function AdminSusutPage() {
     <CrudPageLayout
       eyebrow="Produksi & stok"
       title="Klasifikasi susut"
-      description="US2.5 — tentukan susut normal (masuk HPP) vs abnormal (kerugian operasional)."
+      description="Klasifikasi susut normal (masuk HPP) dan abnormal (beban operasional)."
       flowSteps={[
         { label: "Antrian", detail: "Log kegagalan dari petani menunggu klasifikasi." },
         { label: "Klasifikasi", detail: "Pilih normal/abnormal per baris — mempengaruhi HPP." },

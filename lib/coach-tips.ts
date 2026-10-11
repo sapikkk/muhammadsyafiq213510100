@@ -1,196 +1,196 @@
-/** Tips UAT / blackbox per halaman — dipasang di coachmark. */
+/** Catatan singkat per halaman — dipasang di dialog Panduan. */
 export const COACH_TIPS: Record<string, string[]> = {
   "owner-home": [
-    "KPI memakai jurnal APPROVED bulan berjalan (akun 4xxx / 5xxx).",
-    "Banner stok rendah mengarah ke daftar item di bawah minimum.",
-    "Sidebar epik 1.0–7.0 — buka grup dengan chevron.",
+    "KPI memakai jurnal berstatus APPROVED pada bulan berjalan (akun 4xxx dan 5xxx).",
+    "Banner stok rendah mengarah ke daftar item di bawah batas minimum.",
+    "Menu Owner dikelompokkan; buka grup dengan ikon chevron di sidebar.",
   ],
   "admin-home": [
-    "Reset sandi petani: selesaikan antrian sebelum daftar petani baru.",
-    "Alur harian di chip — klik Panduan jika lupa urutan.",
+    "Selesaikan antrian reset sandi sebelum mendaftarkan petani baru.",
+    "Tombol Panduan di setiap halaman menjelaskan urutan kerja halaman itu.",
   ],
   "petani-home": [
-    "Mulai dari siklus aktif atau buat semai baru.",
-    "Stok rendah = bahan perlu diisi Admin atau catat pergerakan.",
+    "Mulai dari batch aktif di Siklus, atau buat semai baru jika kolam siap.",
+    "Stok rendah berarti bahan perlu diisi Admin atau dicatat pergerakannya.",
   ],
   "owner-laporan": [
-    "Format periode YYYY-MM — selaras filter arus kas.",
-    "Unduh PDF per jenis laporan (laba rugi, neraca, arus kas).",
+    "Format periode YYYY-MM, selaras dengan filter arus kas.",
+    "Unduh PDF per jenis laporan: laba rugi, neraca, dan arus kas.",
   ],
   "owner-jurnal": [
-    "Hanya jurnal APPROVED masuk laporan keuangan.",
-    "Klik baris untuk detail; setujui/tolak dari Admin atau otomatis.",
+    "Hanya jurnal APPROVED yang masuk laporan keuangan.",
+    "Klik baris untuk detail; persetujuan dilakukan Admin atau otomatis sesuai tipe.",
   ],
   "owner-akun": [
-    "Bagan akun COA — kode 4xxx pendapatan, 5xxx beban.",
-    "Perubahan struktur akun hanya Admin; Owner pantau.",
+    "Bagan akun COA: kode 4xxx pendapatan, 5xxx beban.",
+    "Perubahan struktur akun hanya Admin; Owner memantau.",
   ],
   "owner-prive": [
-    "Pencatatan prive Owner mempengaruhi ekuitas di neraca.",
+    "Pencatatan prive Owner mempengaruhi ekuitas pada neraca.",
   ],
   "owner-arus-kas": [
-    "Filter rentang bulan lalu terapkan.",
+    "Terapkan filter rentang bulan sebelum membaca mutasi.",
     "Mutasi mengacu akun Kas/Bank dari jurnal APPROVED.",
   ],
   "owner-biaya": [
-    "Breakdown biaya langsung vs overhead per periode.",
-    "Data siklus panen disetujui mengisi HPP di evaluasi.",
+    "Pisahkan biaya langsung dan overhead per periode.",
+    "Batch panen yang disetujui mengisi HPP di halaman Evaluasi.",
   ],
   "owner-evaluasi": [
-    "Margin = harga master varietas − HPP rata.",
-    "BEP dan kolam idle membantu keputusan harga & kapasitas.",
+    "Margin = harga master varietas dikurangi HPP rata-rata.",
+    "BEP dan kolam idle membantu keputusan harga dan kapasitas.",
   ],
   "owner-varietas": [
-    "Klik baris varietas — detail lewat sheet kanan.",
-    "Nonaktifkan hanya jika tidak dipakai siklus baru.",
+    "Klik baris varietas untuk detail di panel kanan.",
+    "Nonaktifkan varietas hanya jika tidak dipakai untuk siklus baru.",
   ],
   "owner-infrastruktur": [
-    "Owner baca saja — ubah lahan/GH/kolam via Admin.",
+    "Owner hanya melihat; perubahan lahan, greenhouse, dan kolam lewat Admin.",
   ],
   "owner-inventaris": [
-    "Riwayat pergerakan vs riwayat perubahan master terpisah.",
+    "Riwayat pergerakan stok terpisah dari riwayat perubahan master item.",
   ],
   "owner-stok-rendah": [
-    "Item di bawah stok minimum — koordinasi dengan Admin.",
+    "Item di bawah stok minimum; koordinasikan restock dengan Admin.",
   ],
   "owner-petani": [
-    "Daftar akun login petani — bukan master HR lengkap.",
+    "Daftar ini master petani lapangan, bukan daftar akun login.",
   ],
   "owner-pengguna": [
-    "Owner bisa buat Admin/Petani dan reset sandi awal.",
-    "Nonaktifkan user menutup login, data historis tetap.",
+    "Owner dapat membuat Admin/Petani dan memberi sandi awal.",
+    "Menonaktifkan user menutup login; data historis tetap tersimpan.",
   ],
   "owner-produksi": [
-    "Read-only — operasi fase di /petani/siklus.",
+    "Halaman baca saja; operasi fase di menu Petani → Siklus.",
   ],
   "owner-kegagalan-susut": [
-    "Antrian menunggu klasifikasi Admin di /admin/susut.",
+    "Antrian menunggu klasifikasi Admin di menu Susut.",
   ],
   "owner-penjualan": [
-    "Read-only — aksi SO di /admin/penjualan.",
-    "Pendapatan tercatat lewat jurnal saat SO terkirim.",
+    "Halaman baca saja; aksi sales order di menu Penjualan Admin.",
+    "Pendapatan tercatat lewat jurnal saat order terkirim.",
   ],
   "admin-pelanggan": [
-    "Tambah/Ubah lewat sheet; nonaktifkan butuh centang konfirmasi.",
-    "Pelanggan nonaktif tidak dipilih di SO baru.",
+    "Tambah dan ubah lewat panel samping; nonaktifkan memerlukan konfirmasi.",
+    "Pelanggan nonaktif tidak dapat dipilih pada sales order baru.",
   ],
   "admin-penjualan": [
-    "Buat SO → konfirmasi → kirim → catat pelunasan/DP.",
-    "Klik baris untuk detail sheet.",
+    "Alur: buat order → konfirmasi → kirim → catat pelunasan atau DP.",
+    "Klik baris untuk detail di panel samping.",
   ],
   "admin-jurnal": [
-    "Draft perlu disetujui Owner (atau otomatis sesuai tipe).",
-    "Debit harus sama dengan kredit sebelum approve.",
+    "Draft perlu disetujui Owner, kecuali tipe yang disetujui otomatis.",
+    "Total debit harus sama dengan total kredit sebelum approve.",
   ],
   "admin-akuntansi": [
-    "Smart jurnal & penyusutan — ikuti langkah di Panduan.",
+    "Smart Jurnal dan penyusutan: ikuti langkah di Panduan halaman ini.",
   ],
   "admin-akun": [
-    "Pohon akun — tambah/ubah/nonaktifkan per node.",
+    "Pohon akun: tambah, ubah, atau nonaktifkan per node.",
   ],
   "admin-biaya": [
     "Overhead bulanan mempengaruhi alokasi HPP panen.",
   ],
   "admin-inventaris": [
-    "IN/OUT/ADJUST di detail item; nonaktifkan jika obsolet.",
+    "Pergerakan IN, OUT, dan ADJUST di detail item; nonaktifkan jika obsolet.",
   ],
   "admin-active-pack": [
-    "Pack aktif mengurangi stok bahan saat dipakai semai.",
+    "Pack aktif mengurangi stok bahan saat dipakai untuk semai.",
   ],
   "admin-infrastruktur": [
-    "Status kolam TERPAKAI / MENGANGGUR mempengaruhi evaluasi idle.",
+    "Status kolam TERPAKAI atau MENGANGGUR mempengaruhi evaluasi kapasitas idle.",
   ],
   "admin-varietas": [
-    "Parameter varietas dipakai hitung HPP otomatis.",
+    "Parameter varietas dipakai perhitungan HPP otomatis.",
   ],
   "admin-harvest": [
-    "Approve panen menulis HPP + jurnal persediaan.",
-    "Klik baris review untuk sheet detail.",
+    "Approve panen menulis HPP dan jurnal persediaan.",
+    "Klik baris review untuk detail di panel samping.",
   ],
   "admin-susut": [
-    "Normal masuk HPP; abnormal ke beban operasional.",
+    "Susut normal masuk HPP; susut abnormal ke beban operasional.",
   ],
   "admin-stok-rendah": [
-    "Sama dengan alert banner — prioritas restock.",
+    "Sama dengan peringatan banner; prioritaskan restock.",
   ],
   "admin-petani": [
-    "Master petani ≠ akun User — daftar login di reset/daftarkan.",
+    "Master petani berbeda dari akun User; login didaftarkan terpisah di beranda Admin.",
   ],
   "petani-siklus": [
-    "Satu baris = satu batch; detail untuk langkah fase & panen.",
-    "Abort menghentikan siklus — tidak bisa lanjut panen.",
+    "Satu baris = satu batch; detail berisi langkah fase dan panen.",
+    "Abort menghentikan siklus; batch tidak dapat dilanjutkan ke panen.",
   ],
   "petani-inventaris": [
-    "Catat OUT saat pakai bahan di lapangan.",
+    "Catat OUT saat bahan dipakai di lapangan.",
   ],
   "petani-active-pack": [
-    "Pakai pack saat mulai semai — sisa unit berkurang.",
+    "Pakai pack saat mulai semai; sisa unit berkurang otomatis.",
   ],
   "petani-varietas": [
-    "Hanya varietas AKTIF muncul di semai baru.",
+    "Hanya varietas berstatus AKTIF muncul di semai baru.",
   ],
   "petani-pengiriman": [
-    "Konfirmasi kirim & terima sesuai status SO.",
+    "Konfirmasi kirim dan terima sesuai status sales order.",
   ],
   "petani-stok-rendah": [
-    "Laporkan ke Admin jika stok habis di lapangan.",
+    "Hubungi Admin jika stok habis di lapangan.",
   ],
   "detail-varietas": [
     "Riwayat perubahan mencatat siapa mengubah parameter.",
-    "Ubah lewat tombol aksi — sheet form.",
+    "Ubah lewat tombol aksi; form di panel samping.",
   ],
   "detail-inventaris": [
-    "Pergerakan stok terpisah dari ubah master item.",
+    "Pergerakan stok terpisah dari perubahan data master item.",
   ],
   "detail-jurnal": [
-    "Baris debit/kredit harus seimbang sebelum approve.",
+    "Baris debit dan kredit harus seimbang sebelum approve.",
   ],
   "detail-sales-order": [
-    "Status SO menentukan tombol aksi yang muncul.",
+    "Status order menentukan tombol aksi yang tampil.",
   ],
   login: [
-    "Gunakan email dan sandi akun demo atau produksi.",
-    "Sandi salah tidak menyinggung apakah email terdaftar.",
-    "Owner, Admin, dan Petani masuk ke dashboard berbeda.",
+    "Masuk dengan email dan sandi yang diberikan administrador.",
+    "Pesan error tidak menyinggung apakah email terdaftar.",
+    "Owner, Admin, dan Petani diarahkan ke dashboard masing-masing.",
   ],
-  "pengaturan": [
-    "Ganti sandi dan profil — wajib setelah reset Owner.",
+  pengaturan: [
+    "Perbarui profil dan sandi; wajib setelah reset dari Owner atau Admin.",
   ],
   "admin-jurnal-baru": [
-    "Smart Jurnal atau manual — pastikan debit = kredit sebelum simpan.",
-    "Periode tutup memblokir tanggal sebelum lock.",
+    "Smart Jurnal atau manual: pastikan debit sama dengan kredit sebelum simpan.",
+    "Periode tutup memblokir tanggal sebelum tanggal lock.",
   ],
   "admin-penjualan-baru": [
     "Pilih pelanggan aktif dan batch panen yang masih tersedia.",
-    "Simpan sebagai draft — konfirmasi stok di halaman detail SO.",
+    "Simpan sebagai draft; konfirmasi stok di halaman detail order.",
   ],
   "petani-siklus-baru": [
-    "Pack benih/media berkurang otomatis saat batch dibuat.",
+    "Stok pack benih atau media berkurang otomatis saat batch dibuat.",
     "Varietas nonaktif tidak muncul di daftar pilihan.",
   ],
   "ganti-sandi": [
-    "Wajib setelah Admin/Owner memberi sandi sementara.",
-    "Setelah sukses, Anda diarahkan kembali ke dashboard peran.",
+    "Wajib setelah Admin atau Owner memberi sandi sementara.",
+    "Setelah berhasil, Anda diarahkan ke dashboard peran Anda.",
   ],
   "lupa-sandi": [
-    "Tidak ada reset otomatis lewat email — Admin memproses antrian.",
+    "Reset tidak otomatis lewat email; Admin memproses antrian.",
     "Gunakan email yang terdaftar pada akun petani.",
   ],
   "akses-ditolak": [
-    "URL atau menu bukan untuk peran Anda — gunakan sidebar yang tersedia.",
+    "URL atau menu ini bukan untuk peran Anda; gunakan menu sidebar.",
     "Tombol kembali mengarah ke dashboard peran saat ini.",
   ],
   "admin-penjualan-invoice": [
-    "Pratinjau di layar — gunakan Cetak untuk PDF atau kertas.",
-    "Kembali ke detail SO untuk ubah status atau pelunasan.",
+    "Pratinjau di layar; gunakan Cetak untuk PDF atau kertas.",
+    "Kembali ke detail order untuk ubah status atau pelunasan.",
   ],
   "petani-pengiriman-detail": [
-    "Konfirmasi kirim/terima sesuai peran logistik.",
-    "Status SO menentukan aksi yang boleh dilakukan.",
+    "Konfirmasi kirim dan terima sesuai peran logistik.",
+    "Status order menentukan aksi yang boleh dilakukan.",
   ],
   home: [
-    "Halaman registry progres — bukan operasional harian.",
-    "Setelah login, buka dashboard peran lewat tombol di kanan atas.",
+    "Halaman ini menampilkan status pengembangan produk, bukan transaksi harian.",
+    "Untuk operasional, masuk lalu buka dashboard peran Anda.",
   ],
 };
 

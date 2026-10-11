@@ -45,7 +45,7 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
     <CrudPageLayout
       eyebrow="Ringkasan"
       title="Ekspor laporan"
-      description="US6.3 — laba rugi & neraca PDF (Owner/Admin). Jurnal xlsx di menu Admin."
+      description="Ekspor laba rugi dan neraca PDF. Ekspor jurnal Excel tersedia di menu Admin."
       flowSteps={[
         { label: "Pilih periode", detail: "Format YYYY-MM — sama dengan filter arus kas." },
         { label: "Unduh", detail: "Tabel laporan — tombol Unduh PDF per baris." },

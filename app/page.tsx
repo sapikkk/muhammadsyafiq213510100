@@ -38,17 +38,17 @@ export default async function HomePage() {
 
       <section className="mx-auto w-full max-w-6xl px-6 py-10">
         <PageHeaderRow
-          eyebrow="Progres proyek"
-          title="Kokonus Farm"
-          description="Tata kelola biaya produksi hidroponik. Ringkasan agile live dari GitHub Project — semua kartu sprint, status, dan riwayat waktu kerja (WIB)."
+          eyebrow="Kokonus Farm"
+          title="Tata kelola produksi hidroponik"
+          description="Ringkasan status pengembangan produk. Transaksi harian lewat halaman Masuk ke dashboard Owner, Admin, atau Petani."
           guide={
             <PageCoachmark
               pageKey="home"
               title="Panduan halaman beranda"
               placement="toolbar"
               steps={[
-                { label: "Registry agile", detail: "Progres sprint — bukan transaksi operasional." },
-                { label: "Masuk aplikasi", detail: "Login lalu buka dashboard peran Anda." },
+                { label: "Status pengembangan", detail: "Board di bawah untuk tim produk, bukan operasional kebun." },
+                { label: "Masuk aplikasi", detail: "Klik Masuk, lalu buka dashboard sesuai peran akun." },
               ]}
             />
           }

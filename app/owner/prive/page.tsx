@@ -9,7 +9,7 @@ export default function OwnerPrivePage() {
     <CrudPageLayout
       eyebrow="Keuangan"
       title="Prive"
-      description="US2.6 — pencatatan pengambilan pribadi Owner; jurnal seimbang menunggu approve Admin."
+      description="Pencatatan pengambilan pribadi Owner; jurnal menunggu persetujuan Admin."
       flowSteps={[
         { label: "Isi form", detail: "Nominal & sumber kas — tanggal default hari ini." },
         { label: "Approve", detail: "Admin setujui jurnal di menu Jurnal." },

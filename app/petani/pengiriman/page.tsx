@@ -12,7 +12,7 @@ export default async function PetaniPengirimanPage() {
     <CrudPageLayout
       eyebrow="Penjualan"
       title="Packing & pengiriman"
-      description="US5.3 — SO CONFIRMED → SHIPPED → DELIVERED. Catatan dan waktu tercatat otomatis."
+      description="Sales order: dikonfirmasi, dikirim, diterima. Catatan dan waktu tercatat otomatis."
       flowSteps={[
         { label: "CONFIRMED", detail: "Siap pack — update status ke SHIPPED saat barang keluar." },
         { label: "DELIVERED", detail: "Konfirmasi sampai pelanggan — waktu tercatat." },

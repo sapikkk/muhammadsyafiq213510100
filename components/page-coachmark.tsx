@@ -26,7 +26,7 @@ export type PageCoachmarkProps = {
   /** Judul dialog — default "Panduan halaman" */
   title?: string;
   intro?: string;
-  /** Tips UAT; jika kosong diisi dari lib/coach-tips.ts */
+  /** Catatan; jika kosong diisi dari lib/coach-tips.ts */
   tips?: string[];
   /** Tampil otomatis saat pertama kali (localStorage) */
   autoOnFirstVisit?: boolean;
@@ -79,7 +79,7 @@ function CoachDialog({
         {tips.length > 0 ? (
           <div className="border-t pt-4 text-sm">
             <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              Tips pengguna
+              Catatan
             </p>
             <ul className="list-disc space-y-1 pl-4 text-muted-foreground">
               {tips.map((tip) => (
@@ -101,7 +101,7 @@ function CoachDialog({
               onOpenChange(false);
             }}
           >
-            Mengerti — jangan tampilkan otomatis lagi
+            Jangan tampilkan lagi saat buka halaman
           </Button>
         </div>
       </DialogContent>
@@ -113,7 +113,7 @@ export function PageCoachmark({
   pageKey,
   steps,
   title = "Panduan halaman",
-  intro = "Ikuti langkah dari atas ke bawah. Cocok untuk uji blackbox dan UAT.",
+  intro = "Langkah mengikuti urutan layar dari atas ke bawah.",
   tips,
   autoOnFirstVisit = true,
   placement = "block",

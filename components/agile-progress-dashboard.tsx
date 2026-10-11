@@ -96,7 +96,7 @@ export function AgileProgressDashboard({ data }: { data: AgileProgressFile }) {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Agile · GitHub Project #1
+            Status pengembangan
           </p>
           <h2 className="text-2xl font-bold tracking-tight">{data.project.title}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -124,7 +124,7 @@ export function AgileProgressDashboard({ data }: { data: AgileProgressFile }) {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Registry sprint (docs/agile)</CardTitle>
+          <CardTitle className="text-base">Ringkasan sprint</CardTitle>
           <CardDescription>
             Actual start PO vs iteration di Project — progres kartu per sprint live dari GitHub.
           </CardDescription>

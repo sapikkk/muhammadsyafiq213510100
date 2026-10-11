@@ -74,7 +74,7 @@ export default function LoginPage() {
               steps={[
                 { label: "Email & sandi", detail: "Isi keduanya lalu klik Masuk." },
                 { label: "Peran", detail: "Diarahkan ke dashboard Owner, Admin, atau Petani." },
-                { label: "Setelah masuk", detail: "Buka Panduan di setiap halaman untuk UAT." },
+                { label: "Setelah masuk", detail: "Gunakan Panduan di setiap halaman jika perlu penjelasan alur." },
               ]}
             />
           }

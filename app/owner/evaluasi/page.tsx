@@ -26,7 +26,7 @@ export default async function OwnerEvaluasiPage() {
     <CrudPageLayout
       eyebrow="Keuangan"
       title="Evaluasi margin & BEP"
-      description="US6.4 — HPP vs harga jual, titik impas, dan kapasitas kolam menganggur."
+      description="Perbandingan HPP dan harga jual, titik impas, dan kapasitas kolam menganggur."
       flowSteps={[
         { label: "Kapasitas", detail: "Tabel ringkasan lubang & kolam." },
         { label: "Margin & BEP", detail: "Rata-rata curah/pack dan titik impas." },

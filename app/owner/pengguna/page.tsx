@@ -12,7 +12,7 @@ export default async function OwnerPenggunaPage() {
     <CrudPageLayout
       eyebrow="Kelola"
       title="Kelola user"
-      description="US1.9 — Owner menambah Admin/Petani dan mereset sandi (bukan akun Owner)."
+      description="Owner menambah Admin atau Petani dan mereset sandi (tidak untuk akun Owner)."
       flowSteps={[
         { label: "Daftar user", detail: "Cari nama atau email di tabel." },
         { label: "Tambah / reset", detail: "Tambah lewat panel kanan; reset sandi lewat dialog konfirmasi." },

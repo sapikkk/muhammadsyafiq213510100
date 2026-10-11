@@ -29,7 +29,7 @@ export default async function OwnerBiayaPage({ searchParams }: { searchParams: S
     <CrudPageLayout
       eyebrow="Keuangan"
       title="Breakdown biaya"
-      description="US6.2 — pie beban per akun (jurnal APPROVED). Klik akun untuk drill-down jurnal."
+      description="Diagram beban per akun (jurnal APPROVED). Klik akun untuk melihat jurnal terkait."
       flowSteps={[
         { label: "Filter periode", detail: "YYYY-MM — terapkan sebelum baca pie." },
         { label: "Drill-down", detail: "Klik irisan pie — daftar jurnal di bawah." },

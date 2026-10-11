@@ -9,13 +9,13 @@ export default async function OwnerProduksiPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="2.0 Manajemen Produksi & Siklus"
+      eyebrow="Produksi"
       title="Monitoring siklus produksi"
-      description="Pantau batch dari semai hingga panen — operasi lapangan oleh Petani/Admin."
+      description="Pantau batch dari semai hingga panen. Operasi lapangan oleh Petani; persetujuan panen oleh Admin."
       flowSteps={[
         { label: "Daftar batch", detail: "Semua siklus tercatat di sistem." },
-        { label: "Operasi", detail: "Petani menjalankan fase di /petani/siklus." },
-        { label: "HPP", detail: "Setelah panen disetujui — lihat epik 4.0 & 6.0." },
+        { label: "Operasi", detail: "Petani menjalankan fase di menu Siklus." },
+        { label: "HPP", detail: "Setelah panen disetujui, lihat Biaya dan Evaluasi." },
       ]}
       list={<SiklusDaftar rows={siklusRows.map(serializeSiklus)} readOnly />}
       listTitle="Batch produksi"

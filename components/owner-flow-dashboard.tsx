@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 export const OWNER_DASHBOARD_ALUR = [
   { label: "Pantau KPI", detail: "Dashboard — pendapatan vs beban bulan ini." },
   { label: "Review jurnal", detail: "Setujui/tolak entri dari Admin & otomatis." },
-  { label: "Ekspor", detail: "Laba rugi & neraca PDF untuk sidang." },
+  { label: "Ekspor laporan", detail: "Laba rugi dan neraca PDF per periode." },
 ];
 
 const QUICK = [

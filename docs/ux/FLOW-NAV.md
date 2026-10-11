@@ -9,7 +9,7 @@ Menu dikelompokkan per peran:
 | Peran | Grup |
 | --- | --- |
 | Admin | Mulai · Produksi & stok · Penjualan · Akuntansi · Tim |
-| Owner | Ringkasan · epik 1.0–7.0 (skripsi) · Kelola — lihat `lib/owner-epic-nav.ts` |
+| Owner | Ringkasan · modul 1.0–7.0 · Kelola — lihat `lib/owner-epic-nav.ts` |
 | Petani | Hari ini · Di lapangan · Logistik · Peringatan |
 
 Item **Akuntansi** (`/admin/akuntansi`) ada di navigasi Admin.
@@ -18,7 +18,7 @@ Item **Akuntansi** (`/admin/akuntansi`) ada di navigasi Admin.
 
 Komponen:
 
-- `PageCoachmark` / `FlowSteps` — tombol **Panduan** di **baris header** (`PageHeaderRow`, sejajar judul & aksi), langkah di dialog, tips UAT, auto-tampil pertama kali (localStorage)
+- `PageCoachmark` / `FlowSteps` — tombol **Panduan** di **baris header** (`PageHeaderRow`, sejajar judul & aksi), langkah di dialog, catatan singkat, auto-tampil pertama kali (localStorage)
 - `PageGuideToolbar` / `DetailLayoutToolbar` — panduan dari URL di detail `/[id]`, `/baru`, pengaturan, ganti sandi, invoice SO
 - `PageSection` — judul + badge **Read / Create / Update**
 - `CrudPageLayout` — header + daftar; form lewat `actions` (Sheet) bila sudah dimigrasi
@@ -38,7 +38,7 @@ Komponen:
 
 **Petani:** dashboard, siklus (+ `/baru`), inventaris, active pack, varietas, stok rendah, pengiriman (+ detail `[id]`).
 
-**Lain:** `/` (registry), `/login`, `/lupa-sandi`, `/ganti-sandi`, `/akses-ditolak`, `/admin/jurnal/baru`, `/admin/penjualan/baru`, `/admin/penjualan/[id]/invoice`.
+**Lain:** `/` (beranda), `/login`, `/lupa-sandi`, `/ganti-sandi`, `/akses-ditolak`, `/admin/jurnal/baru`, `/admin/penjualan/baru`, `/admin/penjualan/[id]/invoice`.
 
 Halaman **detail** — soft navigation dari daftar membuka **DetailSheetFrame**; hard link / refresh tetap halaman penuh dengan “Kembali ke daftar”. Sidebar: grup **judul saja**, sub-menu **collapse**.
 

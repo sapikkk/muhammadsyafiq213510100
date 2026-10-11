@@ -24,7 +24,7 @@ export default async function OwnerJurnalPage({
     <CrudPageLayout
       eyebrow="Keuangan"
       title="Jurnal"
-      description="US2.6 — lihat dan filter jurnal; tanpa buat/edit/approve."
+      description="Lihat dan filter jurnal; Owner tidak membuat, mengubah, atau menyetujui entri."
       flowSteps={[
         { label: "Filter", detail: "Tanggal & status — lalu terapkan." },
         { label: "Detail", detail: "Klik baris untuk melihat baris debit/kredit." },
