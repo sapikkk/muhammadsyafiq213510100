@@ -22,10 +22,11 @@ Komponen:
 - `PageSection` — judul + badge **Read / Create / Update**
 - `CrudPageLayout` — header + daftar; form lewat `actions` (Sheet) bila sudah dimigrasi
 - `FormSheet`, `ConfirmDialog`, `RowActions` — Tingkat A (pelanggan, petani master, owner pengguna)
-- `DetailLayout` + `getRowHref` — Tingkat B varietas, inventaris, active pack: daftar → `[id]`, Tambah Sheet, aksi di detail
+- `DetailLayout` + `getRowHref` — Tingkat B varietas, inventaris, active pack: daftar → `[id]`, Tambah Sheet, aksi di detail (inventaris: Ubah Sheet + Nonaktifkan Dialog admin)
 - **Akun (Tingkat B pohon):** Tambah Sheet di header; Ubah/Nonaktifkan per node (Dialog); tanpa `?edit=`; Owner `mode="owner"`
 - **Infrastruktur (Tingkat B pohon):** Tambah lahan/GH/kolam Sheet; status kolam Dialog per baris; Owner baca saja
 - **Penjualan (Tingkat C):** `/admin/penjualan` daftar → `[id]` aksi per status; `/admin/penjualan/baru`; petani `/petani/pengiriman/[id]`
+- **Siklus petani (Tingkat C):** `/petani/siklus/baru`; detail `[id]` — langkah berikutnya inline; monitor/tambal/kegagalan/abort via Dialog
 - `admin-flow-dashboard.tsx` / `owner-flow-dashboard.tsx` — hub Admin/Owner
 
 ## Cakupan halaman (v1.28.0)

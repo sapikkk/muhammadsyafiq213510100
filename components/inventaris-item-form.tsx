@@ -2,7 +2,8 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { useFormState } from "react-dom";
-import { simpanItemInventaris } from "@/app/actions/inventaris";
+import { simpanItemInventaris, ubahItemInventaris } from "@/app/actions/inventaris";
+import type { SerializedItemInventaris } from "@/lib/inventaris-types";
 import { FormSheet } from "@/components/form-sheet";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { SubmitButton } from "@/components/submit-button";
@@ -25,9 +26,19 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-export function InventarisItemForm({ onSuccess }: { onSuccess?: () => void }) {
-  const [satuan, setSatuan] = useState<string>("");
-  const [state, formAction] = useFormState(simpanItemInventaris, {});
+export function InventarisItemForm({
+  initial,
+  onSuccess,
+}: {
+  initial?: SerializedItemInventaris;
+  onSuccess?: () => void;
+}) {
+  const isEdit = Boolean(initial);
+  const [satuan, setSatuan] = useState<string>(initial?.satuan ?? "");
+  const [state, formAction] = useFormState(
+    isEdit ? ubahItemInventaris : simpanItemInventaris,
+    {},
+  );
   useActionToast({ error: state.error, ok: state.ok });
 
   useEffect(() => {
@@ -36,48 +47,78 @@ export function InventarisItemForm({ onSuccess }: { onSuccess?: () => void }) {
 
   return (
     <form action={formAction} className="space-y-4">
-      <input type="hidden" name="satuan" value={satuan} />
+      {isEdit ? <input type="hidden" name="itemId" value={initial!.id} /> : null}
+      {!isEdit ? <input type="hidden" name="satuan" value={satuan} /> : null}
       <Field label="Kode">
-        <Input name="kode" required className="h-11" placeholder="BNH-SLAD" />
+        {isEdit ? (
+          <Input readOnly className="h-11 bg-muted/40" value={initial!.kode} />
+        ) : (
+          <Input name="kode" required className="h-11" placeholder="BNH-SLAD" />
+        )}
       </Field>
       <Field label="Nama">
-        <Input name="nama" required className="h-11" />
+        <Input name="nama" required className="h-11" defaultValue={initial?.nama} />
       </Field>
-      <Field label="Satuan">
-        <Select value={satuan} onValueChange={setSatuan} required>
-          <SelectTrigger className="h-11">
-            <SelectValue placeholder="Pilih satuan" />
-          </SelectTrigger>
-          <SelectContent>
-            {satuanInventarisList.map((s) => (
-              <SelectItem key={s} value={s}>
-                {satuanInventarisLabel[s]}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </Field>
+      {isEdit ? (
+        <p className="text-xs text-muted-foreground">
+          Satuan: {satuanInventarisLabel[initial!.satuan]} — tidak bisa diubah setelah dibuat.
+        </p>
+      ) : (
+        <Field label="Satuan">
+          <Select value={satuan} onValueChange={setSatuan} required>
+            <SelectTrigger className="h-11">
+              <SelectValue placeholder="Pilih satuan" />
+            </SelectTrigger>
+            <SelectContent>
+              {satuanInventarisList.map((s) => (
+                <SelectItem key={s} value={s}>
+                  {satuanInventarisLabel[s]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </Field>
+      )}
       <Field label="Stok minimum (opsional)">
-        <Input name="stokMinimum" className="h-11" inputMode="decimal" placeholder="0" />
+        <Input
+          name="stokMinimum"
+          className="h-11"
+          inputMode="decimal"
+          placeholder="0"
+          defaultValue={initial?.stokMinimum}
+        />
       </Field>
       <SubmitButton className="h-11" pendingLabel="Menyimpan...">
-        Simpan item
+        {isEdit ? "Simpan perubahan" : "Simpan item"}
       </SubmitButton>
     </form>
   );
 }
 
-export function InventarisItemFormSheet({ trigger }: { trigger: ReactNode }) {
+export function InventarisItemFormSheet({
+  trigger,
+  initial,
+}: {
+  trigger: ReactNode;
+  initial?: SerializedItemInventaris;
+}) {
   const [open, setOpen] = useState(false);
+  const isEdit = Boolean(initial);
   return (
     <FormSheet
-      title="Tambah item"
-      description="Master bahan baku — stok awal nol; catat masuk lewat pergerakan IN."
+      title={isEdit ? "Ubah item" : "Tambah item"}
+      description={
+        isEdit
+          ? "Nama dan stok minimum — kode/satuan tetap."
+          : "Master bahan baku — stok awal nol; catat masuk lewat pergerakan IN."
+      }
       trigger={trigger}
       open={open}
       onOpenChange={setOpen}
     >
-      {open ? <InventarisItemForm onSuccess={() => setOpen(false)} /> : null}
+      {open ? (
+        <InventarisItemForm initial={initial} onSuccess={() => setOpen(false)} />
+      ) : null}
     </FormSheet>
   );
 }
