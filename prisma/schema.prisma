@@ -122,6 +122,7 @@ model Petani {
   id           Int     @id @default(autoincrement())
   nama         String  @db.VarChar(100)
   gaji_bulanan Decimal @db.Decimal(18, 2)
+  aktif        Boolean @default(true)
 }
 
 model Biaya_Overhead {
@@ -180,6 +181,7 @@ model Pelanggan {
   alamat       String        @db.Text
   no_telepon   String        @db.VarChar(25)
   email        String        @db.VarChar(254)
+  aktif        Boolean       @default(true)
   penjualan    Penjualan[]
   sales_orders Sales_Order[]
 }
@@ -287,6 +289,7 @@ model User {
   passwordHash       String                 @db.VarChar(100)
   role               Role
   mustChangePassword Boolean                @default(false)
+  aktif              Boolean                @default(true)
   resetRequests      PasswordResetRequest[] @relation("requester")
   handledResets      PasswordResetRequest[] @relation("handler")
   jurnalDibuat       Jurnal[]               @relation("jurnalPembuat")

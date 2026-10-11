@@ -313,6 +313,9 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
   return prisma.$transaction(async (tx) => {
     const pelanggan = await tx.pelanggan.findUnique({ where: { id: input.pelangganId } });
     if (!pelanggan) throw new SalesOrderError("Pelanggan tidak ditemukan.", 404);
+    if (!pelanggan.aktif) {
+      throw new SalesOrderError("Pelanggan nonaktif — pilih pelanggan aktif atau aktifkan kembali.", 400);
+    }
 
     let total = new Prisma.Decimal(0);
     const barisData = [];
