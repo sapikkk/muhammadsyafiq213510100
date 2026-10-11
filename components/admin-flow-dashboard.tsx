@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { PageHeader } from "@/components/page-header";
 import { FlowSteps } from "@/components/flow-steps";
+import { PageHeaderRow } from "@/components/page-header-row";
 
 const ALUR_HARIAN = [
   {
@@ -29,13 +29,20 @@ const QUICK = [
 
 export function AdminFlowDashboard() {
   return (
-    <div className="flex flex-col gap-8">
-      <PageHeader
+    <div className="flex flex-col gap-6">
+      <PageHeaderRow
         eyebrow="Admin"
         title="Dashboard"
         description="Ikuti alur harian: stok → produksi → penjualan → pembukuan."
+        guide={
+          <FlowSteps
+            pageKey="admin"
+            steps={ALUR_HARIAN}
+            title="Panduan dashboard Admin"
+            toolbar
+          />
+        }
       />
-      <FlowSteps pageKey="admin" steps={ALUR_HARIAN} title="Panduan dashboard Admin" />
       <div className="grid gap-3 sm:grid-cols-2">
         {QUICK.map((q) => (
           <Link

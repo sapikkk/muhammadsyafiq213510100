@@ -16,6 +16,7 @@ import {
 import { roleHome } from "@/lib/role-home";
 import { notify } from "@/lib/notify";
 import { PageCoachmark } from "@/components/page-coachmark";
+import { PageHeaderRow } from "@/components/page-header-row";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -61,25 +62,22 @@ export default function LoginPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-sm space-y-6">
-        {/* Brand */}
-        <div className="space-y-1 text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Kokonus Farm
-          </p>
-          <h1 className="text-2xl font-bold tracking-tight">Masuk</h1>
-          <p className="text-sm text-muted-foreground">
-            Gunakan akun Owner, Admin, atau Petani.
-          </p>
-        </div>
-
-        <PageCoachmark
-          pageKey="login"
-          title="Panduan masuk"
-          steps={[
-            { label: "Email & sandi", detail: "Isi keduanya lalu klik Masuk." },
-            { label: "Peran", detail: "Diarahkan ke dashboard Owner, Admin, atau Petani." },
-            { label: "Setelah masuk", detail: "Buka Panduan di setiap halaman untuk UAT." },
-          ]}
+        <PageHeaderRow
+          eyebrow="Kokonus Farm"
+          title="Masuk"
+          description="Gunakan akun Owner, Admin, atau Petani."
+          guide={
+            <PageCoachmark
+              pageKey="login"
+              title="Panduan masuk"
+              placement="toolbar"
+              steps={[
+                { label: "Email & sandi", detail: "Isi keduanya lalu klik Masuk." },
+                { label: "Peran", detail: "Diarahkan ke dashboard Owner, Admin, atau Petani." },
+                { label: "Setelah masuk", detail: "Buka Panduan di setiap halaman untuk UAT." },
+              ]}
+            />
+          }
         />
 
         <Card>

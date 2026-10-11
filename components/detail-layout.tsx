@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { DetailLayoutToolbar } from "@/components/detail-layout-toolbar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -68,11 +69,7 @@ export function DetailLayout({
               <div className="text-sm text-muted-foreground">{description}</div>
             ) : null}
           </header>
-          {actions ? (
-            <div className="flex shrink-0 flex-wrap items-center gap-2">
-              {actions}
-            </div>
-          ) : null}
+          <DetailLayoutToolbar actions={actions} />
         </div>
       </div>
 

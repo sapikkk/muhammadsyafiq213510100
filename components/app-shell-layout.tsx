@@ -9,7 +9,6 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { PageCoachmarkFromPath } from "@/components/page-coachmark";
 import type { Role } from "@/types/role";
 import { roleLabel } from "@/types/role";
 
@@ -58,10 +57,7 @@ export function AppShellLayout({
         </header>
 
         <div className="flex-1 p-4 md:p-8">
-          <div className="mx-auto w-full max-w-6xl space-y-8">
-            <PageCoachmarkFromPath />
-            {children}
-          </div>
+          <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">{children}</div>
         </div>
       </main>
 
