@@ -6,8 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatRupiah } from "@/lib/format";
 import { getVarietas, serializeVarietas } from "@/lib/varietas";
 import { rataHppPerLubangVarietas } from "@/lib/varietas-hpp-rata";
-import { EntityChangeHistory } from "@/components/entity-change-history";
-import { listEntityChanges } from "@/lib/entity-audit";
+import { EntityChangeHistorySection } from "@/components/entity-change-history-section";
 import { varietasStatusLabel } from "@/lib/varietas-status";
 
 export async function VarietasDetail({
@@ -31,8 +30,6 @@ export async function VarietasDetail({
   const serialized = serializeVarietas(row);
   const rata = await rataHppPerLubangVarietas(id);
   const rataStr = rata ? formatRupiah(rata.toFixed(2)) : "—";
-  const riwayat = await listEntityChanges("Varietas", id);
-
   return (
     <DetailLayout
       backHref={listHref}
@@ -58,9 +55,7 @@ export async function VarietasDetail({
           <Item label="Harga jual pack" value={formatRupiah(serialized.hargaJualPack)} />
         </dl>
       </PageSection>
-      <PageSection title="Riwayat perubahan" badge="Read">
-        <EntityChangeHistory rows={riwayat} />
-      </PageSection>
+      <EntityChangeHistorySection entitas="Varietas" entitasId={id} />
     </DetailLayout>
   );
 }

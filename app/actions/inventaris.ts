@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { isRoleAllowed } from "@/lib/rbac";
 import { revalidatePath } from "next/cache";
 import { authOptions } from "@/lib/auth";
+import { actorFromSession, logEntityChange } from "@/lib/entity-audit";
 import {
   InventarisError,
   catatPergerakan,
@@ -23,6 +24,7 @@ async function requireAdmin() {
   if (!isRoleAllowed(session.user.role, "ADMIN")) {
     throw new InventarisError("Peran Anda tidak berhak.", 403);
   }
+  return session;
 }
 
 async function requireMovement() {
@@ -55,9 +57,16 @@ export async function simpanItemInventaris(
   formData: FormData,
 ): Promise<FormState> {
   try {
-    await requireAdmin();
+    const session = await requireAdmin();
     const raw = Object.fromEntries(formData.entries());
-    await createItem(parseItemInput(raw));
+    const item = await createItem(parseItemInput(raw));
+    await logEntityChange({
+      entitas: "ItemInventaris",
+      entitasId: item.id,
+      aksi: "CREATE",
+      ringkasan: `Item baru: ${item.kode} · ${item.nama}`,
+      actor: actorFromSession(session),
+    });
     revalidateInventarisPaths();
     return { ok: "Item inventaris tersimpan." };
   } catch (error) {
@@ -70,10 +79,17 @@ export async function ubahItemInventaris(
   formData: FormData,
 ): Promise<FormState> {
   try {
-    await requireAdmin();
+    const session = await requireAdmin();
     const raw = Object.fromEntries(formData.entries());
     const input = parseItemUpdateInput(raw);
     const item = await updateItem(input);
+    await logEntityChange({
+      entitas: "ItemInventaris",
+      entitasId: item.id,
+      aksi: "UPDATE",
+      ringkasan: `Master diperbarui · ${item.kode}`,
+      actor: actorFromSession(session),
+    });
     revalidateInventarisPaths(item.id);
     return { ok: `Item ${item.kode} diperbarui.` };
   } catch (error) {
@@ -86,7 +102,7 @@ export async function ubahStatusItemInventaris(
   formData: FormData,
 ): Promise<FormState> {
   try {
-    await requireAdmin();
+    const session = await requireAdmin();
     const raw = Object.fromEntries(formData.entries());
     const id = Number(raw.itemId);
     const aktif = raw.aktif === "true";
@@ -97,6 +113,13 @@ export async function ubahStatusItemInventaris(
       throw new InventarisError("Centang konfirmasi sebelum menonaktifkan item.", 400);
     }
     const item = await setItemAktif(id, aktif);
+    await logEntityChange({
+      entitas: "ItemInventaris",
+      entitasId: item.id,
+      aksi: "STATUS",
+      ringkasan: aktif ? "Diaktifkan" : "Dinonaktifkan",
+      actor: actorFromSession(session),
+    });
     revalidateInventarisPaths(item.id);
     return {
       ok: `Item ${item.kode} ${aktif ? "diaktifkan" : "dinonaktifkan"}.`,

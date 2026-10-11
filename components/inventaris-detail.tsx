@@ -6,6 +6,7 @@ import { PageSection } from "@/components/page-section";
 import { Badge } from "@/components/ui/badge";
 import { formatQty } from "@/lib/format";
 import { getItemInventaris, listPergerakan, serializeItem, serializePergerakan } from "@/lib/inventaris";
+import { EntityChangeHistorySection } from "@/components/entity-change-history-section";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
 
 export async function InventarisDetail({
@@ -54,6 +55,7 @@ export async function InventarisDetail({
       <PageSection title="Riwayat pergerakan" description="Read — 50 entri terakhir item ini." badge="Read">
         <InventarisRiwayat rows={riwayat.map(serializePergerakan)} hideItemColumn />
       </PageSection>
+      <EntityChangeHistorySection entitas="ItemInventaris" entitasId={id} />
     </DetailLayout>
   );
 }
