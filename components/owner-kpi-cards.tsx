@@ -1,33 +1,43 @@
+import { MetricRowsTable } from "@/components/metric-rows-table";
 import { formatRupiah } from "@/lib/format";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function OwnerKpiCards({
   pendapatan,
   pengeluaran,
   labaKasar,
+  batchPanenApproved,
+  avgHppPerLubang,
+  avgYieldPct,
 }: {
   pendapatan: string;
   pengeluaran: string;
   labaKasar: string;
+  batchPanenApproved: number;
+  avgHppPerLubang: string;
+  avgYieldPct: string;
 }) {
-  const items = [
-    { title: "Pendapatan bulan ini", value: pendapatan },
-    { title: "Beban bulan ini", value: pengeluaran },
-    { title: "Laba kasar (pendapatan − beban)", value: labaKasar },
-  ];
-
   return (
-    <div className="grid gap-4 sm:grid-cols-3">
-      {items.map((item) => (
-        <Card key={item.title}>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">{item.title}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-semibold tabular-nums">{formatRupiah(item.value)}</p>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+    <MetricRowsTable
+      caption="KPI keuangan dan produksi bulan ini"
+      rows={[
+        { label: "Pendapatan bulan ini", value: formatRupiah(pendapatan) },
+        { label: "Beban bulan ini", value: formatRupiah(pengeluaran) },
+        {
+          label: "Laba kasar",
+          value: formatRupiah(labaKasar),
+          hint: "Pendapatan − beban (akun 4xxx / 5xxx)",
+        },
+        {
+          label: "HPP rata-rata per lubang",
+          value: batchPanenApproved > 0 ? formatRupiah(avgHppPerLubang) : "—",
+          hint: `v2-G.1 · ${batchPanenApproved} batch panen APPROVED`,
+        },
+        {
+          label: "Yield rata-rata",
+          value: batchPanenApproved > 0 ? `${avgYieldPct}%` : "—",
+          hint: "Lubang layak ÷ jumlah disemai",
+        },
+      ]}
+    />
   );
 }

@@ -1,8 +1,16 @@
 import { CashFlowMutasiDaftar } from "@/components/cash-flow-mutasi-daftar";
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { MetricRowsTable } from "@/components/metric-rows-table";
 import { MonthRangeFilter } from "@/components/month-range-filter";
 import { PageSection } from "@/components/page-section";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { buildCashFlow } from "@/lib/cash-flow";
 import { formatRupiah } from "@/lib/format";
 
@@ -45,8 +53,8 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
       description="US6.5 — pergerakan Kas/Bank dari jurnal APPROVED, filter periode YYYY-MM."
       flowSteps={[
         { label: "Filter", detail: "Pilih rentang bulan lalu terapkan." },
-        { label: "Mutasi", detail: "Tabel bawah — link ke detail jurnal." },
-        { label: "PDF", detail: "Unduh arus kas resmi untuk arsip." },
+        { label: "Ringkasan", detail: "Tabel saldo dan arus per kategori." },
+        { label: "Mutasi", detail: "Detail per jurnal — link ke baris jurnal." },
       ]}
       list={
         <div className="space-y-6">
@@ -56,58 +64,56 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
             exportHref={`/api/export/cash-flow?${exportQ}`}
           />
 
-          <div className="grid gap-4 sm:grid-cols-3">
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Saldo awal kas
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-xl font-semibold tabular-nums">{formatRupiah(data.saldoAwal)}</p>
-                <p className="text-xs text-muted-foreground">Sebelum {data.dari}</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Perubahan bersih
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-xl font-semibold tabular-nums">{formatRupiah(data.netChange)}</p>
-                <p className="text-xs text-muted-foreground">
-                  Periode {data.dari} s/d {data.sampai}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Saldo akhir kas
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-xl font-semibold tabular-nums">{formatRupiah(data.saldoAkhir)}</p>
-                <p className="text-xs text-muted-foreground">Akhir periode</p>
-              </CardContent>
-            </Card>
-          </div>
+          <PageSection title="Ringkasan saldo kas" badge="Read">
+            <MetricRowsTable
+              rows={[
+                {
+                  label: "Saldo awal kas",
+                  value: formatRupiah(data.saldoAwal),
+                  hint: `Sebelum ${data.dari}`,
+                },
+                {
+                  label: "Perubahan bersih",
+                  value: formatRupiah(data.netChange),
+                  hint: `Periode ${data.dari} s/d ${data.sampai}`,
+                },
+                {
+                  label: "Saldo akhir kas",
+                  value: formatRupiah(data.saldoAkhir),
+                  hint: "Akhir periode",
+                },
+              ]}
+            />
+          </PageSection>
 
-          <div className="grid gap-4 md:grid-cols-3">
-            {data.sections.map((sec) => (
-              <Card key={sec.kategori}>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base">{sec.label}</CardTitle>
-                  <CardDescription>Net {formatRupiah(sec.net)}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-1 text-sm">
-                  <p>Masuk {formatRupiah(sec.masuk)}</p>
-                  <p>Keluar {formatRupiah(sec.keluar)}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <PageSection title="Arus per kategori" badge="Read">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Kategori</TableHead>
+                  <TableHead className="text-right">Masuk</TableHead>
+                  <TableHead className="text-right">Keluar</TableHead>
+                  <TableHead className="text-right">Net</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {data.sections.map((sec) => (
+                  <TableRow key={sec.kategori}>
+                    <TableCell className="font-medium">{sec.label}</TableCell>
+                    <TableCell className="text-right tabular-nums">
+                      {formatRupiah(sec.masuk)}
+                    </TableCell>
+                    <TableCell className="text-right tabular-nums">
+                      {formatRupiah(sec.keluar)}
+                    </TableCell>
+                    <TableCell className="text-right tabular-nums font-medium">
+                      {formatRupiah(sec.net)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </PageSection>
 
           <PageSection
             title="Mutasi kas"

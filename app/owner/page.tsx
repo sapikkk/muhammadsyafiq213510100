@@ -1,22 +1,17 @@
 import { OwnerFlowDashboard } from "@/components/owner-flow-dashboard";
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { OwnerKpiCards } from "@/components/owner-kpi-cards";
+import { OwnerPetaniAkunDaftar } from "@/components/owner-petani-akun-daftar";
 import { OwnerRevenueChart } from "@/components/owner-revenue-chart";
 import { PageHeader } from "@/components/page-header";
+import { PageSection } from "@/components/page-section";
+import { MetricRowsTable } from "@/components/metric-rows-table";
 import { formatRupiah } from "@/lib/format";
 import { listAlertStokMinimum } from "@/lib/inventaris";
 import { kpiHidroponikMvpCached, monthlySummaryCached } from "@/lib/cached-queries";
 import { bestProfitMonth } from "@/lib/monthly-summary";
-import { OwnerHidroponikKpi } from "@/components/owner-hidroponik-kpi";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 export const dynamic = "force-dynamic";
 
@@ -68,68 +63,47 @@ export default async function OwnerPage() {
         </Link>
       </nav>
 
-      <OwnerKpiCards
-        pendapatan={summary.pendapatanBulanIni}
-        pengeluaran={summary.pengeluaranBulanIni}
-        labaKasar={summary.labaKasarBulanIni}
-      />
-
-      <OwnerHidroponikKpi
-        batchPanenApproved={kpiV2.batchPanenApproved}
-        avgHppPerLubang={kpiV2.avgHppPerLubang}
-        avgYieldPct={kpiV2.avgYieldPct}
-      />
+      <PageSection title="KPI ringkas" badge="Read">
+        <OwnerKpiCards
+          pendapatan={summary.pendapatanBulanIni}
+          pengeluaran={summary.pengeluaranBulanIni}
+          labaKasar={summary.labaKasarBulanIni}
+          batchPanenApproved={kpiV2.batchPanenApproved}
+          avgHppPerLubang={kpiV2.avgHppPerLubang}
+          avgYieldPct={kpiV2.avgYieldPct}
+        />
+      </PageSection>
 
       {labaTerbaik ? (
-        <Card className="border-foreground">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">Bulan laba tertinggi (6 bulan)</CardTitle>
-            <CardDescription>
-              {labaTerbaik.label} · laba kasar {formatRupiah(labaTerbaik.laba)} — US6.4 / uji T5.3
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Link href="/owner/evaluasi" className="text-sm text-primary hover:underline">
+        <PageSection title="Sorotan 6 bulan" badge="Read">
+          <MetricRowsTable
+            rows={[
+              {
+                label: "Bulan laba tertinggi",
+                value: labaTerbaik.label,
+                hint: `Laba kasar ${formatRupiah(labaTerbaik.laba)}`,
+              },
+            ]}
+          />
+          <p className="mt-3 text-sm">
+            <Link href="/owner/evaluasi" className="text-primary hover:underline">
               Lihat evaluasi margin, BEP, dan kapasitas →
             </Link>
-          </CardContent>
-        </Card>
+          </p>
+        </PageSection>
       ) : null}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Pendapatan vs beban</CardTitle>
-          <CardDescription>6 bulan terakhir · akun pendapatan (4xxx) dan beban (5xxx)</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <OwnerRevenueChart months={summary.months} />
-        </CardContent>
-      </Card>
+      <PageSection
+        title="Pendapatan vs beban"
+        description="6 bulan terakhir · akun pendapatan (4xxx) dan beban (5xxx)"
+        badge="Read"
+      >
+        <OwnerRevenueChart months={summary.months} />
+      </PageSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Akun petani</CardTitle>
-          <CardDescription>
-            Daftar petani yang terdaftar di sistem.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {petani.length === 0 ? (
-            <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-              Belum ada akun petani.
-            </p>
-          ) : (
-            <ul className="divide-y rounded-md border">
-              {petani.map((akun) => (
-                <li key={akun.id} className="px-4 py-3">
-                  <p className="text-sm font-medium">{akun.nama}</p>
-                  <p className="text-xs text-muted-foreground">{akun.email}</p>
-                </li>
-              ))}
-            </ul>
-          )}
-        </CardContent>
-      </Card>
+      <PageSection title="Akun petani" description="Login HP / pekerja lapangan." badge="Read">
+        <OwnerPetaniAkunDaftar rows={petani} />
+      </PageSection>
     </>
   );
 }
