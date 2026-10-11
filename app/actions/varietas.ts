@@ -10,6 +10,7 @@ import {
   createVarietas,
   parseVarietasInput,
   setVarietasStatus,
+  updateVarietas,
 } from "@/lib/varietas";
 
 type FormState = { error?: string; ok?: string };
@@ -27,30 +28,45 @@ function toState(error: unknown): FormState {
   throw error;
 }
 
-function revalidate() {
+function revalidateVarietas(id?: number) {
   revalidatePath("/admin/varietas");
   revalidatePath("/owner/varietas");
+  revalidatePath("/petani/varietas");
+  if (id) {
+    revalidatePath(`/admin/varietas/${id}`);
+    revalidatePath(`/owner/varietas/${id}`);
+    revalidatePath(`/petani/varietas/${id}`);
+  }
+}
+
+function rawFromForm(formData: FormData) {
+  return {
+    nama: formData.get("nama"),
+    hargaBenihPerGram: formData.get("hargaBenihPerGram"),
+    bijiPerGram: formData.get("bijiPerGram"),
+    dayaKecambah: formData.get("dayaKecambah"),
+    lamaSemai: formData.get("lamaSemai"),
+    lamaDiKolam: formData.get("lamaDiKolam"),
+    beratRataRataPanen: formData.get("beratRataRataPanen"),
+    beratPerPack: formData.get("beratPerPack"),
+    hargaJualCurah: formData.get("hargaJualCurah"),
+    hargaJualPack: formData.get("hargaJualPack"),
+    status: formData.get("status"),
+  };
 }
 
 export async function simpanVarietas(_prev: FormState, formData: FormData): Promise<FormState> {
   try {
     await requireWrite();
-    await createVarietas(
-      parseVarietasInput({
-        nama: formData.get("nama"),
-        hargaBenihPerGram: formData.get("hargaBenihPerGram"),
-        bijiPerGram: formData.get("bijiPerGram"),
-        dayaKecambah: formData.get("dayaKecambah"),
-        lamaSemai: formData.get("lamaSemai"),
-        lamaDiKolam: formData.get("lamaDiKolam"),
-        beratRataRataPanen: formData.get("beratRataRataPanen"),
-        beratPerPack: formData.get("beratPerPack"),
-        hargaJualCurah: formData.get("hargaJualCurah"),
-        hargaJualPack: formData.get("hargaJualPack"),
-        status: formData.get("status"),
-      }),
-    );
-    revalidate();
+    const id = Number(formData.get("id"));
+    const input = parseVarietasInput(rawFromForm(formData));
+    if (Number.isInteger(id) && id > 0) {
+      await updateVarietas(id, input);
+      revalidateVarietas(id);
+    } else {
+      await createVarietas(input);
+      revalidateVarietas();
+    }
     return { ok: "Varietas tersimpan." };
   } catch (error) {
     return toState(error);
@@ -76,7 +92,7 @@ export async function ubahStatusVarietas(
       throw new VarietasError("Centang konfirmasi sebelum menonaktifkan varietas.", 400);
     }
     await setVarietasStatus(id, status);
-    revalidate();
+    revalidateVarietas(id);
     return { ok: "Status varietas diperbarui." };
   } catch (error) {
     return toState(error);
