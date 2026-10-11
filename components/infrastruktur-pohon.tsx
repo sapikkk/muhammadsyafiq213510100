@@ -1,10 +1,30 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useFormState } from "react-dom";
+import { ubahStatusKolam } from "@/app/actions/infrastruktur";
+import { SubmitButton } from "@/components/submit-button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { kolamStatusLabel, type KolamStatus } from "@/lib/infrastruktur-kolam-status";
-import type { SerializedInfrastrukturPohon } from "@/lib/infrastruktur-types";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { kolamStatusLabel, kolamStatusList, type KolamStatus } from "@/lib/infrastruktur-kolam-status";
+import type { SerializedInfrastrukturPohon, SerializedKolam } from "@/lib/infrastruktur-types";
+import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 type Pohon = SerializedInfrastrukturPohon;
 
@@ -39,14 +59,81 @@ function filterPohon(data: Pohon, query: string): Pohon {
   return { ...data, lahan };
 }
 
-export function InfrastrukturPohon({ data }: { data: Pohon }) {
+function KolamStatusBadge({ status }: { status: KolamStatus }) {
+  const label = kolamStatusLabel[status] ?? status;
+  const variant = status === "MENGANGGUR" ? "outline" : ("secondary" as const);
+  return <Badge variant={variant}>{label}</Badge>;
+}
+
+function KolamStatusDialog({ kolam }: { kolam: SerializedKolam }) {
+  const [open, setOpen] = useState(false);
+  const [status, setStatus] = useState(kolam.status as KolamStatus);
+  const [state, action] = useFormState(ubahStatusKolam, {});
+  useActionToast({ error: state.error, ok: state.ok });
+
+  useEffect(() => {
+    if (state.ok) setOpen(false);
+  }, [state.ok]);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button type="button" variant="outline" size="sm" className="h-8 text-xs">
+          Status
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Status kolam {kolam.nama}</DialogTitle>
+          <DialogDescription>
+            Menganggur = siap dipakai semai; terpakai = ada siklus aktif di kolam ini.
+          </DialogDescription>
+        </DialogHeader>
+        <form action={action} className="space-y-4 pt-2">
+          <input type="hidden" name="kolamId" value={kolam.id} />
+          <input type="hidden" name="status" value={status} />
+          <label className="block space-y-1 text-sm">
+            <span className="font-medium">Status</span>
+            <Select value={status} onValueChange={(v) => setStatus(v as KolamStatus)}>
+              <SelectTrigger className="h-11">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {kolamStatusList.map((s) => (
+                  <SelectItem key={s} value={s}>
+                    {kolamStatusLabel[s]}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </label>
+          <div className="flex justify-end gap-2">
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+              Batal
+            </Button>
+            <SubmitButton pendingLabel="…">Simpan</SubmitButton>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export function InfrastrukturPohon({
+  data,
+  mode = "owner",
+}: {
+  data: Pohon;
+  mode?: "admin" | "owner";
+}) {
   const [filter, setFilter] = useState("");
   const view = useMemo(() => filterPohon(data, filter), [data, filter]);
+  const writable = mode === "admin";
 
   if (data.lahan.length === 0) {
     return (
       <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-        Belum ada data lahan. Tambah lahan lewat form di bawah.
+        Belum ada data lahan. Admin dapat menambah lahan lewat tombol di atas.
       </p>
     );
   }
@@ -104,6 +191,7 @@ export function InfrastrukturPohon({ data }: { data: Pohon }) {
                                 {k.kapasitasLubang.toLocaleString("id-ID")} lubang
                               </span>
                               <KolamStatusBadge status={k.status as KolamStatus} />
+                              {writable ? <KolamStatusDialog kolam={k} /> : null}
                             </li>
                           ))}
                         </ul>
@@ -118,10 +206,4 @@ export function InfrastrukturPohon({ data }: { data: Pohon }) {
       )}
     </div>
   );
-}
-
-function KolamStatusBadge({ status }: { status: KolamStatus }) {
-  const label = kolamStatusLabel[status] ?? status;
-  const variant = status === "MENGANGGUR" ? "outline" : ("secondary" as const);
-  return <Badge variant={variant}>{label}</Badge>;
 }

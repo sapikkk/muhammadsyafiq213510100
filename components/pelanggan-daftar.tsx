@@ -3,8 +3,11 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
+import { ubahStatusPelanggan } from "@/app/actions/pelanggan";
+import { AktifToggleDialog } from "@/components/aktif-toggle-dialog";
 import { PelangganFormSheet } from "@/components/pelanggan-form";
 import { RowActions } from "@/components/row-actions";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export type PelangganRow = {
@@ -13,12 +16,26 @@ export type PelangganRow = {
   alamat: string;
   no_telepon: string;
   email: string;
+  aktif: boolean;
 };
 
 export function PelangganDaftar({ rows }: { rows: PelangganRow[] }) {
   const columns = useMemo<ColumnDef<PelangganRow>[]>(
     () => [
-      { accessorKey: "nama", header: "Nama" },
+      {
+        accessorKey: "nama",
+        header: "Nama",
+        cell: ({ row }) => (
+          <div className="flex items-center gap-2">
+            <span>{row.original.nama}</span>
+            {!row.original.aktif ? (
+              <Badge variant="outline" className="text-xs">
+                Nonaktif
+              </Badge>
+            ) : null}
+          </div>
+        ),
+      },
       { accessorKey: "alamat", header: "Alamat" },
       {
         id: "kontak",
@@ -43,6 +60,17 @@ export function PelangganDaftar({ rows }: { rows: PelangganRow[] }) {
                     Ubah
                   </Button>
                 }
+              />
+            }
+            deactivateTrigger={
+              <AktifToggleDialog
+                id={row.original.id}
+                aktif={row.original.aktif}
+                idFieldName="pelangganId"
+                action={ubahStatusPelanggan}
+                label={row.original.nama}
+                offDescription="Pelanggan nonaktif tidak muncul di dropdown sales order baru."
+                onDescription="Pelanggan aktif kembali bisa dipilih di SO."
               />
             }
           />

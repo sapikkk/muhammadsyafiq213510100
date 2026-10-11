@@ -168,6 +168,71 @@ export async function createItem(input: ItemInput): Promise<ItemInventaris> {
   }
 }
 
+export type ItemUpdateInput = {
+  id: number;
+  nama: string;
+  stokMinimum: Prisma.Decimal;
+};
+
+export function parseItemUpdateInput(raw: Record<string, unknown>): ItemUpdateInput {
+  const id = Number(raw.itemId);
+  const nama = String(raw.nama ?? "").trim();
+  if (!Number.isInteger(id) || id <= 0) {
+    throw new InventarisError("Item tidak valid.", 400);
+  }
+  if (!nama) {
+    throw new InventarisError("Isi nama item.", 400);
+  }
+  if (nama.length > 100) {
+    throw new InventarisError("Nama item maksimal 100 karakter.", 400);
+  }
+  return {
+    id,
+    nama,
+    stokMinimum: parseStokMinimum(raw.stokMinimum),
+  };
+}
+
+export async function updateItem(input: ItemUpdateInput): Promise<ItemInventaris> {
+  try {
+    return await prisma.itemInventaris.update({
+      where: { id: input.id },
+      data: {
+        nama: input.nama,
+        stokMinimum: input.stokMinimum,
+      },
+    });
+  } catch (error) {
+    translatePrismaError(error);
+  }
+}
+
+export async function setItemAktif(id: number, aktif: boolean): Promise<ItemInventaris> {
+  const item = await prisma.itemInventaris.findUnique({ where: { id } });
+  if (!item) {
+    throw new InventarisError("Item tidak ditemukan.", 404);
+  }
+  if (!aktif && item.aktif) {
+    const packAktif = await prisma.activePack.count({
+      where: { itemId: id, status: "AKTIF", sisaUnit: { gt: 0 } },
+    });
+    if (packAktif > 0) {
+      throw new InventarisError(
+        "Nonaktifkan active pack yang masih berisi stok dulu.",
+        400,
+      );
+    }
+  }
+  try {
+    return await prisma.itemInventaris.update({
+      where: { id },
+      data: { aktif },
+    });
+  } catch (error) {
+    translatePrismaError(error);
+  }
+}
+
 export async function listPergerakan(itemId?: number, limit = 50) {
   return prisma.pergerakanInventaris.findMany({
     where: itemId ? { itemId } : undefined,

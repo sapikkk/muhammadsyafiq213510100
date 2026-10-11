@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PageHeader } from "@/components/page-header";
+import { DetailLayout } from "@/components/detail-layout";
 import { PrintButton } from "@/components/print-button";
 import { formatRupiah } from "@/lib/format";
 import { SalesOrderError } from "@/lib/sales-order";
@@ -25,24 +24,23 @@ export default async function SalesOrderInvoicePage({ params }: { params: { id: 
   const grand = subtotal.add(packing);
 
   return (
-    <div className="space-y-6 print:space-y-4">
-      <div className="flex flex-wrap items-start justify-between gap-4 print:hidden">
-        <PageHeader
+    <div className="print:block">
+      <div className="print:hidden">
+        <DetailLayout
+          backHref={`/admin/penjualan/${id}`}
+          backLabel="Kembali ke sales order"
+          eyebrow="Penjualan"
           title="Invoice penjualan"
-          description={`US5.5 — ${invoice.nomor_invoice ?? ""} untuk ${invoice.nomor_so}`}
-        />
-        <div className="flex gap-2">
-          <Link
-            href="/admin/penjualan"
-            className="inline-flex h-9 items-center rounded-md border px-3 text-sm"
-          >
-            Kembali
-          </Link>
-          <PrintButton />
-        </div>
+          description={`${invoice.nomor_invoice ?? "—"} · ${invoice.nomor_so}`}
+          actions={<PrintButton />}
+        >
+          <p className="text-sm text-muted-foreground">
+            Pratinjau di bawah — gunakan Cetak untuk PDF/kertas. Layout invoice tetap di dokumen cetak.
+          </p>
+        </DetailLayout>
       </div>
 
-      <article className="rounded-md border bg-card p-6 text-sm print:border-0">
+      <article className="mx-auto max-w-3xl rounded-md border bg-card p-6 text-sm print:max-w-none print:border-0 print:p-0">
         <header className="mb-6 border-b pb-4">
           <p className="text-lg font-semibold">Kokonus Farm</p>
           <p className="text-muted-foreground">Invoice {invoice.nomor_invoice}</p>

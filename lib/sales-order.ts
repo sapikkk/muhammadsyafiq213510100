@@ -205,21 +205,30 @@ export async function stokTersediaSiklus(siklusId: number, jenis: JenisSo, tx: D
   return Prisma.Decimal.max(0, packs.sub(terpakai));
 }
 
+const salesOrderInclude = {
+  pelanggan: { select: { nama: true } },
+  jurnal_pendapatan: { select: { id: true, status: true, keterangan: true } },
+  jurnal_packing: { select: { id: true, status: true } },
+  jurnal_dp: { select: { id: true, status: true } },
+  akun_dp: { select: { id: true, kode: true, nama: true } },
+  baris: {
+    include: {
+      siklus: { select: { kode_batch: true } },
+    },
+  },
+} as const;
+
 export async function listSalesOrders() {
   return prisma.sales_Order.findMany({
     orderBy: { id: "desc" },
-    include: {
-      pelanggan: { select: { nama: true } },
-      jurnal_pendapatan: { select: { id: true, status: true, keterangan: true } },
-      jurnal_packing: { select: { id: true, status: true } },
-      jurnal_dp: { select: { id: true, status: true } },
-      akun_dp: { select: { id: true, kode: true, nama: true } },
-      baris: {
-        include: {
-          siklus: { select: { kode_batch: true } },
-        },
-      },
-    },
+    include: salesOrderInclude,
+  });
+}
+
+export async function getSalesOrder(id: number) {
+  return prisma.sales_Order.findUnique({
+    where: { id },
+    include: salesOrderInclude,
   });
 }
 
@@ -304,6 +313,9 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
   return prisma.$transaction(async (tx) => {
     const pelanggan = await tx.pelanggan.findUnique({ where: { id: input.pelangganId } });
     if (!pelanggan) throw new SalesOrderError("Pelanggan tidak ditemukan.", 404);
+    if (!pelanggan.aktif) {
+      throw new SalesOrderError("Pelanggan nonaktif — pilih pelanggan aktif atau aktifkan kembali.", 400);
+    }
 
     let total = new Prisma.Decimal(0);
     const barisData = [];

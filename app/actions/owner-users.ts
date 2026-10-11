@@ -8,6 +8,7 @@ import {
   createUserByOwner,
   OwnerUserError,
   resetPasswordByOwner,
+  setUserAktifByOwner,
 } from "@/lib/owner-users";
 
 export type OwnerUserState = { ok?: boolean; error?: string; message?: string };
@@ -56,6 +57,32 @@ export async function resetOwnerUserPassword(
     await resetPasswordByOwner(userId, ctx.id, { password: formData.get("password") });
     revalidatePath("/owner/pengguna");
     return { ok: true, message: "Sandi direset; user wajib ganti saat login." };
+  } catch (error) {
+    if (error instanceof OwnerUserError) return { error: error.message };
+    throw error;
+  }
+}
+
+export async function ubahStatusOwnerUser(
+  _prev: { error?: string; ok?: string },
+  formData: FormData,
+): Promise<{ error?: string; ok?: string }> {
+  const ctx = await requireOwnerId();
+  if (!ctx) return { error: "Hanya Owner." };
+
+  const userId = Number(formData.get("userId"));
+  const aktif = formData.get("aktif") === "true";
+  if (!Number.isInteger(userId)) return { error: "User tidak valid." };
+  if (!aktif && formData.get("konfirmasi") !== "ya") {
+    return { error: "Centang konfirmasi sebelum menonaktifkan user." };
+  }
+
+  try {
+    const row = await setUserAktifByOwner(userId, ctx.id, aktif);
+    revalidatePath("/owner/pengguna");
+    return {
+      ok: `Akun ${row.email} ${aktif ? "diaktifkan" : "dinonaktifkan"}.`,
+    };
   } catch (error) {
     if (error instanceof OwnerUserError) return { error: error.message };
     throw error;

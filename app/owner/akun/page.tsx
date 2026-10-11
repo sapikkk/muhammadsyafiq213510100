@@ -17,7 +17,7 @@ export default async function OwnerAkunPage() {
         { label: "Navigasi pohon", detail: "Expand induk untuk melihat sub-akun." },
         { label: "Perubahan COA", detail: "Hanya Admin — Owner lihat saldo via jurnal/laporan." },
       ]}
-      list={<AkunTree tree={buildClientTree(rows)} />}
+      list={<AkunTree tree={buildClientTree(rows)} mode="owner" />}
       listTitle="Struktur COA"
     />
   );

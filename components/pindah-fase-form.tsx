@@ -22,7 +22,7 @@ export function PindahFaseForm({
   return (
     <form
       action={formAction}
-      className="space-y-4 rounded-md border-2 border-foreground p-4 shadow-sm"
+      className="space-y-4 rounded-md border-2 border-foreground p-4"
       aria-label={`Lanjut fase ke ${faseLabel[faseBerikutnya]}`}
     >
       <input type="hidden" name="siklusId" value={siklusId} />

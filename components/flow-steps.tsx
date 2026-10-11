@@ -8,7 +8,7 @@ export function FlowSteps({ steps }: { steps: FlowStep[] }) {
   if (steps.length === 0) return null;
   return (
     <ol
-      className="grid gap-3 rounded-md border border-border bg-muted/20 p-4 sm:grid-cols-2 lg:grid-cols-none lg:grid-flow-col lg:auto-cols-fr"
+      className="grid gap-3 rounded-md border border-border bg-muted/20 p-4 sm:grid-cols-2 lg:flex lg:flex-wrap lg:items-start lg:justify-between lg:gap-4"
       aria-label="Alur halaman"
     >
       {steps.map((step, index) => (

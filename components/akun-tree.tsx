@@ -1,11 +1,20 @@
 "use client";
 
-import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import { useFormState } from "react-dom";
-import { useMemo, useState } from "react";
 import { toggleAkun } from "@/app/actions/akun";
+import { AkunFormSheet, type AkunEdit, type AkunOption } from "@/components/akun-form";
 import { SubmitButton } from "@/components/submit-button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { tipeAkunLabel, type TipeAkunKey } from "@/lib/akun-tipe";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
@@ -17,10 +26,9 @@ export type AkunRow = {
   tipe: TipeAkunKey;
   aktif: boolean;
   isSystem: boolean;
+  parentId: number | null;
   anak: AkunRow[];
 };
-
-type ToggleAction = (formData: FormData) => void;
 
 function filterAkunTree(nodes: AkunRow[], query: string): AkunRow[] {
   const q = query.trim().toLowerCase();
@@ -39,15 +47,78 @@ function filterAkunTree(nodes: AkunRow[], query: string): AkunRow[] {
   return nodes.map(walk).filter((n): n is AkunRow => n !== null);
 }
 
+function toEdit(akun: AkunRow): AkunEdit {
+  return {
+    id: akun.id,
+    kode: akun.kode,
+    nama: akun.nama,
+    tipe: akun.tipe,
+    parentId: akun.parentId,
+    isSystem: akun.isSystem,
+  };
+}
+
+function AkunToggleDialog({
+  akun,
+  nextAktif,
+  label,
+}: {
+  akun: AkunRow;
+  nextAktif: boolean;
+  label: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [state, action] = useFormState(toggleAkun, {});
+  useActionToast({ error: state.error, saved: state.saved });
+
+  useEffect(() => {
+    if (state.saved) setOpen(false);
+  }, [state.saved]);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button type="button" variant="outline" size="sm" className="h-9">
+          {label}
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{label} akun</DialogTitle>
+          <DialogDescription>
+            {nextAktif
+              ? `Akun ${akun.kode} akan muncul lagi di dropdown jurnal.`
+              : `Akun ${akun.kode} tidak bisa dipakai transaksi baru; jurnal lama tetap utuh.`}
+          </DialogDescription>
+        </DialogHeader>
+        <form action={action} className="space-y-4 pt-2">
+          <input type="hidden" name="id" value={akun.id} />
+          <input type="hidden" name="aktif" value={String(nextAktif)} />
+          <div className="flex justify-end gap-2">
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+              Batal
+            </Button>
+            <SubmitButton pendingLabel="…">{label}</SubmitButton>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 function Node({
   akun,
   depth,
-  toggleAction,
+  mode,
+  parents,
 }: {
   akun: AkunRow;
   depth: number;
-  toggleAction: ToggleAction;
+  mode: "admin" | "owner";
+  parents: AkunOption[];
 }) {
+  const writable = mode === "admin" && !akun.isSystem;
+
   return (
     <li>
       <div
@@ -65,38 +136,29 @@ function Node({
           {akun.aktif ? null : <Badge variant="outline">Nonaktif</Badge>}
           {akun.isSystem ? <Badge variant="secondary">Sistem</Badge> : null}
         </div>
-        <div className="flex gap-2">
-          <Link
-            href={`/admin/akun?edit=${akun.id}`}
-            className="inline-flex h-9 items-center rounded-md border border-input px-3 text-sm hover:bg-accent"
-          >
-            Ubah
-          </Link>
-          {akun.isSystem ? null : (
-            <form action={toggleAction}>
-              <input type="hidden" name="id" value={akun.id} />
-              <input type="hidden" name="aktif" value={String(!akun.aktif)} />
-              <SubmitButton
-                variant="outline"
-                size="sm"
-                className="h-9"
-                pendingLabel="Memproses..."
-              >
-                {akun.aktif ? "Nonaktifkan" : "Aktifkan"}
-              </SubmitButton>
-            </form>
-          )}
-        </div>
+        {writable ? (
+          <div className="flex gap-2">
+            <AkunFormSheet
+              parents={parents}
+              edit={toEdit(akun)}
+              trigger={
+                <Button type="button" variant="outline" size="sm" className="h-9">
+                  Ubah
+                </Button>
+              }
+            />
+            <AkunToggleDialog
+              akun={akun}
+              nextAktif={!akun.aktif}
+              label={akun.aktif ? "Nonaktifkan" : "Aktifkan"}
+            />
+          </div>
+        ) : null}
       </div>
       {akun.anak.length > 0 ? (
         <ul className="divide-y border-t">
           {akun.anak.map((anak) => (
-            <Node
-              key={anak.id}
-              akun={anak}
-              depth={depth + 1}
-              toggleAction={toggleAction}
-            />
+            <Node key={anak.id} akun={anak} depth={depth + 1} mode={mode} parents={parents} />
           ))}
         </ul>
       ) : null}
@@ -104,11 +166,16 @@ function Node({
   );
 }
 
-export function AkunTree({ tree }: { tree: AkunRow[] }) {
-  const [state, toggleAction] = useFormState(toggleAkun, {});
+export function AkunTree({
+  tree,
+  mode,
+  parents = [],
+}: {
+  tree: AkunRow[];
+  mode: "admin" | "owner";
+  parents?: AkunOption[];
+}) {
   const [filter, setFilter] = useState("");
-  useActionToast({ error: state.error, saved: state.saved });
-
   const visible = useMemo(() => filterAkunTree(tree, filter), [tree, filter]);
 
   return (
@@ -136,7 +203,7 @@ export function AkunTree({ tree }: { tree: AkunRow[] }) {
       ) : (
         <ul className="divide-y rounded-md border px-4">
           {visible.map((akun) => (
-            <Node key={akun.id} akun={akun} depth={0} toggleAction={toggleAction} />
+            <Node key={akun.id} akun={akun} depth={0} mode={mode} parents={parents} />
           ))}
         </ul>
       )}
