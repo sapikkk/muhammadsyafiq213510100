@@ -25,6 +25,7 @@ Komponen:
 - `DetailLayout` + `getRowHref` — Tingkat B varietas, inventaris, active pack: daftar → `[id]`, Tambah Sheet, aksi di detail
 - **Akun (Tingkat B pohon):** Tambah Sheet di header; Ubah/Nonaktifkan per node (Dialog); tanpa `?edit=`; Owner `mode="owner"`
 - **Infrastruktur (Tingkat B pohon):** Tambah lahan/GH/kolam Sheet; status kolam Dialog per baris; Owner baca saja
+- **Penjualan (Tingkat C):** `/admin/penjualan` daftar → `[id]` aksi per status; `/admin/penjualan/baru`; petani `/petani/pengiriman/[id]`
 - `admin-flow-dashboard.tsx` / `owner-flow-dashboard.tsx` — hub Admin/Owner
 
 ## Cakupan halaman (v1.28.0)

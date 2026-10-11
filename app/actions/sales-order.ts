@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -17,6 +18,16 @@ import { catatDpSalesOrder, catatPelunasanSalesOrder } from "@/lib/sales-order-p
 
 type FormState = { error?: string; ok?: string };
 
+function revalidateSalesOrder(id?: number) {
+  revalidatePath("/admin/penjualan");
+  revalidatePath("/admin/penjualan/baru");
+  revalidatePath("/petani/pengiriman");
+  if (id) {
+    revalidatePath(`/admin/penjualan/${id}`);
+    revalidatePath(`/petani/pengiriman/${id}`);
+  }
+}
+
 export async function submitSalesOrder(_prev: FormState, formData: FormData): Promise<FormState> {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) return { error: "Belum masuk." };
@@ -30,8 +41,8 @@ export async function submitSalesOrder(_prev: FormState, formData: FormData): Pr
     }
     const input = parseSalesOrderInput(raw);
     const row = await createSalesOrderDraft(Number(session.user.id), input);
-    revalidatePath("/admin/penjualan");
-    return { ok: `SO ${row.nomor_so} dibuat (DRAFT).` };
+    revalidateSalesOrder(row.id);
+    redirect(`/admin/penjualan/${row.id}`);
   } catch (err) {
     if (err instanceof SalesOrderError) return { error: err.message };
     if (err instanceof SyntaxError) return { error: "Format baris pesanan tidak valid." };
@@ -53,7 +64,7 @@ export async function catatPelunasanSalesOrderAction(
       nominal: formData.get("nominal"),
       sumberKas: formData.get("sumberKas"),
     });
-    revalidatePath("/admin/penjualan");
+    revalidateSalesOrder(id);
     revalidatePath("/admin/jurnal");
     return {
       ok: `Pelunasan ${row.nomor_so} tercatat. Status: ${row.status_pembayaran}.`,
@@ -77,7 +88,7 @@ export async function catatDpSalesOrderAction(
     const row = await catatDpSalesOrder(id, Number(session.user.id), {
       sumberKas: formData.get("sumberKas"),
     });
-    revalidatePath("/admin/penjualan");
+    revalidateSalesOrder(id);
     revalidatePath("/admin/jurnal");
     return {
       ok: `DP ${row.nomor_so} tercatat (Dr Kas Cr uang muka). Status pembayaran: DP_DITERIMA.`,
@@ -99,7 +110,7 @@ export async function confirmSalesOrderAction(
     const id = Number(formData.get("salesOrderId"));
     if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
     const row = await confirmSalesOrder(id);
-    revalidatePath("/admin/penjualan");
+    revalidateSalesOrder(id);
     return { ok: `${row.nomor_so} dikonfirmasi (CONFIRMED).` };
   } catch (err) {
     if (err instanceof SalesOrderError) return { error: err.message };
@@ -124,8 +135,7 @@ export async function shipSalesOrderAction(
     if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
     const catatan = formData.get("catatan");
     const row = await shipSalesOrder(id, Number(session.user.id), catatan);
-    revalidatePath("/admin/penjualan");
-    revalidatePath("/petani/pengiriman");
+    revalidateSalesOrder(id);
     return { ok: `${row.nomor_so} dikirim (SHIPPED).` };
   } catch (err) {
     if (err instanceof SalesOrderError) return { error: err.message };
@@ -149,8 +159,7 @@ export async function deliverSalesOrderAction(
       catatan,
       sumberKas: formData.get("sumberKas"),
     });
-    revalidatePath("/admin/penjualan");
-    revalidatePath("/petani/pengiriman");
+    revalidateSalesOrder(id);
     revalidatePath("/admin/jurnal");
     return {
       ok: `${row.nomor_so} terkirim (DELIVERED). Jurnal #${row.jurnal_pendapatan?.id ?? "?"} menunggu persetujuan.`,
@@ -177,7 +186,7 @@ export async function recordPackingCostAction(
       formData.get("biayaPacking"),
       { sumberKas: formData.get("sumberKas") },
     );
-    revalidatePath("/admin/penjualan");
+    revalidateSalesOrder(id);
     const jId = row.jurnal_packing?.id;
     return {
       ok: jId
@@ -201,8 +210,7 @@ export async function cancelSalesOrderAction(
     const id = Number(formData.get("salesOrderId"));
     if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
     const row = await cancelSalesOrder(id, Number(session.user.id), formData.get("alasan"));
-    revalidatePath("/admin/penjualan");
-    revalidatePath("/petani/pengiriman");
+    revalidateSalesOrder(id);
     revalidatePath("/admin/jurnal");
     const rev = row.jurnal_reversal?.id;
     return {
