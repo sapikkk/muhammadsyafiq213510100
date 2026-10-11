@@ -18,7 +18,7 @@ const QUICK = [
 export function OwnerFlowDashboard() {
   return (
     <div className="space-y-6">
-      <FlowSteps steps={ALUR} />
+      <FlowSteps pageKey="owner" steps={ALUR} title="Panduan dashboard Owner" />
       <div className="grid gap-3 sm:grid-cols-2">
         {QUICK.map((q) => (
           <Link

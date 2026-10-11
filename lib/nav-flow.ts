@@ -1,6 +1,7 @@
 import type { Role } from "@/types/role";
 import type { NavItem } from "@/lib/nav-items";
 import { getNavItems } from "@/lib/nav-items";
+import { getOwnerEpicNavGroups } from "@/lib/owner-epic-nav";
 
 export type NavFlowGroup = {
   id: string;
@@ -69,45 +70,7 @@ export function getNavFlowGroups(role: Role, stokRendahCount: number): NavFlowGr
   }
 
   if (role === "OWNER") {
-    return [
-      {
-        id: "start",
-        title: "Ringkasan",
-        hint: "KPI & ekspor",
-        items: [byHref("/owner"), byHref(`${prefix}/laporan`)],
-      },
-      {
-        id: "keuangan",
-        title: "Keuangan",
-        hint: "Jurnal, prive, arus kas",
-        items: [
-          byHref(`${prefix}/jurnal`),
-          byHref(`${prefix}/akun`),
-          byHref(`${prefix}/prive`),
-          byHref(`${prefix}/arus-kas`),
-          byHref(`${prefix}/biaya`),
-          byHref(`${prefix}/evaluasi`),
-        ],
-      },
-      {
-        id: "operasi",
-        title: "Operasi",
-        hint: "Stok & varietas",
-        items: [
-          byHref(`${prefix}/inventaris`),
-          byHref(`${prefix}/infrastruktur`),
-          byHref(`${prefix}/varietas`),
-          byHref(`${prefix}/petani`),
-          byHref(`${prefix}/stok-rendah`),
-        ],
-      },
-      {
-        id: "kelola",
-        title: "Kelola",
-        hint: "User & peran",
-        items: [byHref(`${prefix}/pengguna`)],
-      },
-    ];
+    return getOwnerEpicNavGroups(stokRendahCount);
   }
 
   return [

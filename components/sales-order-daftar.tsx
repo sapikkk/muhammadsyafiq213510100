@@ -12,6 +12,7 @@ export type { SoRow } from "@/components/sales-order-detail";
 const listHref = {
   admin: "/admin/penjualan",
   pengiriman: "/petani/pengiriman",
+  owner: "/owner/penjualan",
 } as const;
 
 export function SalesOrderDaftar({

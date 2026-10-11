@@ -35,7 +35,7 @@ export function AdminFlowDashboard() {
         title="Dashboard"
         description="Ikuti alur harian: stok → produksi → penjualan → pembukuan."
       />
-      <FlowSteps steps={ALUR_HARIAN} />
+      <FlowSteps pageKey="admin" steps={ALUR_HARIAN} title="Panduan dashboard Admin" />
       <div className="grid gap-3 sm:grid-cols-2">
         {QUICK.map((q) => (
           <Link

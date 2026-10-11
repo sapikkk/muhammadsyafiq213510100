@@ -14,7 +14,7 @@ export async function SalesOrderDetailLayout({
 }: {
   id: number;
   listHref: string;
-  mode: "admin" | "pengiriman";
+  mode: "admin" | "pengiriman" | "owner";
   surface?: "page" | "sheet";
 }) {
   if (!Number.isInteger(id) || id <= 0) notFound();
@@ -23,22 +23,21 @@ export async function SalesOrderDetailLayout({
   if (!row) notFound();
 
   const so = serializeSalesOrder(row) as SoRow;
-  const isAdmin = mode === "admin";
+  const sectionTitle =
+    mode === "admin" ? "Aksi & riwayat" : mode === "owner" ? "Ringkasan SO" : "Kirim / terima";
+  const eyebrow = mode === "pengiriman" ? "Pengiriman" : "Sales order";
 
   return (
     <DetailLayout
       backHref={listHref}
       surface={surface}
-      eyebrow={isAdmin ? "Sales order" : "Pengiriman"}
+      eyebrow={eyebrow}
       title={so.nomor_so}
       badge={<Badge variant="secondary">{so.status}</Badge>}
       description={`${so.pelanggan_nama} · Total ${formatRupiah(so.total)}`}
     >
-      <PageSection
-        title={isAdmin ? "Aksi & riwayat" : "Kirim / terima"}
-        badge="Update"
-      >
-        <SalesOrderDetail row={so} mode={isAdmin ? "admin" : "pengiriman"} />
+      <PageSection title={sectionTitle} badge={mode === "owner" ? "Read" : "Update"}>
+        <SalesOrderDetail row={so} mode={mode} />
       </PageSection>
     </DetailLayout>
   );

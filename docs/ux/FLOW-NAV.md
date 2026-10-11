@@ -9,7 +9,7 @@ Menu dikelompokkan per peran:
 | Peran | Grup |
 | --- | --- |
 | Admin | Mulai · Produksi & stok · Penjualan · Akuntansi · Tim |
-| Owner | Ringkasan · Keuangan · Operasi · Kelola |
+| Owner | Ringkasan · epik 1.0–7.0 (skripsi) · Kelola — lihat `lib/owner-epic-nav.ts` |
 | Petani | Hari ini · Di lapangan · Logistik · Peringatan |
 
 Item **Akuntansi** (`/admin/akuntansi`) ada di navigasi Admin.
@@ -18,7 +18,8 @@ Item **Akuntansi** (`/admin/akuntansi`) ada di navigasi Admin.
 
 Komponen:
 
-- `FlowSteps` — chip langkah + tooltip native; tombol **Panduan** (coachmark dialog) untuk penjelasan penuh
+- `PageCoachmark` / `FlowSteps` — chip langkah, dialog **Panduan**, tips UAT (`lib/coach-tips.ts`), auto-tampil pertama kali per halaman (localStorage)
+- `PageCoachmarkFromPath` — detail `/[id]`, login, pengaturan
 - `PageSection` — judul + badge **Read / Create / Update**
 - `CrudPageLayout` — header + daftar; form lewat `actions` (Sheet) bila sudah dimigrasi
 - `FormSheet`, `ConfirmDialog`, `RowActions`, `AktifToggleDialog` — Tingkat A (pelanggan, petani master, owner pengguna): Tambah/Ubah Sheet + Nonaktifkan Dialog
