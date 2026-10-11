@@ -41,12 +41,15 @@ Lalu `db push`, `seed`, `seed:demo`, `npm run dev`.
 
 Skills domain (commit): `docs/skills/akuntansi-hidroponik/SKILL.md`.
 
-Skills keuangan umum (gitignore, opsional):
+Skills keuangan umum — salinan **`SKILL.md` saja** (commit): `docs/skills/openaccountant/*/SKILL.md` (44 skill). Restore lokal:
 
 ```bash
 npx skills add openaccountant/skills -y
-# → .agents/skills/
+# atau: rsync -a docs/skills/openaccountant/ .agents/skills/
+# → .agents/skills/ (gitignore)
 ```
+
+Lihat `docs/skills/README.md`.
 
 Cursor Agent Skills Platform (submodule opsional, lihat `docs/sprint-backlog-agile.md`):
 

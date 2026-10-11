@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
         if (!email || !password) return null;
 
         const user = await prisma.user.findUnique({ where: { email } });
-        if (!user) return null;
+        if (!user || !user.aktif) return null;
 
         const matches = await compare(password, user.passwordHash);
         if (!matches) return null;

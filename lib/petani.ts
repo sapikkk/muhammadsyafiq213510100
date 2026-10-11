@@ -40,8 +40,25 @@ export function parsePetaniInput(raw: Record<string, unknown>): PetaniInput {
   };
 }
 
-export async function listPetani(): Promise<Petani[]> {
-  return prisma.petani.findMany({ orderBy: { nama: "asc" } });
+export async function listPetani(onlyAktif = false): Promise<Petani[]> {
+  return prisma.petani.findMany({
+    where: onlyAktif ? { aktif: true } : undefined,
+    orderBy: { nama: "asc" },
+  });
+}
+
+export async function setPetaniAktif(id: number, aktif: boolean): Promise<Petani> {
+  try {
+    return await prisma.petani.update({
+      where: { id },
+      data: { aktif },
+    });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") {
+      throw new PetaniError("Petani tidak ditemukan.", 404);
+    }
+    throw error;
+  }
 }
 
 export async function createPetani(input: PetaniInput): Promise<Petani> {
@@ -75,5 +92,6 @@ export function serializePetani(row: Petani) {
     id: row.id,
     nama: row.nama,
     gaji_bulanan: row.gaji_bulanan.toString(),
+    aktif: row.aktif,
   };
 }

@@ -9,7 +9,10 @@ import {
   catatPergerakan,
   createItem,
   parseItemInput,
+  parseItemUpdateInput,
   parseMovementInput,
+  setItemAktif,
+  updateItem,
 } from "@/lib/inventaris";
 
 type FormState = { error?: string; ok?: string };
@@ -39,6 +42,14 @@ function toState(error: unknown): FormState {
   throw error;
 }
 
+function revalidateInventarisPaths(itemId?: number) {
+  const bases = ["/admin/inventaris", "/owner/inventaris", "/petani/inventaris"] as const;
+  for (const base of bases) {
+    revalidatePath(base);
+    if (itemId != null) revalidatePath(`${base}/${itemId}`);
+  }
+}
+
 export async function simpanItemInventaris(
   _prev: FormState,
   formData: FormData,
@@ -47,10 +58,49 @@ export async function simpanItemInventaris(
     await requireAdmin();
     const raw = Object.fromEntries(formData.entries());
     await createItem(parseItemInput(raw));
-    revalidatePath("/admin/inventaris");
-    revalidatePath("/owner/inventaris");
-    revalidatePath("/petani/inventaris");
+    revalidateInventarisPaths();
     return { ok: "Item inventaris tersimpan." };
+  } catch (error) {
+    return toState(error);
+  }
+}
+
+export async function ubahItemInventaris(
+  _prev: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  try {
+    await requireAdmin();
+    const raw = Object.fromEntries(formData.entries());
+    const input = parseItemUpdateInput(raw);
+    const item = await updateItem(input);
+    revalidateInventarisPaths(item.id);
+    return { ok: `Item ${item.kode} diperbarui.` };
+  } catch (error) {
+    return toState(error);
+  }
+}
+
+export async function ubahStatusItemInventaris(
+  _prev: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  try {
+    await requireAdmin();
+    const raw = Object.fromEntries(formData.entries());
+    const id = Number(raw.itemId);
+    const aktif = raw.aktif === "true";
+    if (!Number.isInteger(id) || id <= 0) {
+      throw new InventarisError("Item tidak valid.", 400);
+    }
+    if (!aktif && raw.konfirmasi !== "ya") {
+      throw new InventarisError("Centang konfirmasi sebelum menonaktifkan item.", 400);
+    }
+    const item = await setItemAktif(id, aktif);
+    revalidateInventarisPaths(item.id);
+    return {
+      ok: `Item ${item.kode} ${aktif ? "diaktifkan" : "dinonaktifkan"}.`,
+    };
   } catch (error) {
     return toState(error);
   }

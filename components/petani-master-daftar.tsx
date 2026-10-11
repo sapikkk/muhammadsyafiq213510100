@@ -3,12 +3,20 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
+import { ubahStatusPetaniMaster } from "@/app/actions/petani-master";
+import { AktifToggleDialog } from "@/components/aktif-toggle-dialog";
 import { PetaniMasterFormSheet } from "@/components/petani-master-form";
 import { RowActions } from "@/components/row-actions";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatRupiah } from "@/lib/format";
 
-export type PetaniMasterRow = { id: number; nama: string; gaji_bulanan: string };
+export type PetaniMasterRow = {
+  id: number;
+  nama: string;
+  gaji_bulanan: string;
+  aktif: boolean;
+};
 
 export function PetaniMasterDaftar({
   rows,
@@ -19,7 +27,20 @@ export function PetaniMasterDaftar({
 }) {
   const columns = useMemo<ColumnDef<PetaniMasterRow>[]>(() => {
     const base: ColumnDef<PetaniMasterRow>[] = [
-      { accessorKey: "nama", header: "Nama" },
+      {
+        accessorKey: "nama",
+        header: "Nama",
+        cell: ({ row }) => (
+          <div className="flex items-center gap-2">
+            <span>{row.original.nama}</span>
+            {!row.original.aktif ? (
+              <Badge variant="outline" className="text-xs">
+                Nonaktif
+              </Badge>
+            ) : null}
+          </div>
+        ),
+      },
       {
         accessorKey: "gaji_bulanan",
         header: "Gaji bulanan",
@@ -45,6 +66,17 @@ export function PetaniMasterDaftar({
                     Ubah
                   </Button>
                 }
+              />
+            }
+            deactivateTrigger={
+              <AktifToggleDialog
+                id={row.original.id}
+                aktif={row.original.aktif}
+                idFieldName="petaniId"
+                action={ubahStatusPetaniMaster}
+                label={row.original.nama}
+                offDescription="Master nonaktif tetap di histori; tandai bila petani sudah tidak aktif di lapangan."
+                onDescription="Master petani aktif kembali untuk referensi operasional."
               />
             }
           />

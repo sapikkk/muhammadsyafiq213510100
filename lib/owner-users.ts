@@ -24,7 +24,28 @@ export function listUsersForOwner() {
       email: true,
       role: true,
       mustChangePassword: true,
+      aktif: true,
     },
+  });
+}
+
+export async function setUserAktifByOwner(
+  targetUserId: number,
+  ownerId: number,
+  aktif: boolean,
+): Promise<{ id: number; nama: string; email: string; role: Role; aktif: boolean }> {
+  const target = await prisma.user.findUnique({ where: { id: targetUserId } });
+  if (!target) throw new OwnerUserError("User tidak ditemukan.", 404);
+  if (target.role === "OWNER") {
+    throw new OwnerUserError("Akun Owner tidak bisa dinonaktifkan dari sini.", 403);
+  }
+  if (target.id === ownerId) {
+    throw new OwnerUserError("Nonaktifkan diri sendiri tidak diizinkan.", 400);
+  }
+  return prisma.user.update({
+    where: { id: targetUserId },
+    data: { aktif },
+    select: { id: true, nama: true, email: true, role: true, aktif: true },
   });
 }
 

@@ -1,3 +1,5 @@
+import { DetailLayout } from "@/components/detail-layout";
+import { PageSection } from "@/components/page-section";
 import { JurnalBaruPanel } from "@/components/jurnal-baru-panel";
 import { keTanggalIso } from "@/lib/format";
 import { listAkunPosting } from "@/lib/jurnal";
@@ -10,19 +12,19 @@ export default async function JurnalBaruPage() {
   const periodeTutup = lock ? lock.toISOString().slice(0, 10) : null;
 
   return (
-    <div className="flex flex-col gap-8">
-      <header className="space-y-2">
-        <p className="text-sm font-medium text-primary">Admin</p>
-        <h1 className="text-3xl font-semibold tracking-tight">Jurnal baru</h1>
-        <p className="text-muted-foreground">
-          Smart Jurnal (v2-F.4 · 17 tipe) atau jurnal manual. Saldo berubah setelah approve.
-        </p>
-      </header>
-      <JurnalBaruPanel
-        akun={akun}
-        tanggalAwal={keTanggalIso(new Date())}
-        periodeTutup={periodeTutup}
-      />
-    </div>
+    <DetailLayout
+      backHref="/admin/jurnal"
+      eyebrow="Akuntansi"
+      title="Jurnal baru"
+      description="Smart Jurnal (v2-F.4 · 17 tipe) atau jurnal manual. Saldo berubah setelah approve."
+    >
+      <PageSection title="Form jurnal" badge="Create">
+        <JurnalBaruPanel
+          akun={akun}
+          tanggalAwal={keTanggalIso(new Date())}
+          periodeTutup={periodeTutup}
+        />
+      </PageSection>
+    </DetailLayout>
   );
 }

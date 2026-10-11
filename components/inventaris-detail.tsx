@@ -34,11 +34,14 @@ export async function InventarisDetail({
       eyebrow="Inventaris"
       title={`${serialized.kode} · ${serialized.nama}`}
       badge={
-        serialized.diBawahMinimum ? (
-          <Badge variant="outline">Di bawah minimum</Badge>
-        ) : (
-          <Badge variant="outline">OK</Badge>
-        )
+        <>
+          {!serialized.aktif ? <Badge variant="outline">Nonaktif</Badge> : null}
+          {serialized.diBawahMinimum ? (
+            <Badge variant="outline">Di bawah minimum</Badge>
+          ) : serialized.aktif ? (
+            <Badge variant="outline">OK</Badge>
+          ) : null}
+        </>
       }
       description={`Stok ${formatQty(serialized.stokSaatIni)} ${satuan} · minimum ${formatQty(serialized.stokMinimum)} ${satuan}`}
       actions={
