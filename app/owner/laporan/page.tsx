@@ -1,4 +1,5 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { MonthRangeFilter } from "@/components/month-range-filter";
 
 export const dynamic = "force-dynamic";
 
@@ -29,29 +30,7 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
       ]}
       list={
         <div className="space-y-4">
-          <form method="get" className="flex flex-wrap items-end gap-3 text-sm">
-            <label className="flex flex-col gap-1">
-              <span className="text-muted-foreground">Dari (YYYY-MM)</span>
-              <input
-                name="dari"
-                defaultValue={dari}
-                className="h-9 rounded-md border bg-background px-2"
-                pattern="\d{4}-\d{2}"
-              />
-            </label>
-            <label className="flex flex-col gap-1">
-              <span className="text-muted-foreground">Sampai (YYYY-MM)</span>
-              <input
-                name="sampai"
-                defaultValue={sampai}
-                className="h-9 rounded-md border bg-background px-2"
-                pattern="\d{4}-\d{2}"
-              />
-            </label>
-            <button type="submit" className="h-9 rounded-md bg-primary px-4 text-primary-foreground">
-              Terapkan
-            </button>
-          </form>
+          <MonthRangeFilter dari={dari} sampai={sampai} />
           <ul className="grid gap-3 sm:grid-cols-2">
             <li>
               <a

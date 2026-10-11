@@ -52,7 +52,6 @@ Catatan audit: `docs/audit/frontend.md`.
 
 ## Belum / opsional (bukan blocker deploy)
 
-- Tabel HTML manual di Owner arus kas & evaluasi (bisa diseragamkan ke `DataTable` later)
 - Uji responsif sistematis (Playwright viewport matrix) — `docs/audit/frontend.md`
 - Filter DB-side penuh untuk stok rendah (saat ini filter di app setelah select kolom minimal)
 
