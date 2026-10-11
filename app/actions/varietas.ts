@@ -5,10 +5,13 @@ import { isRoleAllowed } from "@/lib/rbac";
 import { revalidatePath } from "next/cache";
 import { authOptions } from "@/lib/auth";
 import { isVarietasStatus } from "@/lib/varietas-status";
+import { logEntityChange } from "@/lib/entity-audit";
 import {
   VarietasError,
   createVarietas,
+  getVarietas,
   parseVarietasInput,
+  serializeVarietas,
   setVarietasStatus,
   updateVarietas,
 } from "@/lib/varietas";
@@ -21,6 +24,7 @@ async function requireWrite() {
   if (!isRoleAllowed(session.user.role, ["ADMIN", "OWNER"])) {
     throw new VarietasError("Peran Anda tidak berhak.", 403);
   }
+  return session;
 }
 
 function toState(error: unknown): FormState {
@@ -57,14 +61,37 @@ function rawFromForm(formData: FormData) {
 
 export async function simpanVarietas(_prev: FormState, formData: FormData): Promise<FormState> {
   try {
-    await requireWrite();
+    const session = await requireWrite();
+    const actor = { email: session.user!.email!, nama: session.user!.name ?? undefined };
     const id = Number(formData.get("id"));
     const input = parseVarietasInput(rawFromForm(formData));
     if (Number.isInteger(id) && id > 0) {
+      const before = await getVarietas(id);
       await updateVarietas(id, input);
+      if (before) {
+        const prev = serializeVarietas(before);
+        const changes: string[] = [];
+        if (prev.nama !== input.nama) changes.push(`nama → ${input.nama}`);
+        if (prev.status !== input.status) changes.push(`status → ${input.status}`);
+        if (changes.length === 0) changes.push("parameter diperbarui");
+        await logEntityChange({
+          entitas: "Varietas",
+          entitasId: id,
+          aksi: "UPDATE",
+          ringkasan: changes.join("; "),
+          actor,
+        });
+      }
       revalidateVarietas(id);
     } else {
-      await createVarietas(input);
+      const created = await createVarietas(input);
+      await logEntityChange({
+        entitas: "Varietas",
+        entitasId: created.id,
+        aksi: "CREATE",
+        ringkasan: `Varietas baru: ${input.nama}`,
+        actor,
+      });
       revalidateVarietas();
     }
     return { ok: "Varietas tersimpan." };
@@ -78,7 +105,7 @@ export async function ubahStatusVarietas(
   formData: FormData,
 ): Promise<FormState> {
   try {
-    await requireWrite();
+    const session = await requireWrite();
     const id = Number(formData.get("varietasId"));
     const status = String(formData.get("status") ?? "").trim().toUpperCase();
     if (!Number.isInteger(id) || id <= 0) {
@@ -92,6 +119,13 @@ export async function ubahStatusVarietas(
       throw new VarietasError("Centang konfirmasi sebelum menonaktifkan varietas.", 400);
     }
     await setVarietasStatus(id, status);
+    await logEntityChange({
+      entitas: "Varietas",
+      entitasId: id,
+      aksi: "STATUS",
+      ringkasan: `Status → ${status}`,
+      actor: { email: session.user!.email!, nama: session.user!.name ?? undefined },
+    });
     revalidateVarietas(id);
     return { ok: "Status varietas diperbarui." };
   } catch (error) {

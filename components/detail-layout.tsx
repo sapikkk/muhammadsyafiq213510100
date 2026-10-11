@@ -15,6 +15,8 @@ export type DetailLayoutProps = {
   children: ReactNode;
   extra?: ReactNode;
   className?: string;
+  /** `sheet` = drill-down dalam panel samping (tanpa link kembali). */
+  surface?: "page" | "sheet";
 };
 
 export function DetailLayout({
@@ -28,21 +30,26 @@ export function DetailLayout({
   children,
   extra,
   className,
+  surface = "page",
 }: DetailLayoutProps) {
+  const inSheet = surface === "sheet";
+
   return (
-    <div className={cn("flex flex-col gap-8", className)}>
+    <div className={cn("flex flex-col", inSheet ? "gap-6" : "gap-8", className)}>
       <div>
-        <Button
-          asChild
-          variant="ghost"
-          size="sm"
-          className="-ml-2 mb-3 h-8 gap-1.5 px-2 text-xs text-muted-foreground hover:text-foreground"
-        >
-          <Link href={backHref}>
-            <ArrowLeft className="size-3.5" aria-hidden />
-            <span>{backLabel}</span>
-          </Link>
-        </Button>
+        {inSheet ? null : (
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="-ml-2 mb-3 h-8 gap-1.5 px-2 text-xs text-muted-foreground hover:text-foreground"
+          >
+            <Link href={backHref}>
+              <ArrowLeft className="size-3.5" aria-hidden />
+              <span>{backLabel}</span>
+            </Link>
+          </Button>
+        )}
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <header className="space-y-1.5">

@@ -18,11 +18,11 @@ Item **Akuntansi** (`/admin/akuntansi`) ada di navigasi Admin.
 
 Komponen:
 
-- `FlowSteps` — langkah 1–n di atas konten
+- `FlowSteps` — chip langkah + tooltip native; tombol **Panduan** (coachmark dialog) untuk penjelasan penuh
 - `PageSection` — judul + badge **Read / Create / Update**
 - `CrudPageLayout` — header + daftar; form lewat `actions` (Sheet) bila sudah dimigrasi
 - `FormSheet`, `ConfirmDialog`, `RowActions`, `AktifToggleDialog` — Tingkat A (pelanggan, petani master, owner pengguna): Tambah/Ubah Sheet + Nonaktifkan Dialog
-- `DetailLayout` + `getRowHref` — Tingkat B varietas, inventaris, active pack: daftar → `[id]`, Tambah Sheet, aksi di detail (inventaris: Ubah Sheet + Nonaktifkan Dialog admin)
+- `DetailLayout` + `getRowHref` — Tingkat B varietas, inventaris, active pack: klik baris → **sheet lebar** (intercept `[id]`) atau halaman penuh jika URL dibuka langsung; Tambah Sheet; riwayat perubahan master (`RiwayatPerubahan`, varietas dulu)
 - **Akun (Tingkat B pohon):** Tambah Sheet di header; Ubah/Nonaktifkan per node (Dialog); tanpa `?edit=`; Owner `mode="owner"`
 - **Infrastruktur (Tingkat B pohon):** Tambah lahan/GH/kolam Sheet; status kolam Dialog per baris; Owner baca saja
 - **Penjualan (Tingkat C):** `/admin/penjualan` daftar → `[id]` aksi per status; `/admin/penjualan/baru`; petani `/petani/pengiriman/[id]`
@@ -37,7 +37,7 @@ Komponen:
 
 **Petani:** dashboard, siklus, inventaris, active pack, varietas, stok rendah, pengiriman.
 
-Halaman **detail** (`jurnal/[id]`, harvest `[id]`, invoice, siklus `[id]`, varietas/inventaris/active-pack `[id]`) — drill-down dengan “Kembali ke daftar”.
+Halaman **detail** — soft navigation dari daftar membuka **DetailSheetFrame**; hard link / refresh tetap halaman penuh dengan “Kembali ke daftar”. Sidebar: grup **judul saja**, sub-menu **collapse**.
 
 ## Performa (request dedup)
 

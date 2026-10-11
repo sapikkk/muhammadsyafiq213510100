@@ -465,3 +465,18 @@ model Arus_Kas {
   kas_pendanaan        Decimal  @db.Decimal(18, 2)
   perubahan_kas_bersih Decimal  @db.Decimal(18, 2)
 }
+
+/// Audit ringkas perubahan master / entitas bisnis (bukan jurnal inventaris per gerakan).
+model RiwayatPerubahan {
+  id         Int      @id @default(autoincrement())
+  entitas    String   @db.VarChar(60)
+  entitasId  Int
+  aksi       String   @db.VarChar(20)
+  ringkasan  String   @db.VarChar(500)
+  detailJson String?  @db.Text
+  userEmail  String?  @db.VarChar(254)
+  userNama   String?  @db.VarChar(100)
+  createdAt  DateTime @default(now())
+
+  @@index([entitas, entitasId, createdAt])
+}

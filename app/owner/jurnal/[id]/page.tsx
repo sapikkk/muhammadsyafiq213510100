@@ -1,6 +1,4 @@
-import { notFound } from "next/navigation";
-import { JurnalDetailView } from "@/components/jurnal-detail-view";
-import { getJurnal } from "@/lib/jurnal";
+import { JurnalDetailScreen } from "@/components/jurnal-detail-screen";
 
 export const dynamic = "force-dynamic";
 
@@ -9,9 +7,5 @@ export default async function OwnerJurnalDetailPage({
 }: {
   params: { id: string };
 }) {
-  const id = Number(params.id);
-  const jurnal = Number.isInteger(id) ? await getJurnal(id) : null;
-  if (!jurnal) notFound();
-
-  return <JurnalDetailView jurnal={jurnal} backHref="/owner/jurnal" />;
+  return <JurnalDetailScreen id={Number(params.id)} backHref="/owner/jurnal" />;
 }

@@ -22,10 +22,12 @@ export async function ActivePackDetail({
   id,
   listHref,
   writableMode,
+  surface = "page",
 }: {
   id: number;
   listHref: string;
   writableMode?: "admin" | "petani";
+  surface?: "page" | "sheet";
 }) {
   if (!Number.isInteger(id) || id <= 0) notFound();
 
@@ -39,6 +41,7 @@ export async function ActivePackDetail({
   return (
     <DetailLayout
       backHref={listHref}
+      surface={surface}
       eyebrow="Active pack"
       title={serialized.kode}
       badge={

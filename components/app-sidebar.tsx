@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { ChevronRight, LeafyGreen, LogOut, Settings } from "lucide-react";
+import { ChevronDown, ChevronRight, LeafyGreen, LogOut, Settings } from "lucide-react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { getNavFlowGroups } from "@/lib/nav-flow";
+import { getNavFlowGroups, type NavFlowGroup } from "@/lib/nav-flow";
 import { getNavItems, type NavItem } from "@/lib/nav-items";
 import type { Role } from "@/types/role";
 import { roleLabel } from "@/types/role";
@@ -76,22 +77,12 @@ export function AppSidebar({
           </ul>
         ) : (
           groups!.map((group) => (
-            <div key={group.id} className="mb-5 last:mb-2">
-              <div className="mb-1.5 px-2">
-                <p className="text-xs font-semibold tracking-tight text-foreground">{group.title}</p>
-                <p className="text-[11px] leading-snug text-muted-foreground">{group.hint}</p>
-              </div>
-              <ul className="space-y-0.5">
-                {group.items.map((item) => (
-                  <NavLink
-                    key={item.href}
-                    item={item}
-                    active={isNavActive(pathname, item.href)}
-                    onNavigate={onNavigate}
-                  />
-                ))}
-              </ul>
-            </div>
+            <NavFlowGroup
+              key={group.id}
+              group={group}
+              pathname={pathname}
+              onNavigate={onNavigate}
+            />
           ))
         )}
       </nav>
@@ -126,6 +117,52 @@ export function AppSidebar({
         </div>
       </div>
     </aside>
+  );
+}
+
+function NavFlowGroup({
+  group,
+  pathname,
+  onNavigate,
+}: {
+  group: NavFlowGroup;
+  pathname: string;
+  onNavigate?: () => void;
+}) {
+  const hasActive = group.items.some((item) => isNavActive(pathname, item.href));
+  const [open, setOpen] = useState(hasActive);
+
+  useEffect(() => {
+    if (hasActive) setOpen(true);
+  }, [hasActive]);
+
+  return (
+    <div className="mb-3 last:mb-1">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex min-h-9 w-full items-center justify-between rounded-md px-2 text-left text-xs font-semibold tracking-tight text-foreground hover:bg-sidebar-accent/60"
+        aria-expanded={open}
+      >
+        <span>{group.title}</span>
+        <ChevronDown
+          className={cn("h-3.5 w-3.5 shrink-0 opacity-60 transition-transform", open && "rotate-180")}
+          aria-hidden
+        />
+      </button>
+      {open ? (
+        <ul className="mt-0.5 space-y-0.5 border-l border-border pl-2 ml-2">
+          {group.items.map((item) => (
+            <NavLink
+              key={item.href}
+              item={item}
+              active={isNavActive(pathname, item.href)}
+              onNavigate={onNavigate}
+            />
+          ))}
+        </ul>
+      ) : null}
+    </div>
   );
 }
 
