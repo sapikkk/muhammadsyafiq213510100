@@ -62,6 +62,8 @@ test("admin DataTable: pelanggan, inventaris, varietas — cari", async ({ page 
 
   await page.goto("/admin/inventaris");
   await expect(page.getByPlaceholder(/Cari kode atau nama/i)).toBeVisible();
+  await expect(page.getByRole("button", { name: /^Tambah$/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Item & pergerakan stok/i })).toHaveCount(0);
 
   await page.goto("/admin/petani");
   await expect(page.getByRole("button", { name: /^Tambah$/ })).toBeVisible();

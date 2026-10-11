@@ -48,6 +48,8 @@ export async function simpanItemInventaris(
     const raw = Object.fromEntries(formData.entries());
     await createItem(parseItemInput(raw));
     revalidatePath("/admin/inventaris");
+    revalidatePath("/owner/inventaris");
+    revalidatePath("/petani/inventaris");
     return { ok: "Item inventaris tersimpan." };
   } catch (error) {
     return toState(error);
@@ -62,8 +64,16 @@ export async function catatPergerakanForm(
   try {
     const userId = await requireMovement();
     const raw = Object.fromEntries(formData.entries());
-    await catatPergerakan(parseMovementInput(raw, userId));
+    const input = parseMovementInput(raw, userId);
+    await catatPergerakan(input);
     revalidatePath(basePath);
+    revalidatePath(`${basePath}/${input.itemId}`);
+    revalidatePath("/owner/inventaris");
+    revalidatePath(`/owner/inventaris/${input.itemId}`);
+    if (basePath === "/admin/inventaris") {
+      revalidatePath("/petani/inventaris");
+      revalidatePath(`/petani/inventaris/${input.itemId}`);
+    }
     return { ok: "Pergerakan stok tercatat." };
   } catch (error) {
     return toState(error);
