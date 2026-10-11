@@ -149,6 +149,10 @@ export async function listItemInventaris(onlyAktif = true) {
   });
 }
 
+export async function getItemInventaris(id: number) {
+  return prisma.itemInventaris.findUnique({ where: { id } });
+}
+
 export async function createItem(input: ItemInput): Promise<ItemInventaris> {
   try {
     return await prisma.itemInventaris.create({

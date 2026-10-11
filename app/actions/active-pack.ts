@@ -40,6 +40,8 @@ export async function simpanActivePack(
     const raw = Object.fromEntries(formData.entries());
     await buatActivePack(parseActivePackInput(raw, userId));
     revalidatePath(basePath);
+    revalidatePath("/admin/inventaris");
+    revalidatePath("/petani/inventaris");
     return { ok: "Active pack tersimpan." };
   } catch (error) {
     return toState(error);
@@ -74,6 +76,7 @@ export async function pakaiActivePackForm(
     }
     const pack = await pakaiActivePack(id, jumlah);
     revalidatePath(basePath);
+    revalidatePath(`${basePath}/${id}`);
     return {
       ok:
         pack.status === "HABIS"

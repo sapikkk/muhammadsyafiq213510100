@@ -7,7 +7,19 @@ import { formatQty } from "@/lib/format";
 import type { SerializedItemInventaris } from "@/lib/inventaris-types";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
 
-export function InventarisDaftar({ items }: { items: SerializedItemInventaris[] }) {
+const basePath = {
+  admin: "/admin/inventaris",
+  owner: "/owner/inventaris",
+  petani: "/petani/inventaris",
+} as const;
+
+export function InventarisDaftar({
+  items,
+  mode,
+}: {
+  items: SerializedItemInventaris[];
+  mode: keyof typeof basePath;
+}) {
   const columns = useMemo<ColumnDef<SerializedItemInventaris>[]>(
     () => [
       {
@@ -61,6 +73,7 @@ export function InventarisDaftar({ items }: { items: SerializedItemInventaris[] 
       searchPlaceholder="Cari kode atau nama…"
       searchColumnIds={["kode", "nama"]}
       emptyMessage="Belum ada item inventaris."
+      getRowHref={(row) => `${basePath[mode]}/${row.id}`}
     />
   );
 }

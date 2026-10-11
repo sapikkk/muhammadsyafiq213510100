@@ -1,109 +1,21 @@
 "use client";
 
+import { useEffect, useState, type ReactNode } from "react";
 import { useFormState } from "react-dom";
-import { simpanVarietas, ubahStatusVarietas } from "@/app/actions/varietas";
+import { simpanVarietas } from "@/app/actions/varietas";
+import { FormSheet } from "@/components/form-sheet";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
-import { varietasStatusLabel, varietasStatusList } from "@/lib/varietas-status";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
-
-const selectClass =
-  "flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
-
-type Option = { id: number; label: string };
-
-export function VarietasForm({ varietasOptions }: { varietasOptions: Option[] }) {
-  const [createState, createAction] = useFormState(simpanVarietas, {});
-  const [statusState, statusAction] = useFormState(ubahStatusVarietas, {});
-  useActionToast({ error: createState.error, ok: createState.ok });
-  useActionToast({ error: statusState.error, ok: statusState.ok });
-
-  return (
-    <div className="space-y-6">
-      <form action={createAction} className="space-y-4 rounded-md border p-4">
-        <h2 className="text-lg font-semibold">Tambah varietas</h2>
-        <Field label="Nama">
-          <Input name="nama" className="h-11" required />
-        </Field>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Harga benih per gram (Rp)">
-            <Input name="hargaBenihPerGram" className="h-11" inputMode="decimal" required />
-          </Field>
-          <Field label="Biji per gram">
-            <Input name="bijiPerGram" className="h-11" inputMode="decimal" required />
-          </Field>
-          <Field label="Daya kecambah (%)">
-            <Input name="dayaKecambah" className="h-11" inputMode="decimal" required />
-          </Field>
-          <Field label="Lama semai (hari)">
-            <Input name="lamaSemai" className="h-11" inputMode="numeric" required />
-          </Field>
-          <Field label="Lama di kolam (hari)">
-            <Input name="lamaDiKolam" className="h-11" inputMode="numeric" required />
-          </Field>
-          <Field label="Berat rata panen (gram)">
-            <Input name="beratRataRataPanen" className="h-11" inputMode="decimal" required />
-          </Field>
-          <Field label="Berat per pack (gram)">
-            <Input name="beratPerPack" className="h-11" inputMode="decimal" required />
-          </Field>
-          <Field label="Harga jual curah (Rp)">
-            <Input name="hargaJualCurah" className="h-11" inputMode="decimal" required />
-          </Field>
-          <Field label="Harga jual pack (Rp)">
-            <Input name="hargaJualPack" className="h-11" inputMode="decimal" required />
-          </Field>
-        </div>
-        <Field label="Status awal">
-          <select name="status" className={selectClass} defaultValue="AKTIF">
-            {varietasStatusList.map((s) => (
-              <option key={s} value={s}>
-                {varietasStatusLabel[s]}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <SubmitButton className="h-11" pendingLabel="Menyimpan...">
-          Simpan varietas
-        </SubmitButton>
-      </form>
-
-      {varietasOptions.length > 0 ? (
-        <form action={statusAction} className="space-y-4 rounded-md border p-4">
-          <h2 className="text-lg font-semibold">Aktifkan / nonaktifkan</h2>
-          <Field label="Varietas">
-            <select name="varietasId" className={selectClass} required defaultValue="">
-              <option value="" disabled>
-                Pilih varietas
-              </option>
-              {varietasOptions.map((o) => (
-                <option key={o.id} value={o.id}>
-                  {o.label}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field label="Status baru">
-            <select name="status" className={selectClass} defaultValue="NONAKTIF">
-              {varietasStatusList.map((s) => (
-                <option key={s} value={s}>
-                  {varietasStatusLabel[s]}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <label className="flex items-start gap-2 text-sm">
-            <input type="checkbox" name="konfirmasi" value="ya" className="mt-1" />
-            Saya yakin menonaktifkan varietas ini (tidak bisa dipilih di siklus baru).
-          </label>
-          <SubmitButton className="h-11" pendingLabel="Memperbarui...">
-            Perbarui status
-          </SubmitButton>
-        </form>
-      ) : null}
-    </div>
-  );
-}
+import { varietasStatusLabel, varietasStatusList } from "@/lib/varietas-status";
+import type { SerializedVarietas } from "@/lib/varietas-types";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -111,5 +23,161 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
       <span className="font-medium">{label}</span>
       {children}
     </label>
+  );
+}
+
+export function VarietasForm({
+  initial,
+  onSuccess,
+}: {
+  initial?: SerializedVarietas;
+  onSuccess?: () => void;
+}) {
+  const isEdit = Boolean(initial);
+  const [status, setStatus] = useState(initial?.status ?? "AKTIF");
+  const [state, formAction] = useFormState(simpanVarietas, {});
+  useActionToast({ error: state.error, ok: state.ok });
+
+  useEffect(() => {
+    if (state.ok) onSuccess?.();
+  }, [state.ok, onSuccess]);
+
+  return (
+    <form action={formAction} className="space-y-4">
+      {initial ? <input type="hidden" name="id" value={initial.id} /> : null}
+      <input type="hidden" name="status" value={status} />
+      <Field label="Nama">
+        <Input name="nama" className="h-11" required defaultValue={initial?.nama} />
+      </Field>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Harga benih per gram (Rp)">
+          <Input
+            name="hargaBenihPerGram"
+            className="h-11"
+            inputMode="decimal"
+            required
+            defaultValue={initial?.hargaBenihPerGram}
+          />
+        </Field>
+        <Field label="Biji per gram">
+          <Input
+            name="bijiPerGram"
+            className="h-11"
+            inputMode="decimal"
+            required
+            defaultValue={initial?.bijiPerGram}
+          />
+        </Field>
+        <Field label="Daya kecambah (%)">
+          <Input
+            name="dayaKecambah"
+            className="h-11"
+            inputMode="decimal"
+            required
+            defaultValue={initial?.dayaKecambah}
+          />
+        </Field>
+        <Field label="Lama semai (hari)">
+          <Input
+            name="lamaSemai"
+            className="h-11"
+            inputMode="numeric"
+            required
+            defaultValue={initial?.lamaSemai}
+          />
+        </Field>
+        <Field label="Lama di kolam (hari)">
+          <Input
+            name="lamaDiKolam"
+            className="h-11"
+            inputMode="numeric"
+            required
+            defaultValue={initial?.lamaDiKolam}
+          />
+        </Field>
+        <Field label="Berat rata panen (gram)">
+          <Input
+            name="beratRataRataPanen"
+            className="h-11"
+            inputMode="decimal"
+            required
+            defaultValue={initial?.beratRataRataPanen}
+          />
+        </Field>
+        <Field label="Berat per pack (gram)">
+          <Input
+            name="beratPerPack"
+            className="h-11"
+            inputMode="decimal"
+            required
+            defaultValue={initial?.beratPerPack}
+          />
+        </Field>
+        <Field label="Harga jual curah (Rp)">
+          <Input
+            name="hargaJualCurah"
+            className="h-11"
+            inputMode="decimal"
+            required
+            defaultValue={initial?.hargaJualCurah}
+          />
+        </Field>
+        <Field label="Harga jual pack (Rp)">
+          <Input
+            name="hargaJualPack"
+            className="h-11"
+            inputMode="decimal"
+            required
+            defaultValue={initial?.hargaJualPack}
+          />
+        </Field>
+      </div>
+      {!isEdit ? (
+        <Field label="Status awal">
+          <Select value={status} onValueChange={(v) => setStatus(v as typeof status)}>
+            <SelectTrigger className="h-11">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {varietasStatusList.map((s) => (
+                <SelectItem key={s} value={s}>
+                  {varietasStatusLabel[s]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </Field>
+      ) : null}
+      <SubmitButton className="h-11" pendingLabel="Menyimpan...">
+        {isEdit ? "Simpan perubahan" : "Simpan varietas"}
+      </SubmitButton>
+    </form>
+  );
+}
+
+export function VarietasFormSheet({
+  trigger,
+  initial,
+}: {
+  trigger: ReactNode;
+  initial?: SerializedVarietas;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <FormSheet
+      title={initial ? "Ubah varietas" : "Tambah varietas"}
+      description="Asumsi benih, pertumbuhan, dan harga jual untuk HPP dan siklus."
+      trigger={trigger}
+      open={open}
+      onOpenChange={setOpen}
+    >
+      {open ? (
+        <VarietasForm
+          key={initial?.id ?? "baru"}
+          initial={initial}
+          onSuccess={() => setOpen(false)}
+        />
+      ) : null}
+    </FormSheet>
   );
 }

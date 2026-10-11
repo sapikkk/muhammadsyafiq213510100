@@ -6,9 +6,21 @@ import { DataTable } from "@/components/data-table";
 import { varietasStatusLabel, type VarietasStatus } from "@/lib/varietas-status";
 import type { SerializedVarietas } from "@/lib/varietas-types";
 
-type Row = SerializedVarietas;
+type Row = SerializedVarietas & { rataHppPerLubang?: string | null };
 
-export function VarietasDaftar({ rows }: { rows: Row[] }) {
+const basePath = {
+  admin: "/admin/varietas",
+  owner: "/owner/varietas",
+  petani: "/petani/varietas",
+} as const;
+
+export function VarietasDaftar({
+  rows,
+  mode,
+}: {
+  rows: Row[];
+  mode: keyof typeof basePath;
+}) {
   const columns = useMemo<ColumnDef<Row>[]>(
     () => [
       { accessorKey: "nama", header: "Nama" },
@@ -63,6 +75,7 @@ export function VarietasDaftar({ rows }: { rows: Row[] }) {
       searchPlaceholder="Cari varietas…"
       searchColumnIds={["nama"]}
       emptyMessage="Belum ada varietas."
+      getRowHref={(row) => `${basePath[mode]}/${row.id}`}
     />
   );
 }

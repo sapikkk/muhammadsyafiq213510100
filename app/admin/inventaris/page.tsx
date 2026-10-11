@@ -1,24 +1,13 @@
-import { catatPergerakanAdmin } from "@/app/actions/inventaris";
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { InventarisDaftar } from "@/components/inventaris-daftar";
-import { InventarisItemForm } from "@/components/inventaris-item-form";
-import { InventarisMovementForm } from "@/components/inventaris-movement-form";
-import { InventarisRiwayat } from "@/components/inventaris-riwayat";
-import { PageSection } from "@/components/page-section";
-import {
-  listItemInventaris,
-  listPergerakan,
-  serializeItem,
-  serializePergerakan,
-} from "@/lib/inventaris";
+import { InventarisItemFormSheet } from "@/components/inventaris-item-form";
+import { Button } from "@/components/ui/button";
+import { listItemInventaris, serializeItem } from "@/lib/inventaris";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminInventarisPage() {
-  const [items, riwayat] = await Promise.all([
-    listItemInventaris(true),
-    listPergerakan(undefined, 30),
-  ]);
+  const items = await listItemInventaris(true);
 
   return (
     <CrudPageLayout
@@ -26,28 +15,22 @@ export default async function AdminInventarisPage() {
       title="Inventaris"
       description="Kelola item bahan baku, stok saat ini, dan jejak pergerakan."
       flowSteps={[
-        { label: "Lihat stok", detail: "Tabel di bawah — perhatikan badge stok rendah." },
-        { label: "Tambah item", detail: "Form item baru (jarang — kebanyakan dari seed)." },
-        { label: "Catat pergerakan", detail: "IN / OUT / ADJUST — stok berubah langsung." },
+        { label: "Lihat stok", detail: "Klik baris — riwayat per item + catat IN/OUT/ADJUST." },
+        { label: "Tambah item", detail: "Panel samping kanan (jarang — kebanyakan dari seed)." },
         { label: "Active pack", detail: "Setelah stok masuk, buat pack di menu Active pack." },
       ]}
-      list={<InventarisDaftar items={items.map(serializeItem)} />}
+      actions={
+        <InventarisItemFormSheet
+          trigger={
+            <Button type="button" className="h-11">
+              Tambah
+            </Button>
+          }
+        />
+      }
+      list={<InventarisDaftar items={items.map(serializeItem)} mode="admin" />}
       listTitle="Stok saat ini"
-      create={
-        <>
-          <InventarisItemForm />
-          <div className="mt-8 border-t pt-8">
-            <InventarisMovementForm items={items} action={catatPergerakanAdmin} />
-          </div>
-        </>
-      }
-      createTitle="Item & pergerakan stok"
-      createDescription="Create/Update — pergerakan OUT dipakai petani saat semai."
-      extra={
-        <PageSection title="Riwayat pergerakan" description="Read — 30 entri terakhir." badge="Read">
-          <InventarisRiwayat rows={riwayat.map(serializePergerakan)} />
-        </PageSection>
-      }
+      listDescription="Perhatikan badge stok rendah. Pergerakan OUT dipakai petani saat semai."
     />
   );
 }
