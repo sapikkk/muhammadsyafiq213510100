@@ -1,3 +1,10 @@
+## [1.35.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.35.0...v1.35.1) (2026-10-11)
+
+
+### Bug Fixes
+
+* **ux:** sejajarkan Panduan dengan header halaman dan spacing gap-6 ([6110055](https://github.com/sapikkk/muhammadsyafiq213510100/commit/6110055d88141300e2655ec7692c9447011c8f52))
+
 # [1.35.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.34.0...v1.35.0) (2026-10-11)
 
 
