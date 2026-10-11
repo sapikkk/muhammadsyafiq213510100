@@ -1,3 +1,10 @@
+# [1.34.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.33.0...v1.34.0) (2026-10-11)
+
+
+### Features
+
+* **ux:** sidebar epik Owner 1.0–7.0 dan coachmark UAT per halaman ([5112171](https://github.com/sapikkk/muhammadsyafiq213510100/commit/5112171dbd0838f201124a427c89ac84a1006a64))
+
 # [1.33.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.32.0...v1.33.0) (2026-10-11)
 
 
