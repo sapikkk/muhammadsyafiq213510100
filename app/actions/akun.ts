@@ -3,7 +3,6 @@
 import { getServerSession } from "next-auth";
 import { isRoleAllowed } from "@/lib/rbac";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import {
   AkunError,
@@ -43,7 +42,7 @@ export async function saveAkun(
       ? await updateAkun(id, input)
       : await createAkun(input);
     revalidatePath("/admin/akun");
-    if (id) redirect("/admin/akun");
+    revalidatePath("/owner/akun");
     return { saved: `Akun ${akun.kode} ${akun.nama} tersimpan.` };
   } catch (error) {
     if (error instanceof AkunError) return { error: error.message };
@@ -63,6 +62,7 @@ export async function toggleAkun(
   try {
     const akun = await setAkunAktif(id, aktif);
     revalidatePath("/admin/akun");
+    revalidatePath("/owner/akun");
     return {
       saved: `Akun ${akun.kode} ${akun.nama} ${aktif ? "diaktifkan" : "dinonaktifkan"}.`,
     };

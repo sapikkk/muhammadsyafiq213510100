@@ -160,6 +160,7 @@ export type AkunClientNode = {
   tipe: TipeAkunKey;
   aktif: boolean;
   isSystem: boolean;
+  parentId: number | null;
   anak: AkunClientNode[];
 };
 
@@ -174,6 +175,7 @@ export function buildClientTree(rows: Akun[]): AkunClientNode[] {
         tipe: row.tipe as TipeAkunKey,
         aktif: row.aktif,
         isSystem: row.isSystem,
+        parentId: row.parentId,
         anak: [],
       },
     ]),
