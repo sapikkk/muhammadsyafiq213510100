@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { FlowSteps } from "@/components/flow-steps";
-
-const ALUR = [
+export const OWNER_DASHBOARD_ALUR = [
   { label: "Pantau KPI", detail: "Dashboard — pendapatan vs beban bulan ini." },
   { label: "Review jurnal", detail: "Setujui/tolak entri dari Admin & otomatis." },
   { label: "Ekspor", detail: "Laba rugi & neraca PDF untuk sidang." },
@@ -18,7 +16,6 @@ const QUICK = [
 export function OwnerFlowDashboard() {
   return (
     <div className="space-y-6">
-      <FlowSteps pageKey="owner" steps={ALUR} title="Panduan dashboard Owner" />
       <div className="grid gap-3 sm:grid-cols-2">
         {QUICK.map((q) => (
           <Link

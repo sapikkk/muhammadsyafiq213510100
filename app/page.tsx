@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { AgileProgressDashboard } from "@/components/agile-progress-dashboard";
 import { FoundationPanel } from "@/components/foundation-panel";
 import { PageCoachmark } from "@/components/page-coachmark";
+import { PageHeaderRow } from "@/components/page-header-row";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 import { loadAgileProgress } from "@/lib/agile-progress";
@@ -36,27 +37,24 @@ export default async function HomePage() {
       </header>
 
       <section className="mx-auto w-full max-w-6xl px-6 py-10">
-        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          Progres proyek
-        </p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight">Kokonus Farm</h1>
-        <p className="mt-2 max-w-2xl text-muted-foreground">
-          Tata kelola biaya produksi hidroponik. Ringkasan agile live dari GitHub Project —
-          semua kartu sprint, status, dan riwayat waktu kerja (WIB).
-        </p>
+        <PageHeaderRow
+          eyebrow="Progres proyek"
+          title="Kokonus Farm"
+          description="Tata kelola biaya produksi hidroponik. Ringkasan agile live dari GitHub Project — semua kartu sprint, status, dan riwayat waktu kerja (WIB)."
+          guide={
+            <PageCoachmark
+              pageKey="home"
+              title="Panduan halaman beranda"
+              placement="toolbar"
+              steps={[
+                { label: "Registry agile", detail: "Progres sprint — bukan transaksi operasional." },
+                { label: "Masuk aplikasi", detail: "Login lalu buka dashboard peran Anda." },
+              ]}
+            />
+          }
+        />
 
-        <div className="mt-4">
-          <PageCoachmark
-            pageKey="home"
-            title="Panduan halaman beranda"
-            steps={[
-              { label: "Registry agile", detail: "Progres sprint — bukan transaksi operasional." },
-              { label: "Masuk aplikasi", detail: "Login lalu buka dashboard peran Anda." },
-            ]}
-          />
-        </div>
-
-        <div className="mt-10">
+        <div className="mt-8">
           <AgileProgressDashboard data={progress} />
         </div>
 

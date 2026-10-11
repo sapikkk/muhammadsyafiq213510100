@@ -16,9 +16,18 @@ type FlowStepsProps = {
   tips?: string[];
   title?: string;
   intro?: PageCoachmarkProps["intro"];
+  /** Sejajar tombol aksi di header (default untuk CRUD/dashboard) */
+  toolbar?: boolean;
 };
 
-export function FlowSteps({ steps, pageKey, tips, title, intro }: FlowStepsProps) {
+export function FlowSteps({
+  steps,
+  pageKey,
+  tips,
+  title,
+  intro,
+  toolbar = true,
+}: FlowStepsProps) {
   const pathname = usePathname();
   const derivedKey =
     pageKey ??
@@ -31,6 +40,7 @@ export function FlowSteps({ steps, pageKey, tips, title, intro }: FlowStepsProps
       tips={tips}
       title={title}
       intro={intro}
+      placement={toolbar ? "toolbar" : "block"}
     />
   );
 }

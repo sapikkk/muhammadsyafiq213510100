@@ -5,6 +5,7 @@ import { useFormState } from "react-dom";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { changePassword } from "@/app/actions/password";
+import { PageGuideToolbar } from "@/components/page-guide-toolbar";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { roleHome } from "@/lib/role-home";
@@ -24,17 +25,20 @@ export default function GantiSandiPage() {
   }, [state.ok, update, router, session?.user?.role]);
 
   return (
-    <div className="mx-auto flex w-full max-w-sm flex-col justify-center py-6">
-      <p className="text-sm font-medium text-primary">Kokonus Farm</p>
-      <h1 className="mt-2 text-2xl font-semibold tracking-tight">
-        Ganti sandi
-      </h1>
-      <p className="mt-1 text-sm text-muted-foreground">
-        {session?.user?.mustChangePassword
-          ? "Anda masuk dengan sandi dari Admin. Buat sandi baru sebelum lanjut."
-          : "Buat sandi baru untuk akun ini."}
-      </p>
-      <form action={formAction} noValidate className="mt-6 space-y-4">
+    <div className="mx-auto flex w-full max-w-sm flex-col justify-center gap-6 py-6">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0 space-y-1">
+          <p className="text-sm font-medium text-primary">Kokonus Farm</p>
+          <h1 className="text-2xl font-semibold tracking-tight">Ganti sandi</h1>
+          <p className="text-sm text-muted-foreground">
+            {session?.user?.mustChangePassword
+              ? "Anda masuk dengan sandi dari Admin. Buat sandi baru sebelum lanjut."
+              : "Buat sandi baru untuk akun ini."}
+          </p>
+        </div>
+        <PageGuideToolbar />
+      </div>
+      <form action={formAction} noValidate className="space-y-4">
         <label className="block space-y-1.5 text-sm">
           <span className="font-medium">Sandi baru</span>
           <Input

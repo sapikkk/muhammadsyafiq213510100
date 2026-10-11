@@ -13,21 +13,25 @@ export default function LupaSandiPage() {
   useActionToast({ error: state.error, ok: state.sent ? "Permintaan terkirim." : undefined });
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-sm flex-col justify-center px-4 py-10">
-      <p className="text-sm font-medium text-primary">Kokonus Farm</p>
-      <h1 className="mt-2 text-2xl font-semibold tracking-tight">Lupa sandi</h1>
-
-      <PageCoachmark
-        pageKey="lupa-sandi"
-        title="Panduan lupa sandi"
-        steps={[
-          { label: "Email", detail: "Kirim permintaan — Admin yang memproses." },
-          { label: "Setelah disetujui", detail: "Admin beri sandi sementara; ganti lewat Ganti sandi." },
-        ]}
-      />
+    <main className="mx-auto flex min-h-screen w-full max-w-sm flex-col justify-center gap-6 px-4 py-10">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0 space-y-1">
+          <p className="text-sm font-medium text-primary">Kokonus Farm</p>
+          <h1 className="text-2xl font-semibold tracking-tight">Lupa sandi</h1>
+        </div>
+        <PageCoachmark
+          pageKey="lupa-sandi"
+          title="Panduan lupa sandi"
+          placement="toolbar"
+          steps={[
+            { label: "Email", detail: "Kirim permintaan — Admin yang memproses." },
+            { label: "Setelah disetujui", detail: "Admin beri sandi sementara; ganti lewat Ganti sandi." },
+          ]}
+        />
+      </div>
 
       {state.sent ? (
-        <div role="status" className="mt-4 space-y-4">
+        <div role="status" className="space-y-4">
           <p className="text-sm">
             Permintaan sudah masuk ke Admin. Jika disetujui, Admin memberi Anda
             sandi sementara secara langsung. Jika ditolak, Admin juga akan

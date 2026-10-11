@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { FlowSteps, type FlowStep } from "@/components/flow-steps";
-import { PageHeader } from "@/components/page-header";
+import { PageHeaderRow } from "@/components/page-header-row";
 import { PageSection } from "@/components/page-section";
 
 export function CrudPageLayout({
@@ -37,20 +37,25 @@ export function CrudPageLayout({
   createDescription?: string;
   extra?: ReactNode;
 }) {
+  const guide = flowSteps ? (
+    <FlowSteps
+      steps={flowSteps}
+      pageKey={coachKey}
+      tips={coachTips}
+      title={coachTitle}
+      toolbar
+    />
+  ) : null;
+
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <PageHeader title={title} description={description} eyebrow={eyebrow} />
-        {actions ? <div className="flex shrink-0 flex-wrap gap-2">{actions}</div> : null}
-      </div>
-      {flowSteps ? (
-        <FlowSteps
-          steps={flowSteps}
-          pageKey={coachKey}
-          tips={coachTips}
-          title={coachTitle}
-        />
-      ) : null}
+    <div className="flex flex-col gap-6">
+      <PageHeaderRow
+        title={title}
+        description={description}
+        eyebrow={eyebrow}
+        guide={guide}
+        actions={actions}
+      />
       {list ? (
         <PageSection title={listTitle} description={listDescription} badge="Read" id="crud-list">
           {list}

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { AccountSettings } from "@/components/account-settings";
+import { PageGuideToolbar } from "@/components/page-guide-toolbar";
+import { PageHeaderRow } from "@/components/page-header-row";
 import { RoleMatrix } from "@/components/role-matrix";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -28,13 +30,12 @@ export default async function PengaturanPage() {
       : 0;
 
   return (
-    <div className="mx-auto flex w-full max-w-lg flex-col gap-8">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight">Pengaturan</h1>
-        <p className="text-muted-foreground">
-          {`${nama} · ${roleLabel[role]}`}
-        </p>
-      </header>
+    <div className="mx-auto flex w-full max-w-lg flex-col gap-6">
+      <PageHeaderRow
+        title="Pengaturan"
+        description={`${nama} · ${roleLabel[role]}`}
+        guide={<PageGuideToolbar />}
+      />
 
       <section aria-labelledby="notif-title" className="space-y-3">
         <h2 id="notif-title" className="text-lg font-semibold">

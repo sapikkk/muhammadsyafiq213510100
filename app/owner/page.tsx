@@ -1,9 +1,10 @@
-import { OwnerFlowDashboard } from "@/components/owner-flow-dashboard";
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { OwnerKpiCards } from "@/components/owner-kpi-cards";
 import { OwnerPetaniAkunDaftar } from "@/components/owner-petani-akun-daftar";
 import { OwnerRevenueChart } from "@/components/owner-revenue-chart";
-import { PageHeader } from "@/components/page-header";
+import { FlowSteps } from "@/components/flow-steps";
+import { OWNER_DASHBOARD_ALUR, OwnerFlowDashboard } from "@/components/owner-flow-dashboard";
+import { PageHeaderRow } from "@/components/page-header-row";
 import { PageSection } from "@/components/page-section";
 import { MetricRowsTable } from "@/components/metric-rows-table";
 import { formatRupiah } from "@/lib/format";
@@ -30,11 +31,19 @@ export default async function OwnerPage() {
   const labaTerbaik = bestProfitMonth(summary.months);
 
   return (
-    <>
-      <PageHeader
+    <div className="flex flex-col gap-6">
+      <PageHeaderRow
         eyebrow="Owner"
         title="Dashboard"
         description="KPI keuangan, alur approve jurnal, dan ekspor laporan sidang."
+        guide={
+          <FlowSteps
+            pageKey="owner"
+            steps={OWNER_DASHBOARD_ALUR}
+            title="Panduan dashboard Owner"
+            toolbar
+          />
+        }
       />
       <InventarisAlertBanner items={stokRendah} detailHref="/owner/stok-rendah" />
       <OwnerFlowDashboard />
@@ -104,6 +113,6 @@ export default async function OwnerPage() {
       <PageSection title="Akun petani" description="Login HP / pekerja lapangan." badge="Read">
         <OwnerPetaniAkunDaftar rows={petani} />
       </PageSection>
-    </>
+    </div>
   );
 }

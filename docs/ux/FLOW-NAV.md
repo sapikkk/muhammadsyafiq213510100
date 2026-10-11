@@ -18,8 +18,8 @@ Item **Akuntansi** (`/admin/akuntansi`) ada di navigasi Admin.
 
 Komponen:
 
-- `PageCoachmark` / `FlowSteps` — tombol **Panduan** saja (langkah hanya di dialog), tips UAT, auto-tampil pertama kali (localStorage)
-- `PageCoachmarkFromPath` — detail `/[id]`, form `/baru`, ganti sandi, akses ditolak, invoice SO, pengaturan (login/lupa sandi/beranda pakai `PageCoachmark` inline)
+- `PageCoachmark` / `FlowSteps` — tombol **Panduan** di **baris header** (`PageHeaderRow`, sejajar judul & aksi), langkah di dialog, tips UAT, auto-tampil pertama kali (localStorage)
+- `PageGuideToolbar` / `DetailLayoutToolbar` — panduan dari URL di detail `/[id]`, `/baru`, pengaturan, ganti sandi, invoice SO
 - `PageSection` — judul + badge **Read / Create / Update**
 - `CrudPageLayout` — header + daftar; form lewat `actions` (Sheet) bila sudah dimigrasi
 - `FormSheet`, `ConfirmDialog`, `RowActions`, `AktifToggleDialog` — Tingkat A (pelanggan, petani master, owner pengguna): Tambah/Ubah Sheet + Nonaktifkan Dialog
