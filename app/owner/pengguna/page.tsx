@@ -1,5 +1,6 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
-import { OwnerUserPanel } from "@/components/owner-user-panel";
+import { OwnerUserCreateSheet, OwnerUserDaftar } from "@/components/owner-user-panel";
+import { Button } from "@/components/ui/button";
 import { listUsersForOwner } from "@/lib/owner-users";
 
 export const dynamic = "force-dynamic";
@@ -13,10 +14,19 @@ export default async function OwnerPenggunaPage() {
       title="Kelola user"
       description="US1.9 — Owner menambah Admin/Petani dan mereset sandi (bukan akun Owner)."
       flowSteps={[
-        { label: "Daftar user", detail: "Peran Admin & Petani — sortir kolom email jika perlu." },
-        { label: "Tambah / reset", detail: "Form di panel — sandi sementara dikirim ke email." },
+        { label: "Daftar user", detail: "Cari nama atau email di tabel." },
+        { label: "Tambah / reset", detail: "Tambah lewat panel kanan; reset sandi lewat dialog konfirmasi." },
       ]}
-      list={<OwnerUserPanel users={users} />}
+      actions={
+        <OwnerUserCreateSheet
+          trigger={
+            <Button type="button" className="h-11">
+              Tambah
+            </Button>
+          }
+        />
+      }
+      list={<OwnerUserDaftar users={users} />}
       listTitle="Akun aplikasi"
     />
   );

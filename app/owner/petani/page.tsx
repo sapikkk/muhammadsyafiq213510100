@@ -12,7 +12,7 @@ export default async function OwnerPetaniPage() {
       eyebrow="Operasi"
       title="Master petani"
       description="Hanya baca. Perubahan lewat Admin."
-      list={<PetaniMasterDaftar rows={rows.map(serializePetani)} />}
+      list={<PetaniMasterDaftar rows={rows.map(serializePetani)} mode="owner" />}
       listTitle="Daftar petani lapangan"
     />
   );
