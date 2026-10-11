@@ -63,6 +63,10 @@ test("admin DataTable: pelanggan, inventaris, varietas — cari", async ({ page 
   await page.goto("/admin/inventaris");
   await expect(page.getByPlaceholder(/Cari kode atau nama/i)).toBeVisible();
 
+  await page.goto("/admin/petani");
+  await expect(page.getByRole("button", { name: /^Tambah$/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Form petani baru/i })).toHaveCount(0);
+
   await page.goto("/admin/varietas");
   await expect(page.getByPlaceholder(/Cari varietas/i)).toBeVisible();
 });
@@ -79,6 +83,8 @@ test("owner pengguna DataTable cari", async ({ page }) => {
   await loginOwner(page);
   await page.goto("/owner/pengguna");
   await expect(page.getByRole("heading", { name: /Kelola user/i })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^Tambah$/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Tambah akun login/i })).toHaveCount(0);
   const search = page.getByPlaceholder(/Cari nama atau email/i);
   await expect(search).toBeVisible();
   await search.fill("admin@kokonus");
