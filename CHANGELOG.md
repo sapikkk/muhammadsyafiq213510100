@@ -1,3 +1,15 @@
+# [1.29.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.28.1...v1.29.0) (2026-10-11)
+
+
+### Features
+
+* **flow:** active pack Tingkat B — detail, Sheet buat/pakai (Fase 6) ([630d64a](https://github.com/sapikkk/muhammadsyafiq213510100/commit/630d64a0089dd317de33ff31d5bc3b10ba4cd3db))
+* **flow:** fondasi UI Sheet, FormSheet, ConfirmDialog, RowActions (Fase 1) ([5de332f](https://github.com/sapikkk/muhammadsyafiq213510100/commit/5de332fb9206bb69f90614ebf9b3719eb592e33f))
+* **flow:** inventaris Tingkat B — detail, Sheet tambah/pergerakan (Fase 5) ([a6e4060](https://github.com/sapikkk/muhammadsyafiq213510100/commit/a6e4060880936695f48a976a63c437976e8a79fc))
+* **flow:** pilot pelanggan Tingkat A — Sheet Tambah/Ubah (Fase 2) ([f3bba79](https://github.com/sapikkk/muhammadsyafiq213510100/commit/f3bba79ae58fa39ef1c3afba4571b7b184eae4b0))
+* **flow:** Tingkat A petani master + owner pengguna (Fase 3) ([da4f0bd](https://github.com/sapikkk/muhammadsyafiq213510100/commit/da4f0bd3f3c88b3ac4a5fda999d93661fe41fe23))
+* **flow:** varietas Tingkat B — detail, Sheet, status Dialog (Fase 4) ([b385c3d](https://github.com/sapikkk/muhammadsyafiq213510100/commit/b385c3df6c667f0a43c2d9de7fde77641939a9be))
+
 ## [1.28.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.28.0...v1.28.1) (2026-10-10)
 
 
