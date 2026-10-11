@@ -9,7 +9,7 @@ test("admin penjualan: form SO punya lubang terpakai (v2-D.1)", async ({ page })
   await page.getByRole("button", { name: /masuk/i }).click();
   await page.waitForURL(/\/admin/);
 
-  await page.goto("/admin/penjualan");
+  await page.goto("/admin/penjualan/baru");
   await expect(page.getByText(/Sales order/i).first()).toBeVisible();
 
   const lubangField = page.getByPlaceholder("Lubang terpakai");
