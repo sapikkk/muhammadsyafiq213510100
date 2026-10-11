@@ -15,7 +15,7 @@ export default async function PetaniVarietasPage() {
       flowSteps={[
         { label: "Pilih varietas", detail: "Buka Siklus → batch baru → dropdown varietas." },
       ]}
-      list={<VarietasDaftar rows={serialized} />}
+      list={<VarietasDaftar rows={serialized} mode="petani" />}
       listTitle="Referensi varietas"
     />
   );

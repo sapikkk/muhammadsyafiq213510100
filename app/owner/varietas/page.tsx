@@ -1,6 +1,7 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { VarietasDaftar } from "@/components/varietas-daftar";
-import { VarietasForm } from "@/components/varietas-form";
+import { VarietasFormSheet } from "@/components/varietas-form";
+import { Button } from "@/components/ui/button";
 import { listVarietas, serializeVarietas } from "@/lib/varietas";
 import { mapRataHppPerLubangSemuaVarietas } from "@/lib/varietas-hpp-rata";
 
@@ -16,7 +17,6 @@ export default async function OwnerVarietasPage() {
     const rata = rataHppMap.get(r.id);
     return { ...base, rataHppPerLubang: rata ?? null };
   });
-  const options = serialized.map((r) => ({ id: r.id, label: `${r.nama} (${r.status})` }));
 
   return (
     <CrudPageLayout
@@ -25,12 +25,19 @@ export default async function OwnerVarietasPage() {
       description="Parameter varietas sesuai PRD modul 1.0 — Owner dan Admin boleh mengubah."
       flowSteps={[
         { label: "Lihat HPP rata", detail: "Kolom rata per lubang dari batch approved." },
-        { label: "Ubah asumsi", detail: "Form di bawah — dampak batch baru." },
+        { label: "Detail", detail: "Klik baris — ubah asumsi atau aktif/nonaktif." },
       ]}
-      list={<VarietasDaftar rows={serialized} />}
+      actions={
+        <VarietasFormSheet
+          trigger={
+            <Button type="button" className="h-11">
+              Tambah
+            </Button>
+          }
+        />
+      }
+      list={<VarietasDaftar rows={serialized} mode="owner" />}
       listTitle="Master varietas"
-      create={<VarietasForm varietasOptions={options} />}
-      createTitle="Form varietas"
     />
   );
 }

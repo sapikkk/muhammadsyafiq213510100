@@ -1,14 +1,22 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { VarietasDaftar } from "@/components/varietas-daftar";
-import { VarietasForm } from "@/components/varietas-form";
+import { VarietasFormSheet } from "@/components/varietas-form";
+import { Button } from "@/components/ui/button";
 import { listVarietas, serializeVarietas } from "@/lib/varietas";
+import { mapRataHppPerLubangSemuaVarietas } from "@/lib/varietas-hpp-rata";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminVarietasPage() {
-  const rows = await listVarietas(false);
-  const serialized = rows.map(serializeVarietas);
-  const options = serialized.map((r) => ({ id: r.id, label: `${r.nama} (${r.status})` }));
+  const [rows, rataHppMap] = await Promise.all([
+    listVarietas(false),
+    mapRataHppPerLubangSemuaVarietas(),
+  ]);
+  const serialized = rows.map((r) => {
+    const base = serializeVarietas(r);
+    const rata = rataHppMap.get(r.id);
+    return { ...base, rataHppPerLubang: rata ?? null };
+  });
 
   return (
     <CrudPageLayout
@@ -16,15 +24,23 @@ export default async function AdminVarietasPage() {
       title="Varietas & asumsi"
       description="Parameter benih, pertumbuhan, dan harga jual untuk perhitungan HPP dan siklus."
       flowSteps={[
-        { label: "Lihat daftar", detail: "Semua varietas — aktif/nonaktif." },
-        { label: "Tambah / ubah", detail: "Form di bawah — asumsi benih & media mengikuti PRD." },
+        { label: "Lihat daftar", detail: "Klik baris untuk detail — HPP rata per lubang." },
+        { label: "Tambah", detail: "Panel samping kanan — asumsi benih & media." },
+        { label: "Ubah / status", detail: "Di halaman detail — nonaktifkan jika sudah dipakai siklus." },
         { label: "Pakai di siklus", detail: "Petani pilih varietas aktif saat semai batch baru." },
       ]}
-      list={<VarietasDaftar rows={serialized} />}
+      actions={
+        <VarietasFormSheet
+          trigger={
+            <Button type="button" className="h-11">
+              Tambah
+            </Button>
+          }
+        />
+      }
+      list={<VarietasDaftar rows={serialized} mode="admin" />}
       listTitle="Master varietas"
-      create={<VarietasForm varietasOptions={options} />}
-      createTitle="Form varietas"
-      createDescription="Create/Update — nonaktifkan varietas lama alih-alih hapus jika sudah dipakai siklus."
+      listDescription="Cari nama varietas. Status dan ubah asumsi dari halaman detail."
     />
   );
 }
