@@ -35,6 +35,10 @@ type DataTableProps<TData, TValue> = {
   searchColumnIds?: string[];
   /** Sync search box to URL query param (e.g. `q`). */
   syncSearchParam?: string;
+  /** Return an href to navigate when a row is clicked (excluding action buttons/links). */
+  getRowHref?: (row: TData) => string;
+  /** Click callback for the entire row (excluding action buttons/links). */
+  onRowClick?: (row: TData) => void;
 };
 
 export function DataTable<TData, TValue>({
@@ -45,6 +49,8 @@ export function DataTable<TData, TValue>({
   searchPlaceholder,
   searchColumnIds,
   syncSearchParam,
+  getRowHref,
+  onRowClick,
 }: DataTableProps<TData, TValue>) {
   const router = useRouter();
   const pathname = usePathname();
@@ -107,6 +113,7 @@ export function DataTable<TData, TValue>({
   });
 
   const filteredCount = table.getFilteredRowModel().rows.length;
+  const isRowInteractive = Boolean(getRowHref || onRowClick);
 
   return (
     <div className="space-y-3">
@@ -124,7 +131,7 @@ export function DataTable<TData, TValue>({
       ) : null}
       <div className="overflow-x-auto rounded-md border bg-card">
         <Table noContainer>
-          <TableHeader className="sticky top-0 z-10 bg-muted/80 backdrop-blur-sm">
+          <TableHeader className="sticky top-0 z-10 bg-muted">
             {table.getHeaderGroups().map((hg) => (
               <TableRow key={hg.id} className="hover:bg-transparent">
                 {hg.headers.map((header) => {
@@ -164,7 +171,28 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row, index) => (
                 <TableRow
                   key={row.id}
-                  className={cn(index % 2 === 1 && "bg-muted/20")}
+                  className={cn(
+                    index % 2 === 1 && "bg-muted/20",
+                    isRowInteractive &&
+                      "cursor-pointer transition-colors hover:bg-muted/40",
+                  )}
+                  onClick={(e) => {
+                    if (!isRowInteractive) return;
+                    const target = e.target as HTMLElement | null;
+                    if (
+                      target?.closest(
+                        "button, a, input, select, textarea, [role='button'], [data-prevent-row-click]",
+                      )
+                    ) {
+                      return;
+                    }
+                    if (getRowHref) {
+                      const href = getRowHref(row.original);
+                      if (href) router.push(href);
+                    } else if (onRowClick) {
+                      onRowClick(row.original);
+                    }
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="px-3 py-2.5 text-sm align-middle">
