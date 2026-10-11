@@ -1,3 +1,16 @@
+# [1.30.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.29.0...v1.30.0) (2026-10-11)
+
+
+### Features
+
+* **flow:** akun Tingkat B — Sheet Tambah/Ubah, Dialog nonaktifkan ([11245b6](https://github.com/sapikkk/muhammadsyafiq213510100/commit/11245b6bd8a88b58e5a403987360abb0ae6dda87))
+* **flow:** infrastruktur Tingkat B — Sheet tambah, Dialog status kolam ([7369bda](https://github.com/sapikkk/muhammadsyafiq213510100/commit/7369bda931cd2e32c0b3fd321167d3af7359eb3c))
+* **flow:** penjualan Tingkat C — daftar, /baru, /[id] aksi per status ([bcbaa49](https://github.com/sapikkk/muhammadsyafiq213510100/commit/bcbaa490d10edd0d58a6a8d594b1b672cb4a4813))
+* **flow:** siklus Tingkat C, inventaris Ubah/Nonaktifkan, banned-ui fix ([15ce8f4](https://github.com/sapikkk/muhammadsyafiq213510100/commit/15ce8f45edd2293d5979cd6b050d4815117aa03c))
+* **flow:** Tingkat A — kolom aktif pelanggan, petani master, user ([2a8188b](https://github.com/sapikkk/muhammadsyafiq213510100/commit/2a8188b8e00d139fee20607f9e81a10e255d0837))
+* **ui:** DataTable owner keuangan, DetailLayout jurnal, filter seragam ([7b1df67](https://github.com/sapikkk/muhammadsyafiq213510100/commit/7b1df67636619f0fff295a53fec44d809dfdb711))
+* **ui:** selaraskan jurnal, harvest review, invoice ke DetailLayout/Crud ([32a0c69](https://github.com/sapikkk/muhammadsyafiq213510100/commit/32a0c691f74957af0a877b1ff187ca2c19c4baf8))
+
 # [1.29.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.28.1...v1.29.0) (2026-10-11)
 
 
