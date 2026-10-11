@@ -1,4 +1,5 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { LaporanExportDaftar } from "@/components/laporan-export-daftar";
 import { MonthRangeFilter } from "@/components/month-range-filter";
 
 export const dynamic = "force-dynamic";
@@ -19,6 +20,27 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
       : defaultMonth();
   const q = `dari=${encodeURIComponent(dari)}&sampai=${encodeURIComponent(sampai)}`;
 
+  const rows = [
+    {
+      id: "laba-rugi",
+      judul: "Laba rugi",
+      deskripsi: `Periode ${dari}–${sampai} · jurnal APPROVED`,
+      href: `/api/export/income-statement?${q}`,
+    },
+    {
+      id: "neraca",
+      judul: "Neraca",
+      deskripsi: "Saldo akun posting (snapshot)",
+      href: `/api/export/balance-sheet?${q}`,
+    },
+    {
+      id: "arus-kas",
+      judul: "Arus kas",
+      deskripsi: "Kas/Bank · jurnal APPROVED",
+      href: `/api/export/cash-flow?${q}`,
+    },
+  ];
+
   return (
     <CrudPageLayout
       eyebrow="Ringkasan"
@@ -26,42 +48,12 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
       description="US6.3 — laba rugi & neraca PDF (Owner/Admin). Jurnal xlsx di menu Admin."
       flowSteps={[
         { label: "Pilih periode", detail: "Format YYYY-MM — sama dengan filter arus kas." },
-        { label: "Unduh PDF", detail: "Klik kartu — file dari API export (jurnal APPROVED)." },
+        { label: "Unduh", detail: "Tabel laporan — tombol Unduh PDF per baris." },
       ]}
       list={
         <div className="space-y-4">
           <MonthRangeFilter dari={dari} sampai={sampai} />
-          <ul className="grid gap-3 sm:grid-cols-2">
-            <li>
-              <a
-                href={`/api/export/income-statement?${q}`}
-                className="block rounded-md border p-4 transition-colors hover:bg-muted/50"
-              >
-                <p className="font-medium">Laba rugi (PDF)</p>
-                <p className="text-sm text-muted-foreground">
-                  Periode {dari}–{sampai} · jurnal APPROVED
-                </p>
-              </a>
-            </li>
-            <li>
-              <a
-                href={`/api/export/balance-sheet?${q}`}
-                className="block rounded-md border p-4 transition-colors hover:bg-muted/50"
-              >
-                <p className="font-medium">Neraca (PDF)</p>
-                <p className="text-sm text-muted-foreground">Saldo akun posting (snapshot)</p>
-              </a>
-            </li>
-            <li>
-              <a
-                href={`/api/export/cash-flow?${q}`}
-                className="block rounded-md border p-4 transition-colors hover:bg-muted/50"
-              >
-                <p className="font-medium">Arus kas (PDF)</p>
-                <p className="text-sm text-muted-foreground">Kas/Bank · jurnal APPROVED</p>
-              </a>
-            </li>
-          </ul>
+          <LaporanExportDaftar rows={rows} />
         </div>
       }
       listTitle="Unduhan"
