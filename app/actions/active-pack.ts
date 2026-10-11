@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { actorFromSession, logEntityChange } from "@/lib/entity-audit";
 import {
   ActivePackError,
   buatActivePack,
@@ -22,7 +23,7 @@ async function requirePack() {
   if (!isRoleAllowed(session.user.role, ["ADMIN", "PEKERJA"])) {
     throw new ActivePackError("Peran Anda tidak berhak.", 403);
   }
-  return userId;
+  return { userId, session };
 }
 
 function toState(error: unknown): FormState {
@@ -36,9 +37,16 @@ export async function simpanActivePack(
   basePath: "/admin/active-pack" | "/petani/active-pack",
 ): Promise<FormState> {
   try {
-    const userId = await requirePack();
+    const { userId, session } = await requirePack();
     const raw = Object.fromEntries(formData.entries());
-    await buatActivePack(parseActivePackInput(raw, userId));
+    const pack = await buatActivePack(parseActivePackInput(raw, userId));
+    await logEntityChange({
+      entitas: "ActivePack",
+      entitasId: pack.id,
+      aksi: "CREATE",
+      ringkasan: `Pack baru: ${pack.kode}`,
+      actor: actorFromSession(session),
+    });
     revalidatePath(basePath);
     revalidatePath("/admin/inventaris");
     revalidatePath("/petani/inventaris");
@@ -68,13 +76,20 @@ export async function pakaiActivePackForm(
   basePath: "/admin/active-pack" | "/petani/active-pack",
 ): Promise<FormState> {
   try {
-    await requirePack();
+    const { session } = await requirePack();
     const id = Number(formData.get("id"));
     const jumlah = formData.get("jumlah");
     if (!Number.isInteger(id) || id <= 0) {
       return { error: "Pilih pack." };
     }
     const pack = await pakaiActivePack(id, jumlah);
+    await logEntityChange({
+      entitas: "ActivePack",
+      entitasId: pack.id,
+      aksi: "UPDATE",
+      ringkasan: `Pakai stok · sisa ${pack.sisaUnit.toString()} unit`,
+      actor: actorFromSession(session),
+    });
     revalidatePath(basePath);
     revalidatePath(`${basePath}/${id}`);
     return {

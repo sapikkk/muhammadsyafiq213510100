@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { isRoleAllowed } from "@/lib/rbac";
 import { revalidatePath } from "next/cache";
 import { authOptions } from "@/lib/auth";
+import { actorFromSession, logEntityChange } from "@/lib/entity-audit";
 import {
   createUserByOwner,
   OwnerUserError,
@@ -29,11 +30,18 @@ export async function createOwnerUser(
   if (!ctx) return { error: "Hanya Owner." };
 
   try {
-    await createUserByOwner({
+    const user = await createUserByOwner({
       nama: formData.get("nama"),
       email: formData.get("email"),
       password: formData.get("password"),
       role: formData.get("role"),
+    });
+    await logEntityChange({
+      entitas: "User",
+      entitasId: user.id,
+      aksi: "CREATE",
+      ringkasan: `Akun baru · ${user.email} (${user.role})`,
+      actor: actorFromSession(ctx.session),
     });
     revalidatePath("/owner/pengguna");
     return { ok: true, message: "Akun baru dibuat." };
@@ -55,6 +63,13 @@ export async function resetOwnerUserPassword(
 
   try {
     await resetPasswordByOwner(userId, ctx.id, { password: formData.get("password") });
+    await logEntityChange({
+      entitas: "User",
+      entitasId: userId,
+      aksi: "UPDATE",
+      ringkasan: "Sandi direset oleh Owner",
+      actor: actorFromSession(ctx.session),
+    });
     revalidatePath("/owner/pengguna");
     return { ok: true, message: "Sandi direset; user wajib ganti saat login." };
   } catch (error) {
@@ -79,6 +94,13 @@ export async function ubahStatusOwnerUser(
 
   try {
     const row = await setUserAktifByOwner(userId, ctx.id, aktif);
+    await logEntityChange({
+      entitas: "User",
+      entitasId: userId,
+      aksi: "STATUS",
+      ringkasan: aktif ? "Diaktifkan" : "Dinonaktifkan",
+      actor: actorFromSession(ctx.session),
+    });
     revalidatePath("/owner/pengguna");
     return {
       ok: `Akun ${row.email} ${aktif ? "diaktifkan" : "dinonaktifkan"}.`,

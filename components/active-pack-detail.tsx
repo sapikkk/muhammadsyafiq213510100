@@ -5,6 +5,7 @@ import { PageSection } from "@/components/page-section";
 import { Badge } from "@/components/ui/badge";
 import { formatQty, formatRupiah, formatTanggal } from "@/lib/format";
 import { getActivePack, serializeActivePack, type ActivePackListRow } from "@/lib/active-pack";
+import { EntityChangeHistorySection } from "@/components/entity-change-history-section";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
 
 function toListRow(
@@ -67,6 +68,7 @@ export async function ActivePackDetail({
           <Item label="Keterangan" value={serialized.keterangan ?? "—"} />
         </dl>
       </PageSection>
+      <EntityChangeHistorySection entitas="ActivePack" entitasId={id} />
     </DetailLayout>
   );
 }

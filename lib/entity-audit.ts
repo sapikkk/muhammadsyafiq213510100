@@ -7,6 +7,16 @@ export type EntityAuditActor = {
   nama?: string;
 };
 
+export function actorFromSession(
+  session: {
+    user?: { email?: string | null; name?: string | null } | null;
+  } | null,
+): EntityAuditActor | null {
+  const email = session?.user?.email;
+  if (!email) return null;
+  return { email, nama: session?.user?.name ?? undefined };
+}
+
 export async function logEntityChange(input: {
   entitas: string;
   entitasId: number;
