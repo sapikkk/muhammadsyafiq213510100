@@ -170,7 +170,7 @@ export function SalesOrderDetail({
   showHeader = false,
 }: {
   row: SoRow;
-  mode: "admin" | "pengiriman";
+  mode: "admin" | "pengiriman" | "owner";
   showHeader?: boolean;
 }) {
   return (
@@ -221,6 +221,11 @@ export function SalesOrderDetail({
       ) : null}
       {row.alasan_batal ? (
         <p className="text-xs text-destructive">Batal: {row.alasan_batal}</p>
+      ) : null}
+      {mode === "owner" ? (
+        <p className="text-xs text-muted-foreground">
+          Tampilan Owner — baca saja. Aksi penjualan dilakukan Admin.
+        </p>
       ) : null}
       {mode === "admin" && row.status !== "DRAFT" && row.status !== "CANCELLED" ? (
         <Link

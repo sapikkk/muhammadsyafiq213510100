@@ -9,6 +9,9 @@ export function CrudPageLayout({
   eyebrow,
   actions,
   flowSteps,
+  coachKey,
+  coachTips,
+  coachTitle,
   list,
   listTitle = "Daftar data",
   listDescription,
@@ -22,6 +25,10 @@ export function CrudPageLayout({
   eyebrow?: string;
   actions?: ReactNode;
   flowSteps?: FlowStep[];
+  /** Override kunci coachmark (default: path halaman) */
+  coachKey?: string;
+  coachTips?: string[];
+  coachTitle?: string;
   list?: ReactNode;
   listTitle?: string;
   listDescription?: string;
@@ -36,7 +43,14 @@ export function CrudPageLayout({
         <PageHeader title={title} description={description} eyebrow={eyebrow} />
         {actions ? <div className="flex shrink-0 flex-wrap gap-2">{actions}</div> : null}
       </div>
-      {flowSteps ? <FlowSteps steps={flowSteps} /> : null}
+      {flowSteps ? (
+        <FlowSteps
+          steps={flowSteps}
+          pageKey={coachKey}
+          tips={coachTips}
+          title={coachTitle}
+        />
+      ) : null}
       {list ? (
         <PageSection title={listTitle} description={listDescription} badge="Read" id="crud-list">
           {list}

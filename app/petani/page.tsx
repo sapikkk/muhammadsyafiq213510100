@@ -22,6 +22,8 @@ export default async function PetaniPage() {
         description="Mulai dari tugas hari ini, lalu buka Siklus untuk batch aktif."
       />
       <FlowSteps
+        pageKey="petani"
+        title="Panduan dashboard Petani"
         steps={[
           { label: "Cek stok", detail: "Inventaris & active pack — pastikan bahan cukup." },
           { label: "Semai batch", detail: "Menu Siklus → mulai fase SEMAI." },

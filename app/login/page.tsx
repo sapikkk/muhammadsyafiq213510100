@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/card";
 import { roleHome } from "@/lib/role-home";
 import { notify } from "@/lib/notify";
+import { PageCoachmark } from "@/components/page-coachmark";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -70,6 +71,16 @@ export default function LoginPage() {
             Gunakan akun Owner, Admin, atau Petani.
           </p>
         </div>
+
+        <PageCoachmark
+          pageKey="login"
+          title="Panduan masuk"
+          steps={[
+            { label: "Email & sandi", detail: "Isi keduanya lalu klik Masuk." },
+            { label: "Peran", detail: "Diarahkan ke dashboard Owner, Admin, atau Petani." },
+            { label: "Setelah masuk", detail: "Buka Panduan di setiap halaman untuk UAT." },
+          ]}
+        />
 
         <Card>
           <CardHeader className="pb-2">

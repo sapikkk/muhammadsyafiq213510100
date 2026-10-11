@@ -18,7 +18,14 @@ export type SiklusBaris = {
   status: string;
 };
 
-export function SiklusDaftar({ rows }: { rows: SiklusBaris[] }) {
+export function SiklusDaftar({
+  rows,
+  readOnly = false,
+}: {
+  rows: SiklusBaris[];
+  /** Owner: tabel tanpa navigasi ke petani. */
+  readOnly?: boolean;
+}) {
   const columns = useMemo<ColumnDef<SiklusBaris>[]>(
     () => [
       { accessorKey: "kode_batch", header: "Batch" },
@@ -70,7 +77,7 @@ export function SiklusDaftar({ rows }: { rows: SiklusBaris[] }) {
       searchPlaceholder="Cari batch, varietas, lokasi…"
       searchColumnIds={["kode_batch", "varietas_nama", "lokasi", "status"]}
       emptyMessage="Belum ada siklus produksi."
-      getRowHref={(row) => `/petani/siklus/${row.id}`}
+      getRowHref={readOnly ? undefined : (row) => `/petani/siklus/${row.id}`}
     />
   );
 }
