@@ -1,3 +1,10 @@
+# [1.31.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.30.0...v1.31.0) (2026-10-11)
+
+
+### Features
+
+* **ui:** dashboard owner menampilkan data lewat tabel, bukan Card ([a228ed1](https://github.com/sapikkk/muhammadsyafiq213510100/commit/a228ed19f96c618c923056ed27ef9abc568fe2c3))
+
 # [1.30.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.29.0...v1.30.0) (2026-10-11)
 
 
