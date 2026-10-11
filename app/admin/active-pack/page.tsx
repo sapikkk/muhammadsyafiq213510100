@@ -1,12 +1,8 @@
-import {
-  pakaiActivePackAdmin,
-  simpanActivePackAdmin,
-} from "@/app/actions/active-pack";
+import { simpanActivePackAdmin } from "@/app/actions/active-pack";
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { ActivePackDaftar } from "@/components/active-pack-daftar";
-import { ActivePackForm } from "@/components/active-pack-form";
-import { ActivePackPakaiForm } from "@/components/active-pack-pakai-form";
-import { PageSection } from "@/components/page-section";
+import { ActivePackFormSheet } from "@/components/active-pack-form";
+import { Button } from "@/components/ui/button";
 import {
   listActivePack,
   serializeActivePack,
@@ -31,19 +27,24 @@ export default async function AdminActivePackPage() {
       title="Active pack"
       description="Alokasi biaya benih/media per unit — dipakai saat semai & tambal."
       flowSteps={[
-        { label: "Buat pack", detail: "Pilih item inventaris + harga total pack." },
-        { label: "Pakai unit", detail: "Kurangi sisa — otomatis saat petani semai." },
-        { label: "Habis", detail: "Status HABIS + jurnal penyesuaian pembulatan (v2)." },
+        { label: "Buat pack", detail: "Tombol Tambah — pilih item inventaris + harga total pack." },
+        { label: "Detail", detail: "Klik baris — pakai unit manual atau lihat sisa." },
+        { label: "Habis", detail: "Status habis + jurnal penyesuaian pembulatan (v2)." },
       ]}
-      list={<ActivePackDaftar rows={packs} />}
-      listTitle="Daftar pack"
-      create={<ActivePackForm items={items} action={simpanActivePackAdmin} />}
-      createTitle="Pack baru"
-      extra={
-        <PageSection title="Pakai manual (Admin)" description="Update — kurangi sisa pack tanpa siklus.">
-          <ActivePackPakaiForm packs={packs} action={pakaiActivePackAdmin} />
-        </PageSection>
+      actions={
+        <ActivePackFormSheet
+          items={items}
+          action={simpanActivePackAdmin}
+          trigger={
+            <Button type="button" className="h-11">
+              Tambah
+            </Button>
+          }
+        />
       }
+      list={<ActivePackDaftar rows={packs} mode="admin" />}
+      listTitle="Daftar pack"
+      listDescription="Pemakaian otomatis saat semai; admin bisa pakai manual dari detail pack aktif."
     />
   );
 }

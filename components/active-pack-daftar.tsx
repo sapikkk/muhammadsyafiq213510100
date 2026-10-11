@@ -10,7 +10,18 @@ import type { ActivePackListRow } from "@/lib/active-pack-types";
 
 export type { ActivePackListRow } from "@/lib/active-pack-types";
 
-export function ActivePackDaftar({ rows }: { rows: ActivePackListRow[] }) {
+const basePath = {
+  admin: "/admin/active-pack",
+  petani: "/petani/active-pack",
+} as const;
+
+export function ActivePackDaftar({
+  rows,
+  mode,
+}: {
+  rows: ActivePackListRow[];
+  mode: keyof typeof basePath;
+}) {
   const columns = useMemo<ColumnDef<ActivePackListRow>[]>(
     () => [
       { accessorKey: "kode", header: "Kode" },
@@ -78,6 +89,7 @@ export function ActivePackDaftar({ rows }: { rows: ActivePackListRow[] }) {
       searchPlaceholder="Cari pack atau item…"
       searchColumnIds={["kode", "item", "dibuatOleh.nama"]}
       emptyMessage="Belum ada active pack."
+      getRowHref={(row) => `${basePath[mode]}/${row.id}`}
     />
   );
 }

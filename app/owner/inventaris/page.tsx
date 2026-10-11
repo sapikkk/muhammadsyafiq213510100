@@ -13,10 +13,10 @@ export default async function OwnerInventarisPage() {
       title="Inventaris"
       description="Hanya baca stok bahan. Pergerakan di Admin atau Petani."
       flowSteps={[
-        { label: "Cek stok", detail: "Sortir kolom stok — bandingkan dengan alert stok rendah." },
-        { label: "Tindak lanjut", detail: "Koordinasi Admin untuk pembelian jika ada alert." },
+        { label: "Cek stok", detail: "Klik baris untuk riwayat per item." },
+        { label: "Tindak lanjut", detail: "Koordinasi Admin untuk pembelian jika ada alert stok rendah." },
       ]}
-      list={<InventarisDaftar items={items.map(serializeItem)} />}
+      list={<InventarisDaftar items={items.map(serializeItem)} mode="owner" />}
       listTitle="Stok bahan baku"
     />
   );

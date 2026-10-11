@@ -1,11 +1,8 @@
-import {
-  pakaiActivePackPetani,
-  simpanActivePackPetani,
-} from "@/app/actions/active-pack";
+import { simpanActivePackPetani } from "@/app/actions/active-pack";
 import { ActivePackDaftar } from "@/components/active-pack-daftar";
-import { ActivePackForm } from "@/components/active-pack-form";
-import { ActivePackPakaiForm } from "@/components/active-pack-pakai-form";
+import { ActivePackFormSheet } from "@/components/active-pack-form";
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { Button } from "@/components/ui/button";
 import {
   listActivePack,
   serializeActivePack,
@@ -30,21 +27,23 @@ export default async function PetaniActivePackPage() {
       title="Active pack"
       description="Rakit pack jual dari stok inventaris — pakai saat fase produksi membutuhkan pack."
       flowSteps={[
-        { label: "Lihat pack", detail: "Stok pack siap pakai vs habis." },
-        { label: "Buat pack", detail: "Form komposisi — kurangi stok bahan otomatis." },
-        { label: "Pakai", detail: "Form pakai — kurangi qty pack aktif." },
+        { label: "Lihat pack", detail: "Klik baris — stok siap pakai vs habis." },
+        { label: "Buat pack", detail: "Tombol Tambah — kurangi stok bahan otomatis." },
+        { label: "Pakai", detail: "Di detail pack aktif — kurangi qty sisa." },
       ]}
-      list={<ActivePackDaftar rows={packs} />}
-      listTitle="Daftar pack"
-      create={
-        <>
-          <ActivePackForm items={items} action={simpanActivePackPetani} />
-          <div className="mt-8 border-t pt-8">
-            <ActivePackPakaiForm packs={packs} action={pakaiActivePackPetani} />
-          </div>
-        </>
+      actions={
+        <ActivePackFormSheet
+          items={items}
+          action={simpanActivePackPetani}
+          trigger={
+            <Button type="button" className="h-11">
+              Tambah
+            </Button>
+          }
+        />
       }
-      createTitle="Buat & pakai pack"
+      list={<ActivePackDaftar rows={packs} mode="petani" />}
+      listTitle="Daftar pack"
     />
   );
 }

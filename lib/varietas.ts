@@ -120,22 +120,42 @@ export async function listVarietas(onlyAktif = false) {
   });
 }
 
-export async function createVarietas(input: VarietasInput): Promise<Varietas> {
-  return prisma.varietas.create({
-    data: {
-      nama: input.nama,
-      harga_benih_per_gram: input.hargaBenihPerGram,
-      biji_per_gram: input.bijiPerGram,
-      daya_kecambah: input.dayaKecambah,
-      lama_semai: input.lamaSemai,
-      lama_di_kolam: input.lamaDiKolam,
-      berat_rata_rata_panen: input.beratRataRataPanen,
-      berat_per_pack: input.beratPerPack,
-      harga_jual_curah: input.hargaJualCurah,
-      harga_jual_pack: input.hargaJualPack,
-      status: input.status,
-    },
+export async function getVarietas(id: number) {
+  return prisma.varietas.findUnique({
+    where: { id },
+    include: { _count: { select: { siklus: true } } },
   });
+}
+
+function varietasDataFromInput(input: VarietasInput) {
+  return {
+    nama: input.nama,
+    harga_benih_per_gram: input.hargaBenihPerGram,
+    biji_per_gram: input.bijiPerGram,
+    daya_kecambah: input.dayaKecambah,
+    lama_semai: input.lamaSemai,
+    lama_di_kolam: input.lamaDiKolam,
+    berat_rata_rata_panen: input.beratRataRataPanen,
+    berat_per_pack: input.beratPerPack,
+    harga_jual_curah: input.hargaJualCurah,
+    harga_jual_pack: input.hargaJualPack,
+    status: input.status,
+  };
+}
+
+export async function createVarietas(input: VarietasInput): Promise<Varietas> {
+  return prisma.varietas.create({ data: varietasDataFromInput(input) });
+}
+
+export async function updateVarietas(id: number, input: VarietasInput): Promise<Varietas> {
+  try {
+    return await prisma.varietas.update({
+      where: { id },
+      data: varietasDataFromInput(input),
+    });
+  } catch (error) {
+    translatePrisma(error);
+  }
 }
 
 export async function setVarietasStatus(id: number, status: VarietasStatus) {
