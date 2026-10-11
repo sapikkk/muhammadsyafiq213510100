@@ -20,7 +20,8 @@ Komponen:
 
 - `FlowSteps` — langkah 1–n di atas konten
 - `PageSection` — judul + badge **Read / Create / Update**
-- `CrudPageLayout` — gabungan header + alur + daftar + form
+- `CrudPageLayout` — header + daftar; form lewat `actions` (Sheet) bila sudah dimigrasi
+- `FormSheet`, `ConfirmDialog`, `RowActions` — pilot flow Tingkat A (pelanggan, petani master, owner pengguna)
 - `admin-flow-dashboard.tsx` / `owner-flow-dashboard.tsx` — hub Admin/Owner
 
 ## Cakupan halaman (v1.28.0)
