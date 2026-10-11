@@ -26,6 +26,7 @@ export async function mulaiSiklusSemai(
     const raw = Object.fromEntries(formData.entries());
     const siklus = await buatSiklusSemai(parseSiklusInput(raw), Number(session!.user!.id));
     revalidatePath("/petani/siklus");
+    revalidatePath("/petani/siklus/baru");
     return { ok: `Siklus ${siklus.kode_batch} tersimpan. Fase ${siklus.status}.` };
   } catch (error) {
     if (error instanceof SiklusError) return { error: error.message };

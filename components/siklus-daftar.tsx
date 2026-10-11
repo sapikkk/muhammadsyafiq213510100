@@ -1,7 +1,6 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
@@ -59,18 +58,6 @@ export function SiklusDaftar({ rows }: { rows: SiklusBaris[] }) {
           <span className="tabular-nums">{row.original.jumlah_disemai}</span>
         ),
       },
-      {
-        id: "aksi",
-        header: "",
-        cell: ({ row }) => (
-          <Link
-            href={`/petani/siklus/${row.original.id}`}
-            className="text-sm font-medium text-primary underline-offset-4 hover:underline"
-          >
-            Pindah fase
-          </Link>
-        ),
-      },
     ],
     [],
   );
@@ -83,6 +70,7 @@ export function SiklusDaftar({ rows }: { rows: SiklusBaris[] }) {
       searchPlaceholder="Cari batch, varietas, lokasi…"
       searchColumnIds={["kode_batch", "varietas_nama", "lokasi", "status"]}
       emptyMessage="Belum ada siklus produksi."
+      getRowHref={(row) => `/petani/siklus/${row.id}`}
     />
   );
 }
