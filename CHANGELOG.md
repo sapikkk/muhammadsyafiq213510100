@@ -1,3 +1,10 @@
+## [1.31.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.31.0...v1.31.1) (2026-10-11)
+
+
+### Bug Fixes
+
+* **ui:** pulihkan tab lama saat chunk JS 404 setelah deploy ([a3de85f](https://github.com/sapikkk/muhammadsyafiq213510100/commit/a3de85f8e1f05649ed05d7cf5e2188695d33c09d))
+
 # [1.31.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.30.0...v1.31.0) (2026-10-11)
 
 
