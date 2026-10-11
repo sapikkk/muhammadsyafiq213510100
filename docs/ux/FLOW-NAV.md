@@ -18,8 +18,8 @@ Item **Akuntansi** (`/admin/akuntansi`) ada di navigasi Admin.
 
 Komponen:
 
-- `PageCoachmark` / `FlowSteps` — chip langkah, dialog **Panduan**, tips UAT (`lib/coach-tips.ts`), auto-tampil pertama kali per halaman (localStorage)
-- `PageCoachmarkFromPath` — detail `/[id]`, login, pengaturan
+- `PageCoachmark` / `FlowSteps` — tombol **Panduan** saja (langkah hanya di dialog), tips UAT, auto-tampil pertama kali (localStorage)
+- `PageCoachmarkFromPath` — detail `/[id]`, form `/baru`, ganti sandi, akses ditolak, invoice SO, pengaturan (login/lupa sandi/beranda pakai `PageCoachmark` inline)
 - `PageSection` — judul + badge **Read / Create / Update**
 - `CrudPageLayout` — header + daftar; form lewat `actions` (Sheet) bila sudah dimigrasi
 - `FormSheet`, `ConfirmDialog`, `RowActions`, `AktifToggleDialog` — Tingkat A (pelanggan, petani master, owner pengguna): Tambah/Ubah Sheet + Nonaktifkan Dialog
@@ -34,9 +34,11 @@ Komponen:
 
 **Admin:** dashboard, pelanggan, inventaris, active pack, penjualan, jurnal, harvest, akuntansi, varietas, infrastruktur, stok rendah, susut, biaya, akun, petani.
 
-**Owner:** dashboard, jurnal, laporan, biaya, arus kas, evaluasi, akun, prive, pengguna, inventaris, varietas, infrastruktur, stok rendah, petani.
+**Owner:** dashboard, jurnal, laporan, biaya, arus kas, evaluasi, akun, prive, pengguna, inventaris, varietas, infrastruktur, stok rendah, petani (semua dengan **Panduan**).
 
-**Petani:** dashboard, siklus, inventaris, active pack, varietas, stok rendah, pengiriman.
+**Petani:** dashboard, siklus (+ `/baru`), inventaris, active pack, varietas, stok rendah, pengiriman (+ detail `[id]`).
+
+**Lain:** `/` (registry), `/login`, `/lupa-sandi`, `/ganti-sandi`, `/akses-ditolak`, `/admin/jurnal/baru`, `/admin/penjualan/baru`, `/admin/penjualan/[id]/invoice`.
 
 Halaman **detail** — soft navigation dari daftar membuka **DetailSheetFrame**; hard link / refresh tetap halaman penuh dengan “Kembali ke daftar”. Sidebar: grup **judul saja**, sub-menu **collapse**.
 

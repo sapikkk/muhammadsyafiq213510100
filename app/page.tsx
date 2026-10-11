@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { AgileProgressDashboard } from "@/components/agile-progress-dashboard";
 import { FoundationPanel } from "@/components/foundation-panel";
+import { PageCoachmark } from "@/components/page-coachmark";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 import { loadAgileProgress } from "@/lib/agile-progress";
@@ -43,6 +44,17 @@ export default async function HomePage() {
           Tata kelola biaya produksi hidroponik. Ringkasan agile live dari GitHub Project —
           semua kartu sprint, status, dan riwayat waktu kerja (WIB).
         </p>
+
+        <div className="mt-4">
+          <PageCoachmark
+            pageKey="home"
+            title="Panduan halaman beranda"
+            steps={[
+              { label: "Registry agile", detail: "Progres sprint — bukan transaksi operasional." },
+              { label: "Masuk aplikasi", detail: "Login lalu buka dashboard peran Anda." },
+            ]}
+          />
+        </div>
 
         <div className="mt-10">
           <AgileProgressDashboard data={progress} />

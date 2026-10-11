@@ -11,7 +11,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
 import { tipsForCoachKey } from "@/lib/coach-tips";
 
 export type FlowStep = {
@@ -129,8 +128,10 @@ export function PageCoachmark({
     }
   }, [storageKey]);
 
+  const hasGuide = steps.length > 0 || resolvedTips.length > 0;
+
   useEffect(() => {
-    if (!autoOnFirstVisit || steps.length === 0) return;
+    if (!autoOnFirstVisit || !hasGuide) return;
     try {
       if (!localStorage.getItem(storageKey)) {
         setCoachOpen(true);
@@ -138,51 +139,20 @@ export function PageCoachmark({
     } catch {
       /* ignore */
     }
-  }, [autoOnFirstVisit, steps.length, storageKey]);
+  }, [autoOnFirstVisit, hasGuide, storageKey]);
 
-  if (steps.length === 0 && resolvedTips.length === 0) return null;
+  if (!hasGuide) return null;
 
   return (
     <>
-      <div
-        className="flex flex-wrap items-center gap-2 rounded-md border border-border bg-muted/20 px-3 py-2"
-        aria-label="Panduan halaman"
-        data-coachmark={pageKey}
-      >
-        <span className="text-xs font-medium text-muted-foreground">Langkah</span>
-        {steps.length > 0 ? (
-          <ol className="flex flex-wrap items-center gap-1.5">
-            {steps.map((step, index) => (
-              <li key={step.label}>
-                <button
-                  type="button"
-                  title={step.detail}
-                  className={cn(
-                    "inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2 py-1 text-xs font-medium",
-                    "hover:bg-muted/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground",
-                  )}
-                  onClick={() => setCoachOpen(true)}
-                >
-                  <span
-                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-foreground text-[10px] font-semibold"
-                    aria-hidden
-                  >
-                    {index + 1}
-                  </span>
-                  <span>{step.label}</span>
-                </button>
-              </li>
-            ))}
-          </ol>
-        ) : (
-          <span className="text-xs text-muted-foreground">Buka panduan untuk tips halaman ini.</span>
-        )}
+      <div className="flex justify-end" data-coachmark={pageKey}>
         <Button
           type="button"
-          variant="ghost"
+          variant="outline"
           size="sm"
-          className="ml-auto h-8 gap-1.5 px-2 text-xs text-muted-foreground"
+          className="h-9 gap-1.5 text-xs"
           onClick={() => setCoachOpen(true)}
+          aria-label="Buka panduan halaman"
         >
           <CircleHelp className="h-3.5 w-3.5" aria-hidden />
           Panduan
@@ -235,9 +205,70 @@ function resolveCoachMeta(pathname: string): {
       ],
     };
   }
+  const staticMatchers: { pattern: RegExp; pageKey: string; title: string; steps: FlowStep[] }[] = [
+    {
+      pattern: /^\/ganti-sandi\/?$/,
+      pageKey: "ganti-sandi",
+      title: "Ganti sandi",
+      steps: [
+        { label: "Sandi lama", detail: "Wajib benar sebelum sandi baru disimpan." },
+        { label: "Konfirmasi", detail: "Ulangi sandi baru — lalu lanjut ke dashboard." },
+      ],
+    },
+    {
+      pattern: /^\/akses-ditolak\/?$/,
+      pageKey: "akses-ditolak",
+      title: "Akses ditolak",
+      steps: [
+        { label: "Peran", detail: "Menu dan URL dibatasi per Owner / Admin / Petani." },
+        { label: "Keluar", detail: "Kembali ke dashboard Anda lewat tombol di bawah." },
+      ],
+    },
+    {
+      pattern: /^\/admin\/jurnal\/baru\/?$/,
+      pageKey: "admin-jurnal-baru",
+      title: "Jurnal baru",
+      steps: [
+        { label: "Tipe", detail: "Smart Jurnal (17 tipe) atau baris manual." },
+        { label: "Approve", detail: "Saldo dan laporan berubah setelah disetujui." },
+      ],
+    },
+    {
+      pattern: /^\/admin\/penjualan\/baru\/?$/,
+      pageKey: "admin-penjualan-baru",
+      title: "Buat sales order",
+      steps: [
+        { label: "Pelanggan & batch", detail: "Pilih baris pesanan valid." },
+        { label: "Draft", detail: "Lanjut konfirmasi stok di detail SO." },
+      ],
+    },
+    {
+      pattern: /^\/petani\/siklus\/baru\/?$/,
+      pageKey: "petani-siklus-baru",
+      title: "Mulai semai baru",
+      steps: [
+        { label: "Varietas & kolam", detail: "Pastikan kolam siap dan pack cukup." },
+        { label: "Submit", detail: "Batch baru muncul di daftar siklus aktif." },
+      ],
+    },
+  ];
+  for (const m of staticMatchers) {
+    if (m.pattern.test(pathname)) {
+      return { pageKey: m.pageKey, title: m.title, steps: m.steps };
+    }
+  }
   const detailMatchers: { pattern: RegExp; pageKey: string; title: string; steps: FlowStep[] }[] = [
     {
-      pattern: /^\/owner\/varietas\/\d+/,
+      pattern: /^\/admin\/penjualan\/\d+\/invoice\/?$/,
+      pageKey: "admin-penjualan-invoice",
+      title: "Invoice penjualan",
+      steps: [
+        { label: "Pratinjau", detail: "Layout cetak di bawah tombol Cetak." },
+        { label: "Kembali", detail: "Ke detail SO untuk status dan pembayaran." },
+      ],
+    },
+    {
+      pattern: /^\/owner\/varietas\/\d+$/,
       pageKey: "detail-varietas",
       title: "Detail varietas",
       steps: [
@@ -247,7 +278,7 @@ function resolveCoachMeta(pathname: string): {
       ],
     },
     {
-      pattern: /^\/(owner|admin|petani)\/inventaris\/\d+/,
+      pattern: /^\/(owner|admin|petani)\/inventaris\/\d+$/,
       pageKey: "detail-inventaris",
       title: "Detail inventaris",
       steps: [
@@ -256,7 +287,7 @@ function resolveCoachMeta(pathname: string): {
       ],
     },
     {
-      pattern: /^\/(owner|admin)\/jurnal\/\d+/,
+      pattern: /^\/(owner|admin)\/jurnal\/\d+$/,
       pageKey: "detail-jurnal",
       title: "Detail jurnal",
       steps: [
@@ -265,7 +296,7 @@ function resolveCoachMeta(pathname: string): {
       ],
     },
     {
-      pattern: /^\/(admin|owner)\/penjualan\/\d+/,
+      pattern: /^\/(admin|owner)\/penjualan\/\d+$/,
       pageKey: "detail-sales-order",
       title: "Detail sales order",
       steps: [
@@ -274,7 +305,16 @@ function resolveCoachMeta(pathname: string): {
       ],
     },
     {
-      pattern: /^\/admin\/harvest\/\d+/,
+      pattern: /^\/petani\/pengiriman\/\d+$/,
+      pageKey: "petani-pengiriman-detail",
+      title: "Detail pengiriman",
+      steps: [
+        { label: "Status SO", detail: "Ikuti alur kirim dan terima." },
+        { label: "Baris", detail: "Periksa batch dan jumlah sebelum konfirmasi." },
+      ],
+    },
+    {
+      pattern: /^\/admin\/harvest\/\d+$/,
       pageKey: "admin-harvest",
       title: "Review panen",
       steps: [
@@ -284,7 +324,7 @@ function resolveCoachMeta(pathname: string): {
       ],
     },
     {
-      pattern: /^\/petani\/siklus\/\d+/,
+      pattern: /^\/petani\/siklus\/\d+$/,
       pageKey: "petani-siklus",
       title: "Detail batch",
       steps: [
@@ -293,7 +333,7 @@ function resolveCoachMeta(pathname: string): {
       ],
     },
     {
-      pattern: /^\/(admin|petani)\/active-pack\/\d+/,
+      pattern: /^\/(admin|petani)\/active-pack\/\d+$/,
       pageKey: "admin-active-pack",
       title: "Detail active pack",
       steps: [

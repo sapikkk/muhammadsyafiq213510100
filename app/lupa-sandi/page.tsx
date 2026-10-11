@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { requestPasswordReset } from "@/app/actions/password";
+import { PageCoachmark } from "@/components/page-coachmark";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
@@ -15,6 +16,15 @@ export default function LupaSandiPage() {
     <main className="mx-auto flex min-h-screen w-full max-w-sm flex-col justify-center px-4 py-10">
       <p className="text-sm font-medium text-primary">Kokonus Farm</p>
       <h1 className="mt-2 text-2xl font-semibold tracking-tight">Lupa sandi</h1>
+
+      <PageCoachmark
+        pageKey="lupa-sandi"
+        title="Panduan lupa sandi"
+        steps={[
+          { label: "Email", detail: "Kirim permintaan — Admin yang memproses." },
+          { label: "Setelah disetujui", detail: "Admin beri sandi sementara; ganti lewat Ganti sandi." },
+        ]}
+      />
 
       {state.sent ? (
         <div role="status" className="mt-4 space-y-4">
