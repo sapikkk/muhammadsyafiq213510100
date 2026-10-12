@@ -158,12 +158,19 @@ function DeliverForm({ id }: { id: number }) {
     <form action={formAction} className="mt-2 space-y-2 rounded-md border border-dashed p-3">
       <input type="hidden" name="salesOrderId" value={id} />
       <Input name="catatan" placeholder="Catatan serah terima (opsional)" className="h-9 text-sm" />
+      <Input
+        name="uangDiterima"
+        inputMode="decimal"
+        placeholder="Uang diterima sekarang (kosong = lunas penuh)"
+        className="h-9 text-sm"
+      />
       <KasSumberSelect />
       <SubmitButton className="h-9" pendingLabel="...">
         Tandai sudah sampai pelanggan
       </SubmitButton>
       <p className="text-xs text-muted-foreground">
-        Tanpa uang muka: pendapatan dicatat ke kas atau bank. Admin menyetujui catatan keuangan.
+        Jika uang diterima kurang dari total (setelah uang muka), sisanya masuk piutang. Catatan keuangan
+        dibuat otomatis.
       </p>
     </form>
   );

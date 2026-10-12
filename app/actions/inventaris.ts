@@ -146,6 +146,7 @@ export async function catatPergerakanForm(
     if (basePath === "/admin/inventaris") {
       revalidatePath("/petani/inventaris");
       revalidatePath(`/petani/inventaris/${input.itemId}`);
+      revalidatePath("/admin/jurnal");
     }
     return { ok: "Pergerakan stok tercatat." };
   } catch (error) {

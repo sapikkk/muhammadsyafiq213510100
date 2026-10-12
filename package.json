@@ -31,6 +31,7 @@
     "check:period-lock": "npx --yes tsx scripts/check-period-lock.ts",
     "check:smart-jurnal-balance": "npx --yes tsx scripts/check-smart-jurnal-balance.ts",
     "check:sales-order-pelunasan": "npx --yes tsx scripts/check-sales-order-pelunasan.ts",
+    "check:sales-order-penerimaan": "npx --yes tsx scripts/check-sales-order-penerimaan.ts",
     "check:harvest-wip-jurnal": "npx --yes tsx scripts/check-harvest-wip-jurnal.ts",
     "check:kas-sumber": "npx --yes tsx scripts/check-kas-sumber.ts",
     "check:penyusutan-otomatis": "npx --yes tsx scripts/check-penyusutan-otomatis.ts",

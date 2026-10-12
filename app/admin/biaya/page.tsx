@@ -23,13 +23,13 @@ export default async function AdminBiayaPage() {
   return (
     <CrudPageLayout
       eyebrow="Akuntansi"
-      title="Biaya langsung dan biaya umum"
-      description="Listrik per lahan (bukan per greenhouse). Gaji bulanan di sini; sewa dan depresiasi greenhouse dari master infrastruktur."
+      title="Biaya untuk hitung HPP"
+      description="Halaman ini untuk membagi biaya ke batch panen — bukan untuk catat uang keluar kas. Bayar listrik/gaji lewat menu Catatan keuangan baru; panduan ada di kotak biru di bawah."
       flowSteps={[
-        { label: "Listrik lahan", detail: "Satu nominal per lahan — dibagi ke kolam saat HPP." },
-        { label: "Gaji", detail: "Biaya umum bulanan, dibagi ke seluruh kolam." },
-        { label: "Biaya langsung", detail: "Tautkan ke batch siklus jika perlu." },
-        { label: "Panen", detail: "HPP final saat Admin setujui laporan panen." },
+        { label: "Listrik lahan", detail: "Angka per lahan → masuk HPP saat panen disetujui." },
+        { label: "Nutrisi batch", detail: "Per siklus, kalau perlu koreksi manual." },
+        { label: "Gaji bulan", detail: "Total gaji farm untuk bagi HPP." },
+        { label: "Setujui panen", detail: "HPP final di menu Setujui panen." },
       ]}
       list={
         <BiayaAdminPanel
@@ -38,7 +38,7 @@ export default async function AdminBiayaPage() {
           lahanListrik={lahanListrik}
         />
       }
-      listTitle="Panel biaya"
+      listTitle="Isian biaya produksi"
       extra={
         <PageSection
           title="Batalkan siklus gagal total"

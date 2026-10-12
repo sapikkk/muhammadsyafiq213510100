@@ -3,9 +3,15 @@ import "server-only";
 import { Prisma } from "@prisma/client";
 import { AKUN_KODE } from "@/lib/akun-kode";
 import { KasSumberError, parseSumberKasKode, resolveKasAkunId, type SumberKasKode } from "@/lib/kas-sumber";
-import { sisaPiutangSo } from "@/lib/sales-order-pembayaran";
 import { prisma } from "@/lib/prisma";
+import {
+  parseUangDiterimaDeliver,
+  PenerimaanPenjualanError,
+  splitPenerimaanPenjualan,
+} from "@/lib/sales-order-penerimaan";
 import { SalesOrderError, type JenisSo } from "@/lib/sales-order";
+
+export { parseUangDiterimaDeliver, splitPenerimaanPenjualan } from "@/lib/sales-order-penerimaan";
 
 type SalesOrderTx = Pick<typeof prisma, "akun" | "hPP" | "jurnal" | "sales_Order">;
 
@@ -70,6 +76,7 @@ async function createJurnalPenjualanPending(
   },
   userId: number,
   kasKode: SumberKasKode,
+  uangDiterima: Prisma.Decimal,
 ) {
   let kasId: number;
   try {
@@ -111,16 +118,21 @@ async function createJurnalPenjualanPending(
 
   const dpDiterima =
     so.status_pembayaran === "DP_DITERIMA" && so.jumlah_dp.gt(0) ? so.jumlah_dp : nol;
-  const sisaPiutang = round2(total.sub(dpDiterima));
+  const { kas: kasDiterima, piutang: sisaPiutang } = splitPenerimaanPenjualan(
+    total,
+    dpDiterima,
+    uangDiterima,
+  );
 
   if (dpDiterima.gt(0)) {
     const umId = so.akun_dp_id ?? uangMukaId;
     baris.push({ akunId: umId, debit: dpDiterima, kredit: nol });
-    if (sisaPiutang.gt(0)) {
-      baris.push({ akunId: piutangId, debit: sisaPiutang, kredit: nol });
-    }
-  } else {
-    baris.push({ akunId: kasId, debit: total, kredit: nol });
+  }
+  if (kasDiterima.gt(0)) {
+    baris.push({ akunId: kasId, debit: kasDiterima, kredit: nol });
+  }
+  if (sisaPiutang.gt(0)) {
+    baris.push({ akunId: piutangId, debit: sisaPiutang, kredit: nol });
   }
   if (pendapatanCurah.gt(nol)) {
     baris.push({ akunId: curahId, debit: nol, kredit: pendapatanCurah });
@@ -200,6 +212,7 @@ export async function shipSalesOrder(id: number, userId: number, catatanRaw?: un
 export type DeliverSalesOrderOpts = {
   catatan?: unknown;
   sumberKas?: unknown;
+  uangDiterima?: unknown;
 };
 
 export async function deliverSalesOrder(
@@ -231,22 +244,28 @@ export async function deliverSalesOrder(
       throw new SalesOrderError("Jurnal penjualan untuk SO ini sudah dibuat.", 409);
     }
 
-    const jurnal = await createJurnalPenjualanPending(tx, so, userId, kasKode);
-
     const dpDiterima =
       so.status_pembayaran === "DP_DITERIMA" && so.jumlah_dp.gt(0) ? so.jumlah_dp : nol;
-    let status_pembayaran = so.status_pembayaran;
-    if (dpDiterima.gt(0)) {
-      status_pembayaran = sisaPiutangSo({
-        total: so.total,
-        jumlah_dp: so.jumlah_dp,
-        jumlah_pelunasan: so.jumlah_pelunasan,
-      }).lte(0)
-        ? "LUNAS"
-        : "PIUTANG";
-    } else {
-      status_pembayaran = "LUNAS";
+    let uangDiterima: Prisma.Decimal;
+    try {
+      uangDiterima = parseUangDiterimaDeliver(opts.uangDiterima, so.total, dpDiterima);
+    } catch (error) {
+      if (error instanceof PenerimaanPenjualanError) {
+        throw new SalesOrderError(error.message, error.status);
+      }
+      throw error;
     }
+    const { piutang: piutangBaru } = splitPenerimaanPenjualan(so.total, dpDiterima, uangDiterima);
+
+    const jurnal = await createJurnalPenjualanPending(
+      tx,
+      so,
+      userId,
+      kasKode,
+      uangDiterima,
+    );
+
+    const status_pembayaran = piutangBaru.lte(0) ? "LUNAS" : "PIUTANG";
 
     return tx.sales_Order.update({
       where: { id },
@@ -256,6 +275,7 @@ export async function deliverSalesOrder(
         terkirim_oleh_id: userId,
         jurnal_pendapatan_id: jurnal.id,
         status_pembayaran,
+        jumlah_pelunasan: uangDiterima,
         ...(catatan != null ? { catatan_pengiriman: catatan } : {}),
       },
       include: {

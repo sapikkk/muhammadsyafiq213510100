@@ -61,6 +61,7 @@ export function InventarisDetailActions({
           items={[option]}
           action={action}
           fixedItemId={item.id}
+          showNilaiPersediaan={mode === "admin"}
           trigger={
             <Button type="button" variant={mode === "admin" ? "outline" : "default"} className="h-11">
               Catat pergerakan

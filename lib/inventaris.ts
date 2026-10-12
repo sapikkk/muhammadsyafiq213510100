@@ -13,6 +13,7 @@ import type {
 import { satuanInventarisList, type SatuanInventaris } from "@/lib/inventaris-satuan";
 import { tipePergerakanList, type TipePergerakan } from "@/lib/inventaris-pergerakan";
 import { emitStokRendah } from "@/lib/notifikasi-emit";
+import { jurnalStokKeluarInventaris } from "@/lib/inventaris-jurnal";
 import { prisma } from "@/lib/prisma";
 
 export type {
@@ -43,6 +44,8 @@ export type MovementInput = {
   jumlah: Prisma.Decimal;
   keterangan: string | null;
   userId: number;
+  /** Opsional: nilai persediaan untuk jurnal AUTO saat stok keluar (Admin). */
+  nilaiPersediaan: Prisma.Decimal | null;
 };
 
 const nol = new Prisma.Decimal(0);
@@ -128,7 +131,19 @@ export function parseMovementInput(
   if (tipe === "ADJUST" && !keterangan) {
     throw new InventarisError("Penyesuaian wajib punya keterangan.", 400);
   }
-  return { itemId, tipe, jumlah, keterangan, userId };
+  let nilaiPersediaan: Prisma.Decimal | null = null;
+  const nilaiRaw = raw.nilaiPersediaan;
+  if (nilaiRaw !== null && nilaiRaw !== undefined && String(nilaiRaw).trim() !== "") {
+    const text = String(nilaiRaw).trim().replace(",", ".");
+    if (!/^\d+(\.\d{1,2})?$/.test(text)) {
+      throw new InventarisError("Nilai persediaan harus angka valid (maks. 2 desimal).", 400);
+    }
+    nilaiPersediaan = new Prisma.Decimal(text);
+    if (nilaiPersediaan.lte(0)) {
+      throw new InventarisError("Nilai persediaan harus lebih dari nol.", 400);
+    }
+  }
+  return { itemId, tipe, jumlah, keterangan, userId, nilaiPersediaan };
 }
 
 function translatePrismaError(error: unknown): never {
@@ -303,7 +318,7 @@ export async function catatPergerakan(input: MovementInput) {
       data: { stokSaatIni: stokSesudah },
     });
 
-    return tx.pergerakanInventaris.create({
+    const movement = await tx.pergerakanInventaris.create({
       data: {
         itemId: item.id,
         tipe: input.tipe,
@@ -318,6 +333,24 @@ export async function catatPergerakan(input: MovementInput) {
         user: { select: { nama: true, role: true } },
       },
     });
+
+    if (
+      input.tipe === "OUT" &&
+      input.nilaiPersediaan &&
+      input.nilaiPersediaan.gt(0)
+    ) {
+      const ket =
+        input.keterangan?.trim() ||
+        `Stok keluar ${item.kode} (${input.jumlah.toString()} ${item.satuan})`;
+      await jurnalStokKeluarInventaris(tx, {
+        itemKode: item.kode,
+        nominal: input.nilaiPersediaan,
+        keterangan: ket,
+        userId: input.userId,
+      });
+    }
+
+    return movement;
   });
   const item = await prisma.itemInventaris.findUnique({ where: { id: input.itemId } });
   if (item?.aktif && item.stokSaatIni.lt(item.stokMinimum)) {

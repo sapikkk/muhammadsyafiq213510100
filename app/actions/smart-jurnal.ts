@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { isRoleAllowed } from "@/lib/rbac";
+import { updateLahanListrikBulan } from "@/lib/infrastruktur";
 import { createSmartJurnal, SmartJurnalError } from "@/lib/smart-jurnal";
 
 export type SmartJurnalState = { error?: string; ok?: string };
@@ -24,6 +25,18 @@ export async function submitSmartJurnal(
     const row = await createSmartJurnal(raw, Number(session.user.id), {
       adminOverridePeriod,
     });
+    if (
+      String(raw.tipe ?? "").toUpperCase() === "BAYAR_LISTRIK" &&
+      raw.syncListrikHpp === "on"
+    ) {
+      const lahanId = Number(raw.lahanId);
+      if (Number.isInteger(lahanId) && lahanId > 0) {
+        await updateLahanListrikBulan(lahanId, { biayaListrikBulan: raw.nominal });
+        revalidatePath("/admin/biaya");
+        revalidatePath("/admin/infrastruktur");
+        revalidatePath("/owner/infrastruktur");
+      }
+    }
     revalidatePath("/admin/jurnal");
     redirect(`/admin/jurnal/${row.id}`);
   } catch (error) {

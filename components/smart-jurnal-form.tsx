@@ -21,12 +21,16 @@ const NO_KAS: SmartJurnalTipe[] = [
   "PEMBELIAN_BAHAN_KREDIT",
 ];
 
+type LahanOpt = { id: number; label: string };
+
 export function SmartJurnalForm({
   tanggalAwal,
   periodeTutup,
+  lahanOptions = [],
 }: {
   tanggalAwal: string;
   periodeTutup: string | null;
+  lahanOptions?: LahanOpt[];
 }) {
   const [state, formAction] = useFormState(submitSmartJurnal, {} as SmartJurnalState);
   const [tipe, setTipe] = useState<SmartJurnalTipe>("BEBAN_OPERASIONAL");
@@ -38,8 +42,7 @@ export function SmartJurnalForm({
   return (
     <form action={formAction} className="space-y-4 rounded-md border p-4">
       <p className="text-sm text-muted-foreground">
-        Pilih salah satu dari 17 jenis jurnal otomatis. Setelah disimpan, Admin atau Owner menyetujui
-        sebelum saldo berubah.
+        Pilih jenis transaksi. Setelah disimpan, Admin atau Owner menyetujui sebelum saldo berubah.
       </p>
 
       <label className="block space-y-1.5 text-sm">
@@ -85,6 +88,29 @@ export function SmartJurnalForm({
         </label>
       ) : null}
 
+      {tipe === "BAYAR_LISTRIK" && lahanOptions.length > 0 ? (
+        <>
+          <label className="block space-y-1.5 text-sm">
+            <span className="font-medium">Lahan (untuk HPP)</span>
+            <select
+              name="lahanId"
+              className="flex h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+              defaultValue={String(lahanOptions[0]?.id ?? "")}
+            >
+              {lahanOptions.map((l) => (
+                <option key={l.id} value={l.id}>
+                  {l.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="flex items-center gap-2 text-sm">
+            <input type="checkbox" name="syncListrikHpp" defaultChecked className="h-4 w-4" />
+            Samakan angka biaya listrik lahan dengan nominal bayar (untuk hitung HPP)
+          </label>
+        </>
+      ) : null}
+
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Tanggal</span>
         <Input name="tanggal" type="date" defaultValue={tanggalAwal} className="h-11" required />
@@ -105,7 +131,7 @@ export function SmartJurnalForm({
       ) : null}
 
       <SubmitButton className="h-11" pendingLabel="Menyimpan…">
-        Catat Jurnal otomatis
+        Catat uang
       </SubmitButton>
     </form>
   );

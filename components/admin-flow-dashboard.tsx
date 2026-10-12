@@ -14,7 +14,7 @@ const ALUR_HARIAN = [
   },
   {
     label: "Jual dan catat keuangan",
-    detail: "Pesanan jual, pengiriman, catatan keuangan otomatis atau isi manual.",
+    detail: "Pesanan jual (uang diterima → piutang otomatis), catat uang tunai lewat dropdown.",
   },
 ];
 
@@ -22,7 +22,7 @@ const QUICK = [
   { href: "/admin/inventaris", title: "Stok barang", sub: "Jumlah dan masuk keluar barang" },
   { href: "/admin/harvest", title: "Setujui panen", sub: "Biaya produksi dan catatan stok" },
   { href: "/admin/penjualan", title: "Pesanan jual", sub: "Buat, kirim, terima bayaran" },
-  { href: "/admin/jurnal/baru", title: "Catatan keuangan baru", sub: "Otomatis atau isi sendiri" },
+  { href: "/admin/jurnal/baru", title: "Catat uang", sub: "Masuk / keluar tunai" },
   { href: "/admin/pelanggan", title: "Pelanggan", sub: "Data pembeli" },
   { href: "/admin/akuntansi", title: "Akuntansi", sub: "Tutup periode dan penyusutan" },
 ];

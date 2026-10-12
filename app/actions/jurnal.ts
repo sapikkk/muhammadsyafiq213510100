@@ -60,6 +60,38 @@ export async function simpanJurnal(
   redirect(`/admin/jurnal/${jurnalId}`);
 }
 
+async function ownerId() {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) return null;
+  if (!isRoleAllowed(session.user.role, "OWNER")) return null;
+  return Number(session.user.id);
+}
+
+/** Koreksi manual Dr/Cr — hanya Owner. */
+export async function simpanJurnalKoreksiOwner(
+  _prev: JurnalFormState,
+  formData: FormData,
+): Promise<JurnalFormState> {
+  const id = await ownerId();
+  if (!id) return { error: "Hanya Owner yang bisa koreksi manual." };
+  let jurnalId: number;
+  try {
+    const input = parseJurnalInput({
+      tanggal: formData.get("tanggal"),
+      keterangan: formData.get("keterangan"),
+      status: formData.get("status"),
+      baris: barisDariForm(formData),
+    });
+    jurnalId = (await createJurnal(input, id)).id;
+  } catch (error) {
+    if (error instanceof JurnalError) return { error: error.message };
+    throw error;
+  }
+  revalidatePath("/owner/jurnal");
+  revalidatePath("/admin/jurnal");
+  redirect(`/owner/jurnal/${jurnalId}`);
+}
+
 async function putuskan(
   formData: FormData,
   aksi: (jurnalId: number, olehId: number, alasan: string) => Promise<unknown>,

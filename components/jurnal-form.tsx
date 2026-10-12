@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useFormState } from "react-dom";
-import { simpanJurnal } from "@/app/actions/jurnal";
+import { simpanJurnal, simpanJurnalKoreksiOwner } from "@/app/actions/jurnal";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { SubmitButton } from "@/components/submit-button";
 import { Button } from "@/components/ui/button";
@@ -29,12 +29,15 @@ export function JurnalForm({
   akun,
   tanggalAwal,
   periodeTutup = null,
+  actionKind = "admin",
 }: {
   akun: AkunPosting[];
   tanggalAwal: string;
   periodeTutup?: string | null;
+  actionKind?: "admin" | "owner";
 }) {
-  const [state, formAction] = useFormState(simpanJurnal, {});
+  const saveAction = actionKind === "owner" ? simpanJurnalKoreksiOwner : simpanJurnal;
+  const [state, formAction] = useFormState(saveAction, {});
   useActionToast({ error: state.error, saved: state.saved });
   const [baris, setBaris] = useState<Baris[]>([barisKosong(1), barisKosong(2)]);
   const [nextKey, setNextKey] = useState(3);

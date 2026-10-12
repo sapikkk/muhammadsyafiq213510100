@@ -162,6 +162,7 @@ export async function deliverSalesOrderAction(
     const row = await deliverSalesOrder(id, Number(session.user.id), {
       catatan,
       sumberKas: formData.get("sumberKas"),
+      uangDiterima: formData.get("uangDiterima"),
     });
     revalidateSalesOrder(id);
     revalidatePath("/admin/jurnal");

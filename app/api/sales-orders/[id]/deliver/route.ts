@@ -25,6 +25,7 @@ export const PUT = withApiHandler(async (request: Request, context?: unknown) =>
     await deliverSalesOrder(id, Number(userId), {
       catatan: body.catatan,
       sumberKas: body.sumberKas,
+      uangDiterima: body.uangDiterima,
     });
     const listed = await listSalesOrders();
     const fresh = listed.find((r) => r.id === id);

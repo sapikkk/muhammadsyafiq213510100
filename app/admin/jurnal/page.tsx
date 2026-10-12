@@ -38,14 +38,14 @@ export default async function JurnalPage({
       title="Catatan keuangan"
       description="Buat catatan baru; setujui atau tolak dari detail (Owner atau Admin)."
       flowSteps={[
-        { label: "Buat", detail: "Jurnal otomatis atau isi manual; status draf atau menunggu." },
-        { label: "Seimbang", detail: "Total debit sama dengan kredit sebelum diajukan." },
-        { label: "Setujui", detail: "Owner atau Admin; saldo akun berubah setelah disetujui." },
+        { label: "Catat uang", detail: "Uang masuk/keluar lewat dropdown; penjualan & panen otomatis." },
+        { label: "Setujui", detail: "Owner atau Admin; saldo berubah setelah disetujui." },
+        { label: "Baca", detail: "Klik baris untuk detail; koreksi manual hanya Owner." },
       ]}
       actions={
         <>
           <Button asChild className="h-11">
-            <Link href="/admin/jurnal/baru">Catatan baru</Link>
+            <Link href="/admin/jurnal/baru">Catat uang</Link>
           </Button>
           <Button asChild variant="outline" className="h-11">
             <Link href="/admin/akuntansi">Tutup periode</Link>

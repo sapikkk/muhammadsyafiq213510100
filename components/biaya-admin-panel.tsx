@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useFormState } from "react-dom";
 import { simpanBiayaLangsung, simpanListrikLahan, simpanOverhead } from "@/app/actions/biaya";
 import { Button } from "@/components/ui/button";
@@ -45,13 +46,41 @@ export function BiayaAdminPanel({
   });
 
   return (
-    <div className="grid gap-8 lg:grid-cols-2">
+    <div className="space-y-8">
+      <div className="rounded-lg border border-primary/20 bg-muted/30 p-4 text-sm">
+        <p className="font-medium">Dua hal berbeda — jangan dicampur</p>
+        <ol className="mt-2 list-decimal space-y-2 pl-5 text-muted-foreground">
+          <li>
+            <span className="text-foreground">Bagi biaya ke panen (HPP)</span> — isi di halaman ini: listrik
+            lahan, nutrisi per batch, gaji bulanan. Dipakai saat Anda{" "}
+            <Link href="/admin/harvest" className="text-primary underline-offset-4 hover:underline">
+              setujui laporan panen
+            </Link>
+            .
+          </li>
+          <li>
+            <span className="text-foreground">Uang benar-benar keluar</span> — catat di{" "}
+            <Link href="/admin/jurnal/baru" className="text-primary underline-offset-4 hover:underline">
+              Catatan keuangan baru
+            </Link>
+            . Contoh: bayar tagihan PLN → pilih beban operasional, nominal tagihan, kas/bank. Saldo dan
+            laporan keuangan mengikuti catatan itu.
+          </li>
+        </ol>
+        <p className="mt-3 text-xs text-muted-foreground">
+          Praktik sederhana: setiap bulan isi listrik lahan di bawah dengan angka yang sama (atai rata-rata)
+          dengan tagihan PLN (atau rata-rata bulan), lalu saat bayar buat catatan keuangan dengan nominal bayar.
+        </p>
+      </div>
+
+      <div className="grid gap-8 lg:grid-cols-2">
       <div className="flex flex-col gap-6">
         <div className="rounded-lg border p-4">
-          <h3 className="font-medium">Listrik per lahan</h3>
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Langkah 1 · HPP</p>
+          <h3 className="mt-1 font-medium">Listrik per lahan</h3>
           <p className="mt-1 text-xs text-muted-foreground">
-            Satu tagihan listrik/pompa per lahan. Semua greenhouse di lahan yang sama membagi biaya ini
-            saat HPP dihitung (proporsional lubang kolam).
+            Satu angka per lahan (bukan per greenhouse). Saat panen disetujui, angka ini dibagi ke kolam
+            menurut jumlah lubang di lahan itu.
           </p>
           <ul className="mt-4 space-y-3">
             {lahanListrik.map((l) => (
@@ -64,7 +93,8 @@ export function BiayaAdminPanel({
         </div>
 
         <form action={langAction} className="flex flex-col gap-4 rounded-lg border p-4">
-          <h3 className="font-medium">Biaya langsung per siklus</h3>
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Langkah 2 · HPP</p>
+          <h3 className="font-medium">Nutrisi per batch tanam</h3>
           <input type="hidden" name="siklusId" value={siklusId} />
           <div className="space-y-2">
             <label className="text-sm font-medium">Siklus</label>
@@ -88,31 +118,39 @@ export function BiayaAdminPanel({
             <Input id="biayaNutrisi" name="biayaNutrisi" inputMode="decimal" defaultValue="0" />
           </div>
           <p className="text-xs text-muted-foreground">
-            Benih, rockwool, dan listrik dari master lahan. Listrik tidak diisi per batch.
+            Benih dan rockwool sudah tercatat saat batch dibuat. Listrik hanya di langkah 1 (per lahan).
           </p>
-          <Button type="submit">Simpan biaya langsung</Button>
+          <Button type="submit">Simpan nutrisi batch</Button>
         </form>
       </div>
 
       <div className="flex flex-col gap-4">
         <form action={ohAction} className="flex flex-col gap-4 rounded-lg border p-4">
-          <h3 className="font-medium">Biaya umum per bulan</h3>
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Langkah 3 · HPP</p>
+          <h3 className="font-medium">Gaji bulan ini</h3>
           <p className="text-xs text-muted-foreground">
-            Gaji farm dibagi ke semua kolam. Sewa lahan, depresiasi greenhouse, dan listrik diambil dari
-            master lahan/greenhouse (listrik isi di kotak kiri).
+            Untuk hitung HPP: gaji dibagi ke semua kolam. Sewa lahan dan bangunan greenhouse sudah di data
+            Lahan & kolam.
           </p>
           <div className="space-y-2">
             <label htmlFor="periode" className="text-sm font-medium">
-              Periode
+              Bulan gaji
             </label>
             <Input id="periode" name="periode" type="date" required />
           </div>
           <Input name="depresiasiGreenhouse" type="hidden" value="0" />
           <Input name="depresiasiListrik" type="hidden" value="0" />
           <Input name="sewaLahan" type="hidden" value="0" />
-          <Input name="gajiKaryawan" placeholder="Gaji karyawan (Rp)" inputMode="decimal" />
-          <Button type="submit">Simpan biaya umum</Button>
+          <Input name="gajiKaryawan" placeholder="Total gaji (Rp)" inputMode="decimal" />
+          <Button type="submit">Simpan gaji untuk HPP</Button>
         </form>
+        <p className="text-xs text-muted-foreground">
+          Sudah transfer gaji ke rekening petani? Buat juga catatan di{" "}
+          <Link href="/admin/jurnal/baru" className="text-primary underline-offset-4 hover:underline">
+            Catatan keuangan baru
+          </Link>{" "}
+          (langkah 2 di kotak atas).
+        </p>
         {overheadRows.length > 0 ? (
           <ul className="text-sm text-muted-foreground">
             {overheadRows.slice(0, 5).map((r) => (
@@ -122,6 +160,7 @@ export function BiayaAdminPanel({
             ))}
           </ul>
         ) : null}
+      </div>
       </div>
     </div>
   );

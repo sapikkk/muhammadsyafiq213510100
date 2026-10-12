@@ -43,11 +43,13 @@ export function InventarisMovementForm({
   action,
   fixedItemId,
   onSuccess,
+  showNilaiPersediaan = false,
 }: {
   items: InventarisMovementItemOption[];
   action: MovementAction;
   fixedItemId?: number;
   onSuccess?: () => void;
+  showNilaiPersediaan?: boolean;
 }) {
   const [itemId, setItemId] = useState(
     fixedItemId ? String(fixedItemId) : items[0] ? String(items[0].id) : "",
@@ -105,6 +107,16 @@ export function InventarisMovementForm({
       <Field label="Keterangan">
         <Input name="keterangan" className="h-11" maxLength={255} />
       </Field>
+      {showNilaiPersediaan && tipe === "OUT" ? (
+        <Field label="Nilai persediaan (Rp, opsional)">
+          <Input
+            name="nilaiPersediaan"
+            className="h-11"
+            inputMode="decimal"
+            placeholder="Isi jika stok hilang/rusak — jurnal otomatis"
+          />
+        </Field>
+      ) : null}
       <SubmitButton className="h-11" pendingLabel="Menyimpan...">
         Simpan pergerakan
       </SubmitButton>
@@ -118,12 +130,14 @@ export function InventarisMovementFormSheet({
   action,
   fixedItemId,
   title = "Catat pergerakan",
+  showNilaiPersediaan = false,
 }: {
   trigger: ReactNode;
   items: InventarisMovementItemOption[];
   action: MovementAction;
   fixedItemId?: number;
   title?: string;
+  showNilaiPersediaan?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   return (
@@ -140,6 +154,7 @@ export function InventarisMovementFormSheet({
           items={items}
           action={action}
           fixedItemId={fixedItemId}
+          showNilaiPersediaan={showNilaiPersediaan}
           onSuccess={() => setOpen(false)}
         />
       ) : null}

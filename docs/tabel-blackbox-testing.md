@@ -230,7 +230,7 @@ Akun demo: `owner@kokonus.farm`, `admin@kokonus.farm`, `petani@kokonus.farm` (sa
 | BB-171 | US5.1 | 3 | UI | Admin | Konfirmasi stok | - | Status CONFIRMED jika qty ≤ stok batch; error jika kurang | — | Checklist |
 | BB-172 | US5.3 | 3 | UI | Petani / Admin | `/petani/pengiriman` atau `/admin/penjualan` | - | SO CONFIRMED → form SHIPPED + catatan opsional + timestamp | — | Checklist |
 | BB-173 | US5.3 | 3 | UI | Petani / Admin | Tandai terkirim | - | SO SHIPPED → DELIVERED; catatan opsional | — | Checklist |
-| BB-174 | US5.4 | 3 | UI | Sistem | DELIVERED | - | Jurnal PENDING: Kas Dr, Penjualan curah/pack Cr; HPP Dr, Persediaan Cr; keterangan berisi nomor SO | — | Checklist |
+| BB-174 | US5.4 | 3 | UI | Sistem | DELIVERED | uang diterima ≤ total | Jurnal PENDING: Kas Dr (uang diterima), Piutang Dr (sisa), Penjualan Cr, HPP Dr / Persediaan Cr | — | Checklist |
 | BB-175 | US5.4 | 3 | UI | Admin | `/admin/jurnal` | - | Setujui jurnal → saldo akun berubah | — | Checklist |
 | BB-176 | US5.5 | 3 | UI | Admin | `/admin/penjualan/{id}/invoice` | - | Nomor `INV-YYYY-NNN`, detail pelanggan & baris, cetak | — | Checklist |
 | BB-177 | US5.5 | 3 | UI | Admin | Catat biaya packing | - | Field tersimpan; jurnal PENDING 5400/Kas jika nominal > 0 | — | Checklist |
@@ -288,6 +288,12 @@ Akun demo: `owner@kokonus.farm`, `admin@kokonus.farm`, `petani@kokonus.farm` (sa
 | BB-229 | v2-E.2 | v2 | UI | Admin | Pelunasan > sisa | - | Pesan error | — | Checklist |
 | BB-230 | v2-H | v2 | UI | Admin | `/admin/akuntansi` → Catat penyusutan | - | Jurnal GH + instalasi (jika nominal > 0) | — | Checklist |
 | BB-231 | v2-H | v2 | UI | Admin | Ulangi bulan sama | - | 409 sudah dicatat | — | Checklist |
+| BB-232 | v2-F | v2 | UI | Admin | `/admin/jurnal/baru` | - | Hanya dropdown catat uang; tidak ada tab jurnal manual | — | Checklist |
+| BB-233 | v2-F | v2 | UI | Admin | Catat **Bayar listrik** + centang sync HPP | nominal + lahan | Jurnal PENDING 5230/kas; `biaya_listrik_bulan` lahan terupdate | — | Checklist |
+| BB-234 | v2-F | v2 | UI | Owner | `/owner/jurnal/koreksi` | baris seimbang | Jurnal manual PENDING; redirect detail Owner | — | Checklist |
+| BB-235 | v2-F | v2 | UI | Admin | Stok keluar inventaris + nilai persediaan | OUT + Rp | Jurnal AUTO PENDING Dr 5300 Cr persediaan | — | Checklist |
+| BB-236 | v2-E.2 | v2 | UI | Admin | DELIVERED, uang diterima < total | mis. 40% total | Status PIUTANG; pelunasan form tampil | — | Checklist |
+| BB-237 | v2-F | v2 | CLI | - | `npm run check:sales-order-penerimaan` | - | Exit 0 | — | Checklist |
 
 ## Findings lintas uji
 
@@ -389,7 +395,7 @@ Catatan: urutan di bawah mengikuti operasi harian Kokonus Farm (budidaya → bia
 | --- | --- | --- |
 | A | Apakah tiga peran (Owner, Admin, Petani) bisa login dan hanya melihat menu yang sesuai? | |
 | B | Apakah alur semai → fase → panen → approve HPP mudah dijelaskan ke pekerja lapangan? | |
-| C | Apakah jurnal manual dan jurnal otomatis (panen, SO) terasa debit = kredit di layar detail? | |
+| C | Apakah catat uang (dropdown) dan jurnal otomatis (panen, SO, stok) terasa seimbang di detail? | |
 | D | Apakah stok rendah terlihat sebelum kehabisan benih/media kritis? | |
 | E | Apakah SO dari draft sampai delivered + invoice jelas untuk admin kantor? | |
 | F | Apakah Owner bisa membaca laba, biaya, dan arus kas tanpa Excel? | |
