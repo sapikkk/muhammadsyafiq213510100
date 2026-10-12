@@ -5,6 +5,7 @@ import { KegagalanForm } from "@/components/kegagalan-form";
 import { MonitorPertumbuhanForm } from "@/components/monitor-pertumbuhan-form";
 import { SiklusAbortForm } from "@/components/siklus-abort-form";
 import { TambalSusulanForm } from "@/components/tambal-susulan-form";
+import { PageSection } from "@/components/page-section";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -35,7 +36,7 @@ function FormDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button type="button" variant="outline" className="h-11">
+        <Button type="button" variant="outline" className="h-11 w-full sm:w-auto">
           {triggerLabel}
         </Button>
       </DialogTrigger>
@@ -59,6 +60,7 @@ export function SiklusDetailSecondary({
   canAbort,
   showKegagalan,
   packs,
+  variant = "toolbar",
 }: {
   siklusId: number;
   kodeBatch: string;
@@ -69,12 +71,14 @@ export function SiklusDetailSecondary({
   canAbort: boolean;
   showKegagalan: boolean;
   packs: PackOpt[];
+  /** `section` = blok di atas konten (lebih mudah di sheet petani). */
+  variant?: "toolbar" | "section";
 }) {
   const any = canMonitor || canTambal || canAbort || showKegagalan;
   if (!any) return null;
 
-  return (
-    <div className="flex flex-wrap gap-2">
+  const buttons = (
+    <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
       {canMonitor ? (
         <FormDialog triggerLabel="Monitor pertumbuhan" title="Monitor pertumbuhan">
           <MonitorPertumbuhanForm siklusId={siklusId} />
@@ -101,4 +105,18 @@ export function SiklusDetailSecondary({
       ) : null}
     </div>
   );
+
+  if (variant === "section") {
+    return (
+      <PageSection
+        title="Aksi siklus"
+        description="Monitor, tambal, catat kegagalan, atau batalkan — sebelum scroll ke log di bawah."
+        badge="Update"
+      >
+        {buttons}
+      </PageSection>
+    );
+  }
+
+  return buttons;
 }

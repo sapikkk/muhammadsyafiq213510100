@@ -84,20 +84,20 @@ export async function SiklusDetailScreen({
         </Badge>
       }
       description={`${siklus.varietas.nama} · ${siklus.kolam.greenhouse.nama} / ${siklus.kolam.nama}`}
-      actions={
-        <SiklusDetailSecondary
-          siklusId={id}
-          kodeBatch={siklus.kode_batch}
-          jumlahDisemai={siklus.jumlah_disemai}
-          totalSusut={siklus.total_susut}
-          canMonitor={Boolean(canMonitor)}
-          canTambal={Boolean(canTambal && (!laporan || laporan.status !== "APPROVED"))}
-          canAbort={canAbort}
-          showKegagalan={showKegagalan}
-          packs={packsAktif}
-        />
-      }
     >
+      <SiklusDetailSecondary
+        siklusId={id}
+        kodeBatch={siklus.kode_batch}
+        jumlahDisemai={siklus.jumlah_disemai}
+        totalSusut={siklus.total_susut}
+        canMonitor={Boolean(canMonitor)}
+        canTambal={Boolean(canTambal && (!laporan || laporan.status !== "APPROVED"))}
+        canAbort={canAbort}
+        showKegagalan={showKegagalan}
+        packs={packsAktif}
+        variant="section"
+      />
+
       {status === STATUS_GAGAL_TOTAL ? (
         <p className="rounded-md border border-destructive/30 bg-destructive/5 p-4 text-sm">
           Siklus tanam dihentikan. Tidak bisa lanjut fase atau panen.
@@ -116,7 +116,7 @@ export async function SiklusDetailScreen({
             <p className="text-sm text-muted-foreground">
               {berikut === null && faseAktif
                 ? "Siklus sudah selesai, tidak ada fase berikutnya."
-                : "Tidak ada langkah fase saat ini — gunakan tombol di atas jika perlu."}
+                : "Tidak ada langkah fase saat ini — gunakan bagian Aksi siklus jika perlu."}
             </p>
           )}
         </PageSection>

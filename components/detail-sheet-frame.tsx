@@ -17,7 +17,7 @@ export function DetailSheetFrame({ children }: { children: ReactNode }) {
     >
       <SheetContent side="right" size="detail">
         <SheetTitle className="sr-only">Detail</SheetTitle>
-        <div className="pr-6">{children}</div>
+        <div className="max-h-[calc(100vh-2rem)] overflow-y-auto pr-6 pb-8">{children}</div>
       </SheetContent>
     </Sheet>
   );

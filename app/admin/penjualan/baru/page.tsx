@@ -12,7 +12,7 @@ export default async function AdminPenjualanBaruPage() {
     <DetailLayout
       backHref="/admin/penjualan"
       eyebrow="Penjualan"
-      title="Buat sales order"
+      title="Buat pesanan jual"
       description="Simpan sebagai draft; konfirmasi stok setelah baris pesanan valid."
     >
       <PageSection title="Baris pesanan" badge="Create">
