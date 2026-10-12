@@ -14,6 +14,8 @@ import {
   type SmartJurnalTipe,
 } from "@/lib/smart-jurnal-catalog";
 import { UI_COPY } from "@/lib/ui-copy";
+import { CatatUangPihakFields } from "@/components/catat-uang-pihak-fields";
+import type { CatatUangPihakBundle } from "@/lib/catat-uang-pihak-types";
 
 const NO_KAS: SmartJurnalTipe[] = [
   "PENYUSUTAN_GREENHOUSE",
@@ -27,10 +29,12 @@ export function SmartJurnalForm({
   tanggalAwal,
   periodeTutup,
   lahanOptions = [],
+  pihak,
 }: {
   tanggalAwal: string;
   periodeTutup: string | null;
   lahanOptions?: LahanOpt[];
+  pihak: CatatUangPihakBundle;
 }) {
   const [state, formAction] = useFormState(submitSmartJurnal, {} as SmartJurnalState);
   const [tipe, setTipe] = useState<SmartJurnalTipe>("BEBAN_OPERASIONAL");
@@ -87,6 +91,8 @@ export function SmartJurnalForm({
           </select>
         </label>
       ) : null}
+
+      <CatatUangPihakFields tipe={tipe} pihak={pihak} />
 
       {tipe === "BAYAR_LISTRIK" && lahanOptions.length > 0 ? (
         <>

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { isRoleAllowed } from "@/lib/rbac";
+import { enrichSmartJurnalRawWithPihak } from "@/lib/catat-uang-pihak";
 import { updateLahanListrikBulan } from "@/lib/infrastruktur";
 import { createSmartJurnal, SmartJurnalError } from "@/lib/smart-jurnal";
 
@@ -22,9 +23,12 @@ export async function submitSmartJurnal(
   const adminOverridePeriod = formData.get("adminOverridePeriod") === "on";
 
   try {
-    const row = await createSmartJurnal(raw, Number(session.user.id), {
+    const enriched = await enrichSmartJurnalRawWithPihak(raw);
+    const row = await createSmartJurnal(enriched, Number(session.user.id), {
       adminOverridePeriod,
     });
+    revalidatePath("/admin/petani");
+    revalidatePath("/owner/petani");
     if (
       String(raw.tipe ?? "").toUpperCase() === "BAYAR_LISTRIK" &&
       raw.syncListrikHpp === "on"

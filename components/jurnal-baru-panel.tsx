@@ -1,5 +1,6 @@
 "use client";
 
+import type { CatatUangPihakBundle } from "@/lib/catat-uang-pihak-types";
 import { SmartJurnalForm } from "@/components/smart-jurnal-form";
 import { JurnalForm } from "@/components/jurnal-form";
 
@@ -12,12 +13,14 @@ export function JurnalBaruPanel({
   periodeTutup,
   mode = "admin-uang",
   lahanOptions = [],
+  pihak,
 }: {
   akun: AkunOpt[];
   tanggalAwal: string;
   periodeTutup: string | null;
   mode?: "admin-uang" | "owner-koreksi";
   lahanOptions?: LahanOpt[];
+  pihak?: CatatUangPihakBundle;
 }) {
   if (mode === "owner-koreksi") {
     return (
@@ -41,6 +44,7 @@ export function JurnalBaruPanel({
         tanggalAwal={tanggalAwal}
         periodeTutup={periodeTutup}
         lahanOptions={lahanOptions}
+        pihak={pihak ?? { petani: [], pelanggan: [], pemilik: [] }}
       />
     </div>
   );
