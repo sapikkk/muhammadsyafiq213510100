@@ -1,3 +1,10 @@
+## [1.36.2](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.1...v1.36.2) (2026-10-12)
+
+
+### Bug Fixes
+
+* **admin:** dropdown biaya pakai arsip siklus ringan ([99ec297](https://github.com/sapikkk/muhammadsyafiq213510100/commit/99ec297e075fd2ee7a895bf5b8f9e203d1f43762))
+
 ## [1.36.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.0...v1.36.1) (2026-10-12)
 
 
