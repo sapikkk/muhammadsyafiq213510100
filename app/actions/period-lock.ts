@@ -31,7 +31,7 @@ export async function updatePeriodeTutupAction(
     await setPeriodeTutup(new Date(tanggalText));
     revalidatePath("/admin/akuntansi");
     return {
-      ok: `Periode tutup ${tanggalText}: jurnal sebelum tanggal ini ditolak (kecuali override Admin).`,
+      ok: `Periode tutup ${tanggalText}: catatan sebelum tanggal ini ditolak, kecuali Admin izinkan tanggal lama.`,
     };
   } catch (error) {
     if (error instanceof PeriodLockError) return { error: error.message };

@@ -13,7 +13,7 @@ export default async function AdminPelangganPage() {
     <CrudPageLayout
       eyebrow="Penjualan"
       title="Pelanggan"
-      description="Data pelanggan dipakai saat membuat sales order."
+      description="Data pelanggan dipakai saat membuat pesanan jual."
       flowSteps={[
         { label: "Daftar", detail: "Cari nama atau email di tabel." },
         { label: "Tambah atau ubah", detail: "Panel samping kanan, data kontak saja." },
@@ -29,7 +29,7 @@ export default async function AdminPelangganPage() {
         />
       }
       list={<PelangganDaftar rows={rows.map(serializePelanggan)} />}
-      listDescription="Cari, lalu Ubah data kontak. Pelanggan yang sudah dipakai sales order tetap bisa diubah namanya."
+      listDescription="Cari, lalu Ubah data kontak. Pelanggan yang sudah punya pesanan jual tetap bisa diubah namanya."
     />
   );
 }

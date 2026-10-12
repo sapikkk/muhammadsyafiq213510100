@@ -5,6 +5,7 @@ import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { BiayaError, createOverhead, updateBiayaLangsung } from "@/lib/biaya";
+import { InfrastrukturError, updateLahanListrikBulan } from "@/lib/infrastruktur";
 
 async function assertAdmin() {
   const session = await getServerSession(authOptions);
@@ -20,12 +21,33 @@ export async function simpanBiayaLangsung(
     const siklusId = Number(formData.get("siklusId"));
     await updateBiayaLangsung(siklusId, {
       biayaNutrisi: formData.get("biayaNutrisi"),
-      biayaListrikPompa: formData.get("biayaListrikPompa"),
     });
     revalidatePath("/admin/biaya");
     return { ok: true };
   } catch (error) {
     if (error instanceof BiayaError) return { error: error.message };
+    throw error;
+  }
+}
+
+export async function simpanListrikLahan(
+  _prev: { error?: string; ok?: boolean },
+  formData: FormData,
+) {
+  try {
+    await assertAdmin();
+    const lahanId = Number(formData.get("lahanId"));
+    await updateLahanListrikBulan(lahanId, {
+      biayaListrikBulan: formData.get("biayaListrikBulan"),
+    });
+    revalidatePath("/admin/biaya");
+    revalidatePath("/admin/infrastruktur");
+    revalidatePath("/owner/infrastruktur");
+    return { ok: true };
+  } catch (error) {
+    if (error instanceof BiayaError || error instanceof InfrastrukturError) {
+      return { error: error.message };
+    }
     throw error;
   }
 }

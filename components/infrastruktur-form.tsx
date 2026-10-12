@@ -47,6 +47,12 @@ function LahanForm({ onSuccess }: { onSuccess?: () => void }) {
       <Field label="Masa sewa (bulan)">
         <Input name="masaSewa" className="h-11" inputMode="numeric" required />
       </Field>
+      <Field label="Listrik & pompa per bulan (Rp)">
+        <Input name="biayaListrikBulan" className="h-11" inputMode="decimal" placeholder="0" />
+      </Field>
+      <p className="text-xs text-muted-foreground">
+        Satu tagihan untuk seluruh greenhouse di lahan ini.
+      </p>
       <SubmitButton className="h-11" pendingLabel="Menyimpan...">
         Simpan lahan
       </SubmitButton>

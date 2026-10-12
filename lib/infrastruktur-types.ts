@@ -23,6 +23,7 @@ export type SerializedLahan = {
   nilaiSewa: string;
   masaSewa: number;
   amortisasiPerBulan: string;
+  biayaListrikBulan: string;
   greenhouse: SerializedGreenhouse[];
 };
 

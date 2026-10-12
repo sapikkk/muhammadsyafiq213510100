@@ -4,26 +4,38 @@ import { CrudPageLayout } from "@/components/crud-page-layout";
 import { PageSection } from "@/components/page-section";
 import { listSiklusProduksiCached } from "@/lib/cached-queries";
 import { listOverhead, serializeOverhead } from "@/lib/biaya";
+import { listInfrastrukturPohon } from "@/lib/infrastruktur";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminBiayaPage() {
-  const [siklus, overhead] = await Promise.all([listSiklusProduksiCached(), listOverhead()]);
+  const [siklus, overhead, pohon] = await Promise.all([
+    listSiklusProduksiCached(),
+    listOverhead(),
+    listInfrastrukturPohon(),
+  ]);
+  const lahanListrik = pohon.map((l) => ({
+    id: l.id,
+    label: `Lahan #${l.id}`,
+    biayaListrikBulan: l.biaya_listrik_bulan.toString(),
+  }));
 
   return (
     <CrudPageLayout
       eyebrow="Akuntansi"
-      title="Biaya langsung & overhead"
-      description="Input overhead. Overhead terbaru dialokasikan ke kolam saat panen disetujui (HPP)."
+      title="Biaya langsung dan biaya umum"
+      description="Listrik per lahan (bukan per greenhouse). Gaji bulanan di sini; sewa dan depresiasi greenhouse dari master infrastruktur."
       flowSteps={[
-        { label: "Overhead", detail: "Catat beban tidak langsung per periode." },
+        { label: "Listrik lahan", detail: "Satu nominal per lahan — dibagi ke kolam saat HPP." },
+        { label: "Gaji", detail: "Biaya umum bulanan, dibagi ke seluruh kolam." },
         { label: "Biaya langsung", detail: "Tautkan ke batch siklus jika perlu." },
-        { label: "Panen", detail: "HPP final saat Admin approve laporan panen." },
+        { label: "Panen", detail: "HPP final saat Admin setujui laporan panen." },
       ]}
       list={
         <BiayaAdminPanel
           siklusOptions={siklus.map((s) => ({ id: s.id, kode_batch: s.kode_batch }))}
           overheadRows={overhead.map(serializeOverhead)}
+          lahanListrik={lahanListrik}
         />
       }
       listTitle="Panel biaya"

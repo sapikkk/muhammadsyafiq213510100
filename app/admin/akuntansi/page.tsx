@@ -16,9 +16,9 @@ export default async function AdminAkuntansiPage() {
       title="Pengaturan akuntansi"
       description="Tutup periode dan catat penyusutan bulanan sebelum tutup buku."
       flowSteps={[
-        { label: "Tutup periode", detail: "Atur tanggal tutup; jurnal tanggal lama ditolak." },
-        { label: "Penyusutan", detail: "Jalankan per bulan; jurnal otomatis greenhouse dan instalasi." },
-        { label: "Jurnal", detail: "Kembali ke daftar jurnal lewat menu sidebar." },
+        { label: "Tutup periode", detail: "Atur tanggal tutup; catatan tanggal lama ditolak." },
+        { label: "Penyusutan", detail: "Jalankan per bulan; catatan otomatis untuk greenhouse dan instalasi." },
+        { label: "Catatan keuangan", detail: "Kembali ke daftar lewat menu samping." },
       ]}
       list={
         <div className="space-y-6">

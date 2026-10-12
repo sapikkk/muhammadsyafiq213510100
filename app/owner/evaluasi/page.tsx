@@ -25,12 +25,12 @@ export default async function OwnerEvaluasiPage() {
   return (
     <CrudPageLayout
       eyebrow="Keuangan"
-      title="Evaluasi margin & BEP"
-      description="Perbandingan HPP dan harga jual, titik impas, dan kapasitas kolam menganggur."
+      title="Untung dan titik impas"
+      description="Bandingskan biaya pokok (HPP) dengan harga jual, hitung titik impas, dan cek kolam yang kosong."
       flowSteps={[
-        { label: "Kapasitas", detail: "Tabel ringkasan lubang & kolam." },
-        { label: "Untung dan titik impas", detail: "Rata-rata curah/pack dan titik impas." },
-        { label: "Batch", detail: "Margin per siklus panen disetujui." },
+        { label: "Kapasitas", detail: "Ringkasan lubang dan kolam." },
+        { label: "Untung rata-rata", detail: "Curah dan pack, plus titik impas." },
+        { label: "Per batch", detail: "Untung per siklus panen yang sudah disetujui." },
       ]}
       list={
         <div className="space-y-6">
@@ -40,7 +40,7 @@ export default async function OwnerEvaluasiPage() {
                 {
                   label: "Total lubang",
                   value: data.kapasitas.totalLubang.toLocaleString("id-ID"),
-                  hint: `Idle ${data.kapasitas.idlePct}%`,
+                  hint: `${data.kapasitas.idlePct}% lubang kosong`,
                 },
                 {
                   label: "Lubang terpakai",
@@ -53,13 +53,13 @@ export default async function OwnerEvaluasiPage() {
                 {
                   label: "Kolam aktif / menganggur",
                   value: `${data.kapasitas.kolamTerpakai} / ${data.kapasitas.kolamMenganggur}`,
-                  hint: "Status TERPAKAI / MENGANGGUR",
+                  hint: "Kolam dipakai atau menganggur",
                 },
               ]}
             />
           </PageSection>
 
-          <PageSection title="Margin rata-rata" badge="Read">
+          <PageSection title="Untung rata-rata" badge="Read">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -70,7 +70,7 @@ export default async function OwnerEvaluasiPage() {
               </TableHeader>
               <TableBody>
                 <TableRow>
-                  <TableCell>HPP</TableCell>
+                  <TableCell>Biaya pokok (HPP)</TableCell>
                   <TableCell className="text-right tabular-nums">
                     {formatRupiah(data.rataRata.hppPerKg)}/kg
                   </TableCell>
@@ -88,7 +88,7 @@ export default async function OwnerEvaluasiPage() {
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium">Kontribusi</TableCell>
+                  <TableCell className="font-medium">Sisa setelah HPP</TableCell>
                   <TableCell className="text-right tabular-nums font-medium">
                     {formatRupiah(data.rataRata.marginCurahPerKg)}/kg
                   </TableCell>
@@ -100,17 +100,17 @@ export default async function OwnerEvaluasiPage() {
             </Table>
           </PageSection>
 
-          <PageSection title="Titik impas (BEP)" description={overheadHint} badge="Read">
+          <PageSection title="Titik impas" description={overheadHint} badge="Read">
             <MetricRowsTable
               rows={[
                 {
-                  label: "BEP penjualan curah",
+                  label: "Titik impas penjualan curah",
                   value:
                     data.bep.bepKgCurah != null ? `${formatQty(data.bep.bepKgCurah)} kg/bulan` : "—",
-                  hint: `Overhead ÷ kontribusi (${formatRupiah(data.bep.kontribusiCurahPerKg)}/kg)`,
+                  hint: `Biaya umum ÷ sisa per kg (${formatRupiah(data.bep.kontribusiCurahPerKg)}/kg)`,
                 },
                 {
-                  label: "BEP lubang layak jual",
+                  label: "Titik impas per lubang layak jual",
                   value:
                     data.bep.bepLubangMin != null
                       ? `${Number(data.bep.bepLubangMin).toLocaleString("id-ID")} lubang/bulan`
@@ -141,8 +141,8 @@ export default async function OwnerEvaluasiPage() {
           </PageSection>
 
           <PageSection
-            title="Siklus dengan HPP disetujui"
-            description="Margin curah per batch."
+            title="Batch panen dengan HPP disetujui"
+            description="Untung curah per batch."
             badge="Read"
           >
             <EvaluasiMarginDaftar rows={data.siklusTerbaru} />

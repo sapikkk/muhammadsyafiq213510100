@@ -93,7 +93,7 @@ export async function HarvestDetailScreen({
               <span className="tabular-nums">{formatRupiah(hppData.biaya_langsung_total.toString())}</span>
             </div>
             <div className="flex justify-between gap-4">
-              <span className="text-muted-foreground">Overhead teralokasi</span>
+              <span className="text-muted-foreground">Biaya umum teralokasi</span>
               <span className="tabular-nums">{formatRupiah(hppData.overhead_teralokasi.toString())}</span>
             </div>
             <div className="flex justify-between gap-4">
@@ -129,12 +129,12 @@ export async function HarvestDetailScreen({
           </div>
           {laporan.status === "PENDING" ? (
             <p className="mt-4 text-xs text-muted-foreground">
-              HPP disimpan + jurnal persediaan (1350/5100) saat Approve. Susut abnormal → jurnal 5300.
+              Setelah disetujui, HPP tersimpan dan stok sayur tercatat di buku. Susut tidak normal masuk beban operasional.
             </p>
           ) : null}
           {"is_override" in hppData && hppData.is_override ? (
             <p className="mt-2 text-xs text-primary">
-              Override Admin: {(hppData as { override_justifikasi?: string | null }).override_justifikasi}
+              HPP diganti manual Admin: {(hppData as { override_justifikasi?: string | null }).override_justifikasi}
             </p>
           ) : null}
         </PageSection>

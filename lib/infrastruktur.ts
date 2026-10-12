@@ -65,6 +65,7 @@ function translatePrisma(error: unknown): never {
 export type LahanInput = {
   nilaiSewa: Prisma.Decimal;
   masaSewa: number;
+  biayaListrikBulan: Prisma.Decimal;
 };
 
 export type GreenhouseInput = {
@@ -81,10 +82,19 @@ export type KolamInput = {
   status: KolamStatus;
 };
 
+function parseMoneyOptional(raw: unknown, label: string): Prisma.Decimal {
+  if (raw === null || raw === undefined || raw === "") return new Prisma.Decimal(0);
+  return parseMoney(raw, label);
+}
+
 export function parseLahanInput(raw: Record<string, unknown>): LahanInput {
   return {
     nilaiSewa: parseMoney(raw.nilaiSewa ?? raw.nilai_sewa, "Nilai sewa lahan"),
     masaSewa: parsePositiveInt(raw.masaSewa ?? raw.masa_sewa, "Masa sewa (bulan)"),
+    biayaListrikBulan: parseMoneyOptional(
+      raw.biayaListrikBulan ?? raw.biaya_listrik_bulan,
+      "Biaya listrik per bulan",
+    ),
   };
 }
 
@@ -146,7 +156,20 @@ export async function createLahan(input: LahanInput) {
         nilai_sewa: input.nilaiSewa,
         masa_sewa: input.masaSewa,
         amortisasi_per_bulan: amortisasiBulanan(input.nilaiSewa, input.masaSewa),
+        biaya_listrik_bulan: input.biayaListrikBulan,
       },
+    });
+  } catch (error) {
+    translatePrisma(error);
+  }
+}
+
+export async function updateLahanListrikBulan(lahanId: number, raw: Record<string, unknown>) {
+  const biaya = parseMoneyOptional(raw.biayaListrikBulan ?? raw.biaya_listrik_bulan, "Biaya listrik");
+  try {
+    return await prisma.lahan.update({
+      where: { id: lahanId },
+      data: { biaya_listrik_bulan: biaya },
     });
   } catch (error) {
     translatePrisma(error);
@@ -234,6 +257,7 @@ export function serializeInfrastruktur(
       nilaiSewa: dec(row.nilai_sewa),
       masaSewa: row.masa_sewa,
       amortisasiPerBulan: dec(row.amortisasi_per_bulan),
+      biayaListrikBulan: dec(row.biaya_listrik_bulan),
       greenhouse,
     };
   });

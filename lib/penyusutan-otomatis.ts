@@ -123,11 +123,15 @@ export async function catatPenyusutanBulan(
     totalGh = totalGh.add(gh.depresiasi_per_bulan);
   }
 
-  const overhead = await prisma.biaya_Overhead.findFirst({
-    orderBy: { periode: "desc" },
-    select: { depresiasi_listrik: true },
-  });
-  const totalListrik = overhead?.depresiasi_listrik ?? nol;
+  const lahanListrik = await prisma.lahan.aggregate({ _sum: { biaya_listrik_bulan: true } });
+  let totalListrik = lahanListrik._sum.biaya_listrik_bulan ?? nol;
+  if (totalListrik.lte(0)) {
+    const overhead = await prisma.biaya_Overhead.findFirst({
+      orderBy: { periode: "desc" },
+      select: { depresiasi_listrik: true },
+    });
+    totalListrik = overhead?.depresiasi_listrik ?? nol;
+  }
 
   const jurnalIds: number[] = [];
   const prefixGh = `Penyusutan otomatis ${label} GH`;

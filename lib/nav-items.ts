@@ -69,7 +69,7 @@ export function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
       { label: "Ambil pribadi", href: "/owner/prive", icon: CircleDollarSign },
       { label: "Arus kas", href: "/owner/arus-kas", icon: Wallet },
       { label: "Rincian biaya", href: "/owner/biaya", icon: PieChart },
-      { label: "Cek untung & rugi", href: "/owner/evaluasi", icon: LineChart },
+      { label: "Untung & titik impas", href: "/owner/evaluasi", icon: LineChart },
       { label: "Produksi", href: "/owner/produksi", icon: Layers },
       { label: "Kegagalan & susut", href: "/owner/kegagalan-susut", icon: ClipboardList },
       { label: "Penjualan", href: "/owner/penjualan", icon: Receipt },

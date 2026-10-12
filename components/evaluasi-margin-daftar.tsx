@@ -34,14 +34,14 @@ export function EvaluasiMarginDaftar({ rows }: { rows: EvaluasiMarginRow[] }) {
       },
       {
         accessorKey: "marginCurahPerKg",
-        header: "Margin/kg",
+        header: "Untung/kg",
         cell: ({ row }) => (
           <span className="tabular-nums">{formatRupiah(row.original.marginCurahPerKg)}</span>
         ),
       },
       {
         accessorKey: "marginCurahPct",
-        header: "Margin %",
+        header: "Untung %",
         cell: ({ row }) => (
           <span className="tabular-nums">{row.original.marginCurahPct}%</span>
         ),
@@ -57,7 +57,7 @@ export function EvaluasiMarginDaftar({ rows }: { rows: EvaluasiMarginRow[] }) {
       pageSize={8}
       searchPlaceholder="Cari batch atau varietas…"
       searchColumnIds={["kodeBatch", "varietas"]}
-      emptyMessage="Belum ada baris margin — approve panen & HPP di Admin."
+      emptyMessage="Belum ada data untung. Setujui laporan panen dan HPP di Admin dulu."
     />
   );
 }

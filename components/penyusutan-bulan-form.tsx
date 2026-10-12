@@ -13,7 +13,7 @@ export function PenyusutanBulanForm({ defaultBulan }: { defaultBulan: string }) 
   return (
     <form action={formAction} className="max-w-md space-y-4 rounded-md border p-4">
       <p className="text-sm text-muted-foreground">
-        Mencatat penyusutan greenhouse dan listrik untuk bulan yang dipilih. Biasanya sekali
+        Mencatat penyusutan greenhouse (per bangunan) dan beban listrik (jumlah per lahan). Biasanya sekali
         per bulan; langsung disetujui otomatis.
       </p>
       <label className="block space-y-1.5 text-sm">

@@ -37,12 +37,12 @@ export function ClientApproval({ laporanId }: { laporanId: number }) {
       });
       const data: unknown = await res.json();
       if (isApiFailure(data, res.ok)) {
-        throw new Error(parseApiErrorMessage(data, "Gagal approve."));
+        throw new Error(parseApiErrorMessage(data, "Gagal menyetujui."));
       }
       notify.success("Laporan panen disetujui.");
       router.refresh();
     } catch (err: unknown) {
-      notify.error(err instanceof Error ? err.message : "Gagal approve.");
+      notify.error(err instanceof Error ? err.message : "Gagal menyetujui.");
     } finally {
       setLoading(false);
     }
@@ -112,9 +112,9 @@ export function ClientApproval({ laporanId }: { laporanId: number }) {
           disabled={loading}
         />
         <span>
-          <span className="font-medium">Override HPP</span>
+          <span className="font-medium">Ganti HPP manual</span>
           <span className="block text-muted-foreground">
-            Isi minimal satu satuan + justifikasi (min. 10 karakter).
+            Isi minimal satu angka (per kg, lubang, atau pack) dan alasan singkat (min. 10 huruf).
           </span>
         </span>
       </label>
@@ -144,7 +144,7 @@ export function ClientApproval({ laporanId }: { laporanId: number }) {
             </label>
           </div>
           <label className="block space-y-1 text-xs">
-            <span className="font-medium">Justifikasi override</span>
+            <span className="font-medium">Alasan ganti manual</span>
             <Textarea
               value={justifikasi}
               onChange={(e) => setJustifikasi(e.target.value)}
@@ -157,7 +157,7 @@ export function ClientApproval({ laporanId }: { laporanId: number }) {
 
       <div className="flex flex-wrap gap-4">
         <Button onClick={handleApprove} disabled={loading} className="w-full sm:w-auto">
-          Approve & generate HPP
+          Setujui dan hitung HPP
         </Button>
         <Button
           onClick={() => setMode("REJECT")}

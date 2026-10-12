@@ -13,6 +13,7 @@ import {
   smartJurnalTipeLabel,
   type SmartJurnalTipe,
 } from "@/lib/smart-jurnal-catalog";
+import { UI_COPY } from "@/lib/ui-copy";
 
 const NO_KAS: SmartJurnalTipe[] = [
   "PENYUSUTAN_GREENHOUSE",
@@ -99,7 +100,7 @@ export function SmartJurnalForm({
       {periodeTutup ? (
         <label className="flex items-center gap-2 text-sm">
           <input type="checkbox" name="adminOverridePeriod" className="h-4 w-4" />
-          Override period lock (PO) — periode tutup {periodeTutup}
+          {UI_COPY.tutupPeriodeOverride} ({periodeTutup})
         </label>
       ) : null}
 

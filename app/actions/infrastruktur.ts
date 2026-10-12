@@ -43,6 +43,7 @@ export async function simpanLahan(_prev: FormState, formData: FormData): Promise
       parseLahanInput({
         nilaiSewa: formData.get("nilaiSewa"),
         masaSewa: formData.get("masaSewa"),
+        biayaListrikBulan: formData.get("biayaListrikBulan"),
       }),
     );
     revalidate();

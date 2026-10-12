@@ -94,7 +94,7 @@ export function SalesOrderForm({
   if (pelanggan.length === 0) {
     return (
       <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-        Tambah pelanggan dulu sebelum membuat sales order.
+        Tambah pelanggan dulu sebelum membuat pesanan jual.
       </p>
     );
   }

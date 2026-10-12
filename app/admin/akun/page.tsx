@@ -17,7 +17,7 @@ export default async function AkunPage() {
       title="Bagan akun"
       description={`${aktif.length} akun aktif dari ${rows.length}. Akun nonaktif tetap tersimpan agar jurnal lama tidak putus.`}
       flowSteps={[
-        { label: "Pohon COA", detail: "Cari kode/nama — expand hierarki di pohon." },
+        { label: "Pohon akun", detail: "Cari kode atau nama, lalu buka cabang di pohon." },
         { label: "Tambah", detail: "Tombol di kanan atas — pilih induk & tipe." },
         { label: "Ubah / status", detail: "Per baris di pohon — akun sistem tanpa aksi." },
       ]}

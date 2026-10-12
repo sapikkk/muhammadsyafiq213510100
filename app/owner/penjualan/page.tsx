@@ -18,7 +18,7 @@ export default async function OwnerPenjualanPage() {
         { label: "Pendapatan", detail: "Epik 5.3 — jurnal di /owner/jurnal." },
       ]}
       list={<SalesOrderDaftar rows={orders.map(serializeSalesOrder)} mode="owner" />}
-      listTitle="Semua sales order"
+      listTitle="Semua pesanan jual"
       listDescription="Owner hanya melihat."
     />
   );

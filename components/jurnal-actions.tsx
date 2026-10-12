@@ -77,10 +77,9 @@ export function JurnalActions({
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Tolak jurnal ini?</DialogTitle>
+                <DialogTitle>Tolak catatan ini?</DialogTitle>
                 <DialogDescription>
-                  Tulis alasannya supaya pembuat jurnal tahu apa yang harus
-                  diperbaiki. Saldo akun tidak berubah.
+                  Tulis alasannya supaya yang mengisi tahu apa yang harus diperbaiki. Saldo akun tidak berubah.
                 </DialogDescription>
               </DialogHeader>
               <form action={tolakAction} className="space-y-3">
@@ -98,7 +97,7 @@ export function JurnalActions({
                   className="h-11"
                   pendingLabel="Menolak..."
                 >
-                  Tolak jurnal
+                  Tolak catatan
                 </SubmitButton>
               </form>
             </DialogContent>

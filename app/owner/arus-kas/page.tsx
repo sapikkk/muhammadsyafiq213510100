@@ -50,7 +50,7 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
     <CrudPageLayout
       eyebrow="Keuangan"
       title="Arus kas"
-      description="Pergerakan Kas/Bank dari catatan keuangan sudah disetujui. Isi bulan dengan format tahun-bulan, contoh 2026-01."
+      description="Uang masuk dan keluar dari kas tunai dan bank (catatan yang sudah disetujui). Isi bulan dengan format tahun-bulan, contoh 2026-01."
       flowSteps={[
         { label: "Filter", detail: "Pilih rentang bulan lalu terapkan." },
         { label: "Ringkasan", detail: "Tabel saldo dan arus per kategori." },
@@ -117,7 +117,7 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
 
           <PageSection
             title="Mutasi kas"
-            description="Akun 1100 Kas dan 1110 Bank — terbaru dulu."
+            description="Kas tunai dan rekening bank, urutan terbaru dulu."
             badge="Read"
           >
             <CashFlowMutasiDaftar rows={mutasiRows} />

@@ -8,14 +8,14 @@ export default function OwnerPrivePage() {
   return (
     <CrudPageLayout
       eyebrow="Keuangan"
-      title="Prive"
-      description="Pencatatan pengambilan pribadi Owner; jurnal menunggu persetujuan Admin."
+      title="Ambil pribadi"
+      description="Catat uang yang Owner ambil untuk keperluan pribadi. Admin yang menyetujui di menu Catatan keuangan."
       flowSteps={[
-        { label: "Isi form", detail: "Nominal & sumber kas — tanggal default hari ini." },
-        { label: "Approve", detail: "Admin setujui jurnal di menu Jurnal." },
+        { label: "Isi form", detail: "Nominal dan sumber kas. Tanggal default hari ini." },
+        { label: "Setujui", detail: "Admin setujui catatan di menu Catatan keuangan." },
       ]}
       list={<PriveForm defaultTanggal={keTanggalIso(new Date())} />}
-      listTitle="Form prive"
+      listTitle="Form ambil pribadi"
       listDescription="Satu kali isi per simpan."
     />
   );

@@ -15,6 +15,8 @@ model Lahan {
   nilai_sewa           Decimal      @db.Decimal(18, 2)
   masa_sewa            Int
   amortisasi_per_bulan Decimal      @db.Decimal(18, 2)
+  /// Beban listrik/pompa satu site — dibagi ke kolam di lahan ini (bukan per greenhouse).
+  biaya_listrik_bulan  Decimal      @default(0) @db.Decimal(18, 2)
   greenhouse           Greenhouse[]
 }
 

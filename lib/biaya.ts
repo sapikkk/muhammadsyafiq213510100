@@ -60,17 +60,16 @@ export async function updateBiayaLangsung(
   if (!existing) throw new BiayaError("Biaya langsung untuk siklus ini belum ada.", 404);
 
   const biaya_nutrisi = parseMoney(raw.biayaNutrisi, "Biaya nutrisi");
-  const biaya_listrik_pompa = parseMoney(raw.biayaListrikPompa, "Biaya listrik/pompa");
   const subtotal = recalcSubtotal({
     biaya_benih: existing.biaya_benih,
     biaya_rockwool: existing.biaya_rockwool,
     biaya_nutrisi,
-    biaya_listrik_pompa,
+    biaya_listrik_pompa: existing.biaya_listrik_pompa,
   });
 
   return prisma.biaya_Langsung.update({
     where: { siklus_id: siklusId },
-    data: { biaya_nutrisi, biaya_listrik_pompa, subtotal },
+    data: { biaya_nutrisi, subtotal },
   });
 }
 
@@ -101,25 +100,71 @@ export async function createOverhead(raw: Record<string, unknown>) {
   });
 }
 
+const nol = new Prisma.Decimal(0);
+
+async function totalLubangSemua(tx: PrismaDb) {
+  const agg = await tx.kolam.aggregate({ _sum: { kapasitas_lubang: true } });
+  return agg._sum.kapasitas_lubang ?? 0;
+}
+
+async function totalLubangLahan(tx: PrismaDb, lahanId: number) {
+  const agg = await tx.kolam.aggregate({
+    where: { greenhouse: { lahan_id: lahanId } },
+    _sum: { kapasitas_lubang: true },
+  });
+  return agg._sum.kapasitas_lubang ?? 0;
+}
+
+/** Listrik per lahan; fallback proporsi depresiasi_listrik overhead jika kolom lahan masih nol. */
+async function listrikBulanLahan(
+  tx: PrismaDb,
+  lahan: { id: number; biaya_listrik_bulan: Prisma.Decimal },
+  lubangLahan: number,
+  overhead: { depresiasi_listrik: Prisma.Decimal } | null,
+) {
+  if (lahan.biaya_listrik_bulan.gt(0)) return lahan.biaya_listrik_bulan;
+  if (!overhead?.depresiasi_listrik.gt(0) || lubangLahan <= 0) return nol;
+  const all = await totalLubangSemua(tx);
+  if (all <= 0) return nol;
+  return overhead.depresiasi_listrik.mul(new Prisma.Decimal(lubangLahan).div(all));
+}
+
 export async function allocateOverheadForSiklus(
   siklusId: number,
   tx: PrismaDb = prisma,
 ): Promise<Prisma.Decimal> {
   const siklus = await tx.siklus_Produksi.findUnique({
     where: { id: siklusId },
-    include: { kolam: true },
+    include: { kolam: { include: { greenhouse: { include: { lahan: true } } } } },
   });
-  if (!siklus) return new Prisma.Decimal(0);
+  if (!siklus?.kolam?.greenhouse?.lahan) return nol;
 
+  const lahan = siklus.kolam.greenhouse.lahan;
+  const lubangLahan = await totalLubangLahan(tx, lahan.id);
+  if (lubangLahan <= 0) return nol;
+
+  const shareLahan = new Prisma.Decimal(siklus.kolam.kapasitas_lubang).div(lubangLahan);
   const overhead = await tx.biaya_Overhead.findFirst({ orderBy: { periode: "desc" } });
-  if (!overhead) return new Prisma.Decimal(0);
 
-  const agg = await tx.kolam.aggregate({ _sum: { kapasitas_lubang: true } });
-  const totalLubang = agg._sum.kapasitas_lubang ?? 0;
-  if (totalLubang <= 0) return new Prisma.Decimal(0);
+  const ghAgg = await tx.greenhouse.aggregate({
+    where: { lahan_id: lahan.id },
+    _sum: { depresiasi_per_bulan: true },
+  });
+  const depGreenhouseLahan = ghAgg._sum.depresiasi_per_bulan ?? nol;
 
-  const share = new Prisma.Decimal(siklus.kolam.kapasitas_lubang).div(totalLubang);
-  return overhead.subtotal.mul(share);
+  const listrik = await listrikBulanLahan(tx, lahan, lubangLahan, overhead);
+  const poolLahan = listrik.add(lahan.amortisasi_per_bulan).add(depGreenhouseLahan);
+  let total = poolLahan.mul(shareLahan);
+
+  if (overhead?.gaji_karyawan.gt(0)) {
+    const all = await totalLubangSemua(tx);
+    if (all > 0) {
+      const shareGlobal = new Prisma.Decimal(siklus.kolam.kapasitas_lubang).div(all);
+      total = total.add(overhead.gaji_karyawan.mul(shareGlobal));
+    }
+  }
+
+  return total;
 }
 
 export function serializeBiayaLangsung(row: NonNullable<Awaited<ReturnType<typeof listBiayaLangsungBySiklus>>>) {

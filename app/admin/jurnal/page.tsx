@@ -30,25 +30,25 @@ export default async function JurnalPage({
       ]
         .filter(Boolean)
         .join(" · ")
-    : "Klik baris untuk detail, edit draft, atau ajukan approve.";
+    : "Klik baris untuk detail, ubah draf, atau ajukan persetujuan.";
 
   return (
     <CrudPageLayout
       eyebrow="Akuntansi"
-      title="Jurnal"
-      description="Buat entri di Jurnal baru; setujui atau tolak dari detail (Owner atau Admin)."
+      title="Catatan keuangan"
+      description="Buat catatan baru; setujui atau tolak dari detail (Owner atau Admin)."
       flowSteps={[
-        { label: "Buat", detail: "Jurnal otomatis atau isi manual; status draft atau menunggu." },
+        { label: "Buat", detail: "Jurnal otomatis atau isi manual; status draf atau menunggu." },
         { label: "Seimbang", detail: "Total debit sama dengan kredit sebelum diajukan." },
         { label: "Setujui", detail: "Owner atau Admin; saldo akun berubah setelah disetujui." },
       ]}
       actions={
         <>
           <Button asChild className="h-11">
-            <Link href="/admin/jurnal/baru">Jurnal baru</Link>
+            <Link href="/admin/jurnal/baru">Catatan baru</Link>
           </Button>
           <Button asChild variant="outline" className="h-11">
-            <Link href="/admin/akuntansi">Period lock</Link>
+            <Link href="/admin/akuntansi">Tutup periode</Link>
           </Button>
         </>
       }
@@ -109,7 +109,7 @@ export default async function JurnalPage({
           />
         </div>
       }
-      listTitle={`${rows.length} jurnal${adaFilter ? " sesuai filter" : ""}`}
+      listTitle={`${rows.length} catatan${adaFilter ? " sesuai filter" : ""}`}
       listDescription={filterDesc}
     />
   );

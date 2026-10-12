@@ -23,8 +23,8 @@ export default async function OwnerJurnalPage({
   return (
     <CrudPageLayout
       eyebrow="Keuangan"
-      title="Jurnal"
-      description="Lihat dan filter jurnal; Owner tidak membuat, mengubah, atau menyetujui entri."
+      title="Catatan keuangan"
+      description="Lihat dan filter catatan keuangan. Owner tidak membuat, mengubah, atau menyetujui baris baru."
       flowSteps={[
         { label: "Filter", detail: "Tanggal & status — lalu terapkan." },
         { label: "Detail", detail: "Klik baris untuk melihat baris debit/kredit." },
@@ -76,7 +76,7 @@ export default async function OwnerJurnalPage({
           />
         </div>
       }
-      listTitle={`${rows.length} jurnal${adaFilter ? " sesuai filter" : ""}`}
+      listTitle={`${rows.length} catatan${adaFilter ? " sesuai filter" : ""}`}
     />
   );
 }

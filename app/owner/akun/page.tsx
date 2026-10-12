@@ -15,10 +15,10 @@ export default async function OwnerAkunPage() {
       description={`Hanya lihat. ${aktif.length} akun aktif dari ${rows.length} total.`}
       flowSteps={[
         { label: "Navigasi pohon", detail: "Expand induk untuk melihat sub-akun." },
-        { label: "Perubahan COA", detail: "Hanya Admin — Owner lihat saldo via jurnal/laporan." },
+        { label: "Perubahan akun", detail: "Hanya Admin. Owner lihat saldo lewat catatan keuangan dan laporan." },
       ]}
       list={<AkunTree tree={buildClientTree(rows)} mode="owner" />}
-      listTitle="Struktur COA"
+      listTitle="Struktur bagan akun"
     />
   );
 }

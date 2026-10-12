@@ -6,5 +6,8 @@ export const UI_COPY = {
   crudListDefault: "Klik baris untuk lihat detail.",
   crudCreateTitle: "Tambah baru",
   jurnalDisetujui: "catatan keuangan yang sudah disetujui",
-  hppSingkat: "biaya pokok produksi (HPP)",
+  hppSingkat: "biaya pokok penjualan (HPP)",
+  tutupPeriodeOverride:
+    "Izinkan tanggal sebelum tutup buku (hanya Admin, perlu centang saat simpan)",
+  gantiHppManual: "Ganti HPP manual",
 } as const;

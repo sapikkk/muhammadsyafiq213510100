@@ -33,8 +33,8 @@ export const COACH_TIPS: Record<string, string[]> = {
     "Daftar ini dari akun Kas dan Bank yang sudah disetujui.",
   ],
   "owner-biaya": [
-    "Pisahkan biaya langsung dan biaya umum (overhead) per bulan.",
-    "Setelah panen disetujui Admin, biaya produksi (HPP) terisi di halaman Evaluasi.",
+    "Pisahkan biaya langsung dan biaya umum per bulan.",
+    "Setelah panen disetujui Admin, HPP terisi di halaman Untung dan titik impas.",
   ],
   "owner-evaluasi": [
     "Untung kotor = harga jual varietas dikurangi HPP rata-rata.",
@@ -89,7 +89,8 @@ export const COACH_TIPS: Record<string, string[]> = {
     "Daftar akun berbentuk pohon: tambah, ubah, atau nonaktifkan per baris.",
   ],
   "admin-biaya": [
-    "Biaya umum bulanan mempengaruhi HPP saat panen disetujui.",
+    "Listrik diisi per lahan, bukan per greenhouse. Kolam membagi proporsional lubang.",
+    "Gaji bulanan di biaya umum; sewa lahan dan depresiasi greenhouse dari data infrastruktur.",
   ],
   "admin-inventaris": [
     "Stok masuk, keluar, dan penyesuaian di halaman detail barang.",
@@ -162,7 +163,7 @@ export const COACH_TIPS: Record<string, string[]> = {
   ],
   "admin-penjualan-baru": [
     "Pilih pelanggan aktif dan batch panen yang masih ada.",
-    "Simpan dulu sebagai draft; konfirmasi stok di halaman detail pesanan.",
+    "Simpan dulu sebagai pesanan sementara; konfirmasi stok di halaman detail pesanan.",
   ],
   "petani-siklus-baru": [
     "Stok paket benih atau media berkurang otomatis saat batch dibuat.",

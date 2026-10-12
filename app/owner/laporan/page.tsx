@@ -30,7 +30,7 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
     {
       id: "neraca",
       judul: "Neraca",
-      deskripsi: "Saldo akun posting (snapshot)",
+      deskripsi: "Saldo akun pada tanggal dipilih",
       href: `/api/export/balance-sheet?${q}`,
     },
     {
@@ -45,9 +45,9 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
     <CrudPageLayout
       eyebrow="Ringkasan"
       title="Ekspor laporan"
-      description="Unduh laporan laba rugi dan neraca sebagai PDF. Ekspor jurnal Excel tersedia di menu Admin."
+      description="Unduh laba rugi, neraca, dan arus kas sebagai PDF. Ekspor Excel catatan keuangan ada di menu Admin."
       flowSteps={[
-        { label: "Pilih periode", detail: "Format YYYY-MM — sama dengan filter arus kas." },
+        { label: "Pilih periode", detail: "Format tahun-bulan (contoh 2026-01), sama seperti halaman Arus kas." },
         { label: "Unduh", detail: "Tabel laporan — tombol Unduh PDF per baris." },
       ]}
       list={

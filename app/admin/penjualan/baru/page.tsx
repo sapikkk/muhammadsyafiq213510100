@@ -13,7 +13,7 @@ export default async function AdminPenjualanBaruPage() {
       backHref="/admin/penjualan"
       eyebrow="Penjualan"
       title="Buat pesanan jual"
-      description="Simpan sebagai draft; konfirmasi stok setelah baris pesanan valid."
+      description="Simpan sebagai pesanan sementara; konfirmasi stok setelah baris pesanan lengkap."
     >
       <PageSection title="Baris pesanan" badge="Create">
         <SalesOrderForm pelanggan={pelanggan} siklus={siklus} akunDp={akunDp} />

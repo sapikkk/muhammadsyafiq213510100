@@ -64,7 +64,7 @@ export function JurnalDetailView({
         </p>
       ) : null}
 
-      <PageSection title="Baris jurnal" badge="Read">
+      <PageSection title="Baris catatan" badge="Read">
         <JurnalBalanceDaftar
           rows={barisRows}
           totalDebit={totalDebit.toString()}

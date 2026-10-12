@@ -31,7 +31,7 @@ export default async function SalesOrderInvoicePage({ params }: { params: { id: 
           backHref={`/admin/penjualan/${id}`}
           backLabel="Kembali ke pesanan jual"
           eyebrow="Penjualan"
-          title="Invoice penjualan"
+          title="Faktur penjualan"
           description={`${invoice.nomor_invoice ?? "—"} · ${invoice.nomor_so}`}
           actions={<PrintButton />}
         >
@@ -44,7 +44,7 @@ export default async function SalesOrderInvoicePage({ params }: { params: { id: 
       <article className="mx-auto max-w-3xl rounded-md border bg-card p-6 text-sm print:max-w-none print:border-0 print:p-0">
         <header className="mb-6 border-b pb-4">
           <p className="text-lg font-semibold">Kokonus Farm</p>
-          <p className="text-muted-foreground">Invoice {invoice.nomor_invoice}</p>
+          <p className="text-muted-foreground">Faktur {invoice.nomor_invoice}</p>
           <p className="text-muted-foreground">Pesanan jual {invoice.nomor_so}</p>
           <p className="mt-2 text-xs text-muted-foreground">
             Status: {labelSalesOrderStatus(invoice.status)} ·{" "}
@@ -102,7 +102,7 @@ export default async function SalesOrderInvoicePage({ params }: { params: { id: 
         </dl>
 
         {invoice.catatan ? (
-          <p className="mt-6 text-xs text-muted-foreground">Catatan SO: {invoice.catatan}</p>
+          <p className="mt-6 text-xs text-muted-foreground">Catatan pesanan: {invoice.catatan}</p>
         ) : null}
       </article>
     </div>

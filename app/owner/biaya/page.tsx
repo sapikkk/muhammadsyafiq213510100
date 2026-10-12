@@ -28,17 +28,17 @@ export default async function OwnerBiayaPage({ searchParams }: { searchParams: S
   return (
     <CrudPageLayout
       eyebrow="Keuangan"
-      title="Breakdown biaya"
-      description="Diagram beban per akun (catatan keuangan sudah disetujui). Klik akun untuk melihat jurnal terkait."
+      title="Rincian biaya"
+      description="Diagram beban per akun dari catatan yang sudah disetujui. Klik irisan untuk lihat catatan terkait."
       flowSteps={[
-        { label: "Filter periode", detail: "YYYY-MM — terapkan sebelum baca pie." },
-        { label: "Drill-down", detail: "Klik irisan pie — daftar jurnal di bawah." },
+        { label: "Filter periode", detail: "Isi tahun-bulan (contoh 2026-01), lalu Terapkan." },
+        { label: "Per akun", detail: "Klik irisan diagram untuk lihat daftar catatan di bawah." },
       ]}
       list={
         <div className="space-y-4">
           <form method="get" className="flex flex-wrap items-end gap-3 text-sm">
             <label className="flex flex-col gap-1">
-              <span className="text-muted-foreground">Dari (YYYY-MM)</span>
+              <span className="text-muted-foreground">Dari (tahun-bulan)</span>
               <input
                 name="dari"
                 defaultValue={searchParams.dari ?? defaultDari}
@@ -47,7 +47,7 @@ export default async function OwnerBiayaPage({ searchParams }: { searchParams: S
               />
             </label>
             <label className="flex flex-col gap-1">
-              <span className="text-muted-foreground">Sampai (YYYY-MM)</span>
+              <span className="text-muted-foreground">Sampai (tahun-bulan)</span>
               <input
                 name="sampai"
                 defaultValue={searchParams.sampai ?? defaultDari}

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 export const OWNER_DASHBOARD_ALUR = [
   { label: "Lihat ringkasan", detail: "Beranda: pendapatan dan beban bulan ini." },
-  { label: "Tinjau catatan keuangan", detail: "Setujui atau tolak entri dari Admin." },
+  { label: "Tinjau catatan keuangan", detail: "Setujui atau tolak catatan dari Admin." },
   { label: "Unduh laporan", detail: "Laba rugi dan neraca PDF per bulan." },
 ];
 

@@ -13,11 +13,11 @@ export default async function AdminPenjualanPage() {
     <CrudPageLayout
       eyebrow="Penjualan"
       title="Pesanan jual"
-      description="Dari draft order sampai kirim, jurnal pendapatan dan HPP, serta pelunasan piutang."
+      description="Dari pesanan sementara sampai kirim, catat pendapatan dan biaya pokok, lalu terima sisa bayaran."
       flowSteps={[
-        { label: "Draft", detail: "Tombol Buat SO: pilih pelanggan dan batch." },
+        { label: "Pesanan sementara", detail: "Tombol Buat pesanan: pilih pelanggan dan batch." },
         { label: "Detail", detail: "Klik baris; aksi mengikuti status (konfirmasi, DP, kirim, dan seterusnya)." },
-        { label: "Invoice", detail: "Dari detail order setelah dikonfirmasi." },
+        { label: "Faktur", detail: "Dari detail pesanan setelah dikonfirmasi." },
       ]}
       actions={
         <Button type="button" className="h-11" asChild>
@@ -25,7 +25,7 @@ export default async function AdminPenjualanPage() {
         </Button>
       }
       list={<SalesOrderDaftar rows={orders.map(serializeSalesOrder)} mode="admin" />}
-      listTitle="Semua sales order"
+      listTitle="Semua pesanan jual"
       listDescription="Klik baris untuk detail dan aksi yang sah untuk status saat ini."
     />
   );

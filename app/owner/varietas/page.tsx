@@ -24,7 +24,7 @@ export default async function OwnerVarietasPage() {
       title="Varietas & asumsi"
       description="Data varietas untuk perhitungan biaya dan harga — Owner dan Admin boleh mengubah."
       flowSteps={[
-        { label: "Lihat HPP rata", detail: "Kolom rata per lubang dari batch approved." },
+        { label: "Lihat HPP rata", detail: "Kolom rata per lubang dari batch panen yang sudah disetujui." },
         { label: "Detail", detail: "Klik baris — ubah asumsi atau aktif/nonaktif." },
       ]}
       actions={

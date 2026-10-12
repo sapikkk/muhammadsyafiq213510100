@@ -173,7 +173,7 @@ export function JurnalForm({
       {periodeTutup ? (
         <label className="flex items-center gap-2 text-sm">
           <input type="checkbox" name="adminOverridePeriod" className="h-4 w-4" />
-          Override period lock — tutup periode {periodeTutup}
+          Izinkan tanggal sebelum tutup buku ({periodeTutup})
         </label>
       ) : null}
 

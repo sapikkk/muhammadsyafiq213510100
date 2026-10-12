@@ -62,7 +62,7 @@ function PelunasanForm({ id }: { id: number }) {
       <Input name="nominal" placeholder="Nominal pelunasan (Rp)" className="h-9 text-sm" required />
       <KasSumberSelect />
       <SubmitButton className="h-9" pendingLabel="...">
-        Catat pelunasan (Dr Kas · Cr piutang)
+        Catat pelunasan (kas masuk, piutang berkurang)
       </SubmitButton>
     </form>
   );

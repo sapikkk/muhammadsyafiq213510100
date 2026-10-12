@@ -35,7 +35,7 @@ export default async function OwnerPage() {
       <PageHeaderRow
         eyebrow="Owner"
         title="Beranda"
-        description="Ringkasan keuangan, persetujuan jurnal, dan ekspor laporan keuangan."
+        description="Ringkasan keuangan bulan ini, persetujuan catatan keuangan, dan unduh laporan."
         guide={
           <FlowSteps
             pageKey="owner"

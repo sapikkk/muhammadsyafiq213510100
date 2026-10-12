@@ -15,10 +15,10 @@ export default async function JurnalBaruPage() {
     <DetailLayout
       backHref="/admin/jurnal"
       eyebrow="Akuntansi"
-      title="Jurnal baru"
-      description="Jurnal otomatis (17 jenis) atau jurnal manual. Saldo berubah setelah jurnal disetujui."
+      title="Catatan keuangan baru"
+      description="Pilih jurnal otomatis (17 jenis) atau isi manual. Saldo akun berubah setelah disetujui."
     >
-      <PageSection title="Form jurnal" badge="Create">
+      <PageSection title="Form catatan" badge="Create">
         <JurnalBaruPanel
           akun={akun}
           tanggalAwal={keTanggalIso(new Date())}

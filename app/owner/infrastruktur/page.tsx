@@ -13,7 +13,7 @@ export default async function OwnerInfrastrukturPage() {
       title="Infrastruktur"
       description="Hanya baca. Perubahan master lewat Admin."
       flowSteps={[
-        { label: "Kapasitas", detail: "Per kolam — bandingkan dengan evaluasi BEP di menu Evaluasi." },
+        { label: "Kapasitas", detail: "Per kolam. Bandingkan dengan titik impas di menu Untung dan titik impas." },
       ]}
       list={<InfrastrukturPohon data={data} mode="owner" />}
       listTitle="Pohon lahan · GH · kolam"

@@ -13,7 +13,7 @@ export type JurnalDaftarRow = SerializedJurnalListRow;
 export function JurnalDaftar({
   rows,
   detailPrefix,
-  emptyMessage = "Belum ada jurnal.",
+  emptyMessage = "Belum ada catatan keuangan.",
 }: {
   rows: JurnalDaftarRow[];
   detailPrefix: "/admin/jurnal" | "/owner/jurnal";

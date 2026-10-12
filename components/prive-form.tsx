@@ -13,7 +13,7 @@ export function PriveForm({ defaultTanggal }: { defaultTanggal: string }) {
     error: state.error,
     message:
       state.ok && state.jurnalId
-        ? `Jurnal prive #${state.jurnalId} menunggu persetujuan Admin.`
+        ? `Catatan ambil pribadi #${state.jurnalId} menunggu persetujuan Admin.`
         : undefined,
   });
 

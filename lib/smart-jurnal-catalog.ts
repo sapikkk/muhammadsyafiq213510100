@@ -25,7 +25,7 @@ export const smartJurnalTipeLabel: Record<SmartJurnalTipe, string> = {
   PRIVE: "Prive pemilik (3200)",
   SUNTIKAN_MODAL: "Suntikan modal (3100)",
   TRANSFER_KAS: "Transfer antar kas/bank",
-  PINJAMAN_MASUK: "Pinjaman masuk (Dr kas · Cr hutang)",
+  PINJAMAN_MASUK: "Pinjaman masuk (kas tambah, hutang tambah)",
   BAYAR_HUTANG: "Bayar hutang usaha (2100)",
   BELI_ASET_TUNAI: "Beli aset tunai (1500 greenhouse)",
   BAYAR_BUNGA: "Beban bunga pinjaman (5500)",
@@ -35,7 +35,7 @@ export const smartJurnalTipeLabel: Record<SmartJurnalTipe, string> = {
   PEMBELIAN_BAHAN_KREDIT: "Beli nutrisi/bahan kredit (1330 · 2100)",
   PENDAPATAN_LAIN: "Pendapatan lain (4100)",
   GAJI_PETANI: "Gaji petani (5200)",
-  TERIMA_PIUTANG: "Terima piutang (Dr kas · Cr 1200)",
+  TERIMA_PIUTANG: "Terima piutang pelanggan (kas tambah)",
   BEBAN_PENGIRIMAN: "Beban pengiriman (5400)",
   BELI_BENIH_TUNAI: "Beli benih tunai (1310)",
 };

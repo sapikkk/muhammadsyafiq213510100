@@ -180,7 +180,8 @@ function GreenhouseBaris({
             <div className="space-y-2 border-t px-4 py-3 text-sm">
               <p className="text-muted-foreground">
                 Lahan #{lahan.id}: sewa {lahan.nilaiSewa} / {lahan.masaSewa}{" "}
-                bulan · amortisasi {lahan.amortisasiPerBulan}/bulan
+                bulan · amortisasi {lahan.amortisasiPerBulan}/bulan · listrik{" "}
+                {lahan.biayaListrikBulan}/bulan (seluruh greenhouse di lahan ini)
               </p>
               {gh.kolam.length === 0 ? (
                 <p className="text-muted-foreground">Belum ada kolam.</p>
