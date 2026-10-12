@@ -1,3 +1,10 @@
+## [1.36.5](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.4...v1.36.5) (2026-10-12)
+
+
+### Bug Fixes
+
+* invalidasi KPI owner saat pack habis di semai/tambal ([4318287](https://github.com/sapikkk/muhammadsyafiq213510100/commit/43182873acdee61f0e0fe5c715ee9b1f0cd47c3f))
+
 ## [1.36.4](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.3...v1.36.4) (2026-10-12)
 
 
