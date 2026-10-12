@@ -10,14 +10,13 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { MonitorGrafikTitik } from "@/lib/monitor-kolam";
+import type { MonitorGrafikTitik } from "@/lib/monitor-kolam-types";
 
 export function PetaniMonitorChart({ points }: { points: MonitorGrafikTitik[] }) {
   if (points.length === 0) {
     return (
       <p className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
-        Belum ada catatan monitor kolam. Buka detail siklus → Monitor kolam untuk isi PPM, pH,
-        dan suhu.
+        Belum ada catatan monitor kolam. Buka Siklus → filter kolam → Monitor kolam hari ini.
       </p>
     );
   }

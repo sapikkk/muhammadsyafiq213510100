@@ -10,12 +10,20 @@ import { daftarTugasPetani, historiAktivitasPetani } from "@/lib/tugas-petani";
 
 export const dynamic = "force-dynamic";
 
+async function monitorGrafikAman() {
+  try {
+    return await listMonitorGrafikPetani();
+  } catch {
+    return [];
+  }
+}
+
 export default async function PetaniPage() {
   const [stokRendah, tugas, histori, monitorGrafik] = await Promise.all([
     listAlertStokMinimum(),
     daftarTugasPetani(),
     historiAktivitasPetani(),
-    listMonitorGrafikPetani(),
+    monitorGrafikAman(),
   ]);
 
   return (

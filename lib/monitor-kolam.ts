@@ -84,15 +84,9 @@ export async function catatMonitorKolam(userId: number, input: MonitorKolamInput
   });
 }
 
-export type MonitorGrafikTitik = {
-  waktu: string;
-  label: string;
-  ppm: number;
-  ph: number;
-  suhu: number;
-  kolam: string;
-  siklusKode: string;
-};
+import type { MonitorGrafikTitik } from "@/lib/monitor-kolam-types";
+
+export type { MonitorGrafikTitik } from "@/lib/monitor-kolam-types";
 
 /** Titik grafik beranda petani — batch aktif (bukan selesai/gagal total). */
 export async function listMonitorGrafikPetani(limit = 40): Promise<MonitorGrafikTitik[]> {
