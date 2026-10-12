@@ -404,11 +404,11 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
       },
     });
   });
-  void emitSalesOrderDraft(row.id, row.nomor_so);
+  void emitSalesOrderDraft(row.id, row.nomor_so, userId);
   return row;
 }
 
-export async function confirmSalesOrder(id: number) {
+export async function confirmSalesOrder(id: number, olehId?: number) {
   const row = await prisma.$transaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({
       where: { id },
@@ -445,6 +445,6 @@ export async function confirmSalesOrder(id: number) {
       },
     });
   });
-  void emitSalesOrderConfirmed(row.id, row.nomor_so);
+  void emitSalesOrderConfirmed(row.id, row.nomor_so, olehId);
   return row;
 }

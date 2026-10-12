@@ -30,7 +30,7 @@ export async function registerPetani(
   formData: FormData,
 ): Promise<RegisterState> {
   const session = await getServerSession(authOptions);
-  if (!isRoleAllowed(session?.user?.role, "ADMIN")) {
+  if (!session?.user?.id || !isRoleAllowed(session.user.role, "ADMIN")) {
     return { error: "Hanya Admin yang bisa mendaftarkan petani." };
   }
 
@@ -65,7 +65,7 @@ export async function registerPetani(
 
   try {
     const user = await prisma.user.create({ data });
-    void emitPetaniBaru(user.id, nama, email);
+    void emitPetaniBaru(user.id, nama, email, Number(session.user.id));
   } catch (error) {
     return translate(error);
   }

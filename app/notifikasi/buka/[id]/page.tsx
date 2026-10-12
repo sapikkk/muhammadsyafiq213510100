@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { tandaiDibaca } from "@/lib/notifikasi";
+import { resolveNotifikasiHref } from "@/lib/notifikasi-href";
+import type { Role } from "@/types/role";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +16,7 @@ export default async function BukaNotifikasiPage({
 }) {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id ? Number(session.user.id) : null;
-  if (!userId) redirect("/login");
+  if (!userId || !session?.user) redirect("/login");
 
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) redirect("/pengaturan#notifikasi");
@@ -27,8 +29,7 @@ export default async function BukaNotifikasiPage({
 
   await tandaiDibaca(id, userId);
 
-  const raw = row.href?.trim() ?? "";
-  const href =
-    raw.startsWith("/") && !raw.startsWith("//") ? raw : "/pengaturan#notifikasi";
+  const role = session.user.role as Role;
+  const href = resolveNotifikasiHref(row.href, role);
   redirect(href);
 }

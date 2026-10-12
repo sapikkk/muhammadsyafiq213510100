@@ -5,6 +5,7 @@ import {
   kirimNotifikasiUser,
   type NotifikasiPayload,
 } from "@/lib/notifikasi";
+import { labelPelaku, pesanAktivitas } from "@/lib/notifikasi-pelaku";
 import { prisma } from "@/lib/prisma";
 
 export const NotifJenis = {
@@ -34,7 +35,10 @@ async function toAdmin(
   await kirimNotifikasiPeran(["ADMIN"], payload, opts);
 }
 
-async function toOwner(payload: NotifikasiPayload, opts?: { excludeUserId?: number }) {
+async function toOwner(
+  payload: NotifikasiPayload,
+  opts?: { excludeUserId?: number; dedupeUnread?: boolean },
+) {
   await kirimNotifikasiPeran(["OWNER"], payload, opts);
 }
 
@@ -67,12 +71,24 @@ export async function emitPasswordResetRejected(userId: number) {
   });
 }
 
-export async function emitHarvestPending(laporanId: number, kodeBatch: string, petaniNama: string) {
+export async function emitHarvestPending(
+  laporanId: number,
+  kodeBatch: string,
+  petaniNama: string,
+) {
   await toAdmin({
     jenis: NotifJenis.HARVEST_PENDING,
     judul: "Laporan panen perlu ditinjau",
-    pesan: `${petaniNama} mengirim panen batch ${kodeBatch}.`,
+    pesan: pesanAktivitas(`Petani ${petaniNama}`, `mengirim panen batch ${kodeBatch}.`),
     href: `/admin/harvest/${laporanId}`,
+    entitas: "Laporan_Panen",
+    entitasId: laporanId,
+  });
+  await toOwner({
+    jenis: NotifJenis.HARVEST_PENDING,
+    judul: "Panen menunggu tinjauan Admin",
+    pesan: pesanAktivitas(`Petani ${petaniNama}`, `mengirim panen batch ${kodeBatch}.`),
+    href: `/owner/produksi`,
     entitas: "Laporan_Panen",
     entitasId: laporanId,
   });
@@ -170,24 +186,35 @@ export async function emitKegagalanBaru(logId: number, kodeBatch: string, tahapL
 }
 
 export async function emitStokRendah(itemId: number, kode: string, nama: string) {
+  const detail = `${kode} ${nama} sudah di bawah minimum. Perlu isi ulang.`;
+  const payload = {
+    jenis: NotifJenis.STOK_RENDAH,
+    judul: "Stok di bawah minimum",
+    pesan: detail,
+    entitas: "ItemInventaris",
+    entitasId: itemId,
+  } satisfies Omit<NotifikasiPayload, "href">;
   await toAdmin(
-    {
-      jenis: NotifJenis.STOK_RENDAH,
-      judul: "Stok di bawah minimum",
-      pesan: `${kode} ${nama} perlu diisi ulang.`,
-      href: `/admin/inventaris/${itemId}`,
-      entitas: "ItemInventaris",
-      entitasId: itemId,
-    },
+    { ...payload, href: `/admin/inventaris/${itemId}` },
+    { dedupeUnread: true },
+  );
+  await toOwner(
+    { ...payload, href: `/owner/inventaris/${itemId}` },
     { dedupeUnread: true },
   );
 }
 
-export async function emitPetaniBaru(userId: number, nama: string, email: string) {
+export async function emitPetaniBaru(
+  userId: number,
+  nama: string,
+  email: string,
+  olehId?: number,
+) {
+  const pelaku = await labelPelaku(olehId);
   await toOwner({
     jenis: NotifJenis.PETANI_BARU,
-    judul: "Petani baru terdaftar",
-    pesan: `${nama} (${email}) ditambahkan Admin.`,
+    judul: "Petani baru ditambahkan",
+    pesan: pesanAktivitas(pelaku, `mendaftarkan petani ${nama} (${email}).`),
     href: `/owner/pengguna?user=${userId}`,
     entitas: "User",
     entitasId: userId,
@@ -195,11 +222,12 @@ export async function emitPetaniBaru(userId: number, nama: string, email: string
 }
 
 export async function emitSalesOrderDraft(soId: number, nomor: string, olehId?: number) {
+  const pelaku = await labelPelaku(olehId);
   await toAdmin(
     {
       jenis: NotifJenis.SALES_ORDER_DRAFT,
       judul: "Pesanan jual sementara",
-      pesan: `${nomor} siap dikonfirmasi stok.`,
+      pesan: pesanAktivitas(pelaku, `membuat ${nomor}. Perlu konfirmasi stok.`),
       href: `/admin/penjualan/${soId}`,
       entitas: "Sales_Order",
       entitasId: soId,
@@ -208,11 +236,16 @@ export async function emitSalesOrderDraft(soId: number, nomor: string, olehId?: 
   );
 }
 
-export async function emitSalesOrderConfirmed(soId: number, nomor: string) {
+export async function emitSalesOrderConfirmed(
+  soId: number,
+  nomor: string,
+  olehId?: number,
+) {
+  const pelaku = await labelPelaku(olehId);
   await toOwner({
     jenis: NotifJenis.SALES_ORDER_CONFIRMED,
     judul: "Pesanan jual dikonfirmasi",
-    pesan: `${nomor} sudah dikonfirmasi.`,
+    pesan: pesanAktivitas(pelaku, `mengonfirmasi ${nomor}.`),
     href: `/owner/penjualan/${soId}`,
     entitas: "Sales_Order",
     entitasId: soId,

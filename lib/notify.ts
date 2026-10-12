@@ -24,4 +24,17 @@ export const notify = {
   dismiss(id?: string | number) {
     toast.dismiss(id);
   },
+  /** Notifikasi aktivitas antar user — tombol Lihat membuka deep link. */
+  aktivitas(judul: string, pesan: string, bukaHref: string) {
+    toast(judul, {
+      description: pesan,
+      duration: 14_000,
+      action: {
+        label: "Lihat",
+        onClick: () => {
+          window.location.assign(bukaHref);
+        },
+      },
+    });
+  },
 };

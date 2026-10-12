@@ -106,12 +106,14 @@ export async function confirmSalesOrderAction(
   formData: FormData,
 ): Promise<FormState> {
   const session = await getServerSession(authOptions);
-  if (!isRoleAllowed(session?.user?.role, "ADMIN")) return { error: "Hanya Admin." };
+  if (!session?.user?.id || !isRoleAllowed(session.user.role, "ADMIN")) {
+    return { error: "Hanya Admin." };
+  }
 
   try {
     const id = Number(formData.get("salesOrderId"));
     if (!Number.isInteger(id) || id <= 0) return { error: "Pesanan tidak valid." };
-    const row = await confirmSalesOrder(id);
+    const row = await confirmSalesOrder(id, Number(session.user.id));
     revalidateSalesOrder(id);
     return { ok: `${row.nomor_so} ${labelSalesOrderStatus("CONFIRMED").toLowerCase()}.` };
   } catch (err) {

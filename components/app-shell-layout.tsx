@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { NotifikasiFloating } from "@/components/notifikasi-floating";
 import { NotifikasiUnreadBadge } from "@/components/notifikasi-unread-badge";
 import type { Role } from "@/types/role";
 import { roleLabel } from "@/types/role";
@@ -33,6 +34,7 @@ export function AppShellLayout({
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background">
+      <NotifikasiFloating />
       <div className="hidden shrink-0 md:flex">
         <AppSidebar
           role={role}
