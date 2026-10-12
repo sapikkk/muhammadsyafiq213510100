@@ -72,7 +72,7 @@ Buka [http://localhost:3000](http://localhost:3000). Akun demo mengikuti output 
 | `NEXTAUTH_SECRET` | Secret session NextAuth (string acak panjang) |
 | `AUDIT_BYPASS_RBAC` | Hanya dev lokal: `true` + `NODE_ENV!==production` untuk audit semua route |
 
-Detail deploy: `docs/deployment/`.
+Detail deploy: [`docs/deployment/panduan-deploy-vercel-postgres.md`](docs/deployment/panduan-deploy-vercel-postgres.md).
 
 ## Perintah penting
 
@@ -178,19 +178,15 @@ Peta file Markdown untuk Agile, progres teknis, UCD, uji (black-box / UAT / SUS)
 | [`docs/blueprint/akuntansi-logistik-hidroponik.md`](docs/blueprint/akuntansi-logistik-hidroponik.md) | COA, WIP, Smart Jurnal |
 | [`docs/blueprint/VALIDASI-BACKLOG-PRD.md`](docs/blueprint/VALIDASI-BACKLOG-PRD.md) | Validasi backlog vs PRD |
 | [`docs/blueprint/GITHUB-BACKLOG-DRAFT.md`](docs/blueprint/GITHUB-BACKLOG-DRAFT.md) | Draft issue epic v2 |
-| [`docs/blueprint/epic-a/A.1-is-system-plan.md`](docs/blueprint/epic-a/A.1-is-system-plan.md) | Epic A — IS |
-| [`docs/blueprint/epic-b/B.1-abort-plan.md`](docs/blueprint/epic-b/B.1-abort-plan.md) | Epic B — abort siklus |
-| [`docs/blueprint/epic-c/C.1-kapasitas-plan.md`](docs/blueprint/epic-c/C.1-kapasitas-plan.md) | Epic C — kapasitas |
-| [`docs/blueprint/epic-d/D.1-so-lubang-plan.md`](docs/blueprint/epic-d/D.1-so-lubang-plan.md) | Epic D — SO & lubang |
+| [`docs/blueprint/rencana-implementasi-epic-v2.md`](docs/blueprint/rencana-implementasi-epic-v2.md) | Rencana PR story v2-A.1–D.1 |
 
 ### Uji — black-box, UAT, SUS, E2E
 
 | Dokumen | Isi |
 |---------|-----|
-| [`docs/testing/README.md`](docs/testing/README.md) | **Hub testing** — Playwright, TestCafe, CI |
+| [`docs/testing/panduan-uji-dan-demo.md`](docs/testing/panduan-uji-dan-demo.md) | Playwright, seed demo, pelatihan go-live (T5.9) |
+| [`docs/testing/README.md`](docs/testing/README.md) | Indeks testing |
 | [`docs/uji-blackbox.md`](docs/uji-blackbox.md) | Notulensi uji black-box per US |
-| [`docs/testing/DEMO-DATA.md`](docs/testing/DEMO-DATA.md) | Seed demo & skenario presentasi |
-| [`docs/testing/pelatihan-6-pengguna.md`](docs/testing/pelatihan-6-pengguna.md) | Go-live & pelatihan 6 pengguna (T5.9) |
 | [`docs/testing/DELETED-AGENTS-SKILLS-MANIFEST.md`](docs/testing/DELETED-AGENTS-SKILLS-MANIFEST.md) | Manifest skill agent (referensi) |
 | [`e2e/smoke.spec.ts`](e2e/smoke.spec.ts) | Smoke E2E |
 | [`e2e/sprint5-usability.spec.ts`](e2e/sprint5-usability.spec.ts) | Usability Sprint 5 (T5.1–T5.3) |
@@ -201,9 +197,7 @@ SUS (10 butir, 6 responden) dan task usability dijelaskan di PRD § Sprint 5 dan
 
 | Dokumen | Isi |
 |---------|-----|
-| [`docs/deployment/vercel-go-live.md`](docs/deployment/vercel-go-live.md) | Checklist go-live Vercel |
-| [`docs/deployment/vercel.md`](docs/deployment/vercel.md) | Konfigurasi Vercel |
-| [`docs/deployment/FINDING-01-db-pool.md`](docs/deployment/FINDING-01-db-pool.md) | Pool PostgreSQL (FINDING-01) |
+| [`docs/deployment/panduan-deploy-vercel-postgres.md`](docs/deployment/panduan-deploy-vercel-postgres.md) | Deploy Vercel, go-live, FINDING-01 pool DB |
 
 ### Audit teknis (RBAC, perf, keamanan)
 

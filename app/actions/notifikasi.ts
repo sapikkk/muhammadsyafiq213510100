@@ -15,6 +15,9 @@ export async function tandaiNotifikasiDibaca(formData: FormData) {
 
   await tandaiDibaca(id, userId);
   revalidatePath("/pengaturan");
+  revalidatePath("/admin", "layout");
+  revalidatePath("/owner", "layout");
+  revalidatePath("/petani", "layout");
 }
 
 export async function tandaiSemuaNotifikasiDibaca() {
@@ -24,4 +27,7 @@ export async function tandaiSemuaNotifikasiDibaca() {
 
   await tandaiSemuaDibaca(userId);
   revalidatePath("/pengaturan");
+  revalidatePath("/admin", "layout");
+  revalidatePath("/owner", "layout");
+  revalidatePath("/petani", "layout");
 }

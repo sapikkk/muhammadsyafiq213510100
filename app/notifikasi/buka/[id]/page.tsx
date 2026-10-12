@@ -26,5 +26,9 @@ export default async function BukaNotifikasiPage({
   if (!row) redirect("/pengaturan#notifikasi");
 
   await tandaiDibaca(id, userId);
-  redirect(row.href?.trim() || "/pengaturan#notifikasi");
+
+  const raw = row.href?.trim() ?? "";
+  const href =
+    raw.startsWith("/") && !raw.startsWith("//") ? raw : "/pengaturan#notifikasi";
+  redirect(href);
 }

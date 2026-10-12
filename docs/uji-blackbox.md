@@ -851,7 +851,7 @@ POST /api/auth/callback/credentials 200 in 24253ms
 1. `app/error.tsx` (US1.8) menangkap error dan menyediakan tombol "Coba lagi". Terbukti memulihkan halaman.
 2. `lib/prisma.ts` (Sprint 5 / T5.5): semua query Prisma otomatis ulang sekali pada `P2024` dengan jeda 250 ms.
 3. `registerPetani` (US1.6) masih menerjemahkan `P2024` ke pesan "Database sedang sibuk. Coba simpan lagi."
-4. Parameter `pool_timeout` / `connection_limit` pada `DATABASE_URL` di `.env` lokal atau Vercel (lihat `docs/deployment/vercel-go-live.md`).
+4. Parameter `pool_timeout` / `connection_limit` pada `DATABASE_URL` di `.env` lokal atau Vercel (lihat `docs/deployment/panduan-deploy-vercel-postgres.md`).
 
 ### Rekomendasi sebelum demo / go-live staging
 

@@ -16,7 +16,7 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 ## 2026-10-10 — ops sidang #50 #81 (v1.27.0)
 
 - **Actor:** agent  
-- **Deliverable:** `seed:demo`, `docs/testing/DEMO-DATA.md`, `docs/deployment/FINDING-01-db-pool.md`, retry P2024 ganda di `lib/prisma.ts`; board #50/#81 Done  
+- **Deliverable:** `seed:demo`, `docs/testing/panduan-uji-dan-demo.md` (bagian data demo), `docs/deployment/panduan-deploy-vercel-postgres.md` (FINDING-01), retry P2024 ganda di `lib/prisma.ts`; board #50/#81 Done  
 
 ---
 
@@ -101,7 +101,7 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 - **Actor:** PO sapikkk + agent  
 - **Merge:** [#85](https://github.com/sapikkk/muhammadsyafiq213510100/pull/85) home progress Project #1 + deploy CLI · [#83](https://github.com/sapikkk/muhammadsyafiq213510100/pull/83) T5.1–T5.9 (e2e, audit jurnal, Vercel prod)  
 - **Production:** kokonusfarm.vercel.app — Postgres Prisma, seed demo, login 3 peran  
-- **Docs:** `docs/agile/sprints/sprint-05-qa.md`, `docs/deployment/vercel.md`, `npm run sync:agile-progress`  
+- **Docs:** `docs/agile/sprints/sprint-05-qa.md`, `docs/deployment/panduan-deploy-vercel-postgres.md`, `npm run sync:agile-progress`  
 - **Issue T5:** #39–#45 siap ditutup setelah verifikasi PO  
 
 ---

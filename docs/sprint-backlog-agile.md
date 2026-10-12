@@ -57,7 +57,7 @@ Dokumen ini merangkum perencanaan dari `docs/prd-agile-kokonus-farm.md`, pelacak
 1. US3.5 + US2.5 (kegagalan & susut)
 2. US3.6, US3.7
 3. Sprint 3 US5.1
-4. Black-box + Playwright smoke (`docs/testing/README.md`)
+4. Black-box + Playwright smoke (`docs/testing/panduan-uji-dan-demo.md`)
 
 ---
 

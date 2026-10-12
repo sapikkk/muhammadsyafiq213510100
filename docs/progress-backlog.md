@@ -13,7 +13,7 @@
 | Prod | **kokonusfarm.vercel.app** · semver **1.28.0** (UX flow + perf) |
 | UX flow + perf (post go-live) | **Selesai** · **v1.28.0** · [`UX-FLOW-PERF-REPORT`](./agile/UX-FLOW-PERF-REPORT.md) |
 
-Demo sidang: [`docs/testing/DEMO-DATA.md`](./testing/DEMO-DATA.md) · pool DB: [`docs/deployment/FINDING-01-db-pool.md`](./deployment/FINDING-01-db-pool.md).
+Demo sidang dan pool DB: [`docs/testing/panduan-uji-dan-demo.md`](./testing/panduan-uji-dan-demo.md) · [`docs/deployment/panduan-deploy-vercel-postgres.md`](./deployment/panduan-deploy-vercel-postgres.md).
 
 ---
 

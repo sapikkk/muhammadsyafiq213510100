@@ -82,7 +82,10 @@ export async function countNotifikasiBelumDibaca(userId: number) {
 export async function listNotifikasi(userId: number, limit = 40) {
   return prisma.notifikasi.findMany({
     where: { userId },
-    orderBy: [{ dibacaPada: "asc" }, { createdAt: "desc" }],
+    orderBy: [
+      { dibacaPada: { sort: "asc", nulls: "first" } },
+      { createdAt: "desc" },
+    ],
     take: limit,
   });
 }

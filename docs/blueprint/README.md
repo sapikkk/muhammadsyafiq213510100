@@ -7,6 +7,7 @@
 | [`akuntansi-logistik-hidroponik.md`](./akuntansi-logistik-hidroponik.md) | Source of truth (draft) — skema, jurnal, Smart Jurnal, COA, fase implementasi |
 | [`VALIDASI-BACKLOG-PRD.md`](./VALIDASI-BACKLOG-PRD.md) | Gap vs `main` v1.12.x, PRD, issue GitHub #2–#45 |
 | [`GITHUB-BACKLOG-DRAFT.md`](./GITHUB-BACKLOG-DRAFT.md) | Draft epic/story untuk issue GitHub (branch dulu) |
+| [`rencana-implementasi-epic-v2.md`](./rencana-implementasi-epic-v2.md) | Checklist PR story v2-A.1 s/d v2-D.1 |
 
 Skill (repo): [`docs/skills/akuntansi-hidroponik/SKILL.md`](../skills/akuntansi-hidroponik/SKILL.md).
 
