@@ -86,7 +86,7 @@ Buka [http://localhost:3000](http://localhost:3000).
 | `SEED_OWNER_EMAIL` / `SEED_OWNER_PASSWORD` | Opsional: Owner pertama saat `npm run seed` (min. 8 karakter sandi) |
 | `SEED_OWNER_NAMA` | Opsional: nama tampilan Owner fondasi |
 
-Dev DB lokal vs cloud: [`docs/deployment/dev-postgres-lokal.md`](docs/deployment/dev-postgres-lokal.md). Deploy production: [`docs/deployment/panduan-deploy-vercel-postgres.md`](docs/deployment/panduan-deploy-vercel-postgres.md).
+Dev DB (cloud + pool): [`docs/deployment/dev-postgres-lokal.md`](docs/deployment/dev-postgres-lokal.md). Deploy production: [`docs/deployment/panduan-deploy-vercel-postgres.md`](docs/deployment/panduan-deploy-vercel-postgres.md).
 
 ## Perintah penting
 

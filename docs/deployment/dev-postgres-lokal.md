@@ -1,17 +1,24 @@
-# Postgres lokal vs cloud untuk development
+# Database dev (cloud / Prisma)
 
-Ringkasan praktis: kapan pakai database mana, dan cara ganti tanpa meng-commit rahasia.
+Tim dev **cukup satu `.env`** dengan Postgres **cloud** (Prisma Data Platform, Neon, Supabase, dll.) — tidak wajib Postgres lokal.
 
-## Kenapa dua mode?
+## Default: cloud + pool
 
-| Mode | `DATABASE_URL` | Latensi dev | Cocok untuk |
-| --- | --- | --- | --- |
-| **Lokal** | `localhost:5432` | Rendah (~1–5 ms) | Coding harian, `npm run dev`, seed, typecheck dengan data |
-| **Cloud** (Neon, Supabase, Vercel Postgres, dll.) | Host remote + pool | Tinggi (50–300+ ms per query) | Uji persis seperti production, demo dari laptop ke DB staging |
+| Item | Catatan |
+| --- | --- |
+| `DATABASE_URL` | URL **pooled** dari provider |
+| `DIRECT_URL` | URL direct (migrate / `db push`) |
+| Parameter | `pool_timeout=30` (naik ke 60 jika P2024); lihat FINDING-01 |
 
-FINDING-01 (pool timeout / P2024) sering muncul saat **dev memakai URL cloud** tanpa parameter pool. Itu bukan bug aplikasi — jarak jaringan + limit koneksi.
+FINDING-01 (pool timeout / P2024) muncul jika URL cloud **tanpa** `pool_timeout` / limit koneksi wajar. Bukan bug aplikasi.
 
-## Setup Postgres lokal (macOS)
+Contoh lengkap production: [`panduan-deploy-vercel-postgres.md`](./panduan-deploy-vercel-postgres.md).
+
+## Opsional: Postgres lokal
+
+Hanya jika Anda sengaja ingin DB di laptop (latency lebih rendah). **Bukan requirement** proyek ini.
+
+## Setup Postgres lokal (macOS, opsional)
 
 ```bash
 brew install postgresql@16
