@@ -1,3 +1,10 @@
+## [1.36.6](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.5...v1.36.6) (2026-10-12)
+
+
+### Bug Fixes
+
+* **db:** notifikasi 503 saat DB down dan pool dev lebih longgar ([a5a2122](https://github.com/sapikkk/muhammadsyafiq213510100/commit/a5a2122630d758de0722b1a3607437b6a143bb1f))
+
 ## [1.36.5](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.4...v1.36.5) (2026-10-12)
 
 
