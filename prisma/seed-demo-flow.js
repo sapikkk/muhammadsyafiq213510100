@@ -1,5 +1,5 @@
 /**
- * Data demo alur penjualan & jurnal (idempotent). Butuh seed utama dulu: npm run seed
+ * Data demo alur penjualan & jurnal (idempotent). Butuh seed demo lengkap dulu: npm run seed:demo-lengkap
  */
 const { PrismaClient } = require("@prisma/client");
 

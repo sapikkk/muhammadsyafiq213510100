@@ -52,7 +52,7 @@ npm install
 cp .env.example .env
 ```
 
-Isi `.env` (lihat tabel di bawah), lalu migrasi dan seed:
+Isi `.env` (lihat tabel di bawah), lalu migrasi dan seed **fondasi** (hanya bagan akun COA; tanpa data operasi demo):
 
 ```bash
 npx prisma db push
@@ -60,7 +60,19 @@ npx prisma db seed
 npm run dev
 ```
 
-Buka [http://localhost:3000](http://localhost:3000). Akun demo mengikuti output seed di `prisma/seed.js`.
+Opsional di `.env`: `SEED_OWNER_EMAIL` + `SEED_OWNER_PASSWORD` untuk satu akun Owner saat seed. Selain itu, isi varietas, inventaris, dan transaksi lewat aplikasi.
+
+**Hapus semua data lalu mulai kosong:**
+
+```bash
+CONFIRM_DB_RESET=yes npm run db:reset
+```
+
+(Pastikan `DATABASE_URL` mengarah ke database yang benar — semua baris dihapus.)
+
+Uji/sidang dengan data contoh: `npm run seed:demo-lengkap` (akun demo + inventaris + siklus).
+
+Buka [http://localhost:3000](http://localhost:3000).
 
 ### Variabel lingkungan
 
@@ -71,6 +83,8 @@ Buka [http://localhost:3000](http://localhost:3000). Akun demo mengikuti output 
 | `NEXTAUTH_URL` | URL aplikasi (dev: `http://localhost:3000`) |
 | `NEXTAUTH_SECRET` | Secret session NextAuth (string acak panjang) |
 | `AUDIT_BYPASS_RBAC` | Hanya dev lokal: `true` + `NODE_ENV!==production` untuk audit semua route |
+| `SEED_OWNER_EMAIL` / `SEED_OWNER_PASSWORD` | Opsional: Owner pertama saat `npm run seed` (min. 8 karakter sandi) |
+| `SEED_OWNER_NAMA` | Opsional: nama tampilan Owner fondasi |
 
 Detail deploy: [`docs/deployment/panduan-deploy-vercel-postgres.md`](docs/deployment/panduan-deploy-vercel-postgres.md).
 
@@ -83,7 +97,9 @@ npm run start        # jalankan build
 npm run typecheck    # TypeScript
 npm run lint         # ESLint
 npm run test:e2e     # Playwright (butuh browser ter-install)
-npm run seed:demo    # alur demo (butuh .env)
+npm run db:reset     # hapus semua data + seed fondasi (butuh CONFIRM_DB_RESET=yes)
+npm run seed:demo-lengkap  # data demo penuh (uji/sidang)
+npm run seed:demo    # alur demo penjualan/jurnal (butuh seed demo lengkap dulu)
 ```
 
 Skrip verifikasi domain (jurnal balance, SO, panen-WIP, dll.) ada di bagian `check:*` pada `package.json`.
