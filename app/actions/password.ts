@@ -6,6 +6,11 @@ import { compare, hash } from "bcryptjs";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { authOptions } from "@/lib/auth";
+import {
+  emitPasswordResetApproved,
+  emitPasswordResetPending,
+  emitPasswordResetRejected,
+} from "@/lib/notifikasi-emit";
 import { prisma } from "@/lib/prisma";
 
 export type RequestState = { sent?: boolean; error?: string };
@@ -32,7 +37,10 @@ export async function requestPasswordReset(
       where: { userId: user.id, status: "PENDING" },
     });
     if (!pending) {
-      await prisma.passwordResetRequest.create({ data: { userId: user.id } });
+      const created = await prisma.passwordResetRequest.create({
+        data: { userId: user.id },
+      });
+      void emitPasswordResetPending(created.id, user.nama);
     }
   }
   // Jawaban sama untuk email terdaftar atau tidak, supaya daftar akun tidak bocor.
@@ -83,7 +91,9 @@ export async function approvePasswordReset(
     }),
   ]);
 
+  void emitPasswordResetApproved(request.userId);
   revalidatePath("/admin");
+  revalidatePath("/pengaturan");
   return { tempPassword, nama: request.user.nama, email: request.user.email };
 }
 
@@ -92,11 +102,16 @@ export async function rejectPasswordReset(formData: FormData) {
   if (!adminId) return;
 
   const id = Number(formData.get("id"));
+  const request = await prisma.passwordResetRequest.findUnique({ where: { id } });
   await prisma.passwordResetRequest.updateMany({
     where: { id, status: "PENDING", NOT: { userId: adminId } },
     data: { status: "REJECTED", handledById: adminId, handledAt: new Date() },
   });
+  if (request?.status === "PENDING" && request.userId !== adminId) {
+    void emitPasswordResetRejected(request.userId);
+  }
   revalidatePath("/admin");
+  revalidatePath("/pengaturan");
 }
 
 export async function changePassword(

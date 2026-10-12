@@ -2,7 +2,9 @@ import "server-only";
 
 import { Prisma, type Role } from "@prisma/client";
 import { hash } from "bcryptjs";
+import { emitAkunBaru, emitSandiResetOwner } from "@/lib/notifikasi-emit";
 import { prisma } from "@/lib/prisma";
+import { roleLabel } from "@/types/role";
 
 export class OwnerUserError extends Error {
   constructor(
@@ -81,7 +83,7 @@ export async function createUserByOwner(raw: Record<string, unknown>) {
   }
 
   try {
-    return await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         nama,
         email,
@@ -91,6 +93,8 @@ export async function createUserByOwner(raw: Record<string, unknown>) {
       },
       select: { id: true, nama: true, email: true, role: true },
     });
+    void emitAkunBaru(user.id, roleLabel[user.role]);
+    return user;
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
       throw new OwnerUserError("Email sudah dipakai.", 409);
@@ -122,7 +126,7 @@ export async function resetPasswordByOwner(
     throw new OwnerUserError("Reset sandi sendiri lewat menu pengaturan.", 400);
   }
 
-  return prisma.user.update({
+  const updated = await prisma.user.update({
     where: { id: targetUserId },
     data: {
       passwordHash: await hash(password, 10),
@@ -130,4 +134,6 @@ export async function resetPasswordByOwner(
     },
     select: { id: true, nama: true, email: true, role: true },
   });
+  void emitSandiResetOwner(updated.id);
+  return updated;
 }

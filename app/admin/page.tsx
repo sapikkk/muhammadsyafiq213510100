@@ -39,6 +39,7 @@ export default async function AdminPage() {
 
       {pending.length > 0 ? (
         <PageSection
+          id="reset-sandi"
           title="Permintaan reset sandi"
           description={`${pending.length} permintaan menunggu persetujuan Anda.`}
           badge="Update"

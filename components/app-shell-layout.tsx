@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Bell, Menu } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Button } from "@/components/ui/button";
@@ -9,19 +9,23 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { NotifikasiUnreadBadge } from "@/components/notifikasi-unread-badge";
 import type { Role } from "@/types/role";
 import { roleLabel } from "@/types/role";
+import Link from "next/link";
 
 export function AppShellLayout({
   role,
   userName,
   stokRendahCount = 0,
+  notifikasiUnreadCount = 0,
   auditShowAllNav = false,
   children,
 }: {
   role: Role;
   userName: string;
   stokRendahCount?: number;
+  notifikasiUnreadCount?: number;
   auditShowAllNav?: boolean;
   children: ReactNode;
 }) {
@@ -34,6 +38,7 @@ export function AppShellLayout({
           role={role}
           userName={userName}
           stokRendahCount={stokRendahCount}
+          notifikasiUnreadCount={notifikasiUnreadCount}
           auditShowAllNav={auditShowAllNav}
         />
       </div>
@@ -50,10 +55,21 @@ export function AppShellLayout({
           >
             <Menu className="h-5 w-5" />
           </Button>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <p className="text-xs text-muted-foreground">{roleLabel[role]}</p>
             <h1 className="truncate text-sm font-semibold leading-tight">{userName}</h1>
           </div>
+          <Link
+            href="/pengaturan#notifikasi"
+            className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-md border text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+            aria-label="Notifikasi"
+          >
+            <Bell className="h-4 w-4" />
+            <NotifikasiUnreadBadge
+              count={notifikasiUnreadCount}
+              className="absolute -right-1 -top-1"
+            />
+          </Link>
         </header>
 
         <div className="flex-1 p-4 md:p-8">
@@ -68,6 +84,7 @@ export function AppShellLayout({
             role={role}
             userName={userName}
             stokRendahCount={stokRendahCount}
+            notifikasiUnreadCount={notifikasiUnreadCount}
             auditShowAllNav={auditShowAllNav}
             onNavigate={() => setMenuOpen(false)}
           />

@@ -7,6 +7,7 @@ import { ChevronDown, ChevronRight, LeafyGreen, LogOut, Settings } from "lucide-
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { getNavFlowGroups, type NavFlowGroup } from "@/lib/nav-flow";
+import { NotifikasiUnreadBadge } from "@/components/notifikasi-unread-badge";
 import { getNavItems, type NavItem } from "@/lib/nav-items";
 import type { Role } from "@/types/role";
 import { roleLabel } from "@/types/role";
@@ -39,12 +40,14 @@ export function AppSidebar({
   role,
   userName,
   stokRendahCount = 0,
+  notifikasiUnreadCount = 0,
   auditShowAllNav = false,
   onNavigate,
 }: {
   role: Role;
   userName: string;
   stokRendahCount?: number;
+  notifikasiUnreadCount?: number;
   auditShowAllNav?: boolean;
   onNavigate?: () => void;
 }) {
@@ -99,12 +102,13 @@ export function AppSidebar({
         </div>
         <div className="flex gap-1">
           <Link
-            href="/pengaturan"
+            href="/pengaturan#notifikasi"
             onClick={() => onNavigate?.()}
-            className="flex min-h-10 flex-1 items-center justify-center gap-2 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+            className="relative flex min-h-10 flex-1 items-center justify-center gap-2 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
             <Settings className="h-4 w-4 shrink-0" />
             Pengaturan
+            <NotifikasiUnreadBadge count={notifikasiUnreadCount} />
           </Link>
           <button
             type="button"

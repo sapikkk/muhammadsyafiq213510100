@@ -4,6 +4,11 @@ import { Prisma, type StatusJurnal, type SumberJurnal } from "@prisma/client";
 import type { SerializedJurnalListRow } from "@/lib/jurnal-types";
 import { statusJurnalList } from "@/lib/jurnal-status";
 import { assertJurnalTanggalAllowed, PeriodLockError } from "@/lib/period-lock";
+import {
+  emitJurnalApproved,
+  emitJurnalPending,
+  emitJurnalRejected,
+} from "@/lib/notifikasi-emit";
 import { prisma } from "@/lib/prisma";
 
 export type { SerializedJurnalListRow } from "@/lib/jurnal-types";
@@ -132,7 +137,7 @@ export async function createJurnal(
     throw error;
   }
   await assertAkunPosting(input.baris.map((b) => b.akunId));
-  return prisma.jurnal.create({
+  const created = await prisma.jurnal.create({
     data: {
       tanggal: input.tanggal,
       keterangan: input.keterangan,
@@ -143,6 +148,10 @@ export async function createJurnal(
     },
     include: { baris: true },
   });
+  if (created.status === "PENDING") {
+    void emitJurnalPending(created.id, created.keterangan, dibuatOlehId);
+  }
+  return created;
 }
 
 export type FilterJurnal = { status?: string; dari?: string; sampai?: string };
@@ -213,8 +222,13 @@ async function requireStatus(id: number, allowed: StatusJurnal[]) {
 }
 
 export async function ajukanJurnal(id: number) {
-  await requireStatus(id, ["DRAFT"]);
-  return prisma.jurnal.update({ where: { id }, data: { status: "PENDING" } });
+  const jurnal = await requireStatus(id, ["DRAFT"]);
+  const updated = await prisma.jurnal.update({
+    where: { id },
+    data: { status: "PENDING" },
+  });
+  void emitJurnalPending(updated.id, jurnal.keterangan, jurnal.dibuatOlehId);
+  return updated;
 }
 
 // Saldo akun hanya berubah di sini, dalam satu transaksi dengan perubahan status.
@@ -234,14 +248,20 @@ export async function setujuiJurnal(id: number, olehId: number) {
       where: { id },
       data: { status: "APPROVED", diputusOlehId: olehId, diputusPada: new Date() },
     }),
-  ]).then((hasil) => hasil[hasil.length - 1]);
+  ]).then((hasil) => {
+    const row = hasil[hasil.length - 1];
+    if (jurnal.dibuatOlehId !== olehId) {
+      void emitJurnalApproved(jurnal.dibuatOlehId, id, jurnal.keterangan);
+    }
+    return row;
+  });
 }
 
 export async function tolakJurnal(id: number, olehId: number, alasan: string) {
   const teks = alasan.trim();
   if (!teks) throw new JurnalError("Isi alasan penolakan.", 400);
-  await requireStatus(id, ["PENDING"]);
-  return prisma.jurnal.update({
+  const jurnal = await requireStatus(id, ["PENDING"]);
+  const updated = await prisma.jurnal.update({
     where: { id },
     data: {
       status: "REJECTED",
@@ -250,6 +270,10 @@ export async function tolakJurnal(id: number, olehId: number, alasan: string) {
       diputusPada: new Date(),
     },
   });
+  if (jurnal.dibuatOlehId !== olehId) {
+    void emitJurnalRejected(jurnal.dibuatOlehId, id, jurnal.keterangan);
+  }
+  return updated;
 }
 
 export function listAkunPosting() {

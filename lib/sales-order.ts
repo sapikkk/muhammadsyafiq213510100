@@ -1,6 +1,10 @@
 import "server-only";
 
 import { Prisma } from "@prisma/client";
+import {
+  emitSalesOrderConfirmed,
+  emitSalesOrderDraft,
+} from "@/lib/notifikasi-emit";
 import { prisma } from "@/lib/prisma";
 import { hitungHppOrderBaris, resolveHppPerLubangUntukOrder } from "@/lib/sales-order-hpp";
 import { rataHppPerLubangVarietas } from "@/lib/varietas-hpp-rata";
@@ -310,7 +314,7 @@ export function serializeSalesOrder(row: SoSerializeRow) {
 }
 
 export async function createSalesOrderDraft(userId: number, input: SalesOrderInput) {
-  return prisma.$transaction(async (tx) => {
+  const row = await prisma.$transaction(async (tx) => {
     const pelanggan = await tx.pelanggan.findUnique({ where: { id: input.pelangganId } });
     if (!pelanggan) throw new SalesOrderError("Pelanggan tidak ditemukan.", 404);
     if (!pelanggan.aktif) {
@@ -400,10 +404,12 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
       },
     });
   });
+  void emitSalesOrderDraft(row.id, row.nomor_so);
+  return row;
 }
 
 export async function confirmSalesOrder(id: number) {
-  return prisma.$transaction(async (tx) => {
+  const row = await prisma.$transaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({
       where: { id },
       include: { baris: true },
@@ -439,4 +445,6 @@ export async function confirmSalesOrder(id: number) {
       },
     });
   });
+  void emitSalesOrderConfirmed(row.id, row.nomor_so);
+  return row;
 }

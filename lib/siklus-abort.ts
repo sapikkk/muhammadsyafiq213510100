@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { AKUN_KODE } from "@/lib/akun-kode";
 import { allocateOverheadForSiklus } from "@/lib/biaya";
 import { prisma, type PrismaTransaction } from "@/lib/prisma";
+import { emitHarvestRejected, emitSiklusAbort } from "@/lib/notifikasi-emit";
 import {
   STATUS_GAGAL_TOTAL,
   siklusBolehAbort,
@@ -136,7 +137,11 @@ export async function abortSiklusGagalTotal(
 
       const wip = await hitungWipSiklus(siklusId, tx as PrismaDb);
 
+      let laporanPetaniId: number | null = null;
+      let laporanId: number | null = null;
       if (siklus.laporanPanen?.status === "PENDING") {
+        laporanPetaniId = siklus.laporanPanen.userId;
+        laporanId = siklus.laporanPanen.id;
         await tx.laporan_Panen.update({
           where: { id: siklus.laporanPanen.id },
           data: { status: "REJECTED", catatan: `Dibatalkan abort: ${alasan.slice(0, 400)}` },
@@ -163,9 +168,40 @@ export async function abortSiklusGagalTotal(
         },
       });
 
-      return { siklus: updated, wip: wip.toString() };
+      return {
+        siklus: updated,
+        wip: wip.toString(),
+        kodeBatch: siklus.kode_batch,
+        laporanPetaniId,
+        laporanId,
+        alasan,
+      };
     },
     { maxWait: 20_000, timeout: 60_000 },
+  ).then(
+    async ({ siklus, wip, kodeBatch, laporanPetaniId, laporanId, alasan: alasanTeks }) => {
+      if (laporanPetaniId != null && laporanId != null) {
+        void emitHarvestRejected(
+          laporanPetaniId,
+          kodeBatch,
+          laporanId,
+          `Di-abort: ${alasanTeks}`,
+          siklus.id,
+        );
+      } else {
+        const logs = await prisma.log_Produksi.findMany({
+          where: { siklus_id: siklus.id },
+          orderBy: { id: "desc" },
+          take: 1,
+          select: { userId: true },
+        });
+        const petaniId = logs[0]?.userId;
+        if (petaniId) {
+          void emitSiklusAbort(petaniId, kodeBatch, siklus.id, alasanTeks);
+        }
+      }
+      return { siklus, wip };
+    },
   );
 }
 

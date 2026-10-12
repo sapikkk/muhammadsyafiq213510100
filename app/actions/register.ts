@@ -6,6 +6,7 @@ import { hash } from "bcryptjs";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { authOptions } from "@/lib/auth";
+import { emitPetaniBaru } from "@/lib/notifikasi-emit";
 import { prisma } from "@/lib/prisma";
 
 export type RegisterState = {
@@ -63,12 +64,14 @@ export async function registerPetani(
   };
 
   try {
-    await prisma.user.create({ data });
+    const user = await prisma.user.create({ data });
+    void emitPetaniBaru(user.id, nama, email);
   } catch (error) {
     return translate(error);
   }
 
   revalidatePath("/admin");
+  revalidatePath("/pengaturan");
   revalidatePath("/owner");
   revalidatePath("/owner/pengguna");
   return { nama, email };

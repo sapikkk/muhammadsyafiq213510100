@@ -299,6 +299,24 @@ model User {
   logProduksi          Log_Produksi[]
   laporanPanen         Laporan_Panen[]
   salesOrdersDibuat    Sales_Order[]   @relation("SalesOrderDibuat")
+  notifikasi           Notifikasi[]
+}
+
+model Notifikasi {
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jenis      String    @db.VarChar(60)
+  judul      String    @db.VarChar(200)
+  pesan      String    @db.VarChar(500)
+  href       String?   @db.VarChar(255)
+  entitas    String?   @db.VarChar(60)
+  entitasId  Int?
+  dibacaPada DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([userId, dibacaPada, createdAt])
+  @@index([userId, jenis, entitas, entitasId])
 }
 
 // Epic 4 — inventaris bahan. Tidak ada di ERD Figma 16 tabel, ditambah untuk US4.1.

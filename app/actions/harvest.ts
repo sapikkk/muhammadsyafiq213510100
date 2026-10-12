@@ -33,6 +33,8 @@ export async function submitHarvestReport(
     const siklusId = raw.siklusId;
     revalidatePath("/petani/siklus");
     revalidatePath(`/petani/siklus/${siklusId}`);
+    revalidatePath("/pengaturan");
+    revalidatePath("/admin/harvest");
     return { ok: "Laporan panen terkirim. Menunggu review Admin." };
   } catch (error) {
     if (error instanceof HarvestError) return { error: error.message };

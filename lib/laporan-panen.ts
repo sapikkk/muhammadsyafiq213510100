@@ -7,6 +7,11 @@ import { calculateHPP, yieldContextFromSiklus } from "@/lib/hpp";
 import { prisma } from "@/lib/prisma";
 import { AKUN_KODE } from "@/lib/akun-kode";
 import { resolveAkunWip, STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort";
+import {
+  emitHarvestApproved,
+  emitHarvestPending,
+  emitHarvestRejected,
+} from "@/lib/notifikasi-emit";
 import { totalBiayaAbnormalSiklus } from "@/lib/susut";
 
 export class HarvestError extends Error {
@@ -130,7 +135,23 @@ export async function kirimLaporanPanen(userId: number, input: HarvestInput) {
       return laporan;
     },
     { maxWait: 20_000, timeout: 60_000 },
-  );
+  ).then(async (laporan) => {
+    const detail = await prisma.laporan_Panen.findUnique({
+      where: { id: laporan.id },
+      include: {
+        siklus: { select: { kode_batch: true } },
+        user: { select: { nama: true } },
+      },
+    });
+    if (detail) {
+      void emitHarvestPending(
+        detail.id,
+        detail.siklus.kode_batch,
+        detail.user.nama,
+      );
+    }
+    return laporan;
+  });
 }
 
 export async function listLaporanPanen(status?: string) {
@@ -313,10 +334,18 @@ export async function approveLaporanPanen(
         });
       }
 
-      return updatedLaporan;
+      return { updatedLaporan, notifyUserId: laporan.userId, kodeBatch: laporan.siklus.kode_batch };
     },
-    { maxWait: 20_000, timeout: 60_000 }
-  );
+    { maxWait: 20_000, timeout: 60_000 },
+  ).then(async ({ updatedLaporan, notifyUserId, kodeBatch }) => {
+    void emitHarvestApproved(
+      notifyUserId,
+      kodeBatch,
+      updatedLaporan.id,
+      updatedLaporan.siklus_id,
+    );
+    return updatedLaporan;
+  });
 }
 
 export async function rejectLaporanPanen(id: number, userId: number, alasan: string) {
@@ -345,8 +374,22 @@ export async function rejectLaporanPanen(id: number, userId: number, alasan: str
         },
       });
 
-      return updatedLaporan;
+      return {
+        updatedLaporan,
+        notifyUserId: laporan.userId,
+        kodeBatch: laporan.siklus.kode_batch,
+        alasan: alasan.trim(),
+      };
     },
-    { maxWait: 20_000, timeout: 60_000 }
-  );
+    { maxWait: 20_000, timeout: 60_000 },
+  ).then(async ({ updatedLaporan, notifyUserId, kodeBatch, alasan: alasanTeks }) => {
+    void emitHarvestRejected(
+      notifyUserId,
+      kodeBatch,
+      updatedLaporan.id,
+      alasanTeks,
+      updatedLaporan.siklus_id,
+    );
+    return updatedLaporan;
+  });
 }

@@ -29,6 +29,12 @@ export async function getStokRendahCount() {
   return rows.length;
 }
 
+export const countNotifikasiBelumDibacaCached = cache(async (userId: number) => {
+  return prisma.notifikasi.count({
+    where: { userId, dibacaPada: null },
+  });
+});
+
 /** Siklus aktif saja — dashboard petani & tugas (bukan full history). */
 export const listSiklusProduksiCached = cache(listSiklusProduksi);
 

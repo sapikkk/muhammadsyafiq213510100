@@ -39,6 +39,10 @@ type DataTableProps<TData, TValue> = {
   getRowHref?: (row: TData) => string;
   /** Click callback for the entire row (excluding action buttons/links). */
   onRowClick?: (row: TData) => void;
+  /** Lompat ke halaman yang berisi baris ini dan sorot (mis. dari deep link notifikasi). */
+  focusRowId?: number | string | null;
+  getRowFocusId?: (row: TData) => number | string;
+  getRowDomId?: (row: TData) => string;
 };
 
 export function DataTable<TData, TValue>({
@@ -51,6 +55,9 @@ export function DataTable<TData, TValue>({
   syncSearchParam,
   getRowHref,
   onRowClick,
+  focusRowId,
+  getRowFocusId,
+  getRowDomId,
 }: DataTableProps<TData, TValue>) {
   const router = useRouter();
   const pathname = usePathname();
@@ -115,6 +122,23 @@ export function DataTable<TData, TValue>({
   const filteredCount = table.getFilteredRowModel().rows.length;
   const isRowInteractive = Boolean(getRowHref || onRowClick);
 
+  useEffect(() => {
+    if (focusRowId == null || focusRowId === "" || !getRowFocusId) return;
+    const target = String(focusRowId);
+    const rows = table.getFilteredRowModel().rows;
+    const index = rows.findIndex((r) => String(getRowFocusId(r.original)) === target);
+    if (index < 0) return;
+    const pageIndex = Math.floor(index / pageSize);
+    table.setPageIndex(pageIndex);
+    const domId = getRowDomId?.(rows[index]!.original);
+    if (!domId) return;
+    const t = window.setTimeout(() => {
+      document.getElementById(domId)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- table instance stabil cukup lewat data/focusRowId
+  }, [focusRowId, data, pageSize, getRowFocusId, getRowDomId]);
+
   return (
     <div className="space-y-3">
       {searchPlaceholder ? (
@@ -168,11 +192,20 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row, index) => (
+              table.getRowModel().rows.map((row, index) => {
+                const domId = getRowDomId?.(row.original);
+                const isFocused =
+                  focusRowId != null &&
+                  focusRowId !== "" &&
+                  getRowFocusId &&
+                  String(getRowFocusId(row.original)) === String(focusRowId);
+                return (
                 <TableRow
                   key={row.id}
+                  id={domId}
                   className={cn(
                     index % 2 === 1 && "bg-muted/20",
+                    isFocused && "bg-primary/10 ring-1 ring-primary/40",
                     isRowInteractive &&
                       "cursor-pointer transition-colors hover:bg-muted/40",
                   )}
@@ -200,7 +233,8 @@ export function DataTable<TData, TValue>({
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
+              );
+              })
             ) : (
               <TableRow className="hover:bg-transparent">
                 <TableCell

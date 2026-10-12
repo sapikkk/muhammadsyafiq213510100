@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { AccountSettings } from "@/components/account-settings";
+import { NotifikasiSection } from "@/components/notifikasi-section";
 import { PageGuideToolbar } from "@/components/page-guide-toolbar";
 import { PageHeaderRow } from "@/components/page-header-row";
 import { RoleMatrix } from "@/components/role-matrix";
@@ -24,11 +24,6 @@ export default async function PengaturanPage() {
     : null;
   const nama = user?.nama ?? session?.user?.name ?? "";
 
-  const pendingReset =
-    role === "ADMIN"
-      ? await prisma.passwordResetRequest.count({ where: { status: "PENDING" } })
-      : 0;
-
   return (
     <div className="mx-auto flex w-full max-w-lg flex-col gap-6">
       <PageHeaderRow
@@ -37,23 +32,7 @@ export default async function PengaturanPage() {
         guide={<PageGuideToolbar />}
       />
 
-      <section aria-labelledby="notif-title" className="space-y-3">
-        <h2 id="notif-title" className="text-lg font-semibold">
-          Notifikasi
-        </h2>
-        {role === "ADMIN" && pendingReset > 0 ? (
-          <Link
-            href="/admin"
-            className="block rounded-md border bg-secondary p-4 text-sm underline-offset-4 hover:underline"
-          >
-            {`${pendingReset} permintaan reset sandi menunggu Anda.`}
-          </Link>
-        ) : (
-          <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-            Belum ada notifikasi.
-          </p>
-        )}
-      </section>
+      {userId ? <NotifikasiSection userId={userId} /> : null}
 
       <AccountSettings nama={nama} />
       <RoleMatrix />

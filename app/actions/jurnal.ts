@@ -77,6 +77,8 @@ async function putuskan(
   revalidatePath("/admin/jurnal");
   revalidatePath(`/admin/jurnal/${jurnalId}`);
   revalidatePath("/admin/akun");
+  revalidatePath("/pengaturan");
+  revalidatePath("/owner/jurnal");
   return { saved: pesan };
 }
 

@@ -23,7 +23,7 @@ function KlasifikasiBaris({ row }: { row: LogMenunggu }) {
   useActionToast({ error: state.error, ok: state.ok });
 
   return (
-    <li className="space-y-3 rounded-md border p-4 text-sm">
+    <li id={`log-kegagalan-${row.id}`} className="scroll-mt-24 space-y-3 rounded-md border p-4 text-sm">
       <div>
         <p className="font-medium">
           {row.siklus.kode_batch} · {row.siklus.varietas.nama}

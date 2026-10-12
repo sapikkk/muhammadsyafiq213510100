@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { OwnerUserCreateSheet, OwnerUserDaftar } from "@/components/owner-user-panel";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,11 @@ export default async function OwnerPenggunaPage() {
           }
         />
       }
-      list={<OwnerUserDaftar users={users} />}
+      list={
+        <Suspense fallback={<p className="text-sm text-muted-foreground">Memuat daftar…</p>}>
+          <OwnerUserDaftar users={users} />
+        </Suspense>
+      }
       listTitle="Akun aplikasi"
     />
   );

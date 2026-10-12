@@ -44,6 +44,7 @@ export async function createOwnerUser(
       actor: actorFromSession(ctx.session),
     });
     revalidatePath("/owner/pengguna");
+    revalidatePath("/pengaturan");
     return { ok: true, message: "Akun baru dibuat." };
   } catch (error) {
     if (error instanceof OwnerUserError) return { error: error.message };
@@ -71,6 +72,7 @@ export async function resetOwnerUserPassword(
       actor: actorFromSession(ctx.session),
     });
     revalidatePath("/owner/pengguna");
+    revalidatePath("/pengaturan");
     return { ok: true, message: "Sandi direset; user wajib ganti saat login." };
   } catch (error) {
     if (error instanceof OwnerUserError) return { error: error.message };

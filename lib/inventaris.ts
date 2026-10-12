@@ -12,6 +12,7 @@ import type {
 } from "@/lib/inventaris-types";
 import { satuanInventarisList, type SatuanInventaris } from "@/lib/inventaris-satuan";
 import { tipePergerakanList, type TipePergerakan } from "@/lib/inventaris-pergerakan";
+import { emitStokRendah } from "@/lib/notifikasi-emit";
 import { prisma } from "@/lib/prisma";
 
 export type {
@@ -286,7 +287,7 @@ function hitungStokBaru(
 }
 
 export async function catatPergerakan(input: MovementInput) {
-  return prisma.$transaction(async (tx) => {
+  const movement = await prisma.$transaction(async (tx) => {
     const item = await tx.itemInventaris.findUnique({ where: { id: input.itemId } });
     if (!item || !item.aktif) {
       throw new InventarisError("Item tidak ditemukan atau nonaktif.", 404);
@@ -318,6 +319,11 @@ export async function catatPergerakan(input: MovementInput) {
       },
     });
   });
+  const item = await prisma.itemInventaris.findUnique({ where: { id: input.itemId } });
+  if (item?.aktif && item.stokSaatIni.lt(item.stokMinimum)) {
+    void emitStokRendah(item.id, item.kode, item.nama);
+  }
+  return movement;
 }
 
 export function serializeItem(item: ItemInventaris): SerializedItemInventaris {

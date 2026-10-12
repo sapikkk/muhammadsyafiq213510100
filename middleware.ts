@@ -46,5 +46,6 @@ export const config = {
     "/ganti-sandi",
     "/akses-ditolak",
     "/pengaturan",
+    "/notifikasi/:path*",
   ],
 };

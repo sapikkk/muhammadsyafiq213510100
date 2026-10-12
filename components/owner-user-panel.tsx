@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useSearchParams } from "next/navigation";
 import { useFormState } from "react-dom";
 import type { ColumnDef } from "@tanstack/react-table";
 import {
@@ -44,6 +45,14 @@ export type OwnerUserRow = {
 };
 
 export function OwnerUserDaftar({ users }: { users: OwnerUserRow[] }) {
+  const searchParams = useSearchParams();
+  const userParam = searchParams.get("user");
+  const focusUserId = userParam ? Number(userParam) : null;
+  const focusRowId =
+    focusUserId != null && Number.isInteger(focusUserId) && focusUserId > 0
+      ? focusUserId
+      : null;
+
   const columns = useMemo<ColumnDef<OwnerUserRow>[]>(
     () => [
       {
@@ -107,6 +116,9 @@ export function OwnerUserDaftar({ users }: { users: OwnerUserRow[] }) {
       searchPlaceholder="Cari nama atau email…"
       searchColumnIds={["nama", "email"]}
       emptyMessage="Belum ada user."
+      focusRowId={focusRowId}
+      getRowFocusId={(row) => row.id}
+      getRowDomId={(row) => `owner-user-${row.id}`}
     />
   );
 }
