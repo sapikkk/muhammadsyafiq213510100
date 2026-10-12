@@ -3,6 +3,7 @@ import "server-only";
 import { Prisma } from "@prisma/client";
 import { AKUN_KODE } from "@/lib/akun-kode";
 import { allocateOverheadForSiklus } from "@/lib/biaya";
+import { revalidateOwnerDashboardCaches } from "@/lib/owner-dashboard-cache";
 import { prisma, type PrismaTransaction } from "@/lib/prisma";
 import { emitHarvestRejected, emitSiklusAbort } from "@/lib/notifikasi-emit";
 import { ringkasanSiklusUntukTeks, siklusLabelSelect } from "@/lib/produksi-ui-labels";
@@ -207,6 +208,7 @@ export async function abortSiklusGagalTotal(
           void emitSiklusAbort(petaniId, lokasiTanam, siklus.id, alasanTeks);
         }
       }
+      revalidateOwnerDashboardCaches();
       return { siklus, wip };
     },
   );

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { revalidateTag, unstable_cache } from "next/cache";
+import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import { kpiHidroponikMvp as kpiHidroponikMvpImpl } from "@/lib/kpi-hidroponik";
 import { monthlySummary as monthlySummaryImpl } from "@/lib/monthly-summary";
@@ -58,11 +58,7 @@ export const monthlySummaryCached = cache((monthCount = 6) =>
 
 export const kpiHidroponikMvpCached = cache(() => kpiHidroponikMvpData());
 
-/** Panggil setelah jurnal disetujui atau panen disetujui agar KPI beranda owner segar. */
-export function revalidateOwnerDashboardCaches() {
-  revalidateTag("monthly-summary");
-  revalidateTag("kpi-hidroponik");
-}
+export { revalidateOwnerDashboardCaches } from "@/lib/owner-dashboard-cache";
 
 export const listSiklusAktifCached = cache(async () => {
   return prisma.siklus_Produksi.findMany({

@@ -9,6 +9,7 @@ import {
   emitJurnalPending,
   emitJurnalRejected,
 } from "@/lib/notifikasi-emit";
+import { revalidateOwnerDashboardCaches } from "@/lib/owner-dashboard-cache";
 import { prisma } from "@/lib/prisma";
 
 export type { SerializedJurnalListRow } from "@/lib/jurnal-types";
@@ -253,6 +254,7 @@ export async function setujuiJurnal(id: number, olehId: number) {
     if (jurnal.dibuatOlehId !== olehId) {
       void emitJurnalApproved(jurnal.dibuatOlehId, id, jurnal.keterangan);
     }
+    revalidateOwnerDashboardCaches();
     return row;
   });
 }

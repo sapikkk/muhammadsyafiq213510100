@@ -86,7 +86,7 @@ Buka [http://localhost:3000](http://localhost:3000).
 | `SEED_OWNER_EMAIL` / `SEED_OWNER_PASSWORD` | Opsional: Owner pertama saat `npm run seed` (min. 8 karakter sandi) |
 | `SEED_OWNER_NAMA` | Opsional: nama tampilan Owner fondasi |
 
-Detail deploy: [`docs/deployment/panduan-deploy-vercel-postgres.md`](docs/deployment/panduan-deploy-vercel-postgres.md).
+Dev DB lokal vs cloud: [`docs/deployment/dev-postgres-lokal.md`](docs/deployment/dev-postgres-lokal.md). Deploy production: [`docs/deployment/panduan-deploy-vercel-postgres.md`](docs/deployment/panduan-deploy-vercel-postgres.md).
 
 ## Perintah penting
 
@@ -236,6 +236,7 @@ SUS (10 butir, 6 responden) dan task usability dijelaskan di PRD § Sprint 5 dan
 | [`AGENTS.md`](AGENTS.md) | Panduan agent (Graphify, Superpowers, backlog) |
 | [`docs/cursor-superpowers.md`](docs/cursor-superpowers.md) | Submodule Superpowers |
 | [`docs/skills/README.md`](docs/skills/README.md) | Skills lokal |
+| [`docs/cursor-vendor-agents.md`](docs/cursor-vendor-agents.md) | Agency Agents, Karpathy, Semgrep (submodule + bootstrap) |
 | [`docs/skills/akuntansi-hidroponik/SKILL.md`](docs/skills/akuntansi-hidroponik/SKILL.md) | Skill domain akuntansi hidroponik |
 
 ### Domain & notulensi

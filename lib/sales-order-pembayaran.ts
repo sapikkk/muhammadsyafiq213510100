@@ -8,6 +8,7 @@ import {
   resolveKasAkunId,
   type SumberKasKode,
 } from "@/lib/kas-sumber";
+import { revalidateOwnerDashboardCaches } from "@/lib/owner-dashboard-cache";
 import { prisma, runTransaction } from "@/lib/prisma";
 import { siklusSelectUntukPesanan } from "@/lib/sales-order";
 import { SalesOrderError } from "@/lib/sales-order";
@@ -100,7 +101,7 @@ export async function catatDpSalesOrder(
 ) {
   const kasKode = parseKasForSo(raw.sumberKas);
 
-  return runTransaction(async (tx) => {
+  const result = await runTransaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({
       where: { id: soId },
       include: { akun_dp: true },
@@ -158,6 +159,8 @@ export async function catatDpSalesOrder(
       },
     });
   });
+  revalidateOwnerDashboardCaches();
+  return result;
 }
 
 function parsePelunasanNominal(raw: unknown): Prisma.Decimal {
@@ -178,7 +181,7 @@ export async function catatPelunasanSalesOrder(
   const nominal = parsePelunasanNominal(raw.nominal);
   const kasKode = parseKasForSo(raw.sumberKas);
 
-  return runTransaction(async (tx) => {
+  const result = await runTransaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({ where: { id: soId } });
     if (!so) throw new SalesOrderError("Sales order tidak ditemukan.", 404);
     if (so.status !== "DELIVERED") {
@@ -244,4 +247,6 @@ export async function catatPelunasanSalesOrder(
       },
     });
   });
+  revalidateOwnerDashboardCaches();
+  return result;
 }

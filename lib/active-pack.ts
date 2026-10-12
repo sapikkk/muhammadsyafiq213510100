@@ -11,6 +11,7 @@ import type {
 } from "@/lib/active-pack-types";
 import { maybeJurnalPenyesuaianPackHabis } from "@/lib/active-pack-habis-jurnal";
 import type { SatuanInventaris } from "@/lib/inventaris-satuan";
+import { revalidateOwnerDashboardCaches } from "@/lib/owner-dashboard-cache";
 import { prisma, type PrismaTransaction } from "@/lib/prisma";
 
 export type { ActivePackListRow, SerializedActivePack } from "@/lib/active-pack-types";
@@ -191,7 +192,13 @@ export async function pakaiActivePack(
   jumlahRaw: unknown,
 ): Promise<ActivePack> {
   const jumlah = parseDecimal(jumlahRaw, "Jumlah pakai");
-  return prisma.$transaction(async (tx) => pakaiActivePackDalamTx(tx, id, jumlah));
+  const row = await prisma.$transaction(async (tx) =>
+    pakaiActivePackDalamTx(tx, id, jumlah),
+  );
+  if (row.status === "HABIS") {
+    revalidateOwnerDashboardCaches();
+  }
+  return row;
 }
 
 export function serializeActivePack(

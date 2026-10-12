@@ -2,6 +2,7 @@ import "server-only";
 
 import { Prisma } from "@prisma/client";
 import { assertJurnalTanggalAllowed, PeriodLockError } from "@/lib/period-lock";
+import { revalidateOwnerDashboardCaches } from "@/lib/owner-dashboard-cache";
 import { prisma } from "@/lib/prisma";
 
 export class PenyusutanError extends Error {
@@ -170,6 +171,8 @@ export async function catatPenyusutanBulan(
   if (jurnalIds.length === 0) {
     throw new PenyusutanError("Tidak ada nominal penyusutan (greenhouse/overhead nol).", 400);
   }
+
+  revalidateOwnerDashboardCaches();
 
   return {
     bulan: label,

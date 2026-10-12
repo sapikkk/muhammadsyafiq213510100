@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { keTanggalIso } from "@/lib/format";
 import { applyHppOverride, parseHppOverride } from "@/lib/hpp-override";
 import { calculateHPP, yieldContextFromSiklus } from "@/lib/hpp";
+import { revalidateOwnerDashboardCaches } from "@/lib/owner-dashboard-cache";
 import { prisma } from "@/lib/prisma";
 import { AKUN_KODE } from "@/lib/akun-kode";
 import { resolveAkunWip, STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort";
@@ -365,6 +366,7 @@ export async function approveLaporanPanen(
       updatedLaporan.id,
       updatedLaporan.siklus_id,
     );
+    revalidateOwnerDashboardCaches();
     return updatedLaporan;
   });
 }

@@ -3,7 +3,6 @@
 import { getServerSession } from "next-auth";
 import { isRoleAllowed } from "@/lib/rbac";
 import { revalidatePath } from "next/cache";
-import { revalidateOwnerDashboardCaches } from "@/lib/cached-queries";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import {
@@ -112,7 +111,6 @@ async function putuskan(
   revalidatePath("/admin/akun");
   revalidatePath("/pengaturan");
   revalidatePath("/owner/jurnal");
-  revalidateOwnerDashboardCaches();
   return { saved: pesan };
 }
 
