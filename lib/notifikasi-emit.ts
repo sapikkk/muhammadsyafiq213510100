@@ -70,7 +70,7 @@ export async function emitPasswordResetRejected(userId: number) {
 export async function emitHarvestPending(laporanId: number, kodeBatch: string, petaniNama: string) {
   await toAdmin({
     jenis: NotifJenis.HARVEST_PENDING,
-    judul: "Laporan panen menunggu review",
+    judul: "Laporan panen perlu ditinjau",
     pesan: `${petaniNama} mengirim panen batch ${kodeBatch}.`,
     href: `/admin/harvest/${laporanId}`,
     entitas: "Laporan_Panen",
@@ -87,7 +87,7 @@ export async function emitHarvestApproved(
   await kirimNotifikasiUser(userId, {
     jenis: NotifJenis.HARVEST_APPROVED,
     judul: "Panen disetujui",
-    pesan: `Laporan panen batch ${kodeBatch} disetujui. HPP sudah dihitung.`,
+    pesan: `Panen batch ${kodeBatch} disetujui. Biaya produksi (HPP) sudah dihitung.`,
     href: `/petani/siklus/${siklusId}`,
     entitas: "Laporan_Panen",
     entitasId: laporanId,
@@ -116,7 +116,7 @@ export async function emitJurnalPending(jurnalId: number, keterangan: string, ol
   await toAdmin(
     {
       jenis: NotifJenis.JURNAL_PENDING,
-      judul: "Jurnal menunggu persetujuan",
+      judul: "Catatan keuangan menunggu persetujuan",
       pesan: keterangan.slice(0, 200),
       href: `/admin/jurnal/${jurnalId}`,
       entitas: "Jurnal",
@@ -139,7 +139,7 @@ async function hrefJurnalUntukUser(userId: number, jurnalId: number) {
 export async function emitJurnalApproved(userId: number, jurnalId: number, keterangan: string) {
   await kirimNotifikasiUser(userId, {
     jenis: NotifJenis.JURNAL_APPROVED,
-    judul: "Jurnal disetujui",
+    judul: "Catatan keuangan disetujui",
     pesan: keterangan.slice(0, 200),
     href: await hrefJurnalUntukUser(userId, jurnalId),
     entitas: "Jurnal",
@@ -150,7 +150,7 @@ export async function emitJurnalApproved(userId: number, jurnalId: number, keter
 export async function emitJurnalRejected(userId: number, jurnalId: number, keterangan: string) {
   await kirimNotifikasiUser(userId, {
     jenis: NotifJenis.JURNAL_REJECTED,
-    judul: "Jurnal ditolak",
+    judul: "Catatan keuangan ditolak",
     pesan: keterangan.slice(0, 200),
     href: await hrefJurnalUntukUser(userId, jurnalId),
     entitas: "Jurnal",
@@ -174,7 +174,7 @@ export async function emitStokRendah(itemId: number, kode: string, nama: string)
     {
       jenis: NotifJenis.STOK_RENDAH,
       judul: "Stok di bawah minimum",
-      pesan: `${kode} ${nama} perlu restock.`,
+      pesan: `${kode} ${nama} perlu diisi ulang.`,
       href: `/admin/inventaris/${itemId}`,
       entitas: "ItemInventaris",
       entitasId: itemId,
@@ -198,8 +198,8 @@ export async function emitSalesOrderDraft(soId: number, nomor: string, olehId?: 
   await toAdmin(
     {
       jenis: NotifJenis.SALES_ORDER_DRAFT,
-      judul: "Sales order draft",
-      pesan: `${nomor} siap dikonfirmasi.`,
+      judul: "Pesanan jual sementara",
+      pesan: `${nomor} siap dikonfirmasi stok.`,
       href: `/admin/penjualan/${soId}`,
       entitas: "Sales_Order",
       entitasId: soId,
@@ -211,8 +211,8 @@ export async function emitSalesOrderDraft(soId: number, nomor: string, olehId?: 
 export async function emitSalesOrderConfirmed(soId: number, nomor: string) {
   await toOwner({
     jenis: NotifJenis.SALES_ORDER_CONFIRMED,
-    judul: "Sales order dikonfirmasi",
-    pesan: `${nomor} sudah CONFIRMED.`,
+    judul: "Pesanan jual dikonfirmasi",
+    pesan: `${nomor} sudah dikonfirmasi.`,
     href: `/owner/penjualan/${soId}`,
     entitas: "Sales_Order",
     entitasId: soId,
@@ -247,7 +247,7 @@ export async function emitSiklusAbort(
 ) {
   await kirimNotifikasiUser(petaniUserId, {
     jenis: NotifJenis.SIKLUS_ABORT,
-    judul: "Siklus di-abort",
+    judul: "Siklus tanam dibatalkan",
     pesan: `Batch ${kodeBatch} gagal total: ${alasan.slice(0, 120)}`,
     href: `/petani/siklus/${siklusId}`,
     entitas: "Siklus_Produksi",

@@ -10,12 +10,9 @@ import { DetailLayout } from "@/components/detail-layout";
 import { Badge } from "@/components/ui/badge";
 import { formatTanggal } from "@/lib/format";
 import { serializeLaporanRingkas } from "@/lib/laporan-panen";
-import {
-  faseBerikutnya,
-  faseLabel,
-  isFaseProduksi,
-  type FaseProduksi,
-} from "@/lib/siklus-fase";
+import { labelLaporanPanenStatus } from "@/lib/laporan-panen-status";
+import { faseBerikutnya, faseLabel, isFaseProduksi, type FaseProduksi } from "@/lib/siklus-fase";
+import { labelSiklusStatus } from "@/lib/siklus-status-label";
 import { listLogKegagalan, serializeLogKegagalan } from "@/lib/log-kegagalan";
 import { getSiklusProduksi, listLogProduksi } from "@/lib/siklus-produksi";
 import { siklusBolehAbort, STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort-status";
@@ -73,12 +70,7 @@ export async function SiklusDetailScreen({
     status !== "SELESAI" && (!laporan || laporan.status !== "APPROVED");
   const showHarvest = faseAktif === "PANEN" && !laporan;
 
-  const badgeLabel =
-    status === STATUS_GAGAL_TOTAL
-      ? "Gagal total (abort)"
-      : faseAktif
-        ? faseLabel[faseAktif]
-        : status;
+  const badgeLabel = faseAktif ? labelSiklusStatus(faseAktif) : labelSiklusStatus(status);
 
   return (
     <DetailLayout
@@ -108,7 +100,7 @@ export async function SiklusDetailScreen({
     >
       {status === STATUS_GAGAL_TOTAL ? (
         <p className="rounded-md border border-destructive/30 bg-destructive/5 p-4 text-sm">
-          Siklus dihentikan (abort). Tidak ada lanjut fase atau panen.
+          Siklus tanam dihentikan. Tidak bisa lanjut fase atau panen.
         </p>
       ) : (
         <PageSection title="Langkah berikutnya" badge="Update">
@@ -154,7 +146,8 @@ export async function SiklusDetailScreen({
         <PageSection title="Laporan panen" badge="Read">
           <div className="space-y-2 text-sm">
             <p>
-              Status: <strong>{laporan.status}</strong> · {laporan.waktu_kirim}
+              Status: <strong>{labelLaporanPanenStatus(laporan.status)}</strong> ·{" "}
+              {laporan.waktu_kirim}
             </p>
             <p>
               Layak {laporan.jumlah_layak} pohon ({laporan.berat_layak_gram} g) · Tidak layak{" "}

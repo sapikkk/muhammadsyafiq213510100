@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
 import { Badge } from "@/components/ui/badge";
 import { formatRupiah } from "@/lib/format";
+import { labelSalesOrderStatus } from "@/lib/sales-order-status";
 import type { SoRow } from "@/components/sales-order-detail";
 
 export type { SoRow } from "@/components/sales-order-detail";
@@ -24,11 +25,13 @@ export function SalesOrderDaftar({
 }) {
   const columns = useMemo<ColumnDef<SoRow>[]>(
     () => [
-      { accessorKey: "nomor_so", header: "Nomor SO" },
+      { accessorKey: "nomor_so", header: "Nomor pesanan" },
       {
         accessorKey: "status",
         header: "Status",
-        cell: ({ row }) => <Badge variant="secondary">{row.original.status}</Badge>,
+        cell: ({ row }) => (
+          <Badge variant="secondary">{labelSalesOrderStatus(row.original.status)}</Badge>
+        ),
       },
       { accessorKey: "pelanggan_nama", header: "Pelanggan" },
       {

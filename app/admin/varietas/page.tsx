@@ -39,7 +39,7 @@ export default async function AdminVarietasPage() {
         />
       }
       list={<VarietasDaftar rows={serialized} mode="admin" />}
-      listTitle="Master varietas"
+      listTitle="Daftar varietas"
       listDescription="Cari nama varietas. Status dan ubah asumsi dari halaman detail."
     />
   );

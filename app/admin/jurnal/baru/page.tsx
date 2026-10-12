@@ -16,7 +16,7 @@ export default async function JurnalBaruPage() {
       backHref="/admin/jurnal"
       eyebrow="Akuntansi"
       title="Jurnal baru"
-      description="Smart Jurnal (17 tipe) atau jurnal manual. Saldo berubah setelah jurnal disetujui."
+      description="Jurnal otomatis (17 jenis) atau jurnal manual. Saldo berubah setelah jurnal disetujui."
     >
       <PageSection title="Form jurnal" badge="Create">
         <JurnalBaruPanel

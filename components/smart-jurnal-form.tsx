@@ -37,8 +37,8 @@ export function SmartJurnalForm({
   return (
     <form action={formAction} className="space-y-4 rounded-md border p-4">
       <p className="text-sm text-muted-foreground">
-        v2-F.4 — 17 tipe terkunci debit/kredit. Jurnal <strong>SMART</strong>, status PENDING (saldo setelah
-        approve).
+        Pilih salah satu dari 17 jenis jurnal otomatis. Setelah disimpan, Admin atau Owner menyetujui
+        sebelum saldo berubah.
       </p>
 
       <label className="block space-y-1.5 text-sm">
@@ -104,7 +104,7 @@ export function SmartJurnalForm({
       ) : null}
 
       <SubmitButton className="h-11" pendingLabel="Menyimpan…">
-        Catat Smart Jurnal
+        Catat Jurnal otomatis
       </SubmitButton>
     </form>
   );

@@ -50,7 +50,7 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
     <CrudPageLayout
       eyebrow="Keuangan"
       title="Arus kas"
-      description="Pergerakan Kas/Bank dari jurnal APPROVED. Filter periode format YYYY-MM."
+      description="Pergerakan Kas/Bank dari catatan keuangan sudah disetujui. Isi bulan dengan format tahun-bulan, contoh 2026-01."
       flowSteps={[
         { label: "Filter", detail: "Pilih rentang bulan lalu terapkan." },
         { label: "Ringkasan", detail: "Tabel saldo dan arus per kategori." },

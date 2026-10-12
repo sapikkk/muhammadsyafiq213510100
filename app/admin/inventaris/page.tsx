@@ -17,7 +17,7 @@ export default async function AdminInventarisPage() {
       flowSteps={[
         { label: "Stok", detail: "Klik baris untuk riwayat item dan catat masuk, keluar, atau penyesuaian." },
         { label: "Item baru", detail: "Tombol Tambah di panel samping jika perlu menambah master item." },
-        { label: "Active pack", detail: "Setelah stok tercatat, buat pack di menu Active pack." },
+        { label: "Paket siap pakai", detail: "Setelah stok tercatat, buat pack di menu Paket siap pakai." },
       ]}
       actions={
         <InventarisItemFormSheet

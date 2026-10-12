@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { tipsForCoachKey } from "@/lib/coach-tips";
+import { UI_COPY } from "@/lib/ui-copy";
 import { resolveCoachMeta, type FlowStep } from "@/lib/coach-meta";
 import { cn } from "@/lib/utils";
 
@@ -101,7 +102,7 @@ function CoachDialog({
               onOpenChange(false);
             }}
           >
-            Jangan tampilkan lagi saat buka halaman
+            Jangan tampilkan lagi otomatis
           </Button>
         </div>
       </DialogContent>
@@ -113,7 +114,7 @@ export function PageCoachmark({
   pageKey,
   steps,
   title = "Panduan halaman",
-  intro = "Langkah mengikuti urutan layar dari atas ke bawah.",
+  intro = UI_COPY.coachIntro,
   tips,
   autoOnFirstVisit = true,
   placement = "block",

@@ -20,7 +20,7 @@ export function PriveForm({ defaultTanggal }: { defaultTanggal: string }) {
   return (
     <form action={formAction} className="max-w-md space-y-4 rounded-md border p-4">
       <p className="text-sm text-muted-foreground">
-        Jurnal PENDING: debit Prive (3200), kredit Kas tunai atau Bank. Admin menyetujui seperti jurnal lain.
+        Catatan menunggu persetujuan Admin: ambil pribadi dicatat dari kas tunai atau bank.
       </p>
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Tanggal</span>

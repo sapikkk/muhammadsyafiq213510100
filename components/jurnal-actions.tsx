@@ -109,8 +109,8 @@ export function JurnalActions({
       {status === "APPROVED" ? (
         <div className="space-y-2">
           <p className="text-sm text-muted-foreground">
-            Jurnal disetujui tidak bisa diedit. Buat jurnal pembalik (PENDING)
-            jika perlu koreksi setelah disetujui.
+            Catatan yang sudah disetujui tidak bisa diubah. Buat catatan pembalik jika perlu
+            koreksi.
           </p>
           <Dialog>
             <DialogTrigger asChild>
@@ -122,8 +122,8 @@ export function JurnalActions({
               <DialogHeader>
                 <DialogTitle>Pembalikan jurnal #{id}</DialogTitle>
                 <DialogDescription>
-                  Debit dan kredit ditukar pada jurnal baru berstatus PENDING.
-                  Setujui jurnal pembalik untuk mengoreksi saldo akun.
+                  Debit dan kredit ditukar pada catatan baru yang menunggu persetujuan.
+                  Setujui catatan pembalik untuk mengoreksi saldo akun.
                 </DialogDescription>
               </DialogHeader>
               <form action={balikAction} className="space-y-3">

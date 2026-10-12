@@ -15,7 +15,7 @@ export default async function PetaniInventarisPage() {
       flowSteps={[
         { label: "Cek stok", detail: "Pastikan bahan semai cukup sebelum buka Siklus." },
         { label: "Catat pergerakan", detail: "Di detail item — OUT saat pakai bahan." },
-        { label: "Active pack", detail: "Buat pack dari stok yang sama di menu Active pack." },
+        { label: "Paket siap pakai", detail: "Buat pack dari stok yang sama di menu Paket siap pakai." },
       ]}
       list={<InventarisDaftar items={items.map(serializeItem)} mode="petani" />}
       listTitle="Stok saat ini"

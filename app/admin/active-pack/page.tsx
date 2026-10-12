@@ -24,7 +24,7 @@ export default async function AdminActivePackPage() {
   return (
     <CrudPageLayout
       eyebrow="Produksi & stok"
-      title="Active pack"
+      title="Paket siap pakai"
       description="Alokasi biaya benih dan media per unit; dipakai saat semai dan tambal susulan."
       flowSteps={[
         { label: "Buat pack", detail: "Tombol Tambah: pilih item inventaris dan harga total pack." },

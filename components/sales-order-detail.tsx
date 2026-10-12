@@ -3,6 +3,11 @@
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { KasSumberSelect } from "@/components/kas-sumber-select";
+import { statusJurnalLabel, type StatusJurnalKey } from "@/lib/jurnal-status";
+import {
+  labelPembayaranStatus,
+  labelSalesOrderStatus,
+} from "@/lib/sales-order-status";
 import {
   cancelSalesOrderAction,
   catatDpSalesOrderAction,
@@ -71,10 +76,10 @@ function CatatDpButton({ id }: { id: number }) {
       <input type="hidden" name="salesOrderId" value={id} />
       <KasSumberSelect />
       <SubmitButton className="h-9" pendingLabel="...">
-        Catat DP (Dr Kas · Cr uang muka)
+        Catat uang muka
       </SubmitButton>
       <p className="text-xs text-muted-foreground">
-        Jurnal langsung APPROVED; bukan pendapatan. Pelunasan di story berikutnya.
+        Uang muka langsung disetujui; ini bukan pendapatan penuh. Pelunasan dicatat terpisah.
       </p>
     </form>
   );
@@ -101,7 +106,7 @@ function ShipForm({ id }: { id: number }) {
       <input type="hidden" name="salesOrderId" value={id} />
       <Input name="catatan" placeholder="Catatan packing/kirim (opsional)" className="h-9 text-sm" />
       <SubmitButton className="h-9" pendingLabel="...">
-        Tandai dikirim (SHIPPED)
+        Tandai sudah kirim
       </SubmitButton>
     </form>
   );
@@ -126,7 +131,7 @@ function PackingCostForm({ id, defaultValue }: { id: number; defaultValue: strin
         Catat biaya packing
       </SubmitButton>
       <p className="text-xs text-muted-foreground">
-        Jurnal beban 5400 / Kas atau Bank jika nominal &gt; 0.
+        Biaya kemasan dicatat ke beban jika nominal lebih dari nol.
       </p>
     </form>
   );
@@ -140,7 +145,7 @@ function CancelForm({ id }: { id: number }) {
       <input type="hidden" name="salesOrderId" value={id} />
       <Input name="alasan" placeholder="Alasan pembatalan (wajib)" className="h-9 text-sm" required />
       <SubmitButton className="h-9" pendingLabel="..." variant="destructive">
-        Batalkan SO
+        Batalkan pesanan
       </SubmitButton>
     </form>
   );
@@ -155,10 +160,10 @@ function DeliverForm({ id }: { id: number }) {
       <Input name="catatan" placeholder="Catatan serah terima (opsional)" className="h-9 text-sm" />
       <KasSumberSelect />
       <SubmitButton className="h-9" pendingLabel="...">
-        Tandai terkirim (DELIVERED)
+        Tandai sudah sampai pelanggan
       </SubmitButton>
       <p className="text-xs text-muted-foreground">
-        Tanpa DP: Dr kas/bank di jurnal pendapatan. Jurnal PENDING menunggu Admin.
+        Tanpa uang muka: pendapatan dicatat ke kas atau bank. Admin menyetujui catatan keuangan.
       </p>
     </form>
   );
@@ -178,7 +183,7 @@ export function SalesOrderDetail({
       {showHeader ? (
         <div className="flex flex-wrap items-center gap-2">
           <p className="font-medium">{row.nomor_so}</p>
-          <Badge variant="secondary">{row.status}</Badge>
+          <Badge variant="secondary">{labelSalesOrderStatus(row.status)}</Badge>
         </div>
       ) : null}
       <p className="text-muted-foreground">
@@ -189,8 +194,8 @@ export function SalesOrderDetail({
       </p>
       {row.status_pembayaran && row.status_pembayaran !== "BELUM_BAYAR" ? (
         <p className="text-xs text-muted-foreground">
-          Pembayaran: {row.status_pembayaran}
-          {row.jurnal_dp_id ? ` · Jurnal DP #${row.jurnal_dp_id}` : ""}
+          Pembayaran: {labelPembayaranStatus(row.status_pembayaran)}
+          {row.jurnal_dp_id ? ` · Catatan uang muka #${row.jurnal_dp_id}` : ""}
         </p>
       ) : null}
       <ul className="text-xs text-muted-foreground">
@@ -215,7 +220,11 @@ export function SalesOrderDetail({
         <p className="text-xs text-muted-foreground">
           Terkirim: {new Date(row.terkirim_pada).toLocaleString("id-ID")}
           {row.jurnal_pendapatan_id
-            ? ` · Jurnal #${row.jurnal_pendapatan_id} (${row.jurnal_pendapatan_status ?? "?"})`
+            ? ` · Catatan keuangan #${row.jurnal_pendapatan_id}${
+                row.jurnal_pendapatan_status
+                  ? ` (${statusJurnalLabel[row.jurnal_pendapatan_status as StatusJurnalKey] ?? row.jurnal_pendapatan_status})`
+                  : ""
+              }`
             : null}
         </p>
       ) : null}
@@ -224,7 +233,7 @@ export function SalesOrderDetail({
       ) : null}
       {mode === "owner" ? (
         <p className="text-xs text-muted-foreground">
-          Tampilan Owner — baca saja. Aksi penjualan dilakukan Admin.
+          Tampilan Owner hanya melihat. Aksi penjualan dilakukan Admin.
         </p>
       ) : null}
       {mode === "admin" && row.status !== "DRAFT" && row.status !== "CANCELLED" ? (
@@ -232,7 +241,7 @@ export function SalesOrderDetail({
           href={`/admin/penjualan/${row.id}/invoice`}
           className="text-xs font-medium text-primary underline-offset-2 hover:underline"
         >
-          Invoice {row.nomor_invoice ? `(${row.nomor_invoice})` : ""}
+          Faktur {row.nomor_invoice ? `(${row.nomor_invoice})` : ""}
         </Link>
       ) : null}
       {mode === "admin" && row.status === "DRAFT" ? <ConfirmButton id={row.id} /> : null}
@@ -257,7 +266,7 @@ export function SalesOrderDetail({
       {mode === "admin" && row.biaya_packing && row.biaya_packing !== "0" ? (
         <p className="text-xs text-muted-foreground">
           Biaya packing: {formatRupiah(row.biaya_packing)}
-          {row.jurnal_packing_id ? ` · Jurnal #${row.jurnal_packing_id}` : null}
+          {row.jurnal_packing_id ? ` · Catatan keuangan #${row.jurnal_packing_id}` : null}
         </p>
       ) : null}
       {mode === "admin" && row.status !== "CANCELLED" ? <CancelForm id={row.id} /> : null}

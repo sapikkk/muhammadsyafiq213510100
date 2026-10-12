@@ -75,7 +75,7 @@ export function PetaniMasterFormSheet({
   return (
     <FormSheet
       title={initial ? "Ubah petani" : "Tambah petani"}
-      description="Master ERD (nama & gaji). Akun login HP didaftarkan terpisah di beranda Admin."
+      description="Data petani (nama & gaji). Akun login HP didaftarkan terpisah di beranda Admin."
       trigger={trigger}
       open={open}
       onOpenChange={setOpen}

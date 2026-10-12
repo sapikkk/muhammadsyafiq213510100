@@ -27,7 +27,7 @@ export default async function HomePage() {
         <div className="flex items-center gap-2">
           {role ? (
             <Button asChild size="sm" variant="secondary">
-              <Link href={roleHome[role]}>Dashboard aplikasi</Link>
+              <Link href={roleHome[role]}>Beranda aplikasi</Link>
             </Button>
           ) : null}
           <Button asChild size="sm">
@@ -40,7 +40,7 @@ export default async function HomePage() {
         <PageHeaderRow
           eyebrow="Kokonus Farm"
           title="Tata kelola produksi hidroponik"
-          description="Ringkasan status pengembangan produk. Transaksi harian lewat halaman Masuk ke dashboard Owner, Admin, atau Petani."
+          description="Ringkasan status pengembangan produk. Transaksi harian lewat halaman Masuk ke beranda Owner, Admin, atau Petani."
           guide={
             <PageCoachmark
               pageKey="home"

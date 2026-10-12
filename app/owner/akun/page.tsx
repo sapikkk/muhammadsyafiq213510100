@@ -12,7 +12,7 @@ export default async function OwnerAkunPage() {
     <CrudPageLayout
       eyebrow="Keuangan"
       title="Bagan akun"
-      description={`Tampilan read-only. ${aktif.length} akun aktif dari ${rows.length} total.`}
+      description={`Hanya lihat. ${aktif.length} akun aktif dari ${rows.length} total.`}
       flowSteps={[
         { label: "Navigasi pohon", detail: "Expand induk untuk melihat sub-akun." },
         { label: "Perubahan COA", detail: "Hanya Admin — Owner lihat saldo via jurnal/laporan." },

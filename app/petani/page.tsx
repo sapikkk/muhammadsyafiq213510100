@@ -18,15 +18,15 @@ export default async function PetaniPage() {
     <div className="flex flex-col gap-6">
       <PageHeaderRow
         eyebrow="Petani"
-        title="Dashboard"
+        title="Beranda"
         description="Mulai dari tugas hari ini, lalu buka Siklus untuk batch aktif."
         guide={
           <FlowSteps
             pageKey="petani"
-            title="Panduan dashboard Petani"
+            title="Panduan beranda Petani"
             toolbar
             steps={[
-              { label: "Cek stok", detail: "Inventaris & active pack — pastikan bahan cukup." },
+              { label: "Cek stok", detail: "Inventaris & paket siap pakai — pastikan bahan cukup." },
               { label: "Semai batch", detail: "Menu Siklus → mulai fase SEMAI." },
               { label: "Pindah fase", detail: "Di detail batch — catat pertumbuhan & panen." },
               { label: "Pengiriman", detail: "Setelah Admin kirim SO — update status pengiriman." },

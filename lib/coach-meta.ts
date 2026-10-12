@@ -1,4 +1,4 @@
-/** Langkah panduan per halaman (coachmark). */
+/** Langkah panduan per halaman (tombol Panduan). */
 export type FlowStep = {
   label: string;
   detail: string;
@@ -10,16 +10,16 @@ export type CoachMeta = {
   steps: FlowStep[];
 };
 
-/** Meta panduan dari path URL (detail, /baru, pengaturan, auth). */
+/** Meta panduan dari path URL. */
 export function resolveCoachMeta(pathname: string): CoachMeta | null {
   if (pathname === "/login") {
     return {
       pageKey: "login",
-      title: "Panduan masuk",
+      title: "Cara masuk",
       steps: [
-        { label: "Email & sandi", detail: "Isi keduanya lalu klik Masuk." },
-        { label: "Peran", detail: "Sistem mengarahkan ke dashboard Owner, Admin, atau Petani." },
-        { label: "Lupa sandi", detail: "Petani minta reset ke Admin; profil di Pengaturan." },
+        { label: "Email dan sandi", detail: "Isi keduanya, lalu klik Masuk." },
+        { label: "Peran", detail: "Sistem membuka beranda Owner, Admin, atau Petani." },
+        { label: "Lupa sandi", detail: "Petani minta bantuan Admin; ganti sandi rutin di Pengaturan." },
       ],
     };
   }
@@ -28,8 +28,8 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
       pageKey: "pengaturan",
       title: "Pengaturan akun",
       steps: [
-        { label: "Profil", detail: "Perbarui nama tampilan jika perlu." },
-        { label: "Sandi", detail: "Ganti sandi — wajib setelah reset dari Owner." },
+        { label: "Profil", detail: "Ubah nama tampilan jika perlu." },
+        { label: "Sandi", detail: "Ganti sandi, wajib setelah reset dari Owner." },
       ],
     };
   }
@@ -39,8 +39,8 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
       pageKey: "ganti-sandi",
       title: "Ganti sandi",
       steps: [
-        { label: "Sandi lama", detail: "Wajib benar sebelum sandi baru disimpan." },
-        { label: "Konfirmasi", detail: "Ulangi sandi baru — lalu lanjut ke dashboard." },
+        { label: "Sandi lama", detail: "Harus benar sebelum sandi baru disimpan." },
+        { label: "Konfirmasi", detail: "Ketik ulang sandi baru, lalu lanjut ke beranda." },
       ],
     },
     {
@@ -48,26 +48,26 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
       pageKey: "akses-ditolak",
       title: "Akses ditolak",
       steps: [
-        { label: "Peran", detail: "Menu dan URL dibatasi per Owner / Admin / Petani." },
-        { label: "Keluar", detail: "Kembali ke dashboard Anda lewat tombol di bawah." },
+        { label: "Peran", detail: "Menu dan alamat web dibatasi per Owner, Admin, atau Petani." },
+        { label: "Kembali", detail: "Pakai tombol di bawah untuk ke beranda Anda." },
       ],
     },
     {
       pattern: /^\/admin\/jurnal\/baru\/?$/,
       pageKey: "admin-jurnal-baru",
-      title: "Jurnal baru",
+      title: "Catatan keuangan baru",
       steps: [
-        { label: "Tipe", detail: "Smart Jurnal (17 tipe) atau baris manual." },
-        { label: "Approve", detail: "Saldo dan laporan berubah setelah disetujui." },
+        { label: "Jenis", detail: "Pilih jurnal otomatis (17 jenis) atau isi baris sendiri." },
+        { label: "Setujui", detail: "Laporan berubah setelah catatan disetujui." },
       ],
     },
     {
       pattern: /^\/admin\/penjualan\/baru\/?$/,
       pageKey: "admin-penjualan-baru",
-      title: "Buat sales order",
+      title: "Buat pesanan jual",
       steps: [
-        { label: "Pelanggan & batch", detail: "Pilih baris pesanan valid." },
-        { label: "Draft", detail: "Lanjut konfirmasi stok di detail SO." },
+        { label: "Pelanggan dan batch", detail: "Pilih baris pesanan yang valid." },
+        { label: "Draft", detail: "Simpan dulu; konfirmasi stok di halaman detail." },
       ],
     },
     {
@@ -75,8 +75,8 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
       pageKey: "petani-siklus-baru",
       title: "Mulai semai baru",
       steps: [
-        { label: "Varietas & kolam", detail: "Pastikan kolam siap dan pack cukup." },
-        { label: "Submit", detail: "Batch baru muncul di daftar siklus aktif." },
+        { label: "Varietas dan kolam", detail: "Pastikan kolam siap dan paket cukup." },
+        { label: "Simpan", detail: "Batch baru muncul di daftar siklus." },
       ],
     },
   ];
@@ -89,10 +89,10 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
     {
       pattern: /^\/admin\/penjualan\/\d+\/invoice\/?$/,
       pageKey: "admin-penjualan-invoice",
-      title: "Invoice penjualan",
+      title: "Nota penjualan",
       steps: [
-        { label: "Pratinjau", detail: "Layout cetak di bawah tombol Cetak." },
-        { label: "Kembali", detail: "Ke detail SO untuk status dan pembayaran." },
+        { label: "Pratinjau", detail: "Tampilan cetak di bawah tombol Cetak." },
+        { label: "Kembali", detail: "Ke detail pesanan untuk status dan pembayaran." },
       ],
     },
     {
@@ -100,35 +100,35 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
       pageKey: "detail-varietas",
       title: "Detail varietas",
       steps: [
-        { label: "Parameter", detail: "Baca HPP dan harga jual master." },
-        { label: "Ubah", detail: "Tombol aksi — form sheet." },
-        { label: "Riwayat", detail: "Perubahan tercatat per user." },
+        { label: "Parameter", detail: "Lihat HPP dan harga jual." },
+        { label: "Ubah", detail: "Tombol aksi membuka form di samping." },
+        { label: "Riwayat", detail: "Siapa mengubah dan kapan." },
       ],
     },
     {
       pattern: /^\/(owner|admin|petani)\/inventaris\/\d+$/,
       pageKey: "detail-inventaris",
-      title: "Detail inventaris",
+      title: "Detail stok barang",
       steps: [
-        { label: "Stok", detail: "Saldo saat ini vs minimum." },
-        { label: "Pergerakan", detail: "IN/OUT/ADJUST di Admin/Petani." },
+        { label: "Stok", detail: "Jumlah sekarang dibanding batas minimum." },
+        { label: "Pergerakan", detail: "Masuk, keluar, penyesuaian di Admin atau Petani." },
       ],
     },
     {
       pattern: /^\/(owner|admin)\/jurnal\/\d+$/,
       pageKey: "detail-jurnal",
-      title: "Detail jurnal",
+      title: "Detail catatan keuangan",
       steps: [
-        { label: "Baris", detail: "Periksa akun debit dan kredit." },
-        { label: "Status", detail: "Draft vs APPROVED." },
+        { label: "Baris", detail: "Periksa akun masuk dan keluar." },
+        { label: "Status", detail: "Draft (sementara) atau sudah disetujui." },
       ],
     },
     {
       pattern: /^\/(admin|owner)\/penjualan\/\d+$/,
       pageKey: "detail-sales-order",
-      title: "Detail sales order",
+      title: "Detail pesanan jual",
       steps: [
-        { label: "Status", detail: "Menentukan aksi yang boleh dilakukan." },
+        { label: "Status", detail: "Menentukan tombol apa yang boleh diklik." },
         { label: "Baris", detail: "Batch, jumlah, subtotal per item." },
       ],
     },
@@ -137,33 +137,33 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
       pageKey: "petani-pengiriman-detail",
       title: "Detail pengiriman",
       steps: [
-        { label: "Status SO", detail: "Ikuti alur kirim dan terima." },
+        { label: "Status pesanan", detail: "Ikuti urutan kirim dan terima." },
         { label: "Baris", detail: "Periksa batch dan jumlah sebelum konfirmasi." },
       ],
     },
     {
       pattern: /^\/admin\/harvest\/\d+$/,
       pageKey: "admin-harvest",
-      title: "Review panen",
+      title: "Tinjau laporan panen",
       steps: [
-        { label: "Sortasi", detail: "Layak dan tidak layak jual." },
+        { label: "Sortasi", detail: "Layak jual dan tidak layak jual." },
         { label: "HPP", detail: "Pratinjau sebelum disetujui." },
-        { label: "Setujui", detail: "HPP dan jurnal persediaan tercatat." },
+        { label: "Setujui", detail: "HPP dan catatan stok terisi." },
       ],
     },
     {
       pattern: /^\/petani\/siklus\/\d+$/,
       pageKey: "petani-siklus",
-      title: "Detail batch",
+      title: "Detail batch tanam",
       steps: [
         { label: "Langkah berikutnya", detail: "Pindah fase atau kirim laporan panen." },
-        { label: "Aksi", detail: "Monitor, tambal, atau abort via dialog." },
+        { label: "Aksi lain", detail: "Monitor, tambal, atau batalkan siklus lewat dialog." },
       ],
     },
     {
       pattern: /^\/(admin|petani)\/active-pack\/\d+$/,
       pageKey: "admin-active-pack",
-      title: "Detail active pack",
+      title: "Detail paket siap pakai",
       steps: [
         { label: "Sisa", detail: "Unit tersisa setelah dipakai semai." },
         { label: "Pakai", detail: "Kurangi stok saat dipakai di lapangan." },

@@ -52,7 +52,11 @@ export async function InventarisDetail({
         writableMode ? <InventarisDetailActions item={serialized} mode={writableMode} /> : null
       }
     >
-      <PageSection title="Riwayat pergerakan" description="Read — 50 entri terakhir item ini." badge="Read">
+      <PageSection
+        title="Riwayat pergerakan"
+        description="50 pergerakan terakhir untuk item ini."
+        badge="Read"
+      >
         <InventarisRiwayat rows={riwayat.map(serializePergerakan)} hideItemColumn />
       </PageSection>
       <EntityChangeHistorySection entitas="ItemInventaris" entitasId={id} />

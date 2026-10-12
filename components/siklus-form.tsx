@@ -164,7 +164,7 @@ export function SiklusForm({
         <legend className="px-1 text-sm font-medium">Benih (wajib)</legend>
 
         <label className="block space-y-1.5 text-sm">
-          <span className="font-medium">Active pack benih</span>
+          <span className="font-medium">Paket benih siap pakai</span>
           <select
             name="activePackBenihId"
             required
@@ -177,7 +177,7 @@ export function SiklusForm({
             </option>
             {packsBenih.length === 0 ? (
               <option value="" disabled>
-                Belum ada pack benih — buat di Active pack
+                Belum ada pack benih — buat di Paket siap pakai
               </option>
             ) : null}
             {packsBenih.map((p) => {
@@ -213,7 +213,7 @@ export function SiklusForm({
         <legend className="px-1 text-sm font-medium">Media semai (opsional)</legend>
 
         <label className="block space-y-1.5 text-sm">
-          <span className="font-medium">Active pack media</span>
+          <span className="font-medium">Paket media siap pakai</span>
           <select
             name="activePackMediaId"
             className={selectClass}
@@ -234,7 +234,7 @@ export function SiklusForm({
           </select>
           {packsMedia.length === 0 ? (
             <p className="text-xs text-muted-foreground">
-              Buat active pack untuk item RW-SLAB (rockwool) di menu Active pack.
+              Buat paket siap pakai untuk item RW-SLAB (rockwool) di menu Paket siap pakai.
             </p>
           ) : null}
         </label>

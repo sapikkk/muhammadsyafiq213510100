@@ -24,7 +24,7 @@ export default async function PetaniActivePackPage() {
   return (
     <CrudPageLayout
       eyebrow="Produksi"
-      title="Active pack"
+      title="Paket siap pakai"
       description="Rakit pack jual dari stok inventaris — pakai saat fase produksi membutuhkan pack."
       flowSteps={[
         { label: "Lihat pack", detail: "Klik baris — stok siap pakai vs habis." },

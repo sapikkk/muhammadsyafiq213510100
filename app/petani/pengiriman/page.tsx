@@ -12,13 +12,13 @@ export default async function PetaniPengirimanPage() {
     <CrudPageLayout
       eyebrow="Penjualan"
       title="Packing & pengiriman"
-      description="Sales order: dikonfirmasi, dikirim, diterima. Catatan dan waktu tercatat otomatis."
+      description="Pesanan yang sudah dikonfirmasi, dikirim, atau diterima. Waktu dicatat otomatis."
       flowSteps={[
-        { label: "CONFIRMED", detail: "Siap pack — update status ke SHIPPED saat barang keluar." },
-        { label: "DELIVERED", detail: "Konfirmasi sampai pelanggan — waktu tercatat." },
+        { label: "Siap kemas", detail: "Pesanan sudah dikonfirmasi; ubah ke “Sudah kirim” saat barang keluar." },
+        { label: "Sudah sampai", detail: "Konfirmasi barang sampai ke pelanggan." },
       ]}
       list={<SalesOrderDaftar rows={orders.map(serializeSalesOrder)} mode="pengiriman" />}
-      listTitle="Sales order aktif"
+      listTitle="Pesanan jual aktif"
     />
   );
 }

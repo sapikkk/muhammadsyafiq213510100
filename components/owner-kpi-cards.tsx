@@ -18,24 +18,27 @@ export function OwnerKpiCards({
 }) {
   return (
     <MetricRowsTable
-      caption="KPI keuangan dan produksi bulan ini"
+      caption="Ringkasan keuangan dan produksi bulan ini"
       rows={[
         { label: "Pendapatan bulan ini", value: formatRupiah(pendapatan) },
         { label: "Beban bulan ini", value: formatRupiah(pengeluaran) },
         {
           label: "Laba kasar",
           value: formatRupiah(labaKasar),
-          hint: "Pendapatan − beban (akun 4xxx / 5xxx)",
+          hint: "Pendapatan dikurangi beban bulan ini",
         },
         {
-          label: "HPP rata-rata per lubang",
+          label: "Biaya produksi rata-rata per lubang",
           value: batchPanenApproved > 0 ? formatRupiah(avgHppPerLubang) : "—",
-          hint: `v2-G.1 · ${batchPanenApproved} batch panen APPROVED`,
+          hint:
+            batchPanenApproved > 0
+              ? `Dari ${batchPanenApproved} batch panen yang sudah disetujui`
+              : "Belum ada panen disetujui bulan ini",
         },
         {
-          label: "Yield rata-rata",
+          label: "Hasil panen rata-rata",
           value: batchPanenApproved > 0 ? `${avgYieldPct}%` : "—",
-          hint: "Lubang layak ÷ jumlah disemai",
+          hint: "Persen lubang layak jual dari yang disemai",
         },
       ]}
     />

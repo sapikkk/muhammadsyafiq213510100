@@ -10,7 +10,7 @@ export type NavFlowGroup = {
   items: NavItem[];
 };
 
-/** Sidebar dikelompokkan per alur bisnis — bukan daftar datar. */
+/** Sidebar dikelompokkan per alur kerja. */
 export function getNavFlowGroups(role: Role, stokRendahCount: number): NavFlowGroup[] {
   const byHref = (href: string) => {
     const item = getNavItems(role, stokRendahCount).find((i) => i.href === href);
@@ -26,13 +26,13 @@ export function getNavFlowGroups(role: Role, stokRendahCount: number): NavFlowGr
       {
         id: "start",
         title: "Mulai",
-        hint: "Ringkasan tugas & akun petani",
+        hint: "Ringkasan tugas dan daftar petani",
         items: [byHref("/admin")],
       },
       {
         id: "produksi",
         title: "Produksi & stok",
-        hint: "Bahan → pack → panen",
+        hint: "Barang, paket, panen",
         items: [
           byHref(`${prefix}/inventaris`),
           byHref(`${prefix}/active-pack`),
@@ -46,13 +46,13 @@ export function getNavFlowGroups(role: Role, stokRendahCount: number): NavFlowGr
       {
         id: "penjualan",
         title: "Penjualan",
-        hint: "Pelanggan → SO → kirim → jurnal",
+        hint: "Pelanggan, pesanan, kirim",
         items: [byHref(`${prefix}/pelanggan`), byHref(`${prefix}/penjualan`)],
       },
       {
         id: "akuntansi",
-        title: "Akuntansi",
-        hint: "Catat → setujui → laporan",
+        title: "Keuangan",
+        hint: "Catat, setujui, laporan",
         items: [
           byHref(`${prefix}/jurnal`),
           byHref(`${prefix}/akuntansi`),
@@ -63,7 +63,7 @@ export function getNavFlowGroups(role: Role, stokRendahCount: number): NavFlowGr
       {
         id: "people",
         title: "Tim",
-        hint: "Master & reset sandi",
+        hint: "Data petani dan ganti sandi",
         items: [byHref(`${prefix}/petani`)],
       },
     ];
@@ -77,13 +77,13 @@ export function getNavFlowGroups(role: Role, stokRendahCount: number): NavFlowGr
     {
       id: "start",
       title: "Hari ini",
-      hint: "Tugas & batch aktif",
+      hint: "Tugas dan batch aktif",
       items: [byHref("/petani")],
     },
     {
       id: "lapangan",
       title: "Di lapangan",
-      hint: "Semai → fase → panen",
+      hint: "Semai, fase, panen",
       items: [
         byHref(`${prefix}/siklus`),
         byHref(`${prefix}/active-pack`),
@@ -93,14 +93,14 @@ export function getNavFlowGroups(role: Role, stokRendahCount: number): NavFlowGr
     },
     {
       id: "logistik",
-      title: "Logistik",
-      hint: "Pengiriman ke pelanggan",
+      title: "Pengiriman",
+      hint: "Kirim ke pelanggan",
       items: [byHref(`${prefix}/pengiriman`)],
     },
     {
       id: "alert",
       title: "Peringatan",
-      hint: "Stok di bawah minimum",
+      hint: "Stok hampir habis",
       items: [byHref(`${prefix}/stok-rendah`)],
     },
   ];

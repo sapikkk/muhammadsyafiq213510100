@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { formatRupiah, formatQty } from "@/lib/format";
 import { calculateHPP } from "@/lib/hpp";
 import { ringkasanSusutSiklus } from "@/lib/susut";
+import { labelLaporanPanenStatus } from "@/lib/laporan-panen-status";
 
 export async function HarvestDetailScreen({
   id,
@@ -46,12 +47,7 @@ export async function HarvestDetailScreen({
     hppData = await prisma.hPP.findUnique({ where: { siklus_id: laporan.siklus_id } });
   }
 
-  const statusLabel =
-    laporan.status === "PENDING"
-      ? "Menunggu review"
-      : laporan.status === "APPROVED"
-        ? "Disetujui"
-        : laporan.status;
+  const statusLabel = labelLaporanPanenStatus(laporan.status);
 
   return (
     <DetailLayout
@@ -90,7 +86,7 @@ export async function HarvestDetailScreen({
       </PageSection>
 
       {hppData ? (
-        <PageSection title="Breakdown HPP" badge="Read">
+        <PageSection title="Rincian biaya pokok (HPP)" badge="Read">
           <div className="space-y-2 text-sm">
             <div className="flex justify-between gap-4">
               <span className="text-muted-foreground">Biaya langsung total</span>

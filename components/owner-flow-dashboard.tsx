@@ -1,16 +1,16 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 export const OWNER_DASHBOARD_ALUR = [
-  { label: "Pantau KPI", detail: "Dashboard — pendapatan vs beban bulan ini." },
-  { label: "Review jurnal", detail: "Setujui/tolak entri dari Admin & otomatis." },
-  { label: "Ekspor laporan", detail: "Laba rugi dan neraca PDF per periode." },
+  { label: "Lihat ringkasan", detail: "Beranda: pendapatan dan beban bulan ini." },
+  { label: "Tinjau catatan keuangan", detail: "Setujui atau tolak entri dari Admin." },
+  { label: "Unduh laporan", detail: "Laba rugi dan neraca PDF per bulan." },
 ];
 
 const QUICK = [
-  { href: "/owner/jurnal", title: "Jurnal", sub: "Approve · lihat saldo" },
-  { href: "/owner/laporan", title: "Ekspor laporan", sub: "PDF periode" },
-  { href: "/owner/evaluasi", title: "Margin & BEP", sub: "Keputusan harga" },
-  { href: "/owner/pengguna", title: "Kelola user", sub: "Peran Owner/Admin/Petani" },
+  { href: "/owner/jurnal", title: "Catatan keuangan", sub: "Lihat dan setujui" },
+  { href: "/owner/laporan", title: "Unduh laporan", sub: "PDF per bulan" },
+  { href: "/owner/evaluasi", title: "Untung & titik impas", sub: "Keputusan harga" },
+  { href: "/owner/pengguna", title: "Kelola akun", sub: "Owner, Admin, Petani" },
 ];
 
 export function OwnerFlowDashboard() {

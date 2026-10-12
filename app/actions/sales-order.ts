@@ -15,6 +15,8 @@ import { cancelSalesOrder } from "@/lib/sales-order-cancel";
 import { deliverSalesOrder, shipSalesOrder } from "@/lib/sales-order-delivery";
 import { recordPackingCost } from "@/lib/sales-order-packing";
 import { catatDpSalesOrder, catatPelunasanSalesOrder } from "@/lib/sales-order-pembayaran";
+import { statusJurnalLabel } from "@/lib/jurnal-status";
+import { labelSalesOrderStatus } from "@/lib/sales-order-status";
 
 type FormState = { error?: string; ok?: string };
 
@@ -59,7 +61,7 @@ export async function catatPelunasanSalesOrderAction(
   if (!isRoleAllowed(session.user.role, "ADMIN")) return { error: "Hanya Admin." };
   try {
     const id = Number(formData.get("salesOrderId"));
-    if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
+    if (!Number.isInteger(id) || id <= 0) return { error: "Pesanan tidak valid." };
     const row = await catatPelunasanSalesOrder(id, Number(session.user.id), {
       nominal: formData.get("nominal"),
       sumberKas: formData.get("sumberKas"),
@@ -84,7 +86,7 @@ export async function catatDpSalesOrderAction(
   if (!isRoleAllowed(session.user.role, "ADMIN")) return { error: "Hanya Admin." };
   try {
     const id = Number(formData.get("salesOrderId"));
-    if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
+    if (!Number.isInteger(id) || id <= 0) return { error: "Pesanan tidak valid." };
     const row = await catatDpSalesOrder(id, Number(session.user.id), {
       sumberKas: formData.get("sumberKas"),
     });
@@ -108,10 +110,10 @@ export async function confirmSalesOrderAction(
 
   try {
     const id = Number(formData.get("salesOrderId"));
-    if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
+    if (!Number.isInteger(id) || id <= 0) return { error: "Pesanan tidak valid." };
     const row = await confirmSalesOrder(id);
     revalidateSalesOrder(id);
-    return { ok: `${row.nomor_so} dikonfirmasi (CONFIRMED).` };
+    return { ok: `${row.nomor_so} ${labelSalesOrderStatus("CONFIRMED").toLowerCase()}.` };
   } catch (err) {
     if (err instanceof SalesOrderError) return { error: err.message };
     throw err;
@@ -132,11 +134,11 @@ export async function shipSalesOrderAction(
   }
   try {
     const id = Number(formData.get("salesOrderId"));
-    if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
+    if (!Number.isInteger(id) || id <= 0) return { error: "Pesanan tidak valid." };
     const catatan = formData.get("catatan");
     const row = await shipSalesOrder(id, Number(session.user.id), catatan);
     revalidateSalesOrder(id);
-    return { ok: `${row.nomor_so} dikirim (SHIPPED).` };
+    return { ok: `${row.nomor_so} ${labelSalesOrderStatus("SHIPPED").toLowerCase()}.` };
   } catch (err) {
     if (err instanceof SalesOrderError) return { error: err.message };
     throw err;
@@ -153,7 +155,7 @@ export async function deliverSalesOrderAction(
   }
   try {
     const id = Number(formData.get("salesOrderId"));
-    if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
+    if (!Number.isInteger(id) || id <= 0) return { error: "Pesanan tidak valid." };
     const catatan = formData.get("catatan");
     const row = await deliverSalesOrder(id, Number(session.user.id), {
       catatan,
@@ -162,7 +164,7 @@ export async function deliverSalesOrderAction(
     revalidateSalesOrder(id);
     revalidatePath("/admin/jurnal");
     return {
-      ok: `${row.nomor_so} terkirim (DELIVERED). Jurnal #${row.jurnal_pendapatan?.id ?? "?"} menunggu persetujuan.`,
+      ok: `${row.nomor_so} ${labelSalesOrderStatus("DELIVERED").toLowerCase()}. Catatan keuangan #${row.jurnal_pendapatan?.id ?? "?"} menunggu persetujuan.`,
     };
   } catch (err) {
     if (err instanceof SalesOrderError) return { error: err.message };
@@ -179,7 +181,7 @@ export async function recordPackingCostAction(
   if (!isRoleAllowed(session.user.role, "ADMIN")) return { error: "Hanya Admin." };
   try {
     const id = Number(formData.get("salesOrderId"));
-    if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
+    if (!Number.isInteger(id) || id <= 0) return { error: "Pesanan tidak valid." };
     const row = await recordPackingCost(
       id,
       Number(session.user.id),
@@ -208,14 +210,14 @@ export async function cancelSalesOrderAction(
   if (!isRoleAllowed(session.user.role, "ADMIN")) return { error: "Hanya Admin." };
   try {
     const id = Number(formData.get("salesOrderId"));
-    if (!Number.isInteger(id) || id <= 0) return { error: "SO tidak valid." };
+    if (!Number.isInteger(id) || id <= 0) return { error: "Pesanan tidak valid." };
     const row = await cancelSalesOrder(id, Number(session.user.id), formData.get("alasan"));
     revalidateSalesOrder(id);
     revalidatePath("/admin/jurnal");
     const rev = row.jurnal_reversal?.id;
     return {
       ok: rev
-        ? `${row.nomor_so} dibatalkan. Reversal jurnal #${rev} (PENDING).`
+        ? `${row.nomor_so} dibatalkan. Catatan pembalik #${rev} (${statusJurnalLabel.PENDING.toLowerCase()} persetujuan).`
         : `${row.nomor_so} dibatalkan.`,
     };
   } catch (err) {

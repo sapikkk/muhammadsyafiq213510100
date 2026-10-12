@@ -27,7 +27,7 @@ export function TambalSusulanForm({
   if (packs.length === 0) {
     return (
       <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-        Tidak ada active pack — tambal butuh pack benih/media aktif.
+        Tidak ada paket siap pakai — tambal butuh pack benih/media aktif.
       </p>
     );
   }
@@ -37,10 +37,10 @@ export function TambalSusulanForm({
       <input type="hidden" name="siklusId" value={siklusId} />
       <h2 className="text-lg font-semibold">Tambal susulan</h2>
       <p className="text-sm text-muted-foreground">
-        Ganti bibit/media gagal dari active pack. Susut batch disesuaikan otomatis.
+        Ganti bibit/media gagal dari paket siap pakai. Susut batch disesuaikan otomatis.
       </p>
       <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Active pack</span>
+        <span className="font-medium">Paket siap pakai</span>
         <select
           name="activePackId"
           required

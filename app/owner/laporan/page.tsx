@@ -24,7 +24,7 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
     {
       id: "laba-rugi",
       judul: "Laba rugi",
-      deskripsi: `Periode ${dari}–${sampai} · jurnal APPROVED`,
+      deskripsi: `Periode ${dari}–${sampai} · catatan keuangan sudah disetujui`,
       href: `/api/export/income-statement?${q}`,
     },
     {
@@ -36,7 +36,7 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
     {
       id: "arus-kas",
       judul: "Arus kas",
-      deskripsi: "Kas/Bank · jurnal APPROVED",
+      deskripsi: "Kas/Bank · catatan keuangan sudah disetujui",
       href: `/api/export/cash-flow?${q}`,
     },
   ];
@@ -45,7 +45,7 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
     <CrudPageLayout
       eyebrow="Ringkasan"
       title="Ekspor laporan"
-      description="Ekspor laba rugi dan neraca PDF. Ekspor jurnal Excel tersedia di menu Admin."
+      description="Unduh laporan laba rugi dan neraca sebagai PDF. Ekspor jurnal Excel tersedia di menu Admin."
       flowSteps={[
         { label: "Pilih periode", detail: "Format YYYY-MM — sama dengan filter arus kas." },
         { label: "Unduh", detail: "Tabel laporan — tombol Unduh PDF per baris." },

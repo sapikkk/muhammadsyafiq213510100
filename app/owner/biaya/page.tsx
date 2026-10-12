@@ -29,7 +29,7 @@ export default async function OwnerBiayaPage({ searchParams }: { searchParams: S
     <CrudPageLayout
       eyebrow="Keuangan"
       title="Breakdown biaya"
-      description="Diagram beban per akun (jurnal APPROVED). Klik akun untuk melihat jurnal terkait."
+      description="Diagram beban per akun (catatan keuangan sudah disetujui). Klik akun untuk melihat jurnal terkait."
       flowSteps={[
         { label: "Filter periode", detail: "YYYY-MM — terapkan sebelum baca pie." },
         { label: "Drill-down", detail: "Klik irisan pie — daftar jurnal di bawah." },
@@ -68,7 +68,7 @@ export default async function OwnerBiayaPage({ searchParams }: { searchParams: S
       listTitle="Beban per akun"
       extra={
         data.drilldown && data.drilldown.length > 0 ? (
-          <PageSection title="Drill-down jurnal" badge="Read">
+          <PageSection title="Rincian catatan keuangan" badge="Read">
             <div className="rounded-md border">
               <div className="flex items-center justify-between border-b px-4 py-3">
                 <p className="text-sm text-muted-foreground">Jurnal yang membentuk irisan terpilih</p>

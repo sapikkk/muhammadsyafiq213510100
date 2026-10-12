@@ -33,7 +33,7 @@ export function OwnerCostPie({
   if (data.length === 0) {
     return (
       <p className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
-        Belum ada beban tercatat di jurnal APPROVED untuk periode ini.
+        Belum ada beban tercatat di catatan keuangan sudah disetujui untuk periode ini.
       </p>
     );
   }

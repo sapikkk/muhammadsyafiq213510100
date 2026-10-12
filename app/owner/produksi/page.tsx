@@ -19,7 +19,7 @@ export default async function OwnerProduksiPage() {
       ]}
       list={<SiklusDaftar rows={siklusRows.map(serializeSiklus)} readOnly />}
       listTitle="Batch produksi"
-      listDescription="Read-only Owner — tanpa aksi fase."
+      listDescription="Owner hanya melihat — tanpa aksi fase."
     />
   );
 }

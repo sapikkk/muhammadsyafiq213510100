@@ -12,7 +12,7 @@ export default async function AdminPenjualanPage() {
   return (
     <CrudPageLayout
       eyebrow="Penjualan"
-      title="Sales order"
+      title="Pesanan jual"
       description="Dari draft order sampai kirim, jurnal pendapatan dan HPP, serta pelunasan piutang."
       flowSteps={[
         { label: "Draft", detail: "Tombol Buat SO: pilih pelanggan dan batch." },

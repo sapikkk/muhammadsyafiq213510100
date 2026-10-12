@@ -12,8 +12,8 @@ export default async function AdminPetaniPage() {
   return (
     <CrudPageLayout
       eyebrow="Tim"
-      title="Master petani"
-      description="Data master petani lapangan, terpisah dari akun login. Akun login didaftarkan di dashboard Admin."
+      title="Data petani lapangan"
+      description="Data master petani lapangan, terpisah dari akun login. Akun login didaftarkan di beranda Admin."
       flowSteps={[
         { label: "Daftar", detail: "Nama dan gaji lapangan." },
         { label: "Tambah atau ubah", detail: "Panel samping, lalu daftarkan akun login di dashboard." },

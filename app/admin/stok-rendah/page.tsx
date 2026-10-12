@@ -15,7 +15,7 @@ export default async function AdminStokRendahPage() {
       flowSteps={[
         { label: "Review", detail: "Periksa tabel; urutkan kolom stok jika perlu." },
         { label: "Restock", detail: "Catat masuk di inventaris." },
-        { label: "Active pack", detail: "Setelah stok cukup, buat atau isi pack di menu Active pack." },
+        { label: "Paket siap pakai", detail: "Setelah stok cukup, buat atau isi pack di menu Paket siap pakai." },
       ]}
       list={
         <InventarisStokRendah items={items.map(serializeAlertStok)} showRestockHint />

@@ -86,7 +86,7 @@ export function SiklusDetailSecondary({
         </FormDialog>
       ) : null}
       {showKegagalan ? (
-        <FormDialog triggerLabel="Catat kegagalan" title="Log kegagalan (partial)">
+        <FormDialog triggerLabel="Catat kegagalan" title="Catat kegagalan sebagian">
           <KegagalanForm
             siklusId={siklusId}
             jumlahDisemai={jumlahDisemai}
@@ -95,7 +95,7 @@ export function SiklusDetailSecondary({
         </FormDialog>
       ) : null}
       {canAbort ? (
-        <FormDialog triggerLabel="Abort siklus" title="Abort gagal total">
+        <FormDialog triggerLabel="Batalkan siklus" title="Batalkan gagal total">
           <SiklusAbortForm siklusId={siklusId} kodeBatch={kodeBatch} />
         </FormDialog>
       ) : null}

@@ -29,7 +29,7 @@ export default async function OwnerEvaluasiPage() {
       description="Perbandingan HPP dan harga jual, titik impas, dan kapasitas kolam menganggur."
       flowSteps={[
         { label: "Kapasitas", detail: "Tabel ringkasan lubang & kolam." },
-        { label: "Margin & BEP", detail: "Rata-rata curah/pack dan titik impas." },
+        { label: "Untung dan titik impas", detail: "Rata-rata curah/pack dan titik impas." },
         { label: "Batch", detail: "Margin per siklus panen disetujui." },
       ]}
       list={

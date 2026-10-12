@@ -15,7 +15,7 @@ export function AdminSiklusAbortPanel({ siklus }: { siklus: SiklusRow[] }) {
   if (eligible.length === 0) {
     return (
       <p className="text-sm text-muted-foreground">
-        Tidak ada siklus aktif yang bisa di-abort. Buka detail di{" "}
+        Tidak ada siklus aktif yang bisa dibatalkan. Buka detail di{" "}
         <Link href="/petani/siklus" className="text-primary underline-offset-4 hover:underline">
           daftar siklus petani
         </Link>

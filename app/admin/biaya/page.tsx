@@ -29,7 +29,7 @@ export default async function AdminBiayaPage() {
       listTitle="Panel biaya"
       extra={
         <PageSection
-          title="Abort siklus gagal total"
+          title="Batalkan siklus gagal total"
           description="Tutup batch dan jurnal WIP jika produksi gagal total."
           badge="Update"
         >

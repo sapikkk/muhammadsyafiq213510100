@@ -10,7 +10,7 @@ export default async function OwnerPetaniPage() {
   return (
     <CrudPageLayout
       eyebrow="Operasi"
-      title="Master petani"
+      title="Data petani lapangan"
       description="Hanya baca. Perubahan lewat Admin."
       coachKey="owner-petani"
       flowSteps={[

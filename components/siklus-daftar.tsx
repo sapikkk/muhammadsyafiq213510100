@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
 import { formatTanggal } from "@/lib/format";
-import { faseLabel, isFaseProduksi } from "@/lib/siklus-fase";
+import { labelSiklusStatus } from "@/lib/siklus-status-label";
 
 export type SiklusBaris = {
   id: number;
@@ -34,9 +34,7 @@ export function SiklusDaftar({
         header: "Fase",
         cell: ({ row }) => (
           <Badge variant="secondary">
-            {isFaseProduksi(row.original.status)
-              ? faseLabel[row.original.status]
-              : row.original.status}
+            {labelSiklusStatus(row.original.status)}
           </Badge>
         ),
       },

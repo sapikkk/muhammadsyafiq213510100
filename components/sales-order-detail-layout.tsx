@@ -4,6 +4,7 @@ import { DetailLayout } from "@/components/detail-layout";
 import { PageSection } from "@/components/page-section";
 import { Badge } from "@/components/ui/badge";
 import { formatRupiah } from "@/lib/format";
+import { labelSalesOrderStatus } from "@/lib/sales-order-status";
 import { getSalesOrder, serializeSalesOrder } from "@/lib/sales-order";
 
 export async function SalesOrderDetailLayout({
@@ -24,8 +25,8 @@ export async function SalesOrderDetailLayout({
 
   const so = serializeSalesOrder(row) as SoRow;
   const sectionTitle =
-    mode === "admin" ? "Aksi & riwayat" : mode === "owner" ? "Ringkasan SO" : "Kirim / terima";
-  const eyebrow = mode === "pengiriman" ? "Pengiriman" : "Sales order";
+    mode === "admin" ? "Aksi dan riwayat" : mode === "owner" ? "Ringkasan pesanan" : "Kirim dan terima";
+  const eyebrow = mode === "pengiriman" ? "Pengiriman" : "Pesanan jual";
 
   return (
     <DetailLayout
@@ -33,7 +34,7 @@ export async function SalesOrderDetailLayout({
       surface={surface}
       eyebrow={eyebrow}
       title={so.nomor_so}
-      badge={<Badge variant="secondary">{so.status}</Badge>}
+      badge={<Badge variant="secondary">{labelSalesOrderStatus(so.status)}</Badge>}
       description={`${so.pelanggan_nama} · Total ${formatRupiah(so.total)}`}
     >
       <PageSection title={sectionTitle} badge={mode === "owner" ? "Read" : "Update"}>

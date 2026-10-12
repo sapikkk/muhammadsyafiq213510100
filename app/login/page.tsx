@@ -73,7 +73,7 @@ export default function LoginPage() {
               placement="toolbar"
               steps={[
                 { label: "Email & sandi", detail: "Isi keduanya lalu klik Masuk." },
-                { label: "Peran", detail: "Diarahkan ke dashboard Owner, Admin, atau Petani." },
+                { label: "Peran", detail: "Diarahkan ke beranda Owner, Admin, atau Petani." },
                 { label: "Setelah masuk", detail: "Gunakan Panduan di setiap halaman jika perlu penjelasan alur." },
               ]}
             />
@@ -82,7 +82,7 @@ export default function LoginPage() {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-base">Login</CardTitle>
+            <CardTitle className="text-base">Masuk</CardTitle>
             <CardDescription>Masuk dengan email dan sandi Anda.</CardDescription>
           </CardHeader>
           <CardContent>

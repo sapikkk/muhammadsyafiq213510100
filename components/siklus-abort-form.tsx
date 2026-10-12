@@ -22,7 +22,7 @@ export function SiklusAbortForm({
       className="space-y-3 rounded-md border border-destructive/40 bg-destructive/5 p-4"
     >
       <h2 id="abort-siklus-title" className="text-lg font-semibold text-destructive">
-        Abort gagal total
+        Batalkan gagal total
       </h2>
       <p className="text-sm text-muted-foreground">
         Batch <strong>{kodeBatch}</strong> dihentikan. Biaya siklus (WIP) dicatat Dr{" "}
@@ -41,7 +41,7 @@ export function SiklusAbortForm({
         </label>
         {state.error ? <p className="text-sm text-destructive">{state.error}</p> : null}
         <SubmitButton pendingLabel="Memproses…" variant="destructive">
-          Abort siklus
+          Batalkan siklus
         </SubmitButton>
       </form>
     </section>

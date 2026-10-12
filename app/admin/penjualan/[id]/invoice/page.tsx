@@ -4,6 +4,7 @@ import { PrintButton } from "@/components/print-button";
 import { formatRupiah } from "@/lib/format";
 import { SalesOrderError } from "@/lib/sales-order";
 import { getSalesOrderInvoice } from "@/lib/sales-order-invoice";
+import { labelSalesOrderStatus } from "@/lib/sales-order-status";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +29,7 @@ export default async function SalesOrderInvoicePage({ params }: { params: { id: 
       <div className="print:hidden">
         <DetailLayout
           backHref={`/admin/penjualan/${id}`}
-          backLabel="Kembali ke sales order"
+          backLabel="Kembali ke pesanan jual"
           eyebrow="Penjualan"
           title="Invoice penjualan"
           description={`${invoice.nomor_invoice ?? "—"} · ${invoice.nomor_so}`}
@@ -44,9 +45,10 @@ export default async function SalesOrderInvoicePage({ params }: { params: { id: 
         <header className="mb-6 border-b pb-4">
           <p className="text-lg font-semibold">Kokonus Farm</p>
           <p className="text-muted-foreground">Invoice {invoice.nomor_invoice}</p>
-          <p className="text-muted-foreground">Sales order {invoice.nomor_so}</p>
+          <p className="text-muted-foreground">Pesanan jual {invoice.nomor_so}</p>
           <p className="mt-2 text-xs text-muted-foreground">
-            Status: {invoice.status} · {invoice.dibuat_pada.toLocaleDateString("id-ID")}
+            Status: {labelSalesOrderStatus(invoice.status)} ·{" "}
+            {invoice.dibuat_pada.toLocaleDateString("id-ID")}
           </p>
         </header>
 

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { FlowSteps, type FlowStep } from "@/components/flow-steps";
 import { PageHeaderRow } from "@/components/page-header-row";
 import { PageSection } from "@/components/page-section";
+import { UI_COPY } from "@/lib/ui-copy";
 
 export function CrudPageLayout({
   title,
@@ -13,10 +14,10 @@ export function CrudPageLayout({
   coachTips,
   coachTitle,
   list,
-  listTitle = "Daftar data",
+  listTitle = UI_COPY.crudListTitle,
   listDescription,
   create,
-  createTitle = "Tambah data baru",
+  createTitle = UI_COPY.crudCreateTitle,
   createDescription,
   extra,
 }: {

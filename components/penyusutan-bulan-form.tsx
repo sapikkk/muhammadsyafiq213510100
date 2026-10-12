@@ -13,11 +13,11 @@ export function PenyusutanBulanForm({ defaultBulan }: { defaultBulan: string }) 
   return (
     <form action={formAction} className="max-w-md space-y-4 rounded-md border p-4">
       <p className="text-sm text-muted-foreground">
-        v2-H — jurnal AUTO APPROVED: Dr 5210 Cr 1510 (Σ depresiasi greenhouse) dan Dr 5220 Cr 1530
-        (depresiasi listrik dari overhead terakhir). Satu kali per bulan.
+        Mencatat penyusutan greenhouse dan listrik untuk bulan yang dipilih. Biasanya sekali
+        per bulan; langsung disetujui otomatis.
       </p>
       <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Bulan (YYYY-MM)</span>
+        <span className="font-medium">Bulan</span>
         <Input name="bulan" type="month" defaultValue={defaultBulan} className="h-11" required />
       </label>
       <SubmitButton className="h-11" pendingLabel="Mencatat…">

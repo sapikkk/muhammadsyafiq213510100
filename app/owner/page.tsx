@@ -34,13 +34,13 @@ export default async function OwnerPage() {
     <div className="flex flex-col gap-6">
       <PageHeaderRow
         eyebrow="Owner"
-        title="Dashboard"
-        description="KPI keuangan, persetujuan jurnal, dan ekspor laporan keuangan."
+        title="Beranda"
+        description="Ringkasan keuangan, persetujuan jurnal, dan ekspor laporan keuangan."
         guide={
           <FlowSteps
             pageKey="owner"
             steps={OWNER_DASHBOARD_ALUR}
-            title="Panduan dashboard Owner"
+            title="Panduan beranda Owner"
             toolbar
           />
         }
@@ -56,13 +56,13 @@ export default async function OwnerPage() {
           href="/owner/biaya"
           className="inline-flex min-h-11 items-center border px-3 font-medium hover:bg-accent"
         >
-          Pie biaya
+          Diagram biaya
         </Link>
         <Link
           href="/owner/evaluasi"
           className="inline-flex min-h-11 items-center border px-3 font-medium hover:bg-accent"
         >
-          Margin & BEP
+          Untung dan titik impas
         </Link>
         <Link
           href="/owner/laporan"
@@ -72,7 +72,7 @@ export default async function OwnerPage() {
         </Link>
       </nav>
 
-      <PageSection title="KPI ringkas" badge="Read">
+      <PageSection title="Ringkasan angka" badge="Read">
         <OwnerKpiCards
           pendapatan={summary.pendapatanBulanIni}
           pengeluaran={summary.pengeluaranBulanIni}
@@ -96,7 +96,7 @@ export default async function OwnerPage() {
           />
           <p className="mt-3 text-sm">
             <Link href="/owner/evaluasi" className="text-primary hover:underline">
-              Lihat evaluasi margin, BEP, dan kapasitas →
+              Lihat untung, titik impas, dan kolam kosong →
             </Link>
           </p>
         </PageSection>
@@ -104,13 +104,13 @@ export default async function OwnerPage() {
 
       <PageSection
         title="Pendapatan vs beban"
-        description="6 bulan terakhir · akun pendapatan (4xxx) dan beban (5xxx)"
+        description="Enam bulan terakhir: pendapatan dan beban"
         badge="Read"
       >
         <OwnerRevenueChart months={summary.months} />
       </PageSection>
 
-      <PageSection title="Akun petani" description="Login HP / pekerja lapangan." badge="Read">
+      <PageSection title="Akun petani" description="Akun login di HP / pekerja lapangan." badge="Read">
         <OwnerPetaniAkunDaftar rows={petani} />
       </PageSection>
     </div>

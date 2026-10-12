@@ -28,6 +28,10 @@ Aturan Cursor: `.cursor/rules/graphify.mdc`.
 
 Plugin: `.cursor/plugins/superpowers` (submodule). Satu US = satu branch.
 
+## Bahasa UI (pengguna 40+)
+
+Teks di layar (`app/`, `components/`, notifikasi): bahasa Indonesia sederhana, kalimat pendek, hindari jargon Inggris (Dashboard → Beranda, Sales order → Pesanan jual, Smart Jurnal → Jurnal otomatis). Istilah teknis internal (enum, path import) tidak diubah.
+
 ## Git commit
 
 - **Jangan** menambahkan `Co-authored-by: Cursor` (atau trailer Cursor lain) pada pesan commit.

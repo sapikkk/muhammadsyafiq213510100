@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
+import { labelLaporanPanenStatus } from "@/lib/laporan-panen-status";
 
 type Row = {
   id: number;
@@ -37,7 +38,7 @@ export function HarvestAdminDaftar({ rows }: { rows: Row[] }) {
         header: "Status",
         cell: ({ row }) => (
           <Badge variant={row.original.status === "PENDING" ? "default" : "secondary"}>
-            {row.original.status}
+            {labelLaporanPanenStatus(row.original.status)}
           </Badge>
         ),
       },

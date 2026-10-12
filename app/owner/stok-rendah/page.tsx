@@ -11,7 +11,7 @@ export default async function OwnerStokRendahPage() {
     <CrudPageLayout
       eyebrow="Operasi"
       title="Alert stok minimum"
-      description="Monitoring stok kritis — pergerakan stok hanya Admin/Petani."
+      description="Pantau stok hampir habis — pergerakan stok hanya Admin/Petani."
       flowSteps={[
         { label: "Review", detail: "Daftar item di bawah minimum." },
         { label: "Eskalasi", detail: "Hubungi Admin untuk restock inventaris." },

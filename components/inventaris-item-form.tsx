@@ -110,7 +110,7 @@ export function InventarisItemFormSheet({
       description={
         isEdit
           ? "Nama dan stok minimum — kode/satuan tetap."
-          : "Master bahan baku — stok awal nol; catat masuk lewat pergerakan IN."
+          : "Data bahan baku — stok awal nol; catat masuk lewat pergerakan IN."
       }
       trigger={trigger}
       open={open}

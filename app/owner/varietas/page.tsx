@@ -22,7 +22,7 @@ export default async function OwnerVarietasPage() {
     <CrudPageLayout
       eyebrow="Operasi"
       title="Varietas & asumsi"
-      description="Parameter varietas sesuai PRD modul 1.0 — Owner dan Admin boleh mengubah."
+      description="Data varietas untuk perhitungan biaya dan harga — Owner dan Admin boleh mengubah."
       flowSteps={[
         { label: "Lihat HPP rata", detail: "Kolom rata per lubang dari batch approved." },
         { label: "Detail", detail: "Klik baris — ubah asumsi atau aktif/nonaktif." },
@@ -37,7 +37,7 @@ export default async function OwnerVarietasPage() {
         />
       }
       list={<VarietasDaftar rows={serialized} mode="owner" />}
-      listTitle="Master varietas"
+      listTitle="Daftar varietas"
     />
   );
 }

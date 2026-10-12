@@ -99,7 +99,7 @@ function InventarisAktifDialog({ item }: { item: SerializedItemInventaris }) {
           </DialogTitle>
           <DialogDescription>
             {nextAktif
-              ? "Item aktif kembali muncul di daftar operasional dan active pack baru."
+              ? "Item aktif kembali muncul di daftar operasional dan paket siap pakai baru."
               : "Item nonaktif tidak bisa dipakai di pergerakan atau pack baru; riwayat tetap ada."}
           </DialogDescription>
         </DialogHeader>

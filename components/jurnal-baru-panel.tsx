@@ -27,7 +27,7 @@ export function JurnalBaruPanel({
           size="sm"
           onClick={() => setTab("smart")}
         >
-          Smart Jurnal
+          Jurnal otomatis
         </Button>
         <Button
           type="button"

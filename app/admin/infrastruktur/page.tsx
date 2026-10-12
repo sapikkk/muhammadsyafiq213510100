@@ -25,7 +25,7 @@ export default async function AdminInfrastrukturPage() {
     <CrudPageLayout
       eyebrow="Produksi & stok"
       title="Infrastruktur"
-      description="Master lahan, greenhouse, dan kolam untuk alokasi kapasitas produksi."
+      description="Data lahan, greenhouse, dan kolam untuk alokasi kapasitas produksi."
       flowSteps={[
         { label: "Pohon", detail: "Lahan, greenhouse, kolam, dan kapasitas lubang per kolam." },
         { label: "Tambah", detail: "Tombol lahan, greenhouse, atau kolam di panel samping." },

@@ -15,7 +15,7 @@ export default function OwnerKegagalanSusutPage() {
         { label: "Panen", detail: "Layak vs tidak layak jual — masuk perhitungan susut siklus." },
       ]}
       list={<KegagalanSusutOwnerPanel />}
-      listTitle="Menunggu klasifikasi (read-only)"
+      listTitle="Menunggu klasifikasi (hanya lihat)"
     />
   );
 }

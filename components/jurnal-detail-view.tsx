@@ -47,7 +47,7 @@ export function JurnalDetailView({
     <DetailLayout
       backHref={backHref}
       surface={surface}
-      eyebrow={`Jurnal #${jurnal.id}`}
+      eyebrow={`Catatan keuangan #${jurnal.id}`}
       title={jurnal.keterangan}
       badge={<Badge variant="secondary">{statusJurnalLabel[jurnal.status]}</Badge>}
       description={meta}

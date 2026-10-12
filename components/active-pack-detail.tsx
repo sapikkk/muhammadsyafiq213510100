@@ -43,7 +43,7 @@ export async function ActivePackDetail({
     <DetailLayout
       backHref={listHref}
       surface={surface}
-      eyebrow="Active pack"
+      eyebrow="Paket siap pakai"
       title={serialized.kode}
       badge={
         habis ? (

@@ -16,7 +16,7 @@ export default function OwnerPrivePage() {
       ]}
       list={<PriveForm defaultTanggal={keTanggalIso(new Date())} />}
       listTitle="Form prive"
-      listDescription="Create — satu entri per submit."
+      listDescription="Satu kali isi per simpan."
     />
   );
 }

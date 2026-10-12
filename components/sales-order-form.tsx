@@ -110,7 +110,7 @@ export function SalesOrderForm({
   return (
     <form action={formAction} className="space-y-4 rounded-md border p-4">
       <input type="hidden" name="barisJson" value={barisJson} readOnly />
-      <h3 className="text-lg font-semibold">Buat sales order (DRAFT)</h3>
+      <h3 className="text-lg font-semibold">Buat pesanan jual (sementara)</h3>
       <p className="text-sm text-muted-foreground">
         v2-D.1: setiap baris wajib <strong>lubang terpakai</strong> (bundling) + qty jual (kg curah /
         jumlah pack). HPP order dihitung saat simpan dari HPP/lubang batch.
@@ -201,7 +201,7 @@ export function SalesOrderForm({
             className="h-11"
           />
           <p className="text-xs text-muted-foreground">
-            Maksimal sama dengan total SO. Posting DP setelah SO dikonfirmasi.
+            Maksimal sama dengan total pesanan. Catat uang muka setelah pesanan dikonfirmasi.
           </p>
         </label>
         {akunDp.length > 0 ? (
@@ -228,7 +228,7 @@ export function SalesOrderForm({
       </label>
 
       <SubmitButton className="h-11" pendingLabel="Menyimpan...">
-        Simpan SO (DRAFT)
+        Simpan pesanan (sementara)
       </SubmitButton>
     </form>
   );

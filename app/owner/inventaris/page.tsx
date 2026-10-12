@@ -11,7 +11,7 @@ export default async function OwnerInventarisPage() {
     <CrudPageLayout
       eyebrow="Operasi"
       title="Inventaris"
-      description="Hanya baca stok bahan. Pergerakan di Admin atau Petani."
+      description="Hanya melihat stok barang. Pergerakan di Admin atau Petani."
       flowSteps={[
         { label: "Cek stok", detail: "Klik baris untuk riwayat per item." },
         { label: "Tindak lanjut", detail: "Koordinasi Admin untuk pembelian jika ada alert stok rendah." },

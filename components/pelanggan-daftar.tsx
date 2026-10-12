@@ -70,7 +70,7 @@ export function PelangganDaftar({ rows }: { rows: PelangganRow[] }) {
                 action={ubahStatusPelanggan}
                 label={row.original.nama}
                 offDescription="Pelanggan nonaktif tidak muncul di dropdown sales order baru."
-                onDescription="Pelanggan aktif kembali bisa dipilih di SO."
+                onDescription="Pelanggan aktif kembali bisa dipilih saat buat pesanan jual."
               />
             }
           />

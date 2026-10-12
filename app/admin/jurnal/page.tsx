@@ -38,7 +38,7 @@ export default async function JurnalPage({
       title="Jurnal"
       description="Buat entri di Jurnal baru; setujui atau tolak dari detail (Owner atau Admin)."
       flowSteps={[
-        { label: "Buat", detail: "Smart Jurnal atau manual; status draft atau menunggu." },
+        { label: "Buat", detail: "Jurnal otomatis atau isi manual; status draft atau menunggu." },
         { label: "Seimbang", detail: "Total debit sama dengan kredit sebelum diajukan." },
         { label: "Setujui", detail: "Owner atau Admin; saldo akun berubah setelah disetujui." },
       ]}

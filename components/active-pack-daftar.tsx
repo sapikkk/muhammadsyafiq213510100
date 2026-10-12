@@ -88,7 +88,7 @@ export function ActivePackDaftar({
       pageSize={10}
       searchPlaceholder="Cari pack atau item…"
       searchColumnIds={["kode", "item", "dibuatOleh.nama"]}
-      emptyMessage="Belum ada active pack."
+      emptyMessage="Belum ada paket siap pakai."
       getRowHref={(row) => `${basePath[mode]}/${row.id}`}
     />
   );

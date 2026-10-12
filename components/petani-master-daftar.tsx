@@ -75,8 +75,8 @@ export function PetaniMasterDaftar({
                 idFieldName="petaniId"
                 action={ubahStatusPetaniMaster}
                 label={row.original.nama}
-                offDescription="Master nonaktif tetap di histori; tandai bila petani sudah tidak aktif di lapangan."
-                onDescription="Master petani aktif kembali untuk referensi operasional."
+                offDescription="Data nonaktif tetap di histori; tandai bila petani sudah tidak aktif di lapangan."
+                onDescription="Data petani lapangan aktif kembali untuk referensi operasional."
               />
             }
           />

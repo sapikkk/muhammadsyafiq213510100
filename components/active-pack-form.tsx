@@ -98,7 +98,7 @@ export function ActivePackFormSheet({
   const [open, setOpen] = useState(false);
   return (
     <FormSheet
-      title="Buka active pack baru"
+      title="Buka paket siap pakai baru"
       description="Alokasi biaya benih/media per unit — dipakai saat semai & tambal."
       trigger={trigger}
       open={open}

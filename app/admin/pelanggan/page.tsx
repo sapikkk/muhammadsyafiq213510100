@@ -17,7 +17,7 @@ export default async function AdminPelangganPage() {
       flowSteps={[
         { label: "Daftar", detail: "Cari nama atau email di tabel." },
         { label: "Tambah atau ubah", detail: "Panel samping kanan, data kontak saja." },
-        { label: "Sales order", detail: "Pilih pelanggan saat membuat order baru." },
+        { label: "Pesanan jual", detail: "Pilih pelanggan saat membuat pesanan baru." },
       ]}
       actions={
         <PelangganFormSheet
