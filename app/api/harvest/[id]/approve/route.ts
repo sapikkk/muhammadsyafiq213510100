@@ -1,5 +1,6 @@
 import { requireApiRole } from "@/lib/api-auth";
 import { apiFail, apiOk, withApiHandler } from "@/lib/api-response";
+import { revalidateOwnerDashboardCaches } from "@/lib/cached-queries";
 import { approveLaporanPanen, HarvestError } from "@/lib/laporan-panen";
 
 export const POST = withApiHandler(async (request: Request, context?: unknown) => {
@@ -19,6 +20,7 @@ export const POST = withApiHandler(async (request: Request, context?: unknown) =
       raw = {};
     }
     const result = await approveLaporanPanen(id, userId, raw);
+    revalidateOwnerDashboardCaches();
     return apiOk({ status: result.status });
   } catch (error) {
     if (error instanceof HarvestError) {

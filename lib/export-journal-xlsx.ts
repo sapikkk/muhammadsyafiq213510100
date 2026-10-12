@@ -1,10 +1,10 @@
 import "server-only";
 
-import * as XLSX from "xlsx";
 import { prisma } from "@/lib/prisma";
 import { parseFilter, type FilterJurnal } from "@/lib/jurnal";
 
 export async function buildJournalXlsxBuffer(filter: FilterJurnal): Promise<Buffer> {
+  const XLSX = await import("xlsx");
   const jurnals = await prisma.jurnal.findMany({
     where: parseFilter(filter),
     orderBy: [{ tanggal: "asc" }, { id: "asc" }],

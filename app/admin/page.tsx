@@ -3,7 +3,8 @@ import { RegisterPetani } from "@/components/register-petani";
 import { ResetRequests } from "@/components/reset-requests";
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { PageSection } from "@/components/page-section";
-import { alertBannerItems, listAlertStokMinimum } from "@/lib/inventaris";
+import { alertBannerItems } from "@/lib/inventaris";
+import { listAlertStokMinimumCached } from "@/lib/cached-queries";
 import { CuacaWidget } from "@/components/cuaca-widget";
 import { prisma } from "@/lib/prisma";
 
@@ -22,7 +23,7 @@ export default async function AdminPage() {
       orderBy: { requestedAt: "asc" },
       include: { user: { select: { nama: true, email: true } } },
     }),
-    listAlertStokMinimum(),
+    listAlertStokMinimumCached(),
   ]);
 
   return (

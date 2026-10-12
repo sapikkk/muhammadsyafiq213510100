@@ -12,7 +12,7 @@ export const GET = withApiHandler(async (request: Request) => {
   const { dari, sampai, start, end } = parsePeriodParams(url);
   const report = await buildIncomeStatement(start, end);
   const lines = incomeStatementPdfLines(`${dari} s/d ${sampai}`, report.lines);
-  const buffer = pdfBufferFromReport("Laporan Laba Rugi — Kokonus Farm", lines);
+  const buffer = await pdfBufferFromReport("Laporan Laba Rugi — Kokonus Farm", lines);
   const filename = `laba-rugi-${dari}-${sampai}.pdf`;
   return new NextResponse(new Uint8Array(buffer), {
     headers: {

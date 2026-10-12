@@ -5,9 +5,15 @@ import { prisma } from "@/lib/prisma";
 
 const nol = new Prisma.Decimal(0);
 
+/** KPI beranda owner — batch panen disetujui dalam jendela ini (bukan arsip penuh). */
+export const KPI_PANEN_LOOKBACK_MONTHS = 12;
+
 export async function kpiHidroponikMvp() {
+  const since = new Date();
+  since.setMonth(since.getMonth() - KPI_PANEN_LOOKBACK_MONTHS);
+
   const panen = await prisma.laporan_Panen.findMany({
-    where: { status: "APPROVED" },
+    where: { status: "APPROVED", waktu_kirim: { gte: since } },
     select: {
       jumlah_layak: true,
       jumlah_tidak_layak: true,

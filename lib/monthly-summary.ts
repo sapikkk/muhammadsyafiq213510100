@@ -52,7 +52,16 @@ export async function monthlySummary(monthCount = 6): Promise<MonthlySummaryResu
 
   const jurnals = await prisma.jurnal.findMany({
     where: { status: "APPROVED", tanggal: { gte: start } },
-    include: { baris: { include: { akun: { select: { tipe: true } } } } },
+    select: {
+      tanggal: true,
+      baris: {
+        select: {
+          debit: true,
+          kredit: true,
+          akun: { select: { tipe: true } },
+        },
+      },
+    },
   });
 
   for (const j of jurnals) {

@@ -1,5 +1,6 @@
 import "server-only";
 
+import { revalidateTag, unstable_cache } from "next/cache";
 import { cache } from "react";
 import { kpiHidroponikMvp as kpiHidroponikMvpImpl } from "@/lib/kpi-hidroponik";
 import { monthlySummary as monthlySummaryImpl } from "@/lib/monthly-summary";
@@ -38,9 +39,30 @@ export const countNotifikasiBelumDibacaCached = cache(async (userId: number) => 
 /** Opsi siklus admin biaya — arsip penuh, select ringan. */
 export const listSiklusUntukPilihAdminCached = cache(listSiklusUntukPilihAdmin);
 
-export const monthlySummaryCached = cache(monthlySummaryImpl);
+const monthlySummaryData = unstable_cache(
+  async (monthCount: number) => monthlySummaryImpl(monthCount),
+  ["monthly-summary"],
+  { revalidate: 120, tags: ["monthly-summary"] },
+);
 
-export const kpiHidroponikMvpCached = cache(kpiHidroponikMvpImpl);
+const kpiHidroponikMvpData = unstable_cache(
+  async () => kpiHidroponikMvpImpl(),
+  ["kpi-hidroponik-mvp"],
+  { revalidate: 120, tags: ["kpi-hidroponik"] },
+);
+
+/** Dedup per request + cache 120s antar request (beranda owner/admin keuangan). */
+export const monthlySummaryCached = cache((monthCount = 6) =>
+  monthlySummaryData(monthCount),
+);
+
+export const kpiHidroponikMvpCached = cache(() => kpiHidroponikMvpData());
+
+/** Panggil setelah jurnal disetujui atau panen disetujui agar KPI beranda owner segar. */
+export function revalidateOwnerDashboardCaches() {
+  revalidateTag("monthly-summary");
+  revalidateTag("kpi-hidroponik");
+}
 
 export const listSiklusAktifCached = cache(async () => {
   return prisma.siklus_Produksi.findMany({

@@ -1,7 +1,7 @@
-import { jsPDF } from "jspdf";
 import { formatRupiah } from "@/lib/format";
 
-export function pdfBufferFromReport(title: string, lines: string[]): Buffer {
+export async function pdfBufferFromReport(title: string, lines: string[]): Promise<Buffer> {
+  const { jsPDF } = await import("jspdf");
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   doc.setFontSize(14);
   doc.text(title, 14, 18);

@@ -25,7 +25,7 @@ export const GET = withApiHandler(async (request: Request) => {
       net: s.net,
     })),
   );
-  const buffer = pdfBufferFromReport("Laporan Arus Kas — Kokonus Farm", lines);
+  const buffer = await pdfBufferFromReport("Laporan Arus Kas — Kokonus Farm", lines);
   const filename = `arus-kas-${dari}-${sampai}.pdf`;
   return new NextResponse(new Uint8Array(buffer), {
     headers: {

@@ -15,7 +15,7 @@ export const GET = withApiHandler(async (request: Request) => {
     totalAset: sheet.totalAset,
     totalKewajibanModal: sheet.totalKewajibanModal,
   });
-  const buffer = pdfBufferFromReport("Neraca — Kokonus Farm", lines);
+  const buffer = await pdfBufferFromReport("Neraca — Kokonus Farm", lines);
   const filename = `neraca-${sheet.asOf}.pdf`;
   return new NextResponse(new Uint8Array(buffer), {
     headers: {
