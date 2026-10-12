@@ -34,7 +34,6 @@ export async function VarietasDetail({
     <DetailLayout
       backHref={listHref}
       surface={surface}
-      eyebrow="Varietas"
       title={serialized.nama}
       badge={
         <Badge variant="outline">{varietasStatusLabel[serialized.status]}</Badge>

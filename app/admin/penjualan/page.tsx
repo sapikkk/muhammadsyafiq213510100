@@ -12,7 +12,6 @@ export default async function AdminPenjualanPage() {
   return (
     <CrudPageLayout
       financeNavRole="ADMIN"
-      eyebrow="Keuangan"
       title="Pesanan jual"
       actions={
         <>

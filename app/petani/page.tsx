@@ -35,7 +35,7 @@ export default async function PetaniPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeaderRow eyebrow="Petani" title="Beranda" />
+      <PageHeaderRow title="Beranda" />
       <CuacaWidget />
       <InventarisAlertBanner items={stokRendah} detailHref="/petani/stok-rendah" />
       <PageSection title="Monitor kolam" badge="Read">

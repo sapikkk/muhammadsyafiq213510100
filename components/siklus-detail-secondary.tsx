@@ -106,7 +106,7 @@ function LangkahBerikutnyaMenu({
         <ChevronDown className="h-4 w-4 opacity-80" />
       </Button>
       {menuOpen ? (
-        <div className="absolute left-0 top-full z-50 mt-1 min-w-[14rem] rounded-md border bg-popover p-1 shadow-md">
+        <div className="absolute left-0 top-full z-50 mt-1 min-w-[14rem] rounded-md border border-border bg-popover p-1">
           <button
             type="button"
             className="flex w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent"

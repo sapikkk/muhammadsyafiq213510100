@@ -9,7 +9,6 @@ export default function JurnalBaruPage() {
     <DetailLayout
       financeNavRole="ADMIN"
       backHref="/admin/jurnal"
-      eyebrow="Keuangan"
       title="Catat uang masuk / keluar"
     >
       <PageSection title="Form catatan" badge="Create">

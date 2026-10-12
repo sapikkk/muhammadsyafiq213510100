@@ -13,7 +13,6 @@ export async function SalesOrderCreateSheet() {
       <DetailLayout
         backHref="/admin/penjualan"
         surface="sheet"
-        eyebrow="Pesanan jual"
         title="Buat pesanan jual"
       >
         <PageSection title="Baris pesanan" badge="Create">

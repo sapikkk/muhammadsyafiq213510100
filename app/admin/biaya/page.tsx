@@ -31,7 +31,6 @@ export default async function AdminBiayaPage() {
   return (
     <CrudPageLayout
       financeNavRole="ADMIN"
-      eyebrow="Keuangan"
       title="Biaya untuk hitung HPP"
       list={
         <BiayaAdminPanel

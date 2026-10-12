@@ -19,6 +19,7 @@ import {
   TriangleAlert,
   Calculator,
   LandPlot,
+  Landmark,
   ShoppingCart,
 } from "lucide-react";
 import { ICON_ARUS_KAS, ICON_EVALUASI, ICON_PELANGGAN, ICON_PENJUALAN } from "@/lib/nav-icons";
@@ -69,7 +70,7 @@ export function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
       { label: "Unduh laporan", href: "/owner/laporan", icon: FileDown },
       { label: "Catatan keuangan", href: "/owner/jurnal", icon: Banknote },
       { label: "Daftar akun", href: "/owner/akun", icon: BookOpen },
-      { label: "Rekening bank", href: "/owner/rekening", icon: Wallet },
+      { label: "Rekening bank", href: "/owner/rekening", icon: Landmark },
       { label: "Ambil pribadi", href: "/owner/prive", icon: PiggyBank },
       { label: "Arus kas", href: "/owner/arus-kas", icon: ICON_ARUS_KAS },
       { label: "Rincian biaya", href: "/owner/biaya", icon: Coins },

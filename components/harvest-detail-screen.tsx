@@ -58,7 +58,6 @@ export async function HarvestDetailScreen({
     <DetailLayout
       backHref="/admin/harvest"
       surface={surface}
-      eyebrow="Produksi"
       title={`Review panen · ${labelBarisProduksiUtama(partsFromSiklusNested(laporan.siklus))}`}
       badge={
         <Badge variant={laporan.status === "PENDING" ? "default" : "secondary"}>

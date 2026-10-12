@@ -12,7 +12,6 @@ export default async function OwnerRekeningPage() {
   return (
     <CrudPageLayout
       financeNavRole="OWNER"
-      eyebrow="Keuangan"
       title="Rekening kas & bank"
       listTitle="Daftar rekening"
       list={<RekeningKasDaftar rows={rows} />}

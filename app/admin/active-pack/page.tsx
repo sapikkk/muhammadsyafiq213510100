@@ -23,7 +23,6 @@ export default async function AdminActivePackPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi & stok"
       title="Paket siap pakai"
       actions={
         <ActivePackFormSheet

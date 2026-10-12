@@ -15,7 +15,6 @@ export default async function PetaniSiklusPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Di lapangan"
       title="Siklus produksi"
       actions={
         <Button type="button" className="h-11" asChild>

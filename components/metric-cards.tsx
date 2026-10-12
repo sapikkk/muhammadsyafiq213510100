@@ -30,7 +30,7 @@ export function MetricCards({
   return (
     <div className={cn("grid gap-3", grid, className)}>
       {items.map((item, i) => (
-        <Card key={item.id ?? (typeof item.label === "string" ? item.label : `metric-${i}`)} className="p-4 shadow-none">
+        <Card key={item.id ?? (typeof item.label === "string" ? item.label : `metric-${i}`)} className="p-4">
           <p className="text-xs font-medium leading-snug text-muted-foreground">{item.label}</p>
           <div className="mt-1.5 text-lg font-semibold tabular-nums tracking-tight text-foreground sm:text-xl">
             {item.value}

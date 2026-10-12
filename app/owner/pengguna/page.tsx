@@ -11,7 +11,6 @@ export default async function OwnerPenggunaPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Kelola"
       title="Kelola akun"
       actions={
         <OwnerUserCreateSheet

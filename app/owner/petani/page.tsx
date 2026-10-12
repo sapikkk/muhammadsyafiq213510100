@@ -9,7 +9,6 @@ export default async function OwnerPetaniPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Operasi"
       title="Data petani lapangan"
       coachKey="owner-petani"
       list={<PetaniMasterDaftar rows={rows.map(serializePetani)} mode="owner" />}

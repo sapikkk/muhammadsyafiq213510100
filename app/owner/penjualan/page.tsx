@@ -10,7 +10,6 @@ export default async function OwnerPenjualanPage() {
   return (
     <CrudPageLayout
       financeNavRole="OWNER"
-      eyebrow="Keuangan"
       title="Pesanan jual"
       list={<SalesOrderDaftar rows={orders.map(serializeSalesOrder)} mode="owner" />}
       listTitle="Semua pesanan jual"

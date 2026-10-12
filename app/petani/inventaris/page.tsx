@@ -9,7 +9,6 @@ export default async function PetaniInventarisPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi"
       title="Inventaris"
       list={<InventarisDaftar items={items.map(serializeItem)} mode="petani" />}
       listTitle="Stok saat ini"

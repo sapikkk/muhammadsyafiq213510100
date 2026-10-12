@@ -34,7 +34,7 @@ export function PageSection({
           {title}
         </h2>
         {badgeLabel ? (
-          <span className="rounded border border-border px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+          <span className="rounded border border-border px-2 py-0.5 text-xs font-medium text-muted-foreground">
             {badgeLabel}
           </span>
         ) : null}

@@ -33,13 +33,10 @@ export async function SalesOrderDetailLayout({
   const so = serializeSalesOrder(row) as SoRow;
   const sectionTitle =
     mode === "admin" ? "Aksi dan riwayat" : mode === "owner" ? "Ringkasan pesanan" : "Kirim dan terima";
-  const eyebrow = mode === "pengiriman" ? "Pengiriman" : "Pesanan jual";
-
   return (
     <DetailLayout
       backHref={listHref}
       surface={surface}
-      eyebrow={eyebrow}
       title={so.nomor_so}
       badge={<Badge variant="secondary">{labelSalesOrderStatus(so.status)}</Badge>}
       description={`${so.pelanggan_nama} · Total ${formatRupiah(so.total)}`}

@@ -9,7 +9,6 @@ export default async function OwnerStokRendahPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Operasi"
       title="Alert stok minimum"
       list={<InventarisStokRendah items={items.map(serializeAlertStok)} />}
       listTitle="Item di bawah minimum"

@@ -4,6 +4,20 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DEST="$ROOT/.agents/skills"
 mkdir -p "$DEST"
 
+rsync_skill_dir() {
+  local src="$1"
+  local name="$2"
+  if [[ ! -d "$src" ]]; then
+    return 0
+  fi
+  mkdir -p "$DEST/$name"
+  if command -v rsync >/dev/null 2>&1; then
+    rsync -a "$src/" "$DEST/$name/"
+  else
+    cp -R "$src/"* "$DEST/$name/"
+  fi
+}
+
 if command -v rsync >/dev/null 2>&1; then
   rsync -a --delete "$ROOT/docs/skills/openaccountant/" "$DEST/"
 else
@@ -26,15 +40,33 @@ fi
 SEMGREP_VENDOR="$ROOT/vendor/agents/semgrep-skills/skills"
 if [[ -d "$SEMGREP_VENDOR" ]]; then
   for skill in semgrep code-security llm-security; do
-    if [[ -d "$SEMGREP_VENDOR/$skill" ]]; then
-      mkdir -p "$DEST/$skill"
-      if command -v rsync >/dev/null 2>&1; then
-        rsync -a "$SEMGREP_VENDOR/$skill/" "$DEST/$skill/"
-      else
-        cp -R "$SEMGREP_VENDOR/$skill/"* "$DEST/$skill/"
-      fi
-    fi
+    rsync_skill_dir "$SEMGREP_VENDOR/$skill" "$skill"
   done
+fi
+
+MATT="$ROOT/vendor/agents/mattpocock-skills/skills"
+if [[ -d "$MATT" ]]; then
+  for cat in engineering productivity misc; do
+    [[ -d "$MATT/$cat" ]] || continue
+    for skill_dir in "$MATT/$cat"/*/; do
+      [[ -d "$skill_dir" ]] || continue
+      rsync_skill_dir "$skill_dir" "$(basename "$skill_dir")"
+    done
+  done
+fi
+
+APPLE="$ROOT/vendor/agents/apple-design-skill"
+if [[ -f "$APPLE/SKILL.md" ]]; then
+  mkdir -p "$DEST/apple-design"
+  if command -v rsync >/dev/null 2>&1; then
+    rsync -a \
+      --exclude '.git' \
+      --exclude '.github' \
+      "$APPLE/" "$DEST/apple-design/"
+  else
+    cp "$APPLE/SKILL.md" "$DEST/apple-design/"
+    cp -R "$APPLE/references" "$DEST/apple-design/" 2>/dev/null || true
+  fi
 fi
 
 echo "Skills synced to .agents/skills ($(find "$DEST" -name SKILL.md | wc -l | tr -d ' ') files)"

@@ -36,7 +36,6 @@ export default async function SalesOrderInvoicePage({ params }: { params: { id: 
         <DetailLayout
           backHref={`/admin/penjualan/${id}`}
           backLabel="Kembali ke pesanan jual"
-          eyebrow="Penjualan"
           title="Faktur penjualan"
           description={`${invoice.nomor_invoice ?? "—"} · ${invoice.nomor_so}`}
           actions={<PrintButton />}

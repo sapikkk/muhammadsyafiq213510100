@@ -44,7 +44,6 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
   return (
     <CrudPageLayout
       financeNavRole="OWNER"
-      eyebrow="Keuangan"
       title="Ekspor laporan"
       list={
         <div className="space-y-4">

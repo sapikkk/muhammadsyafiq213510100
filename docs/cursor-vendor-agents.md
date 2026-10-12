@@ -9,6 +9,8 @@ Submodule + skrip pasang ulang skill pihak ketiga untuk Kokonus Farm.
 | `vendor/agents/agency-agents` | [msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents) | 280+ persona agent → aturan Cursor (`.mdc`) |
 | `vendor/agents/andrej-karpathy-skills` | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) | Prinsip coding LLM (Karpathy) |
 | `vendor/agents/semgrep-skills` | [semgrep/skills](https://github.com/semgrep/skills) | Skill agent Semgrep (scan, rule YAML, keamanan) |
+| `vendor/agents/mattpocock-skills` | [mattpocock/skills](https://github.com/mattpocock/skills) | Skill engineering / productivity / misc |
+| `vendor/agents/apple-design-skill` | [dickwu/apple-design-skill](https://github.com/dickwu/apple-design-skill) | Review UI/UX berbasis Apple HIG + referensi `references/hig/` |
 
 Repo [semgrep/semgrep](https://github.com/semgrep/semgrep) adalah **mesin CLI**, bukan paket skill; skill resmi ada di `semgrep/skills`.
 
@@ -24,7 +26,12 @@ bash scripts/bootstrap-vendor-agents.sh
 1. Menjalankan `convert.sh` + `install.sh --link` Agency → symlink `.cursor/rules/<agent>.mdc` (tidak di-commit; lihat `.gitignore`).
 2. Menjalankan `scripts/sync-agent-skills.sh` → salin skill ke `.agents/skills/` (gitignore).
 
-Aturan **Karpathy** di-commit: `.cursor/rules/karpathy-guidelines.mdc` (`alwaysApply: true`). Sinkronkan teks dari submodule jika upstream berubah.
+Aturan di-commit:
+
+| File | Perilaku |
+|------|----------|
+| `karpathy-guidelines.mdc` | always-on |
+| `apple-design-skill.mdc` | aktif pada `app/**`, `components/**`; review HIG + gabung dengan `ui-ringkas` untuk copy ID |
 
 ## Agency Agents di Cursor
 
@@ -42,6 +49,27 @@ vendor/agents/agency-agents/scripts/install.sh --tool cursor --division engineer
 ```
 
 Daftar tim: `vendor/agents/agency-agents/scripts/install.sh --list teams`
+
+## Matt Pocock (real engineering)
+
+Skill disalin dari `vendor/agents/mattpocock-skills/skills/{engineering,productivity,misc}/` (bukan folder `deprecated` / `in-progress`).
+
+Contoh pemicuan di chat:
+
+- `tdd`, `code-review`, `diagnosing-bugs`, `implement-spec`, `triage`, `pr`
+
+Proses TDD/debug **Superpowers** (submodule `.cursor/plugins/superpowers`) tetap dipakai untuk US Kokonus; skill Matt Pocock bisa melengkapi alur implementasi/review — pilih satu alur per task, jangan campur dua skill TDD sekaligus.
+
+Update upstream: `git submodule update --remote vendor/agents/mattpocock-skills && bash scripts/sync-agent-skills.sh`
+
+Alternatif resmi: [skills.sh](https://skills.sh/mattpocock/skills) — `npx skills add mattpocock/skills -a cursor` (hindari dobel install).
+
+## Apple design (HIG)
+
+- Bundle lengkap (123 halaman HIG) ada di submodule + `.agents/skills/apple-design/` setelah sync.
+- Rule proyek: `.cursor/rules/apple-design-skill.mdc`.
+- Contoh prompt: _"Review halaman Beranda ini terhadap HIG; copy tetap Indonesia per ui-ringkas."_
+- Install alternatif: `npx skills add dickwu/apple-design-skill -a cursor`.
 
 ## Semgrep
 

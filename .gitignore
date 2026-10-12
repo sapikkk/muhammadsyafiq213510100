@@ -15,6 +15,7 @@ e2e/.demo-siklus-id
 .cursor/rules/*
 !.cursor/rules/graphify.mdc
 !.cursor/rules/karpathy-guidelines.mdc
+!.cursor/rules/apple-design-skill.mdc
 skills-lock.json
 .DS_Store
 

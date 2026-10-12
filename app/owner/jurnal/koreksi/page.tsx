@@ -16,7 +16,6 @@ export default async function OwnerJurnalKoreksiPage() {
   return (
     <DetailLayout
       backHref="/owner/jurnal"
-      eyebrow="Keuangan"
       title="Koreksi catatan manual"
       actions={
         <Button asChild variant="outline" className="h-11">

@@ -33,10 +33,10 @@ function FinanceModuleNavItem({ mod, active }: { mod: FinanceModule; active: boo
         href={mod.href}
         title={mod.hint}
         className={cn(
-          "inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-medium transition-colors",
+          "inline-flex min-h-11 items-center gap-2 rounded-md border border-transparent px-3 text-sm font-medium transition-colors",
           active
-            ? "bg-background text-foreground shadow-sm ring-1 ring-border"
-            : "text-muted-foreground hover:bg-background/80 hover:text-foreground",
+            ? "border-border bg-background text-foreground"
+            : "text-muted-foreground hover:border-border/60 hover:bg-muted/40 hover:text-foreground",
         )}
       >
         <Icon className="size-4 shrink-0 opacity-80" aria-hidden />

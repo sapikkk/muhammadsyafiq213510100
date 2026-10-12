@@ -9,7 +9,6 @@ export default async function AdminStokRendahPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi & stok"
       title="Alert stok minimum"
       list={
         <InventarisStokRendah items={items.map(serializeAlertStok)} showRestockHint />

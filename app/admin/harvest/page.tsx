@@ -10,7 +10,6 @@ export default async function AdminHarvestPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi & stok"
       title="Laporan panen"
       list={<HarvestAdminDaftar rows={rows.map(serializeLaporanPanen)} />}
       listTitle="Daftar laporan"

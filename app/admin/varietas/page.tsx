@@ -20,7 +20,6 @@ export default async function AdminVarietasPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi & stok"
       title="Varietas & asumsi"
       actions={
         <VarietasFormSheet

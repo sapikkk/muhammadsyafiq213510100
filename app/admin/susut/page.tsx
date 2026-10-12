@@ -21,7 +21,6 @@ export default async function AdminSusutPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi & stok"
       title="Klasifikasi susut"
       list={<SusutKlasifikasiPanel rows={rows} />}
       listTitle="Menunggu klasifikasi"

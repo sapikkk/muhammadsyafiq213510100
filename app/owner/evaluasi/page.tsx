@@ -21,7 +21,6 @@ export default async function OwnerEvaluasiPage() {
   return (
     <CrudPageLayout
       financeNavRole="OWNER"
-      eyebrow="Keuangan"
       title="Untung dan titik impas"
       list={
         <div className="space-y-6">

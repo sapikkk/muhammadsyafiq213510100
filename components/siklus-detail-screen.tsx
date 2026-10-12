@@ -97,7 +97,6 @@ export async function SiklusDetailScreen({
     <DetailLayout
       backHref="/petani/siklus"
       surface={surface}
-      eyebrow="Siklus"
       title={labelBarisProduksiUtama(partsFromSiklusNested(siklus))}
       badge={
         <Badge variant={status === STATUS_GAGAL_TOTAL ? "outline" : "secondary"}>

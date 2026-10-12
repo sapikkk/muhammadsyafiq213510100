@@ -17,3 +17,9 @@
 [submodule "vendor/agents/semgrep-skills"]
 	path = vendor/agents/semgrep-skills
 	url = https://github.com/semgrep/skills.git
+[submodule "vendor/agents/mattpocock-skills"]
+	path = vendor/agents/mattpocock-skills
+	url = https://github.com/mattpocock/skills.git
+[submodule "vendor/agents/apple-design-skill"]
+	path = vendor/agents/apple-design-skill
+	url = https://github.com/dickwu/apple-design-skill.git

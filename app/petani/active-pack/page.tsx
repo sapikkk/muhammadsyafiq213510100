@@ -23,7 +23,6 @@ export default async function PetaniActivePackPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi"
       title="Paket siap pakai"
       actions={
         <ActivePackFormSheet

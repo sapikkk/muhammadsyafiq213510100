@@ -6,13 +6,7 @@ import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { roleHome } from "@/lib/role-home";
 import { notify } from "@/lib/notify";
 import { PageCoachmark } from "@/components/page-coachmark";
@@ -63,9 +57,7 @@ export default function LoginPage() {
     <main className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-sm space-y-6">
         <PageHeaderRow
-          eyebrow="Kokonus Farm"
           title="Masuk"
-          description="Gunakan akun Owner, Admin, atau Petani."
           guide={
             <PageCoachmark
               pageKey="login"
@@ -81,11 +73,7 @@ export default function LoginPage() {
         />
 
         <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">Masuk</CardTitle>
-            <CardDescription>Masuk dengan email dan sandi Anda.</CardDescription>
-          </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <form className="space-y-4" noValidate onSubmit={onSubmit}>
               <label className="block space-y-1.5 text-sm">
                 <span className="font-medium">Email</span>

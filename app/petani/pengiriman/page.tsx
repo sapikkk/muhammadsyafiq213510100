@@ -10,7 +10,6 @@ export default async function PetaniPengirimanPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Penjualan"
       title="Packing & pengiriman"
       list={<SalesOrderDaftar rows={orders.map(serializeSalesOrder)} mode="pengiriman" />}
       listTitle="Pesanan jual aktif"

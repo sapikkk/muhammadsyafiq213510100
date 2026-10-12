@@ -36,7 +36,6 @@ export async function InventarisDetail({
     <DetailLayout
       backHref={listHref}
       surface={surface}
-      eyebrow="Inventaris"
       title={serialized.nama}
       badge={
         <>

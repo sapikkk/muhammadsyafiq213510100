@@ -11,7 +11,6 @@ export default async function AdminInventarisPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi & stok"
       title="Inventaris"
       actions={
         <InventarisItemFormSheet

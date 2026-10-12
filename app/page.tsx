@@ -20,7 +20,7 @@ export default async function HomePage() {
       <header className="flex h-14 items-center justify-between border-b px-6">
         <div className="flex items-center gap-2">
           <div className="flex h-6 w-6 items-center justify-center bg-foreground">
-            <span className="text-[10px] font-bold text-background">KF</span>
+            <span className="text-xs font-bold text-background">KF</span>
           </div>
           <span className="text-sm font-semibold">Kokonus Farm</span>
         </div>
@@ -38,7 +38,6 @@ export default async function HomePage() {
 
       <section className="mx-auto w-full max-w-6xl px-6 py-10">
         <PageHeaderRow
-          eyebrow="Kokonus Farm"
           title="Tata kelola produksi hidroponik"
           guide={
             <PageCoachmark

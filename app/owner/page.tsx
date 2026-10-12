@@ -38,7 +38,7 @@ export default async function OwnerPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeaderRow eyebrow="Owner" title="Beranda" />
+      <PageHeaderRow title="Beranda" />
       <div className="grid gap-3 lg:grid-cols-[1fr_minmax(240px,320px)]">
         <CuacaWidget />
       </div>

@@ -35,7 +35,6 @@ export default async function JurnalPage({
   return (
     <CrudPageLayout
       financeNavRole="ADMIN"
-      eyebrow="Keuangan"
       title="Catatan keuangan"
       actions={
         <>

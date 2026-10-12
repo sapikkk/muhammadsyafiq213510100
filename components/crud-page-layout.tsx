@@ -8,7 +8,6 @@ import { UI_COPY } from "@/lib/ui-copy";
 export function CrudPageLayout({
   title,
   description,
-  eyebrow,
   actions,
   flowSteps,
   coachKey,
@@ -25,7 +24,6 @@ export function CrudPageLayout({
 }: {
   title: string;
   description?: string;
-  eyebrow?: string;
   /** Tab modul keuangan (Books-style IA, design system Kokonus). */
   financeNavRole?: "ADMIN" | "OWNER";
   actions?: ReactNode;
@@ -58,7 +56,6 @@ export function CrudPageLayout({
       <PageHeaderRow
         title={title}
         description={description}
-        eyebrow={eyebrow}
         guide={guide}
         actions={actions}
       />

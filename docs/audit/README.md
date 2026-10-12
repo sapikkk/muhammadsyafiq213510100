@@ -12,3 +12,5 @@ Master prompt execution log. Start with `00-inventory.md` and `01-baseline.md`.
 Branch: `chore/global-audit-bw-refactor`.
 
 **Agent:** baca [`AGENT-RUNBOOK.md`](AGENT-RUNBOOK.md) sebelum setiap sesi.
+
+**UI 91 halaman (Apple HIG + ui-ringkas):** [`apple-design-inventaris-91-halaman.md`](apple-design-inventaris-91-halaman.md).

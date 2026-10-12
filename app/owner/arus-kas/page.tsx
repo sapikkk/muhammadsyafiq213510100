@@ -50,7 +50,6 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
   return (
     <CrudPageLayout
       financeNavRole="OWNER"
-      eyebrow="Keuangan"
       title="Arus kas"
       list={
         <div className="space-y-6">

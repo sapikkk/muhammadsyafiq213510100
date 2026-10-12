@@ -13,7 +13,6 @@ export default async function OwnerProduksiPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi"
       title="Monitoring siklus produksi"
       list={<SiklusDaftar rows={siklusRows.map(serializeSiklus)} readOnly />}
       listTitle="Siklus produksi"

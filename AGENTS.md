@@ -59,7 +59,7 @@ Untuk `docs/` dan notulensi uji: jalankan humanizer — hindari pola AI (kontras
 - **Skill domain:** `docs/skills/akuntansi-hidroponik/SKILL.md`
 - **Skill keuangan umum (lokal, gitignore):** `npx skills add openaccountant/skills -y` → `.agents/skills/` ([openaccountant/skills](https://github.com/openaccountant/skills)); adaptasi COA Indonesia, bukan IRS/US mentah.
 
-## Skill vendor (Agency, Karpathy, Semgrep)
+## Skill vendor (Agency, Karpathy, Semgrep, Matt Pocock, Apple HIG)
 
 Submodule di `vendor/agents/`; pasang ke Cursor + `.agents/skills/`:
 
@@ -71,6 +71,8 @@ bash scripts/bootstrap-vendor-agents.sh
 - **Agency Agents** ([msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)): `@<slug>` di chat Cursor setelah bootstrap.
 - **Karpathy guidelines** ([multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills)): `.cursor/rules/karpathy-guidelines.mdc` (always-on).
 - **Semgrep** — skill di [semgrep/skills](https://github.com/semgrep/skills); CLI mesin [semgrep/semgrep](https://github.com/semgrep/semgrep): `npm run semgrep:scan` setelah `brew install semgrep`.
+- **Matt Pocock** ([mattpocock/skills](https://github.com/mattpocock/skills)): engineering + productivity + misc → `.agents/skills/` (`tdd`, `code-review`, `triage`, …). Alternatif CLI: `npx skills add mattpocock/skills -a cursor` (jangan dobel dengan bootstrap).
+- **Apple design** ([dickwu/apple-design-skill](https://github.com/dickwu/apple-design-skill)): review HIG + craft; rule `.cursor/rules/apple-design-skill.mdc` pada `app/` & `components/`; teks UI tetap [`docs/skills/kokonus/ui-ringkas/SKILL.md`](docs/skills/kokonus/ui-ringkas/SKILL.md).
 
 Detail: [`docs/cursor-vendor-agents.md`](docs/cursor-vendor-agents.md) · indeks skill: [`docs/skills/README.md`](docs/skills/README.md).
 

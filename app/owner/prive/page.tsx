@@ -12,7 +12,6 @@ export default async function OwnerPrivePage() {
   return (
     <CrudPageLayout
       financeNavRole="OWNER"
-      eyebrow="Keuangan"
       title="Ambil pribadi"
       list={<PriveForm defaultTanggal={keTanggalIso(new Date())} rekeningOptions={rekeningOptions} />}
       listTitle="Form ambil pribadi"

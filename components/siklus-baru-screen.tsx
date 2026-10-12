@@ -15,7 +15,6 @@ export async function SiklusBaruScreen({
     <DetailLayout
       backHref="/petani/siklus"
       surface={surface}
-      eyebrow="Produksi"
       title="Mulai semai baru"
       description="Pilih varietas, kolam, dan pack benih/media — stok pack berkurang otomatis."
     >

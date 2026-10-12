@@ -11,7 +11,6 @@ export type DetailLayoutProps = {
   backLabel?: string;
   title: ReactNode;
   description?: ReactNode;
-  eyebrow?: ReactNode;
   badge?: ReactNode;
   actions?: ReactNode;
   children: ReactNode;
@@ -27,7 +26,6 @@ export function DetailLayout({
   backLabel = "Kembali ke daftar",
   title,
   description,
-  eyebrow,
   badge,
   actions,
   children,
@@ -39,7 +37,7 @@ export function DetailLayout({
   const inSheet = surface === "sheet";
 
   return (
-    <div className={cn("flex flex-col", inSheet ? "gap-6" : "gap-8", className)}>
+    <div className={cn("flex flex-col gap-6", className)}>
       {financeNavRole && !inSheet ? <FinanceModuleNav role={financeNavRole} /> : null}
       <div>
         {inSheet ? null : (
@@ -47,7 +45,7 @@ export function DetailLayout({
             asChild
             variant="ghost"
             size="sm"
-            className="-ml-2 mb-3 h-8 gap-1.5 px-2 text-xs text-muted-foreground hover:text-foreground"
+            className="-ml-2 mb-3 min-h-11 gap-1.5 px-2 text-sm text-muted-foreground hover:text-foreground"
           >
             <Link href={backHref}>
               <ArrowLeft className="size-3.5" aria-hidden />
@@ -58,13 +56,8 @@ export function DetailLayout({
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <header className="space-y-1.5">
-            {eyebrow ? (
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                {eyebrow}
-              </p>
-            ) : null}
             <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+              <h1 className="text-2xl font-semibold tracking-tight text-foreground">
                 {title}
               </h1>
               {badge ? <div>{badge}</div> : null}
@@ -77,7 +70,7 @@ export function DetailLayout({
         </div>
       </div>
 
-      <div className="flex flex-col gap-8">{children}</div>
+      <div className="flex flex-col gap-6">{children}</div>
 
       {extra}
     </div>

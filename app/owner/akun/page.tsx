@@ -10,7 +10,6 @@ export default async function OwnerAkunPage() {
   return (
     <CrudPageLayout
       financeNavRole="OWNER"
-      eyebrow="Keuangan"
       title="Bagan akun"
       list={<AkunTree tree={buildClientTree(rows)} mode="owner" />}
       listTitle="Struktur bagan akun"

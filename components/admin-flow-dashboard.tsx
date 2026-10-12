@@ -14,7 +14,7 @@ const QUICK = [
 export function AdminFlowDashboard() {
   return (
     <div className="flex flex-col gap-6">
-      <PageHeaderRow eyebrow="Admin" title="Beranda" />
+      <PageHeaderRow title="Beranda" />
       <div className="grid gap-3 sm:grid-cols-2">
         {QUICK.map((q) => (
           <Link

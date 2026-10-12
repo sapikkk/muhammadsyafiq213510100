@@ -44,7 +44,6 @@ export async function ActivePackDetail({
     <DetailLayout
       backHref={listHref}
       surface={surface}
-      eyebrow="Paket siap pakai"
       title={serialized.item.nama}
       badge={
         habis ? (

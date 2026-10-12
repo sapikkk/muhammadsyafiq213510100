@@ -9,7 +9,6 @@ export default async function OwnerInventarisPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Operasi"
       title="Inventaris"
       list={<InventarisDaftar items={items.map(serializeItem)} mode="owner" />}
       listTitle="Stok bahan baku"

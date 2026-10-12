@@ -112,7 +112,7 @@ export function AppSidebar({
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-xs font-medium">{userName}</p>
-            <p className="truncate text-[11px] text-muted-foreground">{roleLabel[role]}</p>
+            <p className="truncate text-xs text-muted-foreground">{roleLabel[role]}</p>
           </div>
         </div>
         <div className="flex gap-1">
@@ -214,7 +214,7 @@ function NavLink({
         href={item.href}
         onClick={() => onNavigate?.()}
         className={cn(
-          "flex min-h-9 items-start gap-2 rounded-md px-2 py-1.5 text-[13px] leading-snug transition-colors",
+          "flex min-h-11 items-start gap-2 rounded-md px-2 py-1.5 text-sm leading-snug transition-colors",
           active
             ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground ring-1 ring-border/80"
             : muted

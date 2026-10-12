@@ -56,7 +56,6 @@ export function JurnalDetailView({
       backHref={backHref}
       surface={surface}
       financeNavRole={backHref.startsWith("/owner") ? "OWNER" : backHref.startsWith("/admin") ? "ADMIN" : undefined}
-      eyebrow="Catatan keuangan"
       title={jurnal.keterangan}
       badge={<Badge variant="secondary">{statusJurnalLabel[jurnal.status]}</Badge>}
       description={meta}

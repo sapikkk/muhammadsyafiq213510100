@@ -11,7 +11,6 @@ export default async function AdminPetaniPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Tim"
       title="Data petani lapangan"
       actions={
         <PetaniMasterFormSheet

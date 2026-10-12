@@ -14,7 +14,7 @@ export async function CuacaWidget() {
   const cuaca = await fetchCuacaLokal();
   if (!cuaca) {
     return (
-      <Card className="flex items-center gap-3 p-4 shadow-none">
+      <Card className="flex items-center gap-3 p-4">
         <CloudSun className="h-8 w-8 text-muted-foreground" aria-hidden />
         <div>
           <p className="text-sm font-medium">Cuaca</p>
@@ -25,7 +25,7 @@ export async function CuacaWidget() {
   }
 
   return (
-    <Card className="flex items-center gap-4 p-4 shadow-none">
+    <Card className="flex items-center gap-4 p-4">
       <CuacaIkon kode={cuaca.kodeCuaca} />
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium">{cuaca.label}</p>

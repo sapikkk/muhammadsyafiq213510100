@@ -9,7 +9,6 @@ export default async function OwnerInfrastrukturPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Operasi"
       title="Infrastruktur"
       list={<InfrastrukturPohon data={data} mode="owner" />}
       listTitle="Pohon lahan · GH · kolam"

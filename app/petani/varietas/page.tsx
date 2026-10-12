@@ -9,7 +9,6 @@ export default async function PetaniVarietasPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi"
       title="Varietas aktif"
       list={<VarietasDaftar rows={serialized} mode="petani" />}
       listTitle="Referensi varietas"

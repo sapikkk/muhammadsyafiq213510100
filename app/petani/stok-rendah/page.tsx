@@ -9,7 +9,6 @@ export default async function PetaniStokRendahPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi"
       title="Stok rendah"
       list={<InventarisStokRendah items={items.map(serializeAlertStok)} />}
       listTitle="Item di bawah minimum"
