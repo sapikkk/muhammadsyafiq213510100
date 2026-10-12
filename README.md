@@ -186,7 +186,8 @@ Peta file Markdown untuk Agile, progres teknis, UCD, uji (black-box / UAT / SUS)
 |---------|-----|
 | [`docs/testing/panduan-uji-dan-demo.md`](docs/testing/panduan-uji-dan-demo.md) | Playwright, seed demo, pelatihan go-live (T5.9) |
 | [`docs/testing/README.md`](docs/testing/README.md) | Indeks testing |
-| [`docs/uji-blackbox.md`](docs/uji-blackbox.md) | Notulensi uji black-box per US |
+| [`docs/tabel-blackbox-testing.md`](docs/tabel-blackbox-testing.md) | Tabel master 231 langkah blackbox (BB-ID) |
+| [`docs/uji-blackbox.md`](docs/uji-blackbox.md) | Notulensi uji black-box per US (AC, DoD, temuan) |
 | [`docs/testing/DELETED-AGENTS-SKILLS-MANIFEST.md`](docs/testing/DELETED-AGENTS-SKILLS-MANIFEST.md) | Manifest skill agent (referensi) |
 | [`e2e/smoke.spec.ts`](e2e/smoke.spec.ts) | Smoke E2E |
 | [`e2e/sprint5-usability.spec.ts`](e2e/sprint5-usability.spec.ts) | Usability Sprint 5 (T5.1–T5.3) |

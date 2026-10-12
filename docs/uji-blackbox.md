@@ -2,6 +2,8 @@
 
 Berkas ini adalah notulensi pengujian setiap user story. Isi yang sama ditempel ke issue GitHub masing-masing supaya papan proyek https://github.com/users/sapikkk/projects/1 bisa dibaca tanpa membuka repo.
 
+Register langkah uji dalam satu tabel: [`tabel-blackbox-testing.md`](./tabel-blackbox-testing.md).
+
 ## Cara membaca
 
 - **Acceptance criteria**: syarat dari PRD, workbook, dan Figma. Status: Terpenuhi, Ditunda (dengan alasan), atau Tidak berlaku.

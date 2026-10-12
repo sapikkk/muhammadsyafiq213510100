@@ -37,7 +37,7 @@ Playwright dan TestCafe dipasang lewat npm, bukan clone penuh ke repo.
 
 ## Sprint 5
 
-Black-box manual: `docs/uji-blackbox.md`. Audit debit=kredit: T5.4 setelah alur jurnal stabil.
+Black-box manual: [`docs/tabel-blackbox-testing.md`](../tabel-blackbox-testing.md) (register langkah) dan [`docs/uji-blackbox.md`](../uji-blackbox.md) (notulensi). Audit debit=kredit: T5.4 setelah alur jurnal stabil.
 
 ## Data demo sidang
 
