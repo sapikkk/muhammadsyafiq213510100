@@ -5,6 +5,8 @@ import { getJurnal } from "@/lib/jurnal";
 import { notFound } from "next/navigation";
 
 export default async function AdminJurnalDetailSheet({ params }: { params: { id: string } }) {
+  if (params.id === "baru") return null;
+
   const id = Number(params.id);
   const jurnal = Number.isInteger(id) ? await getJurnal(id) : null;
   if (!jurnal) notFound();
