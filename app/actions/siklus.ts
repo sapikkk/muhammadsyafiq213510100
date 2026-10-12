@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { isRoleAllowed } from "@/lib/rbac";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -27,7 +28,7 @@ export async function mulaiSiklusSemai(
     const siklus = await buatSiklusSemai(parseSiklusInput(raw), Number(session!.user!.id));
     revalidatePath("/petani/siklus");
     revalidatePath("/petani/siklus/baru");
-    return { ok: `Siklus ${siklus.kode_batch} tersimpan. Fase ${siklus.status}.` };
+    redirect(`/petani/siklus/${siklus.id}`);
   } catch (error) {
     if (error instanceof SiklusError) return { error: error.message };
     throw error;

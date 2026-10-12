@@ -9,8 +9,14 @@ export async function loadSiklusBaruContext() {
   const [varietasRows, kolamRows, packs] = await Promise.all([
     listVarietas(true),
     prisma.kolam.findMany({
+      where: { status: "MENGANGGUR" },
       orderBy: { id: "asc" },
-      include: { greenhouse: { select: { nama: true } } },
+      select: {
+        id: true,
+        nama: true,
+        kapasitas_lubang: true,
+        greenhouse: { select: { nama: true } },
+      },
     }),
     listActivePack(true),
   ]);

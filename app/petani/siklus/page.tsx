@@ -21,7 +21,9 @@ export default async function PetaniSiklusPage() {
       ]}
       actions={
         <Button type="button" className="h-11" asChild>
-          <Link href="/petani/siklus/baru">Mulai semai</Link>
+          <Link href="/petani/siklus/baru" prefetch>
+            Mulai semai
+          </Link>
         </Button>
       }
       list={<SiklusDaftar rows={siklusRows.map(serializeSiklus)} />}
