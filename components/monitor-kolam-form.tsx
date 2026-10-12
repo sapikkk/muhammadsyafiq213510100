@@ -24,7 +24,7 @@ export function MonitorKolamForm({
   const [suhu, setSuhu] = useState(24);
 
   return (
-    <form action={formAction} className="space-y-4">
+    <form action={formAction} className="space-y-5">
       <input type="hidden" name="siklusId" value={siklusId} />
       <input type="hidden" name="kolamId" value={kolamId} />
       <p className="text-sm text-muted-foreground">

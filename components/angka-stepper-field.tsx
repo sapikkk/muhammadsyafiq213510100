@@ -52,43 +52,50 @@ export function AngkaStepperField({
 
   const bump = (delta: number) => apply(value + delta);
 
+  const btnClass =
+    "h-9 w-[3.25rem] shrink-0 px-0 tabular-nums text-xs sm:text-sm";
+
   return (
-    <div className="space-y-1.5 text-sm">
-      <span className="font-medium">{label}</span>
+    <div className="mx-auto w-full max-w-md space-y-2 text-sm">
+      <p className="text-center font-medium">{label}</p>
       <input type="hidden" name={name} value={value.toFixed(decimals)} />
-      <div className="flex flex-wrap items-center gap-1.5">
-        {minus.map((s) => (
-          <Button
-            key={s.label}
-            type="button"
-            variant="outline"
-            size="sm"
-            className="h-9 min-w-[2.75rem] px-2 tabular-nums"
-            onClick={() => bump(s.delta)}
-          >
-            {s.label}
-          </Button>
-        ))}
+      <div className="grid grid-cols-[1fr_5.5rem_1fr] items-center gap-x-1.5 sm:gap-x-2">
+        <div className="flex flex-wrap justify-end gap-1.5">
+          {minus.map((s) => (
+            <Button
+              key={s.label}
+              type="button"
+              variant="outline"
+              size="sm"
+              className={btnClass}
+              onClick={() => bump(s.delta)}
+            >
+              {s.label}
+            </Button>
+          ))}
+        </div>
         <Input
-          className="h-11 w-[4.5rem] shrink-0 tabular-nums text-center"
+          className="h-11 w-[5.5rem] tabular-nums text-center"
           inputMode="decimal"
           value={formatTampilan(value, decimals)}
           onChange={(e) => apply(parseTampilan(e.target.value))}
           required={required}
           aria-label={label}
         />
-        {plus.map((s) => (
-          <Button
-            key={s.label}
-            type="button"
-            variant="outline"
-            size="sm"
-            className="h-9 min-w-[2.75rem] px-2 tabular-nums"
-            onClick={() => bump(s.delta)}
-          >
-            {s.label}
-          </Button>
-        ))}
+        <div className="flex flex-wrap justify-start gap-1.5">
+          {plus.map((s) => (
+            <Button
+              key={s.label}
+              type="button"
+              variant="outline"
+              size="sm"
+              className={btnClass}
+              onClick={() => bump(s.delta)}
+            >
+              {s.label}
+            </Button>
+          ))}
+        </div>
       </div>
     </div>
   );
