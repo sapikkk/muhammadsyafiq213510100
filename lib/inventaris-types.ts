@@ -16,6 +16,9 @@ export type SerializedAlertStok = SerializedItemInventaris & {
   kekurangan: string;
 };
 
+/** Hanya kode — aman untuk komponen client (banner stok rendah). */
+export type InventarisAlertBannerItem = Pick<SerializedItemInventaris, "kode">;
+
 export type SerializedPergerakan = {
   id: number;
   tipe: TipePergerakan;

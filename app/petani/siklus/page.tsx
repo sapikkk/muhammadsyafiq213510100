@@ -2,7 +2,11 @@ import Link from "next/link";
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { SiklusDaftarPetani } from "@/components/siklus-daftar-petani";
 import { Button } from "@/components/ui/button";
-import { listSiklusProduksi, serializeSiklus } from "@/lib/siklus-produksi";
+import {
+  LIST_SIKLUS_DEFAULT_LIMIT,
+  listSiklusProduksi,
+  serializeSiklus,
+} from "@/lib/siklus-produksi";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +26,7 @@ export default async function PetaniSiklusPage() {
       }
       list={<SiklusDaftarPetani rows={siklusRows.map(serializeSiklus)} />}
       listTitle="Siklus aktif & selesai"
+      listDescription={`Menampilkan ${LIST_SIKLUS_DEFAULT_LIMIT} batch terbaru. Gunakan pencarian untuk kode batch di daftar ini.`}
     />
   );
 }

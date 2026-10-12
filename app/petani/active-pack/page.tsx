@@ -8,7 +8,7 @@ import {
   serializeActivePack,
   type ActivePackListRow,
 } from "@/lib/active-pack";
-import { listItemInventaris } from "@/lib/inventaris";
+import { listItemInventaris, serializeItem } from "@/lib/inventaris";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +27,7 @@ export default async function PetaniActivePackPage() {
       title="Paket siap pakai"
       actions={
         <ActivePackFormSheet
-          items={items}
+          items={items.map(serializeItem)}
           action={simpanActivePackPetani}
           trigger={
             <Button type="button" className="h-11">

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { useFormState } from "react-dom";
-import type { ItemInventaris } from "@prisma/client";
+import type { SerializedItemInventaris } from "@/lib/inventaris-types";
 import { FormSheet } from "@/components/form-sheet";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
@@ -36,7 +36,7 @@ export function ActivePackForm({
   action,
   onSuccess,
 }: {
-  items: ItemInventaris[];
+  items: SerializedItemInventaris[];
   action: PackSaveAction;
   onSuccess?: () => void;
 }) {
@@ -106,7 +106,7 @@ export function ActivePackFormSheet({
   action,
 }: {
   trigger: ReactNode;
-  items: ItemInventaris[];
+  items: SerializedItemInventaris[];
   action: PackSaveAction;
 }) {
   const [open, setOpen] = useState(false);

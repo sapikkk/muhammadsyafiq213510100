@@ -4,8 +4,7 @@ import {
   SiklusError,
   lanjutFase,
   serializeSiklus,
-  getSiklusProduksi,
-  listSiklusProduksi,
+  getSiklusProduksiListRow,
 } from "@/lib/siklus-produksi";
 
 function handleError(error: unknown) {
@@ -33,8 +32,7 @@ export const PUT = withApiHandler(async (request: Request, context?: unknown) =>
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const hasil = await lanjutFase(id, userId, body);
-    const rows = await listSiklusProduksi();
-    const row = rows.find((r) => r.id === id);
+    const row = await getSiklusProduksiListRow(id);
     return apiOk({
       fase_dari: hasil.fase_dari,
       fase_ke: hasil.fase_ke,
@@ -54,11 +52,9 @@ export const GET = withApiHandler(async (_request: Request, context?: unknown) =
   if (!Number.isInteger(id) || id <= 0) {
     return apiFail("INVALID_ID", "id tidak valid.", 400);
   }
-  const siklus = await getSiklusProduksi(id);
-  if (!siklus) {
+  const row = await getSiklusProduksiListRow(id);
+  if (!row) {
     return apiFail("NOT_FOUND", "Siklus tidak ditemukan.", 404);
   }
-  const rows = await listSiklusProduksi();
-  const row = rows.find((r) => r.id === id)!;
   return apiOk(serializeSiklus(row));
 });

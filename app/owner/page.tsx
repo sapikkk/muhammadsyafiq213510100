@@ -8,7 +8,7 @@ import { PageHeaderRow } from "@/components/page-header-row";
 import { PageSection } from "@/components/page-section";
 import { MetricCards } from "@/components/metric-cards";
 import { formatRupiah } from "@/lib/format";
-import { listAlertStokMinimum } from "@/lib/inventaris";
+import { alertBannerItems, listAlertStokMinimum } from "@/lib/inventaris";
 import { kpiHidroponikMvpCached, monthlySummaryCached } from "@/lib/cached-queries";
 import { bestProfitMonth } from "@/lib/monthly-summary";
 import Link from "next/link";
@@ -39,7 +39,10 @@ export default async function OwnerPage() {
         <CuacaWidget />
       </div>
       <RekeningSaldoWidget />
-      <InventarisAlertBanner items={stokRendah} detailHref="/owner/stok-rendah" />
+      <InventarisAlertBanner
+        items={alertBannerItems(stokRendah)}
+        detailHref="/owner/stok-rendah"
+      />
       <OwnerFlowDashboard />
 
       <nav

@@ -6,6 +6,7 @@ import {
   type PergerakanInventaris,
 } from "@prisma/client";
 import type {
+  InventarisAlertBannerItem,
   SerializedAlertStok,
   SerializedItemInventaris,
   SerializedPergerakan,
@@ -372,6 +373,12 @@ export function serializeItem(item: ItemInventaris): SerializedItemInventaris {
 export async function listAlertStokMinimum() {
   const { listAlertStokMinimumCached } = await import("@/lib/cached-queries");
   return listAlertStokMinimumCached();
+}
+
+export function alertBannerItems(
+  items: ItemInventaris[],
+): InventarisAlertBannerItem[] {
+  return items.map((i) => ({ kode: i.kode }));
 }
 
 export function serializeAlertStok(item: ItemInventaris): SerializedAlertStok {

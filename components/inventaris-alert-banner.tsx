@@ -1,11 +1,11 @@
 import Link from "next/link";
-import type { ItemInventaris } from "@prisma/client";
+import type { InventarisAlertBannerItem } from "@/lib/inventaris-types";
 
 export function InventarisAlertBanner({
   items,
   detailHref,
 }: {
-  items: ItemInventaris[];
+  items: InventarisAlertBannerItem[];
   detailHref: string;
 }) {
   if (items.length === 0) return null;

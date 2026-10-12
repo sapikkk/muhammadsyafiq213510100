@@ -139,20 +139,40 @@ function translateError(error: unknown): never {
   throw error;
 }
 
-export async function listSiklusProduksi() {
-  return prisma.siklus_Produksi.findMany({
-    orderBy: { id: "desc" },
-    include: {
-      varietas: { select: { nama: true, status: true } },
-      kolam: {
-        select: {
-          id: true,
-          nama: true,
-          greenhouse: { select: { id: true, nama: true } },
-        },
-      },
-      laporanPanen: { select: { id: true, status: true } },
+/** Batas default daftar siklus (halaman & API) — bukan arsip penuh. */
+export const LIST_SIKLUS_DEFAULT_LIMIT = 100;
+export const LIST_SIKLUS_MAX_LIMIT = 200;
+
+const siklusListInclude = {
+  varietas: { select: { nama: true, status: true } },
+  kolam: {
+    select: {
+      id: true,
+      nama: true,
+      greenhouse: { select: { id: true, nama: true } },
     },
+  },
+  laporanPanen: { select: { id: true, status: true } },
+} as const;
+
+export type ListSiklusOptions = {
+  limit?: number;
+  /** Filter kode batch (contains, case-insensitive). */
+  q?: string;
+};
+
+export async function listSiklusProduksi(options: ListSiklusOptions = {}) {
+  const rawLimit = options.limit ?? LIST_SIKLUS_DEFAULT_LIMIT;
+  const take = Math.min(LIST_SIKLUS_MAX_LIMIT, Math.max(1, rawLimit));
+  const q = options.q?.trim();
+
+  return prisma.siklus_Produksi.findMany({
+    where: q
+      ? { kode_batch: { contains: q, mode: "insensitive" } }
+      : undefined,
+    orderBy: { id: "desc" },
+    take,
+    include: siklusListInclude,
   });
 }
 
@@ -300,12 +320,17 @@ export async function getSiklusProduksi(id: number) {
   return prisma.siklus_Produksi.findUnique({
     where: { id },
     include: {
-      varietas: { select: { nama: true } },
-      kolam: {
-        select: { nama: true, greenhouse: { select: { nama: true } } },
-      },
+      ...siklusListInclude,
       laporanPanen: true,
     },
+  });
+}
+
+/** Satu baris daftar — shape sama list (untuk serialize setelah create/update). */
+export async function getSiklusProduksiListRow(id: number) {
+  return prisma.siklus_Produksi.findUnique({
+    where: { id },
+    include: siklusListInclude,
   });
 }
 
