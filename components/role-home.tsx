@@ -18,8 +18,14 @@ export async function RoleHome({
   const session = await getServerSession(authOptions);
   const name = session?.user?.name || roleLabel[role];
   const userId = session?.user?.id ? Number(session.user.id) : null;
-  const notifikasiUnreadCount =
-    userId != null ? await countNotifikasiBelumDibacaCached(userId) : 0;
+  let notifikasiUnreadCount = 0;
+  if (userId != null) {
+    try {
+      notifikasiUnreadCount = await countNotifikasiBelumDibacaCached(userId);
+    } catch {
+      notifikasiUnreadCount = 0;
+    }
+  }
 
   return (
     <AppShellLayout

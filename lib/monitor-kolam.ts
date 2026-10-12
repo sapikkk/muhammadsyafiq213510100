@@ -2,7 +2,10 @@ import "server-only";
 
 import { Prisma } from "@prisma/client";
 import { siklusBolehMonitorKolam } from "@/lib/monitor-kolam-fase";
+import type { MonitorGrafikTitik } from "@/lib/monitor-kolam-types";
 import { prisma } from "@/lib/prisma";
+
+export type { MonitorGrafikTitik } from "@/lib/monitor-kolam-types";
 
 export { siklusBolehMonitorKolam } from "@/lib/monitor-kolam-fase";
 
@@ -84,10 +87,6 @@ export async function catatMonitorKolam(userId: number, input: MonitorKolamInput
   });
 }
 
-import type { MonitorGrafikTitik } from "@/lib/monitor-kolam-types";
-
-export type { MonitorGrafikTitik } from "@/lib/monitor-kolam-types";
-
 /** Titik grafik beranda petani — batch aktif (bukan selesai/gagal total). */
 export async function listMonitorGrafikPetani(limit = 40): Promise<MonitorGrafikTitik[]> {
   const rows = await prisma.log_Monitor_Kolam.findMany({
@@ -116,13 +115,14 @@ export async function listMonitorGrafikPetani(limit = 40): Promise<MonitorGrafik
         hour: "2-digit",
         minute: "2-digit",
       }).format(t);
+      const gh = r.kolam.greenhouse?.nama ?? "Greenhouse";
       return {
         waktu: t.toISOString(),
         label,
         ppm: Number(r.ppm),
         ph: Number(r.ph),
         suhu: Number(r.suhu_c),
-        kolam: `${r.kolam.greenhouse.nama} / ${r.kolam.nama}`,
+        kolam: `${gh} / ${r.kolam.nama}`,
         siklusKode: r.siklus.kode_batch,
       };
     });

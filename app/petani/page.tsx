@@ -2,28 +2,32 @@ import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { FlowSteps } from "@/components/flow-steps";
 import { PageHeaderRow } from "@/components/page-header-row";
 import { PageSection } from "@/components/page-section";
-import { PetaniMonitorChart } from "@/components/petani-monitor-chart";
+import { PetaniMonitorChartLazy } from "@/components/petani-monitor-chart.lazy";
 import { PetaniTugasPanel } from "@/components/petani-tugas-panel";
 import { listAlertStokMinimum } from "@/lib/inventaris";
 import { listMonitorGrafikPetani } from "@/lib/monitor-kolam";
+import type { MonitorGrafikTitik } from "@/lib/monitor-kolam-types";
 import { daftarTugasPetani, historiAktivitasPetani } from "@/lib/tugas-petani";
+import type { TugasPetani } from "@/lib/tugas-petani-types";
+import type { ItemInventaris } from "@prisma/client";
+import type { HistoriPetaniBaris } from "@/lib/tugas-petani";
 
 export const dynamic = "force-dynamic";
 
-async function monitorGrafikAman() {
+async function muatAman<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
   try {
-    return await listMonitorGrafikPetani();
+    return await fn();
   } catch {
-    return [];
+    return fallback;
   }
 }
 
 export default async function PetaniPage() {
   const [stokRendah, tugas, histori, monitorGrafik] = await Promise.all([
-    listAlertStokMinimum(),
-    daftarTugasPetani(),
-    historiAktivitasPetani(),
-    monitorGrafikAman(),
+    muatAman(listAlertStokMinimum, [] as ItemInventaris[]),
+    muatAman(daftarTugasPetani, [] as TugasPetani[]),
+    muatAman(historiAktivitasPetani, [] as HistoriPetaniBaris[]),
+    muatAman(listMonitorGrafikPetani, [] as MonitorGrafikTitik[]),
   ]);
 
   return (
@@ -52,7 +56,7 @@ export default async function PetaniPage() {
         description="Grafik PPM, pH, dan suhu — isi lewat Siklus → filter kolam → Monitor kolam hari ini."
         badge="Read"
       >
-        <PetaniMonitorChart points={monitorGrafik} />
+        <PetaniMonitorChartLazy points={monitorGrafik} />
       </PageSection>
       <PetaniTugasPanel
         tugas={tugas}
