@@ -1,3 +1,10 @@
+## [1.36.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.0...v1.36.1) (2026-10-12)
+
+
+### Performance Improvements
+
+* batasi daftar siklus dan serialisasi inventaris ke client ([2ebc1d0](https://github.com/sapikkk/muhammadsyafiq213510100/commit/2ebc1d09f3e737b12b150b9bc788ce50fe3d017a))
+
 # [1.36.0](https://github.com/sapikkk/muhammadsyafiq213510100/releases/tag/v1.36.0) (2026-10-12)
 
 ### Features
