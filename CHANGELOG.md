@@ -1,3 +1,10 @@
+## [1.36.3](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.2...v1.36.3) (2026-10-12)
+
+
+### Performance Improvements
+
+* ringankan beranda owner dan muat export PDF/xlsx lazy ([6bb4910](https://github.com/sapikkk/muhammadsyafiq213510100/commit/6bb4910c8ec24b549291dba6d013c3a7316adb88))
+
 ## [1.36.2](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.1...v1.36.2) (2026-10-12)
 
 
