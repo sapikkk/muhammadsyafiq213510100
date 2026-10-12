@@ -146,9 +146,9 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
       pageKey: "admin-harvest",
       title: "Review panen",
       steps: [
-        { label: "Sortasi", detail: "Layak vs tidak layak jual." },
-        { label: "HPP", detail: "Preview sebelum approve." },
-        { label: "Approve", detail: "Menulis HPP dan jurnal persediaan." },
+        { label: "Sortasi", detail: "Layak dan tidak layak jual." },
+        { label: "HPP", detail: "Pratinjau sebelum disetujui." },
+        { label: "Setujui", detail: "HPP dan jurnal persediaan tercatat." },
       ],
     },
     {

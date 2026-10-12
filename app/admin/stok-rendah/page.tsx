@@ -13,15 +13,15 @@ export default async function AdminStokRendahPage() {
       title="Alert stok minimum"
       description="Item aktif yang stoknya di bawah batas minimum. Perbarui lewat pergerakan IN di inventaris."
       flowSteps={[
-        { label: "Review alert", detail: "Tabel di bawah — urutkan kolom stok jika perlu." },
-        { label: "Catat IN", detail: "Inventaris → pergerakan masuk atau pembelian." },
-        { label: "Active pack", detail: "Setelah stok cukup, buat/isi pack di menu Active pack." },
+        { label: "Review", detail: "Periksa tabel; urutkan kolom stok jika perlu." },
+        { label: "Restock", detail: "Catat masuk di inventaris." },
+        { label: "Active pack", detail: "Setelah stok cukup, buat atau isi pack di menu Active pack." },
       ]}
       list={
         <InventarisStokRendah items={items.map(serializeAlertStok)} showRestockHint />
       }
       listTitle="Item di bawah minimum"
-      listDescription="Read — badge di sidebar menunjukkan jumlah yang sama (satu query per halaman)."
+      listDescription="Jumlah item sama dengan badge peringatan di sidebar."
     />
   );
 }

@@ -7,7 +7,7 @@ export const COACH_TIPS: Record<string, string[]> = {
   ],
   "admin-home": [
     "Selesaikan antrian reset sandi sebelum mendaftarkan petani baru.",
-    "Tombol Panduan di setiap halaman menjelaskan urutan kerja halaman itu.",
+    "Pintasan di bawah mengarah ke inventaris, panen, penjualan, jurnal, pelanggan, dan akuntansi.",
   ],
   "petani-home": [
     "Mulai dari batch aktif di Siklus, atau buat semai baru jika kolam siap.",
@@ -75,37 +75,37 @@ export const COACH_TIPS: Record<string, string[]> = {
     "Pelanggan nonaktif tidak dapat dipilih pada sales order baru.",
   ],
   "admin-penjualan": [
-    "Alur: buat order → konfirmasi → kirim → catat pelunasan atau DP.",
+    "Alur: buat order, konfirmasi, kirim, lalu catat pelunasan atau uang muka.",
     "Klik baris untuk detail di panel samping.",
   ],
   "admin-jurnal": [
     "Draft perlu disetujui Owner, kecuali tipe yang disetujui otomatis.",
-    "Total debit harus sama dengan total kredit sebelum approve.",
+    "Total debit harus sama dengan total kredit sebelum disetujui.",
   ],
   "admin-akuntansi": [
-    "Smart Jurnal dan penyusutan: ikuti langkah di Panduan halaman ini.",
+    "Tutup periode sebelum tutup buku; jalankan penyusutan per bulan.",
   ],
   "admin-akun": [
-    "Pohon akun: tambah, ubah, atau nonaktifkan per node.",
+    "Pohon akun: tambah, ubah, atau nonaktifkan per baris.",
   ],
   "admin-biaya": [
-    "Overhead bulanan mempengaruhi alokasi HPP panen.",
+    "Overhead bulanan mempengaruhi alokasi HPP saat panen disetujui.",
   ],
   "admin-inventaris": [
-    "Pergerakan IN, OUT, dan ADJUST di detail item; nonaktifkan jika obsolet.",
+    "Pergerakan masuk, keluar, dan penyesuaian di detail item.",
   ],
   "admin-active-pack": [
     "Pack aktif mengurangi stok bahan saat dipakai untuk semai.",
   ],
   "admin-infrastruktur": [
-    "Status kolam TERPAKAI atau MENGANGGUR mempengaruhi evaluasi kapasitas idle.",
+    "Status kolam terpakai atau menganggur mempengaruhi evaluasi kapasitas.",
   ],
   "admin-varietas": [
     "Parameter varietas dipakai perhitungan HPP otomatis.",
   ],
   "admin-harvest": [
-    "Approve panen menulis HPP dan jurnal persediaan.",
-    "Klik baris review untuk detail di panel samping.",
+    "Menyetujui panen menulis HPP dan jurnal persediaan.",
+    "Klik baris untuk review di panel samping.",
   ],
   "admin-susut": [
     "Susut normal masuk HPP; susut abnormal ke beban operasional.",
@@ -114,7 +114,7 @@ export const COACH_TIPS: Record<string, string[]> = {
     "Sama dengan peringatan banner; prioritaskan restock.",
   ],
   "admin-petani": [
-    "Master petani berbeda dari akun User; login didaftarkan terpisah di beranda Admin.",
+    "Master petani berbeda dari akun login; akun didaftarkan di dashboard Admin.",
   ],
   "petani-siklus": [
     "Satu baris = satu batch; detail berisi langkah fase dan panen.",

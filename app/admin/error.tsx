@@ -19,7 +19,7 @@ export default function AdminError({
   return (
     <StateScreen
       title="Gagal memuat halaman"
-      description="Terjadi kesalahan di area Admin. Coba lagi."
+      description="Terjadi kesalahan saat memuat halaman Admin. Gunakan tombol di bawah untuk mencoba lagi."
     >
       <Button type="button" className="h-11" onClick={reset}>
         Coba lagi

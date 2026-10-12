@@ -16,18 +16,18 @@ export default async function AdminAkuntansiPage() {
       title="Pengaturan akuntansi"
       description="Tutup periode dan catat penyusutan bulanan sebelum tutup buku."
       flowSteps={[
-        { label: "Period lock", detail: "Set tanggal tutup — jurnal backdate ditolak." },
-        { label: "Penyusutan", detail: "Satu klik per bulan — jurnal AUTO GH & instalasi." },
-        { label: "Jurnal", detail: "Kembali ke daftar jurnal lewat sidebar." },
+        { label: "Tutup periode", detail: "Atur tanggal tutup; jurnal tanggal lama ditolak." },
+        { label: "Penyusutan", detail: "Jalankan per bulan; jurnal otomatis greenhouse dan instalasi." },
+        { label: "Jurnal", detail: "Kembali ke daftar jurnal lewat menu sidebar." },
       ]}
       list={
         <div className="space-y-6">
-          <PageSection title="Period lock" description="Update — tanggal periode tutup buku." badge="Update">
+          <PageSection title="Tutup periode" description="Tanggal terakhir transaksi boleh dicatat." badge="Update">
             <PeriodLockForm periodeTutup={periodeTutup} />
           </PageSection>
           <PageSection
             title="Penyusutan otomatis"
-            description="Create — idempotent per bulan."
+            description="Satu kali per bulan; aman dijalankan ulang bulan yang sama."
             badge="Create"
           >
             <PenyusutanBulanForm defaultBulan={new Date().toISOString().slice(0, 7)} />

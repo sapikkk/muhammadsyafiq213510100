@@ -36,11 +36,11 @@ export default async function JurnalPage({
     <CrudPageLayout
       eyebrow="Akuntansi"
       title="Jurnal"
-      description="Create di Jurnal baru · Read di tabel · Update lewat approve/tolak (Owner/Admin)."
+      description="Buat entri di Jurnal baru; setujui atau tolak dari detail (Owner atau Admin)."
       flowSteps={[
-        { label: "Buat", detail: "Smart Jurnal atau manual — status DRAFT/PENDING." },
-        { label: "Seimbang", detail: "Total debit = kredit sebelum ajukan." },
-        { label: "Approve", detail: "Owner/Admin — saldo akun baru berubah." },
+        { label: "Buat", detail: "Smart Jurnal atau manual; status draft atau menunggu." },
+        { label: "Seimbang", detail: "Total debit sama dengan kredit sebelum diajukan." },
+        { label: "Setujui", detail: "Owner atau Admin; saldo akun berubah setelah disetujui." },
       ]}
       actions={
         <>

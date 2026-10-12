@@ -5,26 +5,26 @@ import { PageHeaderRow } from "@/components/page-header-row";
 
 const ALUR_HARIAN = [
   {
-    label: "Stok & pack",
-    detail: "Cek inventaris → buat active pack jika perlu",
+    label: "Stok dan pack",
+    detail: "Periksa inventaris, lalu buat active pack jika diperlukan.",
   },
   {
     label: "Produksi",
-    detail: "Petani semai batch → Admin approve panen",
+    detail: "Petani menjalankan batch; Admin menyetujui laporan panen.",
   },
   {
-    label: "Jual & catat",
-    detail: "SO → kirim → jurnal otomatis / Smart Jurnal",
+    label: "Penjualan dan pembukuan",
+    detail: "Sales order, pengiriman, jurnal otomatis, atau Smart Jurnal.",
   },
 ];
 
 const QUICK = [
-  { href: "/admin/inventaris", title: "Inventaris", sub: "Lihat stok · catat keluar/masuk" },
-  { href: "/admin/harvest", title: "Approve panen", sub: "HPP & jurnal WIP" },
-  { href: "/admin/penjualan", title: "Sales order", sub: "Buat · kirim · pelunasan" },
-  { href: "/admin/jurnal/baru", title: "Jurnal baru", sub: "Smart atau manual" },
-  { href: "/admin/pelanggan", title: "Pelanggan", sub: "CRUD master pelanggan" },
-  { href: "/admin/akuntansi", title: "Akuntansi", sub: "Period lock · penyusutan" },
+  { href: "/admin/inventaris", title: "Inventaris", sub: "Stok dan pergerakan barang" },
+  { href: "/admin/harvest", title: "Laporan panen", sub: "HPP dan jurnal persediaan" },
+  { href: "/admin/penjualan", title: "Sales order", sub: "Buat, kirim, pelunasan" },
+  { href: "/admin/jurnal/baru", title: "Jurnal baru", sub: "Smart Jurnal atau manual" },
+  { href: "/admin/pelanggan", title: "Pelanggan", sub: "Data master pelanggan" },
+  { href: "/admin/akuntansi", title: "Akuntansi", sub: "Tutup periode dan penyusutan" },
 ];
 
 export function AdminFlowDashboard() {
@@ -33,7 +33,7 @@ export function AdminFlowDashboard() {
       <PageHeaderRow
         eyebrow="Admin"
         title="Dashboard"
-        description="Ikuti alur harian: stok → produksi → penjualan → pembukuan."
+        description="Urutan kerja: stok, produksi, penjualan, lalu pembukuan."
         guide={
           <FlowSteps
             pageKey="admin"

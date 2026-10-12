@@ -13,11 +13,11 @@ export default async function AdminPelangganPage() {
     <CrudPageLayout
       eyebrow="Penjualan"
       title="Pelanggan"
-      description="Master data pelanggan dipakai saat membuat sales order."
+      description="Data pelanggan dipakai saat membuat sales order."
       flowSteps={[
-        { label: "Lihat daftar", detail: "Cari nama atau email di tabel." },
-        { label: "Tambah atau ubah", detail: "Panel samping kanan — data kontak saja." },
-        { label: "Pakai di SO", detail: "Sales order → pilih pelanggan dari dropdown." },
+        { label: "Daftar", detail: "Cari nama atau email di tabel." },
+        { label: "Tambah atau ubah", detail: "Panel samping kanan, data kontak saja." },
+        { label: "Sales order", detail: "Pilih pelanggan saat membuat order baru." },
       ]}
       actions={
         <PelangganFormSheet

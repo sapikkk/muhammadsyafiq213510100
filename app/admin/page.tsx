@@ -31,7 +31,7 @@ export default async function AdminPage() {
 
       <PageSection
         title="Daftarkan petani"
-        description="Create — akun baru untuk petani (login email + sandi)."
+        description="Buat akun login petani (email dan sandi awal)."
         badge="Create"
       >
         <RegisterPetani />
@@ -40,7 +40,7 @@ export default async function AdminPage() {
       {pending.length > 0 ? (
         <PageSection
           title="Permintaan reset sandi"
-          description={`Update — ${pending.length} permintaan menunggu persetujuan Admin.`}
+          description={`${pending.length} permintaan menunggu persetujuan Anda.`}
           badge="Update"
         >
           <ResetRequests

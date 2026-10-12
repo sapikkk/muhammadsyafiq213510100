@@ -24,8 +24,8 @@ export default async function AdminSusutPage() {
       title="Klasifikasi susut"
       description="Klasifikasi susut normal (masuk HPP) dan abnormal (beban operasional)."
       flowSteps={[
-        { label: "Antrian", detail: "Log kegagalan dari petani menunggu klasifikasi." },
-        { label: "Klasifikasi", detail: "Pilih normal/abnormal per baris — mempengaruhi HPP." },
+        { label: "Antrian", detail: "Catatan kegagalan dari petani menunggu klasifikasi." },
+        { label: "Klasifikasi", detail: "Tandai normal atau abnormal per baris; mempengaruhi HPP." },
       ]}
       list={<SusutKlasifikasiPanel rows={rows} />}
       listTitle="Menunggu klasifikasi"

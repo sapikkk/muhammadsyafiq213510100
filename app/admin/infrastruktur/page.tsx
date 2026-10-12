@@ -27,10 +27,10 @@ export default async function AdminInfrastrukturPage() {
       title="Infrastruktur"
       description="Master lahan, greenhouse, dan kolam untuk alokasi kapasitas produksi."
       flowSteps={[
-        { label: "Lihat pohon", detail: "Lahan → GH → kolam — kapasitas lubang per kolam." },
-        { label: "Tambah", detail: "Tombol lahan / GH / kolam — Sheet di kanan." },
-        { label: "Status kolam", detail: "Dialog per baris kolam di pohon." },
-        { label: "Siklus", detail: "Petani/Admin pilih kolam kosong saat semai." },
+        { label: "Pohon", detail: "Lahan, greenhouse, kolam, dan kapasitas lubang per kolam." },
+        { label: "Tambah", detail: "Tombol lahan, greenhouse, atau kolam di panel samping." },
+        { label: "Status kolam", detail: "Ubah status per baris kolam di pohon." },
+        { label: "Siklus", detail: "Pilih kolam kosong saat memulai semai." },
       ]}
       actions={
         <InfrastrukturTambahActions

@@ -18,13 +18,13 @@ export default async function AdminHarvestPage() {
           : "Semua laporan sudah diproses atau belum ada pengajuan."
       }
       flowSteps={[
-        { label: "Petani kirim", detail: "Dari detail batch — status PENDING." },
-        { label: "Admin review", detail: "Buka baris → cek berat & susut." },
-        { label: "Approve", detail: "HPP + jurnal Dr 1350 Cr WIP; batch siap jual." },
+        { label: "Pengajuan", detail: "Petani mengirim dari detail batch dengan status menunggu." },
+        { label: "Review", detail: "Buka baris, periksa berat dan susut." },
+        { label: "Setujui", detail: "HPP dan jurnal persediaan tercatat; batch siap dijual." },
       ]}
       list={<HarvestAdminDaftar rows={rows.map(serializeLaporanPanen)} />}
       listTitle="Daftar laporan"
-      listDescription="Update — approve/tolak per baris."
+      listDescription="Setujui atau tolak per baris."
     />
   );
 }

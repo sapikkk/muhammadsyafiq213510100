@@ -35,7 +35,7 @@ export default async function SalesOrderInvoicePage({ params }: { params: { id: 
           actions={<PrintButton />}
         >
           <p className="text-sm text-muted-foreground">
-            Pratinjau di bawah — gunakan Cetak untuk PDF/kertas. Layout invoice tetap di dokumen cetak.
+            Pratinjau di bawah. Gunakan Cetak untuk PDF atau kertas.
           </p>
         </DetailLayout>
       </div>

@@ -24,10 +24,10 @@ export default async function AdminVarietasPage() {
       title="Varietas & asumsi"
       description="Parameter benih, pertumbuhan, dan harga jual untuk perhitungan HPP dan siklus."
       flowSteps={[
-        { label: "Lihat daftar", detail: "Klik baris untuk detail — HPP rata per lubang." },
-        { label: "Tambah", detail: "Panel samping kanan — asumsi benih & media." },
-        { label: "Ubah / status", detail: "Di halaman detail — nonaktifkan jika sudah dipakai siklus." },
-        { label: "Pakai di siklus", detail: "Petani pilih varietas aktif saat semai batch baru." },
+        { label: "Daftar", detail: "Klik baris untuk detail dan HPP rata per lubang." },
+        { label: "Tambah", detail: "Panel samping: asumsi benih dan media." },
+        { label: "Ubah", detail: "Di halaman detail; nonaktifkan jika tidak dipakai siklus baru." },
+        { label: "Siklus", detail: "Petani memilih varietas aktif saat semai batch baru." },
       ]}
       actions={
         <VarietasFormSheet

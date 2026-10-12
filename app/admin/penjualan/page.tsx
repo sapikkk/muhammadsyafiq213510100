@@ -13,11 +13,11 @@ export default async function AdminPenjualanPage() {
     <CrudPageLayout
       eyebrow="Penjualan"
       title="Sales order"
-      description="Dari draft SO sampai kirim, jurnal pendapatan/HPP, dan pelunasan piutang."
+      description="Dari draft order sampai kirim, jurnal pendapatan dan HPP, serta pelunasan piutang."
       flowSteps={[
-        { label: "Buat draft", detail: "Tombol Buat SO → pilih pelanggan + batch." },
-        { label: "Detail", detail: "Klik baris — aksi sesuai status (konfirmasi, DP, kirim, …)." },
-        { label: "Invoice", detail: "Dari detail SO setelah konfirmasi." },
+        { label: "Draft", detail: "Tombol Buat SO: pilih pelanggan dan batch." },
+        { label: "Detail", detail: "Klik baris; aksi mengikuti status (konfirmasi, DP, kirim, dan seterusnya)." },
+        { label: "Invoice", detail: "Dari detail order setelah dikonfirmasi." },
       ]}
       actions={
         <Button type="button" className="h-11" asChild>

@@ -15,9 +15,9 @@ export default async function AdminInventarisPage() {
       title="Inventaris"
       description="Kelola item bahan baku, stok saat ini, dan jejak pergerakan."
       flowSteps={[
-        { label: "Lihat stok", detail: "Klik baris — riwayat per item + catat IN/OUT/ADJUST." },
-        { label: "Tambah item", detail: "Panel samping kanan (jarang — kebanyakan dari seed)." },
-        { label: "Active pack", detail: "Setelah stok masuk, buat pack di menu Active pack." },
+        { label: "Stok", detail: "Klik baris untuk riwayat item dan catat masuk, keluar, atau penyesuaian." },
+        { label: "Item baru", detail: "Tombol Tambah di panel samping jika perlu menambah master item." },
+        { label: "Active pack", detail: "Setelah stok tercatat, buat pack di menu Active pack." },
       ]}
       actions={
         <InventarisItemFormSheet
@@ -30,7 +30,7 @@ export default async function AdminInventarisPage() {
       }
       list={<InventarisDaftar items={items.map(serializeItem)} mode="admin" />}
       listTitle="Stok saat ini"
-      listDescription="Perhatikan badge stok rendah. Pergerakan OUT dipakai petani saat semai."
+      listDescription="Perhatikan badge stok rendah. Petani mencatat keluar saat memakai bahan di lapangan."
     />
   );
 }

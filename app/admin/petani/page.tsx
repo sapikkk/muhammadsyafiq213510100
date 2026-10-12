@@ -13,10 +13,10 @@ export default async function AdminPetaniPage() {
     <CrudPageLayout
       eyebrow="Tim"
       title="Master petani"
-      description="Data Petani di ERD (bukan akun login). Akun HP didaftarkan terpisah di beranda Admin."
+      description="Data master petani lapangan, terpisah dari akun login. Akun login didaftarkan di dashboard Admin."
       flowSteps={[
-        { label: "Daftar petani", detail: "Master nama & gaji lapangan." },
-        { label: "Tambah atau ubah", detail: "Panel samping — lalu buat akun login di beranda Admin." },
+        { label: "Daftar", detail: "Nama dan gaji lapangan." },
+        { label: "Tambah atau ubah", detail: "Panel samping, lalu daftarkan akun login di dashboard." },
       ]}
       actions={
         <PetaniMasterFormSheet
