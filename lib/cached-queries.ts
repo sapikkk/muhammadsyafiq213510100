@@ -4,7 +4,7 @@ import { cache } from "react";
 import { kpiHidroponikMvp as kpiHidroponikMvpImpl } from "@/lib/kpi-hidroponik";
 import { monthlySummary as monthlySummaryImpl } from "@/lib/monthly-summary";
 import { prisma } from "@/lib/prisma";
-import { listSiklusProduksi } from "@/lib/siklus-produksi";
+import { listSiklusUntukPilihAdmin } from "@/lib/siklus-produksi";
 
 /** Satu query stok rendah per request React — layout + dashboard + banner. */
 export const listAlertStokMinimumCached = cache(async () => {
@@ -35,8 +35,8 @@ export const countNotifikasiBelumDibacaCached = cache(async (userId: number) => 
   });
 });
 
-/** Siklus aktif saja — dashboard petani & tugas (bukan full history). */
-export const listSiklusProduksiCached = cache(listSiklusProduksi);
+/** Opsi siklus admin biaya — arsip penuh, select ringan. */
+export const listSiklusUntukPilihAdminCached = cache(listSiklusUntukPilihAdmin);
 
 export const monthlySummaryCached = cache(monthlySummaryImpl);
 

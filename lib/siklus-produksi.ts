@@ -10,6 +10,7 @@ import {
   isFaseProduksi,
   type FaseProduksi,
 } from "@/lib/siklus-fase";
+import { siklusLabelSelect } from "@/lib/produksi-ui-labels";
 import { STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort-status";
 import {
   gramBenihUntukLubang,
@@ -173,6 +174,19 @@ export async function listSiklusProduksi(options: ListSiklusOptions = {}) {
     orderBy: { id: "desc" },
     take,
     include: siklusListInclude,
+  });
+}
+
+/** Dropdown admin biaya / abort — semua batch, kolom minimal (tanpa cap daftar layar). */
+export async function listSiklusUntukPilihAdmin() {
+  return prisma.siklus_Produksi.findMany({
+    orderBy: { id: "desc" },
+    select: {
+      id: true,
+      status: true,
+      ...siklusLabelSelect,
+      laporanPanen: { select: { status: true } },
+    },
   });
 }
 

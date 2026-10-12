@@ -2,7 +2,7 @@ import { AdminSiklusAbortPanel } from "@/components/admin-siklus-abort-panel";
 import { BiayaAdminPanel } from "@/components/biaya-admin-panel";
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { PageSection } from "@/components/page-section";
-import { listSiklusProduksiCached } from "@/lib/cached-queries";
+import { listSiklusUntukPilihAdminCached } from "@/lib/cached-queries";
 import { listOverhead, serializeOverhead } from "@/lib/biaya";
 import { listInfrastrukturPohon } from "@/lib/infrastruktur";
 import {
@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminBiayaPage() {
   const [siklus, overhead, pohon] = await Promise.all([
-    listSiklusProduksiCached(),
+    listSiklusUntukPilihAdminCached(),
     listOverhead(),
     listInfrastrukturPohon(),
   ]);
