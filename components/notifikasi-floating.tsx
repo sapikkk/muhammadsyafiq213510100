@@ -5,7 +5,10 @@ import { useCallback, useEffect, useRef } from "react";
 import { notify } from "@/lib/notify";
 
 const POLL_MS =
-  process.env.NODE_ENV === "development" ? 10_000 : 22_000;
+  process.env.NODE_ENV === "development" ? 12_000 : 22_000;
+
+/** Selaras connect_timeout=8 di DATABASE_URL — jangan tunggu 30s saat offline. */
+const FETCH_TIMEOUT_MS = 9_000;
 
 type RecentItem = {
   id: number;
@@ -28,7 +31,7 @@ export function NotifikasiFloating() {
     try {
       const res = await fetch(
         `/api/notifikasi/recent?afterId=${cursorRef.current}`,
-        { cache: "no-store" },
+        { cache: "no-store", signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) },
       );
       if (!res.ok) return;
       const data = (await res.json()) as {
@@ -57,6 +60,7 @@ export function NotifikasiFloating() {
       try {
         const res = await fetch("/api/notifikasi/recent?baseline=1", {
           cache: "no-store",
+          signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
         });
         if (!res.ok || cancelled) return;
         const data = (await res.json()) as { maxId?: number };

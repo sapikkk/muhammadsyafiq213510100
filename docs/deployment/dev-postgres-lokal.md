@@ -8,7 +8,7 @@ Tim dev **cukup satu `.env`** dengan Postgres **cloud** (Prisma Data Platform, N
 | --- | --- |
 | `DATABASE_URL` | URL **pooled** dari provider |
 | `DIRECT_URL` | URL direct (migrate / `db push`) |
-| Parameter | `pool_timeout=30` (naik ke 60 jika P2024); lihat FINDING-01 |
+| Parameter | `pool_timeout=60`, `connection_limit=10`, `connect_timeout=8` (dev cloud); lihat FINDING-01 |
 
 FINDING-01 (pool timeout / P2024) muncul jika URL cloud **tanpa** `pool_timeout` / limit koneksi wajar. Bukan bug aplikasi.
 
@@ -59,11 +59,13 @@ Satu file **`.env`** saja (gitignore). Untuk coding harian, isi `DATABASE_URL` d
 Tambahkan pada **DATABASE_URL** pooled:
 
 ```text
-?sslmode=require&connection_limit=5&pool_timeout=30
+?sslmode=require&connection_limit=10&pool_timeout=60&connect_timeout=8
 ```
 
-- `pool_timeout=30` — tunggu koneksi dari pool (naikkan ke 60 jika masih P2024).
-- `connection_limit=5` — cukup untuk satu proses `next dev`; jangan terlalu besar di laptop.
+- `pool_timeout=60` — menunggu koneksi dari pool saat `next dev` banyak query paralel.
+- `connection_limit=10` — satu proses dev; turunkan ke 5 jika provider membatasi koneksi.
+- `connect_timeout=8` — putus cepat saat internet/DB mati (bukan menggantung ~30 detik).
+- Target ~2 detik respons stabil hanya realistis dengan DB dekat (Postgres lokal) atau setelah pool hangat; cloud pertama kali sering 3–10 detik.
 
 `DIRECT_URL` **tanpa** pool — host direct dari panel provider (migrate / `db push`).
 

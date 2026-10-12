@@ -11,6 +11,16 @@ function isPoolTimeout(error: unknown) {
   );
 }
 
+/** API / polling: DB mati atau pool habis — jangan biarkan request menggantung puluhan detik. */
+export function isDbUnavailable(error: unknown) {
+  if (error instanceof Prisma.PrismaClientInitializationError) return true;
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    return error.code === "P1001" || error.code === "P1017" || error.code === "P2024";
+  }
+  const msg = error instanceof Error ? error.message : String(error);
+  return msg.includes("Can't reach database server");
+}
+
 function buildClient() {
   return new PrismaClient().$extends({
     query: {
@@ -19,12 +29,12 @@ function buildClient() {
           return await query(args);
         } catch (error) {
           if (!isPoolTimeout(error)) throw error;
-          await new Promise((r) => setTimeout(r, 250));
+          await new Promise((r) => setTimeout(r, 120));
           try {
             return await query(args);
           } catch (retry1) {
             if (!isPoolTimeout(retry1)) throw retry1;
-            await new Promise((r) => setTimeout(r, 500));
+            await new Promise((r) => setTimeout(r, 280));
             return query(args);
           }
         }

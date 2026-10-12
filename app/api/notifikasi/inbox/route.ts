@@ -5,6 +5,7 @@ import {
   countNotifikasiBelumDibaca,
   listNotifikasi,
 } from "@/lib/notifikasi";
+import { isDbUnavailable } from "@/lib/prisma";
 import { resolveNotifikasiHref } from "@/lib/notifikasi-href";
 import type { Role } from "@/types/role";
 
@@ -24,18 +25,30 @@ export async function GET(request: Request) {
     ? Math.min(Math.max(limitRaw, 5), 50)
     : 30;
 
-  const rows = await listNotifikasi(userId, limit);
-  const unreadCount = await countNotifikasiBelumDibaca(userId);
+  try {
+    const [rows, unreadCount] = await Promise.all([
+      listNotifikasi(userId, limit),
+      countNotifikasiBelumDibaca(userId),
+    ]);
 
-  return NextResponse.json({
-    unreadCount,
-    items: rows.map((row) => ({
-      id: row.id,
-      judul: row.judul,
-      pesan: row.pesan,
-      dibaca: row.dibacaPada != null,
-      createdAt: row.createdAt.toISOString(),
-      targetHref: resolveNotifikasiHref(row.href, role),
-    })),
-  });
+    return NextResponse.json({
+      unreadCount,
+      items: rows.map((row) => ({
+        id: row.id,
+        judul: row.judul,
+        pesan: row.pesan,
+        dibaca: row.dibacaPada != null,
+        createdAt: row.createdAt.toISOString(),
+        targetHref: resolveNotifikasiHref(row.href, role),
+      })),
+    });
+  } catch (error) {
+    if (isDbUnavailable(error)) {
+      return NextResponse.json(
+        { error: "Database sementara tidak terjangkau." },
+        { status: 503 },
+      );
+    }
+    throw error;
+  }
 }

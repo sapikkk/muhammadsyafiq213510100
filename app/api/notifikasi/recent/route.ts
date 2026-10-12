@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { countNotifikasiBelumDibaca } from "@/lib/notifikasi";
 import { resolveNotifikasiHref } from "@/lib/notifikasi-href";
-import { prisma } from "@/lib/prisma";
+import { isDbUnavailable, prisma } from "@/lib/prisma";
 import type { Role } from "@/types/role";
 
 export const dynamic = "force-dynamic";
@@ -20,44 +20,57 @@ export async function GET(request: Request) {
   const afterId = Number(url.searchParams.get("afterId") ?? 0);
   const baseline = url.searchParams.get("baseline") === "1";
 
-  if (baseline) {
-    const agg = await prisma.notifikasi.aggregate({
-      where: { userId },
-      _max: { id: true },
-    });
-    const unreadCount = await countNotifikasiBelumDibaca(userId);
+  try {
+    if (baseline) {
+      const [agg, unreadCount] = await Promise.all([
+        prisma.notifikasi.aggregate({
+          where: { userId },
+          _max: { id: true },
+        }),
+        countNotifikasiBelumDibaca(userId),
+      ]);
+      return NextResponse.json({
+        maxId: agg._max.id ?? 0,
+        unreadCount,
+      });
+    }
+
+    if (!Number.isInteger(afterId) || afterId < 0) {
+      return NextResponse.json({ error: "afterId tidak valid." }, { status: 400 });
+    }
+
+    const [rows, unreadCount] = await Promise.all([
+      prisma.notifikasi.findMany({
+        where: { userId, id: { gt: afterId } },
+        orderBy: { id: "asc" },
+        take: 8,
+        select: {
+          id: true,
+          judul: true,
+          pesan: true,
+          href: true,
+          createdAt: true,
+        },
+      }),
+      countNotifikasiBelumDibaca(userId),
+    ]);
+
     return NextResponse.json({
-      maxId: agg._max.id ?? 0,
+      items: rows.map((row) => ({
+        ...row,
+        bukaHref: `/notifikasi/buka/${row.id}`,
+        targetHref: resolveNotifikasiHref(row.href, role),
+      })),
       unreadCount,
+      maxId: rows.length ? rows[rows.length - 1]!.id : afterId,
     });
+  } catch (error) {
+    if (isDbUnavailable(error)) {
+      return NextResponse.json(
+        { error: "Database sementara tidak terjangkau." },
+        { status: 503 },
+      );
+    }
+    throw error;
   }
-
-  if (!Number.isInteger(afterId) || afterId < 0) {
-    return NextResponse.json({ error: "afterId tidak valid." }, { status: 400 });
-  }
-
-  const rows = await prisma.notifikasi.findMany({
-    where: { userId, id: { gt: afterId } },
-    orderBy: { id: "asc" },
-    take: 8,
-    select: {
-      id: true,
-      judul: true,
-      pesan: true,
-      href: true,
-      createdAt: true,
-    },
-  });
-
-  const unreadCount = await countNotifikasiBelumDibaca(userId);
-
-  return NextResponse.json({
-    items: rows.map((row) => ({
-      ...row,
-      bukaHref: `/notifikasi/buka/${row.id}`,
-      targetHref: resolveNotifikasiHref(row.href, role),
-    })),
-    unreadCount,
-    maxId: rows.length ? rows[rows.length - 1]!.id : afterId,
-  });
 }
