@@ -1,3 +1,13 @@
+# [1.36.0](https://github.com/sapikkk/muhammadsyafiq213510100/releases/tag/v1.36.0) (2026-10-12)
+
+### Features
+
+* **v2:** hub keuangan, rekening kas, piutang penjualan, widget cuaca, UI label sederhana ([b66ffcb](https://github.com/sapikkk/muhammadsyafiq213510100/commit/b66ffcb))
+
+### Bug Fixes
+
+* **release:** fetch-tags di CI; tag rilis v1.36.0 pada riwayat main saat ini ([859c702](https://github.com/sapikkk/muhammadsyafiq213510100/commit/859c702))
+
 # 1.0.0 (2026-10-12)
 
 
