@@ -1,0 +1,7 @@
+#!/bin/sh
+# Hapus Co-authored-by Cursor sebelum commit final (Cursor Agent kadang menambahkannya).
+MSG_FILE=$1
+[ -n "$MSG_FILE" ] && [ -f "$MSG_FILE" ] || exit 0
+python3 "$(git rev-parse --show-toplevel)/scripts/strip-cursor-coauthor-msg.py" < "$MSG_FILE" > "${MSG_FILE}.strip" \
+  && mv "${MSG_FILE}.strip" "$MSG_FILE"
+exit 0

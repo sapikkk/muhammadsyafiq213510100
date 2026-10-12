@@ -28,6 +28,11 @@ Aturan Cursor: `.cursor/rules/graphify.mdc`.
 
 Plugin: `.cursor/plugins/superpowers` (submodule). Satu US = satu branch.
 
+## Git commit
+
+- **Jangan** menambahkan `Co-authored-by: Cursor` (atau trailer Cursor lain) pada pesan commit.
+- Setelah clone: `bash scripts/install-git-hooks.sh` — mengarahkan `core.hooksPath` ke `.githooks/` agar trailer Cursor dihapus otomatis.
+
 ## Ponytail (implementasi)
 
 Default **full**: YAGNI, pakai `lib/*` yang sudah ada, tanpa lapisan service baru kecuali PRD memaksa.
