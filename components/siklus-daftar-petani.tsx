@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { siklusBolehMonitorKolam } from "@/lib/monitor-kolam";
+import { siklusBolehMonitorKolam } from "@/lib/monitor-kolam-fase";
 
 export type SiklusBarisPetani = SiklusBaris & {
   kolam_id: number;

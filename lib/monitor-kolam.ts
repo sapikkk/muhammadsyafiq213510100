@@ -1,8 +1,10 @@
 import "server-only";
 
 import { Prisma } from "@prisma/client";
-import { isFaseProduksi, type FaseProduksi } from "@/lib/siklus-fase";
+import { siklusBolehMonitorKolam } from "@/lib/monitor-kolam-fase";
 import { prisma } from "@/lib/prisma";
+
+export { siklusBolehMonitorKolam } from "@/lib/monitor-kolam-fase";
 
 export class MonitorKolamError extends Error {
   constructor(
@@ -11,17 +13,6 @@ export class MonitorKolamError extends Error {
   ) {
     super(message);
   }
-}
-
-const FASE_MONITOR: FaseProduksi[] = [
-  "SPROUT_DAUN",
-  "TAMBAL",
-  "PINDAH_KOLAM",
-  "PENDEWASAAN",
-];
-
-export function siklusBolehMonitorKolam(status: string) {
-  return isFaseProduksi(status) && FASE_MONITOR.includes(status);
 }
 
 export type MonitorKolamInput = {
@@ -76,7 +67,7 @@ export async function catatMonitorKolam(userId: number, input: MonitorKolamInput
     if (siklus.kolam_id !== input.kolamId) {
       throw new MonitorKolamError("Kolam tidak cocok dengan siklus ini.", 400);
     }
-    if (!isFaseProduksi(siklus.status) || !FASE_MONITOR.includes(siklus.status)) {
+    if (!siklusBolehMonitorKolam(siklus.status)) {
       throw new MonitorKolamError("Monitor kolam hanya fase sprout hingga pendewasaan.", 400);
     }
 
