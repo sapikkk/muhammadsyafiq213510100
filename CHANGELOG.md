@@ -1,3 +1,10 @@
+## [1.36.4](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.3...v1.36.4) (2026-10-12)
+
+
+### Bug Fixes
+
+* invalidasi KPI owner di alur keuangan + panduan DB lokal ([71cffcd](https://github.com/sapikkk/muhammadsyafiq213510100/commit/71cffcd8e27307908edd8a23c3faedfd5c92804d))
+
 ## [1.36.3](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.2...v1.36.3) (2026-10-12)
 
 
