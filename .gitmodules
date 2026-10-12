@@ -8,3 +8,12 @@
 [submodule "vendor/testing/test-automation-skills-agents"]
 	path = vendor/testing/test-automation-skills-agents
 	url = https://github.com/fugazi/test-automation-skills-agents.git
+[submodule "vendor/agents/agency-agents"]
+	path = vendor/agents/agency-agents
+	url = https://github.com/msitarzewski/agency-agents.git
+[submodule "vendor/agents/andrej-karpathy-skills"]
+	path = vendor/agents/andrej-karpathy-skills
+	url = https://github.com/multica-ai/andrej-karpathy-skills.git
+[submodule "vendor/agents/semgrep-skills"]
+	path = vendor/agents/semgrep-skills
+	url = https://github.com/semgrep/skills.git

@@ -11,6 +11,10 @@ e2e/.demo-siklus-id
 
 .agents/
 .cursor/skills/
+# Agency Agents: symlink lokal dari bootstrap (commit hanya graphify + karpathy)
+.cursor/rules/*
+!.cursor/rules/graphify.mdc
+!.cursor/rules/karpathy-guidelines.mdc
 skills-lock.json
 .DS_Store
 

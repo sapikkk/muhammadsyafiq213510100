@@ -1,0 +1,8 @@
+# Kokonus Farm — scan lokal (butuh CLI: brew install semgrep)
+# Dokumentasi skill: vendor/agents/semgrep-skills/skills/semgrep/SKILL.md
+rules:
+  - p/typescript
+  - p/javascript
+  - p/nextjs
+  - p/secrets
+  - p/owasp-top-ten

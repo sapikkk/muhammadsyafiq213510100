@@ -59,6 +59,21 @@ Untuk `docs/` dan notulensi uji: jalankan humanizer — hindari pola AI (kontras
 - **Skill domain:** `docs/skills/akuntansi-hidroponik/SKILL.md`
 - **Skill keuangan umum (lokal, gitignore):** `npx skills add openaccountant/skills -y` → `.agents/skills/` ([openaccountant/skills](https://github.com/openaccountant/skills)); adaptasi COA Indonesia, bukan IRS/US mentah.
 
+## Skill vendor (Agency, Karpathy, Semgrep)
+
+Submodule di `vendor/agents/`; pasang ke Cursor + `.agents/skills/`:
+
+```bash
+git submodule update --init --recursive vendor/agents/
+bash scripts/bootstrap-vendor-agents.sh
+```
+
+- **Agency Agents** ([msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)): `@<slug>` di chat Cursor setelah bootstrap.
+- **Karpathy guidelines** ([multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills)): `.cursor/rules/karpathy-guidelines.mdc` (always-on).
+- **Semgrep** — skill di [semgrep/skills](https://github.com/semgrep/skills); CLI mesin [semgrep/semgrep](https://github.com/semgrep/semgrep): `npm run semgrep:scan` setelah `brew install semgrep`.
+
+Detail: [`docs/cursor-vendor-agents.md`](docs/cursor-vendor-agents.md) · indeks skill: [`docs/skills/README.md`](docs/skills/README.md).
+
 ## Backlog & pelacakan sprint
 
 - **Registry Agile (AC, DoD, timeline, audit log):** `docs/agile/README.md`

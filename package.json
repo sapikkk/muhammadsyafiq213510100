@@ -19,6 +19,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "semgrep:scan": "bash scripts/semgrep-scan.sh",
     "typecheck": "tsc --noEmit",
     "check:client-prisma": "bash scripts/check-client-prisma.sh",
     "check:audit-env": "bash scripts/check-audit-env.sh",

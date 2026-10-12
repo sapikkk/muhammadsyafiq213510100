@@ -45,38 +45,7 @@ npm run seed:kokonus-tahun
 
 ## Dev harian vs uji cloud
 
-**Rekomendasi:** satu file `.env` untuk **lokal**, simpan URL cloud di file terpisah yang **gitignore** (mis. `.env.cloud`).
-
-Contoh `.env` (lokal — default):
-
-```text
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/kokonus_farm"
-DIRECT_URL="postgresql://postgres:postgres@localhost:5432/kokonus_farm"
-```
-
-Contoh `.env.cloud` (jangan commit):
-
-```text
-DATABASE_URL="postgresql://USER:PASS@ep-xxx.region.aws.neon.tech/neondb?sslmode=require&connection_limit=5&pool_timeout=30"
-DIRECT_URL="postgresql://USER:PASS@ep-xxx.region.aws.neon.tech/neondb?sslmode=require"
-```
-
-Ganti sementara ke cloud (zsh):
-
-```bash
-cp .env .env.local-backup
-grep -v '^DATABASE_URL\|^DIRECT_URL' .env.local-backup > .env
-cat .env.cloud >> .env
-npm run dev
-```
-
-Kembali ke lokal:
-
-```bash
-mv .env.local-backup .env
-```
-
-Next.js dan Prisma CLI **hanya** membaca `.env` di root repo (kecuali Anda export variabel di shell).
+Satu file **`.env`** saja (gitignore). Untuk coding harian, isi `DATABASE_URL` dan `DIRECT_URL` ke **localhost** (contoh di atas). Kalau perlu uji ke DB staging cloud, **edit langsung** kedua baris itu di `.env`, simpan, restart `npm run dev`. Jangan commit `.env`.
 
 ## Parameter URL cloud (dev remote)
 
