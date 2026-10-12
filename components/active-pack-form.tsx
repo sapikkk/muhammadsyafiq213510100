@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
+import { labelItemPilih } from "@/lib/inventaris-ui-labels";
 
 type PackSaveAction = (
   prev: { error?: string; ok?: string },
@@ -65,7 +66,7 @@ export function ActivePackForm({
       <Field label="Kode pack">
         <Input name="kode" required className="h-11" placeholder="AP-BNH-01" />
       </Field>
-      <Field label="Item">
+      <Field label="Barang">
         <Select value={itemId || undefined} onValueChange={setItemId} required>
           <SelectTrigger className="h-11">
             <SelectValue placeholder="Pilih item" />
@@ -73,7 +74,11 @@ export function ActivePackForm({
           <SelectContent position="popper" className="z-[100]">
             {items.map((item) => (
               <SelectItem key={item.id} value={String(item.id)}>
-                {item.kode} — {item.nama} ({satuanInventarisLabel[item.satuan]})
+                {labelItemPilih({
+                  nama: item.nama,
+                  kode: item.kode,
+                  satuanLabel: satuanInventarisLabel[item.satuan],
+                })}
               </SelectItem>
             ))}
           </SelectContent>

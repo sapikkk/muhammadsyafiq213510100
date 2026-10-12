@@ -7,6 +7,7 @@ import { formatQty, formatRupiah, formatTanggal } from "@/lib/format";
 import { getActivePack, serializeActivePack, type ActivePackListRow } from "@/lib/active-pack";
 import { EntityChangeHistorySection } from "@/components/entity-change-history-section";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
+import { DetailKodeStrip } from "@/components/detail-kode-strip";
 
 function toListRow(
   row: NonNullable<Awaited<ReturnType<typeof getActivePack>>>,
@@ -44,7 +45,7 @@ export async function ActivePackDetail({
       backHref={listHref}
       surface={surface}
       eyebrow="Paket siap pakai"
-      title={serialized.kode}
+      title={serialized.item.nama}
       badge={
         habis ? (
           <Badge variant="outline">Habis</Badge>
@@ -52,13 +53,17 @@ export async function ActivePackDetail({
           <Badge variant="secondary">Aktif</Badge>
         )
       }
-      description={`${serialized.item.kode} · ${serialized.item.nama} · sisa ${formatQty(serialized.sisaUnit)} / ${formatQty(serialized.jumlahUnit)} ${satuan}`}
+      description={`Sisa ${formatQty(serialized.sisaUnit)} / ${formatQty(serialized.jumlahUnit)} ${satuan}`}
       actions={
         writableMode && !habis ? (
           <ActivePackDetailActions row={serialized} mode={writableMode} />
         ) : null
       }
     >
+      <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+        <DetailKodeStrip label="Kode paket" kode={serialized.kode} />
+        <DetailKodeStrip label="Kode barang" kode={serialized.item.kode} />
+      </div>
       <PageSection title="Ringkasan biaya" badge="Read">
         <dl className="grid gap-3 text-sm sm:grid-cols-2">
           <Item label="Harga pack" value={formatRupiah(serialized.hargaPack)} />

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { formatQty, formatRupiah } from "@/lib/format";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
+import { labelItemUtama } from "@/lib/inventaris-ui-labels";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 import type { ActivePackListRow } from "@/lib/active-pack-types";
 
@@ -75,7 +76,7 @@ export function ActivePackPakaiForm({
             <SelectContent>
               {aktif.map((p) => (
                 <SelectItem key={p.id} value={String(p.id)}>
-                  {p.kode} — sisa {formatQty(p.sisaUnit)}{" "}
+                  {labelItemUtama(p.item)} · sisa {formatQty(p.sisaUnit)}{" "}
                   {satuanInventarisLabel[p.item.satuan]} @ {formatRupiah(p.biayaPerUnit)}/unit
                 </SelectItem>
               ))}

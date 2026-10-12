@@ -8,6 +8,7 @@ import { formatQty } from "@/lib/format";
 import { getItemInventaris, listPergerakan, serializeItem, serializePergerakan } from "@/lib/inventaris";
 import { EntityChangeHistorySection } from "@/components/entity-change-history-section";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
+import { DetailKodeStrip } from "@/components/detail-kode-strip";
 
 export async function InventarisDetail({
   id,
@@ -36,14 +37,14 @@ export async function InventarisDetail({
       backHref={listHref}
       surface={surface}
       eyebrow="Inventaris"
-      title={`${serialized.kode} · ${serialized.nama}`}
+      title={serialized.nama}
       badge={
         <>
           {!serialized.aktif ? <Badge variant="outline">Nonaktif</Badge> : null}
           {serialized.diBawahMinimum ? (
             <Badge variant="outline">Di bawah minimum</Badge>
           ) : serialized.aktif ? (
-            <Badge variant="outline">OK</Badge>
+            <Badge variant="outline">Stok cukup</Badge>
           ) : null}
         </>
       }
@@ -52,6 +53,7 @@ export async function InventarisDetail({
         writableMode ? <InventarisDetailActions item={serialized} mode={writableMode} /> : null
       }
     >
+      <DetailKodeStrip label="Kode barang" kode={serialized.kode} />
       <PageSection
         title="Riwayat pergerakan"
         description="50 pergerakan terakhir untuk item ini."

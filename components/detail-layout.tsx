@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { FinanceModuleNav } from "@/components/finance-module-nav";
 import { DetailLayoutToolbar } from "@/components/detail-layout-toolbar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -18,6 +19,7 @@ export type DetailLayoutProps = {
   className?: string;
   /** `sheet` = drill-down dalam panel samping (tanpa link kembali). */
   surface?: "page" | "sheet";
+  financeNavRole?: "ADMIN" | "OWNER";
 };
 
 export function DetailLayout({
@@ -32,11 +34,13 @@ export function DetailLayout({
   extra,
   className,
   surface = "page",
+  financeNavRole,
 }: DetailLayoutProps) {
   const inSheet = surface === "sheet";
 
   return (
     <div className={cn("flex flex-col", inSheet ? "gap-6" : "gap-8", className)}>
+      {financeNavRole && !inSheet ? <FinanceModuleNav role={financeNavRole} /> : null}
       <div>
         {inSheet ? null : (
           <Button

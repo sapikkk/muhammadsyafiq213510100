@@ -38,7 +38,17 @@ Bantu user (mahasiswa skripsi, sistem digitalisasi tata kelola UMKM hidroponik) 
 
 ## Smart Jurnal
 
-Form berbahasa manusia: "Saya ingin mencatat [Tipe] sebesar [Nominal] menggunakan [Sumber Kas]". Sistem memasangkan Debit/Kredit otomatis sehingga selalu balance. Tipe: beban operasional, prive, suntikan modal, pembelian aset, pinjaman, cicilan (pokok + bunga), pembelian bahan tunai/kredit, bayar hutang, penyusutan, transfer antar kas, pendapatan lain, pajak. Tab Jurnal Manual tetap ada sebagai fallback Admin.
+Form berbahasa manusia: "Saya ingin mencatat [Tipe] sebesar [Nominal] menggunakan [Sumber Kas]". Sistem memasangkan Debit/Kredit otomatis sehingga selalu balance.
+
+| Tipe Smart Jurnal | Debit | Kredit | Catatan |
+| --- | --- | --- | --- |
+| Suntikan modal | Kas/Bank | **3100 Modal Pemilik** | Bukan pendapatan; menambah ekuitas |
+| Pendapatan lain-lain | Kas/Bank | **4300 Pendapatan Lain-lain** | Bukan 4100/4200 (penjualan sayur) |
+| Penjualan sayur | — | 4100 / 4200 | Hanya lewat **pesanan jual** (DELIVERED), bukan catat uang |
+| Prive | 3200 | Kas/Bank | |
+| Terima piutang | Kas/Bank | 1200 | Atau pelunasan dari detail SO |
+
+4100 = penjualan curah, 4200 = penjualan pack — jangan dipakai untuk modal atau pendapatan di luar jual sayur.
 
 ## Cara Kerja Saat Dipakai
 

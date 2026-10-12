@@ -22,6 +22,28 @@ import { SubmitButton } from "@/components/submit-button";
 import { Badge } from "@/components/ui/badge";
 import { formatRupiah } from "@/lib/format";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
+import type { RekeningKasOption } from "@/lib/rekening-kas-types";
+import { SalesOrderBarisLine } from "@/components/sales-order-baris-line";
+
+function TautanCatatanKeuangan({
+  mode,
+  jurnalId,
+}: {
+  mode: "admin" | "owner" | "pengiriman";
+  jurnalId: number;
+}) {
+  if (mode === "pengiriman") return null;
+  const href =
+    mode === "owner" ? `/owner/jurnal/${jurnalId}` : `/admin/jurnal/${jurnalId}`;
+  return (
+    <>
+      {" · "}
+      <Link href={href} className="text-primary underline-offset-2 hover:underline">
+        Buka catatan keuangan
+      </Link>
+    </>
+  );
+}
 
 export type SoRow = {
   id: number;
@@ -45,6 +67,9 @@ export type SoRow = {
   jurnal_dp_id?: number | null;
   baris: {
     kode_batch: string;
+    greenhouse_nama: string;
+    kolam_nama: string;
+    varietas_nama: string;
     jenis: string;
     jumlah: string;
     lubang_terpakai?: number;
@@ -53,14 +78,14 @@ export type SoRow = {
   }[];
 };
 
-function PelunasanForm({ id }: { id: number }) {
+function PelunasanForm({ id, rekeningOptions }: { id: number; rekeningOptions: RekeningKasOption[] }) {
   const [state, formAction] = useFormState(catatPelunasanSalesOrderAction, {});
   useActionToast({ error: state.error, ok: state.ok });
   return (
     <form action={formAction} className="mt-2 space-y-2 rounded-md border border-dashed p-3">
       <input type="hidden" name="salesOrderId" value={id} />
       <Input name="nominal" placeholder="Nominal pelunasan (Rp)" className="h-9 text-sm" required />
-      <KasSumberSelect />
+      <KasSumberSelect rekeningOptions={rekeningOptions} />
       <SubmitButton className="h-9" pendingLabel="...">
         Catat pelunasan (kas masuk, piutang berkurang)
       </SubmitButton>
@@ -68,13 +93,13 @@ function PelunasanForm({ id }: { id: number }) {
   );
 }
 
-function CatatDpButton({ id }: { id: number }) {
+function CatatDpButton({ id, rekeningOptions }: { id: number; rekeningOptions: RekeningKasOption[] }) {
   const [state, formAction] = useFormState(catatDpSalesOrderAction, {});
   useActionToast({ error: state.error, ok: state.ok });
   return (
     <form action={formAction} className="mt-2 space-y-2 rounded-md border border-dashed p-3">
       <input type="hidden" name="salesOrderId" value={id} />
-      <KasSumberSelect />
+      <KasSumberSelect rekeningOptions={rekeningOptions} />
       <SubmitButton className="h-9" pendingLabel="...">
         Catat uang muka
       </SubmitButton>
@@ -112,7 +137,15 @@ function ShipForm({ id }: { id: number }) {
   );
 }
 
-function PackingCostForm({ id, defaultValue }: { id: number; defaultValue: string }) {
+function PackingCostForm({
+  id,
+  defaultValue,
+  rekeningOptions,
+}: {
+  id: number;
+  defaultValue: string;
+  rekeningOptions: RekeningKasOption[];
+}) {
   const [state, formAction] = useFormState(recordPackingCostAction, {});
   useActionToast({ error: state.error, ok: state.ok });
   return (
@@ -126,7 +159,7 @@ function PackingCostForm({ id, defaultValue }: { id: number; defaultValue: strin
         placeholder="Biaya packing (Rp)"
         className="h-9 text-sm"
       />
-      <KasSumberSelect />
+      <KasSumberSelect rekeningOptions={rekeningOptions} />
       <SubmitButton className="h-9" pendingLabel="...">
         Catat biaya packing
       </SubmitButton>
@@ -151,7 +184,7 @@ function CancelForm({ id }: { id: number }) {
   );
 }
 
-function DeliverForm({ id }: { id: number }) {
+function DeliverForm({ id, rekeningOptions }: { id: number; rekeningOptions: RekeningKasOption[] }) {
   const [state, formAction] = useFormState(deliverSalesOrderAction, {});
   useActionToast({ error: state.error, ok: state.ok });
   return (
@@ -164,7 +197,7 @@ function DeliverForm({ id }: { id: number }) {
         placeholder="Uang diterima sekarang (kosong = lunas penuh)"
         className="h-9 text-sm"
       />
-      <KasSumberSelect />
+      <KasSumberSelect rekeningOptions={rekeningOptions} />
       <SubmitButton className="h-9" pendingLabel="...">
         Tandai sudah sampai pelanggan
       </SubmitButton>
@@ -180,10 +213,12 @@ export function SalesOrderDetail({
   row,
   mode,
   showHeader = false,
+  rekeningOptions = [],
 }: {
   row: SoRow;
   mode: "admin" | "pengiriman" | "owner";
   showHeader?: boolean;
+  rekeningOptions?: RekeningKasOption[];
 }) {
   return (
     <div className="space-y-4 text-sm">
@@ -195,24 +230,32 @@ export function SalesOrderDetail({
       ) : null}
       <p className="text-muted-foreground">
         {row.pelanggan_nama} · Total {formatRupiah(row.total)}
-        {row.jumlah_dp && row.jumlah_dp !== "0"
-          ? ` · DP ${formatRupiah(row.jumlah_dp)}${row.akun_dp_kode ? ` → akun ${row.akun_dp_kode}` : ""}`
-          : ""}
+        {row.jumlah_dp && row.jumlah_dp !== "0" ? ` · Uang muka ${formatRupiah(row.jumlah_dp)}` : ""}
       </p>
       {row.status_pembayaran && row.status_pembayaran !== "BELUM_BAYAR" ? (
         <p className="text-xs text-muted-foreground">
           Pembayaran: {labelPembayaranStatus(row.status_pembayaran)}
-          {row.jurnal_dp_id ? ` · Catatan uang muka #${row.jurnal_dp_id}` : ""}
+          {row.jurnal_dp_id ? (
+            <TautanCatatanKeuangan mode={mode} jurnalId={row.jurnal_dp_id} />
+          ) : null}
         </p>
       ) : null}
-      <ul className="text-xs text-muted-foreground">
+      <ul className="text-sm">
         {row.baris.map((b, i) => (
-          <li key={i}>
-            {b.kode_batch} · {b.jenis} {b.jumlah}
-            {b.lubang_terpakai ? ` · ${b.lubang_terpakai} lubang` : ""}
-            {b.hpp_order && b.hpp_order !== "0" ? ` · HPP ${formatRupiah(b.hpp_order)}` : ""} →{" "}
-            {formatRupiah(b.subtotal)}
-          </li>
+          <SalesOrderBarisLine
+            key={i}
+            baris={{
+              greenhouseNama: b.greenhouse_nama,
+              kolamNama: b.kolam_nama,
+              varietasNama: b.varietas_nama,
+              kodeBatch: b.kode_batch,
+              jenis: b.jenis,
+              jumlah: b.jumlah,
+              lubang_terpakai: b.lubang_terpakai,
+              hpp_order: b.hpp_order,
+              subtotal: b.subtotal,
+            }}
+          />
         ))}
       </ul>
       {row.catatan_pengiriman ? (
@@ -226,13 +269,18 @@ export function SalesOrderDetail({
       {row.terkirim_pada ? (
         <p className="text-xs text-muted-foreground">
           Terkirim: {new Date(row.terkirim_pada).toLocaleString("id-ID")}
-          {row.jurnal_pendapatan_id
-            ? ` · Catatan keuangan #${row.jurnal_pendapatan_id}${
-                row.jurnal_pendapatan_status
-                  ? ` (${statusJurnalLabel[row.jurnal_pendapatan_status as StatusJurnalKey] ?? row.jurnal_pendapatan_status})`
-                  : ""
-              }`
-            : null}
+          {row.jurnal_pendapatan_id ? (
+            <>
+              {row.jurnal_pendapatan_status ? (
+                <>
+                  {" · "}
+                  {statusJurnalLabel[row.jurnal_pendapatan_status as StatusJurnalKey] ??
+                    row.jurnal_pendapatan_status}
+                </>
+              ) : null}
+              <TautanCatatanKeuangan mode={mode} jurnalId={row.jurnal_pendapatan_id} />
+            </>
+          ) : null}
         </p>
       ) : null}
       {row.alasan_batal ? (
@@ -255,7 +303,7 @@ export function SalesOrderDetail({
       {mode === "admin" &&
       row.status === "DELIVERED" &&
       row.status_pembayaran === "PIUTANG" ? (
-        <PelunasanForm id={row.id} />
+        <PelunasanForm id={row.id} rekeningOptions={rekeningOptions} />
       ) : null}
       {mode === "admin" &&
       row.status_pembayaran === "BELUM_BAYAR" &&
@@ -263,17 +311,23 @@ export function SalesOrderDetail({
       row.jumlah_dp !== "0" &&
       row.status !== "DRAFT" &&
       row.status !== "CANCELLED" ? (
-        <CatatDpButton id={row.id} />
+        <CatatDpButton id={row.id} rekeningOptions={rekeningOptions} />
       ) : null}
       {mode === "admin" &&
       ["CONFIRMED", "SHIPPED", "DELIVERED"].includes(row.status) &&
       !row.jurnal_packing_id ? (
-        <PackingCostForm id={row.id} defaultValue={row.biaya_packing ?? "0"} />
+        <PackingCostForm
+          id={row.id}
+          defaultValue={row.biaya_packing ?? "0"}
+          rekeningOptions={rekeningOptions}
+        />
       ) : null}
       {mode === "admin" && row.biaya_packing && row.biaya_packing !== "0" ? (
         <p className="text-xs text-muted-foreground">
           Biaya packing: {formatRupiah(row.biaya_packing)}
-          {row.jurnal_packing_id ? ` · Catatan keuangan #${row.jurnal_packing_id}` : null}
+          {row.jurnal_packing_id ? (
+            <TautanCatatanKeuangan mode={mode} jurnalId={row.jurnal_packing_id} />
+          ) : null}
         </p>
       ) : null}
       {mode === "admin" && row.status !== "CANCELLED" ? <CancelForm id={row.id} /> : null}
@@ -281,7 +335,7 @@ export function SalesOrderDetail({
         <ShipForm id={row.id} />
       ) : null}
       {(mode === "admin" || mode === "pengiriman") && row.status === "SHIPPED" ? (
-        <DeliverForm id={row.id} />
+        <DeliverForm id={row.id} rekeningOptions={rekeningOptions} />
       ) : null}
     </div>
   );

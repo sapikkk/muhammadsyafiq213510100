@@ -4,6 +4,10 @@ import { useFormState } from "react-dom";
 import { klasifikasiSusut } from "@/app/actions/susut";
 import { SubmitButton } from "@/components/submit-button";
 import { labelTahap } from "@/lib/kegagalan-labels";
+import {
+  labelBarisProduksiUtama,
+  partsFromSiklusNested,
+} from "@/lib/produksi-ui-labels";
 import { kategoriSusutOptions } from "@/lib/susut-labels";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 
@@ -15,6 +19,7 @@ export type LogMenunggu = {
   siklus: {
     kode_batch: string;
     varietas: { nama: string };
+    kolam: { nama: string; greenhouse: { nama: string } };
   };
 };
 
@@ -22,12 +27,16 @@ function KlasifikasiBaris({ row }: { row: LogMenunggu }) {
   const [state, formAction] = useFormState(klasifikasiSusut, {});
   useActionToast({ error: state.error, ok: state.ok });
 
+  const parts = partsFromSiklusNested({
+    kode_batch: row.siklus.kode_batch,
+    varietas: row.siklus.varietas,
+    kolam: row.siklus.kolam,
+  });
+
   return (
     <li id={`log-kegagalan-${row.id}`} className="scroll-mt-24 space-y-3 rounded-md border p-4 text-sm">
       <div>
-        <p className="font-medium">
-          {row.siklus.kode_batch} · {row.siklus.varietas.nama}
-        </p>
+        <p className="font-medium">{labelBarisProduksiUtama(parts)}</p>
         <p>
           {labelTahap(row.tahap)} · {row.jumlah_gagal} gagal
         </p>

@@ -9,6 +9,7 @@ import { SubmitButton } from "@/components/submit-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { formatRupiah } from "@/lib/format";
+import { labelAkunDropdown } from "@/lib/akun-ui-labels";
 
 export type AkunPosting = { id: number; kode: string; nama: string };
 
@@ -102,7 +103,7 @@ export function JurnalForm({
                   <option value="">Pilih akun</option>
                   {akun.map((a) => (
                     <option key={a.id} value={a.id}>
-                      {`${a.kode} ${a.nama}`}
+                      {labelAkunDropdown(a)}
                     </option>
                   ))}
                 </select>

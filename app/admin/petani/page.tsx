@@ -13,11 +13,6 @@ export default async function AdminPetaniPage() {
     <CrudPageLayout
       eyebrow="Tim"
       title="Data petani lapangan"
-      description="Data master petani lapangan, terpisah dari akun login. Akun login didaftarkan di beranda Admin."
-      flowSteps={[
-        { label: "Daftar", detail: "Nama dan gaji lapangan." },
-        { label: "Tambah atau ubah", detail: "Panel samping, lalu daftarkan akun login di dashboard." },
-      ]}
       actions={
         <PetaniMasterFormSheet
           trigger={
@@ -28,7 +23,6 @@ export default async function AdminPetaniPage() {
         />
       }
       list={<PetaniMasterDaftar rows={rows.map(serializePetani)} />}
-      listDescription="Cari nama, lalu Ubah gaji atau nama master."
     />
   );
 }

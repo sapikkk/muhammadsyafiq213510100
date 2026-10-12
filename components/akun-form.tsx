@@ -6,6 +6,7 @@ import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { saveAkun } from "@/app/actions/akun";
 import { FormSheet } from "@/components/form-sheet";
 import { SubmitButton } from "@/components/submit-button";
+import { labelAkunDropdown } from "@/lib/akun-ui-labels";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -138,7 +139,7 @@ export function AkunForm({
                   .filter((parent) => parent.id !== edit?.id)
                   .map((parent) => (
                     <SelectItem key={parent.id} value={String(parent.id)}>
-                      {`${parent.kode} ${parent.nama}`}
+                      {labelAkunDropdown(parent)}
                     </SelectItem>
                   ))}
               </SelectContent>

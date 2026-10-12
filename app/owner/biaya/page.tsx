@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { BebanDrilldownDaftar, BebanPerAkunDaftar } from "@/components/beban-per-akun-daftar";
+import { MetricCards } from "@/components/metric-cards";
 import { OwnerCostPie } from "@/components/owner-cost-pie";
 import { PageSection } from "@/components/page-section";
 import { costBreakdown } from "@/lib/cost-breakdown";
@@ -27,13 +28,9 @@ export default async function OwnerBiayaPage({ searchParams }: { searchParams: S
 
   return (
     <CrudPageLayout
+      financeNavRole="OWNER"
       eyebrow="Keuangan"
       title="Rincian biaya"
-      description="Diagram beban per akun dari catatan yang sudah disetujui. Klik irisan untuk lihat catatan terkait."
-      flowSteps={[
-        { label: "Filter periode", detail: "Isi tahun-bulan (contoh 2026-01), lalu Terapkan." },
-        { label: "Per akun", detail: "Klik irisan diagram untuk lihat daftar catatan di bawah." },
-      ]}
       list={
         <div className="space-y-4">
           <form method="get" className="flex flex-wrap items-end gap-3 text-sm">
@@ -59,37 +56,28 @@ export default async function OwnerBiayaPage({ searchParams }: { searchParams: S
               Terapkan
             </button>
           </form>
-          <p className="text-sm text-muted-foreground">
-            Periode {data.dari} s/d {data.sampai} · Total beban {formatRupiah(data.totalBeban)}
-          </p>
-          <OwnerCostPie slices={data.slices} selectedAkunId={akunId} baseQuery={baseQueryStr} />
+          <MetricCards
+            columns={2}
+            items={[
+              { label: "Periode", value: `${data.dari} – ${data.sampai}` },
+              { label: "Total beban", value: formatRupiah(data.totalBeban) },
+            ]}
+          />
+          <div className="grid gap-4 lg:grid-cols-2">
+            <OwnerCostPie
+              slices={data.slices}
+              selectedAkunId={akunId}
+              baseQuery={baseQueryStr}
+            />
+            <BebanPerAkunDaftar slices={data.slices} baseQuery={baseQueryStr} />
+          </div>
         </div>
       }
       listTitle="Beban per akun"
       extra={
         data.drilldown && data.drilldown.length > 0 ? (
           <PageSection title="Rincian catatan keuangan" badge="Read">
-            <div className="rounded-md border">
-              <div className="flex items-center justify-between border-b px-4 py-3">
-                <p className="text-sm text-muted-foreground">Jurnal yang membentuk irisan terpilih</p>
-                <Link href={`/owner/biaya?${baseQueryStr}`} className="text-xs text-primary hover:underline">
-                  Tutup drill-down
-                </Link>
-              </div>
-              <ul className="divide-y text-sm">
-                {data.drilldown.map((row, i) => (
-                  <li key={`${row.jurnalId}-${i}`} className="flex flex-wrap justify-between gap-2 px-4 py-3">
-                    <div>
-                      <p className="font-medium">Jurnal #{row.jurnalId}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {row.tanggal} · {row.keterangan}
-                      </p>
-                    </div>
-                    <span className="tabular-nums">{formatRupiah(row.nominal)}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <BebanDrilldownDaftar rows={data.drilldown} tutupHref={`/owner/biaya?${baseQueryStr}`} />
           </PageSection>
         ) : null
       }

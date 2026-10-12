@@ -1,6 +1,6 @@
 import "server-only";
 
-import { prisma } from "@/lib/prisma";
+import { prisma, runTransaction } from "@/lib/prisma";
 import { SalesOrderError } from "@/lib/sales-order";
 
 type Db = typeof prisma;
@@ -27,7 +27,22 @@ export async function getSalesOrderInvoice(id: number) {
     where: { id },
     include: {
       pelanggan: true,
-      baris: { include: { siklus: { select: { kode_batch: true } } } },
+      baris: {
+        include: {
+          siklus: {
+            select: {
+              kode_batch: true,
+              varietas: { select: { nama: true } },
+              kolam: {
+                select: {
+                  nama: true,
+                  greenhouse: { select: { nama: true } },
+                },
+              },
+            },
+          },
+        },
+      },
     },
   });
   if (!row) throw new SalesOrderError("Sales order tidak ditemukan.", 404);
@@ -35,7 +50,7 @@ export async function getSalesOrderInvoice(id: number) {
     throw new SalesOrderError("Invoice hanya untuk SO yang sudah dikonfirmasi atau selesai.", 400);
   }
   if (!row.nomor_invoice) {
-    const nomor = await prisma.$transaction(async (tx) => {
+    const nomor = await runTransaction(async (tx) => {
       const fresh = await tx.sales_Order.findUnique({ where: { id } });
       if (fresh?.nomor_invoice) return fresh.nomor_invoice;
       const generated = await generateNomorInvoice(tx as Db);

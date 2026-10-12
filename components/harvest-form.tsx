@@ -15,8 +15,8 @@ export function HarvestForm({ siklusId, jumlahDisemai }: { siklusId: number; jum
       <input type="hidden" name="siklusId" value={siklusId} />
       <h2 className="text-lg font-semibold">Laporan panen & sortasi</h2>
       <p className="text-sm text-muted-foreground">
-        Batch disemai {jumlahDisemai} bibit. Isi hasil sortasi layak vs tidak layak (satu laporan
-        per batch).
+        Disemai {jumlahDisemai} bibit. Isi hasil sortasi layak vs tidak layak (satu laporan per
+        siklus tanam).
       </p>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block space-y-1.5 text-sm">

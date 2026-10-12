@@ -5,15 +5,8 @@ import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recha
 import type { CostSlice } from "@/lib/cost-breakdown-types";
 import { formatRupiah } from "@/lib/format";
 
-const COLORS = [
-  "hsl(0 0% 9%)",
-  "hsl(0 0% 25%)",
-  "hsl(0 0% 40%)",
-  "hsl(0 0% 55%)",
-  "hsl(0 0% 70%)",
-  "hsl(0 0% 85%)",
-  "hsl(0 0% 92%)",
-];
+import { ChartCard } from "@/components/chart-card";
+import { chartFillAt } from "@/lib/chart-monochrome";
 
 export function OwnerCostPie({
   slices,
@@ -25,7 +18,7 @@ export function OwnerCostPie({
   baseQuery: string;
 }) {
   const data = slices.map((s) => ({
-    name: `${s.kode} ${s.nama}`,
+    name: s.nama,
     value: Number(s.total),
     akunId: s.akunId,
   }));
@@ -39,32 +32,35 @@ export function OwnerCostPie({
   }
 
   return (
-    <div className="h-80 w-full">
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart>
-          <Pie
-            data={data}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={100}
-            label={({ name, percent }) => `${name.split(" ")[0]} ${(percent * 100).toFixed(0)}%`}
-          >
-            {data.map((entry, i) => (
-              <Cell
-                key={entry.akunId}
-                fill={COLORS[i % COLORS.length]}
-                stroke={selectedAkunId === entry.akunId ? "hsl(var(--foreground))" : undefined}
-                strokeWidth={selectedAkunId === entry.akunId ? 2 : 0}
-              />
-            ))}
-          </Pie>
-          <Tooltip formatter={(v: number) => formatRupiah(String(v))} />
-          <Legend />
-        </PieChart>
-      </ResponsiveContainer>
-      <ul className="mt-4 space-y-1 text-sm">
+    <ChartCard title="Bagian beban per akun">
+      <div className="h-52 w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={data}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              innerRadius={40}
+              outerRadius={68}
+              paddingAngle={1}
+            >
+              {data.map((entry, i) => (
+                <Cell
+                  key={entry.akunId}
+                  fill={chartFillAt(i)}
+                  stroke={selectedAkunId === entry.akunId ? "hsl(var(--foreground))" : undefined}
+                  strokeWidth={selectedAkunId === entry.akunId ? 2 : 0}
+                />
+              ))}
+            </Pie>
+            <Tooltip formatter={(v: number) => formatRupiah(String(v))} />
+            <Legend wrapperStyle={{ fontSize: 11 }} />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+      <ul className="mt-3 max-h-32 space-y-1 overflow-y-auto text-sm">
         {slices.map((s) => (
           <li key={s.akunId}>
             <Link
@@ -75,11 +71,11 @@ export function OwnerCostPie({
                   : "text-muted-foreground hover:text-foreground hover:underline"
               }
             >
-              {s.kode} {s.nama} — {formatRupiah(s.total)} ({s.persen.toFixed(1)}%)
+              {s.nama} · {formatRupiah(s.total)} ({s.persen.toFixed(1)}%)
             </Link>
           </li>
         ))}
       </ul>
-    </div>
+    </ChartCard>
   );
 }

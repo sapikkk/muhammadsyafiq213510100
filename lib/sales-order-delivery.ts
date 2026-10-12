@@ -3,7 +3,8 @@ import "server-only";
 import { Prisma } from "@prisma/client";
 import { AKUN_KODE } from "@/lib/akun-kode";
 import { KasSumberError, parseSumberKasKode, resolveKasAkunId, type SumberKasKode } from "@/lib/kas-sumber";
-import { prisma } from "@/lib/prisma";
+import { prisma, runTransaction } from "@/lib/prisma";
+import { siklusSelectUntukPesanan } from "@/lib/sales-order";
 import {
   parseUangDiterimaDeliver,
   PenerimaanPenjualanError,
@@ -180,14 +181,14 @@ export async function listSalesOrdersPengiriman() {
     include: {
       pelanggan: { select: { nama: true } },
       jurnal_pendapatan: { select: { id: true, status: true, keterangan: true } },
-      baris: { include: { siklus: { select: { kode_batch: true } } } },
+      baris: { include: { siklus: { select: siklusSelectUntukPesanan } } },
     },
   });
 }
 
 export async function shipSalesOrder(id: number, userId: number, catatanRaw?: unknown) {
   const catatan = parseCatatan(catatanRaw);
-  return prisma.$transaction(async (tx) => {
+  return runTransaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({ where: { id } });
     if (!so) throw new SalesOrderError("Sales order tidak ditemukan.", 404);
     if (so.status !== "CONFIRMED") {
@@ -203,7 +204,7 @@ export async function shipSalesOrder(id: number, userId: number, catatanRaw?: un
       },
       include: {
         pelanggan: { select: { nama: true } },
-        baris: { include: { siklus: { select: { kode_batch: true } } } },
+        baris: { include: { siklus: { select: siklusSelectUntukPesanan } } },
       },
     });
   });
@@ -231,7 +232,7 @@ export async function deliverSalesOrder(
     throw error;
   }
 
-  return prisma.$transaction(async (tx) => {
+  return runTransaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({
       where: { id },
       include: { baris: true },
@@ -280,7 +281,7 @@ export async function deliverSalesOrder(
       },
       include: {
         pelanggan: { select: { nama: true } },
-        baris: { include: { siklus: { select: { kode_batch: true } } } },
+        baris: { include: { siklus: { select: siklusSelectUntukPesanan } } },
         jurnal_pendapatan: { select: { id: true, status: true, keterangan: true } },
       },
     });

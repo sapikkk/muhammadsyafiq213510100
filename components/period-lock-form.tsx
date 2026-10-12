@@ -7,6 +7,14 @@ import {
 } from "@/app/actions/period-lock";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export function PeriodLockForm({ periodeTutup }: { periodeTutup: string | null }) {
@@ -14,29 +22,52 @@ export function PeriodLockForm({ periodeTutup }: { periodeTutup: string | null }
   useActionToast({ error: state.error, ok: state.ok });
 
   return (
-    <form action={formAction} className="max-w-md space-y-4 rounded-md border p-4">
-      <p className="text-sm text-muted-foreground">
-        Aktif:{" "}
-        {periodeTutup
-          ? `jurnal dengan tanggal sebelum ${periodeTutup} ditolak.`
-          : "belum ada lock (semua tanggal diizinkan)."}
-      </p>
-      <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Tanggal tutup periode</span>
-        <Input
-          name="periodeTutup"
-          type="date"
-          defaultValue={periodeTutup ?? ""}
-          className="h-11"
-        />
-      </label>
-      <label className="flex items-center gap-2 text-sm">
-        <input type="checkbox" name="clear" className="h-4 w-4" />
-        Hapus period lock
-      </label>
-      <SubmitButton className="h-11" pendingLabel="Menyimpan…">
-        Simpan pengaturan
-      </SubmitButton>
+    <form action={formAction}>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[35%]">Kolom</TableHead>
+            <TableHead>Isian</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell colSpan={2} className="text-sm text-muted-foreground">
+              {periodeTutup
+                ? `Aktif: jurnal dengan tanggal sebelum ${periodeTutup} ditolak.`
+                : "Belum ada kunci periode (semua tanggal diizinkan)."}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium">Tanggal tutup periode</TableCell>
+            <TableCell>
+              <Input
+                name="periodeTutup"
+                type="date"
+                defaultValue={periodeTutup ?? ""}
+                className="h-11 max-w-md"
+              />
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium">Hapus kunci</TableCell>
+            <TableCell>
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" name="clear" className="h-4 w-4" />
+                Hapus tutup periode
+              </label>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell />
+            <TableCell>
+              <SubmitButton className="h-11" pendingLabel="Menyimpan…">
+                Simpan pengaturan
+              </SubmitButton>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
     </form>
   );
 }

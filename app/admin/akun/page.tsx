@@ -8,19 +8,13 @@ export const dynamic = "force-dynamic";
 
 export default async function AkunPage() {
   const rows = await listAkun();
-  const aktif = rows.filter((row) => row.aktif);
-  const parents = aktif.map(({ id, kode, nama, tipe }) => ({ id, kode, nama, tipe }));
+  const parents = rows.filter((row) => row.aktif).map(({ id, kode, nama, tipe }) => ({ id, kode, nama, tipe }));
 
   return (
     <CrudPageLayout
-      eyebrow="Akuntansi"
+      financeNavRole="ADMIN"
+      eyebrow="Keuangan"
       title="Bagan akun"
-      description={`${aktif.length} akun aktif dari ${rows.length}. Akun nonaktif tetap tersimpan agar jurnal lama tidak putus.`}
-      flowSteps={[
-        { label: "Pohon akun", detail: "Cari kode atau nama, lalu buka cabang di pohon." },
-        { label: "Tambah", detail: "Tombol di kanan atas — pilih induk & tipe." },
-        { label: "Ubah / status", detail: "Per baris di pohon — akun sistem tanpa aksi." },
-      ]}
       actions={
         <AkunFormSheet
           parents={parents}

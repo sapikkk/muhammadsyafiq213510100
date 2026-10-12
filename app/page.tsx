@@ -40,7 +40,6 @@ export default async function HomePage() {
         <PageHeaderRow
           eyebrow="Kokonus Farm"
           title="Tata kelola produksi hidroponik"
-          description="Ringkasan status pengembangan produk. Transaksi harian lewat halaman Masuk ke beranda Owner, Admin, atau Petani."
           guide={
             <PageCoachmark
               pageKey="home"

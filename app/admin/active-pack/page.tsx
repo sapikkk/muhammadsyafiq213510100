@@ -25,12 +25,6 @@ export default async function AdminActivePackPage() {
     <CrudPageLayout
       eyebrow="Produksi & stok"
       title="Paket siap pakai"
-      description="Alokasi biaya benih dan media per unit; dipakai saat semai dan tambal susulan."
-      flowSteps={[
-        { label: "Buat pack", detail: "Tombol Tambah: pilih item inventaris dan harga total pack." },
-        { label: "Detail", detail: "Klik baris untuk pakai unit manual atau lihat sisa." },
-        { label: "Habis", detail: "Status habis memicu jurnal penyesuaian pembulatan." },
-      ]}
       actions={
         <ActivePackFormSheet
           items={items}
@@ -43,8 +37,7 @@ export default async function AdminActivePackPage() {
         />
       }
       list={<ActivePackDaftar rows={packs} mode="admin" />}
-      listTitle="Daftar pack"
-      listDescription="Pemakaian otomatis saat semai; admin bisa pakai manual dari detail pack aktif."
+      listTitle="Paket siap pakai"
     />
   );
 }

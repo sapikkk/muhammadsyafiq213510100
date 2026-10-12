@@ -24,15 +24,13 @@ export function ActivePackDaftar({
 }) {
   const columns = useMemo<ColumnDef<ActivePackListRow>[]>(
     () => [
-      { accessorKey: "kode", header: "Kode" },
       {
-        id: "item",
-        header: "Item",
-        accessorFn: (row) => `${row.item.kode} ${row.item.nama}`,
+        id: "paket",
+        header: "Paket",
+        accessorFn: (row) =>
+          `${row.item.nama} ${row.item.kode} ${row.kode}`,
         cell: ({ row }) => (
-          <span>
-            {row.original.item.kode} {row.original.item.nama}
-          </span>
+          <span className="font-medium">{row.original.item.nama}</span>
         ),
       },
       {
@@ -86,8 +84,8 @@ export function ActivePackDaftar({
       columns={columns}
       data={rows}
       pageSize={10}
-      searchPlaceholder="Cari pack atau item…"
-      searchColumnIds={["kode", "item", "dibuatOleh.nama"]}
+      searchPlaceholder="Cari nama barang atau kode paket…"
+      searchColumnIds={["paket", "kode", "dibuatOleh.nama"]}
       emptyMessage="Belum ada paket siap pakai."
       getRowHref={(row) => `${basePath[mode]}/${row.id}`}
     />

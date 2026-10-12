@@ -5,6 +5,7 @@ import { siklusBolehAbort } from "@/lib/siklus-abort-status";
 type SiklusRow = {
   id: number;
   kode_batch: string;
+  label: string;
   status: string;
   laporan_status: string | null;
 };
@@ -27,7 +28,7 @@ export function AdminSiklusAbortPanel({ siklus }: { siklus: SiklusRow[] }) {
   return (
     <div className="space-y-6">
       {eligible.map((s) => (
-        <SiklusAbortForm key={s.id} siklusId={s.id} kodeBatch={s.kode_batch} />
+        <SiklusAbortForm key={s.id} siklusId={s.id} siklusLabel={s.label} kodeBatch={s.kode_batch} />
       ))}
     </div>
   );

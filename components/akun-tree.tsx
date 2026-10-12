@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { tipeAkunLabel, type TipeAkunKey } from "@/lib/akun-tipe";
+import { formatRupiah } from "@/lib/format";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 
 export type AkunRow = {
@@ -27,8 +28,14 @@ export type AkunRow = {
   aktif: boolean;
   isSystem: boolean;
   parentId: number | null;
+  saldo: string;
   anak: AkunRow[];
 };
+
+function rollupSaldo(node: AkunRow): number {
+  if (node.anak.length === 0) return Number(node.saldo);
+  return node.anak.reduce((sum, child) => sum + rollupSaldo(child), 0);
+}
 
 function filterAkunTree(nodes: AkunRow[], query: string): AkunRow[] {
   const q = query.trim().toLowerCase();
@@ -118,6 +125,8 @@ function Node({
   parents: AkunOption[];
 }) {
   const writable = mode === "admin" && !akun.isSystem;
+  const tampilSaldo = rollupSaldo(akun);
+  const induk = akun.anak.length > 0;
 
   return (
     <li>
@@ -125,10 +134,12 @@ function Node({
         className="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between"
         style={{ paddingLeft: depth * 20 }}
       >
-        <div className="flex flex-wrap items-center gap-2 text-sm">
-          <span className="font-mono font-medium">{akun.kode}</span>
-          <span className={akun.aktif ? "" : "text-muted-foreground line-through"}>
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2 text-sm">
+          <span className={`min-w-0 truncate ${akun.aktif ? "font-medium" : "text-muted-foreground line-through"}`}>
             {akun.nama}
+          </span>
+          <span className="shrink-0 text-xs tabular-nums text-muted-foreground" title={`Kode ${akun.kode}`}>
+            {akun.kode}
           </span>
           {depth === 0 ? (
             <Badge variant="secondary">{tipeAkunLabel[akun.tipe]}</Badge>
@@ -136,6 +147,13 @@ function Node({
           {akun.aktif ? null : <Badge variant="outline">Nonaktif</Badge>}
           {akun.isSystem ? <Badge variant="secondary">Sistem</Badge> : null}
         </div>
+        <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+          <span
+            className={`min-w-[7rem] text-right text-sm tabular-nums ${induk ? "font-semibold" : ""}`}
+            title={induk ? "Jumlah saldo akun di bawahnya" : "Saldo akun"}
+          >
+            {formatRupiah(tampilSaldo)}
+          </span>
         {writable ? (
           <div className="flex gap-2">
             <AkunFormSheet
@@ -154,6 +172,7 @@ function Node({
             />
           </div>
         ) : null}
+        </div>
       </div>
       {akun.anak.length > 0 ? (
         <ul className="divide-y border-t">
@@ -201,11 +220,17 @@ export function AkunTree({
           Tidak ada akun yang cocok dengan pencarian.
         </p>
       ) : (
-        <ul className="divide-y rounded-md border px-4">
-          {visible.map((akun) => (
-            <Node key={akun.id} akun={akun} depth={0} mode={mode} parents={parents} />
-          ))}
-        </ul>
+        <div className="rounded-md border">
+          <div className="hidden border-b px-4 py-2 text-xs font-medium text-muted-foreground sm:grid sm:grid-cols-[1fr_7rem] sm:items-center">
+            <span>Akun</span>
+            <span className="text-right">Saldo</span>
+          </div>
+          <ul className="divide-y px-4">
+            {visible.map((akun) => (
+              <Node key={akun.id} akun={akun} depth={0} mode={mode} parents={parents} />
+            ))}
+          </ul>
+        </div>
       )}
     </section>
   );

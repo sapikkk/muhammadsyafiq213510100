@@ -6,6 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
 import { formatTanggal } from "@/lib/format";
 import { labelSiklusStatus } from "@/lib/siklus-status-label";
+import {
+  labelSiklusDaftarUtama,
+  partsFromSerializeSiklus,
+} from "@/lib/produksi-ui-labels";
 
 export type SiklusBaris = {
   id: number;
@@ -28,7 +32,17 @@ export function SiklusDaftar({
 }) {
   const columns = useMemo<ColumnDef<SiklusBaris>[]>(
     () => [
-      { accessorKey: "kode_batch", header: "Batch" },
+      {
+        id: "produksi",
+        header: "Tanaman & lokasi",
+        accessorFn: (row) =>
+          labelSiklusDaftarUtama(partsFromSerializeSiklus(row)),
+        cell: ({ row }) => (
+          <span className="font-medium">
+            {labelSiklusDaftarUtama(partsFromSerializeSiklus(row.original))}
+          </span>
+        ),
+      },
       {
         accessorKey: "status",
         header: "Fase",
@@ -36,17 +50,6 @@ export function SiklusDaftar({
           <Badge variant="secondary">
             {labelSiklusStatus(row.original.status)}
           </Badge>
-        ),
-      },
-      { accessorKey: "varietas_nama", header: "Varietas" },
-      {
-        id: "lokasi",
-        header: "Lokasi",
-        accessorFn: (row) => `${row.greenhouse_nama} ${row.kolam_nama}`,
-        cell: ({ row }) => (
-          <span className="text-muted-foreground">
-            {row.original.greenhouse_nama} / {row.original.kolam_nama}
-          </span>
         ),
       },
       {
@@ -72,8 +75,8 @@ export function SiklusDaftar({
       columns={columns}
       data={rows}
       pageSize={12}
-      searchPlaceholder="Cari batch, varietas, lokasi…"
-      searchColumnIds={["kode_batch", "varietas_nama", "lokasi", "status"]}
+      searchPlaceholder="Cari varietas, lokasi, kode batch…"
+      searchColumnIds={["produksi", "kode_batch", "status"]}
       emptyMessage="Belum ada siklus produksi."
       getRowHref={readOnly ? undefined : (row) => `/petani/siklus/${row.id}`}
     />

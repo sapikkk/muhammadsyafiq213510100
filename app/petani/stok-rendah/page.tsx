@@ -11,11 +11,6 @@ export default async function PetaniStokRendahPage() {
     <CrudPageLayout
       eyebrow="Produksi"
       title="Stok rendah"
-      description="Bahan yang perlu diisi ulang. Laporkan ke Admin jika perlu pembelian."
-      flowSteps={[
-        { label: "Cek daftar", detail: "Sama dengan banner di dashboard." },
-        { label: "Laporkan", detail: "Hubungi Admin untuk restock — jangan lanjut semai jika kritis." },
-      ]}
       list={<InventarisStokRendah items={items.map(serializeAlertStok)} />}
       listTitle="Item di bawah minimum"
     />

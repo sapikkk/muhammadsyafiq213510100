@@ -7,10 +7,12 @@ import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { formatRupiah } from "@/lib/format";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
+import { labelSiklusPilihBaris } from "@/lib/sales-order-ui-labels";
 
 type SiklusOpt = {
   id: number;
-  kode_batch: string;
+  greenhouse_nama: string;
+  kolam_nama: string;
   varietas_nama: string;
   harga_curah: string;
   harga_pack: string;
@@ -102,19 +104,18 @@ export function SalesOrderForm({
   if (siklus.length === 0) {
     return (
       <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-        Tidak ada batch siap jual (panen harus disetujui).
+        Belum ada panen siap jual. Setujui laporan panen terlebih dahulu.
       </p>
     );
   }
 
+  const akunUangMuka =
+    akunDp.find((a) => a.kode === "2200") ?? akunDp[0];
+
   return (
     <form action={formAction} className="space-y-4 rounded-md border p-4">
       <input type="hidden" name="barisJson" value={barisJson} readOnly />
-      <h3 className="text-lg font-semibold">Buat pesanan jual (sementara)</h3>
-      <p className="text-sm text-muted-foreground">
-        v2-D.1: setiap baris wajib <strong>lubang terpakai</strong> (bundling) + qty jual (kg curah /
-        jumlah pack). HPP order dihitung saat simpan dari HPP/lubang batch.
-      </p>
+      {akunUangMuka ? <input type="hidden" name="akunDpId" value={akunUangMuka.id} readOnly /> : null}
 
       <label className="block space-y-1 text-sm">
         <span className="font-medium">Pelanggan</span>
@@ -132,16 +133,28 @@ export function SalesOrderForm({
       </label>
 
       <div className="space-y-3">
+        <p className="text-sm text-muted-foreground">
+          Pilih lokasi panen, isi jumlah jual, lubang terpakai, dan harga per baris.
+        </p>
         {lines.map((line, index) => (
           <div key={index} className="grid gap-2 rounded border p-3 sm:grid-cols-2 lg:grid-cols-5">
+            <label className="sr-only" htmlFor={`siklus-${index}`}>
+              Lokasi & varietas
+            </label>
             <select
+              id={`siklus-${index}`}
               value={line.siklusId}
               onChange={(e) => onSiklusChange(index, e.target.value)}
               className="h-10 rounded-md border px-2 text-sm sm:col-span-2"
             >
               {siklus.map((s) => (
                 <option key={s.id} value={s.id}>
-                  {s.kode_batch} · {s.varietas_nama} ({s.jumlah_layak} lubang layak)
+                  {labelSiklusPilihBaris({
+                    greenhouseNama: s.greenhouse_nama,
+                    kolamNama: s.kolam_nama,
+                    varietasNama: s.varietas_nama,
+                    jumlahLayak: s.jumlah_layak,
+                  })}
                 </option>
               ))}
             </select>
@@ -154,6 +167,7 @@ export function SalesOrderForm({
                 updateLine(index, { jenis, hargaSatuan: harga ?? line.hargaSatuan });
               }}
               className="h-10 rounded-md border px-2 text-sm"
+              aria-label="Jenis jual"
             >
               <option value="CURAH">Curah (kg)</option>
               <option value="PACK">Pack</option>
@@ -180,55 +194,36 @@ export function SalesOrderForm({
               onChange={(e) => updateLine(index, { hargaSatuan: e.target.value })}
               inputMode="decimal"
               className="h-10 sm:col-span-2"
+              aria-label="Harga satuan"
             />
           </div>
         ))}
-        <button type="button" onClick={addLine} className="text-sm font-medium text-primary underline-offset-4 hover:underline">
+        <button
+          type="button"
+          onClick={addLine}
+          className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+        >
           + Baris item
         </button>
       </div>
 
-      <p className="text-sm font-medium">Grand total estimasi: {formatRupiah(String(grandTotal))}</p>
+      <p className="text-sm font-medium">Total estimasi: {formatRupiah(String(grandTotal))}</p>
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        <label className="block space-y-1 text-sm">
-          <span className="font-medium">Down payment (opsional)</span>
-          <Input
-            name="jumlahDp"
-            type="text"
-            inputMode="decimal"
-            placeholder="0"
-            className="h-11"
-          />
-          <p className="text-xs text-muted-foreground">
-            Maksimal sama dengan total pesanan. Catat uang muka setelah pesanan dikonfirmasi.
-          </p>
-        </label>
-        {akunDp.length > 0 ? (
-          <label className="block space-y-1 text-sm">
-            <span className="font-medium">Akun uang muka</span>
-            <select
-              name="akunDpId"
-              defaultValue={akunDp.find((a) => a.kode === "2200")?.id ?? akunDp[0]?.id}
-              className="flex h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
-            >
-              {akunDp.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {a.kode} · {a.nama}
-                </option>
-              ))}
-            </select>
-          </label>
-        ) : null}
-      </div>
+      <label className="block max-w-md space-y-1 text-sm">
+        <span className="font-medium">Uang muka (opsional)</span>
+        <Input name="jumlahDp" type="text" inputMode="decimal" placeholder="0" className="h-11" />
+        <p className="text-xs text-muted-foreground">
+          Tidak boleh lebih besar dari total. Pencatatan uang muka setelah pesanan dikonfirmasi.
+        </p>
+      </label>
 
       <label className="block space-y-1 text-sm">
         <span className="font-medium">Catatan (opsional)</span>
         <Input name="catatan" maxLength={500} className="h-11" />
       </label>
 
-      <SubmitButton className="h-11" pendingLabel="Menyimpan...">
-        Simpan pesanan (sementara)
+      <SubmitButton className="h-11" pendingLabel="Menyimpan…">
+        Simpan pesanan
       </SubmitButton>
     </form>
   );

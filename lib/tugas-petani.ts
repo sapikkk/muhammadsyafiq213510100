@@ -4,6 +4,7 @@ import { listAlertStokMinimumCached, listSiklusAktifCached } from "@/lib/cached-
 import { prisma } from "@/lib/prisma";
 import { faseBerikutnya, faseLabel, isFaseProduksi } from "@/lib/siklus-fase";
 import type { TugasPetani } from "@/lib/tugas-petani-types";
+import { labelBarisProduksiUtama, partsFromSiklusNested } from "@/lib/produksi-ui-labels";
 
 export type { TugasPetani } from "@/lib/tugas-petani-types";
 
@@ -27,14 +28,14 @@ export async function daftarTugasPetani(): Promise<TugasPetani[]> {
   for (const s of siklus) {
     if (s.status === "SELESAI" || s.status === "GAGAL_TOTAL") continue;
     const href = `/petani/siklus/${s.id}`;
-    const batch = s.kode_batch;
+    const lokasi = labelBarisProduksiUtama(partsFromSiklusNested(s));
 
     if (s.status === "PANEN" && !s.laporanPanen) {
       tugas.push({
         id: `panen-${s.id}`,
         prioritas: "tinggi",
-        judul: `Kirim laporan panen — ${batch}`,
-        deskripsi: "Batch sudah fase panen, laporan belum dikirim.",
+        judul: `Kirim laporan panen — ${lokasi}`,
+        deskripsi: "Siklus sudah fase panen, laporan belum dikirim.",
         href,
       });
       continue;
@@ -46,7 +47,7 @@ export async function daftarTugasPetani(): Promise<TugasPetani[]> {
         tugas.push({
           id: `fase-${s.id}`,
           prioritas: "sedang",
-          judul: `Lanjut fase — ${batch}`,
+          judul: `Lanjut fase — ${lokasi}`,
           deskripsi: `Saat ini ${faseLabel[s.status]} → ${faseLabel[berikut]}`,
           href,
         });
@@ -55,7 +56,7 @@ export async function daftarTugasPetani(): Promise<TugasPetani[]> {
         tugas.push({
           id: `tambal-${s.id}`,
           prioritas: "sedang",
-          judul: `Pantau / tambal — ${batch}`,
+          judul: `Pantau / tambal — ${lokasi}`,
           deskripsi: "Catat monitor pertumbuhan atau tambal susulan bila ada gagal.",
           href,
         });
@@ -71,6 +72,7 @@ export type HistoriPetaniBaris = {
   waktu: Date;
   jenis: "fase" | "monitor" | "tambal" | "kegagalan";
   ringkasan: string;
+  siklus_lokasi: string;
   siklus_kode: string;
   href: string;
 };
@@ -80,7 +82,19 @@ export async function historiAktivitasPetani(limit = 15): Promise<HistoriPetaniB
     orderBy: { waktu: "desc" },
     take: limit * 2,
     include: {
-      siklus: { select: { kode_batch: true, id: true } },
+      siklus: {
+        select: {
+          kode_batch: true,
+          id: true,
+          varietas: { select: { nama: true } },
+          kolam: {
+            select: {
+              nama: true,
+              greenhouse: { select: { nama: true } },
+            },
+          },
+        },
+      },
       user: { select: { nama: true } },
     },
   });
@@ -88,7 +102,21 @@ export async function historiAktivitasPetani(limit = 15): Promise<HistoriPetaniB
   const kegagalan = await prisma.log_Kegagalan.findMany({
     orderBy: { id: "desc" },
     take: limit,
-    include: { siklus: { select: { kode_batch: true, id: true } } },
+    include: {
+      siklus: {
+        select: {
+          kode_batch: true,
+          id: true,
+          varietas: { select: { nama: true } },
+          kolam: {
+            select: {
+              nama: true,
+              greenhouse: { select: { nama: true } },
+            },
+          },
+        },
+      },
+    },
   });
 
   const baris: HistoriPetaniBaris[] = [];
@@ -109,20 +137,24 @@ export async function historiAktivitasPetani(limit = 15): Promise<HistoriPetaniB
       ringkasan = catatan;
     }
 
+    const lokasi = labelBarisProduksiUtama(partsFromSiklusNested(log.siklus));
     baris.push({
       waktu: log.waktu,
       jenis,
       ringkasan,
+      siklus_lokasi: lokasi,
       siklus_kode: log.siklus.kode_batch,
       href: `/petani/siklus/${log.siklus.id}`,
     });
   }
 
   for (const k of kegagalan) {
+    const lokasi = labelBarisProduksiUtama(partsFromSiklusNested(k.siklus));
     baris.push({
       waktu: new Date(k.id * 1000),
       jenis: "kegagalan",
       ringkasan: `Kegagalan ${k.tahap}: ${k.jumlah_gagal} — ${k.penyebab.slice(0, 80)}`,
+      siklus_lokasi: lokasi,
       siklus_kode: k.siklus.kode_batch,
       href: `/petani/siklus/${k.siklus.id}`,
     });

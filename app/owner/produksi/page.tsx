@@ -11,15 +11,8 @@ export default async function OwnerProduksiPage() {
     <CrudPageLayout
       eyebrow="Produksi"
       title="Monitoring siklus produksi"
-      description="Pantau batch dari semai hingga panen. Operasi lapangan oleh Petani; persetujuan panen oleh Admin."
-      flowSteps={[
-        { label: "Daftar batch", detail: "Semua siklus tercatat di sistem." },
-        { label: "Operasi", detail: "Petani menjalankan fase di menu Siklus." },
-        { label: "HPP", detail: "Setelah panen disetujui, lihat Biaya dan Evaluasi." },
-      ]}
       list={<SiklusDaftar rows={siklusRows.map(serializeSiklus)} readOnly />}
-      listTitle="Batch produksi"
-      listDescription="Owner hanya melihat — tanpa aksi fase."
+      listTitle="Siklus produksi"
     />
   );
 }

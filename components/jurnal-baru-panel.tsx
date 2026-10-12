@@ -3,6 +3,7 @@
 import type { CatatUangPihakBundle } from "@/lib/catat-uang-pihak-types";
 import { SmartJurnalForm } from "@/components/smart-jurnal-form";
 import { JurnalForm } from "@/components/jurnal-form";
+import type { RekeningKasOption } from "@/lib/rekening-kas-types";
 
 type AkunOpt = { id: number; kode: string; nama: string };
 type LahanOpt = { id: number; label: string };
@@ -14,6 +15,7 @@ export function JurnalBaruPanel({
   mode = "admin-uang",
   lahanOptions = [],
   pihak,
+  rekeningOptions = [],
 }: {
   akun: AkunOpt[];
   tanggalAwal: string;
@@ -21,6 +23,7 @@ export function JurnalBaruPanel({
   mode?: "admin-uang" | "owner-koreksi";
   lahanOptions?: LahanOpt[];
   pihak?: CatatUangPihakBundle;
+  rekeningOptions?: RekeningKasOption[];
 }) {
   if (mode === "owner-koreksi") {
     return (
@@ -45,6 +48,7 @@ export function JurnalBaruPanel({
         periodeTutup={periodeTutup}
         lahanOptions={lahanOptions}
         pihak={pihak ?? { petani: [], pelanggan: [], pemilik: [] }}
+        rekeningOptions={rekeningOptions}
       />
     </div>
   );

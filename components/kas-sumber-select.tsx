@@ -1,9 +1,13 @@
+import { RekeningSumberSelect } from "@/components/rekening-sumber-select";
 import { AKUN_KODE } from "@/lib/akun-kode";
+import type { RekeningKasOption } from "@/lib/rekening-kas-types";
 
 type Props = {
   name?: string;
   className?: string;
   defaultValue?: string;
+  /** Daftar rekening dari server; kosong = fallback kas/bank generik. */
+  rekeningOptions?: RekeningKasOption[];
 };
 
 const baseClass =
@@ -13,11 +17,23 @@ export function KasSumberSelect({
   name = "sumberKas",
   className,
   defaultValue = AKUN_KODE.KAS,
+  rekeningOptions,
 }: Props) {
+  if (rekeningOptions && rekeningOptions.length > 0) {
+    return (
+      <RekeningSumberSelect
+        name={name}
+        className={className}
+        defaultValue={defaultValue}
+        options={rekeningOptions}
+      />
+    );
+  }
+
   return (
     <select name={name} className={className ?? baseClass} defaultValue={defaultValue}>
-      <option value={AKUN_KODE.KAS}>Kas tunai (1100)</option>
-      <option value={AKUN_KODE.BANK}>Bank (1110)</option>
+      <option value={AKUN_KODE.KAS}>Kas tunai</option>
+      <option value={AKUN_KODE.BANK}>Bank</option>
     </select>
   );
 }

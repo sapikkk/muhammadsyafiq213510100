@@ -24,32 +24,28 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
     {
       id: "laba-rugi",
       judul: "Laba rugi",
-      deskripsi: `Periode ${dari}–${sampai} · catatan keuangan sudah disetujui`,
+      deskripsi: "",
       href: `/api/export/income-statement?${q}`,
     },
     {
       id: "neraca",
       judul: "Neraca",
-      deskripsi: "Saldo akun pada tanggal dipilih",
+      deskripsi: "",
       href: `/api/export/balance-sheet?${q}`,
     },
     {
       id: "arus-kas",
       judul: "Arus kas",
-      deskripsi: "Kas/Bank · catatan keuangan sudah disetujui",
+      deskripsi: "",
       href: `/api/export/cash-flow?${q}`,
     },
   ];
 
   return (
     <CrudPageLayout
-      eyebrow="Ringkasan"
+      financeNavRole="OWNER"
+      eyebrow="Keuangan"
       title="Ekspor laporan"
-      description="Unduh laba rugi, neraca, dan arus kas sebagai PDF. Ekspor Excel catatan keuangan ada di menu Admin."
-      flowSteps={[
-        { label: "Pilih periode", detail: "Format tahun-bulan (contoh 2026-01), sama seperti halaman Arus kas." },
-        { label: "Unduh", detail: "Tabel laporan — tombol Unduh PDF per baris." },
-      ]}
       list={
         <div className="space-y-4">
           <MonthRangeFilter dari={dari} sampai={sampai} />

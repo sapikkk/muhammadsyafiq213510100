@@ -8,6 +8,7 @@ import {
 } from "@/lib/kegagalan-labels";
 import { STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort-status";
 import { emitKegagalanBaru } from "@/lib/notifikasi-emit";
+import { ringkasanSiklusUntukTeks, siklusLabelSelect } from "@/lib/produksi-ui-labels";
 import { prisma } from "@/lib/prisma";
 
 export {
@@ -100,6 +101,12 @@ export async function listLogKegagalanMenunggu() {
           kode_batch: true,
           jumlah_disemai: true,
           varietas: { select: { nama: true } },
+          kolam: {
+            select: {
+              nama: true,
+              greenhouse: { select: { nama: true } },
+            },
+          },
         },
       },
     },
@@ -126,14 +133,18 @@ export async function catatLogKegagalan(input: KegagalanInput) {
   return prisma.$transaction(async (tx) => {
     const siklus = await tx.siklus_Produksi.findUnique({
       where: { id: input.siklusId },
-      include: { laporanPanen: true },
+      include: {
+        laporanPanen: true,
+        varietas: siklusLabelSelect.varietas,
+        kolam: siklusLabelSelect.kolam,
+      },
     });
     if (!siklus) throw new KegagalanError("Siklus tidak ditemukan.", 404);
     if (siklus.status === "SELESAI") {
       throw new KegagalanError("Siklus sudah selesai, tidak bisa catat kegagalan baru.", 400);
     }
     if (siklus.status === STATUS_GAGAL_TOTAL) {
-      throw new KegagalanError("Siklus sudah di-abort gagal total.", 400);
+      throw new KegagalanError("Siklus sudah dibatalkan gagal total.", 400);
     }
     if (siklus.laporanPanen?.status === "APPROVED") {
       throw new KegagalanError("Panen sudah disetujui.", 400);
@@ -165,9 +176,9 @@ export async function catatLogKegagalan(input: KegagalanInput) {
       },
     });
 
-    return { log, kodeBatch: siklus.kode_batch, tahap: input.tahap };
-  }).then(async ({ log, kodeBatch, tahap }) => {
-    void emitKegagalanBaru(log.id, kodeBatch, labelTahap(tahap));
+    return { log, lokasiTanam: ringkasanSiklusUntukTeks(siklus), tahap: input.tahap };
+  }).then(async ({ log, lokasiTanam, tahap }) => {
+    void emitKegagalanBaru(log.id, lokasiTanam, labelTahap(tahap));
     return log;
   });
 }

@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
 import { formatRupiah } from "@/lib/format";
 import { labelTahap } from "@/lib/kegagalan-labels";
+import { labelJenisKerugian, labelKategoriSusut } from "@/lib/susut-labels";
 
 type Row = {
   id: number;
@@ -16,13 +17,6 @@ type Row = {
   jenis_kerugian: string;
   biaya_kerugian: string;
 };
-
-function labelKategori(value: string) {
-  if (value === "NORMAL") return "Normal";
-  if (value === "ABNORMAL") return "Abnormal";
-  if (value === "MENUNGGU") return "Menunggu klasifikasi";
-  return value;
-}
 
 export function LogKegagalanDaftar({ rows }: { rows: Row[] }) {
   const columns = useMemo<ColumnDef<Row>[]>(
@@ -46,7 +40,7 @@ export function LogKegagalanDaftar({ rows }: { rows: Row[] }) {
       {
         accessorKey: "kategori_susut",
         header: "Susut",
-        cell: ({ row }) => labelKategori(row.original.kategori_susut),
+        cell: ({ row }) => labelKategoriSusut(row.original.kategori_susut),
       },
       {
         id: "kerugian",
@@ -56,7 +50,8 @@ export function LogKegagalanDaftar({ rows }: { rows: Row[] }) {
             "—"
           ) : (
             <span className="text-xs text-muted-foreground">
-              {row.original.jenis_kerugian} · {formatRupiah(row.original.biaya_kerugian)}
+              {labelJenisKerugian(row.original.jenis_kerugian)} ·{" "}
+              {formatRupiah(row.original.biaya_kerugian)}
             </span>
           ),
       },
@@ -71,7 +66,7 @@ export function LogKegagalanDaftar({ rows }: { rows: Row[] }) {
       pageSize={8}
       searchPlaceholder="Cari tahap, penyebab…"
       searchColumnIds={["tahap", "penyebab", "kategori_susut"]}
-      emptyMessage="Belum ada log kegagalan untuk batch ini."
+      emptyMessage="Belum ada log kegagalan untuk siklus ini."
     />
   );
 }

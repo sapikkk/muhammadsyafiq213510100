@@ -14,16 +14,21 @@ export type LaporanExportRow = {
 };
 
 export function LaporanExportDaftar({ rows }: { rows: LaporanExportRow[] }) {
+  const showDeskripsi = rows.some((r) => r.deskripsi.trim());
   const columns = useMemo<ColumnDef<LaporanExportRow>[]>(
     () => [
       { accessorKey: "judul", header: "Laporan" },
-      {
-        accessorKey: "deskripsi",
-        header: "Deskripsi",
-        cell: ({ row }) => (
-          <span className="text-muted-foreground">{row.original.deskripsi}</span>
-        ),
-      },
+      ...(showDeskripsi
+        ? [
+            {
+              accessorKey: "deskripsi" as const,
+              header: "Deskripsi",
+              cell: ({ row }: { row: { original: LaporanExportRow } }) => (
+                <span className="text-muted-foreground">{row.original.deskripsi}</span>
+              ),
+            },
+          ]
+        : []),
       {
         id: "aksi",
         header: "",
@@ -35,7 +40,7 @@ export function LaporanExportDaftar({ rows }: { rows: LaporanExportRow[] }) {
         ),
       },
     ],
-    [],
+    [showDeskripsi],
   );
 
   return (

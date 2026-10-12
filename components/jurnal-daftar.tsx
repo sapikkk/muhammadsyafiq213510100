@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
 import { formatRupiah, formatTanggal } from "@/lib/format";
+import { tableCellText } from "@/lib/table-cell-text";
 import { statusJurnalLabel, type StatusJurnalKey } from "@/lib/jurnal-status";
 import type { SerializedJurnalListRow } from "@/lib/jurnal-types";
 
@@ -27,7 +28,8 @@ export function JurnalDaftar({
         cell: ({ row }) => (
           <Link
             href={`${detailPrefix}/${row.original.id}`}
-            className="font-medium underline-offset-4 hover:underline"
+            className={`font-medium underline-offset-4 hover:underline ${tableCellText}`}
+            title={row.original.keterangan}
           >
             {row.original.keterangan}
           </Link>

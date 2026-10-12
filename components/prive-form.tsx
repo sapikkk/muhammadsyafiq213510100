@@ -5,40 +5,83 @@ import { submitPrive, type PriveState } from "@/app/actions/prive";
 import { KasSumberSelect } from "@/components/kas-sumber-select";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
+import type { RekeningKasOption } from "@/lib/rekening-kas-types";
 
-export function PriveForm({ defaultTanggal }: { defaultTanggal: string }) {
+export function PriveForm({
+  defaultTanggal,
+  rekeningOptions = [],
+}: {
+  defaultTanggal: string;
+  rekeningOptions?: RekeningKasOption[];
+}) {
   const [state, formAction] = useFormState(submitPrive, {} as PriveState);
   useActionToast({
     error: state.error,
     message:
       state.ok && state.jurnalId
-        ? `Catatan ambil pribadi #${state.jurnalId} menunggu persetujuan Admin.`
+        ? "Catatan ambil pribadi menunggu persetujuan Admin."
         : undefined,
   });
 
   return (
-    <form action={formAction} className="max-w-md space-y-4 rounded-md border p-4">
-      <p className="text-sm text-muted-foreground">
-        Catatan menunggu persetujuan Admin: ambil pribadi dicatat dari kas tunai atau bank.
-      </p>
-      <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Tanggal</span>
-        <Input name="tanggal" type="date" defaultValue={defaultTanggal} className="h-11" required />
-      </label>
-      <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Nominal (Rp)</span>
-        <Input name="nominal" inputMode="decimal" className="h-11" required placeholder="500000" />
-      </label>
-      <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Sumber kas</span>
-        <KasSumberSelect className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm" />
-      </label>
-      <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Catatan (opsional)</span>
-        <Input name="catatan" className="h-11" maxLength={200} placeholder="Keperluan pribadi" />
-      </label>
-      <SubmitButton pendingLabel="Menyimpan…">Kirim jurnal prive</SubmitButton>
+    <form action={formAction}>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[35%]">Kolom</TableHead>
+            <TableHead>Isian</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell colSpan={2} className="text-sm text-muted-foreground">
+              Catatan menunggu persetujuan Admin: ambil pribadi dari kas tunai atau bank.
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium">Tanggal</TableCell>
+            <TableCell>
+              <Input name="tanggal" type="date" defaultValue={defaultTanggal} className="h-11 max-w-md" required />
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium">Nominal (Rp)</TableCell>
+            <TableCell>
+              <Input name="nominal" inputMode="decimal" className="h-11 max-w-md" required placeholder="500000" />
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium">Sumber kas</TableCell>
+            <TableCell>
+              <KasSumberSelect
+                rekeningOptions={rekeningOptions}
+                className="flex h-11 max-w-md rounded-md border border-input bg-background px-3 text-sm"
+              />
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium">Catatan (opsional)</TableCell>
+            <TableCell>
+              <Input name="catatan" className="h-11 max-w-md" maxLength={200} placeholder="Keperluan pribadi" />
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell />
+            <TableCell>
+              <SubmitButton pendingLabel="Menyimpan…">Kirim jurnal prive</SubmitButton>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
     </form>
   );
 }

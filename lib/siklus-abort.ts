@@ -5,6 +5,7 @@ import { AKUN_KODE } from "@/lib/akun-kode";
 import { allocateOverheadForSiklus } from "@/lib/biaya";
 import { prisma, type PrismaTransaction } from "@/lib/prisma";
 import { emitHarvestRejected, emitSiklusAbort } from "@/lib/notifikasi-emit";
+import { ringkasanSiklusUntukTeks, siklusLabelSelect } from "@/lib/produksi-ui-labels";
 import {
   STATUS_GAGAL_TOTAL,
   siklusBolehAbort,
@@ -50,10 +51,10 @@ export async function hitungWipSiklus(siklusId: number, tx: PrismaDb = prisma) {
 function parseAlasan(raw: unknown): string {
   const text = String(raw ?? "").trim();
   if (text.length < 5) {
-    throw new SiklusAbortError("Alasan abort minimal 5 karakter.", 400);
+    throw new SiklusAbortError("Alasan minimal 5 karakter.", 400);
   }
   if (text.length > 500) {
-    throw new SiklusAbortError("Alasan abort maksimal 500 karakter.", 400);
+    throw new SiklusAbortError("Alasan maksimal 500 karakter.", 400);
   }
   return text;
 }
@@ -69,7 +70,7 @@ export async function resolveAkunWip(tx: PrismaTransaction) {
 async function postingJurnalAbort(
   tx: PrismaTransaction,
   userId: number,
-  kodeBatch: string,
+  ringkasanSiklus: string,
   nominal: Prisma.Decimal,
   alasan: string,
 ) {
@@ -81,7 +82,7 @@ async function postingJurnalAbort(
     throw new SiklusAbortError("Akun 5300 atau WIP (1360/1350) tidak ditemukan.", 500);
   }
 
-  const keterangan = `Abort gagal total ${kodeBatch}: ${alasan.slice(0, 180)}`;
+  const keterangan = `Batalkan gagal total — ${ringkasanSiklus}: ${alasan.slice(0, 180)}`;
   const jurnal = await tx.jurnal.create({
     data: {
       tanggal: new Date(),
@@ -122,17 +123,22 @@ export async function abortSiklusGagalTotal(
     async (tx) => {
       const siklus = await tx.siklus_Produksi.findUnique({
         where: { id: siklusId },
-        include: { biaya_langsung: true, laporanPanen: true },
+        include: {
+          biaya_langsung: true,
+          laporanPanen: true,
+          varietas: siklusLabelSelect.varietas,
+          kolam: siklusLabelSelect.kolam,
+        },
       });
       if (!siklus) throw new SiklusAbortError("Siklus tidak ditemukan.", 404);
       if (siklus.status === STATUS_GAGAL_TOTAL) {
-        throw new SiklusAbortError("Siklus sudah di-abort.", 400);
+        throw new SiklusAbortError("Siklus sudah dibatalkan.", 400);
       }
       if (siklus.status === "SELESAI") {
         throw new SiklusAbortError("Siklus sudah selesai (panen).", 400);
       }
       if (siklus.laporanPanen?.status === "APPROVED") {
-        throw new SiklusAbortError("Panen sudah disetujui, tidak bisa abort.", 400);
+        throw new SiklusAbortError("Panen sudah disetujui, tidak bisa dibatalkan.", 400);
       }
 
       const wip = await hitungWipSiklus(siklusId, tx as PrismaDb);
@@ -148,7 +154,8 @@ export async function abortSiklusGagalTotal(
         });
       }
 
-      await postingJurnalAbort(tx, userId, siklus.kode_batch, wip, alasan);
+      const lokasiTanam = ringkasanSiklusUntukTeks(siklus);
+      await postingJurnalAbort(tx, userId, lokasiTanam, wip, alasan);
 
       const updated = await tx.siklus_Produksi.update({
         where: { id: siklusId },
@@ -171,7 +178,7 @@ export async function abortSiklusGagalTotal(
       return {
         siklus: updated,
         wip: wip.toString(),
-        kodeBatch: siklus.kode_batch,
+        lokasiTanam,
         laporanPetaniId,
         laporanId,
         alasan,
@@ -179,13 +186,13 @@ export async function abortSiklusGagalTotal(
     },
     { maxWait: 20_000, timeout: 60_000 },
   ).then(
-    async ({ siklus, wip, kodeBatch, laporanPetaniId, laporanId, alasan: alasanTeks }) => {
+    async ({ siklus, wip, lokasiTanam, laporanPetaniId, laporanId, alasan: alasanTeks }) => {
       if (laporanPetaniId != null && laporanId != null) {
         void emitHarvestRejected(
           laporanPetaniId,
-          kodeBatch,
+          lokasiTanam,
           laporanId,
-          `Di-abort: ${alasanTeks}`,
+          `Siklus dibatalkan: ${alasanTeks}`,
           siklus.id,
         );
       } else {
@@ -197,7 +204,7 @@ export async function abortSiklusGagalTotal(
         });
         const petaniId = logs[0]?.userId;
         if (petaniId) {
-          void emitSiklusAbort(petaniId, kodeBatch, siklus.id, alasanTeks);
+          void emitSiklusAbort(petaniId, lokasiTanam, siklus.id, alasanTeks);
         }
       }
       return { siklus, wip };

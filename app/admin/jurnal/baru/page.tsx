@@ -7,10 +7,10 @@ export const dynamic = "force-dynamic";
 export default function JurnalBaruPage() {
   return (
     <DetailLayout
+      financeNavRole="ADMIN"
       backHref="/admin/jurnal"
-      eyebrow="Akuntansi"
+      eyebrow="Keuangan"
       title="Catat uang masuk / keluar"
-      description="Dropdown transaksi tunai. Penjualan dan panen tidak perlu diisi di sini."
     >
       <PageSection title="Form catatan" badge="Create">
         <CatatUangFormBlock />

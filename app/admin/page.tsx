@@ -4,6 +4,7 @@ import { ResetRequests } from "@/components/reset-requests";
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { PageSection } from "@/components/page-section";
 import { listAlertStokMinimum } from "@/lib/inventaris";
+import { CuacaWidget } from "@/components/cuaca-widget";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -26,22 +27,18 @@ export default async function AdminPage() {
 
   return (
     <div className="flex flex-col gap-6">
+      <CuacaWidget />
       <InventarisAlertBanner items={stokRendah} detailHref="/admin/stok-rendah" />
       <AdminFlowDashboard />
 
-      <PageSection
-        title="Daftarkan petani"
-        description="Buat akun login petani (email dan sandi awal)."
-        badge="Create"
-      >
+      <PageSection title="Daftarkan petani" badge="Create">
         <RegisterPetani />
       </PageSection>
 
       {pending.length > 0 ? (
         <PageSection
           id="reset-sandi"
-          title="Permintaan reset sandi"
-          description={`${pending.length} permintaan menunggu persetujuan Anda.`}
+          title={`Permintaan reset sandi (${pending.length})`}
           badge="Update"
         >
           <ResetRequests

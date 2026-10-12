@@ -7,6 +7,9 @@ import { formatRupiah } from "@/lib/format";
 
 export type JurnalBarisRow = {
   id: number;
+  akunNama: string;
+  akunKode: string;
+  /** Legacy / pencarian — nama + kode. */
   akunLabel: string;
   debit: string;
   kredit: string;
@@ -23,7 +26,11 @@ export function JurnalBalanceDaftar({
 }) {
   const columns = useMemo<ColumnDef<JurnalBarisRow>[]>(
     () => [
-      { accessorKey: "akunLabel", header: "Akun" },
+      {
+        accessorKey: "akunLabel",
+        header: "Akun",
+        cell: ({ row }) => <span>{row.original.akunNama}</span>,
+      },
       {
         accessorKey: "debit",
         header: () => <span className="block w-full text-right">Debit</span>,
@@ -52,7 +59,7 @@ export function JurnalBalanceDaftar({
         columns={columns}
         data={rows}
         pageSize={20}
-        searchPlaceholder="Cari kode atau nama akun…"
+        searchPlaceholder="Cari nama atau kode akun…"
         searchColumnIds={["akunLabel"]}
         emptyMessage="Tidak ada baris."
       />

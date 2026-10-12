@@ -11,10 +11,6 @@ export default async function PetaniVarietasPage() {
     <CrudPageLayout
       eyebrow="Produksi"
       title="Varietas aktif"
-      description="Hanya baca. Hanya varietas aktif ditampilkan — dipilih saat semai di Siklus."
-      flowSteps={[
-        { label: "Pilih varietas", detail: "Buka Siklus → batch baru → dropdown varietas." },
-      ]}
       list={<VarietasDaftar rows={serialized} mode="petani" />}
       listTitle="Referensi varietas"
     />

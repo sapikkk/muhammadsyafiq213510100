@@ -2,11 +2,13 @@ import "server-only";
 
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { labelBarisProduksiUtama, partsFromSiklusNested } from "@/lib/produksi-ui-labels";
 
 const nol = new Prisma.Decimal(0);
 
 export type SiklusMarginRow = {
   kodeBatch: string;
+  lokasiLabel: string;
   varietas: string;
   hppPerKg: string;
   hppPerPack: string;
@@ -93,6 +95,12 @@ export async function ownerEvaluation(): Promise<OwnerEvaluationResult> {
           laporanPanen: {
             select: { status: true, berat_layak_gram: true, jumlah_layak: true },
           },
+          kolam: {
+            select: {
+              nama: true,
+              greenhouse: { select: { nama: true } },
+            },
+          },
         },
       },
     },
@@ -127,8 +135,10 @@ export async function ownerEvaluation(): Promise<OwnerEvaluationResult> {
     const v = row.siklus.varietas;
     const marginCurah = v.harga_jual_curah.sub(row.hpp_per_kg);
     const marginPack = v.harga_jual_pack.sub(row.hpp_per_pack);
+    const parts = partsFromSiklusNested(row.siklus);
     return {
       kodeBatch: row.siklus.kode_batch,
+      lokasiLabel: labelBarisProduksiUtama(parts),
       varietas: v.nama,
       hppPerKg: dec(row.hpp_per_kg),
       hppPerPack: dec(row.hpp_per_pack),

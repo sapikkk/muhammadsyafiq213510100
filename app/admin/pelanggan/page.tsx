@@ -11,14 +11,9 @@ export default async function AdminPelangganPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Penjualan"
+      financeNavRole="ADMIN"
+      eyebrow="Keuangan"
       title="Pelanggan"
-      description="Data pelanggan dipakai saat membuat pesanan jual."
-      flowSteps={[
-        { label: "Daftar", detail: "Cari nama atau email di tabel." },
-        { label: "Tambah atau ubah", detail: "Panel samping kanan, data kontak saja." },
-        { label: "Pesanan jual", detail: "Pilih pelanggan saat membuat pesanan baru." },
-      ]}
       actions={
         <PelangganFormSheet
           trigger={
@@ -29,7 +24,6 @@ export default async function AdminPelangganPage() {
         />
       }
       list={<PelangganDaftar rows={rows.map(serializePelanggan)} />}
-      listDescription="Cari, lalu Ubah data kontak. Pelanggan yang sudah punya pesanan jual tetap bisa diubah namanya."
     />
   );
 }

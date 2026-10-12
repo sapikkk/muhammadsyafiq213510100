@@ -7,6 +7,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { listLogKegagalanMenunggu } from "@/lib/log-kegagalan";
+import { labelTahap } from "@/lib/kegagalan-labels";
+import {
+  labelBarisProduksiUtama,
+  partsFromSiklusNested,
+} from "@/lib/produksi-ui-labels";
 
 export async function KegagalanSusutOwnerPanel() {
   const pending = await listLogKegagalanMenunggu();
@@ -24,23 +29,24 @@ export async function KegagalanSusutOwnerPanel() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Batch</TableHead>
-          <TableHead>Varietas</TableHead>
+          <TableHead>Lokasi tanam</TableHead>
           <TableHead>Tahap</TableHead>
           <TableHead className="text-right">Gagal</TableHead>
           <TableHead>Penyebab</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {pending.map((row) => (
-          <TableRow key={row.id}>
-            <TableCell className="font-medium">{row.siklus.kode_batch}</TableCell>
-            <TableCell>{row.siklus.varietas.nama}</TableCell>
-            <TableCell>{row.tahap}</TableCell>
-            <TableCell className="text-right tabular-nums">{row.jumlah_gagal}</TableCell>
-            <TableCell className="text-sm text-muted-foreground">{row.penyebab}</TableCell>
-          </TableRow>
-        ))}
+        {pending.map((row) => {
+          const parts = partsFromSiklusNested(row.siklus);
+          return (
+            <TableRow key={row.id}>
+              <TableCell className="font-medium">{labelBarisProduksiUtama(parts)}</TableCell>
+              <TableCell>{labelTahap(row.tahap)}</TableCell>
+              <TableCell className="text-right tabular-nums">{row.jumlah_gagal}</TableCell>
+              <TableCell className="text-sm text-muted-foreground">{row.penyebab}</TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
     </Table>
   );

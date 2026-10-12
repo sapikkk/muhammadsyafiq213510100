@@ -13,13 +13,6 @@ export default async function PetaniSiklusPage() {
     <CrudPageLayout
       eyebrow="Di lapangan"
       title="Siklus produksi"
-      description="Satu batch = satu baris di daftar. Detail batch untuk langkah fase & panen."
-      flowSteps={[
-        { label: "Buat semai", detail: "Tombol Mulai semai — varietas, kolam, pack." },
-        { label: "Monitor harian", detail: "Filter greenhouse & kolam → Monitor kolam hari ini (PPM, pH, suhu)." },
-        { label: "Buka batch", detail: "Klik baris → langkah fase & aksi batch." },
-        { label: "Panen", detail: "Kirim laporan panen → Admin approve & HPP." },
-      ]}
       actions={
         <Button type="button" className="h-11" asChild>
           <Link href="/petani/siklus/baru" prefetch>
@@ -28,7 +21,7 @@ export default async function PetaniSiklusPage() {
         </Button>
       }
       list={<SiklusDaftarPetani rows={siklusRows.map(serializeSiklus)} />}
-      listTitle="Batch aktif & selesai"
+      listTitle="Siklus aktif & selesai"
     />
   );
 }

@@ -2,6 +2,7 @@ import { CrudPageLayout } from "@/components/crud-page-layout";
 import { InfrastrukturTambahActions } from "@/components/infrastruktur-form";
 import { InfrastrukturPohon } from "@/components/infrastruktur-pohon";
 import { listInfrastrukturPohon, serializeInfrastruktur } from "@/lib/infrastruktur";
+import { labelLahanUntukLayar } from "@/lib/produksi-ui-labels";
 
 export const dynamic = "force-dynamic";
 
@@ -9,29 +10,29 @@ export default async function AdminInfrastrukturPage() {
   const pohon = await listInfrastrukturPohon();
   const data = serializeInfrastruktur(pohon);
 
-  const lahanOptions = data.lahan.map((l) => ({
-    id: l.id,
-    label: `Lahan #${l.id} (sewa ${l.nilaiSewa})`,
-  }));
+  const lahanOptions = data.lahan.map((l) => {
+    const gh = l.greenhouse.map((g) => g.nama).join(", ");
+    return {
+      id: l.id,
+      label: `${labelLahanUntukLayar(l.id, gh || null)} · sewa ${l.nilaiSewa}`,
+    };
+  });
 
-  const greenhouseOptions = data.lahan.flatMap((l) =>
-    l.greenhouse.map((gh) => ({
+  const greenhouseOptions = data.lahan.flatMap((l) => {
+    const lahanLabel = labelLahanUntukLayar(
+      l.id,
+      l.greenhouse.map((g) => g.nama).join(", ") || null,
+    );
+    return l.greenhouse.map((gh) => ({
       id: gh.id,
-      label: `${gh.nama} (Lahan #${l.id})`,
-    })),
-  );
+      label: `${gh.nama} · ${lahanLabel}`,
+    }));
+  });
 
   return (
     <CrudPageLayout
       eyebrow="Produksi & stok"
       title="Infrastruktur"
-      description="Data lahan, greenhouse, dan kolam untuk alokasi kapasitas produksi."
-      flowSteps={[
-        { label: "Pohon", detail: "Lahan, greenhouse, kolam, dan kapasitas lubang per kolam." },
-        { label: "Tambah", detail: "Tombol lahan, greenhouse, atau kolam di panel samping." },
-        { label: "Status kolam", detail: "Ubah status per baris kolam di pohon." },
-        { label: "Siklus", detail: "Pilih kolam kosong saat memulai semai." },
-      ]}
       actions={
         <InfrastrukturTambahActions
           lahanOptions={lahanOptions}

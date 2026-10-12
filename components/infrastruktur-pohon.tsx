@@ -34,6 +34,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
+import { labelLahanUntukLayar } from "@/lib/produksi-ui-labels";
 
 type Pohon = SerializedInfrastrukturPohon;
 
@@ -143,6 +144,10 @@ function GreenhouseBaris({
   const [open, setOpen] = useState(false);
   const { lahan, gh } = baris;
   const kapasitas = gh.kolam.reduce((n, k) => n + k.kapasitasLubang, 0);
+  const lahanLabel = labelLahanUntukLayar(
+    lahan.id,
+    lahan.greenhouse.map((g) => g.nama).join(", ") || null,
+  );
 
   return (
     <>
@@ -165,7 +170,7 @@ function GreenhouseBaris({
           </Button>
         </TableCell>
         <TableCell className="font-medium">{gh.nama}</TableCell>
-        <TableCell className="text-muted-foreground">#{lahan.id}</TableCell>
+        <TableCell className="text-muted-foreground">{lahanLabel}</TableCell>
         <TableCell>{gh.nilaiInvestasi}</TableCell>
         <TableCell>{gh.umurEkonomis} bln</TableCell>
         <TableCell>{gh.depresiasiPerBulan}/bln</TableCell>
@@ -179,9 +184,9 @@ function GreenhouseBaris({
           <TableCell colSpan={7} className="p-0">
             <div className="space-y-2 border-t px-4 py-3 text-sm">
               <p className="text-muted-foreground">
-                Lahan #{lahan.id}: sewa {lahan.nilaiSewa} / {lahan.masaSewa}{" "}
-                bulan · amortisasi {lahan.amortisasiPerBulan}/bulan · listrik{" "}
-                {lahan.biayaListrikBulan}/bulan (seluruh greenhouse di lahan ini)
+                {lahanLabel}: sewa {lahan.nilaiSewa} / {lahan.masaSewa} bulan · amortisasi{" "}
+                {lahan.amortisasiPerBulan}/bulan · listrik {lahan.biayaListrikBulan}/bulan (seluruh
+                greenhouse di lahan ini)
               </p>
               {gh.kolam.length === 0 ? (
                 <p className="text-muted-foreground">Belum ada kolam.</p>

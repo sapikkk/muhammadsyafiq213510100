@@ -1,6 +1,6 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { EvaluasiMarginDaftar } from "@/components/evaluasi-margin-daftar";
-import { MetricRowsTable } from "@/components/metric-rows-table";
+import { MetricCards } from "@/components/metric-cards";
 import { PageSection } from "@/components/page-section";
 import {
   Table,
@@ -18,29 +18,21 @@ export const dynamic = "force-dynamic";
 export default async function OwnerEvaluasiPage() {
   const data = await ownerEvaluation();
 
-  const overheadHint = data.bep.overheadPeriode
-    ? `Periode ${data.bep.overheadPeriode} · ${formatRupiah(data.bep.overheadBulan)}/bulan`
-    : "Belum diinput Admin";
-
   return (
     <CrudPageLayout
+      financeNavRole="OWNER"
       eyebrow="Keuangan"
       title="Untung dan titik impas"
-      description="Bandingskan biaya pokok (HPP) dengan harga jual, hitung titik impas, dan cek kolam yang kosong."
-      flowSteps={[
-        { label: "Kapasitas", detail: "Ringkasan lubang dan kolam." },
-        { label: "Untung rata-rata", detail: "Curah dan pack, plus titik impas." },
-        { label: "Per batch", detail: "Untung per siklus panen yang sudah disetujui." },
-      ]}
       list={
         <div className="space-y-6">
           <PageSection title="Kapasitas produksi" badge="Read">
-            <MetricRowsTable
-              rows={[
+            <MetricCards
+              columns={2}
+              items={[
                 {
                   label: "Total lubang",
                   value: data.kapasitas.totalLubang.toLocaleString("id-ID"),
-                  hint: `${data.kapasitas.idlePct}% lubang kosong`,
+                  hint: `${data.kapasitas.idlePct}% kosong`,
                 },
                 {
                   label: "Lubang terpakai",
@@ -53,7 +45,6 @@ export default async function OwnerEvaluasiPage() {
                 {
                   label: "Kolam aktif / menganggur",
                   value: `${data.kapasitas.kolamTerpakai} / ${data.kapasitas.kolamMenganggur}`,
-                  hint: "Kolam dipakai atau menganggur",
                 },
               ]}
             />
@@ -100,22 +91,21 @@ export default async function OwnerEvaluasiPage() {
             </Table>
           </PageSection>
 
-          <PageSection title="Titik impas" description={overheadHint} badge="Read">
-            <MetricRowsTable
-              rows={[
+          <PageSection title="Titik impas" badge="Read">
+            <MetricCards
+              columns={2}
+              items={[
                 {
-                  label: "Titik impas penjualan curah",
+                  label: "Titik impas curah",
                   value:
                     data.bep.bepKgCurah != null ? `${formatQty(data.bep.bepKgCurah)} kg/bulan` : "—",
-                  hint: `Biaya umum ÷ sisa per kg (${formatRupiah(data.bep.kontribusiCurahPerKg)}/kg)`,
                 },
                 {
-                  label: "Titik impas per lubang layak jual",
+                  label: "Titik impas per lubang",
                   value:
                     data.bep.bepLubangMin != null
                       ? `${Number(data.bep.bepLubangMin).toLocaleString("id-ID")} lubang/bulan`
                       : "—",
-                  hint: "Estimasi curah per lubang − HPP/lubang",
                 },
               ]}
             />
@@ -125,7 +115,7 @@ export default async function OwnerEvaluasiPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-12">#</TableHead>
+                  <TableHead className="w-12">No.</TableHead>
                   <TableHead>Saran</TableHead>
                 </TableRow>
               </TableHeader>
@@ -140,11 +130,7 @@ export default async function OwnerEvaluasiPage() {
             </Table>
           </PageSection>
 
-          <PageSection
-            title="Batch panen dengan HPP disetujui"
-            description="Untung curah per batch."
-            badge="Read"
-          >
+          <PageSection title="Siklus panen dengan HPP disetujui" badge="Read">
             <EvaluasiMarginDaftar rows={data.siklusTerbaru} />
           </PageSection>
         </div>

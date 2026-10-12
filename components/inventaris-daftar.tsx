@@ -23,12 +23,11 @@ export function InventarisDaftar({
   const columns = useMemo<ColumnDef<SerializedItemInventaris>[]>(
     () => [
       {
-        accessorKey: "kode",
-        header: "Kode",
+        id: "barang",
+        header: "Barang",
+        accessorFn: (row) => `${row.nama} ${row.kode}`,
         cell: ({ row }) => (
-          <span className="font-medium">
-            {row.original.kode} · {row.original.nama}
-          </span>
+          <span className="font-medium">{row.original.nama}</span>
         ),
       },
       {
@@ -70,8 +69,8 @@ export function InventarisDaftar({
       columns={columns}
       data={items}
       pageSize={12}
-      searchPlaceholder="Cari kode atau nama…"
-      searchColumnIds={["kode", "nama"]}
+      searchPlaceholder="Cari nama barang atau kode…"
+      searchColumnIds={["barang", "kode", "nama"]}
       emptyMessage="Belum ada item inventaris."
       getRowHref={(row) => `${basePath[mode]}/${row.id}`}
     />

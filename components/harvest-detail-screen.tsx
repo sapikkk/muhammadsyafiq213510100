@@ -8,6 +8,11 @@ import { formatRupiah, formatQty } from "@/lib/format";
 import { calculateHPP } from "@/lib/hpp";
 import { ringkasanSusutSiklus } from "@/lib/susut";
 import { labelLaporanPanenStatus } from "@/lib/laporan-panen-status";
+import { DetailKodeStrip } from "@/components/detail-kode-strip";
+import {
+  labelBarisProduksiUtama,
+  partsFromSiklusNested,
+} from "@/lib/produksi-ui-labels";
 
 export async function HarvestDetailScreen({
   id,
@@ -24,7 +29,7 @@ export async function HarvestDetailScreen({
       siklus: {
         include: {
           varietas: true,
-          kolam: true,
+          kolam: { include: { greenhouse: true } },
         },
       },
       user: true,
@@ -54,14 +59,15 @@ export async function HarvestDetailScreen({
       backHref="/admin/harvest"
       surface={surface}
       eyebrow="Produksi"
-      title={`Review panen · ${laporan.siklus.kode_batch}`}
+      title={`Review panen · ${labelBarisProduksiUtama(partsFromSiklusNested(laporan.siklus))}`}
       badge={
         <Badge variant={laporan.status === "PENDING" ? "default" : "secondary"}>
           {statusLabel}
         </Badge>
       }
-      description={`${laporan.siklus.varietas.nama} · ${laporan.siklus.kolam.nama} · pelapor ${laporan.user.nama}`}
+      description={`Pelapor ${laporan.user.nama}`}
     >
+      <DetailKodeStrip label="Kode batch" kode={laporan.siklus.kode_batch} />
       <PageSection title="Hasil sortasi" badge="Read">
         <div className="grid gap-4 sm:grid-cols-2 text-sm">
           <div className="rounded-md border bg-muted/20 p-4">

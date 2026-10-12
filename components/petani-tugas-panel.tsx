@@ -23,6 +23,7 @@ export type HistoriPetaniBarisClient = {
   waktu: string;
   jenis: "fase" | "monitor" | "tambal" | "kegagalan";
   ringkasan: string;
+  siklus_lokasi: string;
   siklus_kode: string;
   href: string;
 };
@@ -71,7 +72,12 @@ export function PetaniTugasPanel({
 
   const historiColumns = useMemo<ColumnDef<HistoriPetaniBarisClient>[]>(
     () => [
-      { accessorKey: "siklus_kode", header: "Batch" },
+      {
+        id: "siklus",
+        header: "Lokasi",
+        accessorFn: (row) => `${row.siklus_lokasi} ${row.siklus_kode}`,
+        cell: ({ row }) => row.original.siklus_lokasi,
+      },
       { accessorKey: "ringkasan", header: "Ringkasan" },
       { accessorKey: "jenis", header: "Jenis" },
       {
@@ -102,7 +108,7 @@ export function PetaniTugasPanel({
           pageSize={8}
           searchPlaceholder="Cari tugas…"
           searchColumnIds={["judul", "deskripsi", "prioritas"]}
-          emptyMessage="Tidak ada tugas terbuka. Batch aktif sudah up to date."
+          emptyMessage="Tidak ada tugas terbuka. Siklus aktif sudah up to date."
         />
       </section>
 
@@ -112,8 +118,8 @@ export function PetaniTugasPanel({
           columns={historiColumns}
           data={histori}
           pageSize={8}
-          searchPlaceholder="Cari batch atau ringkasan…"
-          searchColumnIds={["siklus_kode", "ringkasan", "jenis"]}
+          searchPlaceholder="Cari lokasi, ringkasan, kode batch…"
+          searchColumnIds={["siklus", "siklus_kode", "ringkasan", "jenis"]}
           emptyMessage="Belum ada log produksi."
         />
       </section>

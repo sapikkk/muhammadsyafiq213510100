@@ -15,6 +15,7 @@ export default async function AdminSusutPage() {
     siklus: {
       kode_batch: row.siklus.kode_batch,
       varietas: { nama: row.siklus.varietas.nama },
+      kolam: row.siklus.kolam,
     },
   }));
 
@@ -22,11 +23,6 @@ export default async function AdminSusutPage() {
     <CrudPageLayout
       eyebrow="Produksi & stok"
       title="Klasifikasi susut"
-      description="Klasifikasi susut normal (masuk HPP) dan abnormal (beban operasional)."
-      flowSteps={[
-        { label: "Antrian", detail: "Catatan kegagalan dari petani menunggu klasifikasi." },
-        { label: "Klasifikasi", detail: "Tandai normal atau abnormal per baris; mempengaruhi HPP." },
-      ]}
       list={<SusutKlasifikasiPanel rows={rows} />}
       listTitle="Menunggu klasifikasi"
     />

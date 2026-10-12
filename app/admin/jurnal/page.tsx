@@ -30,18 +30,13 @@ export default async function JurnalPage({
       ]
         .filter(Boolean)
         .join(" · ")
-    : "Klik baris untuk detail, ubah draf, atau ajukan persetujuan.";
+    : undefined;
 
   return (
     <CrudPageLayout
-      eyebrow="Akuntansi"
+      financeNavRole="ADMIN"
+      eyebrow="Keuangan"
       title="Catatan keuangan"
-      description="Buat catatan baru; setujui atau tolak dari detail (Owner atau Admin)."
-      flowSteps={[
-        { label: "Catat uang", detail: "Uang masuk/keluar lewat dropdown; penjualan & panen otomatis." },
-        { label: "Setujui", detail: "Owner atau Admin; saldo berubah setelah disetujui." },
-        { label: "Baca", detail: "Klik baris untuk detail; koreksi manual hanya Owner." },
-      ]}
       actions={
         <>
           <Button asChild className="h-11">

@@ -25,12 +25,6 @@ export default async function PetaniActivePackPage() {
     <CrudPageLayout
       eyebrow="Produksi"
       title="Paket siap pakai"
-      description="Rakit pack jual dari stok inventaris — pakai saat fase produksi membutuhkan pack."
-      flowSteps={[
-        { label: "Lihat pack", detail: "Klik baris — stok siap pakai vs habis." },
-        { label: "Buat pack", detail: "Tombol Tambah — kurangi stok bahan otomatis." },
-        { label: "Pakai", detail: "Di detail pack aktif — kurangi qty sisa." },
-      ]}
       actions={
         <ActivePackFormSheet
           items={items}
@@ -43,7 +37,7 @@ export default async function PetaniActivePackPage() {
         />
       }
       list={<ActivePackDaftar rows={packs} mode="petani" />}
-      listTitle="Daftar pack"
+      listTitle="Paket siap pakai"
     />
   );
 }

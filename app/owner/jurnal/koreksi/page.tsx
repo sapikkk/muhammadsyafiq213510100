@@ -18,7 +18,6 @@ export default async function OwnerJurnalKoreksiPage() {
       backHref="/owner/jurnal"
       eyebrow="Keuangan"
       title="Koreksi catatan manual"
-      description="Hanya untuk penyesuaian kecil. Transaksi harian lewat Admin (catat uang otomatis)."
       actions={
         <Button asChild variant="outline" className="h-11">
           <Link href="/owner/jurnal">Kembali ke daftar</Link>

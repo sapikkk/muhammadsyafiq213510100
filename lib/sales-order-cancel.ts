@@ -1,7 +1,7 @@
 import "server-only";
 
 import { Prisma, type StatusJurnal } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import { prisma, runTransaction } from "@/lib/prisma";
 import { SalesOrderError } from "@/lib/sales-order";
 
 type SalesOrderTx = Pick<typeof prisma, "jurnal" | "sales_Order">;
@@ -63,7 +63,7 @@ async function voidPendingJurnal(tx: SalesOrderTx, jurnalId: number, olehId: num
 
 export async function cancelSalesOrder(id: number, userId: number, alasanRaw: unknown) {
   const alasan = parseAlasan(alasanRaw);
-  return prisma.$transaction(async (tx) => {
+  return runTransaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({ where: { id } });
     if (!so) throw new SalesOrderError("Sales order tidak ditemukan.", 404);
     if (so.status === "CANCELLED") {

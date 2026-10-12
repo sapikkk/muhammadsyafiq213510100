@@ -29,7 +29,7 @@ export function MonitorKolamForm({
       <input type="hidden" name="kolamId" value={kolamId} />
       <p className="text-sm text-muted-foreground">
         Kolam: <span className="font-medium text-foreground">{kolamLabel}</span> — catatan
-        tersimpan ke batch siklus aktif di kolam ini.
+        tersimpan ke siklus tanam aktif di kolam ini.
       </p>
       <AngkaStepperField
         label="PPM nutrisi"

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { FinanceModuleNav } from "@/components/finance-module-nav";
 import { FlowSteps, type FlowStep } from "@/components/flow-steps";
 import { PageHeaderRow } from "@/components/page-header-row";
 import { PageSection } from "@/components/page-section";
@@ -20,10 +21,13 @@ export function CrudPageLayout({
   createTitle = UI_COPY.crudCreateTitle,
   createDescription,
   extra,
+  financeNavRole,
 }: {
   title: string;
   description?: string;
   eyebrow?: string;
+  /** Tab modul keuangan (Books-style IA, design system Kokonus). */
+  financeNavRole?: "ADMIN" | "OWNER";
   actions?: ReactNode;
   flowSteps?: FlowStep[];
   /** Override kunci coachmark (default: path halaman) */
@@ -50,6 +54,7 @@ export function CrudPageLayout({
 
   return (
     <div className="flex flex-col gap-6">
+      {financeNavRole ? <FinanceModuleNav role={financeNavRole} /> : null}
       <PageHeaderRow
         title={title}
         description={description}

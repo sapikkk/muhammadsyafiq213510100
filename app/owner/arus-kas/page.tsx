@@ -1,6 +1,7 @@
 import { CashFlowMutasiDaftar } from "@/components/cash-flow-mutasi-daftar";
 import { CrudPageLayout } from "@/components/crud-page-layout";
-import { MetricRowsTable } from "@/components/metric-rows-table";
+import { CashFlowSummaryChart } from "@/components/cash-flow-summary-chart";
+import { MetricCards } from "@/components/metric-cards";
 import { MonthRangeFilter } from "@/components/month-range-filter";
 import { PageSection } from "@/components/page-section";
 import {
@@ -48,14 +49,9 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
 
   return (
     <CrudPageLayout
+      financeNavRole="OWNER"
       eyebrow="Keuangan"
       title="Arus kas"
-      description="Uang masuk dan keluar dari kas tunai dan bank (catatan yang sudah disetujui). Isi bulan dengan format tahun-bulan, contoh 2026-01."
-      flowSteps={[
-        { label: "Filter", detail: "Pilih rentang bulan lalu terapkan." },
-        { label: "Ringkasan", detail: "Tabel saldo dan arus per kategori." },
-        { label: "Mutasi", detail: "Detail per jurnal — link ke baris jurnal." },
-      ]}
       list={
         <div className="space-y-6">
           <MonthRangeFilter
@@ -64,27 +60,16 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
             exportHref={`/api/export/cash-flow?${exportQ}`}
           />
 
-          <PageSection title="Ringkasan saldo kas" badge="Read">
-            <MetricRowsTable
-              rows={[
-                {
-                  label: "Saldo awal kas",
-                  value: formatRupiah(data.saldoAwal),
-                  hint: `Sebelum ${data.dari}`,
-                },
-                {
-                  label: "Perubahan bersih",
-                  value: formatRupiah(data.netChange),
-                  hint: `Periode ${data.dari} s/d ${data.sampai}`,
-                },
-                {
-                  label: "Saldo akhir kas",
-                  value: formatRupiah(data.saldoAkhir),
-                  hint: "Akhir periode",
-                },
-              ]}
-            />
-          </PageSection>
+          <MetricCards
+            columns={3}
+            items={[
+              { label: "Saldo awal kas", value: formatRupiah(data.saldoAwal) },
+              { label: "Perubahan bersih", value: formatRupiah(data.netChange) },
+              { label: "Saldo akhir kas", value: formatRupiah(data.saldoAkhir) },
+            ]}
+          />
+
+          <CashFlowSummaryChart sections={data.sections} />
 
           <PageSection title="Arus per kategori" badge="Read">
             <Table>
@@ -115,11 +100,7 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
             </Table>
           </PageSection>
 
-          <PageSection
-            title="Mutasi kas"
-            description="Kas tunai dan rekening bank, urutan terbaru dulu."
-            badge="Read"
-          >
+          <PageSection title="Mutasi kas" badge="Read">
             <CashFlowMutasiDaftar rows={mutasiRows} />
           </PageSection>
         </div>

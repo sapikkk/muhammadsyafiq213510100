@@ -5,6 +5,7 @@ import { submitTambalSusulan } from "@/app/actions/tambal";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
+import { labelPackSiapPakai } from "@/lib/inventaris-ui-labels";
 
 type PackOption = {
   id: number;
@@ -37,7 +38,7 @@ export function TambalSusulanForm({
       <input type="hidden" name="siklusId" value={siklusId} />
       <h2 className="text-lg font-semibold">Tambal susulan</h2>
       <p className="text-sm text-muted-foreground">
-        Ganti bibit/media gagal dari paket siap pakai. Susut batch disesuaikan otomatis.
+        Ganti bibit/media gagal dari paket siap pakai. Susut siklus disesuaikan otomatis.
       </p>
       <label className="block space-y-1.5 text-sm">
         <span className="font-medium">Paket siap pakai</span>
@@ -48,7 +49,11 @@ export function TambalSusulanForm({
         >
           {packs.map((p) => (
             <option key={p.id} value={p.id}>
-              {p.kode} — {p.itemNama} (sisa {p.sisaUnit} {p.satuan})
+              {labelPackSiapPakai({
+                itemNama: p.itemNama,
+                sisaUnit: p.sisaUnit,
+                satuanLabel: p.satuan,
+              })}
             </option>
           ))}
         </select>

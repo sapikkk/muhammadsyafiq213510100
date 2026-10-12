@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { siklusBolehMonitorKolam } from "@/lib/monitor-kolam-fase";
 import type { MonitorGrafikTitik } from "@/lib/monitor-kolam-types";
 import { prisma } from "@/lib/prisma";
+import { ringkasanSiklusUntukTeks } from "@/lib/produksi-ui-labels";
 
 export type { MonitorGrafikTitik } from "@/lib/monitor-kolam-types";
 
@@ -101,7 +102,12 @@ export async function listMonitorGrafikPetani(limit = 40): Promise<MonitorGrafik
     take: limit,
     include: {
       kolam: { select: { nama: true, greenhouse: { select: { nama: true } } } },
-      siklus: { select: { kode_batch: true } },
+      siklus: {
+        select: {
+          kode_batch: true,
+          varietas: { select: { nama: true } },
+        },
+      },
     },
   });
 
@@ -123,7 +129,14 @@ export async function listMonitorGrafikPetani(limit = 40): Promise<MonitorGrafik
         ph: Number(r.ph),
         suhu: Number(r.suhu_c),
         kolam: `${gh} / ${r.kolam.nama}`,
-        siklusKode: r.siklus.kode_batch,
+        siklusLabel: ringkasanSiklusUntukTeks({
+          kode_batch: r.siklus.kode_batch,
+          varietas: r.siklus.varietas,
+          kolam: {
+            nama: r.kolam.nama,
+            greenhouse: { nama: gh },
+          },
+        }),
       };
     });
 }

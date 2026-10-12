@@ -11,10 +11,6 @@ export default async function OwnerInfrastrukturPage() {
     <CrudPageLayout
       eyebrow="Operasi"
       title="Infrastruktur"
-      description="Hanya baca. Perubahan master lewat Admin."
-      flowSteps={[
-        { label: "Kapasitas", detail: "Per kolam. Bandingkan dengan titik impas di menu Untung dan titik impas." },
-      ]}
       list={<InfrastrukturPohon data={data} mode="owner" />}
       listTitle="Pohon lahan · GH · kolam"
     />

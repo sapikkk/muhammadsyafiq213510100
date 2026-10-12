@@ -1,22 +1,21 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { PriveForm } from "@/components/prive-form";
 import { keTanggalIso } from "@/lib/format";
+import { ensureRekeningKasDefaults, listRekeningKasAktif } from "@/lib/rekening-kas";
 
 export const dynamic = "force-dynamic";
 
-export default function OwnerPrivePage() {
+export default async function OwnerPrivePage() {
+  await ensureRekeningKasDefaults();
+  const rekeningOptions = await listRekeningKasAktif();
+
   return (
     <CrudPageLayout
+      financeNavRole="OWNER"
       eyebrow="Keuangan"
       title="Ambil pribadi"
-      description="Catat uang yang Owner ambil untuk keperluan pribadi. Admin yang menyetujui di menu Catatan keuangan."
-      flowSteps={[
-        { label: "Isi form", detail: "Nominal dan sumber kas. Tanggal default hari ini." },
-        { label: "Setujui", detail: "Admin setujui catatan di menu Catatan keuangan." },
-      ]}
-      list={<PriveForm defaultTanggal={keTanggalIso(new Date())} />}
+      list={<PriveForm defaultTanggal={keTanggalIso(new Date())} rekeningOptions={rekeningOptions} />}
       listTitle="Form ambil pribadi"
-      listDescription="Satu kali isi per simpan."
     />
   );
 }

@@ -23,6 +23,7 @@ export async function submitPrive(_prev: PriveState, formData: FormData): Promis
         tanggal: formData.get("tanggal"),
         nominal: formData.get("nominal"),
         catatan: formData.get("catatan"),
+        sumberKas: formData.get("sumberKas"),
       },
       userId,
     );

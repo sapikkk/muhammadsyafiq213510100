@@ -1,5 +1,4 @@
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
-import { FlowSteps } from "@/components/flow-steps";
 import { PageHeaderRow } from "@/components/page-header-row";
 import { PageSection } from "@/components/page-section";
 import { PetaniMonitorChartLazy } from "@/components/petani-monitor-chart.lazy";
@@ -11,6 +10,7 @@ import { daftarTugasPetani, historiAktivitasPetani } from "@/lib/tugas-petani";
 import type { TugasPetani } from "@/lib/tugas-petani-types";
 import type { ItemInventaris } from "@prisma/client";
 import type { HistoriPetaniBaris } from "@/lib/tugas-petani";
+import { CuacaWidget } from "@/components/cuaca-widget";
 
 export const dynamic = "force-dynamic";
 
@@ -32,30 +32,10 @@ export default async function PetaniPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeaderRow
-        eyebrow="Petani"
-        title="Beranda"
-        description="Mulai dari tugas hari ini, lalu buka Siklus untuk batch aktif."
-        guide={
-          <FlowSteps
-            pageKey="petani"
-            title="Panduan beranda Petani"
-            toolbar
-            steps={[
-              { label: "Cek stok", detail: "Inventaris & paket siap pakai — pastikan bahan cukup." },
-              { label: "Semai batch", detail: "Menu Siklus → mulai fase SEMAI." },
-              { label: "Pindah fase", detail: "Di detail batch — catat pertumbuhan & panen." },
-              { label: "Pengiriman", detail: "Setelah Admin kirim SO — update status pengiriman." },
-            ]}
-          />
-        }
-      />
+      <PageHeaderRow eyebrow="Petani" title="Beranda" />
+      <CuacaWidget />
       <InventarisAlertBanner items={stokRendah} detailHref="/petani/stok-rendah" />
-      <PageSection
-        title="Monitor kolam"
-        description="Grafik PPM, pH, dan suhu — isi lewat Siklus → filter kolam → Monitor kolam hari ini."
-        badge="Read"
-      >
+      <PageSection title="Monitor kolam" badge="Read">
         <PetaniMonitorChartLazy points={monitorGrafik} />
       </PageSection>
       <PetaniTugasPanel

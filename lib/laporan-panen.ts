@@ -12,6 +12,7 @@ import {
   emitHarvestPending,
   emitHarvestRejected,
 } from "@/lib/notifikasi-emit";
+import { ringkasanSiklusUntukTeks, siklusLabelSelect } from "@/lib/produksi-ui-labels";
 import { totalBiayaAbnormalSiklus } from "@/lib/susut";
 
 export class HarvestError extends Error {
@@ -95,13 +96,13 @@ export async function kirimLaporanPanen(userId: number, input: HarvestInput) {
       });
       if (!siklus) throw new HarvestError("Siklus tidak ditemukan.", 404);
       if (siklus.status === STATUS_GAGAL_TOTAL) {
-        throw new HarvestError("Siklus sudah di-abort gagal total.", 400);
+        throw new HarvestError("Siklus sudah dibatalkan gagal total.", 400);
       }
       if (siklus.status !== "PANEN") {
         throw new HarvestError("Laporan panen hanya saat fase Panen & sortasi.", 400);
       }
       if (siklus.laporanPanen) {
-        throw new HarvestError("Batch ini sudah punya laporan panen.", 409);
+        throw new HarvestError("Siklus ini sudah punya laporan panen.", 409);
       }
       const totalSortasi = input.jumlahLayak + input.jumlahTidakLayak;
       if (totalSortasi > siklus.jumlah_disemai) {
@@ -139,14 +140,14 @@ export async function kirimLaporanPanen(userId: number, input: HarvestInput) {
     const detail = await prisma.laporan_Panen.findUnique({
       where: { id: laporan.id },
       include: {
-        siklus: { select: { kode_batch: true } },
+        siklus: { select: siklusLabelSelect },
         user: { select: { nama: true } },
       },
     });
     if (detail) {
       void emitHarvestPending(
         detail.id,
-        detail.siklus.kode_batch,
+        ringkasanSiklusUntukTeks(detail.siklus),
         detail.user.nama,
       );
     }
@@ -164,6 +165,12 @@ export async function listLaporanPanen(status?: string) {
           kode_batch: true,
           jumlah_disemai: true,
           varietas: { select: { nama: true } },
+          kolam: {
+            select: {
+              nama: true,
+              greenhouse: { select: { nama: true } },
+            },
+          },
         },
       },
       user: { select: { nama: true } },
@@ -179,6 +186,8 @@ export function serializeLaporanPanen(
     siklus_id: row.siklus_id,
     kode_batch: row.siklus.kode_batch,
     varietas_nama: row.siklus.varietas.nama,
+    greenhouse_nama: row.siklus.kolam.greenhouse.nama,
+    kolam_nama: row.siklus.kolam.nama,
     jumlah_disemai: row.siklus.jumlah_disemai,
     berat_layak_gram: row.berat_layak_gram.toString(),
     berat_tidak_layak_gram: row.berat_tidak_layak_gram.toString(),
@@ -221,17 +230,25 @@ export async function approveLaporanPanen(
         where: { id },
         include: {
           siklus: {
-            include: { varietas: { select: { berat_per_pack: true } } },
+            include: {
+              varietas: { select: { berat_per_pack: true, nama: true } },
+              kolam: {
+                select: {
+                  nama: true,
+                  greenhouse: { select: { nama: true } },
+                },
+              },
+            },
           },
         },
       });
 
       if (!laporan) throw new HarvestError("Laporan tidak ditemukan.", 404);
       if (laporan.siklus.status === STATUS_GAGAL_TOTAL) {
-        throw new HarvestError("Siklus sudah di-abort gagal total.", 400);
+        throw new HarvestError("Siklus sudah dibatalkan gagal total.", 400);
       }
       if (laporan.status !== "PENDING") {
-        throw new HarvestError("Laporan tidak dalam status PENDING.", 400);
+        throw new HarvestError("Laporan tidak menunggu persetujuan.", 400);
       }
 
       // Update status laporan
@@ -334,13 +351,17 @@ export async function approveLaporanPanen(
         });
       }
 
-      return { updatedLaporan, notifyUserId: laporan.userId, kodeBatch: laporan.siklus.kode_batch };
+      return {
+        updatedLaporan,
+        notifyUserId: laporan.userId,
+        lokasiTanam: ringkasanSiklusUntukTeks(laporan.siklus),
+      };
     },
     { maxWait: 20_000, timeout: 60_000 },
-  ).then(async ({ updatedLaporan, notifyUserId, kodeBatch }) => {
+  ).then(async ({ updatedLaporan, notifyUserId, lokasiTanam }) => {
     void emitHarvestApproved(
       notifyUserId,
-      kodeBatch,
+      lokasiTanam,
       updatedLaporan.id,
       updatedLaporan.siklus_id,
     );
@@ -357,12 +378,12 @@ export async function rejectLaporanPanen(id: number, userId: number, alasan: str
     async (tx) => {
       const laporan = await tx.laporan_Panen.findUnique({
         where: { id },
-        include: { siklus: true },
+        include: { siklus: { select: siklusLabelSelect } },
       });
 
       if (!laporan) throw new HarvestError("Laporan tidak ditemukan.", 404);
       if (laporan.status !== "PENDING") {
-        throw new HarvestError("Laporan tidak dalam status PENDING.", 400);
+        throw new HarvestError("Laporan tidak menunggu persetujuan.", 400);
       }
 
       // Update status laporan
@@ -377,15 +398,15 @@ export async function rejectLaporanPanen(id: number, userId: number, alasan: str
       return {
         updatedLaporan,
         notifyUserId: laporan.userId,
-        kodeBatch: laporan.siklus.kode_batch,
+        lokasiTanam: ringkasanSiklusUntukTeks(laporan.siklus),
         alasan: alasan.trim(),
       };
     },
     { maxWait: 20_000, timeout: 60_000 },
-  ).then(async ({ updatedLaporan, notifyUserId, kodeBatch, alasan: alasanTeks }) => {
+  ).then(async ({ updatedLaporan, notifyUserId, lokasiTanam, alasan: alasanTeks }) => {
     void emitHarvestRejected(
       notifyUserId,
-      kodeBatch,
+      lokasiTanam,
       updatedLaporan.id,
       alasanTeks,
       updatedLaporan.siklus_id,

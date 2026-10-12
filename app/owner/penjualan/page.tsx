@@ -9,17 +9,11 @@ export default async function OwnerPenjualanPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="5.0 Penjualan & Pemasaran"
+      financeNavRole="OWNER"
+      eyebrow="Keuangan"
       title="Pesanan jual"
-      description="Pantau pesanan, packing, distribusi, dan jurnal pendapatan — aksi operasional oleh Admin."
-      flowSteps={[
-        { label: "Pesanan", detail: "Klik baris untuk lihat detail (hanya baca)." },
-        { label: "Distribusi", detail: "Status kirim & terkirim — Petani/Admin." },
-        { label: "Pendapatan", detail: "Epik 5.3 — jurnal di /owner/jurnal." },
-      ]}
       list={<SalesOrderDaftar rows={orders.map(serializeSalesOrder)} mode="owner" />}
       listTitle="Semua pesanan jual"
-      listDescription="Owner hanya melihat."
     />
   );
 }

@@ -447,6 +447,22 @@ model Akun {
   baris    JurnalBaris[]
   sales_orders_dp        Sales_Order[] @relation("SoAkunDp")
   sales_orders_pelunasan Sales_Order[] @relation("SoAkunPelunasan")
+  rekening_kas           Rekening_Kas?
+}
+
+/// Rekening tunai / bank / e-wallet pemilik — satu baris = satu akun kas/bank (COA) untuk posting.
+model Rekening_Kas {
+  id             Int     @id @default(autoincrement())
+  nama_rekening  String  @db.VarChar(80)
+  institusi_kode String  @db.VarChar(40)
+  nomor_rekening String? @db.VarChar(40)
+  atas_nama      String? @db.VarChar(100)
+  akun_id        Int     @unique
+  akun           Akun    @relation(fields: [akun_id], references: [id])
+  urutan         Int     @default(0)
+  aktif          Boolean @default(true)
+
+  @@index([aktif, urutan])
 }
 
 enum StatusJurnal {

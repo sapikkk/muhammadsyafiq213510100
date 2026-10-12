@@ -4,8 +4,10 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
 import { formatRupiah } from "@/lib/format";
+
 export type EvaluasiMarginRow = {
   kodeBatch: string;
+  lokasiLabel: string;
   varietas: string;
   hppPerKg: string;
   hargaCurah: string;
@@ -16,7 +18,14 @@ export type EvaluasiMarginRow = {
 export function EvaluasiMarginDaftar({ rows }: { rows: EvaluasiMarginRow[] }) {
   const columns = useMemo<ColumnDef<EvaluasiMarginRow>[]>(
     () => [
-      { accessorKey: "kodeBatch", header: "Batch" },
+      {
+        id: "produksi",
+        header: "Lokasi tanam",
+        accessorFn: (row) => `${row.lokasiLabel} ${row.kodeBatch} ${row.varietas}`,
+        cell: ({ row }) => (
+          <span className="font-medium">{row.original.lokasiLabel}</span>
+        ),
+      },
       { accessorKey: "varietas", header: "Varietas" },
       {
         accessorKey: "hppPerKg",
@@ -55,8 +64,8 @@ export function EvaluasiMarginDaftar({ rows }: { rows: EvaluasiMarginRow[] }) {
       columns={columns}
       data={rows}
       pageSize={8}
-      searchPlaceholder="Cari batch atau varietas…"
-      searchColumnIds={["kodeBatch", "varietas"]}
+      searchPlaceholder="Cari lokasi, varietas, kode batch…"
+      searchColumnIds={["produksi", "kodeBatch", "varietas"]}
       emptyMessage="Belum ada data untung. Setujui laporan panen dan HPP di Admin dulu."
     />
   );

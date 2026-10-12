@@ -6,6 +6,7 @@ import { mulaiSiklusSemai } from "@/app/actions/siklus";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
+import { labelPackSiapPakai } from "@/lib/inventaris-ui-labels";
 import {
   estimasiGramBenih,
   estimasiSlabRockwool,
@@ -187,9 +188,12 @@ export function SiklusForm({
                   : null;
               return (
                 <option key={p.id} value={p.id}>
-                  {p.kode} — {p.itemNama} (sisa {p.sisaUnit}{" "}
-                  {satuanInventarisLabel[p.satuan as SatuanInventaris]}
-                  {kap != null ? ` · ~${kap} lubang` : ""})
+                  {labelPackSiapPakai({
+                    itemNama: p.itemNama,
+                    sisaUnit: p.sisaUnit,
+                    satuanLabel: satuanInventarisLabel[p.satuan as SatuanInventaris],
+                    kapLubang: kap,
+                  })}
                 </option>
               );
             })}
@@ -225,9 +229,12 @@ export function SiklusForm({
               const kap = kapasitasLubangMediaPack(Number(p.sisaUnit), p.itemKode);
               return (
                 <option key={`m-${p.id}`} value={p.id}>
-                  {p.kode} — {p.itemNama} (sisa {p.sisaUnit}{" "}
-                  {satuanInventarisLabel[p.satuan as SatuanInventaris]}
-                  {kap > 0 ? ` · ~${kap} lubang` : ""})
+                  {labelPackSiapPakai({
+                    itemNama: p.itemNama,
+                    sisaUnit: p.sisaUnit,
+                    satuanLabel: satuanInventarisLabel[p.satuan as SatuanInventaris],
+                    kapLubang: kap > 0 ? kap : null,
+                  })}
                 </option>
               );
             })}

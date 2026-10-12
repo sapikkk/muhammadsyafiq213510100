@@ -30,6 +30,7 @@ const akunAnak = [
   ["3300", "Laba Ditahan", "3000"],
   ["4100", "Penjualan Sayur Curah", "4000"],
   ["4200", "Penjualan Sayur Pack", "4000"],
+  ["4300", "Pendapatan Lain-lain", "4000"],
   ["5100", "Harga Pokok Penjualan", "5000"],
   ["5110", "Beban Benih", "5000"],
   ["5120", "Beban Rockwool", "5000"],

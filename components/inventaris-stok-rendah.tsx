@@ -19,13 +19,11 @@ export function InventarisStokRendah({ items, showRestockHint = false }: Props) 
     () => [
       {
         id: "nama",
-        header: "Item",
+        header: "Barang",
         accessorFn: (row) => `${row.kode} ${row.nama}`,
         cell: ({ row }) => (
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-medium">
-              {row.original.kode} · {row.original.nama}
-            </span>
+            <span className="font-medium">{row.original.nama}</span>
             <Badge variant="outline" className="border-destructive text-destructive">
               Stok rendah
             </Badge>

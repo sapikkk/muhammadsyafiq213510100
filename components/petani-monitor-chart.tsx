@@ -27,7 +27,7 @@ export function PetaniMonitorChart({ points }: { points: MonitorGrafikTitik[] })
     ph: p.ph,
     suhu: p.suhu,
     kolam: p.kolam,
-    batch: p.siklusKode,
+    tanam: p.siklusLabel,
   }));
 
   return (
@@ -60,9 +60,9 @@ export function PetaniMonitorChart({ points }: { points: MonitorGrafikTitik[] })
               return [value, "PPM"];
             }}
             labelFormatter={(_, payload) => {
-              const row = payload?.[0]?.payload as { kolam?: string; batch?: string } | undefined;
+              const row = payload?.[0]?.payload as { kolam?: string; tanam?: string } | undefined;
               if (!row) return "";
-              return `${row.batch} · ${row.kolam}`;
+              return `${row.tanam ?? ""} · ${row.kolam ?? ""}`;
             }}
           />
           <Legend />

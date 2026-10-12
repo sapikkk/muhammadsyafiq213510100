@@ -50,7 +50,7 @@ export function SalesOrderDaftar({
       columns={columns}
       data={rows}
       pageSize={10}
-      searchPlaceholder="Cari SO, pelanggan, status…"
+      searchPlaceholder="Cari nomor pesanan, pelanggan, status…"
       searchColumnIds={["nomor_so", "pelanggan_nama", "status"]}
       emptyMessage="Belum ada pesanan jual."
       getRowHref={(row) => `${listHref[mode]}/${row.id}`}

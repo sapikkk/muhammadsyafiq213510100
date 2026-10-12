@@ -161,6 +161,8 @@ export type AkunClientNode = {
   aktif: boolean;
   isSystem: boolean;
   parentId: number | null;
+  /** Saldo posting (leaf); induk di UI dijumlahkan dari anak. */
+  saldo: string;
   anak: AkunClientNode[];
 };
 
@@ -176,6 +178,7 @@ export function buildClientTree(rows: Akun[]): AkunClientNode[] {
         aktif: row.aktif,
         isSystem: row.isSystem,
         parentId: row.parentId,
+        saldo: row.saldo.toString(),
         anak: [],
       },
     ]),

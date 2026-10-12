@@ -6,17 +6,12 @@ export const dynamic = "force-dynamic";
 
 export default async function OwnerAkunPage() {
   const rows = await listAkun();
-  const aktif = rows.filter((row) => row.aktif);
 
   return (
     <CrudPageLayout
+      financeNavRole="OWNER"
       eyebrow="Keuangan"
       title="Bagan akun"
-      description={`Hanya lihat. ${aktif.length} akun aktif dari ${rows.length} total.`}
-      flowSteps={[
-        { label: "Navigasi pohon", detail: "Expand induk untuk melihat sub-akun." },
-        { label: "Perubahan akun", detail: "Hanya Admin. Owner lihat saldo lewat catatan keuangan dan laporan." },
-      ]}
       list={<AkunTree tree={buildClientTree(rows)} mode="owner" />}
       listTitle="Struktur bagan akun"
     />

@@ -22,13 +22,13 @@ export function CashFlowMutasiDaftar({ rows }: { rows: CashFlowMutasiRow[] }) {
       { accessorKey: "tanggal", header: "Tanggal" },
       {
         accessorKey: "jurnalId",
-        header: "Jurnal",
+        header: "Catatan",
         cell: ({ row }) => (
           <Link
             href={`/owner/jurnal/${row.original.jurnalId}`}
-            className="tabular-nums text-primary hover:underline"
+            className="text-primary underline-offset-2 hover:underline"
           >
-            #{row.original.jurnalId}
+            Buka catatan
           </Link>
         ),
       },

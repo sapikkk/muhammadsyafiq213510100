@@ -7,6 +7,9 @@ if (parseSumberKasKode(undefined) !== AKUN_KODE.KAS) {
 if (parseSumberKasKode("1110") !== AKUN_KODE.BANK) {
   throw new Error("bank");
 }
+if (parseSumberKasKode("1111") !== "1111") {
+  throw new Error("sub bank");
+}
 try {
   parseSumberKasKode("9999");
   throw new Error("expected error");

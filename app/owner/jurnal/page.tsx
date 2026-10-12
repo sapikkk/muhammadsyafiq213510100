@@ -22,14 +22,9 @@ export default async function OwnerJurnalPage({
 
   return (
     <CrudPageLayout
+      financeNavRole="OWNER"
       eyebrow="Keuangan"
       title="Catatan keuangan"
-      description="Lihat dan filter. Koreksi manual kecil lewat menu terpisah; setujui pending lewat Admin."
-      flowSteps={[
-        { label: "Filter", detail: "Tanggal dan status, lalu terapkan." },
-        { label: "Detail", detail: "Klik baris untuk debit/kredit." },
-        { label: "Koreksi", detail: "Hanya jika perlu penyesuaian manual." },
-      ]}
       actions={
         <Button asChild variant="outline" className="h-11">
           <Link href="/owner/jurnal/koreksi">Koreksi manual</Link>

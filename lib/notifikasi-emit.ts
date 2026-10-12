@@ -73,13 +73,13 @@ export async function emitPasswordResetRejected(userId: number) {
 
 export async function emitHarvestPending(
   laporanId: number,
-  kodeBatch: string,
+  lokasiTanam: string,
   petaniNama: string,
 ) {
   await toAdmin({
     jenis: NotifJenis.HARVEST_PENDING,
     judul: "Laporan panen perlu ditinjau",
-    pesan: pesanAktivitas(`Petani ${petaniNama}`, `mengirim panen batch ${kodeBatch}.`),
+    pesan: pesanAktivitas(`Petani ${petaniNama}`, `mengirim laporan panen (${lokasiTanam}).`),
     href: `/admin/harvest/${laporanId}`,
     entitas: "Laporan_Panen",
     entitasId: laporanId,
@@ -87,7 +87,7 @@ export async function emitHarvestPending(
   await toOwner({
     jenis: NotifJenis.HARVEST_PENDING,
     judul: "Panen menunggu tinjauan Admin",
-    pesan: pesanAktivitas(`Petani ${petaniNama}`, `mengirim panen batch ${kodeBatch}.`),
+    pesan: pesanAktivitas(`Petani ${petaniNama}`, `mengirim laporan panen (${lokasiTanam}).`),
     href: `/owner/produksi`,
     entitas: "Laporan_Panen",
     entitasId: laporanId,
@@ -96,14 +96,14 @@ export async function emitHarvestPending(
 
 export async function emitHarvestApproved(
   userId: number,
-  kodeBatch: string,
+  lokasiTanam: string,
   laporanId: number,
   siklusId: number,
 ) {
   await kirimNotifikasiUser(userId, {
     jenis: NotifJenis.HARVEST_APPROVED,
     judul: "Panen disetujui",
-    pesan: `Panen batch ${kodeBatch} disetujui. Biaya produksi (HPP) sudah dihitung.`,
+    pesan: `Panen ${lokasiTanam} disetujui. Biaya produksi (HPP) sudah dihitung.`,
     href: `/petani/siklus/${siklusId}`,
     entitas: "Laporan_Panen",
     entitasId: laporanId,
@@ -112,7 +112,7 @@ export async function emitHarvestApproved(
 
 export async function emitHarvestRejected(
   userId: number,
-  kodeBatch: string,
+  lokasiTanam: string,
   laporanId: number,
   alasan: string,
   siklusId: number,
@@ -121,7 +121,7 @@ export async function emitHarvestRejected(
   await kirimNotifikasiUser(userId, {
     jenis: NotifJenis.HARVEST_REJECTED,
     judul: "Panen ditolak",
-    pesan: `Batch ${kodeBatch} ditolak: ${ringkas}`,
+    pesan: `Panen ${lokasiTanam} ditolak: ${ringkas}`,
     href: `/petani/siklus/${siklusId}`,
     entitas: "Laporan_Panen",
     entitasId: laporanId,
@@ -174,19 +174,19 @@ export async function emitJurnalRejected(userId: number, jurnalId: number, keter
   });
 }
 
-export async function emitKegagalanBaru(logId: number, kodeBatch: string, tahapLabel: string) {
+export async function emitKegagalanBaru(logId: number, lokasiTanam: string, tahapLabel: string) {
   await toAdmin({
     jenis: NotifJenis.KEGAGALAN_BARU,
     judul: "Catatan kegagalan baru",
-    pesan: `Batch ${kodeBatch}: ${tahapLabel}. Perlu klasifikasi susut.`,
+    pesan: `${lokasiTanam}: ${tahapLabel}. Perlu klasifikasi susut.`,
     href: `/admin/susut#log-kegagalan-${logId}`,
     entitas: "Log_Kegagalan",
     entitasId: logId,
   });
 }
 
-export async function emitStokRendah(itemId: number, kode: string, nama: string) {
-  const detail = `${kode} ${nama} sudah di bawah minimum. Perlu isi ulang.`;
+export async function emitStokRendah(itemId: number, _kode: string, nama: string) {
+  const detail = `Stok ${nama} sudah di bawah minimum. Perlu isi ulang.`;
   const payload = {
     jenis: NotifJenis.STOK_RENDAH,
     judul: "Stok di bawah minimum",
@@ -274,14 +274,14 @@ export async function emitSandiResetOwner(userId: number) {
 
 export async function emitSiklusAbort(
   petaniUserId: number,
-  kodeBatch: string,
+  lokasiTanam: string,
   siklusId: number,
   alasan: string,
 ) {
   await kirimNotifikasiUser(petaniUserId, {
     jenis: NotifJenis.SIKLUS_ABORT,
     judul: "Siklus tanam dibatalkan",
-    pesan: `Batch ${kodeBatch} gagal total: ${alasan.slice(0, 120)}`,
+    pesan: `Siklus ${lokasiTanam} gagal total: ${alasan.slice(0, 120)}`,
     href: `/petani/siklus/${siklusId}`,
     entitas: "Siklus_Produksi",
     entitasId: siklusId,

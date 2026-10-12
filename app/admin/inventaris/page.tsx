@@ -13,12 +13,6 @@ export default async function AdminInventarisPage() {
     <CrudPageLayout
       eyebrow="Produksi & stok"
       title="Inventaris"
-      description="Kelola item bahan baku, stok saat ini, dan jejak pergerakan."
-      flowSteps={[
-        { label: "Stok", detail: "Klik baris untuk riwayat item dan catat masuk, keluar, atau penyesuaian." },
-        { label: "Item baru", detail: "Tombol Tambah di panel samping jika perlu menambah master item." },
-        { label: "Paket siap pakai", detail: "Setelah stok tercatat, buat pack di menu Paket siap pakai." },
-      ]}
       actions={
         <InventarisItemFormSheet
           trigger={
@@ -30,7 +24,6 @@ export default async function AdminInventarisPage() {
       }
       list={<InventarisDaftar items={items.map(serializeItem)} mode="admin" />}
       listTitle="Stok saat ini"
-      listDescription="Perhatikan badge stok rendah. Petani mencatat keluar saat memakai bahan di lapangan."
     />
   );
 }

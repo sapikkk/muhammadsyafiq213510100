@@ -143,6 +143,7 @@ function LangkahBerikutnyaMenu({
 
 export function SiklusDetailSecondary({
   siklusId,
+  siklusLabel,
   kodeBatch,
   jumlahDisemai,
   totalSusut,
@@ -154,6 +155,7 @@ export function SiklusDetailSecondary({
   variant = "toolbar",
 }: {
   siklusId: number;
+  siklusLabel: string;
   kodeBatch: string;
   jumlahDisemai: number;
   totalSusut: number;
@@ -186,7 +188,7 @@ export function SiklusDetailSecondary({
       ) : null}
       {canAbort ? (
         <FormDialog triggerLabel="Batalkan siklus" title="Batalkan gagal total">
-          <SiklusAbortForm siklusId={siklusId} kodeBatch={kodeBatch} />
+          <SiklusAbortForm siklusId={siklusId} siklusLabel={siklusLabel} kodeBatch={kodeBatch} />
         </FormDialog>
       ) : null}
     </div>

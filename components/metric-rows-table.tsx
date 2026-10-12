@@ -15,6 +15,7 @@ export type MetricRow = {
 };
 
 export function MetricRowsTable({ rows, caption }: { rows: MetricRow[]; caption?: string }) {
+  const showHints = rows.some((r) => r.hint?.trim());
   return (
     <Table>
       {caption ? <caption className="sr-only">{caption}</caption> : null}
@@ -22,7 +23,7 @@ export function MetricRowsTable({ rows, caption }: { rows: MetricRow[]; caption?
         <TableRow>
           <TableHead className="w-[40%]">Indikator</TableHead>
           <TableHead>Nilai</TableHead>
-          <TableHead className="hidden md:table-cell">Keterangan</TableHead>
+          {showHints ? <TableHead className="hidden md:table-cell">Keterangan</TableHead> : null}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -30,9 +31,11 @@ export function MetricRowsTable({ rows, caption }: { rows: MetricRow[]; caption?
           <TableRow key={row.label}>
             <TableCell className="font-medium">{row.label}</TableCell>
             <TableCell className="tabular-nums">{row.value}</TableCell>
-            <TableCell className="hidden text-muted-foreground md:table-cell">
-              {row.hint ?? "—"}
-            </TableCell>
+            {showHints ? (
+              <TableCell className="hidden text-muted-foreground md:table-cell">
+                {row.hint ?? "—"}
+              </TableCell>
+            ) : null}
           </TableRow>
         ))}
       </TableBody>

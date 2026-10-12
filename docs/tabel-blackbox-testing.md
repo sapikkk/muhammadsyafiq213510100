@@ -294,6 +294,9 @@ Akun demo: `owner@kokonus.farm`, `admin@kokonus.farm`, `petani@kokonus.farm` (sa
 | BB-235 | v2-F | v2 | UI | Admin | Stok keluar inventaris + nilai persediaan | OUT + Rp | Jurnal AUTO PENDING Dr 5300 Cr persediaan | — | Checklist |
 | BB-236 | v2-E.2 | v2 | UI | Admin | DELIVERED, uang diterima < total | mis. 40% total | Status PIUTANG; pelunasan form tampil | — | Checklist |
 | BB-237 | v2-F | v2 | CLI | - | `npm run check:sales-order-penerimaan` | - | Exit 0 | — | Checklist |
+| BB-238 | v2-F | v2 | UI | Admin | Catat uang → Suntikan modal | catatan «suntikan modal» + tipe Pendapatan lain | Tolak simpan; pesan arahkan ke 3100 | — | Checklist |
+| BB-239 | v2-F | v2 | UI | Admin | Catat uang → Pendapatan lain-lain | nominal | Jurnal PENDING Dr kas Cr **4300** (bukan 4100) | — | Checklist |
+| BB-240 | v2-F | v2 | UI | Admin | `/admin/penjualan/piutang` | SO DELIVERED + PIUTANG | Daftar sisa + umur hari | — | Checklist |
 
 ## Findings lintas uji
 
@@ -338,14 +341,14 @@ Catatan: urutan di bawah mengikuti operasi harian Kokonus Farm (budidaya → bia
 ### Petani — hari di lapangan
 
 11. Petani login dan membuka beranda. Sistem menampilkan tugas hari ini, histori aktivitas singkat, dan peringatan stok rendah jika ada.
-12. Petani membuka Siklus produksi, menekan mulai siklus baru, memilih varietas aktif, kolam, serta pack benih (dan media jika dipakai). Sistem menghitung kebutuhan gram benih dan media dari jumlah lubang; Petani mengisi jumlah lubang dan menyimpan. Sistem membuat batch dengan kode unik, fase awal semai, dan mengurangi sisa pack secara proporsional.
-13. Petani membuka detail batch, membaca log fase, mencentang konfirmasi, lalu menekan Lanjut fase. Sistem hanya mengizinkan maju satu fase sesuai urutan; fase dan waktu tercatat di log.
+12. Petani membuka Siklus produksi, menekan mulai siklus baru, memilih varietas aktif, kolam, serta pack benih (dan media jika dipakai). Sistem menghitung kebutuhan gram benih dan media dari jumlah lubang; Petani mengisi jumlah lubang dan menyimpan. Sistem membuat siklus tanam (kode internal di detail), fase awal semai, dan mengurangi sisa pack secara proporsional.
+13. Petani membuka detail siklus, membaca log fase, mencentang konfirmasi, lalu menekan Lanjut fase. Sistem hanya mengizinkan maju satu fase sesuai urutan; fase dan waktu tercatat di log.
 14. Petani di fase panen mengisi laporan panen (jumlah, kualitas, tanggal). Sistem menyimpan laporan menunggu persetujuan Admin.
-15. Petani membuka form catat kegagalan pada batch aktif: tahap, jumlah gagal, penyebab. Sistem menambah log dan menaikkan total susut batch; validasi menolak jika melebihi jumlah yang disemai.
-16. Petani mencatat monitor pertumbuhan atau tambal susulan (dengan pack jika perlu). Sistem menambah entri di log fase; susut batch menyesuaikan; sisa pack berkurang saat tambal memakai stok.
-17. Petani memutuskan abort gagal total: mengisi alasan, centang konfirmasi, menekan Abort. Sistem mengubah status batch menjadi gagal total, menutup lanjut fase/panen/kegagalan baru, dan (setelah proses back-office) biaya batch masuk jurnal beban.
+15. Petani membuka form catat kegagalan pada siklus aktif: tahap, jumlah gagal, penyebab. Sistem menambah log dan menaikkan total susut; validasi menolak jika melebihi jumlah yang disemai.
+16. Petani mencatat monitor pertumbuhan atau tambal susulan (dengan pack jika perlu). Sistem menambah entri di log fase; susut menyesuaikan; sisa pack berkurang saat tambal memakai stok.
+17. Petani membatalkan siklus gagal total: mengisi alasan, centang konfirmasi, menekan Batalkan siklus. Sistem mengubah status menjadi gagal total, menutup lanjut fase/panen/kegagalan baru, dan biaya siklus tercatat di jurnal beban.
 18. Petani membuka Inventaris, melihat stok, lalu mencatat masuk/keluar/adjust opname dengan keterangan jika diwajibkan. Sistem menolak keluar jika stok tidak cukup.
-19. Petani membuka Active pack, membuka pack baru atau mencatat pemakaian. Sistem menghitung biaya per unit dan menandai pack habis jika sisa nol.
+19. Petani membuka Paket siap pakai, membuka pack baru atau mencatat pemakaian. Sistem menghitung biaya per unit dan menandai pack habis jika sisa nol.
 20. Petani membuka daftar varietas (hanya yang aktif), stok rendah, dan pengiriman. Sistem menampilkan sales order yang siap diantar; Petani (atau Admin) menandai terkirim lalu delivered sesuai alur penjualan.
 21. Petani mencoba membuka menu Admin atau Owner. Sistem menampilkan akses ditolak.
 

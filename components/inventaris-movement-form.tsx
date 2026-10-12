@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import { FormSheet } from "@/components/form-sheet";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
+import { labelItemPilih } from "@/lib/inventaris-ui-labels";
 import { tipePergerakanLabel, tipePergerakanList, type TipePergerakan } from "@/lib/inventaris-pergerakan";
 
 export type InventarisMovementItemOption = {
@@ -69,7 +70,7 @@ export function InventarisMovementForm({
       <input type="hidden" name="itemId" value={resolvedItemId || ""} />
       <input type="hidden" name="tipe" value={tipe} />
       {!fixedItemId ? (
-        <Field label="Item">
+        <Field label="Barang">
           <Select value={itemId} onValueChange={setItemId} required>
             <SelectTrigger className="h-11">
               <SelectValue placeholder="Pilih item" />
@@ -77,7 +78,11 @@ export function InventarisMovementForm({
             <SelectContent>
               {items.map((item) => (
                 <SelectItem key={item.id} value={String(item.id)}>
-                  {item.kode} — {item.nama} ({satuanInventarisLabel[item.satuan]})
+                  {labelItemPilih({
+                    nama: item.nama,
+                    kode: item.kode,
+                    satuanLabel: satuanInventarisLabel[item.satuan],
+                  })}
                 </SelectItem>
               ))}
             </SelectContent>

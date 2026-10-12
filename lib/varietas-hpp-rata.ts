@@ -1,7 +1,7 @@
 import "server-only";
 
 import { Prisma } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import { prisma, type PrismaTransaction } from "@/lib/prisma";
 
 const nol = new Prisma.Decimal(0);
 const round2 = (d: Prisma.Decimal) => d.toDecimalPlaces(2, Prisma.Decimal.ROUND_HALF_UP);
@@ -13,10 +13,11 @@ const DEFAULT_BATCH_LIMIT = 5;
  */
 export async function rataHppPerLubangVarietas(
   varietasId: number,
-  opts?: { batchLimit?: number },
+  opts?: { batchLimit?: number; tx?: PrismaTransaction },
 ): Promise<Prisma.Decimal | null> {
   const limit = opts?.batchLimit ?? DEFAULT_BATCH_LIMIT;
-  const panen = await prisma.laporan_Panen.findMany({
+  const db = opts?.tx ?? prisma;
+  const panen = await db.laporan_Panen.findMany({
     where: {
       status: "APPROVED",
       siklus: { varietas_id: varietasId, hpp: { isNot: null } },

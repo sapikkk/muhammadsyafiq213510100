@@ -6,5 +6,6 @@ export type MonitorGrafikTitik = {
   ph: number;
   suhu: number;
   kolam: string;
-  siklusKode: string;
+  /** Label tanam untuk tooltip (bukan kode batch). */
+  siklusLabel: string;
 };

@@ -5,7 +5,7 @@ import {
   emitSalesOrderConfirmed,
   emitSalesOrderDraft,
 } from "@/lib/notifikasi-emit";
-import { prisma } from "@/lib/prisma";
+import { prisma, runTransaction } from "@/lib/prisma";
 import { hitungHppOrderBaris, resolveHppPerLubangUntukOrder } from "@/lib/sales-order-hpp";
 import { rataHppPerLubangVarietas } from "@/lib/varietas-hpp-rata";
 import {
@@ -149,6 +149,12 @@ export async function listSiklusSiapJual() {
     include: {
       varietas: { select: { nama: true, harga_jual_curah: true, harga_jual_pack: true, berat_per_pack: true } },
       laporanPanen: { select: { jumlah_layak: true, berat_layak_gram: true } },
+      kolam: {
+        select: {
+          nama: true,
+          greenhouse: { select: { nama: true } },
+        },
+      },
     },
   });
 }
@@ -209,6 +215,18 @@ export async function stokTersediaSiklus(siklusId: number, jenis: JenisSo, tx: D
   return Prisma.Decimal.max(0, packs.sub(terpakai));
 }
 
+/** Data siklus untuk label layar (greenhouse, kolam, varietas) + kode batch di detail. */
+export const siklusSelectUntukPesanan = {
+  kode_batch: true,
+  varietas: { select: { nama: true } },
+  kolam: {
+    select: {
+      nama: true,
+      greenhouse: { select: { nama: true } },
+    },
+  },
+} as const;
+
 const salesOrderInclude = {
   pelanggan: { select: { nama: true } },
   jurnal_pendapatan: { select: { id: true, status: true, keterangan: true } },
@@ -217,7 +235,7 @@ const salesOrderInclude = {
   akun_dp: { select: { id: true, kode: true, nama: true } },
   baris: {
     include: {
-      siklus: { select: { kode_batch: true } },
+      siklus: { select: siklusSelectUntukPesanan },
     },
   },
 } as const;
@@ -268,7 +286,11 @@ type SoSerializeRow = {
     hpp_order: Prisma.Decimal;
     harga_satuan: Prisma.Decimal;
     subtotal: Prisma.Decimal;
-    siklus: { kode_batch: string };
+    siklus: {
+      kode_batch: string;
+      varietas: { nama: string };
+      kolam: { nama: string; greenhouse: { nama: string } };
+    };
   }[];
 };
 
@@ -303,6 +325,9 @@ export function serializeSalesOrder(row: SoSerializeRow) {
       id: b.id,
       siklus_id: b.siklus_id,
       kode_batch: b.siklus.kode_batch,
+      varietas_nama: b.siklus.varietas.nama,
+      kolam_nama: b.siklus.kolam.nama,
+      greenhouse_nama: b.siklus.kolam.greenhouse.nama,
       jenis: b.jenis,
       jumlah: b.jumlah.toString(),
       lubang_terpakai: b.lubang_terpakai,
@@ -314,7 +339,7 @@ export function serializeSalesOrder(row: SoSerializeRow) {
 }
 
 export async function createSalesOrderDraft(userId: number, input: SalesOrderInput) {
-  const row = await prisma.$transaction(async (tx) => {
+  const row = await runTransaction(async (tx) => {
     const pelanggan = await tx.pelanggan.findUnique({ where: { id: input.pelangganId } });
     if (!pelanggan) throw new SalesOrderError("Pelanggan tidak ditemukan.", 404);
     if (!pelanggan.aktif) {
@@ -346,7 +371,7 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
       if (!rataVarietasCache.has(siklus.varietas_id)) {
         rataVarietasCache.set(
           siklus.varietas_id,
-          await rataHppPerLubangVarietas(siklus.varietas_id),
+          await rataHppPerLubangVarietas(siklus.varietas_id, { tx }),
         );
       }
       const hppLubang = resolveHppPerLubangUntukOrder(
@@ -378,9 +403,9 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
     let akun_dp_id: number | null = null;
     if (input.jumlahDp.gt(0)) {
       if (input.akunDpId) {
-        akun_dp_id = await resolveAkunDpId(input.akunDpId);
+        akun_dp_id = await resolveAkunDpId(input.akunDpId, tx as Db);
       } else {
-        akun_dp_id = await defaultAkunDpId();
+        akun_dp_id = await defaultAkunDpId(tx as Db);
       }
     }
 
@@ -400,7 +425,7 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
       },
       include: {
         pelanggan: { select: { nama: true } },
-        baris: { include: { siklus: { select: { kode_batch: true } } } },
+        baris: { include: { siklus: { select: siklusSelectUntukPesanan } } },
       },
     });
   });
@@ -409,7 +434,7 @@ export async function createSalesOrderDraft(userId: number, input: SalesOrderInp
 }
 
 export async function confirmSalesOrder(id: number, olehId?: number) {
-  const row = await prisma.$transaction(async (tx) => {
+  const row = await runTransaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({
       where: { id },
       include: { baris: true },
@@ -441,7 +466,7 @@ export async function confirmSalesOrder(id: number, olehId?: number) {
       data: { status: "CONFIRMED" },
       include: {
         pelanggan: { select: { nama: true } },
-        baris: { include: { siklus: { select: { kode_batch: true } } } },
+        baris: { include: { siklus: { select: siklusSelectUntukPesanan } } },
       },
     });
   });

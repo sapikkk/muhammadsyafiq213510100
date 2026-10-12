@@ -18,7 +18,8 @@ export async function loadSalesOrderCreateContext() {
 
   const siklus = siklusRows.map((s) => ({
     id: s.id,
-    kode_batch: s.kode_batch,
+    greenhouse_nama: s.kolam.greenhouse.nama,
+    kolam_nama: s.kolam.nama,
     varietas_nama: s.varietas.nama,
     harga_curah: s.varietas.harga_jual_curah.toString(),
     harga_pack: s.varietas.harga_jual_pack.toString(),

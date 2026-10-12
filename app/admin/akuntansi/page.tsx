@@ -12,24 +12,15 @@ export default async function AdminAkuntansiPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Akuntansi"
+      financeNavRole="ADMIN"
+      eyebrow="Keuangan"
       title="Pengaturan akuntansi"
-      description="Tutup periode dan catat penyusutan bulanan sebelum tutup buku."
-      flowSteps={[
-        { label: "Tutup periode", detail: "Atur tanggal tutup; catatan tanggal lama ditolak." },
-        { label: "Penyusutan", detail: "Jalankan per bulan; catatan otomatis untuk greenhouse dan instalasi." },
-        { label: "Catatan keuangan", detail: "Kembali ke daftar lewat menu samping." },
-      ]}
       list={
         <div className="space-y-6">
-          <PageSection title="Tutup periode" description="Tanggal terakhir transaksi boleh dicatat." badge="Update">
+          <PageSection title="Tutup periode" badge="Update">
             <PeriodLockForm periodeTutup={periodeTutup} />
           </PageSection>
-          <PageSection
-            title="Penyusutan otomatis"
-            description="Satu kali per bulan; aman dijalankan ulang bulan yang sama."
-            badge="Create"
-          >
+          <PageSection title="Penyusutan otomatis" badge="Create">
             <PenyusutanBulanForm defaultBulan={new Date().toISOString().slice(0, 7)} />
           </PageSection>
         </div>

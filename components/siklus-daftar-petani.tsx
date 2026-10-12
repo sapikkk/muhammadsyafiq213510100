@@ -130,8 +130,8 @@ export function SiklusDaftarPetani({ rows }: { rows: SiklusBarisPetani[] }) {
       </div>
       {kolamId !== "all" && !targetMonitor ? (
         <p className="text-sm text-muted-foreground">
-          Kolam ini belum punya batch aktif di fase sprout–pendewasaan. Pilih kolam lain atau lanjutkan
-          fase di detail batch.
+          Kolam ini belum punya siklus aktif di fase sprout–pendewasaan. Pilih kolam lain atau lanjutkan
+          fase di detail siklus.
         </p>
       ) : null}
       <SiklusDaftar rows={filtered} />

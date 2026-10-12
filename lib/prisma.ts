@@ -43,4 +43,17 @@ export type PrismaTransaction = Parameters<
   Parameters<typeof prisma.$transaction>[0]
 >[0];
 
+/** Default interaktif — Prisma 5s terlalu ketat untuk SO / panen multi-query. */
+export const PRISMA_TX_OPTS = { maxWait: 10_000, timeout: 20_000 } as const;
+
+export function runTransaction<T>(
+  fn: (tx: PrismaTransaction) => Promise<T>,
+  opts?: { timeout?: number; maxWait?: number },
+) {
+  return prisma.$transaction(fn, {
+    maxWait: opts?.maxWait ?? PRISMA_TX_OPTS.maxWait,
+    timeout: opts?.timeout ?? PRISMA_TX_OPTS.timeout,
+  });
+}
+
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;

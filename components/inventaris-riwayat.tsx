@@ -33,8 +33,9 @@ export function InventarisRiwayat({
         : [
             {
               id: "item",
-              header: "Item",
-              accessorFn: (row: SerializedPergerakan) => `${row.item.kode} ${row.item.nama}`,
+              header: "Barang",
+              accessorFn: (row: SerializedPergerakan) => `${row.item.nama} ${row.item.kode}`,
+              cell: ({ row }) => row.original.item.nama,
             } satisfies ColumnDef<SerializedPergerakan>,
           ]),
       {

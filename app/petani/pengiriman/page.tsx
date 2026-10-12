@@ -12,11 +12,6 @@ export default async function PetaniPengirimanPage() {
     <CrudPageLayout
       eyebrow="Penjualan"
       title="Packing & pengiriman"
-      description="Pesanan yang sudah dikonfirmasi, dikirim, atau diterima. Waktu dicatat otomatis."
-      flowSteps={[
-        { label: "Siap kemas", detail: "Pesanan sudah dikonfirmasi; ubah ke “Sudah kirim” saat barang keluar." },
-        { label: "Sudah sampai", detail: "Konfirmasi barang sampai ke pelanggan." },
-      ]}
       list={<SalesOrderDaftar rows={orders.map(serializeSalesOrder)} mode="pengiriman" />}
       listTitle="Pesanan jual aktif"
     />

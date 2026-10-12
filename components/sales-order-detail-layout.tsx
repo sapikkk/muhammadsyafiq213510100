@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatRupiah } from "@/lib/format";
 import { labelSalesOrderStatus } from "@/lib/sales-order-status";
 import { getSalesOrder, serializeSalesOrder } from "@/lib/sales-order";
+import { ensureRekeningKasDefaults, listRekeningKasAktif } from "@/lib/rekening-kas";
 
 export async function SalesOrderDetailLayout({
   id,
@@ -20,7 +21,13 @@ export async function SalesOrderDetailLayout({
 }) {
   if (!Number.isInteger(id) || id <= 0) notFound();
 
-  const row = await getSalesOrder(id);
+  const [row, rekeningOptions] = await Promise.all([
+    getSalesOrder(id),
+    (async () => {
+      await ensureRekeningKasDefaults();
+      return listRekeningKasAktif();
+    })(),
+  ]);
   if (!row) notFound();
 
   const so = serializeSalesOrder(row) as SoRow;
@@ -38,7 +45,7 @@ export async function SalesOrderDetailLayout({
       description={`${so.pelanggan_nama} · Total ${formatRupiah(so.total)}`}
     >
       <PageSection title={sectionTitle} badge={mode === "owner" ? "Read" : "Update"}>
-        <SalesOrderDetail row={so} mode={mode} />
+        <SalesOrderDetail row={so} mode={mode} rekeningOptions={rekeningOptions} />
       </PageSection>
     </DetailLayout>
   );

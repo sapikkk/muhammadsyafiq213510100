@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { Prisma } from "@prisma/client";
 import { AKUN_KODE } from "../lib/akun-kode";
 import { smartJurnalTipe, type SmartJurnalTipe } from "../lib/smart-jurnal-catalog";
-import { buildSmartJurnalBaris } from "../lib/smart-jurnal";
+import { buildSmartJurnalBaris } from "../lib/smart-jurnal-baris";
 
 const nominal = new Prisma.Decimal("100000");
 
@@ -27,6 +27,7 @@ const kasMap = new Map([
   ["1530", 12],
   ["1330", 13],
   ["4100", 14],
+  ["4300", 19],
   ["5200", 15],
   ["1200", 16],
   ["5400", 17],

@@ -19,6 +19,11 @@ import { getSiklusProduksi, listLogProduksi } from "@/lib/siklus-produksi";
 import { siklusBolehAbort, STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort-status";
 import { buildTimelineSiklus } from "@/lib/timeline-siklus";
 import { listActivePack } from "@/lib/active-pack";
+import { DetailKodeStrip } from "@/components/detail-kode-strip";
+import {
+  labelBarisProduksiUtama,
+  partsFromSiklusNested,
+} from "@/lib/produksi-ui-labels";
 
 export async function SiklusDetailScreen({
   id,
@@ -93,14 +98,14 @@ export async function SiklusDetailScreen({
       backHref="/petani/siklus"
       surface={surface}
       eyebrow="Siklus"
-      title={siklus.kode_batch}
+      title={labelBarisProduksiUtama(partsFromSiklusNested(siklus))}
       badge={
         <Badge variant={status === STATUS_GAGAL_TOTAL ? "outline" : "secondary"}>
           {badgeLabel}
         </Badge>
       }
-      description={`${siklus.varietas.nama} · ${siklus.kolam.greenhouse.nama} / ${siklus.kolam.nama}`}
     >
+      <DetailKodeStrip label="Kode batch" kode={siklus.kode_batch} />
       {status === STATUS_GAGAL_TOTAL ? (
         <p className="rounded-md border border-destructive/30 bg-destructive/5 p-4 text-sm">
           Siklus tanam dihentikan. Tidak bisa lanjut fase atau panen.
@@ -109,6 +114,7 @@ export async function SiklusDetailScreen({
 
       <SiklusDetailSecondary
         siklusId={id}
+        siklusLabel={labelBarisProduksiUtama(partsFromSiklusNested(siklus))}
         kodeBatch={siklus.kode_batch}
         jumlahDisemai={siklus.jumlah_disemai}
         totalSusut={siklus.total_susut}

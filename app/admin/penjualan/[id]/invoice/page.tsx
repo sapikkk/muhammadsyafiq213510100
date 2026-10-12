@@ -5,6 +5,12 @@ import { formatRupiah } from "@/lib/format";
 import { SalesOrderError } from "@/lib/sales-order";
 import { getSalesOrderInvoice } from "@/lib/sales-order-invoice";
 import { labelSalesOrderStatus } from "@/lib/sales-order-status";
+import { DetailKodeStrip } from "@/components/detail-kode-strip";
+import {
+  labelBarisProduksiUtama,
+  labelJenisBaris,
+  partsFromSiklusNested,
+} from "@/lib/produksi-ui-labels";
 
 export const dynamic = "force-dynamic";
 
@@ -66,7 +72,7 @@ export default async function SalesOrderInvoicePage({ params }: { params: { id: 
         <table className="mb-6 w-full text-left text-sm">
           <thead>
             <tr className="border-b">
-              <th className="py-2 pr-2">Batch</th>
+              <th className="py-2 pr-2">Produksi</th>
               <th className="py-2 pr-2">Jenis</th>
               <th className="py-2 pr-2 text-right">Qty</th>
               <th className="py-2 pr-2 text-right">Harga</th>
@@ -76,8 +82,13 @@ export default async function SalesOrderInvoicePage({ params }: { params: { id: 
           <tbody>
             {invoice.baris.map((b) => (
               <tr key={b.id} className="border-b border-dashed">
-                <td className="py-2 pr-2">{b.siklus.kode_batch}</td>
-                <td className="py-2 pr-2">{b.jenis}</td>
+                <td className="py-2 pr-2">
+                  <p>{labelBarisProduksiUtama(partsFromSiklusNested(b.siklus))}</p>
+                  <div className="mt-2 print:hidden">
+                    <DetailKodeStrip label="Kode batch" kode={b.siklus.kode_batch} />
+                  </div>
+                </td>
+                <td className="py-2 pr-2">{labelJenisBaris(b.jenis)}</td>
                 <td className="py-2 pr-2 text-right">{b.jumlah.toString()}</td>
                 <td className="py-2 pr-2 text-right">{formatRupiah(b.harga_satuan.toString())}</td>
                 <td className="py-2 text-right">{formatRupiah(b.subtotal.toString())}</td>

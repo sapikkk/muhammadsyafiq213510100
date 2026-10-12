@@ -22,11 +22,6 @@ export default async function OwnerVarietasPage() {
     <CrudPageLayout
       eyebrow="Operasi"
       title="Varietas & asumsi"
-      description="Data varietas untuk perhitungan biaya dan harga — Owner dan Admin boleh mengubah."
-      flowSteps={[
-        { label: "Lihat HPP rata", detail: "Kolom rata per lubang dari batch panen yang sudah disetujui." },
-        { label: "Detail", detail: "Klik baris — ubah asumsi atau aktif/nonaktif." },
-      ]}
       actions={
         <VarietasFormSheet
           trigger={

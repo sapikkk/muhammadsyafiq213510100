@@ -6,11 +6,17 @@ import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
 import { labelLaporanPanenStatus } from "@/lib/laporan-panen-status";
+import {
+  labelBarisProduksiUtama,
+  partsFromSerializeSiklus,
+} from "@/lib/produksi-ui-labels";
 
 type Row = {
   id: number;
   kode_batch: string;
   varietas_nama: string;
+  greenhouse_nama: string;
+  kolam_nama: string;
   status: string;
   jumlah_layak: number;
   jumlah_tidak_layak: number;
@@ -21,18 +27,22 @@ export function HarvestAdminDaftar({ rows }: { rows: Row[] }) {
   const columns = useMemo<ColumnDef<Row>[]>(
     () => [
       {
-        accessorKey: "kode_batch",
-        header: "Batch",
-        cell: ({ row }) => (
-          <Link
-            href={`/admin/harvest/${row.original.id}`}
-            className="font-medium text-primary underline-offset-2 hover:underline"
-          >
-            {row.original.kode_batch}
-          </Link>
-        ),
+        id: "lokasi_panen",
+        header: "Lokasi panen",
+        accessorFn: (row) =>
+          labelBarisProduksiUtama(partsFromSerializeSiklus(row)),
+        cell: ({ row }) => {
+          const parts = partsFromSerializeSiklus(row.original);
+          return (
+            <Link
+              href={`/admin/harvest/${row.original.id}`}
+              className="font-medium text-primary underline-offset-2 hover:underline"
+            >
+              {labelBarisProduksiUtama(parts)}
+            </Link>
+          );
+        },
       },
-      { accessorKey: "varietas_nama", header: "Varietas" },
       {
         accessorKey: "status",
         header: "Status",
@@ -66,8 +76,8 @@ export function HarvestAdminDaftar({ rows }: { rows: Row[] }) {
       columns={columns}
       data={rows}
       pageSize={12}
-      searchPlaceholder="Cari batch, varietas, petani…"
-      searchColumnIds={["kode_batch", "varietas_nama", "petani_nama", "status"]}
+      searchPlaceholder="Cari lokasi, varietas, petani, kode batch…"
+      searchColumnIds={["lokasi_panen", "kode_batch", "petani_nama", "status"]}
       emptyMessage="Belum ada laporan panen."
     />
   );

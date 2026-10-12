@@ -52,8 +52,9 @@ export function getNavFlowGroups(role: Role, stokRendahCount: number): NavFlowGr
       {
         id: "akuntansi",
         title: "Keuangan",
-        hint: "Catat, setujui, laporan",
+        hint: "Modul, transaksi, tutup buku",
         items: [
+          byHref(`${prefix}/keuangan`),
           byHref(`${prefix}/jurnal`),
           byHref(`${prefix}/akuntansi`),
           byHref(`${prefix}/akun`),

@@ -2,19 +2,63 @@
 
 import { useMemo } from "react";
 import { Input } from "@/components/ui/input";
-import type { CatatUangPihakBundle, PihakUiMode } from "@/lib/catat-uang-pihak-types";
+import { TableCell, TableRow } from "@/components/ui/table";
+import type { CatatUangPihakBundle } from "@/lib/catat-uang-pihak-types";
 import { pihakModeForSmartJurnalClient } from "@/lib/catat-uang-pihak-types";
 import type { SmartJurnalTipe } from "@/lib/smart-jurnal-catalog";
 
 const selectClass =
-  "flex h-11 w-full rounded-md border border-input bg-background px-3 text-sm";
+  "flex h-11 w-full max-w-md rounded-md border border-input bg-background px-3 text-sm";
+
+function PihakFieldsBody({
+  mode,
+  options,
+  defaultKey,
+  placeholder,
+}: {
+  mode: NonNullable<ReturnType<typeof pihakModeForSmartJurnalClient>>;
+  options: { key: string; label: string; group: string }[];
+  defaultKey: string;
+  placeholder: string;
+}) {
+  return (
+    <>
+      <TableRow>
+        <TableCell className="font-medium">Pihak transaksi</TableCell>
+        <TableCell>
+          <select
+            name="pihakKey"
+            className={selectClass}
+            defaultValue={defaultKey}
+            required={mode !== "umum"}
+          >
+            {mode === "umum" ? <option value="__none__">— Opsional —</option> : null}
+            {options.map((o) => (
+              <option key={o.key} value={o.key}>
+                {o.group}: {o.label}
+              </option>
+            ))}
+          </select>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell className="font-medium">Nama pihak baru</TableCell>
+        <TableCell>
+          <Input name="namaPihakBaru" className="h-11 max-w-md" maxLength={100} placeholder={placeholder} />
+        </TableCell>
+      </TableRow>
+    </>
+  );
+}
 
 export function CatatUangPihakFields({
   tipe,
   pihak,
+  layout = "stack",
 }: {
   tipe: SmartJurnalTipe;
   pihak: CatatUangPihakBundle;
+  layout?: "stack" | "table";
 }) {
   const mode = pihakModeForSmartJurnalClient(tipe);
 
@@ -46,7 +90,7 @@ export function CatatUangPihakFields({
     return rows;
   }, [mode, pihak]);
 
-  if (!mode) return null;
+  if (!mode) return layout === "table" ? null : null;
 
   const defaultKey =
     mode === "karyawan"
@@ -64,8 +108,19 @@ export function CatatUangPihakFields({
         ? "Nama pemilik"
         : "Nama vendor, PT, atau pihak";
 
+  if (layout === "table") {
+    return (
+      <PihakFieldsBody
+        mode={mode}
+        options={options}
+        defaultKey={defaultKey}
+        placeholder={placeholder}
+      />
+    );
+  }
+
   return (
-    <div className="space-y-3 rounded-md border border-dashed p-3">
+    <div className="space-y-3">
       <p className="text-sm font-medium">Pihak transaksi</p>
       <label className="block space-y-1.5 text-sm">
         <span className="text-muted-foreground">Pilih dari daftar</span>
@@ -84,10 +139,8 @@ export function CatatUangPihakFields({
         </select>
       </label>
       <label className="block space-y-1.5 text-sm">
-        <span className="text-muted-foreground">
-          Nama baru (jika pilih &quot;Tambah…&quot; atau vendor lain)
-        </span>
-        <Input name="namaPihakBaru" className="h-11" maxLength={100} placeholder={placeholder} />
+        <span className="text-muted-foreground">Nama baru (jika perlu)</span>
+        <Input name="namaPihakBaru" className="h-11 max-w-md" maxLength={100} placeholder={placeholder} />
       </label>
     </div>
   );

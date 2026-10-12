@@ -8,8 +8,11 @@ import {
   resolveKasAkunId,
   type SumberKasKode,
 } from "@/lib/kas-sumber";
-import { prisma } from "@/lib/prisma";
+import { prisma, runTransaction } from "@/lib/prisma";
+import { siklusSelectUntukPesanan } from "@/lib/sales-order";
 import { SalesOrderError } from "@/lib/sales-order";
+
+type Db = typeof prisma;
 
 function fromKasError(error: unknown): never {
   if (error instanceof KasSumberError) {
@@ -55,7 +58,7 @@ export function parseJumlahDp(raw: unknown): Prisma.Decimal {
   return v;
 }
 
-export async function resolveAkunDpId(akunDpIdRaw: unknown): Promise<number | null> {
+export async function resolveAkunDpId(akunDpIdRaw: unknown, tx?: Db): Promise<number | null> {
   if (akunDpIdRaw === null || akunDpIdRaw === undefined || akunDpIdRaw === "") {
     return null;
   }
@@ -63,7 +66,8 @@ export async function resolveAkunDpId(akunDpIdRaw: unknown): Promise<number | nu
   if (!Number.isInteger(id) || id <= 0) {
     throw new SalesOrderError("Akun DP tidak valid.", 400);
   }
-  const akun = await prisma.akun.findUnique({ where: { id } });
+  const db = tx ?? prisma;
+  const akun = await db.akun.findUnique({ where: { id } });
   if (!akun?.aktif) throw new SalesOrderError("Akun DP tidak ditemukan atau nonaktif.", 400);
   if (akun.tipe !== "KEWAJIBAN") {
     throw new SalesOrderError("Akun DP harus tipe KEWAJIBAN (uang muka pelanggan).", 400);
@@ -71,8 +75,9 @@ export async function resolveAkunDpId(akunDpIdRaw: unknown): Promise<number | nu
   return id;
 }
 
-export async function defaultAkunDpId(): Promise<number> {
-  const akun = await prisma.akun.findUnique({ where: { kode: AKUN_KODE.UANG_MUKA } });
+export async function defaultAkunDpId(tx?: Db): Promise<number> {
+  const db = tx ?? prisma;
+  const akun = await db.akun.findUnique({ where: { kode: AKUN_KODE.UANG_MUKA } });
   if (!akun?.aktif) throw new SalesOrderError("Akun uang muka (2200) tidak siap untuk DP.", 500);
   return akun.id;
 }
@@ -88,8 +93,6 @@ export function sisaPiutangSo(so: {
   );
 }
 
-type Db = typeof prisma;
-
 export async function catatDpSalesOrder(
   soId: number,
   userId: number,
@@ -97,7 +100,7 @@ export async function catatDpSalesOrder(
 ) {
   const kasKode = parseKasForSo(raw.sumberKas);
 
-  return prisma.$transaction(async (tx) => {
+  return runTransaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({
       where: { id: soId },
       include: { akun_dp: true },
@@ -115,7 +118,7 @@ export async function catatDpSalesOrder(
     if (so.jumlah_dp.gt(so.total)) {
       throw new SalesOrderError("Jumlah DP melebihi total SO.", 400);
     }
-    const akunDpId = so.akun_dp_id ?? (await defaultAkunDpId());
+    const akunDpId = so.akun_dp_id ?? (await defaultAkunDpId(tx as Db));
     const kasId = await resolveKasInTx(tx as Db, kasKode);
 
     const jurnal = await tx.jurnal.create({
@@ -151,7 +154,7 @@ export async function catatDpSalesOrder(
       },
       include: {
         pelanggan: { select: { nama: true } },
-        baris: { include: { siklus: { select: { kode_batch: true } } } },
+        baris: { include: { siklus: { select: siklusSelectUntukPesanan } } },
       },
     });
   });
@@ -175,7 +178,7 @@ export async function catatPelunasanSalesOrder(
   const nominal = parsePelunasanNominal(raw.nominal);
   const kasKode = parseKasForSo(raw.sumberKas);
 
-  return prisma.$transaction(async (tx) => {
+  return runTransaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({ where: { id: soId } });
     if (!so) throw new SalesOrderError("Sales order tidak ditemukan.", 404);
     if (so.status !== "DELIVERED") {
@@ -237,7 +240,7 @@ export async function catatPelunasanSalesOrder(
       },
       include: {
         pelanggan: { select: { nama: true } },
-        baris: { include: { siklus: { select: { kode_batch: true } } } },
+        baris: { include: { siklus: { select: siklusSelectUntukPesanan } } },
       },
     });
   });

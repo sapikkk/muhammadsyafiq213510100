@@ -5,12 +5,15 @@ import { submitAbortSiklus } from "@/app/actions/siklus-abort";
 import { SubmitButton } from "@/components/submit-button";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 import { Input } from "@/components/ui/input";
+import { DetailKodeStrip } from "@/components/detail-kode-strip";
 
 export function SiklusAbortForm({
   siklusId,
+  siklusLabel,
   kodeBatch,
 }: {
   siklusId: number;
+  siklusLabel: string;
   kodeBatch: string;
 }) {
   const [state, formAction] = useFormState(submitAbortSiklus, {});
@@ -25,10 +28,11 @@ export function SiklusAbortForm({
         Batalkan gagal total
       </h2>
       <p className="text-sm text-muted-foreground">
-        Batch <strong>{kodeBatch}</strong> dihentikan. Biaya siklus (WIP) dicatat Dr{" "}
-        <span className="font-mono">5300</span> Cr WIP — siklus tidak lanjut produksi. Berbeda
-        dengan log kegagalan partial (klasifikasi susut).
+        Siklus <strong>{siklusLabel}</strong> dihentikan. Biaya siklus (WIP) dipindah ke beban
+        gagal produksi — siklus tidak lanjut panen. Berbeda dengan log kegagalan sebagian
+        (klasifikasi susut).
       </p>
+      <DetailKodeStrip label="Kode batch" kode={kodeBatch} />
       <form action={formAction} className="space-y-3">
         <input type="hidden" name="siklusId" value={siklusId} />
         <label className="block space-y-1.5 text-sm">

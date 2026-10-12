@@ -22,7 +22,7 @@ export async function SiklusBaruScreen({
       <PageSection title="Asumsi bibit" badge="Read">
         <SiklusAsumsiPanel varietas={varietas} />
       </PageSection>
-      <PageSection title="Batch semai" badge="Create">
+      <PageSection title="Data semai" badge="Create">
         <SiklusForm
           varietas={varietas}
           kolam={kolam}

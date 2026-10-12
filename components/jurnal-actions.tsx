@@ -119,7 +119,7 @@ export function JurnalActions({
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Pembalikan jurnal #{id}</DialogTitle>
+                <DialogTitle>Pembalikan catatan keuangan</DialogTitle>
                 <DialogDescription>
                   Debit dan kredit ditukar pada catatan baru yang menunggu persetujuan.
                   Setujui catatan pembalik untuk mengoreksi saldo akun.

@@ -2,7 +2,7 @@ import "server-only";
 
 import { Prisma } from "@prisma/client";
 import { KasSumberError, parseSumberKasKode, resolveKasAkunId } from "@/lib/kas-sumber";
-import { prisma } from "@/lib/prisma";
+import { prisma, runTransaction } from "@/lib/prisma";
 import { SalesOrderError } from "@/lib/sales-order";
 
 type SalesOrderTx = Pick<typeof prisma, "akun" | "jurnal" | "sales_Order">;
@@ -49,7 +49,7 @@ export async function recordPackingCost(
     throw error;
   }
 
-  return prisma.$transaction(async (tx) => {
+  return runTransaction(async (tx) => {
     const so = await tx.sales_Order.findUnique({ where: { id } });
     if (!so) throw new SalesOrderError("Sales order tidak ditemukan.", 404);
     if (so.status === "CANCELLED" || so.status === "DRAFT") {

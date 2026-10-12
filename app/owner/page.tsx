@@ -1,17 +1,19 @@
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { OwnerKpiCards } from "@/components/owner-kpi-cards";
 import { OwnerPetaniAkunDaftar } from "@/components/owner-petani-akun-daftar";
+import { ChartCard } from "@/components/chart-card";
 import { OwnerRevenueChart } from "@/components/owner-revenue-chart";
-import { FlowSteps } from "@/components/flow-steps";
-import { OWNER_DASHBOARD_ALUR, OwnerFlowDashboard } from "@/components/owner-flow-dashboard";
+import { OwnerFlowDashboard } from "@/components/owner-flow-dashboard";
 import { PageHeaderRow } from "@/components/page-header-row";
 import { PageSection } from "@/components/page-section";
-import { MetricRowsTable } from "@/components/metric-rows-table";
+import { MetricCards } from "@/components/metric-cards";
 import { formatRupiah } from "@/lib/format";
 import { listAlertStokMinimum } from "@/lib/inventaris";
 import { kpiHidroponikMvpCached, monthlySummaryCached } from "@/lib/cached-queries";
 import { bestProfitMonth } from "@/lib/monthly-summary";
 import Link from "next/link";
+import { CuacaWidget } from "@/components/cuaca-widget";
+import { RekeningSaldoWidget } from "@/components/rekening-saldo-widget";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -32,19 +34,11 @@ export default async function OwnerPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeaderRow
-        eyebrow="Owner"
-        title="Beranda"
-        description="Ringkasan keuangan bulan ini, persetujuan catatan keuangan, dan unduh laporan."
-        guide={
-          <FlowSteps
-            pageKey="owner"
-            steps={OWNER_DASHBOARD_ALUR}
-            title="Panduan beranda Owner"
-            toolbar
-          />
-        }
-      />
+      <PageHeaderRow eyebrow="Owner" title="Beranda" />
+      <div className="grid gap-3 lg:grid-cols-[1fr_minmax(240px,320px)]">
+        <CuacaWidget />
+      </div>
+      <RekeningSaldoWidget />
       <InventarisAlertBanner items={stokRendah} detailHref="/owner/stok-rendah" />
       <OwnerFlowDashboard />
 
@@ -85,8 +79,9 @@ export default async function OwnerPage() {
 
       {labaTerbaik ? (
         <PageSection title="Sorotan 6 bulan" badge="Read">
-          <MetricRowsTable
-            rows={[
+          <MetricCards
+            columns={2}
+            items={[
               {
                 label: "Bulan laba tertinggi",
                 value: labaTerbaik.label,
@@ -102,15 +97,11 @@ export default async function OwnerPage() {
         </PageSection>
       ) : null}
 
-      <PageSection
-        title="Pendapatan vs beban"
-        description="Enam bulan terakhir: pendapatan dan beban"
-        badge="Read"
-      >
+      <ChartCard title="Pendapatan vs beban (6 bulan)">
         <OwnerRevenueChart months={summary.months} />
-      </PageSection>
+      </ChartCard>
 
-      <PageSection title="Akun petani" description="Akun login di HP / pekerja lapangan." badge="Read">
+      <PageSection title="Akun petani" badge="Read">
         <OwnerPetaniAkunDaftar rows={petani} />
       </PageSection>
     </div>

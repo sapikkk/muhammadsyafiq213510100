@@ -24,7 +24,11 @@ export function getOwnerEpicNavGroups(stokRendahCount: number): NavFlowGroup[] {
       id: "epic-ringkasan",
       title: "Ringkasan",
       hint: "Angka usaha dan unduh laporan",
-      items: [link("", "Beranda", "/owner"), link("", "Unduh laporan", "/owner/laporan")],
+      items: [
+        link("", "Beranda", "/owner"),
+        link("", "Modul keuangan", "/owner/keuangan"),
+        link("", "Unduh laporan", "/owner/laporan"),
+      ],
     },
     {
       id: "epic-1",
@@ -106,6 +110,7 @@ export function getOwnerEpicNavGroups(stokRendahCount: number): NavFlowGroup[] {
       title: "7. Laporan keuangan",
       hint: "Laba rugi, neraca, kas",
       items: [
+        link("", "Modul keuangan", "/owner/keuangan"),
         link("7.1", "Daftar akun", "/owner/akun"),
         link("7.2", "Laba rugi", "/owner/laporan"),
         link("7.3", "Neraca", "/owner/laporan"),
