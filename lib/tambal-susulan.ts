@@ -2,6 +2,7 @@ import "server-only";
 
 import { Prisma } from "@prisma/client";
 import { pakaiActivePackDalamTx } from "@/lib/active-pack";
+import { revalidateOwnerDashboardCaches } from "@/lib/owner-dashboard-cache";
 import { isFaseProduksi, type FaseProduksi } from "@/lib/siklus-fase";
 import { prisma } from "@/lib/prisma";
 
@@ -59,7 +60,7 @@ export function parseTambalInput(raw: Record<string, unknown>): TambalInput {
 }
 
 export async function catatTambalSusulan(userId: number, input: TambalInput) {
-  return prisma.$transaction(async (tx) => {
+  const result = await prisma.$transaction(async (tx) => {
     const siklus = await tx.siklus_Produksi.findUnique({
       where: { id: input.siklusId },
       include: { biaya_langsung: true },
@@ -115,6 +116,14 @@ export async function catatTambalSusulan(userId: number, input: TambalInput) {
       },
     });
 
-    return { jumlah_bibit: input.jumlahBibit, biaya_tambal: biayaTambal.toString() };
+    return {
+      jumlah_bibit: input.jumlahBibit,
+      biaya_tambal: biayaTambal.toString(),
+      packHabis: pack.status === "HABIS",
+    };
   });
+  if (result.packHabis) {
+    revalidateOwnerDashboardCaches();
+  }
+  return { jumlah_bibit: result.jumlah_bibit, biaya_tambal: result.biaya_tambal };
 }

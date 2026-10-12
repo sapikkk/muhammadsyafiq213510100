@@ -3,6 +3,7 @@ import "server-only";
 import { Prisma } from "@prisma/client";
 import { ActivePackError, pakaiActivePackDalamTx } from "@/lib/active-pack";
 import { keTanggalIso } from "@/lib/format";
+import { revalidateOwnerDashboardCaches } from "@/lib/owner-dashboard-cache";
 import { prisma, type PrismaTransaction } from "@/lib/prisma";
 import {
   faseBerikutnya,
@@ -192,7 +193,7 @@ export async function listSiklusUntukPilihAdmin() {
 
 export async function buatSiklusSemai(input: SiklusInput, userId?: number) {
   try {
-    return await prisma.$transaction(
+    const result = await prisma.$transaction(
       async (tx) => {
       const varietas = await tx.varietas.findUnique({ where: { id: input.varietasId } });
       if (!varietas || varietas.status !== "AKTIF") {
@@ -276,6 +277,7 @@ export async function buatSiklusSemai(input: SiklusInput, userId?: number) {
         packOpts,
       );
       let biayaRockwool = new Prisma.Decimal(0);
+      let packMediaHabis = false;
       if (input.activePackMediaId !== null && jumlahMediaPakai !== null) {
         const activeMedia = await pakaiActivePackDalamTx(
           tx,
@@ -283,6 +285,7 @@ export async function buatSiklusSemai(input: SiklusInput, userId?: number) {
           jumlahMediaPakai,
           packOpts,
         );
+        packMediaHabis = activeMedia.status === "HABIS";
         biayaRockwool = jumlahMediaPakai.mul(activeMedia.biayaPerUnit);
       }
       const biayaBenih = jumlahBenihPakai.mul(activeBenih.biayaPerUnit);
@@ -321,10 +324,15 @@ export async function buatSiklusSemai(input: SiklusInput, userId?: number) {
         });
       }
 
-      return siklus;
+      const packBenihHabis = activeBenih.status === "HABIS";
+      return { siklus, dashboardStale: packBenihHabis || packMediaHabis };
     },
     { maxWait: 20_000, timeout: 60_000 },
     );
+    if (result.dashboardStale) {
+      revalidateOwnerDashboardCaches();
+    }
+    return result.siklus;
   } catch (error) {
     translateError(error);
   }
