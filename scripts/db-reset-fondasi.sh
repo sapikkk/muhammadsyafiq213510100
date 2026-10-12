@@ -11,6 +11,6 @@ if [[ "${CONFIRM_DB_RESET:-}" != "yes" ]]; then
 fi
 
 npx prisma db push --force-reset --accept-data-loss
-npm run seed
+npx prisma db seed
 
 echo "Selesai. Database kosong + COA. Login Owner jika SEED_OWNER_* di .env sudah diisi."
