@@ -10,7 +10,9 @@ export function getOwnerEpicNavGroups(stokRendahCount: number): NavFlowGroup[] {
   const link = (code: string, title: string, href: string) => {
     const base = pick(href);
     return {
-      label: code ? `${code} ${title}` : title,
+      label: title,
+      epicCode: code || undefined,
+      navKey: `${href}::${code || title}`,
       href,
       icon: base?.icon ?? LayoutDashboard,
       badge: base?.badge,

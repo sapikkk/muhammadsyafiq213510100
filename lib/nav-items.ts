@@ -28,6 +28,8 @@ export type NavItem = {
   href: string;
   icon: React.ElementType;
   badge?: number;
+  epicCode?: string;
+  navKey?: string;
 };
 
 export function getNavItems(role: Role, stokRendahCount: number): NavItem[] {

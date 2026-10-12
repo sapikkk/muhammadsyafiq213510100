@@ -33,7 +33,19 @@ function isNavActive(pathname: string, href: string) {
   if (href === "/admin" || href === "/owner" || href === "/petani") {
     return pathname === href;
   }
-  return pathname.startsWith(href);
+  return pathname.startsWith(`${href}/`) || pathname === href;
+}
+
+/** Satu highlight — item pertama yang cocok dengan path (hindari semua sub-item hitam). */
+function pickActiveNavKey(pathname: string, groups: NavFlowGroup[]): string | null {
+  for (const group of groups) {
+    for (const item of group.items) {
+      if (isNavActive(pathname, item.href)) {
+        return item.navKey ?? `${item.href}::${item.label}`;
+      }
+    }
+  }
+  return null;
 }
 
 export function AppSidebar({
@@ -54,6 +66,8 @@ export function AppSidebar({
   const pathname = usePathname();
   const groups = auditShowAllNav ? null : getNavFlowGroups(role, stokRendahCount);
   const flatAudit = auditShowAllNav ? getAuditNavItems(stokRendahCount) : null;
+  const activeNavKey =
+    groups && !flatAudit ? pickActiveNavKey(pathname, groups) : null;
 
   return (
     <aside className="flex h-screen w-64 flex-col border-r bg-sidebar">
@@ -84,6 +98,7 @@ export function AppSidebar({
               key={group.id}
               group={group}
               pathname={pathname}
+              activeNavKey={activeNavKey}
               onNavigate={onNavigate}
             />
           ))
@@ -127,10 +142,12 @@ export function AppSidebar({
 function NavFlowGroup({
   group,
   pathname,
+  activeNavKey,
   onNavigate,
 }: {
   group: NavFlowGroup;
   pathname: string;
+  activeNavKey: string | null;
   onNavigate?: () => void;
 }) {
   const hasActive = group.items.some((item) => isNavActive(pathname, item.href));
@@ -141,29 +158,38 @@ function NavFlowGroup({
   }, [hasActive]);
 
   return (
-    <div className="mb-3 last:mb-1">
+    <div className="mb-2 last:mb-0">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex min-h-9 w-full items-center justify-between rounded-md px-2 text-left text-xs font-semibold tracking-tight text-foreground hover:bg-sidebar-accent/60"
+        className={cn(
+          "flex min-h-9 w-full items-center justify-between rounded-md px-2.5 text-left text-xs font-semibold tracking-tight transition-colors",
+          open ? "bg-sidebar-accent/70 text-foreground" : "text-foreground hover:bg-sidebar-accent/50",
+        )}
         aria-expanded={open}
       >
-        <span>{group.title}</span>
+        <span className="leading-snug">{group.title}</span>
         <ChevronDown
           className={cn("h-3.5 w-3.5 shrink-0 opacity-60 transition-transform", open && "rotate-180")}
           aria-hidden
         />
       </button>
       {open ? (
-        <ul className="mt-0.5 space-y-0.5 border-l border-border pl-2 ml-2">
-          {group.items.map((item) => (
-            <NavLink
-              key={item.href}
-              item={item}
-              active={isNavActive(pathname, item.href)}
-              onNavigate={onNavigate}
-            />
-          ))}
+        <ul className="ml-2 mt-1 space-y-0.5 border-l-2 border-border/70 pl-2">
+          {group.items.map((item) => {
+            const key = item.navKey ?? `${item.href}::${item.label}`;
+            return (
+              <NavLink
+                key={key}
+                item={item}
+                active={activeNavKey === key}
+                muted={
+                  activeNavKey !== key && isNavActive(pathname, item.href)
+                }
+                onNavigate={onNavigate}
+              />
+            );
+          })}
         </ul>
       ) : null}
     </div>
@@ -173,10 +199,12 @@ function NavFlowGroup({
 function NavLink({
   item,
   active,
+  muted = false,
   onNavigate,
 }: {
   item: NavItem;
   active: boolean;
+  muted?: boolean;
   onNavigate?: () => void;
 }) {
   const Icon = item.icon;
@@ -186,20 +214,29 @@ function NavLink({
         href={item.href}
         onClick={() => onNavigate?.()}
         className={cn(
-          "flex min-h-10 items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+          "flex min-h-9 items-start gap-2 rounded-md px-2 py-1.5 text-[13px] leading-snug transition-colors",
           active
-            ? "bg-sidebar-primary text-sidebar-primary-foreground"
-            : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+            ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground ring-1 ring-border/80"
+            : muted
+              ? "text-muted-foreground hover:bg-sidebar-accent/40 hover:text-sidebar-foreground"
+              : "text-sidebar-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
         )}
       >
-        <Icon className="h-4 w-4 shrink-0 opacity-90" />
-        <span className="flex-1 truncate">{item.label}</span>
+        <Icon className="mt-0.5 h-3.5 w-3.5 shrink-0 opacity-80" />
+        <span className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-1.5 gap-y-0">
+          {item.epicCode ? (
+            <span className="shrink-0 tabular-nums text-[10px] font-semibold text-muted-foreground">
+              {item.epicCode}
+            </span>
+          ) : null}
+          <span>{item.label}</span>
+        </span>
         {item.badge ? (
-          <span className="flex h-5 min-w-5 items-center justify-center border border-current px-1 text-[10px] font-semibold">
+          <span className="flex h-5 min-w-5 shrink-0 items-center justify-center border border-current px-1 text-[10px] font-semibold">
             {item.badge}
           </span>
         ) : null}
-        {active ? <ChevronRight className="h-3 w-3 shrink-0 opacity-60" /> : null}
+        {active ? <ChevronRight className="mt-1 h-3 w-3 shrink-0 opacity-50" /> : null}
       </Link>
     </li>
   );
