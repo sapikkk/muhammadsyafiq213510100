@@ -3,6 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+export type AngkaStepTombol = { delta: number; label: string };
+
 function formatTampilan(n: number, decimals: number) {
   if (!Number.isFinite(n)) return "";
   return n.toFixed(decimals).replace(".", ",");
@@ -14,53 +16,79 @@ function parseTampilan(raw: string): number {
   return Number.isFinite(n) ? n : 0;
 }
 
+function roundTo(n: number, decimals: number) {
+  return Math.round(n * 10 ** decimals) / 10 ** decimals;
+}
+
 export function AngkaStepperField({
   label,
   name,
   value,
   onChange,
-  stepKecil,
-  stepBesar,
-  labelKecil,
-  labelBesar,
+  minus,
+  plus,
   decimals,
+  min,
+  max,
   required,
 }: {
   label: string;
   name: string;
   value: number;
   onChange: (next: number) => void;
-  stepKecil: number;
-  stepBesar: number;
-  labelKecil: string;
-  labelBesar: string;
+  minus: AngkaStepTombol[];
+  plus: AngkaStepTombol[];
   decimals: number;
+  min?: number;
+  max?: number;
   required?: boolean;
 }) {
-  const bump = (delta: number) => {
-    const next = Math.round((value + delta) * 10 ** decimals) / 10 ** decimals;
-    onChange(next);
+  const apply = (next: number) => {
+    let v = roundTo(next, decimals);
+    if (min != null) v = Math.max(min, v);
+    if (max != null) v = Math.min(max, v);
+    onChange(v);
   };
+
+  const bump = (delta: number) => apply(value + delta);
 
   return (
     <div className="space-y-1.5 text-sm">
       <span className="font-medium">{label}</span>
       <input type="hidden" name={name} value={value.toFixed(decimals)} />
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-1.5">
+        {minus.map((s) => (
+          <Button
+            key={s.label}
+            type="button"
+            variant="outline"
+            size="sm"
+            className="h-9 min-w-[2.75rem] px-2 tabular-nums"
+            onClick={() => bump(s.delta)}
+          >
+            {s.label}
+          </Button>
+        ))}
         <Input
-          className="h-11 w-24 tabular-nums"
+          className="h-11 w-[4.5rem] shrink-0 tabular-nums text-center"
           inputMode="decimal"
           value={formatTampilan(value, decimals)}
-          onChange={(e) => onChange(parseTampilan(e.target.value))}
+          onChange={(e) => apply(parseTampilan(e.target.value))}
           required={required}
           aria-label={label}
         />
-        <Button type="button" variant="outline" size="sm" className="h-9" onClick={() => bump(stepKecil)}>
-          {labelKecil}
-        </Button>
-        <Button type="button" variant="outline" size="sm" className="h-9" onClick={() => bump(stepBesar)}>
-          {labelBesar}
-        </Button>
+        {plus.map((s) => (
+          <Button
+            key={s.label}
+            type="button"
+            variant="outline"
+            size="sm"
+            className="h-9 min-w-[2.75rem] px-2 tabular-nums"
+            onClick={() => bump(s.delta)}
+          >
+            {s.label}
+          </Button>
+        ))}
       </div>
     </div>
   );
