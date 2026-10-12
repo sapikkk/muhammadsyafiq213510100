@@ -20,4 +20,8 @@ jobs:
       - run: npm run check:banned-ui
       - run: npm run check:legacy-api-json
       - run: npm run check:production-env
+      - name: Semgrep (keamanan statis)
+        run: |
+          python3 -m pip install semgrep
+          npm run semgrep:scan
       - run: npm run build

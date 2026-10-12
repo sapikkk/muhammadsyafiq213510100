@@ -3,10 +3,20 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
+# pip install --user (macOS / Linux) sering tidak ada di PATH default shell
+for dir in \
+  "$HOME/Library/Python/3.11/bin" \
+  "$HOME/Library/Python/3.12/bin" \
+  "$HOME/.local/bin"; do
+  if [[ -d "$dir" ]]; then
+    PATH="$dir:$PATH"
+  fi
+done
+export PATH
+
 if ! command -v semgrep >/dev/null 2>&1; then
   echo "Semgrep belum terpasang." >&2
   echo "  python3 -m pip install --user semgrep" >&2
-  echo "  (PATH: ~/Library/Python/3.11/bin jika perlu)" >&2
   echo "  atau: brew install semgrep" >&2
   exit 1
 fi
