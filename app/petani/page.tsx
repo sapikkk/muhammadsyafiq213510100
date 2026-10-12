@@ -1,17 +1,21 @@
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { FlowSteps } from "@/components/flow-steps";
 import { PageHeaderRow } from "@/components/page-header-row";
+import { PageSection } from "@/components/page-section";
+import { PetaniMonitorChart } from "@/components/petani-monitor-chart";
 import { PetaniTugasPanel } from "@/components/petani-tugas-panel";
 import { listAlertStokMinimum } from "@/lib/inventaris";
+import { listMonitorGrafikPetani } from "@/lib/monitor-kolam";
 import { daftarTugasPetani, historiAktivitasPetani } from "@/lib/tugas-petani";
 
 export const dynamic = "force-dynamic";
 
 export default async function PetaniPage() {
-  const [stokRendah, tugas, histori] = await Promise.all([
+  const [stokRendah, tugas, histori, monitorGrafik] = await Promise.all([
     listAlertStokMinimum(),
     daftarTugasPetani(),
     historiAktivitasPetani(),
+    listMonitorGrafikPetani(),
   ]);
 
   return (
@@ -35,6 +39,13 @@ export default async function PetaniPage() {
         }
       />
       <InventarisAlertBanner items={stokRendah} detailHref="/petani/stok-rendah" />
+      <PageSection
+        title="Monitor kolam"
+        description="Grafik PPM, pH, dan suhu dari catatan harian batch aktif."
+        badge="Read"
+      >
+        <PetaniMonitorChart points={monitorGrafik} />
+      </PageSection>
       <PetaniTugasPanel
         tugas={tugas}
         histori={histori.map((h) => ({ ...h, waktu: h.waktu.toISOString() }))}

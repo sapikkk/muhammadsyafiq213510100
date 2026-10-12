@@ -49,7 +49,7 @@ test("T5.1 petani HP: pindah fase batch demo", async ({ page }) => {
   await page.locator("tr", { hasText: "E2E-S5-DEMO" }).click();
   await page.waitForURL(new RegExp(`/petani/siklus/${id}$`));
   await expect(page.getByRole("heading", { name: "E2E-S5-DEMO" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Langkah berikutnya" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Langkah berikutnya/i })).toBeVisible();
 
   const detail = await page.request.get(`/api/production/${id}/phase`);
   expect(detail.ok()).toBeTruthy();

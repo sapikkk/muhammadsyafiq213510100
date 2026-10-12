@@ -1,8 +1,11 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { ChevronDown } from "lucide-react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { HarvestForm } from "@/components/harvest-form";
 import { KegagalanForm } from "@/components/kegagalan-form";
-import { MonitorPertumbuhanForm } from "@/components/monitor-pertumbuhan-form";
+import { MonitorKolamForm } from "@/components/monitor-kolam-form";
+import { PindahFaseForm } from "@/components/pindah-fase-form";
 import { SiklusAbortForm } from "@/components/siklus-abort-form";
 import { TambalSusulanForm } from "@/components/tambal-susulan-form";
 import { PageSection } from "@/components/page-section";
@@ -12,8 +15,9 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
+import { faseLabel, type FaseProduksi } from "@/lib/siklus-fase";
+import { cn } from "@/lib/utils";
 
 type PackOpt = {
   id: number;
@@ -23,30 +27,118 @@ type PackOpt = {
   sisaUnit: string;
 };
 
+export type SiklusLangkahBerikutnya =
+  | {
+      kind: "fase";
+      siklusId: number;
+      faseSaatIni: FaseProduksi;
+      faseBerikutnya: FaseProduksi;
+    }
+  | { kind: "harvest"; siklusId: number; jumlahDisemai: number }
+  | null;
+
 function FormDialog({
   triggerLabel,
   title,
   children,
+  className,
 }: {
   triggerLabel: string;
   title: string;
   children: ReactNode;
+  className?: string;
 }) {
   const [open, setOpen] = useState(false);
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button type="button" variant="outline" className="h-11 w-full sm:w-auto">
-          {triggerLabel}
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-        <div className="pt-2">{children}</div>
-      </DialogContent>
-    </Dialog>
+    <>
+      <Button
+        type="button"
+        variant="outline"
+        className={cn("h-11 shrink-0", className)}
+        onClick={() => setOpen(true)}
+      >
+        {triggerLabel}
+      </Button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+          </DialogHeader>
+          <div className="pt-2">{children}</div>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
+
+function LangkahBerikutnyaMenu({
+  langkah,
+}: {
+  langkah: NonNullable<SiklusLangkahBerikutnya>;
+}) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onDoc = (e: MouseEvent) => {
+      if (!wrapRef.current?.contains(e.target as Node)) setMenuOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [menuOpen]);
+
+  const itemLabel =
+    langkah.kind === "harvest"
+      ? "Laporan panen & sortasi"
+      : `Lanjut ke ${faseLabel[langkah.faseBerikutnya]}`;
+
+  return (
+    <div ref={wrapRef} className="relative shrink-0">
+      <Button
+        type="button"
+        variant="default"
+        className="h-11 gap-1 pr-2"
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((v) => !v)}
+      >
+        Langkah berikutnya
+        <ChevronDown className="h-4 w-4 opacity-80" />
+      </Button>
+      {menuOpen ? (
+        <div className="absolute left-0 top-full z-50 mt-1 min-w-[14rem] rounded-md border bg-popover p-1 shadow-md">
+          <button
+            type="button"
+            className="flex w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent"
+            onClick={() => {
+              setMenuOpen(false);
+              setDialogOpen(true);
+            }}
+          >
+            {itemLabel}
+          </button>
+        </div>
+      ) : null}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{itemLabel}</DialogTitle>
+          </DialogHeader>
+          <div className="pt-2">
+            {langkah.kind === "harvest" ? (
+              <HarvestForm siklusId={langkah.siklusId} jumlahDisemai={langkah.jumlahDisemai} />
+            ) : (
+              <PindahFaseForm
+                siklusId={langkah.siklusId}
+                faseSaatIni={langkah.faseSaatIni}
+                faseBerikutnya={langkah.faseBerikutnya}
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
 
@@ -55,10 +147,13 @@ export function SiklusDetailSecondary({
   kodeBatch,
   jumlahDisemai,
   totalSusut,
+  kolamId,
+  kolamLabel,
   canMonitor,
   canTambal,
   canAbort,
   showKegagalan,
+  langkahBerikutnya,
   packs,
   variant = "toolbar",
 }: {
@@ -66,22 +161,30 @@ export function SiklusDetailSecondary({
   kodeBatch: string;
   jumlahDisemai: number;
   totalSusut: number;
+  kolamId: number;
+  kolamLabel: string;
   canMonitor: boolean;
   canTambal: boolean;
   canAbort: boolean;
   showKegagalan: boolean;
+  langkahBerikutnya: SiklusLangkahBerikutnya;
   packs: PackOpt[];
-  /** `section` = blok di atas konten (lebih mudah di sheet petani). */
   variant?: "toolbar" | "section";
 }) {
-  const any = canMonitor || canTambal || canAbort || showKegagalan;
+  const any =
+    langkahBerikutnya ||
+    canMonitor ||
+    canTambal ||
+    canAbort ||
+    showKegagalan;
   if (!any) return null;
 
   const buttons = (
-    <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+    <div className="flex flex-wrap items-center gap-2">
+      {langkahBerikutnya ? <LangkahBerikutnyaMenu langkah={langkahBerikutnya} /> : null}
       {canMonitor ? (
-        <FormDialog triggerLabel="Monitor pertumbuhan" title="Monitor pertumbuhan">
-          <MonitorPertumbuhanForm siklusId={siklusId} />
+        <FormDialog triggerLabel="Monitor kolam" title="Monitor kolam">
+          <MonitorKolamForm siklusId={siklusId} kolamId={kolamId} kolamLabel={kolamLabel} />
         </FormDialog>
       ) : null}
       {canTambal ? (
@@ -110,7 +213,7 @@ export function SiklusDetailSecondary({
     return (
       <PageSection
         title="Aksi siklus"
-        description="Monitor, tambal, catat kegagalan, atau batalkan — sebelum scroll ke log di bawah."
+        description="Langkah fase, monitor air kolam, tambal, kegagalan, atau batalkan — satu baris tombol."
         badge="Update"
       >
         {buttons}

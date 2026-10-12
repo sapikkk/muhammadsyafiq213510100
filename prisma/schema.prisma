@@ -37,6 +37,7 @@ model Kolam {
   kapasitas_lubang Int
   status           String            @db.VarChar(30)
   siklus           Siklus_Produksi[]
+  logMonitorKolam  Log_Monitor_Kolam[]
 }
 
 model Varietas {
@@ -75,7 +76,26 @@ model Siklus_Produksi {
   penjualan            Penjualan[]
   sales_order_baris    Sales_Order_Baris[]
   logProduksi          Log_Produksi[]
+  logMonitorKolam      Log_Monitor_Kolam[]
   laporanPanen         Laporan_Panen?
+}
+
+// Catatan harian kualitas air kolam (terhubung siklus aktif di kolam itu).
+model Log_Monitor_Kolam {
+  id        Int             @id @default(autoincrement())
+  kolam_id  Int
+  kolam     Kolam           @relation(fields: [kolam_id], references: [id])
+  siklus_id Int
+  siklus    Siklus_Produksi @relation(fields: [siklus_id], references: [id], onDelete: Cascade)
+  ppm       Decimal         @db.Decimal(8, 2)
+  ph        Decimal         @db.Decimal(4, 2)
+  suhu_c    Decimal         @db.Decimal(5, 2)
+  userId    Int
+  user      User            @relation(fields: [userId], references: [id])
+  waktu     DateTime        @default(now())
+
+  @@index([siklus_id, waktu])
+  @@index([kolam_id, waktu])
 }
 
 // Jejak pindah fase (ProductionLog, US3.2).
@@ -297,6 +317,7 @@ model User {
   pergerakanInventaris PergerakanInventaris[]
   activePackDibuat     ActivePack[]
   logProduksi          Log_Produksi[]
+  logMonitorKolam      Log_Monitor_Kolam[]
   laporanPanen         Laporan_Panen[]
   salesOrdersDibuat    Sales_Order[]   @relation("SalesOrderDibuat")
   notifikasi           Notifikasi[]

@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
-import { HarvestForm } from "@/components/harvest-form";
 import { LogKegagalanDaftar } from "@/components/log-kegagalan-daftar";
 import { LogProduksiDaftar } from "@/components/log-produksi-daftar";
 import { PageSection } from "@/components/page-section";
-import { PindahFaseForm } from "@/components/pindah-fase-form";
-import { SiklusDetailSecondary } from "@/components/siklus-detail-secondary";
+import {
+  SiklusDetailSecondary,
+  type SiklusLangkahBerikutnya,
+} from "@/components/siklus-detail-secondary";
 import { SiklusTimeline } from "@/components/siklus-timeline";
 import { DetailLayout } from "@/components/detail-layout";
 import { Badge } from "@/components/ui/badge";
@@ -70,6 +71,26 @@ export async function SiklusDetailScreen({
     status !== "SELESAI" && (!laporan || laporan.status !== "APPROVED");
   const showHarvest = faseAktif === "PANEN" && !laporan;
 
+  let langkahBerikutnya: SiklusLangkahBerikutnya = null;
+  if (status !== STATUS_GAGAL_TOTAL) {
+    if (showHarvest) {
+      langkahBerikutnya = {
+        kind: "harvest",
+        siklusId: id,
+        jumlahDisemai: siklus.jumlah_disemai,
+      };
+    } else if (faseAktif && berikut) {
+      langkahBerikutnya = {
+        kind: "fase",
+        siklusId: id,
+        faseSaatIni: faseAktif,
+        faseBerikutnya: berikut as FaseProduksi,
+      };
+    }
+  }
+
+  const kolamLabel = `${siklus.kolam.greenhouse.nama} / ${siklus.kolam.nama}`;
+
   const badgeLabel = faseAktif ? labelSiklusStatus(faseAktif) : labelSiklusStatus(status);
 
   return (
@@ -85,42 +106,27 @@ export async function SiklusDetailScreen({
       }
       description={`${siklus.varietas.nama} · ${siklus.kolam.greenhouse.nama} / ${siklus.kolam.nama}`}
     >
+      {status === STATUS_GAGAL_TOTAL ? (
+        <p className="rounded-md border border-destructive/30 bg-destructive/5 p-4 text-sm">
+          Siklus tanam dihentikan. Tidak bisa lanjut fase atau panen.
+        </p>
+      ) : null}
+
       <SiklusDetailSecondary
         siklusId={id}
         kodeBatch={siklus.kode_batch}
         jumlahDisemai={siklus.jumlah_disemai}
         totalSusut={siklus.total_susut}
+        kolamId={siklus.kolam_id}
+        kolamLabel={kolamLabel}
         canMonitor={Boolean(canMonitor)}
         canTambal={Boolean(canTambal && (!laporan || laporan.status !== "APPROVED"))}
         canAbort={canAbort}
         showKegagalan={showKegagalan}
+        langkahBerikutnya={langkahBerikutnya}
         packs={packsAktif}
         variant="section"
       />
-
-      {status === STATUS_GAGAL_TOTAL ? (
-        <p className="rounded-md border border-destructive/30 bg-destructive/5 p-4 text-sm">
-          Siklus tanam dihentikan. Tidak bisa lanjut fase atau panen.
-        </p>
-      ) : (
-        <PageSection title="Langkah berikutnya" badge="Update">
-          {showHarvest ? (
-            <HarvestForm siklusId={id} jumlahDisemai={siklus.jumlah_disemai} />
-          ) : faseAktif && berikut ? (
-            <PindahFaseForm
-              siklusId={id}
-              faseSaatIni={faseAktif}
-              faseBerikutnya={berikut as FaseProduksi}
-            />
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              {berikut === null && faseAktif
-                ? "Siklus sudah selesai, tidak ada fase berikutnya."
-                : "Tidak ada langkah fase saat ini — gunakan bagian Aksi siklus jika perlu."}
-            </p>
-          )}
-        </PageSection>
-      )}
 
       <PageSection title="Timeline produksi" badge="Read">
         <SiklusTimeline steps={timeline} />
