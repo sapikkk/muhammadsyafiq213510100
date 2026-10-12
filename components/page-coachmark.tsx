@@ -29,7 +29,7 @@ export type PageCoachmarkProps = {
   intro?: string;
   /** Catatan; jika kosong diisi dari lib/coach-tips.ts */
   tips?: string[];
-  /** Tampil otomatis saat pertama kali (localStorage) */
+  /** Tampil otomatis saat pertama kali (localStorage). Default mati — buka lewat tombol Panduan. */
   autoOnFirstVisit?: boolean;
   /** `toolbar` = sejajar aksi header; `block` = baris penuh kanan (legacy) */
   placement?: "toolbar" | "block";
@@ -43,6 +43,7 @@ function CoachDialog({
   steps,
   tips,
   onDismissForever,
+  showDismissForever,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -51,6 +52,7 @@ function CoachDialog({
   steps: FlowStep[];
   tips: string[];
   onDismissForever: () => void;
+  showDismissForever: boolean;
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -93,17 +95,19 @@ function CoachDialog({
           <Button type="button" className="h-10 w-full" onClick={() => onOpenChange(false)}>
             Tutup
           </Button>
-          <Button
-            type="button"
-            variant="outline"
-            className="h-10 w-full"
-            onClick={() => {
-              onDismissForever();
-              onOpenChange(false);
-            }}
-          >
-            Jangan tampilkan lagi otomatis
-          </Button>
+          {showDismissForever ? (
+            <Button
+              type="button"
+              variant="outline"
+              className="h-10 w-full"
+              onClick={() => {
+                onDismissForever();
+                onOpenChange(false);
+              }}
+            >
+              Jangan tampilkan lagi otomatis
+            </Button>
+          ) : null}
         </div>
       </DialogContent>
     </Dialog>
@@ -116,7 +120,7 @@ export function PageCoachmark({
   title = "Panduan halaman",
   intro = UI_COPY.coachIntro,
   tips,
-  autoOnFirstVisit = true,
+  autoOnFirstVisit = false,
   placement = "block",
 }: PageCoachmarkProps) {
   const [coachOpen, setCoachOpen] = useState(false);
@@ -181,6 +185,7 @@ export function PageCoachmark({
         steps={steps}
         tips={resolvedTips}
         onDismissForever={dismissForever}
+        showDismissForever={autoOnFirstVisit}
       />
     </>
   );
