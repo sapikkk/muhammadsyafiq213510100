@@ -24,15 +24,27 @@ export const notify = {
   dismiss(id?: string | number) {
     toast.dismiss(id);
   },
-  /** Notifikasi aktivitas antar user — tombol Lihat membuka deep link. */
-  aktivitas(judul: string, pesan: string, bukaHref: string) {
+  /** Notifikasi aktivitas — Lihat langsung ke halaman terkait (bukan pengaturan). */
+  aktivitas(
+    judul: string,
+    pesan: string,
+    targetHref: string,
+    notifikasiId?: number,
+  ) {
     toast(judul, {
       description: pesan,
       duration: 14_000,
       action: {
         label: "Lihat",
         onClick: () => {
-          window.location.assign(bukaHref);
+          void (async () => {
+            if (notifikasiId != null) {
+              await fetch(`/api/notifikasi/${notifikasiId}/baca`, {
+                method: "POST",
+              });
+            }
+            window.location.assign(targetHref);
+          })();
         },
       },
     });

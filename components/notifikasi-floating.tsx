@@ -11,7 +11,7 @@ type RecentItem = {
   id: number;
   judul: string;
   pesan: string;
-  bukaHref: string;
+  targetHref: string;
 };
 
 /**
@@ -39,7 +39,7 @@ export function NotifikasiFloating() {
       const items = data.items ?? [];
       if (items.length) {
         for (const item of items) {
-          notify.aktivitas(item.judul, item.pesan, item.bukaHref);
+          notify.aktivitas(item.judul, item.pesan, item.targetHref, item.id);
         }
         cursorRef.current = data.maxId ?? items[items.length - 1]!.id;
         router.refresh();

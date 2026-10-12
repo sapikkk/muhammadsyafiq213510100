@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Button } from "@/components/ui/button";
@@ -10,10 +10,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { NotifikasiFloating } from "@/components/notifikasi-floating";
-import { NotifikasiUnreadBadge } from "@/components/notifikasi-unread-badge";
 import type { Role } from "@/types/role";
 import { roleLabel } from "@/types/role";
-import Link from "next/link";
+import { NotifikasiInboxPopover } from "@/components/notifikasi-inbox-popover";
 
 export function AppShellLayout({
   role,
@@ -61,17 +60,7 @@ export function AppShellLayout({
             <p className="text-xs text-muted-foreground">{roleLabel[role]}</p>
             <h1 className="truncate text-sm font-semibold leading-tight">{userName}</h1>
           </div>
-          <Link
-            href="/pengaturan#notifikasi"
-            className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-md border text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-            aria-label="Notifikasi"
-          >
-            <Bell className="h-4 w-4" />
-            <NotifikasiUnreadBadge
-              count={notifikasiUnreadCount}
-              className="absolute -right-1 -top-1"
-            />
-          </Link>
+          <NotifikasiInboxPopover initialUnreadCount={notifikasiUnreadCount} />
         </header>
 
         <div className="flex-1 p-4 md:p-8">

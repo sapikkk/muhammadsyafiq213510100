@@ -47,6 +47,15 @@ export function ActivePackForm({
     if (state.ok) onSuccess?.();
   }, [state.ok, onSuccess]);
 
+  if (items.length === 0) {
+    return (
+      <p className="text-sm text-muted-foreground">
+        Belum ada item inventaris aktif. Admin harus menambah bahan di menu
+        Inventaris dulu, baru pack bisa dirakit di sini.
+      </p>
+    );
+  }
+
   return (
     <form action={formAction} className="space-y-4">
       <input type="hidden" name="itemId" value={itemId} />
@@ -57,11 +66,11 @@ export function ActivePackForm({
         <Input name="kode" required className="h-11" placeholder="AP-BNH-01" />
       </Field>
       <Field label="Item">
-        <Select value={itemId} onValueChange={setItemId} required>
+        <Select value={itemId || undefined} onValueChange={setItemId} required>
           <SelectTrigger className="h-11">
             <SelectValue placeholder="Pilih item" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent position="popper" className="z-[100]">
             {items.map((item) => (
               <SelectItem key={item.id} value={String(item.id)}>
                 {item.kode} — {item.nama} ({satuanInventarisLabel[item.satuan]})

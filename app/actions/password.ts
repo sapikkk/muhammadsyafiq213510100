@@ -12,6 +12,7 @@ import {
   emitPasswordResetRejected,
 } from "@/lib/notifikasi-emit";
 import { prisma } from "@/lib/prisma";
+import type { Role } from "@/types/role";
 
 export type RequestState = { sent?: boolean; error?: string };
 export type ApproveState = {
@@ -20,7 +21,7 @@ export type ApproveState = {
   email?: string;
   error?: string;
 };
-export type ChangeState = { ok?: boolean; error?: string };
+export type ChangeState = { ok?: boolean; error?: string; role?: Role };
 
 export async function requestPasswordReset(
   _prev: RequestState,
@@ -146,5 +147,5 @@ export async function changePassword(
     where: { id: user.id },
     data: { passwordHash: await hash(password, 10), mustChangePassword: false },
   });
-  return { ok: true };
+  return { ok: true, role: user.role as Role };
 }

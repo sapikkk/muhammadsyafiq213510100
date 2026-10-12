@@ -1,3 +1,4 @@
+import { roleHome } from "@/lib/role-home";
 import type { Role } from "@/types/role";
 
 /** Arahkan href notifikasi ke halaman setara untuk peran penerima. */
@@ -5,7 +6,7 @@ export function resolveNotifikasiHref(
   href: string | null | undefined,
   role: Role,
 ): string {
-  const fallback = "/pengaturan#notifikasi";
+  const fallback = roleHome[role];
   if (!href) return fallback;
   const raw = href.trim();
   if (!raw.startsWith("/") || raw.startsWith("//")) return fallback;

@@ -9,6 +9,7 @@ import { PageGuideToolbar } from "@/components/page-guide-toolbar";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { roleHome } from "@/lib/role-home";
+import type { Role } from "@/types/role";
 
 export default function GantiSandiPage() {
   const [state, formAction] = useFormState(changePassword, {});
@@ -17,12 +18,13 @@ export default function GantiSandiPage() {
 
   useEffect(() => {
     if (!state.ok) return;
-    update().then(() => {
-      const role = session?.user?.role;
+    void (async () => {
+      await update();
+      const role = (state.role ?? session?.user?.role) as Role | undefined;
       router.push(role ? roleHome[role] : "/login");
       router.refresh();
-    });
-  }, [state.ok, update, router, session?.user?.role]);
+    })();
+  }, [state.ok, state.role, update, router, session?.user?.role]);
 
   return (
     <div className="mx-auto flex w-full max-w-sm flex-col justify-center gap-6 py-6">
