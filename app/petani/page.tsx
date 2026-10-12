@@ -41,7 +41,7 @@ export default async function PetaniPage() {
       <InventarisAlertBanner items={stokRendah} detailHref="/petani/stok-rendah" />
       <PageSection
         title="Monitor kolam"
-        description="Grafik PPM, pH, dan suhu dari catatan harian batch aktif."
+        description="Grafik PPM, pH, dan suhu — isi lewat Siklus → filter kolam → Monitor kolam hari ini."
         badge="Read"
       >
         <PetaniMonitorChart points={monitorGrafik} />

@@ -4,7 +4,6 @@ import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { HarvestForm } from "@/components/harvest-form";
 import { KegagalanForm } from "@/components/kegagalan-form";
-import { MonitorKolamForm } from "@/components/monitor-kolam-form";
 import { PindahFaseForm } from "@/components/pindah-fase-form";
 import { SiklusAbortForm } from "@/components/siklus-abort-form";
 import { TambalSusulanForm } from "@/components/tambal-susulan-form";
@@ -147,9 +146,6 @@ export function SiklusDetailSecondary({
   kodeBatch,
   jumlahDisemai,
   totalSusut,
-  kolamId,
-  kolamLabel,
-  canMonitor,
   canTambal,
   canAbort,
   showKegagalan,
@@ -161,9 +157,6 @@ export function SiklusDetailSecondary({
   kodeBatch: string;
   jumlahDisemai: number;
   totalSusut: number;
-  kolamId: number;
-  kolamLabel: string;
-  canMonitor: boolean;
   canTambal: boolean;
   canAbort: boolean;
   showKegagalan: boolean;
@@ -171,22 +164,12 @@ export function SiklusDetailSecondary({
   packs: PackOpt[];
   variant?: "toolbar" | "section";
 }) {
-  const any =
-    langkahBerikutnya ||
-    canMonitor ||
-    canTambal ||
-    canAbort ||
-    showKegagalan;
+  const any = langkahBerikutnya || canTambal || canAbort || showKegagalan;
   if (!any) return null;
 
   const buttons = (
     <div className="flex flex-wrap items-center gap-2">
       {langkahBerikutnya ? <LangkahBerikutnyaMenu langkah={langkahBerikutnya} /> : null}
-      {canMonitor ? (
-        <FormDialog triggerLabel="Monitor kolam" title="Monitor kolam">
-          <MonitorKolamForm siklusId={siklusId} kolamId={kolamId} kolamLabel={kolamLabel} />
-        </FormDialog>
-      ) : null}
       {canTambal ? (
         <FormDialog triggerLabel="Tambal susulan" title="Tambal susulan">
           <TambalSusulanForm siklusId={siklusId} packs={packs} />
@@ -213,7 +196,7 @@ export function SiklusDetailSecondary({
     return (
       <PageSection
         title="Aksi siklus"
-        description="Langkah fase, monitor air kolam, tambal, kegagalan, atau batalkan — satu baris tombol."
+        description="Langkah fase, tambal, kegagalan, atau batalkan. Monitor harian ada di daftar siklus (filter kolam)."
         badge="Update"
       >
         {buttons}

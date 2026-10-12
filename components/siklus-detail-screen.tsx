@@ -63,9 +63,6 @@ export async function SiklusDetailScreen({
       faseAktif,
     ) &&
     status !== "SELESAI";
-  const canMonitor =
-    faseAktif &&
-    (["SPROUT_DAUN", "TAMBAL", "PINDAH_KOLAM", "PENDEWASAAN"] as string[]).includes(faseAktif);
   const canAbort = siklusBolehAbort(status, laporan?.status);
   const showKegagalan =
     status !== "SELESAI" && (!laporan || laporan.status !== "APPROVED");
@@ -88,8 +85,6 @@ export async function SiklusDetailScreen({
       };
     }
   }
-
-  const kolamLabel = `${siklus.kolam.greenhouse.nama} / ${siklus.kolam.nama}`;
 
   const badgeLabel = faseAktif ? labelSiklusStatus(faseAktif) : labelSiklusStatus(status);
 
@@ -117,9 +112,6 @@ export async function SiklusDetailScreen({
         kodeBatch={siklus.kode_batch}
         jumlahDisemai={siklus.jumlah_disemai}
         totalSusut={siklus.total_susut}
-        kolamId={siklus.kolam_id}
-        kolamLabel={kolamLabel}
-        canMonitor={Boolean(canMonitor)}
         canTambal={Boolean(canTambal && (!laporan || laporan.status !== "APPROVED"))}
         canAbort={canAbort}
         showKegagalan={showKegagalan}

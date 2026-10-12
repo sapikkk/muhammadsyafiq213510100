@@ -20,6 +20,10 @@ const FASE_MONITOR: FaseProduksi[] = [
   "PENDEWASAAN",
 ];
 
+export function siklusBolehMonitorKolam(status: string) {
+  return isFaseProduksi(status) && FASE_MONITOR.includes(status);
+}
+
 export type MonitorKolamInput = {
   kolamId: number;
   siklusId: number;

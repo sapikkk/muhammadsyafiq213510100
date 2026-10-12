@@ -26,6 +26,7 @@ export async function submitMonitorKolam(
     const input = parseMonitorKolamInput(raw);
     await catatMonitorKolam(userId, input);
     revalidatePath("/petani");
+    revalidatePath("/petani/siklus");
     revalidatePath(`/petani/siklus/${input.siklusId}`);
     return { ok: "Monitor kolam tersimpan." };
   } catch (err) {

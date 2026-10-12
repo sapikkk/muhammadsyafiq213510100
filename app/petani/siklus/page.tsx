@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CrudPageLayout } from "@/components/crud-page-layout";
-import { SiklusDaftar } from "@/components/siklus-daftar";
+import { SiklusDaftarPetani } from "@/components/siklus-daftar-petani";
 import { Button } from "@/components/ui/button";
 import { listSiklusProduksi, serializeSiklus } from "@/lib/siklus-produksi";
 
@@ -16,7 +16,8 @@ export default async function PetaniSiklusPage() {
       description="Satu batch = satu baris di daftar. Detail batch untuk langkah fase & panen."
       flowSteps={[
         { label: "Buat semai", detail: "Tombol Mulai semai — varietas, kolam, pack." },
-        { label: "Buka batch", detail: "Klik baris → langkah berikutnya sesuai fase." },
+        { label: "Monitor harian", detail: "Filter greenhouse & kolam → Monitor kolam hari ini (PPM, pH, suhu)." },
+        { label: "Buka batch", detail: "Klik baris → langkah fase & aksi batch." },
         { label: "Panen", detail: "Kirim laporan panen → Admin approve & HPP." },
       ]}
       actions={
@@ -26,7 +27,7 @@ export default async function PetaniSiklusPage() {
           </Link>
         </Button>
       }
-      list={<SiklusDaftar rows={siklusRows.map(serializeSiklus)} />}
+      list={<SiklusDaftarPetani rows={siklusRows.map(serializeSiklus)} />}
       listTitle="Batch aktif & selesai"
     />
   );

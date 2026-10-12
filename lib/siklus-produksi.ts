@@ -146,8 +146,9 @@ export async function listSiklusProduksi() {
       varietas: { select: { nama: true, status: true } },
       kolam: {
         select: {
+          id: true,
           nama: true,
-          greenhouse: { select: { nama: true } },
+          greenhouse: { select: { id: true, nama: true } },
         },
       },
       laporanPanen: { select: { id: true, status: true } },
@@ -400,6 +401,7 @@ export function serializeSiklus(
     varietas_nama: row.varietas.nama,
     kolam_id: row.kolam_id,
     kolam_nama: row.kolam.nama,
+    greenhouse_id: row.kolam.greenhouse.id,
     greenhouse_nama: row.kolam.greenhouse.nama,
     tanggal_semai: keTanggalIso(row.tanggal_semai),
     tanggal_pindah_kolam: row.tanggal_pindah_kolam
