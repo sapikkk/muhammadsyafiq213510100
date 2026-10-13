@@ -3,7 +3,14 @@ import "server-only";
 import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import type { GanttLane, GanttModel, GanttSegment } from "@/lib/project-hub-gantt";
+import {
+  formatGanttCaption,
+  ganttUsesDayScale,
+  inclusiveDayCount,
+  type GanttLane,
+  type GanttModel,
+  type GanttSegment,
+} from "@/lib/project-hub-gantt";
 
 const GANTT_SNAPSHOT = join(process.cwd(), "data/gantt-from-git.json");
 
@@ -43,31 +50,26 @@ function clipSegment(label: string, start: string, end: string, rangeEnd: string
   return { label, start, end: clippedEnd };
 }
 
-function ganttCaption(
-  rangeStart: string,
-  rangeEnd: string,
-  firstHash: string,
-  lastHash: string,
-): string {
-  const fmt = new Intl.DateTimeFormat("id-ID", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-  const startLabel = fmt.format(new Date(`${rangeStart}T12:00:00.000Z`));
-  const endLabel = fmt.format(new Date(`${rangeEnd}T12:00:00.000Z`));
-  if (rangeStart === rangeEnd) {
-    return `${startLabel} · commit ${firstHash} (terbaru ${lastHash}).`;
-  }
-  return `${startLabel} – ${endLabel} · dari commit awal (${firstHash}) hingga terbaru (${lastHash}).`;
-}
-
 function monthLabels(start: string, end: string): string[] {
+  const range = { start, end };
+  if (ganttUsesDayScale(range)) {
+    return ganttDayHeadersForModel(inclusiveDayCount(range));
+  }
   const s = new Date(`${start}T12:00:00.000Z`);
   const e = new Date(`${end}T12:00:00.000Z`);
   const fmt = new Intl.DateTimeFormat("id-ID", { month: "short", year: "numeric", day: "numeric" });
   if (start === end) return [fmt.format(s)];
   return [`${fmt.format(s)} – ${fmt.format(e)}`];
+}
+
+function ganttDayHeadersForModel(dayCount: number): string[] {
+  return Array.from({ length: dayCount }, (_, i) => `Hari ${i + 1}`);
+}
+
+function attachScale(model: Omit<GanttModel, "scale" | "dayCount">): GanttModel {
+  const dayCount = inclusiveDayCount(model.range);
+  const scale = ganttUsesDayScale(model.range) ? "day" : "date";
+  return { ...model, scale, dayCount };
 }
 
 function gitAvailable(): boolean {
@@ -158,12 +160,12 @@ function buildGanttFromGit(): GanttModel {
   const firstHash = gitFirst("%h") ?? "?";
   const lastHash = gitLast("%h") ?? "?";
 
-  return {
+  return attachScale({
     range: { start: rangeStart, end: rangeEnd },
     months: monthLabels(rangeStart, rangeEnd),
     lanes,
-    caption: ganttCaption(rangeStart, rangeEnd, firstHash, lastHash),
-  };
+    caption: formatGanttCaption(rangeStart, rangeEnd, firstHash, lastHash),
+  });
 }
 
 /** Gantt dari git (dev) atau data/gantt-from-git.json (prod/Vercel). */

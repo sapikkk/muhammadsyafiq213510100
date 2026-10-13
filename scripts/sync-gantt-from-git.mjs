@@ -4,7 +4,7 @@
  * Dipanggil sebelum build prod agar Gantt di Vercel punya tanggal nyata.
  */
 import { execSync } from "node:child_process";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 const root = process.cwd();
@@ -42,18 +42,39 @@ function clipSegment(label, start, end, rangeEnd) {
   return { label, start, end: clippedEnd };
 }
 
+const MS_PER_DAY = 86_400_000;
+
+function inclusiveDayCount(start, end) {
+  const a = Date.parse(`${start}T12:00:00.000Z`);
+  const b = Date.parse(`${end}T12:00:00.000Z`);
+  return Math.round((b - a) / MS_PER_DAY) + 1;
+}
+
+function usesDayScale(start, end) {
+  return inclusiveDayCount(start, end) <= 14;
+}
+
 function ganttCaption(rangeStart, rangeEnd, firstHash, lastHash) {
-  const fmt = new Intl.DateTimeFormat("id-ID", {
+  const fmtLong = new Intl.DateTimeFormat("id-ID", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
-  const startLabel = fmt.format(new Date(`${rangeStart}T12:00:00.000Z`));
-  const endLabel = fmt.format(new Date(`${rangeEnd}T12:00:00.000Z`));
-  if (rangeStart === rangeEnd) {
-    return `${startLabel} · commit ${firstHash} (terbaru ${lastHash}).`;
+  const fmtShort = new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short" });
+  const startLabel = fmtLong.format(new Date(`${rangeStart}T12:00:00.000Z`));
+  const endLabel = fmtLong.format(new Date(`${rangeEnd}T12:00:00.000Z`));
+  const dayCount = inclusiveDayCount(rangeStart, rangeEnd);
+  const hashesOk =
+    firstHash && lastHash && firstHash !== "?" && lastHash !== "?" && firstHash !== lastHash;
+
+  if (usesDayScale(rangeStart, rangeEnd)) {
+    const a = fmtShort.format(new Date(`${rangeStart}T12:00:00.000Z`));
+    const b = fmtShort.format(new Date(`${rangeEnd}T12:00:00.000Z`));
+    return `${dayCount} hari · ${a} – ${b}`;
   }
-  return `${startLabel} – ${endLabel} · dari commit awal (${firstHash}) hingga terbaru (${lastHash}).`;
+  if (rangeStart === rangeEnd) return startLabel;
+  if (hashesOk) return `${startLabel} – ${endLabel} · commit ${firstHash} hingga ${lastHash}`;
+  return `${startLabel} – ${endLabel}`;
 }
 
 function monthLabels(start, end) {
@@ -62,6 +83,19 @@ function monthLabels(start, end) {
   const fmt = new Intl.DateTimeFormat("id-ID", { month: "short", year: "numeric", day: "numeric" });
   if (start === end) return [fmt.format(s)];
   return [`${fmt.format(s)} – ${fmt.format(e)}`];
+}
+
+function attachScale(model) {
+  const dayCount = inclusiveDayCount(model.range.start, model.range.end);
+  const scale = usesDayScale(model.range.start, model.range.end) ? "day" : "date";
+  return { ...model, scale, dayCount };
+}
+
+function snapshotLooksBroken(model) {
+  if (model.range.start === model.range.end) return true;
+  if (inclusiveDayCount(model.range.start, model.range.end) < 2) return true;
+  if (model.caption.includes("?")) return true;
+  return false;
 }
 
 function build() {
@@ -119,7 +153,7 @@ function build() {
   const firstHash = gitFirst("%h") ?? "?";
   const lastHash = gitLast("%h") ?? "?";
 
-  return {
+  return attachScale({
     range: { start: rangeStart, end: rangeEnd },
     months: monthLabels(rangeStart, rangeEnd),
     lanes: [
@@ -129,10 +163,25 @@ function build() {
       { id: "deploy", label: "Deploy", segments: deploySegments },
     ],
     caption: ganttCaption(rangeStart, rangeEnd, firstHash, lastHash),
-  };
+  });
 }
 
 const model = build();
+
+if (snapshotLooksBroken(model) && existsSync(out)) {
+  try {
+    const kept = JSON.parse(readFileSync(out, "utf8"));
+    if (!snapshotLooksBroken(kept)) {
+      console.log(
+        `Git tidak lengkap di CI; mempertahankan snapshot ${kept.range.start} → ${kept.range.end}`,
+      );
+      process.exit(0);
+    }
+  } catch {
+    /* tulis model baru di bawah */
+  }
+}
+
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, `${JSON.stringify(model, null, 2)}\n`, "utf8");
-console.log(`Gantt snapshot: ${model.range.start} → ${model.range.end} → ${out}`);
+console.log(`Gantt snapshot: ${model.range.start} → ${model.range.end} (${model.scale}) → ${out}`);
