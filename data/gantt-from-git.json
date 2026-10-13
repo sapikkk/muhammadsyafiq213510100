@@ -1,0 +1,66 @@
+{
+  "range": {
+    "start": "2026-10-06",
+    "end": "2026-10-13"
+  },
+  "months": [
+    "6 Okt 2026 – 13 Okt 2026"
+  ],
+  "lanes": [
+    {
+      "id": "desain",
+      "label": "Desain & UCD",
+      "segments": [
+        {
+          "label": "Initialize project",
+          "start": "2026-10-06",
+          "end": "2026-10-07"
+        },
+        {
+          "label": "Arsitektur & scaffold",
+          "start": "2026-10-07",
+          "end": "2026-10-08"
+        },
+        {
+          "label": "Dokumen UCD v2",
+          "start": "2026-10-10",
+          "end": "2026-10-13"
+        }
+      ]
+    },
+    {
+      "id": "program",
+      "label": "Pengembangan",
+      "segments": [
+        {
+          "label": "Implementasi fitur (sprint 1–4)",
+          "start": "2026-10-07",
+          "end": "2026-10-10"
+        }
+      ]
+    },
+    {
+      "id": "qa",
+      "label": "QA & pengujian",
+      "segments": [
+        {
+          "label": "Uji blackbox & otomatis",
+          "start": "2026-10-08",
+          "end": "2026-10-10"
+        }
+      ]
+    },
+    {
+      "id": "deploy",
+      "label": "Deploy",
+      "segments": [
+        {
+          "label": "Deploy & go-live",
+          "start": "2026-10-10",
+          "end": "2026-10-13"
+        }
+      ]
+    }
+  ],
+  "caption": "6 Oktober 2026 – 13 Oktober 2026 · dari commit awal (9e1c32e) hingga terbaru (2fc8bbb)."
+}

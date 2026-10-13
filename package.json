@@ -16,7 +16,8 @@
   "scripts": {
     "dev": "next dev",
     "dev:clean": "rm -rf .next && next dev",
-    "build": "next build",
+    "build": "npm run sync:gantt-from-git && next build",
+    "sync:gantt-from-git": "node scripts/sync-gantt-from-git.mjs",
     "start": "next start",
     "lint": "next lint",
     "semgrep:scan": "bash scripts/semgrep-scan.sh",

@@ -34,7 +34,7 @@ export const HUB_TABS: HubTab[] = [
   {
     id: "agile",
     label: "Agile",
-    description: "Registry, DoD, partial delivery, dan gap GitHub.",
+    description: "Standar tim, definisi selesai, dan status sinkron dengan GitHub.",
     externalHref: "https://github.com/users/sapikkk/projects/1",
     docs: [
       { title: "Panduan agile", path: "docs/agile/README.md" },
@@ -48,8 +48,8 @@ export const HUB_TABS: HubTab[] = [
   },
   {
     id: "sprint",
-    label: "Sprint & iteration",
-    description: "Timeline registry dan rencana per sprint.",
+    label: "Sprint",
+    description: "Jadwal resmi dan rencana kerja per iterasi.",
     docs: [
       { title: "Timeline registry", path: "docs/agile/timeline-registry.md" },
       { title: "Sprint 1 · fondasi", path: "docs/agile/sprints/sprint-01-fondasi.md" },
@@ -62,18 +62,18 @@ export const HUB_TABS: HubTab[] = [
   },
   {
     id: "timeline",
-    label: "Timeline",
-    description: "Event GitHub dari sync board.",
+    label: "Linimasa",
+    description: "Riwayat issue dan pull request selama proyek berjalan.",
   },
   {
     id: "gantt",
     label: "Gantt",
-    description: "Desain, program, QA, deploy — monokrom.",
+    description: "Desain, pengembangan, uji, dan rilis — mengikuti tanggal commit di repo.",
   },
   {
     id: "version",
-    label: "Version control",
-    description: "Semver, semantic-release, audit log, merge.",
+    label: "Versi & rilis",
+    description: "Nomor versi, catatan perubahan, dan aturan merge ke produksi.",
     externalHref: REPO,
     docs: [
       { title: "CHANGELOG (semantic-release)", path: "CHANGELOG.md" },
@@ -85,8 +85,8 @@ export const HUB_TABS: HubTab[] = [
   },
   {
     id: "ucd",
-    label: "UCD & blueprint",
-    description: "Increment v2, blueprint akuntansi/logistik.",
+    label: "Desain produk",
+    description: "UCD, blueprint akuntansi, dan rencana increment v2.",
     docs: [
       { title: "UCD README", path: "docs/ucd/README.md" },
       { title: "Increment v2 akuntansi", path: "docs/ucd/increment-v2-akuntansi-logistik.md" },
@@ -99,8 +99,8 @@ export const HUB_TABS: HubTab[] = [
   },
   {
     id: "blackbox",
-    label: "Blackbox",
-    description: "Register uji dan notulensi.",
+    label: "Uji blackbox",
+    description: "Daftar skenario uji dan catatan hasil pengujian.",
     docs: [
       { title: "Tabel blackbox testing", path: "docs/tabel-blackbox-testing.md" },
       { title: "Uji blackbox (notulensi)", path: "docs/uji-blackbox.md" },
@@ -108,8 +108,8 @@ export const HUB_TABS: HubTab[] = [
   },
   {
     id: "backlog",
-    label: "Backlog & PRD",
-    description: "Progress, backlog sprint, PRD produk.",
+    label: "Backlog",
+    description: "Progress proyek, backlog sprint, dan dokumen kebutuhan produk.",
     docs: [
       { title: "Progress & backlog", path: "docs/progress-backlog.md" },
       { title: "Sprint backlog agile", path: "docs/sprint-backlog-agile.md" },
@@ -119,8 +119,8 @@ export const HUB_TABS: HubTab[] = [
   },
   {
     id: "deploy",
-    label: "Deploy & uji",
-    description: "Vercel, seed, demo sidang, Postgres.",
+    label: "Deploy",
+    description: "Panduan deploy, data demo sidang, dan lingkungan produksi.",
     externalHref: "https://kokonusfarm.vercel.app",
     docs: [
       { title: "Panduan uji & demo", path: "docs/testing/panduan-uji-dan-demo.md" },

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 import { loadAgileProgress } from "@/lib/agile-progress";
 import { HUB_TABS, loadProjectHubContent } from "@/lib/project-hub-content";
+import { loadGanttFromGit } from "@/lib/project-hub-gantt-git";
 import { roleHome } from "@/lib/role-home";
 import type { Role } from "@/types/role";
 
@@ -14,6 +15,7 @@ export default async function HomePage() {
   const session = await getServerSession(authOptions);
   const progress = loadAgileProgress();
   const hub = loadProjectHubContent();
+  const gantt = loadGanttFromGit();
   const role = session?.user?.role as Role | undefined;
 
   return (
@@ -39,22 +41,29 @@ export default async function HomePage() {
 
       <section className="mx-auto w-full max-w-6xl px-6 py-10">
         <PageHeaderRow
-          title="Pusat dokumentasi & progress Kokonus Farm"
+          title="Pusat dokumentasi dan progress Kokonus Farm"
           guide={
             <PageCoachmark
               pageKey="home"
               title="Panduan halaman beranda"
               placement="toolbar"
               steps={[
-                { label: "Tab di atas", detail: "Agile, Gantt, blackbox, UCD, deploy — dokumentasi sidang & PO." },
-                { label: "Masuk aplikasi", detail: "Klik Masuk, lalu buka dashboard sesuai peran akun." },
+                {
+                  label: "Pilih tab",
+                  detail:
+                    "Agile, Gantt, uji, desain, deploy — materi sidang dan laporan progress tim.",
+                },
+                {
+                  label: "Masuk ke aplikasi",
+                  detail: "Gunakan tombol Masuk, lalu buka beranda sesuai peran Anda.",
+                },
               ]}
             />
           }
         />
 
         <div className="mt-8">
-          <ProjectHub tabs={HUB_TABS} hub={hub} agile={progress} />
+          <ProjectHub tabs={HUB_TABS} hub={hub} agile={progress} gantt={gantt} />
         </div>
       </section>
     </main>

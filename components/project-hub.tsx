@@ -18,6 +18,7 @@ import {
 import { type AgileProgressFile, SPRINT_REGISTRY, type AgileTimelineEntry } from "@/lib/agile-progress";
 import { formatWaktuJakarta } from "@/lib/format";
 import type { HubTab, HubTabId, LoadedHubDoc, ProjectHubPayload } from "@/lib/project-hub-content";
+import type { GanttModel } from "@/lib/project-hub-gantt";
 
 function DocPanel({ doc }: { doc: LoadedHubDoc }) {
   return (
@@ -59,8 +60,10 @@ function SprintPanel() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Sprint & iteration (registry)</CardTitle>
-        <CardDescription>Acuan PO — actual start di docs/agile/timeline-registry.md</CardDescription>
+        <CardTitle>Jadwal sprint</CardTitle>
+        <CardDescription>
+          Tanggal mulai mengacu pada registry product owner (timeline-registry).
+        </CardDescription>
       </CardHeader>
       <CardContent className="overflow-x-auto">
         <Table>
@@ -90,14 +93,28 @@ function SprintPanel() {
   );
 }
 
-function TimelinePanel({ entries }: { entries: AgileTimelineEntry[] }) {
-  const recent = [...entries].reverse().slice(0, 80);
+function TimelinePanel({
+  entries,
+  rangeStart,
+  rangeEnd,
+}: {
+  entries: AgileTimelineEntry[];
+  rangeStart: string;
+  rangeEnd: string;
+}) {
+  const inProject = entries.filter((ev) => {
+    if (!ev.at) return false;
+    const day = ev.at.slice(0, 10);
+    return day >= rangeStart && day <= rangeEnd;
+  });
+  const recent = [...inProject].reverse().slice(0, 80);
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Timeline project</CardTitle>
+        <CardTitle>Linimasa proyek</CardTitle>
         <CardDescription>
-          80 event terakhir — npm run sync:agile-progress
+          Aktivitas GitHub {rangeStart} hingga {rangeEnd} · {inProject.length} entri · menampilkan
+          80 terbaru
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -128,7 +145,7 @@ function VersionHeader({ hub }: { hub: ProjectHubPayload }) {
     <Card>
       <CardHeader>
         <CardTitle>Versi produk</CardTitle>
-        <CardDescription>Semver linier 1.x · semantic-release di branch main</CardDescription>
+        <CardDescription>Versi produk 1.x · rilis otomatis dari branch utama</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-wrap gap-2">
         <Badge>v{hub.version}</Badge>
@@ -142,10 +159,12 @@ export function ProjectHub({
   tabs,
   hub,
   agile,
+  gantt,
 }: {
   tabs: HubTab[];
   hub: ProjectHubPayload;
   agile: AgileProgressFile;
+  gantt: GanttModel;
 }) {
   const [active, setActive] = useState<HubTabId>("agile");
 
@@ -178,7 +197,7 @@ export function ProjectHub({
         {current.externalHref ? (
           <Button type="button" variant="link" className="h-auto p-0 text-sm" asChild>
             <Link href={current.externalHref} target="_blank" rel="noopener noreferrer">
-              Tautan eksternal
+              Buka tautan terkait
             </Link>
           </Button>
         ) : null}
@@ -191,8 +210,14 @@ export function ProjectHub({
           <DocStack docs={sectionDocs} />
         </>
       ) : null}
-      {active === "timeline" ? <TimelinePanel entries={agile.timeline} /> : null}
-      {active === "gantt" ? <ProjectHubGantt /> : null}
+      {active === "timeline" ? (
+        <TimelinePanel
+          entries={agile.timeline}
+          rangeStart={gantt.range.start}
+          rangeEnd={gantt.range.end}
+        />
+      ) : null}
+      {active === "gantt" ? <ProjectHubGantt model={gantt} /> : null}
       {active === "version" ? (
         <>
           <VersionHeader hub={hub} />
