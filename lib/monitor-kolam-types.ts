@@ -6,6 +6,10 @@ export type MonitorGrafikTitik = {
   ph: number;
   suhu: number;
   kolam: string;
+  kolamId: number;
+  siklusId: number;
+  greenhouseId: number;
+  lahanId: number;
   /** Label tanam untuk tooltip (bukan kode batch). */
   siklusLabel: string;
 };

@@ -20,6 +20,7 @@ import { siklusBolehAbort, STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort-status"
 import { buildTimelineSiklus } from "@/lib/timeline-siklus";
 import { listActivePack } from "@/lib/active-pack";
 import { DetailKodeStrip } from "@/components/detail-kode-strip";
+import { SiklusEksporPaket } from "@/components/siklus-ekspor-paket";
 import {
   labelBarisProduksiUtama,
   partsFromSiklusNested,
@@ -103,6 +104,7 @@ export async function SiklusDetailScreen({
           {badgeLabel}
         </Badge>
       }
+      actions={<SiklusEksporPaket siklusId={id} />}
     >
       <DetailKodeStrip label="Kode batch" kode={siklus.kode_batch} />
       {status === STATUS_GAGAL_TOTAL ? (

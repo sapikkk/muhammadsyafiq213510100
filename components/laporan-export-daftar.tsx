@@ -1,46 +1,52 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
+import { EksporLembar } from "@/components/ekspor-lembar";
 import { Button } from "@/components/ui/button";
 
 export type LaporanExportRow = {
   id: string;
   judul: string;
-  deskripsi: string;
-  href: string;
+  jenisPratinjau: string;
+  unduhPath: string;
 };
 
-export function LaporanExportDaftar({ rows }: { rows: LaporanExportRow[] }) {
-  const showDeskripsi = rows.some((r) => r.deskripsi.trim());
+export function LaporanExportDaftar({
+  rows,
+  dari,
+  sampai,
+}: {
+  rows: LaporanExportRow[];
+  dari: string;
+  sampai: string;
+}) {
   const columns = useMemo<ColumnDef<LaporanExportRow>[]>(
     () => [
       { accessorKey: "judul", header: "Laporan" },
-      ...(showDeskripsi
-        ? [
-            {
-              accessorKey: "deskripsi" as const,
-              header: "Deskripsi",
-              cell: ({ row }: { row: { original: LaporanExportRow } }) => (
-                <span className="text-muted-foreground">{row.original.deskripsi}</span>
-              ),
-            },
-          ]
-        : []),
       {
         id: "aksi",
         header: "",
         enableSorting: false,
         cell: ({ row }) => (
-          <Button type="button" variant="outline" size="sm" className="h-8" asChild>
-            <Link href={row.original.href}>Unduh PDF</Link>
-          </Button>
+          <EksporLembar
+            judulTombol="Ekspor"
+            unduhPath={row.original.unduhPath}
+            pratinjauPath={`/api/export/preview?jenis=${encodeURIComponent(row.original.jenisPratinjau)}`}
+            rentang="bulan"
+            defaultDari={dari}
+            defaultSampai={sampai}
+            trigger={
+              <Button type="button" variant="outline" size="sm" className="h-8">
+                Ekspor
+              </Button>
+            }
+          />
         ),
       },
     ],
-    [showDeskripsi],
+    [dari, sampai],
   );
 
   return (
@@ -49,7 +55,7 @@ export function LaporanExportDaftar({ rows }: { rows: LaporanExportRow[] }) {
       data={rows}
       pageSize={10}
       searchPlaceholder="Cari jenis laporan…"
-      searchColumnIds={["judul", "deskripsi"]}
+      searchColumnIds={["judul"]}
       emptyMessage="Tidak ada laporan."
     />
   );

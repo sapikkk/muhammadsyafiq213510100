@@ -1,4 +1,5 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { VarietasDaftar } from "@/components/varietas-daftar";
 import { VarietasFormSheet } from "@/components/varietas-form";
 import { Button } from "@/components/ui/button";
@@ -22,13 +23,16 @@ export default async function AdminVarietasPage() {
     <CrudPageLayout
       title="Varietas & asumsi"
       actions={
-        <VarietasFormSheet
-          trigger={
-            <Button type="button" className="h-11">
-              Tambah
-            </Button>
-          }
-        />
+        <div className="flex flex-wrap gap-2">
+          <EksporDaftarTombol unduhPath="/api/export/varietas" jenisPratinjau="varietas" />
+          <VarietasFormSheet
+            trigger={
+              <Button type="button" className="h-11">
+                Tambah
+              </Button>
+            }
+          />
+        </div>
       }
       list={<VarietasDaftar rows={serialized} mode="admin" />}
       listTitle="Daftar varietas"

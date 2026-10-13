@@ -1,6 +1,7 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
 import { ubahStatusPelanggan } from "@/app/actions/pelanggan";
@@ -27,7 +28,12 @@ export function PelangganDaftar({ rows }: { rows: PelangganRow[] }) {
         header: "Nama",
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
-            <span>{row.original.nama}</span>
+            <Link
+              href={`/admin/pelanggan/${row.original.id}`}
+              className="underline-offset-2 hover:underline"
+            >
+              {row.original.nama}
+            </Link>
             {!row.original.aktif ? (
               <Badge variant="outline" className="text-xs">
                 Nonaktif

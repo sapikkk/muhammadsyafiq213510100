@@ -1,5 +1,6 @@
 import { simpanActivePackAdmin } from "@/app/actions/active-pack";
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { ActivePackDaftar } from "@/components/active-pack-daftar";
 import { ActivePackFormSheet } from "@/components/active-pack-form";
 import { Button } from "@/components/ui/button";
@@ -25,15 +26,18 @@ export default async function AdminActivePackPage() {
     <CrudPageLayout
       title="Paket siap pakai"
       actions={
-        <ActivePackFormSheet
-          items={items.map(serializeItem)}
-          action={simpanActivePackAdmin}
-          trigger={
-            <Button type="button" className="h-11">
-              Tambah
-            </Button>
-          }
-        />
+        <div className="flex flex-wrap gap-2">
+          <EksporDaftarTombol unduhPath="/api/export/active-pack" jenisPratinjau="active-pack" />
+          <ActivePackFormSheet
+            items={items.map(serializeItem)}
+            action={simpanActivePackAdmin}
+            trigger={
+              <Button type="button" className="h-11">
+                Tambah
+              </Button>
+            }
+          />
+        </div>
       }
       list={<ActivePackDaftar rows={packs} mode="admin" />}
       listTitle="Paket siap pakai"

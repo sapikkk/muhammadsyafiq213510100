@@ -89,7 +89,7 @@ export async function catatMonitorKolam(userId: number, input: MonitorKolamInput
 }
 
 /** Titik grafik beranda petani — batch aktif (bukan selesai/gagal total). */
-export async function listMonitorGrafikPetani(limit = 40): Promise<MonitorGrafikTitik[]> {
+export async function listMonitorGrafikPetani(limit = 200): Promise<MonitorGrafikTitik[]> {
   const rows = await prisma.log_Monitor_Kolam.findMany({
     where: {
       siklus: {
@@ -101,9 +101,17 @@ export async function listMonitorGrafikPetani(limit = 40): Promise<MonitorGrafik
     orderBy: { waktu: "desc" },
     take: limit,
     include: {
-      kolam: { select: { nama: true, greenhouse: { select: { nama: true } } } },
+      kolam: {
+        select: {
+          id: true,
+          nama: true,
+          greenhouse_id: true,
+          greenhouse: { select: { nama: true, lahan_id: true } },
+        },
+      },
       siklus: {
         select: {
+          id: true,
           kode_batch: true,
           varietas: { select: { nama: true } },
         },
@@ -129,6 +137,10 @@ export async function listMonitorGrafikPetani(limit = 40): Promise<MonitorGrafik
         ph: Number(r.ph),
         suhu: Number(r.suhu_c),
         kolam: `${gh} / ${r.kolam.nama}`,
+        kolamId: r.kolam.id,
+        siklusId: r.siklus.id,
+        greenhouseId: r.kolam.greenhouse_id,
+        lahanId: r.kolam.greenhouse.lahan_id,
         siklusLabel: ringkasanSiklusUntukTeks({
           kode_batch: r.siklus.kode_batch,
           varietas: r.siklus.varietas,

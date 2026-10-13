@@ -1,4 +1,5 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { HarvestAdminDaftar } from "@/components/harvest-admin-daftar";
 import { listLaporanPanen, serializeLaporanPanen } from "@/lib/laporan-panen";
 
@@ -11,6 +12,7 @@ export default async function AdminHarvestPage() {
   return (
     <CrudPageLayout
       title="Laporan panen"
+      actions={<EksporDaftarTombol unduhPath="/api/export/panen" jenisPratinjau="panen" />}
       list={<HarvestAdminDaftar rows={rows.map(serializeLaporanPanen)} />}
       listTitle="Daftar laporan"
     />

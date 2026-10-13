@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { SalesOrderDaftar } from "@/components/sales-order-daftar";
 import { Button } from "@/components/ui/button";
 import { listSalesOrders, serializeSalesOrder } from "@/lib/sales-order";
@@ -15,6 +16,7 @@ export default async function AdminPenjualanPage() {
       title="Pesanan jual"
       actions={
         <>
+          <EksporDaftarTombol unduhPath="/api/export/penjualan" jenisPratinjau="penjualan" />
           <Button type="button" className="h-11" asChild>
             <Link href="/admin/penjualan/baru">Buat pesanan</Link>
           </Button>

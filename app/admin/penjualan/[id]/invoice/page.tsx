@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation";
 import { DetailLayout } from "@/components/detail-layout";
 import { PrintButton } from "@/components/print-button";
+import { EksporLembar } from "@/components/ekspor-lembar";
 import { formatRupiah } from "@/lib/format";
 import { SalesOrderError } from "@/lib/sales-order";
 import { getSalesOrderInvoice } from "@/lib/sales-order-invoice";
 import { labelSalesOrderStatus } from "@/lib/sales-order-status";
 import { DetailKodeStrip } from "@/components/detail-kode-strip";
+import { Button } from "@/components/ui/button";
 import {
   labelBarisProduksiUtama,
   labelJenisBaris,
@@ -38,7 +40,25 @@ export default async function SalesOrderInvoicePage({ params }: { params: { id: 
           backLabel="Kembali ke pesanan jual"
           title="Faktur penjualan"
           description={`${invoice.nomor_invoice ?? "—"} · ${invoice.nomor_so}`}
-          actions={<PrintButton />}
+          actions={
+            <>
+              <EksporLembar
+                judulTombol="Unduh faktur"
+                unduhPath={`/api/export/invoice/${id}`}
+                pratinjauPath={`/api/export/preview?jenis=faktur&soId=${id}`}
+                rentang="tanggal"
+                defaultDari={invoice.dibuat_pada.toISOString().slice(0, 10)}
+                defaultSampai={invoice.dibuat_pada.toISOString().slice(0, 10)}
+                sembunyikanRentang
+                trigger={
+                  <Button type="button" variant="outline" className="h-11">
+                    Unduh faktur
+                  </Button>
+                }
+              />
+              <PrintButton />
+            </>
+          }
         >
           <p className="text-sm text-muted-foreground">
             Pratinjau di bawah. Gunakan Cetak untuk PDF atau kertas.

@@ -18,26 +18,24 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
     searchParams.sampai && /^\d{4}-\d{2}$/.test(searchParams.sampai)
       ? searchParams.sampai
       : defaultMonth();
-  const q = `dari=${encodeURIComponent(dari)}&sampai=${encodeURIComponent(sampai)}`;
-
   const rows = [
     {
       id: "laba-rugi",
       judul: "Laba rugi",
-      deskripsi: "",
-      href: `/api/export/income-statement?${q}`,
+      jenisPratinjau: "laba-rugi",
+      unduhPath: "/api/export/income-statement",
     },
     {
       id: "neraca",
       judul: "Neraca",
-      deskripsi: "",
-      href: `/api/export/balance-sheet?${q}`,
+      jenisPratinjau: "neraca",
+      unduhPath: "/api/export/balance-sheet",
     },
     {
       id: "arus-kas",
       judul: "Arus kas",
-      deskripsi: "",
-      href: `/api/export/cash-flow?${q}`,
+      jenisPratinjau: "arus-kas",
+      unduhPath: "/api/export/cash-flow",
     },
   ];
 
@@ -48,7 +46,7 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
       list={
         <div className="space-y-4">
           <MonthRangeFilter dari={dari} sampai={sampai} />
-          <LaporanExportDaftar rows={rows} />
+          <LaporanExportDaftar rows={rows} dari={dari} sampai={sampai} />
         </div>
       }
       listTitle="Unduhan"

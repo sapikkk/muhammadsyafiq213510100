@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { SiklusDaftarPetani } from "@/components/siklus-daftar-petani";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,11 +18,14 @@ export default async function PetaniSiklusPage() {
     <CrudPageLayout
       title="Siklus produksi"
       actions={
-        <Button type="button" className="h-11" asChild>
-          <Link href="/petani/siklus/baru" prefetch>
-            Mulai semai
-          </Link>
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          <EksporDaftarTombol unduhPath="/api/export/siklus-daftar" jenisPratinjau="siklus-daftar" />
+          <Button type="button" className="h-11" asChild>
+            <Link href="/petani/siklus/baru" prefetch>
+              Mulai semai
+            </Link>
+          </Button>
+        </div>
       }
       list={<SiklusDaftarPetani rows={siklusRows.map(serializeSiklus)} />}
       listTitle="Siklus aktif & selesai"
