@@ -1,18 +1,20 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
-import { AgileProgressDashboard } from "@/components/agile-progress-dashboard";
 import { FoundationPanel } from "@/components/foundation-panel";
+import { ProjectHub } from "@/components/project-hub";
 import { PageCoachmark } from "@/components/page-coachmark";
 import { PageHeaderRow } from "@/components/page-header-row";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 import { loadAgileProgress } from "@/lib/agile-progress";
+import { HUB_TABS, loadProjectHubContent } from "@/lib/project-hub-content";
 import { roleHome } from "@/lib/role-home";
 import type { Role } from "@/types/role";
 
 export default async function HomePage() {
   const session = await getServerSession(authOptions);
   const progress = loadAgileProgress();
+  const hub = loadProjectHubContent();
   const role = session?.user?.role as Role | undefined;
 
   return (
@@ -38,14 +40,14 @@ export default async function HomePage() {
 
       <section className="mx-auto w-full max-w-6xl px-6 py-10">
         <PageHeaderRow
-          title="Tata kelola produksi hidroponik"
+          title="Pusat dokumentasi & progress Kokonus Farm"
           guide={
             <PageCoachmark
               pageKey="home"
               title="Panduan halaman beranda"
               placement="toolbar"
               steps={[
-                { label: "Status pengembangan", detail: "Board di bawah untuk tim produk, bukan operasional kebun." },
+                { label: "Tab di atas", detail: "Agile, sprint, blackbox, UCD, deploy — satu tempat untuk sidang & PO." },
                 { label: "Masuk aplikasi", detail: "Klik Masuk, lalu buka dashboard sesuai peran akun." },
               ]}
             />
@@ -53,7 +55,7 @@ export default async function HomePage() {
         />
 
         <div className="mt-8">
-          <AgileProgressDashboard data={progress} />
+          <ProjectHub tabs={HUB_TABS} hub={hub} agile={progress} />
         </div>
 
         <div className="mt-16 border-t pt-10">

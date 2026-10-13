@@ -516,6 +516,7 @@ async function main() {
     `Seed kokonus-tahun: hapus ${wiped} batch lama, ${Object.keys(varietasByName).length} varietas, ${kolams.length} kolam, ${selesai.length} siklus selesai, ${jumlahSo} pesanan jual. Listrik Rp 500.000/bulan.`,
   );
   console.log(`Login demo: admin@kokonus.farm / ${DEMO_PASSWORD}`);
+  console.log("Langkah berikut (jurnal & saldo akun): npm run seed:keuangan");
 }
 
 main()

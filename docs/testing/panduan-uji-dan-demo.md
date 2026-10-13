@@ -55,8 +55,18 @@ Sandi tidak di-commit; ganti sebelum sidang publik ([`docs/deployment/panduan-de
 
 ```bash
 npx prisma db push   # atau migrate deploy
-npm run seed         # COA, inventaris, infrastruktur, varietas, siklus demo
+npm run seed         # COA fondasi (atau seed:demo-lengkap untuk akun demo)
 npm run seed:demo    # pelanggan demo + 1 jurnal DRAFT
+```
+
+**Demo operasi + keuangan penuh (sidang):**
+
+```bash
+npm run seed:demo-lengkap    # akun demo + inventaris + varietas + siklus ringkas
+npm run seed:kokonus-tahun   # 1 tahun produksi, panen, penjualan, overhead
+npm run seed:keuangan        # jurnal penjualan (APPROVED) + penyusutan 2025
+# atau satu baris:
+npm run seed:demo-prod
 ```
 
 Isi `seed:demo`:

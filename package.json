@@ -46,6 +46,8 @@
     "seed:demo": "node --env-file=.env prisma/seed-demo-flow.js",
     "seed:demo-lengkap": "node --env-file=.env prisma/seed-demo-lengkap.js",
     "seed:kokonus-tahun": "node --env-file=.env prisma/seed-kokonus-tahun.js",
+    "seed:keuangan": "npx --yes tsx scripts/seed-keuangan-demo.ts",
+    "seed:demo-prod": "npm run seed:kokonus-tahun && npm run seed:keuangan",
     "db:reset": "bash scripts/db-reset-fondasi.sh",
     "test:e2e": "playwright test",
     "test:testcafe": "testcafe chrome e2e/smoke.spec.ts --skip-js-errors"
