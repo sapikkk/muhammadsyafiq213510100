@@ -69,6 +69,9 @@ npm run seed:keuangan        # jurnal penjualan (APPROVED) + penyusutan 2025
 npm run seed:demo-prod
 ```
 
+Di DB cloud (Prisma Data Platform), seed panjang (`seed:kokonus-tahun`) lebih stabil dengan **`DIRECT_URL`** sebagai `DATABASE_URL` sekali jalan (bukan pooled).
+```
+
 Isi `seed:demo`:
 
 - 3 pelanggan (pasar, resto, koperasi) — email `demo.*@contoh.local`
