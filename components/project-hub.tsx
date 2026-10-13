@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { AgileProgressDashboard } from "@/components/agile-progress-dashboard";
+import { ProjectHubGantt } from "@/components/project-hub-gantt";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,29 +17,41 @@ import {
 } from "@/components/ui/table";
 import { type AgileProgressFile, SPRINT_REGISTRY, type AgileTimelineEntry } from "@/lib/agile-progress";
 import { formatWaktuJakarta } from "@/lib/format";
-import type { HubTab, HubTabId, ProjectHubPayload } from "@/lib/project-hub-content";
+import type { HubTab, HubTabId, LoadedHubDoc, ProjectHubPayload } from "@/lib/project-hub-content";
 
-function DocPanel({ title, href, body }: { title: string; href?: string; body?: string }) {
+function DocPanel({ doc }: { doc: LoadedHubDoc }) {
   return (
     <Card>
       <CardHeader className="pb-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <CardTitle className="text-base">{title}</CardTitle>
-          {href ? (
-            <Button type="button" variant="outline" size="sm" className="h-9" asChild>
-              <Link href={href} target="_blank" rel="noopener noreferrer">
-                Buka di GitHub
-              </Link>
-            </Button>
-          ) : null}
+          <CardTitle className="text-base">{doc.title}</CardTitle>
+          <Button type="button" variant="outline" size="sm" className="h-9" asChild>
+            <Link href={doc.githubUrl} target="_blank" rel="noopener noreferrer">
+              Buka di GitHub
+            </Link>
+          </Button>
         </div>
+        <CardDescription className="font-mono text-xs">{doc.path}</CardDescription>
       </CardHeader>
       <CardContent>
-        <pre className="max-h-[min(70vh,640px)] overflow-auto whitespace-pre-wrap rounded-md border bg-muted/40 p-4 text-xs leading-relaxed">
-          {body ?? "Tidak ada teks untuk tab ini."}
+        <pre className="max-h-[min(60vh,520px)] overflow-auto whitespace-pre-wrap rounded-md border bg-muted/40 p-4 text-xs leading-relaxed">
+          {doc.body}
         </pre>
       </CardContent>
     </Card>
+  );
+}
+
+function DocStack({ docs }: { docs?: LoadedHubDoc[] }) {
+  if (!docs?.length) {
+    return <p className="text-sm text-muted-foreground">Belum ada dokumen untuk tab ini.</p>;
+  }
+  return (
+    <div className="space-y-4">
+      {docs.map((doc) => (
+        <DocPanel key={doc.path} doc={doc} />
+      ))}
+    </div>
   );
 }
 
@@ -84,7 +97,7 @@ function TimelinePanel({ entries }: { entries: AgileTimelineEntry[] }) {
       <CardHeader>
         <CardTitle>Timeline project</CardTitle>
         <CardDescription>
-          80 event terakhir dari sinkron GitHub — npm run sync:agile-progress
+          80 event terakhir — npm run sync:agile-progress
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -110,21 +123,18 @@ function TimelinePanel({ entries }: { entries: AgileTimelineEntry[] }) {
   );
 }
 
-function VersionPanel({ hub }: { hub: ProjectHubPayload }) {
+function VersionHeader({ hub }: { hub: ProjectHubPayload }) {
   return (
-    <div className="space-y-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>Versi & rilis</CardTitle>
-          <CardDescription>Semver linier 1.x — lihat package.json & tag Git</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-wrap gap-2">
-          <Badge>v{hub.version}</Badge>
-          <Badge variant="secondary">Prod: kokonusfarm.vercel.app</Badge>
-        </CardContent>
-      </Card>
-      <DocPanel title="Audit log (version control proyek)" href={hub.repoUrl} body={hub.docs.version} />
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Versi produk</CardTitle>
+        <CardDescription>Semver linier 1.x · semantic-release di branch main</CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-wrap gap-2">
+        <Badge>v{hub.version}</Badge>
+        <Badge variant="secondary">{hub.prodUrl.replace("https://", "")}</Badge>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -140,6 +150,7 @@ export function ProjectHub({
   const [active, setActive] = useState<HubTabId>("agile");
 
   const current = useMemo(() => tabs.find((t) => t.id === active) ?? tabs[0], [active, tabs]);
+  const sectionDocs = hub.sections[active];
 
   return (
     <div className="space-y-6">
@@ -177,23 +188,22 @@ export function ProjectHub({
       {active === "sprint" ? (
         <>
           <SprintPanel />
-          <DocPanel title="Timeline registry (Markdown)" body={hub.docs.sprint} />
+          <DocStack docs={sectionDocs} />
         </>
       ) : null}
       {active === "timeline" ? <TimelinePanel entries={agile.timeline} /> : null}
-      {active === "version" ? <VersionPanel hub={hub} /> : null}
-      {active === "ucd" ? (
-        <DocPanel title="UCD increment v2" body={hub.docs.ucd} href="https://github.com/sapikkk/muhammadsyafiq213510100/tree/main/docs/ucd" />
+      {active === "gantt" ? <ProjectHubGantt /> : null}
+      {active === "version" ? (
+        <>
+          <VersionHeader hub={hub} />
+          <DocStack docs={sectionDocs} />
+        </>
       ) : null}
-      {active === "blackbox" ? <DocPanel title="Tabel blackbox" body={hub.docs.blackbox} /> : null}
-      {active === "backlog" ? <DocPanel title="Progress & backlog" body={hub.docs.backlog} /> : null}
-      {active === "skills" ? <DocPanel title="Indeks skill" body={hub.docs.skills} /> : null}
-      {active === "deploy" ? (
-        <DocPanel title="Deploy & data demo" body={hub.docs.deploy} href={hub.prodUrl} />
-      ) : null}
-      {active === "agile" && hub.docs.agile ? (
-        <DocPanel title="Panduan agile (README)" body={hub.docs.agile} href={current.externalHref} />
-      ) : null}
+      {active === "ucd" ? <DocStack docs={sectionDocs} /> : null}
+      {active === "blackbox" ? <DocStack docs={sectionDocs} /> : null}
+      {active === "backlog" ? <DocStack docs={sectionDocs} /> : null}
+      {active === "deploy" ? <DocStack docs={sectionDocs} /> : null}
+      {active === "agile" ? <DocStack docs={sectionDocs} /> : null}
     </div>
   );
 }

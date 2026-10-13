@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
-import { FoundationPanel } from "@/components/foundation-panel";
 import { ProjectHub } from "@/components/project-hub";
 import { PageCoachmark } from "@/components/page-coachmark";
 import { PageHeaderRow } from "@/components/page-header-row";
@@ -47,7 +46,7 @@ export default async function HomePage() {
               title="Panduan halaman beranda"
               placement="toolbar"
               steps={[
-                { label: "Tab di atas", detail: "Agile, sprint, blackbox, UCD, deploy — satu tempat untuk sidang & PO." },
+                { label: "Tab di atas", detail: "Agile, Gantt, blackbox, UCD, deploy — dokumentasi sidang & PO." },
                 { label: "Masuk aplikasi", detail: "Klik Masuk, lalu buka dashboard sesuai peran akun." },
               ]}
             />
@@ -56,10 +55,6 @@ export default async function HomePage() {
 
         <div className="mt-8">
           <ProjectHub tabs={HUB_TABS} hub={hub} agile={progress} />
-        </div>
-
-        <div className="mt-16 border-t pt-10">
-          <FoundationPanel />
         </div>
       </section>
     </main>
