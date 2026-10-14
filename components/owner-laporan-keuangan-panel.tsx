@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { OwnerNeracaTampilan } from "@/components/owner-neraca-tampilan";
 import { buildBalanceSheet } from "@/lib/balance-sheet";
 import { buildIncomeStatement } from "@/lib/income-statement";
 import { formatRupiah } from "@/lib/format";
@@ -34,56 +35,7 @@ export async function OwnerLaporanKeuanganPanel({
 
   if (jenis === "neraca") {
     const sheet = await buildBalanceSheet(end);
-    return (
-      <div className="space-y-6">
-        <MetricCards
-          columns={2}
-          items={[
-            { label: "Total aset", value: formatRupiah(sheet.totalAset) },
-            {
-              label: "Kewajiban + modal",
-              value: formatRupiah(sheet.totalKewajibanModal),
-            },
-          ]}
-        />
-        <PageSection title="Neraca" badge="Read">
-          <p className="mb-3 text-sm text-muted-foreground">
-            Per {sheet.asOf.split("-").reverse().join("/")}
-          </p>
-          {sheet.sections.map((sec) => (
-            <div key={sec.tipe} className="mb-6 last:mb-0">
-              <p className="mb-2 text-sm font-medium">{sec.tipe}</p>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Akun</TableHead>
-                    <TableHead className="text-right">Saldo</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {sec.rows.map((r) => (
-                    <TableRow key={r.kode}>
-                      <TableCell>
-                        <span className="font-medium">{r.nama}</span>
-                      </TableCell>
-                      <TableCell className="text-right tabular-nums">
-                        {formatRupiah(r.saldo)}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  <TableRow>
-                    <TableCell className="font-medium">Subtotal {sec.tipe.toLowerCase()}</TableCell>
-                    <TableCell className="text-right tabular-nums font-medium">
-                      {formatRupiah(sec.subtotal)}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </div>
-          ))}
-        </PageSection>
-      </div>
-    );
+    return <OwnerNeracaTampilan sheet={sheet} />;
   }
 
   const laba = await buildIncomeStatement(start, end);

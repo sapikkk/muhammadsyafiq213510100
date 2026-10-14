@@ -1,5 +1,12 @@
 import type { StatusJurnalKey } from "@/lib/jurnal-status";
 
+export type SerializedJurnalBarisRingkas = {
+  id: number;
+  akunNama: string;
+  debit: string;
+  kredit: string;
+};
+
 export type SerializedJurnalListRow = {
   id: number;
   tanggalIso: string;
@@ -9,4 +16,6 @@ export type SerializedJurnalListRow = {
   dibuatOlehNama: string;
   barisCount: number;
   totalDebit: string;
+  totalKredit: string;
+  baris: SerializedJurnalBarisRingkas[];
 };

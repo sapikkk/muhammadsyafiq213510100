@@ -174,7 +174,10 @@ export function listJurnal(filter: FilterJurnal) {
     where: parseFilter(filter),
     orderBy: [{ tanggal: "desc" }, { id: "desc" }],
     include: {
-      baris: { select: { debit: true } },
+      baris: {
+        orderBy: { id: "asc" },
+        include: { akun: { select: { nama: true } } },
+      },
       dibuatOleh: { select: { nama: true } },
     },
   });
@@ -183,7 +186,8 @@ export function listJurnal(filter: FilterJurnal) {
 export type JurnalListRow = Awaited<ReturnType<typeof listJurnal>>[number];
 
 export function serializeJurnalListRow(j: JurnalListRow): SerializedJurnalListRow {
-  const total = j.baris.reduce((sum, b) => sum.add(b.debit), nol);
+  const totalDebit = j.baris.reduce((sum, b) => sum.add(b.debit), nol);
+  const totalKredit = j.baris.reduce((sum, b) => sum.add(b.kredit), nol);
   return {
     id: j.id,
     tanggalIso: j.tanggal.toISOString(),
@@ -192,7 +196,14 @@ export function serializeJurnalListRow(j: JurnalListRow): SerializedJurnalListRo
     sumber: j.sumber,
     dibuatOlehNama: j.dibuatOleh.nama,
     barisCount: j.baris.length,
-    totalDebit: total.toString(),
+    totalDebit: totalDebit.toString(),
+    totalKredit: totalKredit.toString(),
+    baris: j.baris.map((b) => ({
+      id: b.id,
+      akunNama: b.akun.nama,
+      debit: b.debit.gt(0) ? b.debit.toString() : "",
+      kredit: b.kredit.gt(0) ? b.kredit.toString() : "",
+    })),
   };
 }
 
