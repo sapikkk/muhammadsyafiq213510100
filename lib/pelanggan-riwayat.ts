@@ -70,7 +70,6 @@ export async function buildPelangganRiwayatDocument(pelangganId: number): Promis
   const rows: string[][] = [];
   for (const o of riwayat) {
     rows.push([
-      o.nomor_so,
       o.nomor_invoice ?? "—",
       labelSalesOrderStatus(o.status),
       fmt.format(new Date(o.dibuat_pada)),
@@ -89,8 +88,7 @@ export async function buildPelangganRiwayatDocument(pelangganId: number): Promis
     sections: [
       {
         headers: [
-          "Pesanan jual",
-          "Faktur",
+          "No. faktur",
           "Status",
           "Tanggal",
           "Omzet (Rp)",

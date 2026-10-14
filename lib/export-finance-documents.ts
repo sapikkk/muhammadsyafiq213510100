@@ -33,12 +33,12 @@ export async function buildIncomeStatementDocument(start: Date, end: Date, perio
 export async function buildBalanceSheetDocument(end: Date) {
   const sheet = await buildBalanceSheet(end);
   const sections = sheet.sections.flatMap((sec) => {
-    const rows = sec.rows.map((r) => [r.kode, r.nama, formatRupiah(r.saldo)]);
-    rows.push(["", `Subtotal ${sec.tipe}`, formatRupiah(sec.subtotal)]);
+    const rows = sec.rows.map((r) => [r.nama, formatRupiah(r.saldo)]);
+    rows.push([`Subtotal ${sec.tipe}`, formatRupiah(sec.subtotal)]);
     return [
       {
         title: sec.tipe,
-        headers: ["Kode", "Akun", "Saldo (Rp)"],
+        headers: ["Akun", "Saldo (Rp)"],
         rows,
       },
     ];

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { ExportDocument, ExportFormat, ExportOrientation } from "@/lib/export-document-types";
+import { normalizeExportDocument } from "@/lib/export-align";
 import { pdfBufferFromExportDocument } from "@/lib/pdf-table-document";
 import { xlsxBufferFromExportDocument } from "@/lib/export-table-xlsx";
 
@@ -9,8 +10,9 @@ export async function respondExportDocument(
   format: ExportFormat,
   orient: ExportOrientation,
 ) {
+  const normalized = normalizeExportDocument(doc);
   if (format === "xlsx") {
-    const buffer = await xlsxBufferFromExportDocument(doc);
+    const buffer = await xlsxBufferFromExportDocument(normalized);
     return new NextResponse(new Uint8Array(buffer), {
       headers: {
         "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -18,7 +20,7 @@ export async function respondExportDocument(
       },
     });
   }
-  const buffer = await pdfBufferFromExportDocument(doc, orient);
+  const buffer = await pdfBufferFromExportDocument(normalized, orient);
   return new NextResponse(new Uint8Array(buffer), {
     headers: {
       "Content-Type": "application/pdf",

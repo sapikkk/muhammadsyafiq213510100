@@ -92,10 +92,7 @@ export async function buildVarietasDocument(opts: {
 
   return {
     title: opts.onlyAktif ? "Varietas aktif" : "Daftar varietas",
-    subtitleLines: [
-      dieksporPada(),
-      opts.includeRataHpp ? "Termasuk rata-rata HPP per lubang (internal)." : undefined,
-    ].filter(Boolean) as string[],
+    subtitleLines: [dieksporPada()].filter(Boolean) as string[],
     sections: [{ headers, rows: tableRows }],
   };
 }
@@ -103,7 +100,6 @@ export async function buildVarietasDocument(opts: {
 export async function buildInventarisDocument(): Promise<ExportDocument> {
   const items = await listItemInventaris(true);
   const rows = items.map((item) => [
-    item.kode,
     item.nama,
     item.satuan,
     item.stokSaatIni.toString(),
@@ -117,7 +113,7 @@ export async function buildInventarisDocument(): Promise<ExportDocument> {
     subtitleLines: [dieksporPada(), "Hanya item aktif."],
     sections: [
       {
-        headers: ["Kode", "Nama", "Satuan", "Stok", "Minimum", "Di bawah min.", "Status item"],
+        headers: ["Nama", "Satuan", "Stok", "Minimum", "Di bawah min.", "Status item"],
         rows,
       },
     ],
@@ -129,7 +125,6 @@ export async function buildStokRendahDocument(): Promise<ExportDocument> {
   const rows = items.map((item) => {
     const kekurangan = item.stokMinimum.sub(item.stokSaatIni);
     return [
-      item.kode,
       item.nama,
       item.satuan,
       item.stokSaatIni.toString(),
@@ -143,7 +138,7 @@ export async function buildStokRendahDocument(): Promise<ExportDocument> {
     subtitleLines: [dieksporPada()],
     sections: [
       {
-        headers: ["Kode", "Nama", "Satuan", "Stok", "Minimum", "Kekurangan"],
+        headers: ["Nama", "Satuan", "Stok", "Minimum", "Kekurangan"],
         rows,
       },
     ],
@@ -155,7 +150,6 @@ export async function buildSiklusDaftarDocument(): Promise<ExportDocument> {
   const rows = raw.map((r) => {
     const s = serializeSiklus(r);
     return [
-      s.kode_batch,
       s.varietas_nama,
       s.greenhouse_nama,
       s.kolam_nama,
@@ -173,12 +167,11 @@ export async function buildSiklusDaftarDocument(): Promise<ExportDocument> {
     title: "Daftar siklus produksi",
     subtitleLines: [
       dieksporPada(),
-      `Maksimal ${LIST_SIKLUS_MAX_LIMIT} batch terbaru (sama seperti batas daftar layar).`,
+      `Maksimal ${LIST_SIKLUS_MAX_LIMIT} siklus terbaru (sama seperti batas daftar layar).`,
     ],
     sections: [
       {
         headers: [
-          "Batch",
           "Varietas",
           "Greenhouse",
           "Kolam",
@@ -201,13 +194,12 @@ export async function buildPenjualanDocument(includeHpp: boolean): Promise<Expor
   const fmt = new Intl.DateTimeFormat("id-ID", { dateStyle: "medium" });
 
   const headers = includeHpp
-    ? ["No. SO", "Invoice", "Pelanggan", "Status", "Tanggal", "Total", "HPP", "Margin"]
-    : ["No. SO", "Invoice", "Pelanggan", "Status", "Tanggal", "Total"];
+    ? ["No. faktur", "Pelanggan", "Status", "Tanggal", "Total", "HPP", "Margin"]
+    : ["No. faktur", "Pelanggan", "Status", "Tanggal", "Total"];
 
   const rows = orders.map((o) => {
     const hppTotal = o.baris.reduce((s, b) => s.add(b.hpp_order), o.total.mul(0));
     const base = [
-      o.nomor_so,
       o.nomor_invoice ?? "—",
       o.pelanggan.nama,
       labelSalesOrderStatus(o.status),
@@ -237,7 +229,6 @@ export async function buildPanenDocument(): Promise<ExportDocument> {
 
   const rows = laporan.map((r) => [
     labelBarisProduksiUtama(partsFromSiklusNested(r.siklus)),
-    r.siklus.kode_batch,
     labelLaporanPanenStatus(r.status),
     String(r.jumlah_layak),
     String(r.jumlah_tidak_layak),
@@ -254,7 +245,6 @@ export async function buildPanenDocument(): Promise<ExportDocument> {
       {
         headers: [
           "Lokasi",
-          "Batch",
           "Status",
           "Layak (ekor)",
           "Tidak layak",
@@ -274,8 +264,6 @@ export async function buildActivePackDocument(): Promise<ExportDocument> {
   const fmt = new Intl.DateTimeFormat("id-ID", { dateStyle: "medium" });
 
   const rows = packs.map((p) => [
-    p.kode,
-    p.item?.kode ?? "—",
     p.item?.nama ?? "—",
     p.status === "AKTIF" ? "Aktif" : "Habis",
     formatRupiah(p.hargaPack),
@@ -292,8 +280,6 @@ export async function buildActivePackDocument(): Promise<ExportDocument> {
     sections: [
       {
         headers: [
-          "Kode pack",
-          "Kode item",
           "Item",
           "Status",
           "Harga pack",

@@ -1,4 +1,5 @@
 import type { ExportDocument, ExportOrientation } from "@/lib/export-document-types";
+import { normalizeExportDocument } from "@/lib/export-align";
 
 function pageSize(orient: ExportOrientation) {
   return orient === "landscape"
@@ -11,7 +12,7 @@ function drawTable(
     setFont: (face: string, style: string) => void;
     splitTextToSize: (text: string, maxWidth: number) => string[];
     addPage: () => void;
-    text: (text: string, x: number, y: number) => void;
+    text: (text: string, x: number, y: number, options?: { align?: "left" | "right"; maxWidth?: number }) => void;
     setDrawColor: (v: number) => void;
     rect: (x: number, y: number, w: number, h: number) => void;
     line: (x1: number, y1: number, x2: number, y2: number) => void;
@@ -21,6 +22,7 @@ function drawTable(
   contentW: number,
   headers: string[],
   rows: string[][],
+  alignRight: Set<number>,
   startY: number,
   pageH: number,
   margin: number,
@@ -49,8 +51,13 @@ function drawTable(
       const cx = x + c * colW;
       doc.line(cx, cy - 4, cx, cy - 4 + rowH);
       const lines = wrapped[c];
+      const pad = 1.5;
+      const right = alignRight.has(c);
       for (let li = 0; li < lines.length; li++) {
-        doc.text(lines[li], cx + 1.5, cy + li * 4.5);
+        doc.text(lines[li], right ? cx + colW - pad : cx + pad, cy + li * 4.5, {
+          align: right ? "right" : "left",
+          maxWidth: colW - pad * 2,
+        });
       }
     }
     cy += rowH;
@@ -69,20 +76,21 @@ export async function pdfBufferFromExportDocument(
   doc: ExportDocument,
   orient: ExportOrientation = "portrait",
 ): Promise<Buffer> {
+  const normalized = normalizeExportDocument(doc);
   const { jsPDF } = await import("jspdf");
   const { w, h, margin, contentW } = pageSize(orient);
   const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: orient });
   pdf.setFontSize(14);
-  pdf.text(doc.title, margin, 16);
+  pdf.text(normalized.title, margin, 16);
   pdf.setFontSize(9);
   let y = 24;
-  for (const line of doc.subtitleLines ?? []) {
+  for (const line of normalized.subtitleLines ?? []) {
     pdf.text(line, margin, y);
     y += 5;
   }
   y += 4;
 
-  for (const section of doc.sections) {
+  for (const section of normalized.sections) {
     if (section.title) {
       if (y > h - margin - 20) {
         pdf.addPage();
@@ -94,7 +102,8 @@ export async function pdfBufferFromExportDocument(
       pdf.setFont("helvetica", "normal");
       y += 7;
     }
-    y = drawTable(pdf, margin, y, contentW, section.headers, section.rows, y, h, margin);
+    const align = new Set(section.alignRight ?? []);
+    y = drawTable(pdf, margin, y, contentW, section.headers, section.rows, align, y, h, margin);
     y += 6;
   }
 

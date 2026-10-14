@@ -29,7 +29,7 @@ export async function buildSiklusPaketDocument(siklusId: number): Promise<Export
       title: "Ringkas siklus",
       headers: ["Field", "Nilai"],
       rows: [
-        ["Batch", siklus.kode_batch],
+        ["Lokasi & varietas", judul],
         ["Status", labelSiklusStatus(siklus.status)],
         [
           "Semai",
@@ -79,7 +79,7 @@ export async function buildSiklusPaketDocument(siklusId: number): Promise<Export
 
   return {
     title: `Berkas siklus — ${judul}`,
-    subtitleLines: [`Kode batch: ${siklus.kode_batch}`],
+    subtitleLines: [fmt.format(new Date())],
     sections,
   };
 }

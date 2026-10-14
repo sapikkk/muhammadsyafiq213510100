@@ -1,8 +1,10 @@
 import "server-only";
 
 import type { ExportDocument } from "@/lib/export-document-types";
+import { formatRupiah } from "@/lib/format";
 import { prisma } from "@/lib/prisma";
 import { parseFilter, type FilterJurnal } from "@/lib/jurnal";
+import { statusJurnalLabel, type StatusJurnalKey } from "@/lib/jurnal-status";
 
 export async function buildJournalExportDocument(filter: FilterJurnal): Promise<ExportDocument> {
   const jurnals = await prisma.jurnal.findMany({
@@ -10,23 +12,23 @@ export async function buildJournalExportDocument(filter: FilterJurnal): Promise<
     orderBy: [{ tanggal: "asc" }, { id: "asc" }],
     take: 500,
     include: {
-      baris: { include: { akun: { select: { kode: true, nama: true } } } },
+      baris: { include: { akun: { select: { nama: true } } } },
       dibuatOleh: { select: { nama: true } },
     },
   });
 
   const rows: string[][] = [];
   for (const j of jurnals) {
+    const status =
+      statusJurnalLabel[j.status as StatusJurnalKey] ?? j.status;
     for (const b of j.baris) {
       rows.push([
         j.tanggal.toISOString().slice(0, 10),
-        String(j.id),
-        j.status,
-        j.keterangan.slice(0, 60),
-        b.akun.kode,
+        status,
+        j.keterangan.slice(0, 80),
         b.akun.nama,
-        b.debit.toString(),
-        b.kredit.toString(),
+        b.debit.gt(0) ? formatRupiah(b.debit.toString()) : "—",
+        b.kredit.gt(0) ? formatRupiah(b.kredit.toString()) : "—",
         j.dibuatOleh.nama,
       ]);
     }
@@ -37,17 +39,7 @@ export async function buildJournalExportDocument(filter: FilterJurnal): Promise<
     subtitleLines: ["Maks. 500 baris jurnal sesuai filter."],
     sections: [
       {
-        headers: [
-          "Tanggal",
-          "No.",
-          "Status",
-          "Keterangan",
-          "Kode akun",
-          "Nama akun",
-          "Debit",
-          "Kredit",
-          "Dibuat oleh",
-        ],
+        headers: ["Tanggal", "Status", "Keterangan", "Akun", "Debit", "Kredit", "Dibuat oleh"],
         rows,
       },
     ],

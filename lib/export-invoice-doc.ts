@@ -20,7 +20,6 @@ export async function buildInvoicePelangganDocument(soId: number): Promise<Expor
     title: "Faktur penjualan — Kokonus Farm",
     subtitleLines: [
       `No. faktur: ${invoice.nomor_invoice ?? "—"}`,
-      `Pesanan jual: ${invoice.nomor_so}`,
       `Status: ${labelSalesOrderStatus(invoice.status)}`,
       `Tanggal: ${invoice.dibuat_pada.toLocaleDateString("id-ID")}`,
       "",
