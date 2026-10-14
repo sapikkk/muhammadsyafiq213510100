@@ -140,10 +140,16 @@ export async function paginateMonitorLogs(
   };
 }
 
-function truncSql(mode: MonitorKelompokMode): string {
+function truncSql(mode: MonitorKelompokMode): "day" | "week" | "month" {
   if (mode === "bulan") return "month";
   if (mode === "minggu") return "week";
   return "day";
+}
+
+/** Literal SQL — jangan pakai parameter Prisma untuk argumen date_trunc (GROUP BY harus identik). */
+function sqlDateTruncJakarta(mode: MonitorKelompokMode): Prisma.Sql {
+  const unit = truncSql(mode);
+  return Prisma.raw(`date_trunc('${unit}', l.waktu AT TIME ZONE 'Asia/Jakarta')`);
 }
 
 type AgregatRow = {
@@ -165,7 +171,7 @@ function buildAgregatSql(
   offset: number,
   countOnly: boolean,
 ): Prisma.Sql {
-  const trunc = truncSql(mode);
+  const dt = sqlDateTruncJakarta(mode);
   const conditions: Prisma.Sql[] = [
     Prisma.sql`l.waktu >= ${filter.start}`,
     Prisma.sql`l.waktu <= ${filter.end}`,
@@ -185,14 +191,14 @@ function buildAgregatSql(
         INNER JOIN "Kolam" k ON k.id = l.kolam_id
         INNER JOIN "Greenhouse" g ON g.id = k.greenhouse_id
         WHERE ${whereSql}
-        GROUP BY date_trunc(${trunc}, l.waktu AT TIME ZONE 'Asia/Jakarta'), l.kolam_id, k.nama, g.nama, g.id
+        GROUP BY ${dt}, l.kolam_id, k.nama, g.nama, g.id
       ) sub
     `;
   }
 
   return Prisma.sql`
     SELECT
-      to_char(date_trunc(${trunc}, l.waktu AT TIME ZONE 'Asia/Jakarta'), 'YYYY-MM-DD') AS period_key,
+      to_char(${dt}, 'YYYY-MM-DD') AS period_key,
       l.kolam_id,
       k.nama AS kolam_nama,
       g.nama AS greenhouse_nama,
@@ -205,7 +211,7 @@ function buildAgregatSql(
     INNER JOIN "Kolam" k ON k.id = l.kolam_id
     INNER JOIN "Greenhouse" g ON g.id = k.greenhouse_id
     WHERE ${whereSql}
-    GROUP BY date_trunc(${trunc}, l.waktu AT TIME ZONE 'Asia/Jakarta'), l.kolam_id, k.nama, g.nama, g.id
+    GROUP BY ${dt}, l.kolam_id, k.nama, g.nama, g.id
     ORDER BY period_key DESC, g.nama ASC, k.nama ASC
     LIMIT ${limit} OFFSET ${offset}
   `;
@@ -239,9 +245,9 @@ export async function paginateMonitorAgregat(
       kolamId: r.kolam_id,
       greenhouseId: r.greenhouse_id,
       jumlah: Number(r.jumlah),
-      phRata: Math.round(Number(r.ph_avg) * 100) / 100,
-      ppmRata: Math.round(Number(r.ppm_avg) * 100) / 100,
-      suhuRata: Math.round(Number(r.suhu_avg) * 100) / 100,
+      phRata: Math.round(Number(r.ph_avg ?? 0) * 100) / 100,
+      ppmRata: Math.round(Number(r.ppm_avg ?? 0) * 100) / 100,
+      suhuRata: Math.round(Number(r.suhu_avg ?? 0) * 100) / 100,
     };
   });
 
