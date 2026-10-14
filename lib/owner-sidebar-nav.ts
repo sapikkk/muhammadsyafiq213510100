@@ -62,8 +62,6 @@ const PREFIX_BY_HREF: Record<string, string[]> = {
     "/owner/akun",
     "/owner/rekening",
     "/owner/prive",
-    "/owner/petani",
-    "/owner/pengguna",
   ],
 };
 

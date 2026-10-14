@@ -55,7 +55,7 @@ export function JurnalDetailView({
     <DetailLayout
       backHref={backHref}
       surface={surface}
-      financeNavRole={backHref.startsWith("/owner") ? "OWNER" : backHref.startsWith("/admin") ? "ADMIN" : undefined}
+      financeNavRole={backHref.startsWith("/admin") ? "ADMIN" : undefined}
       title={jurnal.keterangan}
       badge={<Badge variant="secondary">{statusJurnalLabel[jurnal.status]}</Badge>}
       description={meta}

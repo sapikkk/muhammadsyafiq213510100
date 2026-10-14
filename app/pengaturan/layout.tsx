@@ -1,11 +1,18 @@
-import type { ReactNode } from "react";
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { getServerSession } from "next-auth";
-import { SessionShell } from "@/components/session-shell";
+import { PengaturanTabs } from "@/components/pengaturan-tabs";
 import { authOptions } from "@/lib/auth";
 
-export default async function PengaturanLayout({ children }: { children: ReactNode }) {
+export default async function PengaturanLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
-  if (!session?.user?.role) redirect("/login");
-  return <SessionShell>{children}</SessionShell>;
+  const showTimTab = session?.user?.role === "OWNER";
+
+  return (
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+      <Suspense fallback={null}>
+        <PengaturanTabs showTimTab={showTimTab} />
+      </Suspense>
+      {children}
+    </div>
+  );
 }

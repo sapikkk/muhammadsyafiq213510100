@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { OwnerKeuanganChrome } from "@/components/owner-keuangan-chrome";
 import { EksporLembar } from "@/components/ekspor-lembar";
 import { MonthRangeFilter } from "@/components/month-range-filter";
 import { OwnerBagianSubnav } from "@/components/owner-bagian-subnav";
@@ -45,8 +46,8 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
   const jenisPratinjau = jenis === "neraca" ? "neraca" : "laba-rugi";
 
   return (
+    <OwnerKeuanganChrome>
     <CrudPageLayout
-      financeNavRole="OWNER"
       title={jenis === "neraca" ? "Neraca" : "Laba rugi"}
       actions={
         <EksporLembar
@@ -73,5 +74,6 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
       }
       listTitle="Angka laporan"
     />
+    </OwnerKeuanganChrome>
   );
 }

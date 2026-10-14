@@ -9,9 +9,19 @@ export type OwnerSectionTab = {
   label: string;
   epic?: string;
   href: string;
+  /** Aktif jika pathname diawali prefix ini (mis. semua /owner/laporan). */
+  activePrefix?: string;
 };
 
-function tabActive(pathname: string, searchParams: URLSearchParams, href: string): boolean {
+function tabActive(
+  pathname: string,
+  searchParams: URLSearchParams,
+  tab: OwnerSectionTab,
+): boolean {
+  if (tab.activePrefix) {
+    return pathname === tab.activePrefix || pathname.startsWith(`${tab.activePrefix}/`);
+  }
+  const href = tab.href;
   const [path, query] = href.split("?");
   const pathOk = pathname === path || pathname.startsWith(`${path}/`);
   if (!pathOk) return false;
@@ -38,7 +48,7 @@ export function OwnerSectionTabs({ tabs }: { tabs: OwnerSectionTab[] }) {
     <nav aria-label="Bagian modul" className="overflow-x-auto border-b pb-2">
       <ul className="flex min-w-max gap-1">
         {tabs.map((tab) => {
-          const active = tabActive(pathname, searchParams, tab.href);
+          const active = tabActive(pathname, searchParams, tab);
           return (
             <li key={tab.id}>
               <Link

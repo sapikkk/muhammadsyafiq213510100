@@ -85,9 +85,9 @@ export function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
       { label: "Stok barang", href: "/owner/inventaris", icon: Box },
       { label: "Lahan & kolam", href: "/owner/infrastruktur", icon: LandPlot },
       { label: "Varietas", href: "/owner/varietas", icon: LeafyGreen },
-      { label: "Data petani", href: "/owner/petani", icon: Users },
+      { label: "Data petani", href: "/pengaturan?bagian=tim&tim=petani", icon: Users },
       alertItem,
-      { label: "Kelola akun", href: "/owner/pengguna", icon: UserCog },
+      { label: "Kelola akun", href: "/pengaturan?bagian=tim&tim=pengguna", icon: UserCog },
     ];
   }
 

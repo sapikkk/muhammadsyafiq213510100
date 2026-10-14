@@ -1,5 +1,6 @@
 import { CashFlowMutasiDaftar } from "@/components/cash-flow-mutasi-daftar";
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { OwnerKeuanganChrome } from "@/components/owner-keuangan-chrome";
 import { EksporLembar } from "@/components/ekspor-lembar";
 import { CashFlowSummaryChart } from "@/components/cash-flow-summary-chart";
 import { MetricCards } from "@/components/metric-cards";
@@ -48,8 +49,8 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
   }));
 
   return (
+    <OwnerKeuanganChrome>
     <CrudPageLayout
-      financeNavRole="OWNER"
       title="Arus kas"
       actions={
         <EksporLembar
@@ -111,5 +112,6 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
       }
       listTitle="Ringkasan & mutasi"
     />
+    </OwnerKeuanganChrome>
   );
 }

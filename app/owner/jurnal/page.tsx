@@ -22,8 +22,7 @@ export default async function OwnerJurnalPage({
 
   return (
     <CrudPageLayout
-      financeNavRole="OWNER"
-      title="Catatan keuangan"
+      title="Jurnal umum"
       actions={
         <Button asChild variant="outline" className="h-11">
           <Link href="/owner/jurnal/koreksi">Koreksi manual</Link>

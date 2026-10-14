@@ -83,7 +83,7 @@ test("404 saat login menampilkan shell dan tombol dashboard", async ({ page }) =
 
 test("owner pengguna DataTable cari", async ({ page }) => {
   await loginOwner(page);
-  await page.goto("/owner/pengguna");
+  await page.goto("/pengaturan?bagian=tim&tim=pengguna");
   await expect(page.getByRole("heading", { name: /Kelola user/i })).toBeVisible();
   await expect(page.getByRole("button", { name: /^Tambah$/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Tambah akun login/i })).toHaveCount(0);

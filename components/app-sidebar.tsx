@@ -159,7 +159,7 @@ export function AppSidebar({
         </div>
         <div className="flex gap-1">
           <Link
-            href="/pengaturan#notifikasi"
+            href="/pengaturan?bagian=notifikasi"
             onClick={() => onNavigate?.()}
             className="relative flex min-h-10 flex-1 items-center justify-center gap-2 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >

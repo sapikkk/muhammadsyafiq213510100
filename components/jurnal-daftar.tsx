@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { Fragment, useMemo, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -14,8 +16,11 @@ import {
 import { formatRupiah, formatTanggal } from "@/lib/format";
 import { statusJurnalLabel, type StatusJurnalKey } from "@/lib/jurnal-status";
 import type { SerializedJurnalListRow } from "@/lib/jurnal-types";
+import { cn } from "@/lib/utils";
 
 export type JurnalDaftarRow = SerializedJurnalListRow;
+
+const PAGE_SIZE = 15;
 
 export function JurnalDaftar({
   rows,
@@ -27,6 +32,8 @@ export function JurnalDaftar({
   emptyMessage?: string;
 }) {
   const [q, setQ] = useState("");
+  const [pageIndex, setPageIndex] = useState(0);
+  const [expanded, setExpanded] = useState<Set<number>>(() => new Set());
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -39,6 +46,19 @@ export function JurnalDaftar({
     );
   }, [rows, q]);
 
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const safePage = Math.min(pageIndex, pageCount - 1);
+  const pageRows = filtered.slice(safePage * PAGE_SIZE, safePage * PAGE_SIZE + PAGE_SIZE);
+
+  function toggleExpand(id: number) {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
   if (rows.length === 0) {
     return <p className="text-sm text-muted-foreground">{emptyMessage}</p>;
   }
@@ -49,72 +69,142 @@ export function JurnalDaftar({
         className="h-11 max-w-md"
         placeholder="Cari keterangan atau nama akun…"
         value={q}
-        onChange={(e) => setQ(e.target.value)}
+        onChange={(e) => {
+          setQ(e.target.value);
+          setPageIndex(0);
+        }}
         aria-label="Cari jurnal"
       />
 
       {filtered.length === 0 ? (
         <p className="text-sm text-muted-foreground">Tidak ada catatan cocok pencarian.</p>
       ) : (
-        <ul className="space-y-4">
-          {filtered.map((row) => (
-            <li key={row.id} className="rounded-md border bg-card">
-              <div className="flex flex-wrap items-baseline justify-between gap-2 border-b bg-muted/20 px-3 py-2.5">
-                <div className="min-w-0 flex-1">
-                  <Link
-                    href={`${detailPrefix}/${row.id}`}
-                    scroll={false}
-                    className="font-medium underline-offset-4 hover:underline"
-                  >
-                    {row.keterangan}
-                  </Link>
-                  <p className="mt-0.5 text-xs text-muted-foreground">
-                    {formatTanggal(new Date(row.tanggalIso))} · {row.dibuatOlehNama} ·{" "}
-                    {statusJurnalLabel[row.status as StatusJurnalKey]}
-                  </p>
-                </div>
-                <Link
-                  href={`${detailPrefix}/${row.id}`}
-                  scroll={false}
-                  className="shrink-0 text-xs text-muted-foreground underline-offset-4 hover:underline"
-                >
-                  Detail
-                </Link>
-              </div>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Akun</TableHead>
-                    <TableHead className="text-right w-[8.5rem]">Debit</TableHead>
-                    <TableHead className="text-right w-[8.5rem]">Kredit</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {row.baris.map((b) => (
-                    <TableRow key={b.id}>
-                      <TableCell className="text-sm">{b.akunNama}</TableCell>
-                      <TableCell className="text-right tabular-nums text-sm">
-                        {b.debit ? formatRupiah(b.debit) : ""}
-                      </TableCell>
-                      <TableCell className="text-right tabular-nums text-sm">
-                        {b.kredit ? formatRupiah(b.kredit) : ""}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  <TableRow className="bg-muted/30 font-medium">
-                    <TableCell>Jumlah</TableCell>
-                    <TableCell className="text-right tabular-nums">
-                      {formatRupiah(row.totalDebit)}
-                    </TableCell>
-                    <TableCell className="text-right tabular-nums">
-                      {formatRupiah(row.totalKredit)}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </li>
-          ))}
-        </ul>
+        <>
+          <div className="overflow-x-auto rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-10" aria-label="Buka rincian" />
+                  <TableHead className="w-[7.5rem]">Tanggal</TableHead>
+                  <TableHead>Keterangan</TableHead>
+                  <TableHead className="w-[7rem]">Status</TableHead>
+                  <TableHead className="text-right w-[8.5rem]">Debit</TableHead>
+                  <TableHead className="text-right w-[8.5rem]">Kredit</TableHead>
+                  <TableHead className="w-[5rem]" />
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {pageRows.map((row) => {
+                  const open = expanded.has(row.id);
+                  return (
+                    <Fragment key={row.id}>
+                      <TableRow className="align-top">
+                        <TableCell>
+                          <button
+                            type="button"
+                            className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-md border border-transparent hover:bg-muted/60"
+                            aria-expanded={open}
+                            aria-label={open ? "Tutup rincian baris jurnal" : "Buka rincian baris jurnal"}
+                            onClick={() => toggleExpand(row.id)}
+                          >
+                            {open ? (
+                              <ChevronDown className="size-4" aria-hidden />
+                            ) : (
+                              <ChevronRight className="size-4" aria-hidden />
+                            )}
+                          </button>
+                        </TableCell>
+                        <TableCell className="text-sm tabular-nums whitespace-nowrap">
+                          {formatTanggal(new Date(row.tanggalIso))}
+                        </TableCell>
+                        <TableCell className="max-w-[18rem]">
+                          <p className={cn("text-sm font-medium", !open && "line-clamp-1")}>
+                            {row.keterangan}
+                          </p>
+                          <p className="text-xs text-muted-foreground">{row.dibuatOlehNama}</p>
+                        </TableCell>
+                        <TableCell className="text-xs">
+                          {statusJurnalLabel[row.status as StatusJurnalKey]}
+                        </TableCell>
+                        <TableCell className="text-right tabular-nums text-sm">
+                          {formatRupiah(row.totalDebit)}
+                        </TableCell>
+                        <TableCell className="text-right tabular-nums text-sm">
+                          {formatRupiah(row.totalKredit)}
+                        </TableCell>
+                        <TableCell>
+                          <Link
+                            href={`${detailPrefix}/${row.id}`}
+                            scroll={false}
+                            className="text-xs font-medium text-primary hover:underline"
+                          >
+                            Detail
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                      {open ? (
+                        <TableRow className="bg-muted/20 hover:bg-muted/20">
+                          <TableCell colSpan={7} className="p-0">
+                            <Table>
+                              <TableHeader>
+                                <TableRow>
+                                  <TableHead>Akun</TableHead>
+                                  <TableHead className="text-right w-[8.5rem]">Debit</TableHead>
+                                  <TableHead className="text-right w-[8.5rem]">Kredit</TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {row.baris.map((b) => (
+                                  <TableRow key={b.id}>
+                                    <TableCell className="text-sm">{b.akunNama}</TableCell>
+                                    <TableCell className="text-right tabular-nums text-sm">
+                                      {b.debit ? formatRupiah(b.debit) : ""}
+                                    </TableCell>
+                                    <TableCell className="text-right tabular-nums text-sm">
+                                      {b.kredit ? formatRupiah(b.kredit) : ""}
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </TableCell>
+                        </TableRow>
+                      ) : null}
+                    </Fragment>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
+            <p className="text-muted-foreground">
+              {filtered.length} catatan · halaman {safePage + 1} dari {pageCount}
+            </p>
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-9"
+                disabled={safePage <= 0}
+                onClick={() => setPageIndex((p) => Math.max(0, p - 1))}
+              >
+                Sebelumnya
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-9"
+                disabled={safePage >= pageCount - 1}
+                onClick={() => setPageIndex((p) => Math.min(pageCount - 1, p + 1))}
+              >
+                Berikutnya
+              </Button>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
