@@ -1,6 +1,5 @@
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { OwnerKpiCards } from "@/components/owner-kpi-cards";
-import { OwnerPetaniAkunDaftar } from "@/components/owner-petani-akun-daftar";
 import { ChartCard } from "@/components/chart-card";
 import { OwnerRevenueChart } from "@/components/owner-revenue-chart";
 import { OwnerFlowDashboard } from "@/components/owner-flow-dashboard";
@@ -18,19 +17,13 @@ import { bestProfitMonth } from "@/lib/monthly-summary";
 import Link from "next/link";
 import { CuacaWidget } from "@/components/cuaca-widget";
 import { RekeningSaldoWidget } from "@/components/rekening-saldo-widget";
-import { prisma } from "@/lib/prisma";
 import { ProduksiRingkasanPanel } from "@/components/produksi-ringkasan-panel";
 import { loadProduksiRingkasan } from "@/lib/produksi-kapasitas";
 
 export const dynamic = "force-dynamic";
 
 export default async function OwnerPage() {
-  const [petani, stokRendah, summary, kpiV2, produksi] = await Promise.all([
-    prisma.user.findMany({
-      where: { role: "PEKERJA" },
-      orderBy: { nama: "asc" },
-      select: { id: true, nama: true, email: true },
-    }),
+  const [stokRendah, summary, kpiV2, produksi] = await Promise.all([
     listAlertStokMinimumCached(),
     monthlySummaryCached(6),
     kpiHidroponikMvpCached(),
@@ -114,9 +107,6 @@ export default async function OwnerPage() {
         <OwnerRevenueChart months={summary.months} />
       </ChartCard>
 
-      <PageSection title="Akun petani" badge="Read">
-        <OwnerPetaniAkunDaftar rows={petani} />
-      </PageSection>
     </div>
   );
 }

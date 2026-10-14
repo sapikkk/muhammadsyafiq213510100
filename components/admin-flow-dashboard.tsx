@@ -9,6 +9,7 @@ const QUICK = [
   { href: "/admin/jurnal/baru", title: "Catat uang" },
   { href: "/admin/pelanggan", title: "Pelanggan" },
   { href: "/admin/akuntansi", title: "Tutup buku" },
+  { href: "/admin/daftar-petani", title: "Daftarkan petani" },
 ];
 
 export function AdminFlowDashboard() {

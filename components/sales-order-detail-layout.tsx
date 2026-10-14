@@ -1,11 +1,15 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SalesOrderDetail, type SoRow } from "@/components/sales-order-detail";
+import { SalesOrderDetail } from "@/components/sales-order-detail";
+import { SalesOrderDetailActions } from "@/components/sales-order-detail-actions";
 import { DetailLayout } from "@/components/detail-layout";
 import { PageSection } from "@/components/page-section";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { formatRupiah } from "@/lib/format";
 import { labelSalesOrderStatus } from "@/lib/sales-order-status";
 import { getSalesOrder, serializeSalesOrder } from "@/lib/sales-order";
+import type { SoRow } from "@/lib/sales-order-detail-types";
 import { ensureRekeningKasDefaults, listRekeningKasAktif } from "@/lib/rekening-kas";
 
 export async function SalesOrderDetailLayout({
@@ -31,18 +35,31 @@ export async function SalesOrderDetailLayout({
   if (!row) notFound();
 
   const so = serializeSalesOrder(row) as SoRow;
-  const sectionTitle =
-    mode === "admin" ? "Aksi dan riwayat" : mode === "owner" ? "Ringkasan pesanan" : "Kirim dan terima";
+  const showFaktur =
+    mode === "admin" && so.status !== "DRAFT" && so.status !== "CANCELLED";
+
   return (
     <DetailLayout
       backHref={listHref}
       surface={surface}
       title={so.nomor_so}
       badge={<Badge variant="secondary">{labelSalesOrderStatus(so.status)}</Badge>}
-      description={`${so.pelanggan_nama} · Total ${formatRupiah(so.total)}`}
+      description={`${so.pelanggan_nama} · ${formatRupiah(so.total)}`}
+      actions={
+        showFaktur ? (
+          <Button variant="outline" className="h-11" asChild>
+            <Link href={`/admin/penjualan/${so.id}/invoice`} scroll={false}>
+              Faktur{so.nomor_invoice ? ` · ${so.nomor_invoice}` : ""}
+            </Link>
+          </Button>
+        ) : null
+      }
+      primaryActions={
+        <SalesOrderDetailActions row={so} mode={mode} rekeningOptions={rekeningOptions} />
+      }
     >
-      <PageSection title={sectionTitle} badge={mode === "owner" ? "Read" : "Update"}>
-        <SalesOrderDetail row={so} mode={mode} rekeningOptions={rekeningOptions} />
+      <PageSection title="Barang" badge="Read">
+        <SalesOrderDetail row={so} mode={mode} />
       </PageSection>
     </DetailLayout>
   );

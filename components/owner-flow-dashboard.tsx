@@ -11,6 +11,7 @@ const QUICK = [
   { href: "/owner/laporan", title: "Unduh laporan", sub: "PDF per bulan" },
   { href: "/owner/evaluasi", title: "Untung & titik impas", sub: "Keputusan harga" },
   { href: "/owner/pengguna", title: "Kelola akun", sub: "Owner, Admin, Petani" },
+  { href: "/owner/petani", title: "Data petani lapangan", sub: "Lihat daftar" },
 ];
 
 export function OwnerFlowDashboard() {

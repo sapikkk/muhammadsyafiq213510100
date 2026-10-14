@@ -65,6 +65,9 @@ export async function HarvestDetailScreen({
         </Badge>
       }
       description={`Pelapor ${laporan.user.nama}`}
+      primaryActions={
+        laporan.status === "PENDING" ? <ClientApproval laporanId={laporan.id} /> : undefined
+      }
     >
       <DetailKodeStrip label="Kode batch" kode={laporan.siklus.kode_batch} />
       <PageSection title="Hasil sortasi" badge="Read">
@@ -145,11 +148,6 @@ export async function HarvestDetailScreen({
         </PageSection>
       ) : null}
 
-      {laporan.status === "PENDING" ? (
-        <PageSection title="Langkah berikutnya" badge="Update">
-          <ClientApproval laporanId={laporan.id} />
-        </PageSection>
-      ) : null}
     </DetailLayout>
   );
 }

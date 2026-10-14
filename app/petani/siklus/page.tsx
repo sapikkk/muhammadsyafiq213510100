@@ -27,7 +27,7 @@ export default async function PetaniSiklusPage() {
         <div className="flex flex-wrap gap-2">
           <EksporDaftarTombol unduhPath="/api/export/siklus-daftar" jenisPratinjau="siklus-daftar" />
           <Button type="button" className="h-11" asChild>
-            <Link href="/petani/siklus/baru" prefetch>
+            <Link href="/petani/siklus/baru" prefetch scroll={false}>
               Mulai semai
             </Link>
           </Button>

@@ -1,5 +1,4 @@
 import { AdminFlowDashboard } from "@/components/admin-flow-dashboard";
-import { RegisterPetani } from "@/components/register-petani";
 import { ResetRequests } from "@/components/reset-requests";
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { PageSection } from "@/components/page-section";
@@ -39,10 +38,6 @@ export default async function AdminPage() {
       <AdminFlowDashboard />
       <PageSection title="Tanam dan kolam">
         <ProduksiRingkasanPanel data={produksi} />
-      </PageSection>
-
-      <PageSection title="Daftarkan petani" badge="Create">
-        <RegisterPetani />
       </PageSection>
 
       {pending.length > 0 ? (

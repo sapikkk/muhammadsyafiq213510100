@@ -71,6 +71,7 @@ export async function registerPetani(
   }
 
   revalidatePath("/admin");
+  revalidatePath("/admin/daftar-petani");
   revalidatePath("/pengaturan");
   revalidatePath("/owner");
   revalidatePath("/owner/pengguna");

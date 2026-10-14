@@ -106,6 +106,20 @@ export async function SiklusDetailScreen({
         </Badge>
       }
       actions={<SiklusEksporPaket siklusId={id} />}
+      primaryActions={
+        <SiklusDetailActions
+          siklusId={id}
+          siklusLabel={labelBarisProduksiUtama(partsFromSiklusNested(siklus))}
+          kodeBatch={siklus.kode_batch}
+          jumlahDisemai={siklus.jumlah_disemai}
+          totalSusut={siklus.total_susut}
+          canTambal={Boolean(canTambal && (!laporan || laporan.status !== "APPROVED"))}
+          canAbort={canAbort}
+          showKegagalan={showKegagalan}
+          langkahBerikutnya={langkahBerikutnya}
+          packs={packsAktif}
+        />
+      }
     >
       <DetailKodeStrip label="Kode batch" kode={siklus.kode_batch} />
 
@@ -128,20 +142,7 @@ export async function SiklusDetailScreen({
         </p>
       ) : null}
 
-      <SiklusDetailActions
-        siklusId={id}
-        siklusLabel={labelBarisProduksiUtama(partsFromSiklusNested(siklus))}
-        kodeBatch={siklus.kode_batch}
-        jumlahDisemai={siklus.jumlah_disemai}
-        totalSusut={siklus.total_susut}
-        canTambal={Boolean(canTambal && (!laporan || laporan.status !== "APPROVED"))}
-        canAbort={canAbort}
-        showKegagalan={showKegagalan}
-        langkahBerikutnya={langkahBerikutnya}
-        packs={packsAktif}
-      />
-
-      <PageSection badge="Read">
+      <PageSection badge="Read" title="Linimasa">
         <SiklusTimeline steps={timeline} />
         {logs.length > 0 ? (
           <div className="mt-6 border-t pt-4">

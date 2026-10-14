@@ -247,7 +247,7 @@ export function SiklusDetailActions({
   if (!any) return null;
 
   return (
-    <div className={cn("flex flex-wrap items-center gap-2 rounded-md border bg-muted/20 p-3", className)}>
+    <div className={cn("flex flex-wrap items-center gap-2", className)}>
       {langkahBerikutnya ? <LangkahBerikutnyaMenu langkah={langkahBerikutnya} /> : null}
       <LainnyaMenu items={lainnya} />
     </div>

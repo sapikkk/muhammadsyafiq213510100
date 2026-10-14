@@ -15,14 +15,26 @@ export type SalesOrderBarisTampilan = SiklusLabelParts & {
 };
 
 /** Satu baris item di detail pesanan — kode batch kecil & abu-abu. */
-export function SalesOrderBarisLine({ baris }: { baris: SalesOrderBarisTampilan }) {
+export function SalesOrderBarisLine({
+  baris,
+  compact = false,
+}: {
+  baris: SalesOrderBarisTampilan;
+  compact?: boolean;
+}) {
   const utama = labelBarisProduksiUtama(baris);
   const jenis = labelJenisBaris(baris.jenis);
 
   return (
-    <li className="space-y-0.5 border-b border-border/60 py-2 last:border-0">
-      <p className="font-medium text-foreground">{utama}</p>
-      {baris.kodeBatch ? (
+    <li className={compact ? "px-3 py-2.5" : "space-y-0.5 border-b border-border/60 py-2 last:border-0"}>
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <p className="font-medium text-foreground">{utama}</p>
+        <p className="shrink-0 text-sm font-medium tabular-nums">{formatRupiah(baris.subtotal)}</p>
+      </div>
+      {compact && baris.kodeBatch ? (
+        <p className="text-xs text-muted-foreground">Batch {baris.kodeBatch}</p>
+      ) : null}
+      {!compact && baris.kodeBatch ? (
         <div className="pt-2">
           <DetailKodeStrip label="Kode batch" kode={baris.kodeBatch} />
         </div>
@@ -30,9 +42,12 @@ export function SalesOrderBarisLine({ baris }: { baris: SalesOrderBarisTampilan 
       <p className="text-xs text-muted-foreground">
         {jenis} {baris.jumlah}
         {baris.lubang_terpakai ? ` · ${baris.lubang_terpakai} lubang` : ""}
-        {baris.hpp_order && baris.hpp_order !== "0" ? ` · HPP ${formatRupiah(baris.hpp_order)}` : ""}
-        {" · "}
-        {formatRupiah(baris.subtotal)}
+        {!compact && baris.hpp_order && baris.hpp_order !== "0"
+          ? ` · HPP ${formatRupiah(baris.hpp_order)}`
+          : null}
+        {compact && baris.hpp_order && baris.hpp_order !== "0"
+          ? ` · HPP ${formatRupiah(baris.hpp_order)}`
+          : null}
       </p>
     </li>
   );

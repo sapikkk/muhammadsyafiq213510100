@@ -53,11 +53,7 @@ export async function InventarisDetail({
       }
     >
       <DetailKodeStrip label="Kode barang" kode={serialized.kode} />
-      <PageSection
-        title="Riwayat pergerakan"
-        description="50 pergerakan terakhir untuk item ini."
-        badge="Read"
-      >
+      <PageSection title="Riwayat pergerakan" badge="Read">
         <InventarisRiwayat rows={riwayat.map(serializePergerakan)} hideItemColumn />
       </PageSection>
       <EntityChangeHistorySection entitas="ItemInventaris" entitasId={id} />

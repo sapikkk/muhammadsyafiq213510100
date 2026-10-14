@@ -28,6 +28,7 @@ export function JurnalDaftar({
         cell: ({ row }) => (
           <Link
             href={`${detailPrefix}/${row.original.id}`}
+            scroll={false}
             className={`font-medium underline-offset-4 hover:underline ${tableCellText}`}
             title={row.original.keterangan}
           >

@@ -221,7 +221,7 @@ export function DataTable<TData, TValue>({
                     }
                     if (getRowHref) {
                       const href = getRowHref(row.original);
-                      if (href) router.push(href);
+                      if (href) router.push(href, { scroll: false });
                     } else if (onRowClick) {
                       onRowClick(row.original);
                     }
