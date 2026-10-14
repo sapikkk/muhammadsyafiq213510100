@@ -30,6 +30,16 @@ function tabActive(
     const expected = new URLSearchParams(query ?? "").get("bagian") ?? "untung";
     return bagian === expected;
   }
+  if (path === "/owner/kegagalan-susut" && pathname === "/owner/kegagalan-susut") {
+    const bagian = searchParams.get("bagian") ?? "menunggu";
+    const expected = new URLSearchParams(query ?? "").get("bagian") ?? "menunggu";
+    return bagian === expected;
+  }
+  if (path === "/owner/biaya" && pathname === "/owner/biaya") {
+    const bagian = searchParams.get("bagian") ?? "langsung";
+    const expected = new URLSearchParams(query ?? "").get("bagian") ?? "langsung";
+    return bagian === expected;
+  }
   if (!query) {
     if (path === "/owner/varietas" && pathname === "/owner/varietas") {
       return searchParams.get("tampilan") !== "status";

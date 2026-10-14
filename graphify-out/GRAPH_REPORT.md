@@ -1,17 +1,17 @@
 # Graph Report - muhammadsyafiq213510100  (2026-10-14)
 
 ## Corpus Check
-- 1491 files · ~1,411,689 words
+- 1505 files · ~1,416,493 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 33 file(s) not represented in the graph (top: (none) 21, .mdc 3, .example 3)
 
 ## Summary
-- 15753 nodes · 24541 edges · 1020 communities (883 shown, 137 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 309 edges (avg confidence: 0.9)
+- 15814 nodes · 24810 edges · 1036 communities (898 shown, 138 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 313 edges (avg confidence: 0.9)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `583580ed`
+- Built from commit: `7073409a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -23,7 +23,7 @@
 - lib/varietas.ts
 - owner/page.tsx
 - 8. Product backlog bernomor
-- isRoleAllowed
+- next
 - requireApiRole
 - siklus-detail-screen.tsx
 - CrudPageLayout
@@ -35,21 +35,20 @@
 - UX alur — Kokonus Farm
 - Notulensi — 2026-10-09
 - Kokonus Farm — panduan agent
-- hig-lookup.md
-- server-only
+- export-daftar-documents.ts
 - Progress & backlog — Kokonus Farm
 - integrations/README.md
 - formatRupiah
-- piutang-penjualan-daftar.tsx
+- piutang-penjualan.ts
 - package.json
-- lib/pelanggan.ts
-- jurnal-detail-view.tsx
+- siklus-produksi.ts
+- jurnal-detail-screen.tsx
 - README.md
 - 9. Alur pengguna end-to-end dan kriteria penerimaan
 - Game controls
 - strip-crud-page-prose.py
 - dashboard-monitor-kolam.tsx
-- chart-card.tsx
+- ChartCard
 - Paid Media Ad Creative Strategist Agent
 - smart-jurnal-form.tsx
 - seed.js
@@ -63,7 +62,7 @@
 - Audit inventory — PHASE 0
 - Panduan GitHub Project #1
 - components.json
-- lib/smart-jurnal.ts
+- catat-uang-pihak.ts
 - check-hermes-config-rewrite.py
 - Layar web (frame 1920×1080, nama `web-*` / `petani-*`)
 - compilerOptions
@@ -78,13 +77,13 @@
 - mattpocock-skills/README.md
 - build-hermes-plugin.py
 - Steps
-- siklus-produksi.ts
+- siklus-form.tsx
 - assign-project-iterations.sh
 - Civil Engineer Agent
 - assign-milestones.sh
-- react
+- Input
 - lib/inventaris.ts
-- prisma
+- prisma.ts
 - laporan-panen.ts
 - Baseline — before global audit (PHASE 0)
 - lib.sh
@@ -98,9 +97,9 @@
 - 🤝 Contributing to The Agency
 - Godot Gameplay Scripter Agent Personality
 - monitor-kolam-query.ts
-- Notulensi pengujian US1.6
+- sales-order-detail-layout.tsx
 - check-audit-env.sh
-- Agent runbook — global audit (Kokonus Farm)
+- audit/README.md
 - Image Prompt Engineer Agent
 - Persona Walkthrough Specialist
 - 🤝 M&A Integration Manager Agent
@@ -125,7 +124,7 @@
 - Blockchain Security Auditor
 - Agentic Identity & Trust Architect
 - AgentsOrchestrator Agent Personality
-- sync-agile-progress.mjs
+- project-hub-content.ts
 - 💼 Chief Financial Officer Agent
 - Resume Tailor Agent
 - Typography
@@ -184,7 +183,7 @@
 - Unreal Multiplayer Architect Agent Personality
 - Notulensi pengujian US2.1
 - Unreal Technical Artist Agent Personality
-- Paid Media Programmatic & Display Buyer Agent
+- DetailSheetFrame
 - Notulensi pengujian USX.Y
 - Unreal World Builder Agent Personality
 - Healthcare Innovation Strategist
@@ -245,7 +244,7 @@
 - .prettierrc.json
 - Kokonus Farm
 - Marketing Baidu SEO Specialist
-- Button
+- react
 - Marketing Bilibili Content Strategist
 - Marketing Kuaishou Strategist
 - Core Mission
@@ -255,7 +254,7 @@
 - Proposal Strategist Agent
 - Government Digital Presales Consultant
 - 🏨 Hospitality Guest Services Agent
-- api-client.ts
+- varietas-detail.tsx
 - 🌐 Language Translator
 - 🏦 Loan Officer Assistant Agent
 - 🛒 Retail Customer Returns Agent
@@ -272,12 +271,12 @@
 - 📒 Bookkeeper & Controller Agent
 - 🔍 Investment Researcher Agent
 - 🏛️ Tax Strategist Agent
-- DeepSeek Harness Integration
+- client-approval.tsx
 - Marketing Livestream Commerce Coach
 - Product Trend Researcher Agent
 - ♟️ Business Strategist
 - 🌟 Customer Success Manager
-- prisma.ts
+- lib/monitor-kolam.ts
 - 📝 Grant Writer
 - ⚖️ Legal Document Review Agent
 - 🏥 Medical Billing & Coding Specialist
@@ -304,10 +303,10 @@
 - Test Results Analyzer Agent Personality
 - Performance — catatan before/after (audit branch)
 - Tool Evaluator Agent Personality
-- jumlah
+- Notulensi pengujian US4.3
 - create-v2-epic-issues.sh
 - Workflow Optimizer Agent Personality
-- Live-viewing apps
+- SalesOrderDetailLayout
 - seed-kokonus-tahun.js
 - config.ts
 - Statistician Agent Personality
@@ -423,7 +422,7 @@
 - Developer Tooling Engineer
 - FinOps Engineer
 - IoT Fleet Engineer
-- 7. Rencana sprint
+- providers.tsx
 - Mobile Release Engineer
 - Privacy Engineer
 - Video Streaming Engineer
@@ -479,8 +478,8 @@
 - Prevent Insecure Deserialization
 - Semgrep Skill
 - Semgrep Quick Reference
-- next
-- Badge
+- Button
+- project-hub.tsx
 - Audit inventory — PHASE 0
 - Secure Docker Configurations
 - Project Manager Agent Personality
@@ -492,8 +491,8 @@
 - Prevent Path Traversal
 - Prevent Cross-Site Scripting (XSS)
 - monitor-produksi.ts
-- 7. Rencana sprint
-- Card
+- active-pack-detail.tsx
+- cuaca.ts
 - Blueprint Akuntansi & Logistik Sistem Hidroponik Greenhouse
 - Skenario naratif untuk klien (UAT / demo / pelatihan)
 - 🎯 Your Core Mission
@@ -587,9 +586,9 @@
 - Karpathy-Inspired Claude Code Guidelines
 - 受 Karpathy 启发的 Claude Code 指南
 - AirPlay
-- sheets.md
+- Alerts
 - App icons
-- app-clips.md
+- Apple In-App Purchase
 - Dark Mode
 - Gestures
 - Toggles
@@ -631,14 +630,14 @@
 - Prevent SQL Injection
 - LLM03: Secure LLM Supply Chain
 - Database dev (cloud / Prisma)
-- Agent runbook — global audit (Kokonus Farm)
+- cached-queries.ts
 - Varietas & harga retail (kisaran)
 - Monthly Digest
 - Smart Split
 - Schedule C Tax Prep
 - Year-End Summary
 - seed-siklus-aktif.js
-- Paid Media Auditor Agent
+- inventaris-stok-rendah.tsx
 - Notulensi pengujian US1.5
 - Notulensi pengujian US1.7
 - Paid Media Tracking & Measurement Specialist Agent
@@ -692,7 +691,7 @@
 - LLM10: Prevent Unbounded Consumption
 - LLM08: Secure Vector and Embedding Systems
 - Part 1: Running Scans
-- BentoSection
+- Rekening kas & bank (Kokonus)
 - Konteks proyek — KOKONUS FARM
 - Skill: Akuntansi Hidroponik Greenhouse
 - Notulensi — 2026-10-09
@@ -721,7 +720,7 @@
 - Subscription Audit
 - Zero-Based Budget
 - UCD — Increment v2: Akuntansi & logistik (blueprint)
-- Notulensi pengujian US2.2
+- SalesOrderForm
 - Architecture Review Checklist
 - Examples
 - 6. Customer Support Blueprint
@@ -744,7 +743,7 @@
 - Onboarding
 - Page controls
 - Pickers
-- progress-indicators.md
+- Progress indicators
 - Sidebars
 - Sliders
 - Tab bars
@@ -777,7 +776,7 @@
 - The Workflow
 - test-install-openclaw-registration.sh
 - 🚀 Advanced Capabilities
-- tailwind.config.ts
+- infrastruktur-pohon.tsx
 - XR Immersive Developer Agent Personality
 - XR Interface Architect Agent Personality
 - China Labor Law Compliance
@@ -793,7 +792,7 @@
 - Managing accounts
 - Managing notifications
 - Pop-up buttons
-- Feedback
+- balance-sheet.ts
 - Pull-down buttons
 - Searching
 - Snippets
@@ -824,7 +823,7 @@
 - ⚡ Quick Start
 - check-tools.sh
 - 🔄 Your Workflow Process
-- owner-kpi-cards.tsx
+- siklus-baru-screen.tsx
 - Onboarding Management
 - Interview Process Design
 - Campus Recruiting
@@ -835,13 +834,13 @@
 - The Four Principles in Detail
 - 四个原则详解
 - graphify
-- 10. Definition of Done
+- logger.ts
 - Branding
 - Collections
 - Color wells
 - iCloud
-- 1. Visi produk
-- 4. Lingkup
+- Validasi blueprint vs Backlog, PRD, dan kode (`main` / v1.12.x)
+- Paid Media Paid Social Strategist Agent
 - 1.0.0 (2026-10-07)
 - Token fields
 - Process
@@ -849,7 +848,7 @@
 - Taint Mode
 - Step 4: Choose Pattern Operators
 - Step 5: Write Taint Rules
-- [1.12.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.11.0...v1.12.0) (2026-10-10)
+- Sheets
 - Definition of Done — Kokonus Farm
 - Pelacakan Agile — Kokonus Farm
 - Timeline sprint — registry
@@ -895,7 +894,7 @@
 - Dock menus
 - Home Screen quick actions
 - Image wells
-- Progress & backlog — Kokonus Farm
+- Notulensi pengujian US4.1
 - Outline views
 - Path controls
 - Web views
@@ -908,11 +907,14 @@
 - Troubleshooting
 - 1.0.0 (2026-10-12)
 - [1.36.0](https://github.com/sapikkk/muhammadsyafiq213510100/releases/tag/v1.36.0) (2026-10-12)
+- Aider Integration
 - [1.13.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.12.0...v1.13.0) (2026-10-10)
 - [1.3.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.2.0...v1.3.0) (2026-10-09)
 - v2-B.1 — Abort gagal total (#96)
 - v2-C.1 — Kapasitas lubang pack (#97)
-- Sprint 2 — Akuntansi, produksi, inventaris
+- Marketing Growth Hacker Agent
+- UX alur — Kokonus Farm
+- XR Cockpit Interaction Specialist Agent Personality
 - sync-agent-skills.sh
 - test-cli-usage.sh
 - test-install-continue-after-failure.sh
@@ -920,7 +922,7 @@
 - 10. Agent Coordination Matrix
 - 13. Risk Management
 - 9. Phase 6 — Operate & Evolve
-- Status bars
+- status-bars.md
 - [1.11.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.10.0...v1.11.0) (2026-10-09)
 - [1.1.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.0.0...v1.1.0) (2026-10-07)
 - [1.22.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.21.0...v1.22.0) (2026-10-10)
@@ -953,7 +955,7 @@
 - test-install-conversion-failure.sh
 - test-install-hermes-destination.sh
 - Designing for iOS
-- Designing for macOS
+- Collaboration and sharing
 - .changeset/README.md
 - link-skills.sh
 - list-skills.sh
@@ -991,18 +993,31 @@
 - prototype-pollution.md
 - _template.md
 - unsafe-functions.md
+- Popovers
+- ensure-coa-akun-baru.js
+- Action sheets
+- Activity views
+- Modality
+- Panels
+- Printing
+- Gyroscope and accelerometer
+- NFC
+- PHASE 6.4 — Security & integrity (draft)
+- [1.27.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.26.0...v1.27.0) (2026-10-10)
+- Deploy Vercel (Kokonus Farm)
+- Designing for iPadOS
 
 ## God Nodes (most connected - your core abstractions)
-1. `Button` - 142 edges
-2. `react` - 121 edges
-3. `requireApiRole()` - 120 edges
-4. `next` - 110 edges
-5. `Input` - 103 edges
-6. `formatRupiah()` - 103 edges
-7. `Communities (117 total, 15 thin omitted)` - 103 edges
-8. `CrudPageLayout()` - 100 edges
-9. `cn()` - 93 edges
-10. `SubmitButton()` - 90 edges
+1. `Button` - 156 edges
+2. `react` - 125 edges
+3. `next` - 123 edges
+4. `requireApiRole()` - 120 edges
+5. `Input` - 109 edges
+6. `formatRupiah()` - 106 edges
+7. `cn()` - 103 edges
+8. `Communities (117 total, 15 thin omitted)` - 103 edges
+9. `CrudPageLayout()` - 94 edges
+10. `useActionToast()` - 91 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Mitigasi yang sudah dilakukan` --references--> `registerPetani()`  [INFERRED]
@@ -1011,59 +1026,59 @@
   docs/uji-blackbox.md → app/actions/register.ts
 - `Pembersihan massal` --references--> `CrudPageLayout()`  [INFERRED]
   docs/skills/kokonus/ui-ringkas/SKILL.md → components/crud-page-layout.tsx
-- `Belum (opsional / backlog skripsi)` --references--> `DataTable()`  [INFERRED]
-  docs/agile/UX-FLOW-PERF-REPORT.md → components/data-table.tsx
-- `Belum (opsional / backlog skripsi)` --references--> `DataTable()`  [INFERRED]
+- `Belum / opsional (bukan blocker deploy)` --references--> `DataTable()`  [INFERRED]
   docs/skills/myskill/skill.md → components/data-table.tsx
+- `Acceptance criteria (PRD US2.2)` --references--> `JurnalActions()`  [INFERRED]
+  docs/uji-blackbox.md → components/jurnal-actions.tsx
 
 ## Import Cycles
 - 3-file cycle: `lib/hpp-override.ts -> lib/laporan-panen.ts -> lib/hpp.ts -> lib/hpp-override.ts`
 
-## Communities (1020 total, 137 thin omitted)
+## Communities (1036 total, 138 thin omitted)
 
 ### Community 0 - "lib/biaya.ts"
 Cohesion: 0.21
-Nodes (16): GET, handleError(), POST, allocateOverheadForSiklus(), BiayaError, createOverhead(), listrikBulanLahan(), nol (+8 more)
+Nodes (17): assertAdmin(), simpanBiayaLangsung(), simpanListrikLahan(), simpanOverhead(), allocateOverheadForSiklus(), BiayaError, createOverhead(), listrikBulanLahan() (+9 more)
 
 ### Community 1 - "lib/active-pack.ts"
-Cohesion: 0.07
-Nodes (46): FormState, pakaiActivePackAdmin(), pakaiActivePackForm(), pakaiActivePackPetani(), requirePack(), simpanActivePack(), simpanActivePackAdmin(), simpanActivePackPetani() (+38 more)
+Cohesion: 0.09
+Nodes (43): FormState, pakaiActivePackAdmin(), pakaiActivePackForm(), pakaiActivePackPetani(), requirePack(), simpanActivePack(), simpanActivePackAdmin(), simpanActivePackPetani() (+35 more)
 
 ### Community 2 - "lib/infrastruktur.ts"
-Cohesion: 0.15
-Nodes (33): FormState, requireAdmin(), revalidate(), simpanGreenhouse(), simpanKolam(), simpanLahan(), toState(), ubahStatusKolam() (+25 more)
+Cohesion: 0.17
+Nodes (30): FormState, requireAdmin(), revalidate(), simpanGreenhouse(), simpanKolam(), simpanLahan(), toState(), ubahStatusKolam() (+22 more)
 
 ### Community 3 - "Communities (117 total, 15 thin omitted)"
 Cohesion: 0.02
 Nodes (103): Communities (117 total, 15 thin omitted), Community 0 - "laporan-panen.ts", Community 10 - "lib/inventaris.ts", Community 115 - "Dokumentasi API", Community 11 - "Rencana Sprint & Backlog Agile — Kokonus Farm", Community 12 - "Notulensi 2026-10-09 — backlog, Graphify, US4.5, US2.4", Community 134 - "Varietas & harga retail (kisaran)", Community 136 - "scripts" (+95 more)
 
 ### Community 4 - "lib/varietas.ts"
-Cohesion: 0.11
-Nodes (32): FormState, rawFromForm(), requireWrite(), revalidateVarietas(), simpanVarietas(), toState(), ubahStatusVarietas(), basePath (+24 more)
+Cohesion: 0.15
+Nodes (31): FormState, rawFromForm(), requireWrite(), revalidateVarietas(), simpanVarietas(), toState(), ubahStatusVarietas(), GET (+23 more)
 
 ### Community 5 - "owner/page.tsx"
-Cohesion: 0.12
-Nodes (46): AdminPage(), dynamic, formatter, MONITOR_KOSONG_ADMIN, dynamic, MONITOR_KOSONG_OWNER, OwnerPage(), PengaturanPage() (+38 more)
+Cohesion: 0.09
+Nodes (57): AdminPage(), dynamic, formatter, MONITOR_KOSONG_ADMIN, dynamic, MONITOR_KOSONG_OWNER, OwnerPage(), dynamic (+49 more)
 
 ### Community 6 - "8. Product backlog bernomor"
-Cohesion: 0.22
-Nodes (9): 8.2 Arsitektur (halaman Architecture), 8. Product backlog bernomor, EPIC-1 — Core Framework & Authentication, EPIC-2 — Akuntansi Double-Entry & HPP, EPIC-3 — Produksi, EPIC-4 — Inventaris & infrastruktur, EPIC-5 — Penjualan & pengiriman, EPIC-6 — Dashboard, visualisasi, ekspor (+1 more)
+Cohesion: 0.15
+Nodes (13): `/api/petani` (US4.5, master Petani ERD), 8.2 Arsitektur (halaman Architecture), 8. Product backlog bernomor, EPIC-1 — Core Framework & Authentication, EPIC-2 — Akuntansi Double-Entry & HPP, EPIC-3 — Produksi, EPIC-4 — Inventaris & infrastruktur, EPIC-5 — Penjualan & pengiriman (+5 more)
 
-### Community 7 - "isRoleAllowed"
-Cohesion: 0.03
-Nodes (99): FormState, ApproveState, ChangeState, rejectPasswordReset(), RequestState, requireAdmin(), PenyusutanFormState, updatePeriodeTutupAction() (+91 more)
+### Community 7 - "next"
+Cohesion: 0.04
+Nodes (90): FormState, tandaiNotifikasiDibaca(), tandaiSemuaNotifikasiDibaca(), approvePasswordReset(), ApproveState, changePassword(), ChangeState, rejectPasswordReset() (+82 more)
 
 ### Community 8 - "requireApiRole"
-Cohesion: 0.09
-Nodes (67): GET, handleError(), PUT, POST, POST, GET, handleError(), POST (+59 more)
+Cohesion: 0.08
+Nodes (63): AdminPenjualanPage(), dynamic, GET, handleError(), PUT, GET, handleError(), POST (+55 more)
 
 ### Community 9 - "siklus-detail-screen.tsx"
-Cohesion: 0.03
-Nodes (105): AdminBiayaPage(), dynamic, AdminHarvestDetailSheet(), dynamic, HarvestDetailAdminPage(), AdminHarvestPage(), dynamic, AdminPelangganDetailSheet() (+97 more)
+Cohesion: 0.04
+Nodes (115): submitLogKegagalan(), klasifikasiSusut(), AdminBiayaPage(), dynamic, dynamic, HarvestDetailAdminPage(), dynamic, SalesOrderInvoicePage() (+107 more)
 
 ### Community 10 - "CrudPageLayout"
-Cohesion: 0.04
-Nodes (108): AdminActivePackPage(), dynamic, AkunPage(), dynamic, AdminDaftarPetaniPage(), dynamic, AdminInventarisPage(), dynamic (+100 more)
+Cohesion: 0.08
+Nodes (52): AdminDaftarPetaniPage(), dynamic, AdminInventarisPage(), dynamic, AdminStokRendahPage(), dynamic, AdminVarietasPage(), dynamic (+44 more)
 
 ### Community 11 - "Rencana Sprint & Backlog Agile — Kokonus Farm"
 Cohesion: 0.18
@@ -1074,19 +1089,19 @@ Cohesion: 0.05
 Nodes (39): Analisis, Bukti dari log dev server, FINDING-01: Database Prisma Postgres lambat dan pool timeout, FINDING-02: Dev server stale — `/api/auth/session` 404 dan CSS preload 404, Findings lintas US, Gejala, Gejala, Mitigasi (+31 more)
 
 ### Community 13 - "cn"
-Cohesion: 0.03
-Nodes (104): tandaiNotifikasiDibaca(), tandaiSemuaNotifikasiDibaca(), AdminActivePackDetailSheet(), AdminActivePackDetailPage(), dynamic, AdminInventarisDetailSheet(), AdminInventarisDetailPage(), dynamic (+96 more)
+Cohesion: 0.06
+Nodes (46): defaultMonth(), dynamic, LAPORAN_LINKS, OwnerLaporanPage(), parseJenis(), Search, dynamic, PengaturanPage() (+38 more)
 
 ### Community 14 - "@prisma/client"
 Cohesion: 0.03
-Nodes (99): cancelSalesOrderAction(), catatDpSalesOrderAction(), catatPelunasanSalesOrderAction(), confirmSalesOrderAction(), deliverSalesOrderAction(), deliveryRoleOk(), FormState, recordPackingCostAction() (+91 more)
+Nodes (121): FormState, submitSalesOrder(), dynamic, PetaniPengirimanPage(), AKUN_KODE, AkunKode, createJurnal(), isUnderKasTree() (+113 more)
 
 ### Community 15 - "produksi-kapasitas.ts"
-Cohesion: 0.17
-Nodes (18): AdminInfrastrukturPage(), dynamic, dynamic, OwnerInfrastrukturPage(), dec(), listInfrastrukturPohon(), serializeInfrastruktur(), kolamIsiToRecord() (+10 more)
+Cohesion: 0.16
+Nodes (17): AdminInfrastrukturPage(), dynamic, GET, dynamic, OwnerInfrastrukturPage(), dec(), listInfrastrukturPohon(), serializeInfrastruktur() (+9 more)
 
 ### Community 16 - "UX alur — Kokonus Farm"
-Cohesion: 0.33
+Cohesion: 0.40
 Nodes (5): Belum / opsional (bukan blocker deploy), Cakupan halaman (v1.28.0), Sidebar (`lib/nav-flow.ts`, `lib/nav-items.ts`), UX alur — Kokonus Farm, Verifikasi
 
 ### Community 17 - "Notulensi — 2026-10-09"
@@ -1094,84 +1109,80 @@ Cohesion: 0.25
 Nodes (7): Berikutnya, Branch, GitHub Project, Notulensi — 2026-10-09, Pull request, Ringkasan sesi, Uji disarankan
 
 ### Community 18 - "Kokonus Farm — panduan agent"
-Cohesion: 0.08
-Nodes (23): Backlog & pelacakan sprint, Bahasa UI (pengguna 40+), Git commit, Graphify (wajib untuk eksplorasi kode), Humanizer (prosa), Kokonus Farm — panduan agent, Ponytail (implementasi), Skill vendor (Agency, Karpathy, Semgrep, Matt Pocock, Apple HIG) (+15 more)
+Cohesion: 0.09
+Nodes (21): Backlog & pelacakan sprint, Bahasa UI (pengguna 40+), Git commit, Graphify (wajib untuk eksplorasi kode), Humanizer (prosa), Kokonus Farm — panduan agent, Ponytail (implementasi), Skill vendor (Agency, Karpathy, Semgrep, Matt Pocock, Apple HIG) (+13 more)
 
-### Community 19 - "hig-lookup.md"
+### Community 20 - "export-daftar-documents.ts"
 Cohesion: 0.08
-Nodes (6): Best practices, Designing for iPadOS, Best practices, Gyroscope and accelerometer, Platform considerations, Related guidelines
-
-### Community 20 - "server-only"
-Cohesion: 0.07
-Nodes (62): GET, GET, GET, GET, GET, GET, GET, GET (+54 more)
+Nodes (55): GET, GET, GET, GET, GET, GET, GET, GET (+47 more)
 
 ### Community 21 - "Progress & backlog — Kokonus Farm"
 Cohesion: 0.67
 Nodes (3): Backlog terbuka, Progress & backlog — Kokonus Farm, Ringkasan (2026-10-10)
 
 ### Community 22 - "integrations/README.md"
-Cohesion: 0.03
-Nodes (51): Aider Integration, Install, Manual usage, Regenerate, Use an agent, Why an index and not the agents, Activate a Skill, Antigravity Integration (+43 more)
+Cohesion: 0.04
+Nodes (45): Activate a Skill, Antigravity Integration, File Format, Install, Regenerate, Activate an Agent, Agent Directory, Claude Code Integration (+37 more)
 
 ### Community 23 - "formatRupiah"
-Cohesion: 0.05
-Nodes (108): assertAdmin(), simpanBiayaLangsung(), simpanListrikLahan(), simpanOverhead(), catatPenyusutanBulanAction(), PeriodLockState, AdminAkuntansiPage(), dynamic (+100 more)
+Cohesion: 0.07
+Nodes (90): AdminAkuntansiPage(), dynamic, dynamic, JurnalBaruPage(), defaultMonth(), dynamic, KATEGORI_LABEL, OwnerArusKasPage() (+82 more)
 
-### Community 24 - "piutang-penjualan-daftar.tsx"
-Cohesion: 0.23
-Nodes (14): AdminPiutangPage(), dynamic, dynamic, OwnerPiutangPage(), PiutangPenjualanDaftar(), PiutangRingkasanPanel(), loadOwnerDashboardKeuangan(), nol (+6 more)
+### Community 24 - "piutang-penjualan.ts"
+Cohesion: 0.27
+Nodes (11): AdminPiutangPage(), dynamic, dynamic, OwnerPiutangPage(), PiutangPenjualanDaftar(), listPiutangPenjualan(), ringkasanPiutang(), klasifikasiUmurPiutang() (+3 more)
 
 ### Community 25 - "package.json"
 Cohesion: 0.06
-Nodes (30): description, engines, node, prettier, @types/node, typescript, name, overrides (+22 more)
+Nodes (33): description, engines, node, prettier, @types/node, typescript, name, overrides (+25 more)
 
-### Community 26 - "lib/pelanggan.ts"
-Cohesion: 0.24
-Nodes (18): FormState, submitPelanggan(), ubahStatusPelanggan(), GET, handleError(), POST, PUT, createPelanggan() (+10 more)
+### Community 26 - "siklus-produksi.ts"
+Cohesion: 0.09
+Nodes (39): FormState, mulaiSiklusSemai(), pindahFaseSiklus(), FormState, submitTambalSusulan(), GET, handleError(), POST (+31 more)
 
-### Community 27 - "jurnal-detail-view.tsx"
-Cohesion: 0.19
-Nodes (13): AdminJurnalDetailSheet(), AdminJurnalDetailPage(), dynamic, OwnerJurnalDetailSheet(), dynamic, OwnerJurnalDetailPage(), JurnalBarisRow, JurnalDetailScreen() (+5 more)
+### Community 27 - "jurnal-detail-screen.tsx"
+Cohesion: 0.32
+Nodes (8): AdminJurnalDetailSheet(), AdminJurnalDetailPage(), dynamic, OwnerJurnalDetailSheet(), dynamic, OwnerJurnalDetailPage(), JurnalDetailScreen(), getJurnal()
 
 ### Community 28 - "README.md"
-Cohesion: 0.10
-Nodes (10): Checklist singkat PO (centang per sesi), Verifikasi AC — US berisiko (post-close), Sprint 3 — Penjualan & pengiriman (rencana), Sprint 4 — Dashboard, visualisasi, ekspor (rencana), Blueprint akuntansi & logistik (post-MVP), FINDING-01 (pindah), Data demo (pindah), atau: rsync -a docs/skills/openaccountant/ .agents/skills/ (+2 more)
+Cohesion: 0.09
+Nodes (11): Checklist singkat PO (centang per sesi), Verifikasi AC — US berisiko (post-close), Sprint 3 — Penjualan & pengiriman (rencana), Sprint 4 — Dashboard, visualisasi, ekspor (rencana), Blueprint akuntansi & logistik (post-MVP), FINDING-01 (pindah), Data demo (pindah), atau: rsync -a docs/skills/openaccountant/ .agents/skills/ (+3 more)
 
 ### Community 29 - "9. Alur pengguna end-to-end dan kriteria penerimaan"
 Cohesion: 0.08
 Nodes (25): 9. Alur pengguna end-to-end dan kriteria penerimaan, F10 — Pindah fase (HP), F11 — Catat kegagalan, F12 — Panen & harvest report, F13 — HPP & susut, F14 — Jurnal pembelian & COA, F15 — Active Pack, F16 — Movement stok (+17 more)
 
 ### Community 30 - "Game controls"
-Cohesion: 0.29
-Nodes (7): Change log, Game controls, Keyboards, Physical controllers, Platform considerations, Related guidelines, Touch controls
+Cohesion: 0.08
+Nodes (19): Best practices, Designing for macOS, Best practices, Feedback, Platform considerations, Related guidelines, Change log, Game controls (+11 more)
 
 ### Community 31 - "strip-crud-page-prose.py"
 Cohesion: 0.21
 Nodes (4): find_matching_brace(), main(), remove_prop(), strip_crud_header()
 
 ### Community 32 - "dashboard-monitor-kolam.tsx"
-Cohesion: 0.23
-Nodes (15): buatKolomAgregat(), buatKolomLog(), DashboardMonitorKolam(), fmtAngka(), ModeLihat, Tampilan, fmtDelta(), labelTrend() (+7 more)
+Cohesion: 0.26
+Nodes (14): buatKolomAgregat(), buatKolomLog(), DashboardMonitorKolam(), fmtAngka(), ModeLihat, Tampilan, fmtDelta(), labelTrend() (+6 more)
 
-### Community 33 - "chart-card.tsx"
-Cohesion: 0.30
-Nodes (7): Props, ChartPayload, CHART_FILL, CHART_PRIMARY, CHART_SECONDARY, CHART_TERTIARY, recharts
+### Community 33 - "ChartCard"
+Cohesion: 0.18
+Nodes (17): CashFlowSummaryChart(), ChartCard(), FinanceHubCharts(), Props, ChartPayload, OwnerCostPie(), PiutangRingkasanPanel(), CHART_FILL (+9 more)
 
 ### Community 34 - "Paid Media Ad Creative Strategist Agent"
 Cohesion: 0.25
 Nodes (7): Core Capabilities, Decision Framework, Identity & Role Definition, Paid Media Ad Creative Strategist Agent, Specialized Skills, Success Metrics, Tooling & Automation
 
 ### Community 35 - "smart-jurnal-form.tsx"
-Cohesion: 0.06
-Nodes (48): dynamic, JurnalBaruPage(), AdminJurnalBaruSheet(), dynamic, OwnerJurnalKoreksiPage(), dynamic, OwnerPrivePage(), CatatUangFormBlock() (+40 more)
+Cohesion: 0.10
+Nodes (25): SmartJurnalState, CatatUangPihakFields(), PihakFieldsBody(), InstitusiKeuanganIcon(), Props, sizeFromClassName(), InstitusiKeuanganSelect(), Props (+17 more)
 
 ### Community 36 - "seed.js"
 Cohesion: 0.24
 Nodes (9): akunAnak, akunInduk, seedAkun(), { hash }, main(), prisma, { PrismaClient }, { seedAkun } (+1 more)
 
 ### Community 37 - "agency-agents/README.md"
-Cohesion: 0.04
-Nodes (36): Communication Style, Core Mission, Critical Rules, 🗄️ Database Optimizer, Identity & Memory, Core Capabilities, Decision Framework, Identity & Role Definition (+28 more)
+Cohesion: 0.05
+Nodes (32): Communication Style, Core Mission, Critical Rules, 🗄️ Database Optimizer, Identity & Memory, Activate a Skill, DeepSeek Harness Integration, File Format (+24 more)
 
 ### Community 38 - "install.sh"
 Cohesion: 0.07
@@ -1179,7 +1190,7 @@ Nodes (44): box_bot(), box_row(), box_top(), capacity_warn(), check_integrations
 
 ### Community 39 - "pull-hig.mjs"
 Cohesion: 0.08
-Nodes (46): abstractOf(), ALL_PLATFORMS, cellText(), collapseBlankLines(), coveredPlatformsLine(), crawlSection(), CURATED_FILES, DESIGNING_FOR_COVERAGE (+38 more)
+Nodes (46): abstractOf(), ALL_PLATFORMS, anchorEntries(), anchorMapFor(), collapseBlankLines(), coveredPlatformsLine(), crawlSection(), CURATED_FILES (+38 more)
 
 ### Community 40 - "Skenario narasi UCD & Agile — Kokonus Farm"
 Cohesion: 0.06
@@ -1209,9 +1220,9 @@ Nodes (6): Iteration — actual start (PO 2026-10-09), Kolom, Mapping issue → 
 Cohesion: 0.11
 Nodes (17): aliases, components, hooks, lib, ui, utils, iconLibrary, rsc (+9 more)
 
-### Community 47 - "lib/smart-jurnal.ts"
-Cohesion: 0.09
-Nodes (39): FormState, simpanPetaniMaster(), ubahStatusPetaniMaster(), handleError(), POST, PUT, enrichSmartJurnalRawWithPihak(), ensurePetaniBaru() (+31 more)
+### Community 47 - "catat-uang-pihak.ts"
+Cohesion: 0.08
+Nodes (52): createOwnerUser(), OwnerUserState, requireOwnerId(), resetOwnerUserPassword(), ubahStatusOwnerUser(), FormState, submitPelanggan(), ubahStatusPelanggan() (+44 more)
 
 ### Community 48 - "check-hermes-config-rewrite.py"
 Cohesion: 0.27
@@ -1226,8 +1237,8 @@ Cohesion: 0.11
 Nodes (17): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+9 more)
 
 ### Community 51 - "Paid Media PPC Campaign Strategist Agent"
-Cohesion: 0.25
-Nodes (7): Core Capabilities, Decision Framework, Identity & Role Definition, Paid Media PPC Campaign Strategist Agent, Specialized Skills, Success Metrics, Tooling & Automation
+Cohesion: 0.12
+Nodes (13): Core Capabilities, Decision Framework, Identity & Role Definition, Marketing Content Creator Agent, Specialized Skills, Success Metrics, Core Capabilities, Decision Framework (+5 more)
 
 ### Community 52 - "ATS Validator Architect"
 Cohesion: 0.04
@@ -1269,29 +1280,29 @@ Nodes (9): build(), collect_agents(), division_dirs(), init_py(), main(), parse_
 Cohesion: 0.05
 Nodes (38): 1. Ask scope, 2. Copy the hook script, 3. Add hook to settings, 4. Ask about customization, 5. Verify, Setup Git Guardrails, Steps, What Gets Blocked (+30 more)
 
-### Community 62 - "siklus-produksi.ts"
-Cohesion: 0.07
-Nodes (50): mulaiSiklusSemai(), SiklusBaruLoading(), dynamic, PetaniSiklusBaruPage(), PetaniSiklusBaruInterceptSlot(), SiklusBaruSheetFallback(), SiklusAsumsiPanel(), VarietasMeta (+42 more)
+### Community 62 - "siklus-form.tsx"
+Cohesion: 0.15
+Nodes (26): SiklusAsumsiPanel(), VarietasMeta, KolamOpt, PackOpt, SiklusForm(), VarietasOpt, BIJI_PER_GRAM_KISARAN, estimasiGramBenih() (+18 more)
 
 ### Community 64 - "Civil Engineer Agent"
 Cohesion: 0.05
 Nodes (41): Advanced Analysis, 🚀 Advanced Capabilities, Asia, Australia & New Zealand, BIM Coordination Checklist, Building Code Compliance, Civil Engineer Agent, Code Compliance (+33 more)
 
-### Community 66 - "react"
-Cohesion: 0.05
-Nodes (143): approvePasswordReset(), changePassword(), requestPasswordReset(), changeOwnPassword(), currentUserId(), PasswordState, ProfileState, updateProfile() (+135 more)
+### Community 66 - "Input"
+Cohesion: 0.06
+Nodes (105): requestPasswordReset(), createRekeningKasAction(), RekeningKasFormState, cancelSalesOrderAction(), catatDpSalesOrderAction(), catatPelunasanSalesOrderAction(), confirmSalesOrderAction(), deliverSalesOrderAction() (+97 more)
 
 ### Community 67 - "lib/inventaris.ts"
-Cohesion: 0.08
-Nodes (51): catatPergerakanAdmin(), catatPergerakanForm(), catatPergerakanPetani(), FormState, requireAdmin(), requireMovement(), revalidateInventarisPaths(), simpanItemInventaris() (+43 more)
+Cohesion: 0.14
+Nodes (32): catatPergerakanAdmin(), catatPergerakanForm(), catatPergerakanPetani(), FormState, requireAdmin(), requireMovement(), revalidateInventarisPaths(), simpanItemInventaris() (+24 more)
 
-### Community 68 - "prisma"
-Cohesion: 0.08
-Nodes (52): adminId(), ajukanJurnalAction(), balikJurnalAction(), barisDariForm(), bukanAdmin, JurnalFormState, ownerId(), putuskan() (+44 more)
+### Community 68 - "prisma.ts"
+Cohesion: 0.04
+Nodes (79): adminId(), balikJurnalAction(), barisDariForm(), bukanAdmin, JurnalFormState, ownerId(), simpanJurnal(), simpanJurnalKoreksiOwner() (+71 more)
 
 ### Community 69 - "laporan-panen.ts"
-Cohesion: 0.04
-Nodes (85): submitHarvestReport(), FormState, submitLogKegagalan(), 2026-10-10 — v2-A.3 panen WIP (#114), 2026-10-10 — v2-A.3 panen WIP (#114), calculateHPP(), applyHppOverride(), BIAYA_PLASTIK_PER_PACK (+77 more)
+Cohesion: 0.05
+Nodes (71): FormState, submitHarvestReport(), AdminHarvestPage(), dynamic, 2026-10-10 — v2-A.3 panen WIP (#114), 1. Jawaban pertanyaan terbuka (§11 blueprint), 2. Matriks gap (blueprint → repo saat ini), 3. Yang sudah selaras (jangan buang) (+63 more)
 
 ### Community 70 - "Baseline — before global audit (PHASE 0)"
 Cohesion: 0.33
@@ -1338,16 +1349,16 @@ Cohesion: 0.05
 Nodes (37): 1. Scene Architecture Design, 2. Signal Architecture, 3. Component Decomposition, 4. Static Typing Audit, 5. Autoload Hygiene, 6. Testing in Isolation, 🚀 Advanced Capabilities, Advanced Scene Architecture Patterns (+29 more)
 
 ### Community 81 - "monitor-kolam-query.ts"
-Cohesion: 0.11
-Nodes (25): ChartSkeleton(), PetaniMonitorChartInner, PetaniMonitorChartLazy(), agregatMonitor(), kunciPeriode(), labelPeriode(), mulaiMingguIso(), rata() (+17 more)
+Cohesion: 0.09
+Nodes (33): GET, GET, ChartSkeleton(), PetaniMonitorChartInner, PetaniMonitorChartLazy(), agregatMonitor(), kunciPeriode(), labelPeriode() (+25 more)
 
-### Community 82 - "Notulensi pengujian US1.6"
-Cohesion: 0.33
-Nodes (6): Acceptance criteria, Definition of Done, Keputusan desain yang mengikat, Langkah uji blackbox, Notulensi pengujian US1.6, Temuan
+### Community 82 - "sales-order-detail-layout.tsx"
+Cohesion: 0.10
+Nodes (26): dynamic, JurnalPage(), GET, dynamic, OwnerJurnalPage(), JurnalDaftar(), JurnalDaftarRow, JurnalListFilter() (+18 more)
 
-### Community 84 - "Agent runbook — global audit (Kokonus Farm)"
-Cohesion: 0.08
-Nodes (18): E2E (opsional, butuh Postgres + seed), Hasil terakhir (agent), Manual singkat, Otomatis (CI + lokal), Phase 7 — verifikasi (checklist), Agent runbook — global audit (Kokonus Farm), Checklist per halaman, Cursor / jaringan (proxy) (+10 more)
+### Community 84 - "audit/README.md"
+Cohesion: 0.12
+Nodes (10): E2E (opsional, butuh Postgres + seed), Hasil terakhir (agent), Manual singkat, Otomatis (CI + lokal), Phase 7 — verifikasi (checklist), Gate otomatis (harus hijau), Merge readiness — branch audit, Sebelum merge (PO / dev) (+2 more)
 
 ### Community 85 - "Image Prompt Engineer Agent"
 Cohesion: 0.05
@@ -1382,16 +1393,16 @@ Cohesion: 0.20
 Nodes (3): load_module(), main(), RecordingContext
 
 ### Community 93 - "PRD Agile — Kokonus Farm"
-Cohesion: 0.15
-Nodes (13): 11. API (kerangka, target sprint), 12. Matriks RBAC (kerangka, nama peran Kokonus), 13. Risiko (dari register kerangka, konteks Kokonus), 14. Uji kesiapan (Sprint 5), 15. Glosarium singkat, 16. Out of scope / later (ulang operasional), 17. Cara pakai backlog, 2. Tujuan (+5 more)
+Cohesion: 0.07
+Nodes (28): 10. Definition of Done, 11. API (kerangka, target sprint), 12. Matriks RBAC (kerangka, nama peran Kokonus), 13. Risiko (dari register kerangka, konteks Kokonus), 14. Uji kesiapan (Sprint 5), 15. Glosarium singkat, 16. Out of scope / later (ulang operasional), 17. Cara pakai backlog (+20 more)
 
 ### Community 94 - "🧠 Organizational Psychologist Agent"
 Cohesion: 0.06
 Nodes (34): Burnout Diagnosis & Prevention, Burnout Prevention Interventions, Burnout Risk Assessment (Team-Level), Common Cognitive Biases in Teams, Competing Values Framework (Quinn & Rohrbaugh), Core Competencies, 🚨 Critical Rules You Must Follow, Culture Assessment Protocol (+26 more)
 
 ### Community 95 - "Catatan uji blackbox Kokonus Farm"
-Cohesion: 0.08
-Nodes (25): Acceptance criteria (F10 / US3.2), Acceptance criteria (F6 / PRD), Acceptance criteria (F7 / PRD), Acceptance criteria (PRD US4.1 + F16), Akun demo, Alur kerja per user story, Cara membaca, Catatan uji blackbox Kokonus Farm (+17 more)
+Cohesion: 0.06
+Nodes (31): Acceptance criteria, Acceptance criteria (F10 / US3.2), Acceptance criteria (F6 / PRD), Acceptance criteria (F7 / PRD), Acceptance criteria (PRD US2.2), Akun demo, Alur kerja per user story, Cara membaca (+23 more)
 
 ### Community 96 - "🔁 Your Workflow"
 Cohesion: 0.06
@@ -1414,8 +1425,8 @@ Cohesion: 0.06
 Nodes (33): 10. Purpose Over Busy Work, 11. Impact Positioning — Outputs Go Where They Work, 1. The Filter — What Gets to the Boss, 2. Process Ownership — Consistency Is the Deliverable, 3. Cascading Updates — The Document Dependency Graph, 4. Output Routing — The Right Place, Ready to Use, 5. Never Take the Boss's Position, 6. Remember. Never Repeat. (+25 more)
 
 ### Community 101 - "app-sidebar.tsx"
-Cohesion: 0.18
-Nodes (21): AppSidebar(), AppSidebarUsers(), getAuditNavItems(), isNavActive(), NavFlowGroup(), NavLink(), pickActiveNavKey(), getNavFlowGroups() (+13 more)
+Cohesion: 0.12
+Nodes (30): AppSidebar(), AppSidebarUsers(), getAuditNavItems(), isNavActive(), NavFlowGroup(), NavLink(), pickActiveNavKey(), FinanceModuleNav() (+22 more)
 
 ### Community 102 - "Agent Personality"
 Cohesion: 0.06
@@ -1445,9 +1456,9 @@ Nodes (33): 🚀 Advanced Capabilities, Agent Identity Infrastructure, Agent Ide
 Cohesion: 0.05
 Nodes (37): 🚀 Advanced Pipeline Capabilities, AgentsOrchestrator Agent Personality, Autonomous Operation, 🤖 Available Specialist Agents, Completion Summary Template, Context-Aware Agent Spawning, 🚨 Critical Rules You Must Follow, 🎨 Design & UX Agents (+29 more)
 
-### Community 109 - "sync-agile-progress.mjs"
-Cohesion: 0.14
-Nodes (13): __dirname, fieldsFromNodes(), ghGraphql(), main(), OUT, ROOT, timelineDetail(), plugin (+5 more)
+### Community 109 - "project-hub-content.ts"
+Cohesion: 0.09
+Nodes (21): HUB_TABS, HubDocEntry, HubTab, HubTabId, loadDoc(), LoadedHubDoc, loadProjectHubContent(), ProjectHubPayload (+13 more)
 
 ### Community 110 - "💼 Chief Financial Officer Agent"
 Cohesion: 0.06
@@ -1470,8 +1481,8 @@ Cohesion: 0.06
 Nodes (31): 🚀 Advanced Capabilities, Change Impact — Full Pipeline, Change-Impact Propagation (depth semantics fixed), Contradiction Detection (Cypher), 🧩 Core Competencies, 🚨 Critical Rules You Must Follow, Entity & Relationship Extraction (Langchain structured output), Fallback Strategy (+23 more)
 
 ### Community 115 - "Dokumentasi API"
-Cohesion: 0.12
-Nodes (17): `/api/accounts` (US2.1, bagan akun), `/api/biaya/langsung` · `/api/biaya/overhead` (US2.4), `/api/harvest` (US3.3, laporan panen), `/api/infrastructure/lahan` · `/greenhouse` · `/kolam`, `/api/infrastructure` (US4.4, pohon lahan → greenhouse → kolam), `/api/inventory/alert` (US4.3, stok di bawah minimum), `/api/inventory` (US4.1, stok bahan), `/api/jurnal/smart` (v2-F.4, Smart Jurnal — 17 tipe) (+9 more)
+Cohesion: 0.09
+Nodes (24): jumlah(), `/api/accounts` (US2.1, bagan akun), `/api/biaya/langsung` · `/api/biaya/overhead` (US2.4), `/api/harvest` (US3.3, laporan panen), `/api/infrastructure/lahan` · `/greenhouse` · `/kolam`, `/api/infrastructure` (US4.4, pohon lahan → greenhouse → kolam), `/api/inventory/active-pack` (US4.2), `/api/inventory/alert` (US4.3, stok di bawah minimum) (+16 more)
 
 ### Community 116 - "re"
 Cohesion: 0.39
@@ -1567,7 +1578,7 @@ Nodes (29): 🚀 Advanced Capabilities, ArchitectUX Agent Personality, Bridge PM
 
 ### Community 139 - "skill.md"
 Cohesion: 0.02
-Nodes (85): Panduan deploy (pindah), [1.10.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.9.0...v1.10.0) (2026-10-09), [1.11.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.10.0...v1.11.0) (2026-10-09), [1.14.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.13.0...v1.14.0) (2026-10-10), [1.16.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.15.0...v1.16.0) (2026-10-10), [1.17.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.16.0...v1.17.0) (2026-10-10), [1.18.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.17.0...v1.18.0) (2026-10-10), [1.19.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.18.0...v1.19.0) (2026-10-10) (+77 more)
+Nodes (90): Panduan deploy (pindah), [1.10.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.9.0...v1.10.0) (2026-10-09), [1.11.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.10.0...v1.11.0) (2026-10-09), [1.12.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.11.0...v1.12.0) (2026-10-10), [1.14.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.13.0...v1.14.0) (2026-10-10), [1.16.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.15.0...v1.16.0) (2026-10-10), [1.17.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.16.0...v1.17.0) (2026-10-10), [1.18.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.17.0...v1.18.0) (2026-10-10) (+82 more)
 
 ### Community 140 - "or"
 Cohesion: 0.07
@@ -1618,15 +1629,15 @@ Cohesion: 0.07
 Nodes (29): Accessibility Audit Report Template, Accessibility Auditor Agent Personality, 🚀 Advanced Capabilities, Audit Against WCAG Standards, Catch What Automation Misses, 🚨 Critical Rules You Must Follow, Cross-Agent Collaboration, Design System Accessibility (+21 more)
 
 ### Community 152 - "lib/akun.ts"
-Cohesion: 0.19
-Nodes (23): AkunFormState, formToRecord(), requireAdmin(), saveAkun(), toggleAkun(), GET, handleError(), POST (+15 more)
+Cohesion: 0.13
+Nodes (31): AkunFormState, formToRecord(), requireAdmin(), saveAkun(), toggleAkun(), AkunPage(), dynamic, GET (+23 more)
 
 ### Community 153 - "Steps"
 Cohesion: 0.07
 Nodes (24): Definition of done, The loop lens, The workspace, Vocabulary, In Progress, 1. Detect the environment, 2. Install dependency-cruiser, 3. Write the config (+16 more)
 
 ### Community 154 - "Skill: Akuntansi Hidroponik Greenhouse"
-Cohesion: 0.29
+Cohesion: 0.25
 Nodes (7): Batasan, Cara Kerja Saat Dipakai, Pemetaan Jurnal Baku, Prinsip Inti, Rumus Penting, Skill: Akuntansi Hidroponik Greenhouse, Smart Jurnal
 
 ### Community 155 - "sprint5-usability.spec.ts"
@@ -1634,8 +1645,8 @@ Cohesion: 0.13
 Nodes (5): loginAdmin(), loginAs(), loginOwner(), root, @playwright/test
 
 ### Community 156 - "lib/rekening-kas.ts"
-Cohesion: 0.12
-Nodes (27): createRekeningKasAction(), RekeningKasFormState, dynamic, OwnerRekeningPage(), BANKS, byKode, DAFTAR_INSTITUSI_KEUANGAN, EWALLETS (+19 more)
+Cohesion: 0.08
+Nodes (39): OwnerJurnalLayout(), dynamic, OwnerKeuanganPage(), dynamic, OwnerPrivePage(), dynamic, OwnerRekeningPage(), ListWithDetailSlotLayout() (+31 more)
 
 ### Community 157 - "Data Engineer Agent"
 Cohesion: 0.07
@@ -1681,9 +1692,9 @@ Nodes (7): Acceptance criteria (PRD US2.1), Definition of Done (PRD bagian 10), 
 Cohesion: 0.07
 Nodes (28): 1. Visual Tech Brief, 2. Material Pipeline, 3. Niagara VFX Production, 4. PCG Graph Development, 5. Performance Review, 🚀 Advanced Capabilities, Advanced Niagara Systems, Build UE5 visual systems that deliver AAA fidelity within hardware budgets (+20 more)
 
-### Community 168 - "Paid Media Programmatic & Display Buyer Agent"
-Cohesion: 0.25
-Nodes (7): Core Capabilities, Decision Framework, Identity & Role Definition, Paid Media Programmatic & Display Buyer Agent, Specialized Skills, Success Metrics, Tooling & Automation
+### Community 168 - "DetailSheetFrame"
+Cohesion: 0.12
+Nodes (21): AdminHarvestDetailSheet(), AdminInventarisDetailSheet(), AdminInventarisDetailPage(), dynamic, GET, OwnerInventarisDetailSheet(), dynamic, OwnerInventarisDetailPage() (+13 more)
 
 ### Community 169 - "Notulensi pengujian USX.Y"
 Cohesion: 0.29
@@ -1718,8 +1729,8 @@ Cohesion: 0.07
 Nodes (28): 🚀 Advanced Capabilities, Build the graphd LSP Aggregator, Create Semantic Index Infrastructure, 🚨 Critical Rules You Must Follow, Graph Consistency Requirements, Graph Construction Pipeline, Graph Engineering Excellence, graphd Core Architecture (+20 more)
 
 ### Community 177 - "PRD Agile — Kokonus Farm"
-Cohesion: 0.09
-Nodes (22): 10. Definition of Done, 11. API (kerangka, target sprint), 12. Matriks RBAC (kerangka, nama peran Kokonus), 13. Risiko (dari register kerangka, konteks Kokonus), 14. Uji kesiapan (Sprint 5), 15. Glosarium singkat, 16. Out of scope / later (ulang operasional), 17. Cara pakai backlog (+14 more)
+Cohesion: 0.07
+Nodes (28): 10. Definition of Done, 11. API (kerangka, target sprint), 12. Matriks RBAC (kerangka, nama peran Kokonus), 13. Risiko (dari register kerangka, konteks Kokonus), 14. Uji kesiapan (Sprint 5), 15. Glosarium singkat, 16. Out of scope / later (ulang operasional), 17. Cara pakai backlog (+20 more)
 
 ### Community 178 - "Part 2: Creating Custom Rules"
 Cohesion: 0.07
@@ -1918,16 +1929,16 @@ Cohesion: 0.50
 Nodes (3): semi, singleQuote, trailingComma
 
 ### Community 227 - "Kokonus Farm"
-Cohesion: 0.09
-Nodes (22): POST(), Agent, Graphify, skills domain, Agile — sprint, DoD, audit log, API (ringkas), Audit teknis (RBAC, perf, keamanan), Blueprint v2 (akuntansi & logistik), Deploy & operasi, Dokumentasi & mekanisme kerja (+14 more)
+Cohesion: 0.10
+Nodes (21): Agent, Graphify, skills domain, Agile — sprint, DoD, audit log, API (ringkas), Audit teknis (RBAC, perf, keamanan), Blueprint v2 (akuntansi & logistik), Deploy & operasi, Dokumentasi & mekanisme kerja, Domain & notulensi (+13 more)
 
 ### Community 228 - "Marketing Baidu SEO Specialist"
 Cohesion: 0.07
 Nodes (26): 🚀 Advanced Capabilities, Baidu Algorithm Mastery, Baidu Ecosystem Integration Strategy, Baidu SEM Integration, Baidu SEO Audit Report Template, Baidu-Specific Technical Requirements, Build Comprehensive China Search Visibility, China-Specific Technical SEO (+18 more)
 
-### Community 229 - "Button"
+### Community 229 - "react"
 Cohesion: 0.05
-Nodes (72): AdminError(), ClientApproval(), dynamic, JurnalPage(), AdminPelangganPage(), dynamic, AdminPetaniPage(), dynamic (+64 more)
+Nodes (66): AdminPelangganDetailSheet(), AdminPelangganDetailPage(), dynamic, AdminPelangganPage(), dynamic, AdminPetaniPage(), dynamic, CashFlowMutasiRow (+58 more)
 
 ### Community 230 - "Marketing Bilibili Content Strategist"
 Cohesion: 0.07
@@ -1965,9 +1976,9 @@ Nodes (26): Bid Document Checklist, Bid Document Preparation & Tender Management
 Cohesion: 0.07
 Nodes (26): 🚀 Advanced Capabilities, Check-In Excellence Guide, Complaint Resolution Framework, Concierge Services Guide, 🚨 Critical Rules You Must Follow, Domain Expertise, Guest Feedback & Review Management, 🏨 Hospitality Guest Services Agent (+18 more)
 
-### Community 239 - "api-client.ts"
-Cohesion: 0.38
-Nodes (5): ApiClientError, apiGet(), parseJson(), ApiErrorBody, ApiSuccessBody
+### Community 239 - "varietas-detail.tsx"
+Cohesion: 0.17
+Nodes (13): AdminVarietasDetailSheet(), AdminVarietasDetailPage(), dynamic, OwnerVarietasDetailSheet(), dynamic, OwnerVarietasDetailPage(), PetaniVarietasDetailSheet(), dynamic (+5 more)
 
 ### Community 240 - "🌐 Language Translator"
 Cohesion: 0.07
@@ -2029,9 +2040,9 @@ Nodes (25): 🚀 Advanced Capabilities, Alternative Data Integration, 🚨 Criti
 Cohesion: 0.08
 Nodes (25): 🚀 Advanced Capabilities, 🚨 Critical Rules You Must Follow, Effective Tax Rate Analysis, International Tax Architecture, 🔄 Learning & Memory, Multi-Jurisdictional Compliance, Phase 1 — Tax Position Assessment, Phase 2 — Opportunity Identification (+17 more)
 
-### Community 256 - "DeepSeek Harness Integration"
-Cohesion: 0.29
-Nodes (6): Activate a Skill, DeepSeek Harness Integration, File Format, Install, Regenerate, Skill Roots Scanned by DSH
+### Community 256 - "client-approval.tsx"
+Cohesion: 0.20
+Nodes (11): AdminError(), ClientApproval(), AksesDitolakPage(), OwnerError(), PetaniError(), RecentItem, StateScreen(), Textarea (+3 more)
 
 ### Community 257 - "Marketing Livestream Commerce Coach"
 Cohesion: 0.08
@@ -2049,9 +2060,9 @@ Nodes (25): 🚀 Advanced Capabilities, Business Case Framework, Business Model 
 Cohesion: 0.08
 Nodes (25): 🚀 Advanced Capabilities, Churn Prevention Playbook, 🚨 Critical Rules You Must Follow, CS Platforms & Tools, Customer Health Score Framework, 🌟 Customer Success Manager, Customer Success Metrics, Domain Expertise (+17 more)
 
-### Community 261 - "prisma.ts"
-Cohesion: 0.08
-Nodes (30): Performa (request dedup), Performa (request dedup), akunPersediaanUntukItemKode(), maybeJurnalPenyesuaianPackHabis(), requireAkunPosting(), round2(), selisihPenyesuaianPackHabis(), jurnalStokKeluarInventaris() (+22 more)
+### Community 261 - "lib/monitor-kolam.ts"
+Cohesion: 0.21
+Nodes (13): FormState, submitMonitorKolam(), catatMonitorKolam(), FASE_MONITOR, siklusBolehMonitorKolam(), listMonitorGrafikPetani(), listMonitorGrafikRentang(), mapMonitorRow() (+5 more)
 
 ### Community 262 - "📝 Grant Writer"
 Cohesion: 0.08
@@ -2126,8 +2137,8 @@ Cohesion: 0.08
 Nodes (24): 🚀 Advanced Capabilities, 🚨 Critical Rules You Must Follow, Drive Business Growth and Market Leadership, Executive-Level Strategic Focus, Financial and Risk Management Excellence, Innovation and Technology Leadership, Lead Strategic Portfolio Management and Creative Vision, 🔄 Learning & Memory (+16 more)
 
 ### Community 281 - "Notulensi pengujian US4.2"
-Cohesion: 0.20
-Nodes (10): `/api/inventory/active-pack` (US4.2), `/api/inventory/active-pack` (US4.2), Acceptance criteria (F15 / US4.2), Definition of Done (PRD §10), Keputusan desain yang mengikat, Langkah uji blackbox: API, Langkah uji blackbox: UI, Notulensi pengujian US4.2 (+2 more)
+Cohesion: 0.29
+Nodes (7): Acceptance criteria (F15 / US4.2), Definition of Done (PRD §10), Keputusan desain yang mengikat, Langkah uji blackbox: API, Langkah uji blackbox: UI, Notulensi pengujian US4.2, Temuan
 
 ### Community 282 - "🔄 Change Management Consultant"
 Cohesion: 0.08
@@ -2157,9 +2168,9 @@ Nodes (5): `/api/auth/session`, Belum diukur, Build CI, Halaman daftar (DataTabl
 Cohesion: 0.08
 Nodes (24): 🚀 Advanced Capabilities, Advanced Evaluation Methodologies, Comprehensive Tool Assessment and Selection, Comprehensive Tool Evaluation Framework Example, Cost-Conscious Decision Making, 🚨 Critical Rules You Must Follow, Evidence-Based Evaluation Process, 🔄 Learning & Memory (+16 more)
 
-### Community 290 - "jumlah"
-Cohesion: 0.15
-Nodes (13): jumlah(), `/api/inventory/movement` (US4.1, log pergerakan), `/api/sales-orders` (v2-E.1, DP & pembayaran SO), 8.1 Kamus data operasional (sign-off ERD), 8.1 Kamus data operasional (sign-off ERD), `/api/inventory/movement` (US4.1, log pergerakan), `/api/sales-orders` (v2-E.1, DP & pembayaran SO), Acceptance criteria (Epic 4 / Figma low-stock) (+5 more)
+### Community 290 - "Notulensi pengujian US4.3"
+Cohesion: 0.33
+Nodes (6): Acceptance criteria (Epic 4 / Figma low-stock), Definition of Done (PRD §10), Langkah uji blackbox: API, Langkah uji blackbox: UI, Notulensi pengujian US4.3, Temuan
 
 ### Community 291 - "create-v2-epic-issues.sh"
 Cohesion: 0.67
@@ -2169,9 +2180,9 @@ Nodes (5): add_project(), create_epic(), create_story(), exists_title(), create-
 Cohesion: 0.08
 Nodes (24): 🚀 Advanced Capabilities, Advanced Workflow Optimization Framework Example, Comprehensive Workflow Analysis and Optimization, 🚨 Critical Rules You Must Follow, Cross-Functional Integration and Coordination, Data-Driven Process Improvement, Human-Centered Design Approach, Intelligent Automation and Integration (+16 more)
 
-### Community 293 - "Live-viewing apps"
-Cohesion: 0.29
-Nodes (6): Best practices, Cloud DVR, EPG experience, Live-viewing apps, Platform considerations, Related guidelines
+### Community 293 - "SalesOrderDetailLayout"
+Cohesion: 0.16
+Nodes (11): AdminPenjualanDetailSheet(), AdminPenjualanDetailPage(), dynamic, OwnerPenjualanDetailSheet(), dynamic, OwnerPenjualanDetailPage(), RESERVED, PetaniPengirimanDetailSheet() (+3 more)
 
 ### Community 294 - "seed-kokonus-tahun.js"
 Cohesion: 0.16
@@ -2587,9 +2598,9 @@ Nodes (17): 🚀 Advanced Capabilities, Commitment Planning (quantified, not vib
 Cohesion: 0.11
 Nodes (17): 🚀 Advanced Capabilities, Connectivity & Protocol Depth, 🚨 Critical Rules You Must Follow, Edge Compute & Autonomy, Fleet Health Dashboard (see problems before the truck roll), Fleet Operations at Scale, IoT Fleet Engineer, 🔄 Learning & Memory (+9 more)
 
-### Community 410 - "7. Rencana sprint"
-Cohesion: 0.33
-Nodes (6): 7. Rencana sprint, Sprint 1 — Fondasi & autentikasi (Minggu 1–2) · 34 pts inti, Sprint 2 — Akuntansi, produksi, inventaris (Minggu 3–4) · 55 pts, Sprint 3 — Penjualan & pengiriman (Minggu 5–6) · 34 pts, Sprint 4 — Dashboard & ekspor (Minggu 7–8) · 21 pts, Sprint 5 — QA, usability, go-live (Minggu 9–10) · 13 pts QA
+### Community 410 - "providers.tsx"
+Cohesion: 0.19
+Nodes (11): Error(), inter, metadata, RootLayout(), ChunkLoadRecovery(), isChunkLoadFailure(), tryReloadOnce(), NetworkStatus() (+3 more)
 
 ### Community 411 - "Mobile Release Engineer"
 Cohesion: 0.11
@@ -2648,8 +2659,8 @@ Cohesion: 0.11
 Nodes (17): Adding Rules to Guideline Skills, AGENTS.md, Before Committing, Best Practices for Context Efficiency, Build System, Creating a New Skill, Directory Structure, End-User Installation (+9 more)
 
 ### Community 425 - "Audit UI: 91 halaman × Apple HIG × ui-ringkas × humanizer"
-Cohesion: 0.10
-Nodes (20): PageHeader(), Admin (36 file), Audit UI: 91 halaman × Apple HIG × ui-ringkas × humanizer, Checklist "pas" skill per halaman (self-service), Critical, Delapan prinsip Apple (filter cepat), Halaman representatif (audit mendalam), High (+12 more)
+Cohesion: 0.12
+Nodes (17): Admin (36 file), Audit UI: 91 halaman × Apple HIG × ui-ringkas × humanizer, Checklist "pas" skill per halaman (self-service), Critical, Delapan prinsip Apple (filter cepat), Halaman representatif (audit mendalam), High, Lampiran: daftar file `page.tsx` (+9 more)
 
 ### Community 426 - "Audit log — pelacakan progres (append-only)"
 Cohesion: 0.12
@@ -2660,8 +2671,8 @@ Cohesion: 0.12
 Nodes (17): Admin (akuntansi / inventaris / harvest / SO), Architecture & Diagram, Auth & global, Celah / gap, Dashboard, Evaluasi & laporan, Halaman (35), Inventaris Figma — KOKONUS FARM (+9 more)
 
 ### Community 428 - "Dokumentasi API"
-Cohesion: 0.12
-Nodes (17): `/api/accounts` (US2.1, bagan akun), `/api/biaya/langsung` · `/api/biaya/overhead` (US2.4), `/api/harvest` (US3.3, laporan panen), `/api/infrastructure/lahan` · `/greenhouse` · `/kolam`, `/api/infrastructure` (US4.4, pohon lahan → greenhouse → kolam), `/api/inventory/alert` (US4.3, stok di bawah minimum), `/api/inventory` (US4.1, stok bahan), `/api/jurnal/smart` (v2-F.4, Smart Jurnal — 17 tipe) (+9 more)
+Cohesion: 0.11
+Nodes (18): `/api/accounts` (US2.1, bagan akun), `/api/biaya/langsung` · `/api/biaya/overhead` (US2.4), `/api/harvest` (US3.3, laporan panen), `/api/infrastructure/lahan` · `/greenhouse` · `/kolam`, `/api/infrastructure` (US4.4, pohon lahan → greenhouse → kolam), `/api/inventory/active-pack` (US4.2), `/api/inventory/alert` (US4.3, stok di bawah minimum), `/api/inventory` (US4.1, stok bahan) (+10 more)
 
 ### Community 429 - "🔌 Integrations"
 Cohesion: 0.12
@@ -2708,8 +2719,8 @@ Cohesion: 0.12
 Nodes (16): Acceptance criteria, Acceptance criteria (tasklist), Catatan partial (isi jika menutup sebelum 100% AC), Definition of Done, Definition of Done (PRD bagian 10), DoD checklist (tasklist), Keputusan desain yang mengikat, Langkah uji blackbox (+8 more)
 
 ### Community 440 - "project-hub-gantt-git.ts"
-Cohesion: 0.16
-Nodes (26): HomePage(), loadAgileProgress(), formatGanttCaption(), ganttDayIndex(), GanttLane, GanttModel, GanttRange, GanttSegment (+18 more)
+Cohesion: 0.19
+Nodes (23): formatGanttCaption(), ganttDayIndex(), GanttLane, GanttRange, GanttSegment, ganttSegmentStyle(), ganttSegmentStyleByDay(), ganttUsesDayScale() (+15 more)
 
 ### Community 441 - "seed-keuangan.js"
 Cohesion: 0.24
@@ -2811,13 +2822,13 @@ Nodes (14): Acknowledgments, Capabilities, Creating Custom Rules, Example Prompt
 Cohesion: 0.13
 Nodes (15): Command Injection, Commands, Common Patterns by Vulnerability, Dangerous Functions (Pattern Matching), Hardcoded Secrets (Pattern Matching), Metadata Fields, Path Filtering, Path Traversal (+7 more)
 
-### Community 466 - "next"
-Cohesion: 0.05
-Nodes (50): FormState, submitMonitorKolam(), contentType, size, defaultMonth(), dynamic, LAPORAN_LINKS, OwnerLaporanPage() (+42 more)
+### Community 466 - "Button"
+Cohesion: 0.07
+Nodes (68): ajukanJurnalAction(), putuskan(), setujuiJurnalAction(), tolakJurnalAction(), ActionState, AktifToggleDialog(), AkunRow, AkunToggleDialog() (+60 more)
 
-### Community 467 - "Badge"
-Cohesion: 0.10
-Nodes (41): LoginPage(), AgileProgressDashboard(), ItemsTable(), statusVariant(), TimelineList(), ViewMode, KolamStatusBadge(), HistoriPetaniBarisClient (+33 more)
+### Community 467 - "project-hub.tsx"
+Cohesion: 0.17
+Nodes (31): LoginPage(), HomePage(), AgileProgressDashboard(), ItemsTable(), statusVariant(), TimelineList(), ViewMode, FoundationPanel() (+23 more)
 
 ### Community 468 - "Audit inventory — PHASE 0"
 Cohesion: 0.14
@@ -2863,13 +2874,13 @@ Nodes (13): Browser DOM Manipulation, Direct ResponseWriter Write, Django HttpRe
 Cohesion: 0.27
 Nodes (9): FormState, submitMonitorPertumbuhan(), catatMonitorPertumbuhan(), FASE_MONITOR, KondisiMonitor, kondisiMonitorOptions, MonitorError, MonitorInput (+1 more)
 
-### Community 479 - "7. Rencana sprint"
-Cohesion: 0.33
-Nodes (6): 7. Rencana sprint, Sprint 1 — Fondasi & autentikasi (Minggu 1–2) · 34 pts inti, Sprint 2 — Akuntansi, produksi, inventaris (Minggu 3–4) · 55 pts, Sprint 3 — Penjualan & pengiriman (Minggu 5–6) · 34 pts, Sprint 4 — Dashboard & ekspor (Minggu 7–8) · 21 pts, Sprint 5 — QA, usability, go-live (Minggu 9–10) · 13 pts QA
+### Community 479 - "active-pack-detail.tsx"
+Cohesion: 0.23
+Nodes (11): AdminActivePackDetailSheet(), AdminActivePackDetailPage(), dynamic, PetaniActivePackDetailSheet(), dynamic, PetaniActivePackDetailPage(), ActivePackDetailActions(), ActivePackDetail() (+3 more)
 
-### Community 480 - "Card"
-Cohesion: 0.20
-Nodes (15): GET(), CuacaIkon(), CuacaKosong(), CuacaWidget(), Card, bulatSuhu(), CuacaDashboard, CuacaHari (+7 more)
+### Community 480 - "cuaca.ts"
+Cohesion: 0.24
+Nodes (11): GET(), bulatSuhu(), CuacaDashboard, CuacaHari, CuacaRingkas, deskripsiCuaca(), fetchCuacaDashboard(), fetchCuacaLokal() (+3 more)
 
 ### Community 481 - "Blueprint Akuntansi & Logistik Sistem Hidroponik Greenhouse"
 Cohesion: 0.15
@@ -2956,8 +2967,8 @@ Cohesion: 0.29
 Nodes (7): Community Hubs (Navigation), Corpus Check, Graph Freshness, Graph Report - muhammadsyafiq213510100  (2026-10-09), Import Cycles, Knowledge Gaps, Summary
 
 ### Community 502 - "Daftar `SKILL.md` yang hilang saat hapus `.agents/` (2026-10-10)"
-Cohesion: 0.17
-Nodes (10): A. OpenAccountant / keuangan (restore: `npx skills add openaccountant/skills -y`), B. Skill proyek / Ponytail / UI / antislop (sumber install tidak tercatat di repo), C. `emilkowalski-skills` (nested), D. `finance-skills` (monorepo — banyak path nested), Daftar `SKILL.md` yang hilang saat hapus `.agents/` (2026-10-10), E. Playwright (`@playwright` tools skills), F. `sw-agiledevelopment`, G. Whiteboard (+2 more)
+Cohesion: 0.22
+Nodes (9): A. OpenAccountant / keuangan (restore: `npx skills add openaccountant/skills -y`), B. Skill proyek / Ponytail / UI / antislop (sumber install tidak tercatat di repo), C. `emilkowalski-skills` (nested), D. `finance-skills` (monorepo — banyak path nested), Daftar `SKILL.md` yang hilang saat hapus `.agents/` (2026-10-10), E. Playwright (`@playwright` tools skills), F. `sw-agiledevelopment`, G. Whiteboard (+1 more)
 
 ### Community 503 - "📸 Inclusive Visuals Specialist"
 Cohesion: 0.17
@@ -3124,8 +3135,8 @@ Cohesion: 0.18
 Nodes (11): Animations, Change log, Custom symbols, Design variants, Gradients, Platform considerations, Related guidelines, Rendering modes (+3 more)
 
 ### Community 544 - "renderBlock"
-Cohesion: 0.18
-Nodes (19): anchorEntries(), anchorMapFor(), collectReferences(), githubSlug(), headingLine(), isDroppedPlatformText(), platformGroupLabel(), platformsMentioned() (+11 more)
+Cohesion: 0.20
+Nodes (19): cellText(), collectReferences(), headingLine(), isDroppedBoilerplate(), isDroppedPlatformLabel(), isDroppedPlatformText(), reduceHeading(), renderAside() (+11 more)
 
 ### Community 545 - "Code Security Build Tools"
 Cohesion: 0.18
@@ -3243,17 +3254,17 @@ Nodes (10): 受 Karpathy 启发的 Claude Code 指南, 在 Cursor 中使用, 如
 Cohesion: 0.20
 Nodes (9): AirPlay, Best practices, Black AirPlay icon, Change log, Custom color AirPlay icon, Platform considerations, Referring to AirPlay, Using AirPlay icons (+1 more)
 
-### Community 574 - "sheets.md"
-Cohesion: 0.04
-Nodes (54): Action sheets, Best practices, Mobile (iOS, iPadOS), Platform considerations, Related guidelines, Activity views, Best practices, Platform considerations (+46 more)
+### Community 574 - "Alerts"
+Cohesion: 0.20
+Nodes (10): Alerts, Anatomy, Best practices, Buttons, Change log, Content, Desktop (macOS), Mobile (iOS, iPadOS) (+2 more)
 
 ### Community 575 - "App icons"
 Cohesion: 0.20
 Nodes (10): App icons, Appearances, Change log, Design, Icon shape, Layer design, Platform considerations, Related guidelines (+2 more)
 
-### Community 576 - "app-clips.md"
-Cohesion: 0.11
-Nodes (14): Apple In-App Purchase, Auto-renewable subscriptions, Best practices, Change log, Helping people manage their subscriptions, Making signup effortless, Platform considerations, Providing help (+6 more)
+### Community 576 - "Apple In-App Purchase"
+Cohesion: 0.20
+Nodes (10): Apple In-App Purchase, Auto-renewable subscriptions, Best practices, Change log, Helping people manage their subscriptions, Making signup effortless, Platform considerations, Providing help (+2 more)
 
 ### Community 577 - "Dark Mode"
 Cohesion: 0.20
@@ -3297,7 +3308,7 @@ Nodes (7): CI/CD Integration, GitHub Actions, Installation (CLI), MCP Tools Avai
 
 ### Community 587 - "8. Product backlog bernomor"
 Cohesion: 0.22
-Nodes (9): 8.2 Arsitektur (halaman Architecture), 8. Product backlog bernomor, EPIC-1 — Core Framework & Authentication, EPIC-2 — Akuntansi Double-Entry & HPP, EPIC-3 — Produksi, EPIC-4 — Inventaris & infrastruktur, EPIC-5 — Penjualan & pengiriman, EPIC-6 — Dashboard, visualisasi, ekspor (+1 more)
+Nodes (9): 8.1 Kamus data operasional (sign-off ERD), 8.2 Arsitektur (halaman Architecture), 8. Product backlog bernomor, EPIC-2 — Akuntansi Double-Entry & HPP, EPIC-3 — Produksi, EPIC-4 — Inventaris & infrastruktur, EPIC-5 — Penjualan & pengiriman, EPIC-6 — Dashboard, visualisasi, ekspor (+1 more)
 
 ### Community 588 - "Custom Report"
 Cohesion: 0.22
@@ -3416,12 +3427,12 @@ Cohesion: 0.22
 Nodes (8): Dependency Management, Key Prevention Rules, LLM03: Secure LLM Supply Chain, LoRA Adapter Security, ML Bill of Materials (ML-BOM), Model Verification, Safe Model Loading (Avoid Pickle Exploits), Vendor and Data Source Vetting
 
 ### Community 617 - "Database dev (cloud / Prisma)"
-Cohesion: 0.22
+Cohesion: 0.25
 Nodes (8): Database dev (cloud / Prisma), Default: cloud + pool, Dev harian vs uji cloud, Jangan campur data prod dan dev, Opsional: Postgres lokal, Parameter URL cloud (dev remote), Perintah setelah ganti database, Setup Postgres lokal (macOS, opsional)
 
-### Community 618 - "Agent runbook — global audit (Kokonus Farm)"
-Cohesion: 0.25
-Nodes (8): Agent runbook — global audit (Kokonus Farm), Checklist per halaman, Cursor / jaringan (proxy), Format temuan (`docs/audit/frontend.md` / `backend.md`), Larangan, Per sesi agent (1–3 jam), Sebelum menyentuh kode, Selesai sprint audit
+### Community 618 - "cached-queries.ts"
+Cohesion: 0.05
+Nodes (52): AdminKeuanganPage(), dynamic, AdminLayout(), AksesDitolakLayout(), GantiSandiLayout(), Loading(), NotFound(), OwnerLayout() (+44 more)
 
 ### Community 619 - "Varietas & harga retail (kisaran)"
 Cohesion: 0.25
@@ -3447,9 +3458,9 @@ Nodes (7): Important Notes, Overview, Report Sections, Wilson Tools Used, Withou
 Cohesion: 0.32
 Nodes (6): addDays(), dateOnly(), FASE_CHAIN, { FLOW_PREFIX }, { Prisma }, seedSiklusAktifDanMenunggu()
 
-### Community 625 - "Paid Media Auditor Agent"
-Cohesion: 0.25
-Nodes (7): Core Capabilities, Decision Framework, Identity & Role Definition, Paid Media Auditor Agent, Specialized Skills, Success Metrics, Tooling & Automation
+### Community 625 - "inventaris-stok-rendah.tsx"
+Cohesion: 0.17
+Nodes (11): basePath, Props, TipePergerakan, tipePergerakanLabel, tipePergerakanList, SatuanInventaris, satuanInventarisList, InventarisAlertBannerItem (+3 more)
 
 ### Community 626 - "Notulensi pengujian US1.5"
 Cohesion: 0.33
@@ -3663,9 +3674,9 @@ Nodes (7): Data Validation Before Embedding, Key Prevention Rules, LLM08: Secure
 Cohesion: 0.25
 Nodes (8): Configuration, Output Formats, Part 1: Running Scans, Quick Scan, Scan Specific Paths, .semgrepignore, Suppress False Positives, Using Rulesets
 
-### Community 679 - "BentoSection"
-Cohesion: 0.17
-Nodes (16): AdminFlowDashboard(), BentoSection(), SPAN_LG, DashboardNavGrid(), OwnerFlowDashboard(), PetaniFlowDashboard(), RekeningSaldoBentoSection(), RekeningSaldoWidget() (+8 more)
+### Community 679 - "Rekening kas & bank (Kokonus)"
+Cohesion: 0.29
+Nodes (6): Cuaca beranda, Data, Halaman, Kapan dipakai, Rekening kas & bank (Kokonus), Setelah deploy / reset DB
 
 ### Community 680 - "Konteks proyek — KOKONUS FARM"
 Cohesion: 0.29
@@ -3779,9 +3790,9 @@ Nodes (6): Important Notes, Overview, Wilson Tools Used, Without Wilson, Workflo
 Cohesion: 0.29
 Nodes (7): Define, Empathize (pain dari lapangan & sidang v1), Ideate (modul v2), Prototype (target), Relasi Scrum, Test (rencana), UCD — Increment v2: Akuntansi & logistik (blueprint)
 
-### Community 708 - "Notulensi pengujian US2.2"
-Cohesion: 0.29
-Nodes (7): Acceptance criteria (PRD US2.2), Definition of Done (PRD bagian 10), Keputusan desain yang mengikat, Langkah uji blackbox: API (26 langkah), Langkah uji blackbox: UI, Notulensi pengujian US2.2, Temuan
+### Community 708 - "SalesOrderForm"
+Cohesion: 0.25
+Nodes (10): AdminPenjualanBaruPage(), dynamic, AdminPenjualanBaruInterceptSheet(), SalesOrderCreateSheet(), SalesOrderForm(), onSiklusChange(), updateLine(), listPelanggan() (+2 more)
 
 ### Community 709 - "Architecture Review Checklist"
 Cohesion: 0.29
@@ -3871,8 +3882,8 @@ Nodes (7): Best practices, Change log, Customizing indicators, Mobile (iOS, iPad
 Cohesion: 0.29
 Nodes (7): Best practices, Change log, Desktop (macOS), Mobile (iOS, iPadOS), Pickers, Platform considerations, Related guidelines
 
-### Community 731 - "progress-indicators.md"
-Cohesion: 0.25
+### Community 731 - "Progress indicators"
+Cohesion: 0.29
 Nodes (7): Best practices, Change log, Desktop (macOS), Mobile (iOS, iPadOS), Platform considerations, Progress indicators, Refresh content controls
 
 ### Community 732 - "Sidebars"
@@ -4003,9 +4014,9 @@ Nodes (5): HOME, OPENCLAW_TEST_LOG, OPENCLAW_TEST_MODE, PATH, test-install-openc
 Cohesion: 0.33
 Nodes (6): 🚀 Advanced Capabilities, CI/CD Security Pipeline Design, Dependency & SCA Analysis, Feature Threat Modeling, Multi-File Codebase Scan, Security Regression Testing
 
-### Community 764 - "tailwind.config.ts"
-Cohesion: 0.50
-Nodes (3): tailwindcss, tailwindcss-animate, config
+### Community 764 - "infrastruktur-pohon.tsx"
+Cohesion: 0.22
+Nodes (11): filterPohon(), GhBaris, KolamStatusBadge(), Pohon, KolamStatus, kolamStatusLabel, kolamStatusList, SerializedGreenhouse (+3 more)
 
 ### Community 765 - "XR Immersive Developer Agent Personality"
 Cohesion: 0.33
@@ -4040,7 +4051,7 @@ Cohesion: 0.33
 Nodes (6): Best practices, Change log, Desktop (macOS), Entering data, Platform considerations, Related guidelines
 
 ### Community 773 - "Focus and selection"
-Cohesion: 0.29
+Cohesion: 0.33
 Nodes (6): Best practices, Change log, Focus and selection, Platform considerations, Related guidelines, Tablet (iPadOS)
 
 ### Community 774 - "Images"
@@ -4067,9 +4078,9 @@ Nodes (6): Best practices, Integrating with Focus, Managing notifications, Platf
 Cohesion: 0.33
 Nodes (6): Best practices, Change log, Platform considerations, Pop-up buttons, Related guidelines, Tablet (iPadOS)
 
-### Community 780 - "Feedback"
-Cohesion: 0.50
-Nodes (4): Best practices, Feedback, Platform considerations, Related guidelines
+### Community 780 - "balance-sheet.ts"
+Cohesion: 0.21
+Nodes (9): TipeAkunKey, tipeAkunLabel, tipeAkunList, BalanceRow, nol, TIPE_ORDER, neracaKelompokLabel, neracaUrutanAktivaPasiva (+1 more)
 
 ### Community 781 - "Pull-down buttons"
 Cohesion: 0.33
@@ -4191,6 +4202,10 @@ Nodes (4): bash_array(), canonical(), fail(), check-tools.sh script
 Cohesion: 0.40
 Nodes (5): Phase 1: Automatic Security Scan (always first), Phase 2: Context Assessment, Phase 3: Execution, Phase 4: Report & Follow-up, 🔄 Your Workflow Process
 
+### Community 811 - "siklus-baru-screen.tsx"
+Cohesion: 0.33
+Nodes (7): SiklusBaruLoading(), dynamic, PetaniSiklusBaruPage(), PetaniSiklusBaruInterceptSlot(), SiklusBaruSheetFallback(), SiklusBaruScreen(), loadSiklusBaruContext()
+
 ### Community 812 - "Onboarding Management"
 Cohesion: 0.40
 Nodes (5): Background Checks, Offer Issuance, Onboarding Management, Onboarding SOP, Probation Period Management
@@ -4227,9 +4242,9 @@ Nodes (5): 1. Think Before Coding, 2. Simplicity First, 3. Surgical Changes, 4. 
 Cohesion: 0.40
 Nodes (5): 1. 编码前思考, 2. 简洁优先, 3. 精准修改, 4. 目标驱动执行, 四个原则详解
 
-### Community 822 - "10. Definition of Done"
-Cohesion: 0.67
-Nodes (3): 10. Definition of Done, Sprint, User story (semua WAJIB kecuali yang bertanda PENTING)
+### Community 822 - "logger.ts"
+Cohesion: 0.32
+Nodes (5): Level, levelRank, logger, minLevel(), shouldLog()
 
 ### Community 823 - "Branding"
 Cohesion: 0.40
@@ -4247,13 +4262,13 @@ Nodes (5): Best practices, Color wells, Desktop (macOS), Platform considerations
 Cohesion: 0.40
 Nodes (4): Best practices, Change log, iCloud, Platform considerations
 
-### Community 827 - "1. Visi produk"
-Cohesion: 0.67
-Nodes (3): 1. Visi produk, Misi, Tagline operasional
+### Community 827 - "Validasi blueprint vs Backlog, PRD, dan kode (`main` / v1.12.x)"
+Cohesion: 0.25
+Nodes (8): 1. Jawaban pertanyaan terbuka (§11 blueprint), 2. Matriks gap (blueprint → repo saat ini), 3. Yang sudah selaras (jangan buang), 4. Usulan epic backlog v2 (dari fase §9), 5. Risiko jika langsung coding tanpa fase 1, 6. Checklist §10 blueprint (status), 7. Langkah berikut (PO), Validasi blueprint vs Backlog, PRD, dan kode (`main` / v1.12.x)
 
-### Community 828 - "4. Lingkup"
-Cohesion: 0.67
-Nodes (3): 4. Lingkup, Dalam lingkup, Di luar lingkup (nanti / bukan skripsi)
+### Community 828 - "Paid Media Paid Social Strategist Agent"
+Cohesion: 0.25
+Nodes (7): Core Capabilities, Decision Framework, Identity & Role Definition, Paid Media Paid Social Strategist Agent, Specialized Skills, Success Metrics, Tooling & Automation
 
 ### Community 829 - "1.0.0 (2026-10-07)"
 Cohesion: 0.67
@@ -4283,9 +4298,9 @@ Nodes (5): Basic Pattern Matching, Focus Metavariable, Metavariable Filters, Sco
 Cohesion: 0.40
 Nodes (5): Basic Taint Structure, Step 5: Write Taint Rules, Taint Sanitizer Options, Taint Sink with Focus, Taint Source Options
 
-### Community 836 - "[1.12.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.11.0...v1.12.0) (2026-10-10)"
-Cohesion: 0.67
-Nodes (3): [1.12.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.11.0...v1.12.0) (2026-10-10), Bug Fixes, Features
+### Community 836 - "Sheets"
+Cohesion: 0.25
+Nodes (8): Anatomy, Best practices, Change log, Desktop (macOS), Mobile (iOS, iPadOS), Platform considerations, Related guidelines, Sheets
 
 ### Community 837 - "Definition of Done — Kokonus Farm"
 Cohesion: 0.50
@@ -4467,9 +4482,9 @@ Nodes (4): Best practices, Home Screen quick actions, Platform considerations, R
 Cohesion: 0.50
 Nodes (4): Best practices, Image wells, Platform considerations, Related guidelines
 
-### Community 882 - "Progress & backlog — Kokonus Farm"
-Cohesion: 0.67
-Nodes (3): Backlog terbuka, Progress & backlog — Kokonus Farm, Ringkasan (2026-10-10)
+### Community 882 - "Notulensi pengujian US4.1"
+Cohesion: 0.29
+Nodes (7): Acceptance criteria (PRD US4.1 + F16), Definition of Done (PRD bagian 10), Keputusan desain yang mengikat, Langkah uji blackbox: API, Langkah uji blackbox: UI, Notulensi pengujian US4.1, Temuan
 
 ### Community 883 - "Outline views"
 Cohesion: 0.50
@@ -4519,6 +4534,10 @@ Nodes (3): 1.0.0 (2026-10-12), Bug Fixes, Features
 Cohesion: 0.67
 Nodes (3): [1.36.0](https://github.com/sapikkk/muhammadsyafiq213510100/releases/tag/v1.36.0) (2026-10-12), Bug Fixes, Features
 
+### Community 895 - "Aider Integration"
+Cohesion: 0.29
+Nodes (6): Aider Integration, Install, Manual usage, Regenerate, Use an agent, Why an index and not the agents
+
 ### Community 896 - "[1.13.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.12.0...v1.13.0) (2026-10-10)"
 Cohesion: 0.67
 Nodes (3): [1.13.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.12.0...v1.13.0) (2026-10-10), Bug Fixes, Features
@@ -4535,9 +4554,17 @@ Nodes (3): AC, Catatan, v2-B.1 — Abort gagal total (#96)
 Cohesion: 0.67
 Nodes (3): AC, Rumus, v2-C.1 — Kapasitas lubang pack (#97)
 
-### Community 902 - "Sprint 2 — Akuntansi, produksi, inventaris"
-Cohesion: 0.67
-Nodes (3): Sprint 2 — Akuntansi, produksi, inventaris, Temuan, US2.3 — AC vs implementasi (arsip)
+### Community 900 - "Marketing Growth Hacker Agent"
+Cohesion: 0.29
+Nodes (6): Core Capabilities, Decision Framework, Identity & Role Definition, Marketing Growth Hacker Agent, Specialized Skills, Success Metrics
+
+### Community 901 - "UX alur — Kokonus Farm"
+Cohesion: 0.33
+Nodes (6): Belum / opsional (bukan blocker deploy), Cakupan halaman (v1.28.0), Pola halaman CRUD, Sidebar (`lib/nav-flow.ts`, `lib/nav-items.ts`), UX alur — Kokonus Farm, Verifikasi
+
+### Community 902 - "XR Cockpit Interaction Specialist Agent Personality"
+Cohesion: 0.33
+Nodes (5): Build cockpit-based immersive interfaces for XR users, 🛠️ What You Can Do, XR Cockpit Interaction Specialist Agent Personality, 🎯 Your Core Mission, 🧠 Your Identity & Memory
 
 ### Community 906 - "Recruitment Data Analytics"
 Cohesion: 0.67
@@ -4555,29 +4582,77 @@ Nodes (3): 13.1 Risk Categories and Owners, 13.2 Risk Response Matrix, 13. Risk 
 Cohesion: 0.67
 Nodes (3): 9.1 Active Agents (Ongoing), 9.2 Continuous Improvement Cycle, 9. Phase 6 — Operate & Evolve
 
-### Community 911 - "Status bars"
-Cohesion: 0.67
+### Community 911 - "status-bars.md"
+Cohesion: 0.50
 Nodes (3): Best practices, Platform considerations, Status bars
+
+### Community 968 - "Collaboration and sharing"
+Cohesion: 0.33
+Nodes (5): Best practices, Change log, Collaboration and sharing, Platform considerations, Related guidelines
+
+### Community 1023 - "Popovers"
+Cohesion: 0.33
+Nodes (6): Best practices, Desktop (macOS), Mobile (iOS, iPadOS), Platform considerations, Popovers, Related guidelines
+
+### Community 1024 - "ensure-coa-akun-baru.js"
+Cohesion: 0.40
+Nodes (3): BARU, prisma, { PrismaClient }
+
+### Community 1025 - "Action sheets"
+Cohesion: 0.40
+Nodes (5): Action sheets, Best practices, Mobile (iOS, iPadOS), Platform considerations, Related guidelines
+
+### Community 1026 - "Activity views"
+Cohesion: 0.40
+Nodes (5): Activity views, Best practices, Platform considerations, Related guidelines, Share and action extensions
+
+### Community 1027 - "Modality"
+Cohesion: 0.40
+Nodes (5): Best practices, Change log, Modality, Platform considerations, Related guidelines
+
+### Community 1028 - "Panels"
+Cohesion: 0.40
+Nodes (5): Best practices, HUD-style panels, Panels, Platform considerations, Related guidelines
+
+### Community 1029 - "Printing"
+Cohesion: 0.40
+Nodes (5): Best practices, Desktop (macOS), Platform considerations, Printing, Related guidelines
+
+### Community 1030 - "Gyroscope and accelerometer"
+Cohesion: 0.50
+Nodes (4): Best practices, Gyroscope and accelerometer, Platform considerations, Related guidelines
+
+### Community 1031 - "NFC"
+Cohesion: 0.50
+Nodes (4): Background tag reading, In-app tag reading, NFC, Platform considerations
+
+### Community 1033 - "[1.27.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.26.0...v1.27.0) (2026-10-10)"
+Cohesion: 0.67
+Nodes (3): [1.27.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.26.0...v1.27.0) (2026-10-10), Bug Fixes, Features
+
+### Community 1034 - "Deploy Vercel (Kokonus Farm)"
+Cohesion: 0.67
+Nodes (3): CLI (lokal), Deploy Vercel (Kokonus Farm), Env wajib
 
 ## Knowledge Gaps
 - **36 isolated node(s):** `graphify-mcp`, `next/core-web-vitals`, `prettier`, `@semantic-release/changelog`, `@semantic-release/git` (+31 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 10182 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **137 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 10192 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **138 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Graph Report - muhammadsyafiq213510100  (2026-10-09)` connect `Graph Report - muhammadsyafiq213510100  (2026-10-09)` to `Communities (117 total, 15 thin omitted)`, `isRoleAllowed`, `requireApiRole`, `Audit UI: 91 halaman × Apple HIG × ui-ringkas × humanizer`, `skill.md`?**
-  _High betweenness centrality (0.011) - this node is a cross-community bridge._
+- **Why does `PHASE 6.1 — Frontend audit log` connect `cached-queries.ts` to `Input`, `react`, `requireApiRole`, `siklus-detail-screen.tsx`, `CrudPageLayout`, `skill.md`, `Button`, `lib/akun.ts`, `siklus-produksi.ts`?**
+  _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **Are the 11 inferred relationships involving `requireApiRole()` (e.g. with `Follow-up` and `PHASE 6.2 — Backend / API audit log`) actually correct?**
   _`requireApiRole()` has 11 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `graphify-mcp`, `next/core-web-vitals`, `prettier` to the rest of the system?**
   _36 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `lib/active-pack.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.06848357791754019 - nodes in this community are weakly interconnected._
-- **Why does `Communities (117 total, 15 thin omitted)` connect `Communities (117 total, 15 thin omitted)` to `Graph Report - muhammadsyafiq213510100  (2026-10-09)`?**
-  _High betweenness centrality (0.010) - this node is a cross-community bridge._
+  _Cohesion score 0.0936408106219427 - nodes in this community are weakly interconnected._
+- **Why does `step()` connect `cn` to `Process`, `mattpocock-skills`?**
+  _High betweenness centrality (0.012) - this node is a cross-community bridge._
 - **Should `Communities (117 total, 15 thin omitted)` be split into smaller, more focused modules?**
   _Cohesion score 0.019417475728155338 - nodes in this community are weakly interconnected._
-- **Should `lib/varietas.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.10853658536585366 - nodes in this community are weakly interconnected._
+- **Why does `3. Author the wizard` connect `Process` to `cn`?**
+  _High betweenness centrality (0.012) - this node is a cross-community bridge._

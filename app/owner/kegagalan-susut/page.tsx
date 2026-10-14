@@ -5,7 +5,7 @@ import { OWNER_KEGAGALAN_BAGIAN } from "@/lib/owner-kegagalan-susut";
 
 export const dynamic = "force-dynamic";
 
-type Search = { bagian?: string };
+type Search = { bagian?: string; bulan?: string; dari?: string; sampai?: string };
 
 export default function OwnerKegagalanSusutPage({ searchParams }: { searchParams: Search }) {
   if (!searchParams.bagian) {
@@ -18,7 +18,16 @@ export default function OwnerKegagalanSusutPage({ searchParams }: { searchParams
   return (
     <CrudPageLayout
       title="Kegagalan & susut"
-      list={<KegagalanSusutOwnerPanel bagian={searchParams.bagian} />}
+      list={
+        <KegagalanSusutOwnerPanel
+          bagian={searchParams.bagian}
+          filter={{
+            bulan: searchParams.bulan,
+            dari: searchParams.dari,
+            sampai: searchParams.sampai,
+          }}
+        />
+      }
       listTitle="Data & riwayat"
     />
   );

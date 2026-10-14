@@ -42,14 +42,14 @@ export const TABS_KEGAGALAN: OwnerSectionTab[] = [
 ];
 
 export const TABS_BIAYA: OwnerSectionTab[] = [
-  { id: "langsung", epic: "4.1", label: "Biaya langsung", href: "/owner/biaya" },
-  { id: "umum", epic: "4.2", label: "Biaya umum", href: "/owner/biaya" },
-  { id: "alokasi", epic: "4.3", label: "Alokasi biaya", href: "/owner/biaya" },
-  { id: "kolam", epic: "4.4", label: "Biaya per kolam", href: "/owner/biaya" },
-  { id: "hpp-kg", epic: "4.5", label: "HPP per kg", href: "/owner/evaluasi" },
-  { id: "hpp-lubang", epic: "4.6", label: "HPP per lubang", href: "/owner/evaluasi" },
-  { id: "cek-hpp", epic: "4.7", label: "Cek HPP", href: "/owner/evaluasi" },
-  { id: "hpp-pack", epic: "4.8", label: "HPP per pack", href: "/owner/evaluasi" },
+  { id: "langsung", epic: "4.1", label: "Biaya langsung", href: "/owner/biaya?bagian=langsung" },
+  { id: "umum", epic: "4.2", label: "Biaya umum", href: "/owner/biaya?bagian=umum" },
+  { id: "alokasi", epic: "4.3", label: "Alokasi biaya", href: "/owner/biaya?bagian=alokasi" },
+  { id: "kolam", epic: "4.4", label: "Biaya per kolam", href: "/owner/biaya?bagian=kolam" },
+  { id: "hpp-kg", epic: "4.5", label: "HPP per kg", href: "/owner/biaya?bagian=hpp-kg" },
+  { id: "hpp-lubang", epic: "4.6", label: "HPP per lubang", href: "/owner/biaya?bagian=hpp-lubang" },
+  { id: "cek-hpp", epic: "4.7", label: "Cek HPP", href: "/owner/biaya?bagian=cek-hpp" },
+  { id: "hpp-pack", epic: "4.8", label: "HPP per pack", href: "/owner/biaya?bagian=hpp-pack" },
 ];
 
 export const TABS_PENJUALAN: OwnerSectionTab[] = [
