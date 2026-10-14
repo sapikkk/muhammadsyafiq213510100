@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,48 +22,49 @@ export type MetricCardItem = {
   followUp?: Pick<MetricEmptyAction, "actionLabel" | "href">;
 };
 
-/** Kartu metrik ringkas — grid responsif, tidak mendominasi layar. */
+/** Kartu metrik: mobile 2 kolom, layar lebar satu baris (jumlah kartu = jumlah kolom). */
 export function MetricCards({
   items,
-  columns = 3,
+  columns: _columns = 3,
   variant = "default",
   className,
 }: {
   items: MetricCardItem[];
+  /** @deprecated Grid mengikuti jumlah item; prop diabaikan. */
   columns?: 2 | 3 | 4;
-  /** `compact`: satu baris, padding kecil (infrastruktur / fase tanam). */
+  /** `compact`: padding kecil; otomatis juga jika item ≥ 5. */
   variant?: "default" | "compact";
   className?: string;
 }) {
-  const grid =
-    variant === "compact"
-      ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-[repeat(5,minmax(0,1fr))]"
-      : columns === 4
-        ? "sm:grid-cols-2 lg:grid-cols-4"
-        : columns === 2
-          ? "sm:grid-cols-2"
-          : "sm:grid-cols-2 xl:grid-cols-3";
+  const n = Math.max(1, items.length);
+  const compact = variant === "compact" || n >= 5;
 
-  const cardClass =
-    variant === "compact" ? "flex min-w-0 flex-col px-2.5 py-2 sm:px-3" : "flex flex-col p-4";
+  const cardClass = compact
+    ? "flex min-w-0 flex-col px-2.5 py-2 sm:px-3"
+    : "flex min-w-0 flex-col p-4";
 
-  const valueClass =
-    variant === "compact"
-      ? "mt-0.5 text-base font-semibold tabular-nums tracking-tight text-foreground"
-      : "mt-1.5 text-lg font-semibold tabular-nums tracking-tight text-foreground sm:text-xl";
+  const valueClass = compact
+    ? "mt-0.5 text-base font-semibold tabular-nums tracking-tight text-foreground"
+    : "mt-1.5 text-lg font-semibold tabular-nums tracking-tight text-foreground sm:text-xl";
 
-  const labelClass =
-    variant === "compact"
-      ? "text-[11px] font-medium leading-tight text-muted-foreground"
-      : "text-xs font-medium leading-snug text-muted-foreground";
+  const labelClass = compact
+    ? "text-[11px] font-medium leading-tight text-muted-foreground"
+    : "text-xs font-medium leading-snug text-muted-foreground";
 
-  const hintClass =
-    variant === "compact"
-      ? "mt-0.5 line-clamp-2 text-[10px] leading-snug text-muted-foreground"
-      : "mt-1 line-clamp-2 text-xs text-muted-foreground";
+  const hintClass = compact
+    ? "mt-0.5 line-clamp-2 text-[10px] leading-snug text-muted-foreground"
+    : "mt-1 line-clamp-2 text-xs text-muted-foreground";
 
   return (
-    <div className={cn("grid gap-2", grid, className)}>
+    <div
+      className={cn(
+        "grid gap-2",
+        n === 1 ? "grid-cols-1" : "grid-cols-2",
+        "md:[grid-template-columns:repeat(var(--metric-n),minmax(0,1fr))]",
+        className,
+      )}
+      style={{ "--metric-n": n } as CSSProperties}
+    >
       {items.map((item, i) => (
         <Card
           key={item.id ?? (typeof item.label === "string" ? item.label : `metric-${i}`)}
@@ -77,7 +78,7 @@ export function MetricCards({
                 asChild
                 size="sm"
                 variant="outline"
-                className={cn("mt-auto w-full", variant === "compact" ? "min-h-9 text-xs" : "min-h-11")}
+                className={cn("mt-auto w-full", compact ? "min-h-9 text-xs" : "min-h-11")}
               >
                 <Link href={item.emptyState.href}>{item.emptyState.actionLabel}</Link>
               </Button>
@@ -91,7 +92,7 @@ export function MetricCards({
                   asChild
                   size="sm"
                   variant="outline"
-                  className={cn("mt-2 w-full", variant === "compact" ? "min-h-9 text-xs" : "min-h-11")}
+                  className={cn("mt-2 w-full", compact ? "min-h-9 text-xs" : "min-h-11")}
                 >
                   <Link href={item.followUp.href}>{item.followUp.actionLabel}</Link>
                 </Button>
