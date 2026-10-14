@@ -8,6 +8,7 @@ export default function PetaniVarietasDetailSheet({ params }: { params: { id: st
         id={Number(params.id)}
         listHref="/petani/varietas"
         requireAktif
+        roleView="petani"
         surface="sheet"
       />
     </DetailSheetFrame>

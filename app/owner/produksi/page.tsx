@@ -31,7 +31,7 @@ export default async function OwnerProduksiPage() {
           <SiklusDaftar rows={siklusRows.map(serializeSiklus)} readOnly />
         </>
       }
-      listTitle="Daftar batch"
+      listTitle="Daftar siklus"
     />
   );
 }

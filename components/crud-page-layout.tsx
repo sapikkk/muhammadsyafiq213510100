@@ -17,10 +17,16 @@ export function CrudPageLayout({
   createTitle = UI_COPY.crudCreateTitle,
   createDescription,
   extra,
+  intro,
+  leading,
   financeNavRole,
 }: {
   title: string;
   description?: string;
+  /** Konteks singkat di bawah judul (mis. petani RBAC). */
+  intro?: ReactNode;
+  /** Blok di atas daftar (ringkasan, filter). */
+  leading?: ReactNode;
   /** Tab modul keuangan (Books-style IA, design system Kokonus). */
   financeNavRole?: "ADMIN" | "OWNER";
   actions?: ReactNode;
@@ -44,7 +50,9 @@ export function CrudPageLayout({
           <FinanceModuleNav role={financeNavRole} />
         </Suspense>
       ) : null}
-      <PageHeaderRow title={title} actions={actions} />
+      <PageHeaderRow title={title} description={description} actions={actions} />
+      {intro}
+      {leading}
       {list ? (
         <PageSection title={listTitle} description={listDescription} badge="Read" id="crud-list">
           {list}

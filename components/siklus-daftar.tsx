@@ -75,9 +75,9 @@ export function SiklusDaftar({
       columns={columns}
       data={rows}
       pageSize={12}
-      searchPlaceholder="Cari varietas, lokasi, kode batch…"
-      searchColumnIds={["produksi", "kode_batch", "status"]}
-      emptyMessage="Belum ada siklus produksi."
+      searchPlaceholder="Cari varietas atau lokasi…"
+      searchColumnIds={["produksi", "status"]}
+      emptyMessage="Belum ada siklus tanam."
       getRowHref={readOnly ? undefined : (row) => `/petani/siklus/${row.id}`}
     />
   );

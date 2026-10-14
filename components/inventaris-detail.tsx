@@ -56,7 +56,9 @@ export async function InventarisDetail({
       <PageSection title="Riwayat pergerakan" badge="Read">
         <InventarisRiwayat rows={riwayat.map(serializePergerakan)} hideItemColumn />
       </PageSection>
-      <EntityChangeHistorySection entitas="ItemInventaris" entitasId={id} />
+      {writableMode === "petani" ? null : (
+        <EntityChangeHistorySection entitas="ItemInventaris" entitasId={id} />
+      )}
     </DetailLayout>
   );
 }

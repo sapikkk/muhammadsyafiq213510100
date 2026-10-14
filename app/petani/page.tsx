@@ -1,11 +1,13 @@
+import Link from "next/link";
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { DashboardBentoEmpty } from "@/components/dashboard-bento-empty";
 import { BentoSection, BentoSlot, DashboardBento } from "@/components/dashboard-bento";
 import { DashboardMonitorKolamSection } from "@/components/dashboard-monitor-kolam-section";
 import { MetricCards } from "@/components/metric-cards";
 import { PageHeaderRow } from "@/components/page-header-row";
-import { PetaniFlowDashboard } from "@/components/petani-flow-dashboard";
+import { PetaniAlurPanel } from "@/components/petani-alur-panel";
 import { PetaniTugasPanel } from "@/components/petani-tugas-panel";
+import { Button } from "@/components/ui/button";
 import { alertBannerItems, listAlertStokMinimum } from "@/lib/inventaris";
 import {
   metricLubangTerisi,
@@ -70,13 +72,37 @@ export default async function PetaniPage() {
   const stokRendah = alertBannerItems(stokRendahRaw);
   const stokCount = stokRendahRaw.length;
   const kap = produksi.kapasitas;
+  const tugasUtama = tugas[0];
+  const headerHref = tugasUtama?.href ?? "/petani/siklus/baru";
+  const headerLabel = tugasUtama ? "Kerjakan tugas" : "Mulai semai";
+
+  const metricTugas = {
+    ...metricTugasPetani(tugas.length),
+    ...(tugas.length > 0
+      ? {
+          followUp: {
+            actionLabel: "Lihat daftar tugas",
+            href: "/petani#tugas-hari-ini",
+          },
+        }
+      : {}),
+  };
 
   return (
     <div className="flex flex-col gap-4">
-      <PageHeaderRow title="Beranda" />
+      <PageHeaderRow
+        title="Beranda"
+        actions={
+          <Button type="button" className="h-11" asChild>
+            <Link href={headerHref} scroll={false}>
+              {headerLabel}
+            </Link>
+          </Button>
+        }
+      />
       <DashboardBento>
         <BentoSlot span={6}>
-          <CuacaWidget />
+          <PetaniAlurPanel tugasUtama={tugasUtama} />
         </BentoSlot>
 
         <BentoSlot span={6}>
@@ -92,11 +118,11 @@ export default async function PetaniPage() {
         </BentoSlot>
 
         <BentoSlot span={6}>
-          <BentoSection title="Ringkasan">
+          <BentoSection title="Ringkasan singkat">
             <MetricCards
-              columns={4}
+              columns={2}
               items={[
-                metricTugasPetani(tugas.length),
+                metricTugas,
                 metricStokRendah(stokCount, "/petani"),
                 metricLubangTerisi(kap, "/petani"),
                 metricSiapJual(produksi.siapJualLubang, kap, "/petani"),
@@ -106,7 +132,24 @@ export default async function PetaniPage() {
         </BentoSlot>
 
         <BentoSlot span={6}>
-          <PetaniFlowDashboard stokRendahCount={stokCount} />
+          <CuacaWidget />
+        </BentoSlot>
+
+        <BentoSlot span={6}>
+          <BentoSection title="Tugas dan histori" id="tugas-hari-ini">
+            {tugas.length === 0 && histori.length === 0 ? (
+              <DashboardBentoEmpty
+                message="Belum ada tugas. Ikuti urutan kerja di atas."
+                actionLabel="Buka siklus tanam"
+                href="/petani/siklus"
+              />
+            ) : (
+              <PetaniTugasPanel
+                tugas={tugas}
+                histori={histori.map((h) => ({ ...h, waktu: h.waktu.toISOString() }))}
+              />
+            )}
+          </BentoSection>
         </BentoSlot>
 
         <BentoSlot span={6}>
@@ -130,23 +173,6 @@ export default async function PetaniPage() {
             defaultTglAkhir={monitor.defaultTglAkhir}
             emptyAction={MONITOR_KOSONG_PETANI}
           />
-        </BentoSlot>
-
-        <BentoSlot span={6}>
-          <BentoSection title="Tugas dan histori">
-            {tugas.length === 0 && histori.length === 0 ? (
-              <DashboardBentoEmpty
-                message="Belum ada tugas maupun histori aktivitas."
-                actionLabel="Buka siklus tanam"
-                href="/petani/siklus"
-              />
-            ) : (
-              <PetaniTugasPanel
-                tugas={tugas}
-                histori={histori.map((h) => ({ ...h, waktu: h.waktu.toISOString() }))}
-              />
-            )}
-          </BentoSection>
         </BentoSlot>
       </DashboardBento>
     </div>

@@ -13,6 +13,12 @@ const waktu = new Intl.DateTimeFormat("id-ID", {
   timeZone: "Asia/Jakarta",
 });
 
+const prioritasLabel: Record<TugasPetani["prioritas"], string> = {
+  tinggi: "Penting",
+  sedang: "Biasa",
+  rendah: "Nanti",
+};
+
 function prioritasVariant(p: TugasPetani["prioritas"]) {
   if (p === "tinggi") return "default" as const;
   if (p === "sedang") return "secondary" as const;
@@ -42,7 +48,7 @@ export function PetaniTugasPanel({
         header: "Prioritas",
         cell: ({ row }) => (
           <Badge variant={prioritasVariant(row.original.prioritas)}>
-            {row.original.prioritas}
+            {prioritasLabel[row.original.prioritas]}
           </Badge>
         ),
       },
@@ -99,27 +105,27 @@ export function PetaniTugasPanel({
   );
 
   return (
-    <div className="grid gap-8 lg:grid-cols-2">
-      <section className="space-y-3">
-        <h2 className="text-lg font-semibold">Tugas hari ini</h2>
+    <div className="grid gap-6 lg:grid-cols-2">
+      <section className="space-y-3" aria-label="Daftar tugas">
+        <p className="text-sm font-medium text-muted-foreground">Tugas</p>
         <DataTable
           columns={tugasColumns}
           data={tugas}
           pageSize={8}
           searchPlaceholder="Cari tugas…"
           searchColumnIds={["judul", "deskripsi", "prioritas"]}
-          emptyMessage="Tidak ada tugas terbuka. Siklus aktif sudah up to date."
+          emptyMessage="Tidak ada tugas terbuka."
         />
       </section>
 
-      <section className="space-y-3">
-        <h2 className="text-lg font-semibold">Histori aktivitas</h2>
+      <section className="space-y-3" aria-label="Histori aktivitas">
+        <p className="text-sm font-medium text-muted-foreground">Histori</p>
         <DataTable
           columns={historiColumns}
           data={histori}
           pageSize={8}
-          searchPlaceholder="Cari lokasi, ringkasan, kode batch…"
-          searchColumnIds={["siklus", "siklus_kode", "ringkasan", "jenis"]}
+          searchPlaceholder="Cari lokasi atau ringkasan…"
+          searchColumnIds={["siklus", "ringkasan", "jenis"]}
           emptyMessage="Belum ada log produksi."
         />
       </section>

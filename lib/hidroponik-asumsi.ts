@@ -34,3 +34,9 @@ export function formatAngkaSingkat(n: number, digit = 2): string {
     minimumFractionDigits: 0,
   });
 }
+
+/** Nilai form ke server: titik desimal, tanpa pemisah ribuan. */
+export function formatAngkaMesin(n: number, digit = 3): string {
+  if (!Number.isFinite(n) || n <= 0) return "";
+  return n.toFixed(digit).replace(/\.?0+$/, "") || "0";
+}

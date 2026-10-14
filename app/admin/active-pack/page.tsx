@@ -40,7 +40,7 @@ export default async function AdminActivePackPage() {
         </div>
       }
       list={<ActivePackDaftar rows={packs} mode="admin" />}
-      listTitle="Paket siap pakai"
+      listTitle="Daftar paket"
     />
   );
 }

@@ -15,12 +15,15 @@ export async function VarietasDetail({
   writable = false,
   requireAktif = false,
   surface = "page",
+  roleView = "full",
 }: {
   id: number;
   listHref: string;
   writable?: boolean;
   requireAktif?: boolean;
   surface?: "page" | "sheet";
+  /** Petani: tanpa HPP/harga di header dan tanpa riwayat audit. */
+  roleView?: "full" | "petani";
 }) {
   if (!Number.isInteger(id) || id <= 0) notFound();
 
@@ -28,8 +31,13 @@ export async function VarietasDetail({
   if (!row || (requireAktif && row.status !== "AKTIF")) notFound();
 
   const serialized = serializeVarietas(row);
-  const rata = await rataHppPerLubangVarietas(id);
+  const forPetani = roleView === "petani";
+  const rata = forPetani ? null : await rataHppPerLubangVarietas(id);
   const rataStr = rata ? formatRupiah(rata.toFixed(2)) : "—";
+  const description = forPetani
+    ? `${serialized.jumlahSiklus} siklus tercatat`
+    : `${serialized.jumlahSiklus} siklus tercatat · HPP rata/lubang ${rataStr}`;
+
   return (
     <DetailLayout
       backHref={listHref}
@@ -38,23 +46,29 @@ export async function VarietasDetail({
       badge={
         <Badge variant="outline">{varietasStatusLabel[serialized.status]}</Badge>
       }
-      description={`${serialized.jumlahSiklus} siklus tercatat · HPP rata/lubang ${rataStr}`}
+      description={description}
       actions={writable ? <VarietasDetailActions row={serialized} /> : null}
     >
-      <PageSection title="Parameter" badge="Read">
+      <PageSection title={forPetani ? "Info tanam" : "Parameter"} badge="Read">
         <dl className="grid gap-3 text-sm sm:grid-cols-2">
-          <Item label="Harga benih/gram" value={formatRupiah(serialized.hargaBenihPerGram)} />
+          {forPetani ? null : (
+            <Item label="Harga benih/gram" value={formatRupiah(serialized.hargaBenihPerGram)} />
+          )}
           <Item label="Biji per gram" value={serialized.bijiPerGram} />
           <Item label="Daya kecambah" value={`${serialized.dayaKecambah}%`} />
           <Item label="Lama semai" value={`${serialized.lamaSemai} hari`} />
           <Item label="Lama di kolam" value={`${serialized.lamaDiKolam} hari`} />
           <Item label="Berat rata panen" value={`${serialized.beratRataRataPanen} g`} />
           <Item label="Berat per pack" value={`${serialized.beratPerPack} g`} />
-          <Item label="Harga jual curah" value={formatRupiah(serialized.hargaJualCurah)} />
-          <Item label="Harga jual pack" value={formatRupiah(serialized.hargaJualPack)} />
+          {forPetani ? null : (
+            <>
+              <Item label="Harga jual curah" value={formatRupiah(serialized.hargaJualCurah)} />
+              <Item label="Harga jual pack" value={formatRupiah(serialized.hargaJualPack)} />
+            </>
+          )}
         </dl>
       </PageSection>
-      <EntityChangeHistorySection entitas="Varietas" entitasId={id} />
+      {forPetani ? null : <EntityChangeHistorySection entitas="Varietas" entitasId={id} />}
     </DetailLayout>
   );
 }

@@ -10,8 +10,9 @@ export const COACH_TIPS: Record<string, string[]> = {
     "Tombol pintasan di bawah mengarah ke stok, panen, pesanan jual, catatan keuangan, pelanggan, dan akuntansi.",
   ],
   "petani-home": [
-    "Mulai dari menu Siklus produksi, atau buat semai baru jika kolam sudah siap.",
-    "Stok rendah artinya bahan habis atau hampir habis; beri tahu Admin.",
+    "Baca «Urutan kerja» di atas: siklus → monitor → stok → pengiriman.",
+    "Tombol «Kerjakan tugas» atau «Mulai semai» di kanan atas = langkah paling urgent.",
+    "Stok rendah: cek daftar, lalu beri tahu Admin bila perlu isi ulang.",
   ],
   "owner-laporan": [
     "Isi bulan dengan format 2026-01 (tahun-bulan).",
@@ -122,8 +123,8 @@ export const COACH_TIPS: Record<string, string[]> = {
     "Data petani lapangan beda dengan akun login; akun login dibuat di beranda Admin.",
   ],
   "petani-siklus": [
-    "Satu baris = satu batch tanam; detail berisi langkah fase dan panen.",
-    "Batalkan siklus = batch tidak bisa dilanjutkan sampai panen.",
+    "Satu baris = satu siklus tanam; buka baris untuk lanjut fase atau panen.",
+    "Filter rumah kaca/kolam lalu «Monitor kolam hari ini» untuk catat pH dan PPM.",
   ],
   "petani-inventaris": [
     "Catat keluar saat bahan dipakai di lapangan.",

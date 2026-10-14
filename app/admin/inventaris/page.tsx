@@ -12,7 +12,7 @@ export default async function AdminInventarisPage() {
 
   return (
     <CrudPageLayout
-      title="Inventaris"
+      title="Stok barang"
       actions={
         <div className="flex flex-wrap gap-2">
           <EksporDaftarTombol unduhPath="/api/export/inventaris" jenisPratinjau="inventaris" />

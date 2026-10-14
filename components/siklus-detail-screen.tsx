@@ -129,7 +129,7 @@ export async function SiklusDetailScreen({
         const pct = kap > 0 ? Math.round((hidup / kap) * 1000) / 10 : 0;
         return (
           <MonochromeProgressBar
-            label="Isi kolam batch ini"
+            label="Isi kolam siklus ini"
             hint={`${hidup.toLocaleString("id-ID")} / ${kap.toLocaleString("id-ID")} lubang (${pct}%)`}
             value={pct}
           />

@@ -21,8 +21,8 @@ export function VarietasDaftar({
   rows: Row[];
   mode: keyof typeof basePath;
 }) {
-  const columns = useMemo<ColumnDef<Row>[]>(
-    () => [
+  const columns = useMemo<ColumnDef<Row>[]>(() => {
+    const cols: ColumnDef<Row>[] = [
       { accessorKey: "nama", header: "Nama" },
       {
         accessorKey: "status",
@@ -33,39 +33,43 @@ export function VarietasDaftar({
           </span>
         ),
       },
-      {
-        id: "harga",
-        header: "Harga",
-        cell: ({ row }) => (
-          <span className="text-muted-foreground">
-            Benih {row.original.hargaBenihPerGram}/g · curah {row.original.hargaJualCurah} · pack{" "}
-            {row.original.hargaJualPack}
-          </span>
-        ),
-      },
-      {
-        id: "siklus",
-        header: "Siklus",
-        cell: ({ row }) => (
-          <span className="text-muted-foreground">
-            {row.original.jumlahSiklus > 0 ? row.original.jumlahSiklus : "—"}
-          </span>
-        ),
-      },
-      {
-        id: "rataHpp",
-        header: "HPP rata/lubang",
-        cell: ({ row }) => (
-          <span className="text-muted-foreground">
-            {"rataHppPerLubang" in row.original && row.original.rataHppPerLubang
-              ? `Rp ${row.original.rataHppPerLubang}`
-              : "—"}
-          </span>
-        ),
-      },
-    ],
-    [],
-  );
+    ];
+    if (mode !== "petani") {
+      cols.push(
+        {
+          id: "harga",
+          header: "Harga",
+          cell: ({ row }) => (
+            <span className="text-muted-foreground">
+              Benih {row.original.hargaBenihPerGram}/g · curah {row.original.hargaJualCurah} · pack{" "}
+              {row.original.hargaJualPack}
+            </span>
+          ),
+        },
+        {
+          id: "rataHpp",
+          header: "HPP rata/lubang",
+          cell: ({ row }) => (
+            <span className="text-muted-foreground">
+              {"rataHppPerLubang" in row.original && row.original.rataHppPerLubang
+                ? `Rp ${row.original.rataHppPerLubang}`
+                : "—"}
+            </span>
+          ),
+        },
+      );
+    }
+    cols.push({
+      id: "siklus",
+      header: "Siklus",
+      cell: ({ row }) => (
+        <span className="text-muted-foreground">
+          {row.original.jumlahSiklus > 0 ? row.original.jumlahSiklus : "—"}
+        </span>
+      ),
+    });
+    return cols;
+  }, [mode]);
 
   return (
     <DataTable

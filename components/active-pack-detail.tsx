@@ -72,7 +72,9 @@ export async function ActivePackDetail({
           <Item label="Keterangan" value={serialized.keterangan ?? "—"} />
         </dl>
       </PageSection>
-      <EntityChangeHistorySection entitas="ActivePack" entitasId={id} />
+      {writableMode === "petani" ? null : (
+        <EntityChangeHistorySection entitas="ActivePack" entitasId={id} />
+      )}
     </DetailLayout>
   );
 }

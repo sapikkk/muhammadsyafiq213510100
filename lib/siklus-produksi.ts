@@ -54,7 +54,12 @@ function parsePackJumlah(raw: unknown, label: string): Prisma.Decimal {
   if (raw === null || raw === undefined || raw === "") {
     throw new SiklusError(`Isi ${label}.`, 400);
   }
-  const text = String(raw).trim().replace(",", ".");
+  let text = String(raw).trim().replace(/\s/g, "");
+  if (text.includes(",") && text.includes(".")) {
+    text = text.replace(/\./g, "").replace(",", ".");
+  } else if (text.includes(",")) {
+    text = text.replace(",", ".");
+  }
   if (!/^\d+(\.\d{1,3})?$/.test(text)) {
     throw new SiklusError(`${label} harus angka positif.`, 400);
   }

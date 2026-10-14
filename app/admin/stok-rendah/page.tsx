@@ -10,12 +10,17 @@ export default async function AdminStokRendahPage() {
 
   return (
     <CrudPageLayout
-      title="Alert stok minimum"
+      title="Stok rendah"
       actions={
         <EksporDaftarTombol unduhPath="/api/export/stok-rendah" jenisPratinjau="stok-rendah" />
       }
       list={
-        <InventarisStokRendah items={items.map(serializeAlertStok)} showRestockHint />
+        <InventarisStokRendah
+          items={items.map(serializeAlertStok)}
+          showRestockHint
+          restockHref="/admin/inventaris"
+          restockLabel="Catat pembelian di inventaris"
+        />
       }
       listTitle="Item di bawah minimum"
     />

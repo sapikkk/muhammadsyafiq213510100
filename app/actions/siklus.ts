@@ -28,7 +28,7 @@ export async function mulaiSiklusSemai(
     const siklus = await buatSiklusSemai(parseSiklusInput(raw), Number(session!.user!.id));
     revalidatePath("/petani/siklus");
     revalidatePath("/petani/siklus/baru");
-    redirect(`/petani/siklus/${siklus.id}`);
+    redirect(`/petani/siklus/${siklus.id}?lubang=${siklus.jumlah_disemai}`);
   } catch (error) {
     if (error instanceof SiklusError) return { error: error.message };
     throw error;

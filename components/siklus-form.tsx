@@ -10,6 +10,7 @@ import { labelPackSiapPakai } from "@/lib/inventaris-ui-labels";
 import {
   estimasiGramBenih,
   estimasiSlabRockwool,
+  formatAngkaMesin,
   formatAngkaSingkat,
 } from "@/lib/hidroponik-asumsi";
 import {
@@ -19,6 +20,7 @@ import {
 import { isItemBenih, isItemMedia } from "@/lib/siklus-pack";
 import type { SatuanInventaris } from "@prisma/client";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
+import { notify } from "@/lib/notify";
 
 const selectClass =
   "flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm";
@@ -33,6 +35,12 @@ type PackOpt = {
   satuan: string;
   sisaUnit: string;
 };
+
+function parseLubangPositif(raw: string): number | null {
+  const n = Number.parseInt(raw.replace(/\s/g, ""), 10);
+  if (!Number.isInteger(n) || n <= 0) return null;
+  return n;
+}
 
 export function SiklusForm({
   varietas,
@@ -61,16 +69,13 @@ export function SiklusForm({
     [packs],
   );
 
-  const jumlahDisemai = Number.parseInt(jumlahDisemaiRaw.replace(/\s/g, ""), 10);
+  const jumlahDisemai = parseLubangPositif(jumlahDisemaiRaw);
   const varietasPilih = varietas.find((v) => String(v.id) === varietasId);
   const gramEstimasi =
-    varietasPilih && Number.isFinite(jumlahDisemai) && jumlahDisemai > 0
+    varietasPilih && jumlahDisemai != null
       ? estimasiGramBenih(jumlahDisemai, varietasPilih.bijiPerGram)
       : null;
-  const slabEstimasi =
-    Number.isFinite(jumlahDisemai) && jumlahDisemai > 0
-      ? estimasiSlabRockwool(jumlahDisemai)
-      : null;
+  const slabEstimasi = jumlahDisemai != null ? estimasiSlabRockwool(jumlahDisemai) : null;
 
   const packBenih = packs.find((p) => String(p.id) === packBenihId);
   const packMedia = packs.find((p) => String(p.id) === packMediaId);
@@ -83,10 +88,17 @@ export function SiklusForm({
   const kapMedia = packMedia
     ? kapasitasLubangMediaPack(Number(packMedia.sisaUnit), packMedia.itemKode)
     : null;
-  const gramPakai =
-    gramEstimasi != null && Number.isFinite(gramEstimasi) ? formatAngkaSingkat(gramEstimasi, 4) : "";
-  const mediaPakai =
-    slabEstimasi != null && packMediaId ? String(slabEstimasi) : "";
+
+  const gramPakaiTampil =
+    gramEstimasi != null && gramEstimasi > 0 ? formatAngkaSingkat(gramEstimasi, 3) : "";
+  const gramPakaiMesin =
+    gramEstimasi != null && gramEstimasi > 0 ? formatAngkaMesin(gramEstimasi, 3) : "";
+  const mediaPakaiTampil =
+    slabEstimasi != null && slabEstimasi > 0 && packMediaId
+      ? formatAngkaSingkat(slabEstimasi, 0)
+      : "";
+  const mediaPakaiMesin =
+    slabEstimasi != null && slabEstimasi > 0 && packMediaId ? String(slabEstimasi) : "";
 
   const satuanBenihLabel = packBenih
     ? satuanInventarisLabel[packBenih.satuan as SatuanInventaris]
@@ -95,15 +107,57 @@ export function SiklusForm({
     ? satuanInventarisLabel[packMedia.satuan as SatuanInventaris]
     : "unit";
 
+  const siapSimpan =
+    varietasId &&
+    jumlahDisemai != null &&
+    packBenihId &&
+    gramPakaiMesin &&
+    !packSama &&
+    (kapBenih == null || jumlahDisemai <= kapBenih) &&
+    (!packMediaId || (mediaPakaiMesin && (kapMedia == null || jumlahDisemai <= kapMedia)));
+
+  function validasiSebelumKirim(): boolean {
+    if (!varietasId) {
+      notify.error("Pilih varietas.");
+      return false;
+    }
+    if (jumlahDisemai == null) {
+      notify.error("Jumlah lubang harus angka positif (minimal 1).");
+      return false;
+    }
+    if (!packBenihId) {
+      notify.error("Pilih paket benih.");
+      return false;
+    }
+    if (!gramPakaiMesin) {
+      notify.error("Isi jumlah lubang dan varietas agar benih terhitung.");
+      return false;
+    }
+    if (packSama) {
+      notify.error("Paket benih dan media tidak boleh sama.");
+      return false;
+    }
+    if (kapBenih != null && jumlahDisemai > kapBenih) {
+      notify.error(`Maksimal ${kapBenih} lubang untuk sisa paket benih.`);
+      return false;
+    }
+    if (packMediaId && kapMedia != null && jumlahDisemai > kapMedia) {
+      notify.error(`Maksimal ${kapMedia} lubang untuk sisa paket media.`);
+      return false;
+    }
+    return true;
+  }
+
   return (
-    <form action={formAction} className="space-y-4 rounded-md border p-4">
-      <h2 className="text-lg font-semibold">Mulai siklus semai</h2>
-      <p className="text-sm text-muted-foreground">
-        <strong>Jumlah disemai = lubang/bibit.</strong> Sistem hitung potong proporsional pack
-        (gram benih &amp; slab media) dari varietas + kapasitas lubang pack (v2-C.1).
-      </p>
+    <form
+      action={formAction}
+      className="space-y-4"
+      onSubmit={(e) => {
+        if (!validasiSebelumKirim()) e.preventDefault();
+      }}
+    >
       <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Varietas aktif</span>
+        <span className="font-medium">Varietas</span>
         <select
           name="varietasId"
           required
@@ -123,14 +177,14 @@ export function SiklusForm({
       </label>
 
       <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Kolam</span>
+        <span className="font-medium">Kolam kosong</span>
         <select name="kolamId" required className={selectClass} defaultValue="">
           <option value="" disabled>
             Pilih kolam
           </option>
           {kolam.map((k) => (
             <option key={k.id} value={k.id}>
-              {k.label} (kap. {k.kapasitas} lubang)
+              {k.label} · {k.kapasitas} lubang
             </option>
           ))}
         </select>
@@ -142,30 +196,38 @@ export function SiklusForm({
       </label>
 
       <label className="block space-y-1.5 text-sm">
-        <span className="font-medium">Jumlah disemai (bibit / pohon)</span>
+        <span className="font-medium">Jumlah lubang disemai</span>
         <Input
           name="jumlahDisemai"
           required
-          className="h-11"
+          min={1}
+          className="h-11 tabular-nums"
           inputMode="numeric"
+          pattern="[0-9]+"
           placeholder="mis. 480"
-          onChange={(e) => setJumlahDisemaiRaw(e.target.value)}
+          value={jumlahDisemaiRaw}
+          onChange={(e) => setJumlahDisemaiRaw(e.target.value.replace(/[^\d\s]/g, ""))}
         />
-        {kapBenih != null && Number.isFinite(jumlahDisemai) && jumlahDisemai > 0 ? (
+        {jumlahDisemaiRaw && jumlahDisemai == null ? (
+          <p className="text-xs text-destructive" role="alert">
+            Isi angka positif (minimal 1).
+          </p>
+        ) : null}
+        {kapBenih != null && jumlahDisemai != null ? (
           <p className="text-xs text-muted-foreground">
-            Pack benih: max {kapBenih} lubang
+            Paket benih: maks. {kapBenih} lubang
             {jumlahDisemai > kapBenih ? (
-              <span className="text-destructive"> — melebihi sisa pack</span>
+              <span className="text-destructive"> — melebihi sisa</span>
             ) : null}
           </p>
         ) : null}
       </label>
 
       <fieldset className="space-y-3 rounded-md border border-dashed p-3">
-        <legend className="px-1 text-sm font-medium">Benih (wajib)</legend>
+        <legend className="px-1 text-sm font-medium">Benih</legend>
 
         <label className="block space-y-1.5 text-sm">
-          <span className="font-medium">Paket benih siap pakai</span>
+          <span className="font-medium">Paket benih</span>
           <select
             name="activePackBenihId"
             required
@@ -174,11 +236,11 @@ export function SiklusForm({
             onChange={(e) => setPackBenihId(e.target.value)}
           >
             <option value="" disabled>
-              Pilih pack benih (BNH-…)
+              Pilih paket benih
             </option>
             {packsBenih.length === 0 ? (
               <option value="" disabled>
-                Belum ada pack benih — buat di Paket siap pakai
+                Belum ada paket — buat di menu Paket siap pakai
               </option>
             ) : null}
             {packsBenih.map((p) => {
@@ -201,23 +263,23 @@ export function SiklusForm({
         </label>
 
         <label className="block space-y-1.5 text-sm">
-          <span className="font-medium">Potong proporsional benih ({satuanBenihLabel})</span>
+          <span className="font-medium">Benih dipakai ({satuanBenihLabel})</span>
+          <input type="hidden" name="jumlahBenihPakai" value={gramPakaiMesin} />
           <Input
-            name="jumlahBenihPakai"
-            required
             readOnly
-            className="h-11 bg-muted/40"
-            value={gramPakai}
-            placeholder="Isi jumlah lubang + pilih varietas/pack"
+            aria-readonly
+            className="h-11 bg-muted/40 tabular-nums text-right"
+            value={gramPakaiTampil}
+            placeholder="Pilih varietas, lubang, dan paket"
           />
         </label>
       </fieldset>
 
       <fieldset className="space-y-3 rounded-md border border-dashed p-3">
-        <legend className="px-1 text-sm font-medium">Media semai (opsional)</legend>
+        <legend className="px-1 text-sm font-medium">Media rockwool (opsional)</legend>
 
         <label className="block space-y-1.5 text-sm">
-          <span className="font-medium">Paket media siap pakai</span>
+          <span className="font-medium">Paket media</span>
           <select
             name="activePackMediaId"
             className={selectClass}
@@ -241,40 +303,41 @@ export function SiklusForm({
           </select>
           {packsMedia.length === 0 ? (
             <p className="text-xs text-muted-foreground">
-              Buat paket siap pakai untuk item RW-SLAB (rockwool) di menu Paket siap pakai.
+              Buat paket rockwool di menu Paket siap pakai bila perlu.
             </p>
           ) : null}
         </label>
 
         {packSama ? (
           <p className="text-sm text-destructive" role="alert">
-            Jangan pilih pack benih yang sama untuk media — stok akan dipotong dua kali.
+            Paket benih dan media tidak boleh sama.
           </p>
         ) : null}
 
         <label className="block space-y-1.5 text-sm">
-          <span className="font-medium">Potong proporsional media ({satuanMediaLabel})</span>
+          <span className="font-medium">Media dipakai ({satuanMediaLabel})</span>
+          <input type="hidden" name="jumlahMediaPakai" value={mediaPakaiMesin} />
           <Input
-            name="jumlahMediaPakai"
-            className="h-11 bg-muted/40"
             readOnly
-            value={mediaPakai}
+            aria-readonly
+            className="h-11 bg-muted/40 tabular-nums text-right"
+            value={mediaPakaiTampil}
             disabled={!packMediaId}
             placeholder={packMediaId ? "0" : "—"}
           />
-          {kapMedia != null && Number.isFinite(jumlahDisemai) && jumlahDisemai > 0 ? (
+          {kapMedia != null && jumlahDisemai != null && packMediaId ? (
             <p className="text-xs text-muted-foreground">
-              Pack media: max {kapMedia} lubang
+              Paket media: maks. {kapMedia} lubang
               {jumlahDisemai > kapMedia ? (
-                <span className="text-destructive"> — melebihi sisa pack</span>
+                <span className="text-destructive"> — melebihi sisa</span>
               ) : null}
             </p>
           ) : null}
         </label>
       </fieldset>
 
-      <SubmitButton className="h-11" pendingLabel="Menyimpan...">
-        Simpan siklus
+      <SubmitButton className="h-11 w-full sm:w-auto" pendingLabel="Menyimpan..." disabled={!siapSimpan}>
+        Simpan semai
       </SubmitButton>
     </form>
   );

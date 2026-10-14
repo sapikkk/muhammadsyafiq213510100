@@ -3,14 +3,11 @@ import { CrudPageLayout } from "@/components/crud-page-layout";
 import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { SiklusDaftarPetani } from "@/components/siklus-daftar-petani";
 import { Button } from "@/components/ui/button";
+import { PetaniModulIntro } from "@/components/petani-modul-intro";
 import { PageSection } from "@/components/page-section";
 import { ProduksiRingkasanPanel } from "@/components/produksi-ringkasan-panel";
 import { loadProduksiRingkasan } from "@/lib/produksi-kapasitas";
-import {
-  LIST_SIKLUS_DEFAULT_LIMIT,
-  listSiklusProduksi,
-  serializeSiklus,
-} from "@/lib/siklus-produksi";
+import { listSiklusProduksi, serializeSiklus } from "@/lib/siklus-produksi";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +19,13 @@ export default async function PetaniSiklusPage() {
 
   return (
     <CrudPageLayout
-      title="Siklus produksi"
+      title="Siklus tanam"
+      intro={<PetaniModulIntro modul="siklus" />}
+      leading={
+        <PageSection title="Ringkasan fase" badge="Read">
+          <ProduksiRingkasanPanel data={ringkasan} showKapasitasBar={false} />
+        </PageSection>
+      }
       actions={
         <div className="flex flex-wrap gap-2">
           <EksporDaftarTombol unduhPath="/api/export/siklus-daftar" jenisPratinjau="siklus-daftar" />
@@ -33,15 +36,8 @@ export default async function PetaniSiklusPage() {
           </Button>
         </div>
       }
-      list={
-        <>
-          <PageSection title="Ringkasan fase">
-            <ProduksiRingkasanPanel data={ringkasan} showKapasitasBar={false} />
-          </PageSection>
-          <SiklusDaftarPetani rows={siklusRows.map(serializeSiklus)} />
-        </>
-      }
-      listTitle="Daftar batch"
+      list={<SiklusDaftarPetani rows={siklusRows.map(serializeSiklus)} />}
+      listTitle="Daftar siklus"
     />
   );
 }

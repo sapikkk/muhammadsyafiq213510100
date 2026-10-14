@@ -1,4 +1,5 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { PetaniModulIntro } from "@/components/petani-modul-intro";
 import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { VarietasDaftar } from "@/components/varietas-daftar";
 import { listVarietas, serializeVarietas } from "@/lib/varietas";
@@ -10,12 +11,13 @@ export default async function PetaniVarietasPage() {
 
   return (
     <CrudPageLayout
-      title="Varietas aktif"
+      title="Varietas"
+      intro={<PetaniModulIntro modul="varietas" />}
       actions={
         <EksporDaftarTombol unduhPath="/api/export/varietas" jenisPratinjau="varietas" />
       }
       list={<VarietasDaftar rows={serialized} mode="petani" />}
-      listTitle="Referensi varietas"
+      listTitle="Daftar varietas"
     />
   );
 }
