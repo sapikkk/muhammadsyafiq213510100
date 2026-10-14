@@ -1,3 +1,10 @@
+# [1.37.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.6...v1.37.0) (2026-10-14)
+
+
+### Features
+
+* **owner:** sidebar modul, beranda keuangan, docs agile, dan UX petani ([29126a1](https://github.com/sapikkk/muhammadsyafiq213510100/commit/29126a171ad672106de445eefbe7f0ef0fdfeb7d))
+
 ## [1.36.6](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.5...v1.36.6) (2026-10-12)
 
 
