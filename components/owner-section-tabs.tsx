@@ -25,6 +25,11 @@ function tabActive(
   const [path, query] = href.split("?");
   const pathOk = pathname === path || pathname.startsWith(`${path}/`);
   if (!pathOk) return false;
+  if (path === "/owner/evaluasi" && pathname === "/owner/evaluasi") {
+    const bagian = searchParams.get("bagian") ?? "untung";
+    const expected = new URLSearchParams(query ?? "").get("bagian") ?? "untung";
+    return bagian === expected;
+  }
   if (!query) {
     if (path === "/owner/varietas" && pathname === "/owner/varietas") {
       return searchParams.get("tampilan") !== "status";

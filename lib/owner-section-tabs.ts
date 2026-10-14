@@ -59,8 +59,8 @@ export const TABS_PENJUALAN: OwnerSectionTab[] = [
 ];
 
 export const TABS_EVALUASI: OwnerSectionTab[] = [
-  { id: "untung", epic: "6.1", label: "Untung vs harga jual", href: "/owner/evaluasi" },
-  { id: "impas", epic: "6.2", label: "Titik impas", href: "/owner/evaluasi" },
-  { id: "kolam", epic: "6.3", label: "Kolam kosong", href: "/owner/evaluasi" },
-  { id: "harga", epic: "6.4", label: "Keputusan harga", href: "/owner/evaluasi" },
+  { id: "untung", epic: "6.1", label: "Untung vs harga jual", href: "/owner/evaluasi?bagian=untung" },
+  { id: "impas", epic: "6.2", label: "Titik impas", href: "/owner/evaluasi?bagian=impas" },
+  { id: "kolam", epic: "6.3", label: "Kolam kosong", href: "/owner/evaluasi?bagian=kolam" },
+  { id: "harga", epic: "6.4", label: "Keputusan harga", href: "/owner/evaluasi?bagian=harga" },
 ];

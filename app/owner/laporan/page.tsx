@@ -3,7 +3,8 @@ import { Suspense } from "react";
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { OwnerKeuanganChrome } from "@/components/owner-keuangan-chrome";
 import { EksporLembar } from "@/components/ekspor-lembar";
-import { MonthRangeFilter } from "@/components/month-range-filter";
+import { MonthPeriodNav } from "@/components/month-period-nav";
+import { monthlySummaryCached } from "@/lib/cached-queries";
 import { OwnerBagianSubnav } from "@/components/owner-bagian-subnav";
 import {
   OwnerLaporanKeuanganPanel,
@@ -28,7 +29,7 @@ const LAPORAN_LINKS = [
   { id: "neraca", label: "Neraca", epic: "7.3", param: "laporan", value: "neraca" },
 ];
 
-export default function OwnerLaporanPage({ searchParams }: { searchParams: Search }) {
+export default async function OwnerLaporanPage({ searchParams }: { searchParams: Search }) {
   if (!searchParams.laporan) {
     redirect(`/owner/laporan?laporan=laba-rugi&dari=${defaultMonth()}&sampai=${defaultMonth()}`);
   }
@@ -44,6 +45,7 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
   const unduhPath =
     jenis === "neraca" ? "/api/export/balance-sheet" : "/api/export/income-statement";
   const jenisPratinjau = jenis === "neraca" ? "neraca" : "laba-rugi";
+  const trend = jenis === "laba-rugi" ? await monthlySummaryCached(6) : null;
 
   return (
     <OwnerKeuanganChrome>
@@ -68,8 +70,15 @@ export default function OwnerLaporanPage({ searchParams }: { searchParams: Searc
               links={LAPORAN_LINKS}
             />
           </Suspense>
-          <MonthRangeFilter dari={dari} sampai={sampai} />
-          <OwnerLaporanKeuanganPanel jenis={jenis} dari={dari} sampai={sampai} />
+          <Suspense fallback={null}>
+            <MonthPeriodNav dari={dari} sampai={sampai} preserveKeys={["laporan"]} />
+          </Suspense>
+          <OwnerLaporanKeuanganPanel
+            jenis={jenis}
+            dari={dari}
+            sampai={sampai}
+            monthTrend={trend?.months}
+          />
         </div>
       }
       listTitle="Angka laporan"

@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { JurnalDaftar } from "@/components/jurnal-daftar";
+import { JurnalListFilter } from "@/components/jurnal-list-filter";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { listJurnal, serializeJurnalListRow, type FilterJurnal } from "@/lib/jurnal";
-import { statusJurnalLabel, statusJurnalList } from "@/lib/jurnal-status";
 
 export const dynamic = "force-dynamic";
 
@@ -24,50 +23,21 @@ export default async function OwnerJurnalPage({
     <CrudPageLayout
       title="Jurnal umum"
       actions={
-        <Button asChild variant="outline" className="h-11">
-          <Link href="/owner/jurnal/koreksi">Koreksi manual</Link>
-        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          <JurnalListFilter
+            basePath="/owner/jurnal"
+            dari={searchParams.dari}
+            sampai={searchParams.sampai}
+            status={searchParams.status}
+            selectClass={selectClass}
+          />
+          <Button asChild variant="outline" className="h-11">
+            <Link href="/owner/jurnal/koreksi">Koreksi manual</Link>
+          </Button>
+        </div>
       }
       list={
         <div className="space-y-4">
-          <form
-            method="get"
-            aria-label="Filter jurnal"
-            className="grid gap-3 rounded-md border bg-muted/20 p-4 sm:grid-cols-[1fr_1fr_1fr_auto] sm:items-end"
-          >
-            <label className="block space-y-1.5 text-sm">
-              <span className="font-medium">Dari tanggal</span>
-              <Input name="dari" type="date" defaultValue={searchParams.dari} className="h-11" />
-            </label>
-            <label className="block space-y-1.5 text-sm">
-              <span className="font-medium">Sampai tanggal</span>
-              <Input name="sampai" type="date" defaultValue={searchParams.sampai} className="h-11" />
-            </label>
-            <label className="block space-y-1.5 text-sm">
-              <span className="font-medium">Status</span>
-              <select name="status" defaultValue={searchParams.status ?? ""} className={selectClass}>
-                <option value="">Semua status</option>
-                {statusJurnalList.map((s) => (
-                  <option key={s} value={s}>
-                    {statusJurnalLabel[s]}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <div className="flex flex-wrap gap-2">
-              <Button type="submit" variant="outline" className="h-11">
-                Terapkan
-              </Button>
-              {adaFilter ? (
-                <Link
-                  href="/owner/jurnal"
-                  className="inline-flex h-11 items-center px-3 text-sm hover:bg-accent"
-                >
-                  Hapus filter
-                </Link>
-              ) : null}
-            </div>
-          </form>
           <JurnalDaftar
             rows={serialized}
             detailPrefix="/owner/jurnal"

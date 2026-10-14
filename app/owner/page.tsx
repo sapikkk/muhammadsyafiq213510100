@@ -9,11 +9,7 @@ import { PageHeaderRow } from "@/components/page-header-row";
 import { MetricCards } from "@/components/metric-cards";
 import { formatRupiah } from "@/lib/format";
 import { alertBannerItems } from "@/lib/inventaris";
-import {
-  metricLubangTerisi,
-  metricSiapJual,
-  metricStokRendah,
-} from "@/lib/dashboard-metric-items";
+import { metricLubangTerisi, metricSiapJual } from "@/lib/dashboard-metric-items";
 import {
   kpiHidroponikMvpCached,
   listAlertStokMinimumCached,
@@ -48,12 +44,10 @@ export default async function OwnerPage() {
   ]);
 
   const labaTerbaik = bestProfitMonth(summary.months);
-  const stokCount = stokRendah.length;
   const kap = produksi.kapasitas;
   const alertItems = alertBannerItems(stokRendah);
 
   const operasionalItems = [
-    metricStokRendah(stokCount, "/owner"),
     metricLubangTerisi(kap, "/owner"),
     metricSiapJual(produksi.siapJualLubang, kap, "/owner"),
     labaTerbaik
@@ -64,7 +58,7 @@ export default async function OwnerPage() {
           hint: `Laba kasar ${formatRupiah(labaTerbaik.laba)}`,
           followUp: {
             actionLabel: "Lihat evaluasi",
-            href: "/owner/evaluasi",
+            href: "/owner/evaluasi?bagian=untung",
           },
         }
       : {
@@ -74,9 +68,24 @@ export default async function OwnerPage() {
           emptyState: {
             message: "Belum ada laba tercatat dalam 6 bulan terakhir.",
             actionLabel: "Lihat evaluasi",
-            href: "/owner/evaluasi",
+            href: "/owner/evaluasi?bagian=untung",
           },
         },
+    {
+      id: "hpp-lubang",
+      label: "HPP rata-rata per lubang",
+      value:
+        kpiV2.batchPanenApproved > 0 ? formatRupiah(kpiV2.avgHppPerLubang) : "—",
+      ...(kpiV2.batchPanenApproved <= 0
+        ? {
+            emptyState: {
+              message: "Belum ada batch panen disetujui.",
+              actionLabel: "Lihat produksi",
+              href: "/owner/produksi",
+            },
+          }
+        : {}),
+    },
   ];
 
   return (
@@ -92,43 +101,23 @@ export default async function OwnerPage() {
         </BentoSlot>
 
         <BentoSlot span={6}>
-          {alertItems.length > 0 ? (
-            <InventarisAlertBanner items={alertItems} detailHref="/owner/stok-rendah" />
-          ) : (
-            <DashboardBentoEmpty
-              message="Tidak ada stok di bawah minimum."
-              actionLabel="Cek stok barang"
-              href="/owner/inventaris"
-            />
-          )}
-        </BentoSlot>
-
-        <BentoSlot span={6}>
-          <BentoSection title="Operasional & HPP">
-            <MetricCards
-              columns={4}
-              items={[
-                ...operasionalItems,
-                {
-                  id: "hpp-lubang",
-                  label: "HPP rata-rata per lubang",
-                  value:
-                    kpiV2.batchPanenApproved > 0
-                      ? formatRupiah(kpiV2.avgHppPerLubang)
-                      : "—",
-                  ...(kpiV2.batchPanenApproved <= 0
-                    ? {
-                        emptyState: {
-                          message: "Belum ada batch panen disetujui.",
-                          actionLabel: "Lihat produksi",
-                          href: "/owner/produksi",
-                        },
-                      }
-                    : {}),
-                },
-              ]}
-            />
-          </BentoSection>
+          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(10.5rem,13.5rem)] lg:items-start">
+            <BentoSection title="Operasional & HPP" className="min-w-0">
+              <MetricCards columns={4} items={operasionalItems} />
+            </BentoSection>
+            <BentoSection title="Stok di bawah minimum" className="min-w-0">
+              {alertItems.length > 0 ? (
+                <InventarisAlertBanner items={alertItems} detailHref="/owner/stok-rendah" />
+              ) : (
+                <DashboardBentoEmpty
+                  compact
+                  message="Semua stok di atas minimum."
+                  actionLabel="Cek stok barang"
+                  href="/owner/inventaris"
+                />
+              )}
+            </BentoSection>
+          </div>
         </BentoSlot>
 
         <BentoSlot span={6}>

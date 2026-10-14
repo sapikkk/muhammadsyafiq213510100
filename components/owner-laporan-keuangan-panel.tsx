@@ -1,5 +1,8 @@
+import { ChartCard } from "@/components/chart-card";
 import { MetricCards } from "@/components/metric-cards";
+import { OwnerRevenueChart } from "@/components/owner-revenue-chart";
 import { PageSection } from "@/components/page-section";
+import type { MonthPoint } from "@/lib/monthly-summary-types";
 import {
   Table,
   TableBody,
@@ -26,10 +29,12 @@ export async function OwnerLaporanKeuanganPanel({
   jenis,
   dari,
   sampai,
+  monthTrend,
 }: {
   jenis: OwnerLaporanJenis;
   dari: string;
   sampai: string;
+  monthTrend?: MonthPoint[];
 }) {
   const { start, end } = monthBounds(dari, sampai);
 
@@ -43,6 +48,11 @@ export async function OwnerLaporanKeuanganPanel({
 
   return (
     <div className="space-y-6">
+      {monthTrend && monthTrend.length > 0 ? (
+        <ChartCard title="Tren pendapatan & beban (6 bulan)">
+          <OwnerRevenueChart months={monthTrend} />
+        </ChartCard>
+      ) : null}
       <MetricCards
         columns={3}
         items={[
