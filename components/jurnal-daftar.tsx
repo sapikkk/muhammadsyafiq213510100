@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useMemo, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -26,10 +26,13 @@ export function JurnalDaftar({
   rows,
   detailPrefix,
   emptyMessage = "Belum ada catatan keuangan.",
+  listActions,
 }: {
   rows: JurnalDaftarRow[];
   detailPrefix: "/admin/jurnal" | "/owner/jurnal";
   emptyMessage?: string;
+  /** Tombol filter / aksi di baris yang sama dengan pencarian. */
+  listActions?: ReactNode;
 }) {
   const [q, setQ] = useState("");
   const [pageIndex, setPageIndex] = useState(0);
@@ -59,14 +62,10 @@ export function JurnalDaftar({
     });
   }
 
-  if (rows.length === 0) {
-    return <p className="text-sm text-muted-foreground">{emptyMessage}</p>;
-  }
-
-  return (
-    <div className="space-y-4">
+  const searchRow = (
+    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2">
       <Input
-        className="h-11 max-w-md"
+        className={cn("h-11 min-w-0", listActions ? "flex-1" : "max-w-md")}
         placeholder="Cari keterangan atau nama akun…"
         value={q}
         onChange={(e) => {
@@ -75,6 +74,24 @@ export function JurnalDaftar({
         }}
         aria-label="Cari jurnal"
       />
+      {listActions ? (
+        <div className="flex shrink-0 flex-wrap items-center gap-2">{listActions}</div>
+      ) : null}
+    </div>
+  );
+
+  if (rows.length === 0) {
+    return (
+      <div className="space-y-4">
+        {listActions ? searchRow : null}
+        <p className="text-sm text-muted-foreground">{emptyMessage}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      {searchRow}
 
       {filtered.length === 0 ? (
         <p className="text-sm text-muted-foreground">Tidak ada catatan cocok pencarian.</p>

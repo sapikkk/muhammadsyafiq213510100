@@ -47,19 +47,6 @@ export default async function OwnerJurnalPage({
   return (
     <CrudPageLayout
       title="Jurnal umum"
-      actions={
-        <div className="flex flex-wrap items-center gap-2">
-          <JurnalListFilter
-            basePath="/owner/jurnal"
-            status={filter.status}
-            selectClass={selectClass}
-            periodeQuery={periodeQ}
-          />
-          <Button asChild variant="outline" className="h-11">
-            <Link href="/owner/jurnal/koreksi">Koreksi manual</Link>
-          </Button>
-        </div>
-      }
       list={
         <div className="space-y-4">
           <Suspense fallback={null}>
@@ -76,6 +63,19 @@ export default async function OwnerJurnalPage({
             detailPrefix="/owner/jurnal"
             emptyMessage={
               adaFilterStatus ? "Tidak ada jurnal untuk filter ini." : "Belum ada jurnal di periode ini."
+            }
+            listActions={
+              <>
+                <JurnalListFilter
+                  basePath="/owner/jurnal"
+                  status={filter.status}
+                  selectClass={selectClass}
+                  periodeQuery={periodeQ}
+                />
+                <Button asChild variant="outline" className="h-11 shrink-0">
+                  <Link href="/owner/jurnal/koreksi">Koreksi manual</Link>
+                </Button>
+              </>
             }
           />
         </div>
