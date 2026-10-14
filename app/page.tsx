@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { ProjectHub } from "@/components/project-hub";
-import { PageCoachmark } from "@/components/page-coachmark";
+import { PageGuideFooter } from "@/components/page-guide-footer";
 import { PageHeaderRow } from "@/components/page-header-row";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
@@ -40,31 +40,12 @@ export default async function HomePage() {
       </header>
 
       <section className="mx-auto w-full max-w-6xl px-6 py-10">
-        <PageHeaderRow
-          title="Pusat dokumentasi dan progress Kokonus Farm"
-          guide={
-            <PageCoachmark
-              pageKey="home"
-              title="Panduan halaman beranda"
-              placement="toolbar"
-              steps={[
-                {
-                  label: "Pilih tab",
-                  detail:
-                    "Agile, Gantt, uji, desain, deploy — materi sidang dan laporan progress tim.",
-                },
-                {
-                  label: "Masuk ke aplikasi",
-                  detail: "Gunakan tombol Masuk, lalu buka beranda sesuai peran Anda.",
-                },
-              ]}
-            />
-          }
-        />
+        <PageHeaderRow title="Pusat dokumentasi dan progress Kokonus Farm" />
 
         <div className="mt-8">
           <ProjectHub tabs={HUB_TABS} hub={hub} agile={progress} gantt={gantt} />
         </div>
+        <PageGuideFooter />
       </section>
     </main>
   );

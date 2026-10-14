@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { FinanceModuleNav } from "@/components/finance-module-nav";
-import { FlowSteps, type FlowStep } from "@/components/flow-steps";
 import { PageHeaderRow } from "@/components/page-header-row";
+import type { FlowStep } from "@/components/flow-steps";
 import { PageSection } from "@/components/page-section";
 import { UI_COPY } from "@/lib/ui-copy";
 
@@ -9,10 +9,6 @@ export function CrudPageLayout({
   title,
   description,
   actions,
-  flowSteps,
-  coachKey,
-  coachTips,
-  coachTitle,
   list,
   listTitle = UI_COPY.crudListTitle,
   listDescription,
@@ -27,8 +23,8 @@ export function CrudPageLayout({
   /** Tab modul keuangan (Books-style IA, design system Kokonus). */
   financeNavRole?: "ADMIN" | "OWNER";
   actions?: ReactNode;
+  /** @deprecated Panduan lewat ikon bawah halaman (coach-meta / coach-tips). */
   flowSteps?: FlowStep[];
-  /** Override kunci coachmark (default: path halaman) */
   coachKey?: string;
   coachTips?: string[];
   coachTitle?: string;
@@ -40,25 +36,10 @@ export function CrudPageLayout({
   createDescription?: string;
   extra?: ReactNode;
 }) {
-  const guide = flowSteps ? (
-    <FlowSteps
-      steps={flowSteps}
-      pageKey={coachKey}
-      tips={coachTips}
-      title={coachTitle}
-      toolbar
-    />
-  ) : null;
-
   return (
     <div className="flex flex-col gap-6">
       {financeNavRole ? <FinanceModuleNav role={financeNavRole} /> : null}
-      <PageHeaderRow
-        title={title}
-        description={description}
-        guide={guide}
-        actions={actions}
-      />
+      <PageHeaderRow title={title} actions={actions} />
       {list ? (
         <PageSection title={listTitle} description={listDescription} badge="Read" id="crud-list">
           {list}

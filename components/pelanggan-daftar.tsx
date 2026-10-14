@@ -1,7 +1,6 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
 import { ubahStatusPelanggan } from "@/app/actions/pelanggan";
@@ -28,12 +27,7 @@ export function PelangganDaftar({ rows }: { rows: PelangganRow[] }) {
         header: "Nama",
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
-            <Link
-              href={`/admin/pelanggan/${row.original.id}`}
-              className="underline-offset-2 hover:underline"
-            >
-              {row.original.nama}
-            </Link>
+            <span className="font-medium">{row.original.nama}</span>
             {!row.original.aktif ? (
               <Badge variant="outline" className="text-xs">
                 Nonaktif
@@ -94,6 +88,7 @@ export function PelangganDaftar({ rows }: { rows: PelangganRow[] }) {
       searchPlaceholder="Cari pelanggan…"
       searchColumnIds={["nama", "alamat", "email"]}
       emptyMessage="Belum ada pelanggan."
+      getRowHref={(row) => `/admin/pelanggan/${row.id}`}
     />
   );
 }

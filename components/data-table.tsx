@@ -43,6 +43,11 @@ type DataTableProps<TData, TValue> = {
   focusRowId?: number | string | null;
   getRowFocusId?: (row: TData) => number | string;
   getRowDomId?: (row: TData) => string;
+  /** Paginasi server: `data` = satu halaman, `rowCount` = total di server. */
+  manualPagination?: boolean;
+  rowCount?: number;
+  pageIndex?: number;
+  onPageIndexChange?: (index: number) => void;
 };
 
 export function DataTable<TData, TValue>({
@@ -58,6 +63,10 @@ export function DataTable<TData, TValue>({
   focusRowId,
   getRowFocusId,
   getRowDomId,
+  manualPagination = false,
+  rowCount,
+  pageIndex: pageIndexProp,
+  onPageIndexChange,
 }: DataTableProps<TData, TValue>) {
   const router = useRouter();
   const pathname = usePathname();
@@ -92,12 +101,35 @@ export function DataTable<TData, TValue>({
     return () => window.clearTimeout(t);
   }, [globalFilter, pathname, router, searchParams, syncSearchParam]);
 
+  const pageCount =
+    manualPagination && rowCount != null
+      ? Math.max(1, Math.ceil(rowCount / pageSize))
+      : undefined;
+
   const table = useReactTable({
     data,
     columns,
-    state: { sorting, globalFilter },
+    state: {
+      sorting,
+      globalFilter,
+      ...(manualPagination && pageIndexProp != null
+        ? { pagination: { pageIndex: pageIndexProp, pageSize } }
+        : {}),
+    },
     onSortingChange: setSorting,
     onGlobalFilterChange: setGlobalFilter,
+    ...(manualPagination
+      ? {
+          manualPagination: true,
+          pageCount,
+          onPaginationChange: (updater) => {
+            if (!onPageIndexChange) return;
+            const prev = pageIndexProp ?? 0;
+            const next = typeof updater === "function" ? updater({ pageIndex: prev, pageSize }) : updater;
+            onPageIndexChange(next.pageIndex);
+          },
+        }
+      : {}),
     defaultColumn: { enableSorting: true },
     globalFilterFn: searchColumnIds?.length
       ? (row, _columnId, filterValue) => {
@@ -119,7 +151,10 @@ export function DataTable<TData, TValue>({
     initialState: { pagination: { pageSize } },
   });
 
-  const filteredCount = table.getFilteredRowModel().rows.length;
+  const filteredCount = manualPagination && rowCount != null ? rowCount : table.getFilteredRowModel().rows.length;
+  const pageTotal = manualPagination ? pageCount ?? 1 : table.getPageCount();
+  const currentPage = manualPagination ? (pageIndexProp ?? 0) + 1 : table.getState().pagination.pageIndex + 1;
+  const showPager = pageTotal > 1;
   const isRowInteractive = Boolean(getRowHref || onRowClick);
 
   useEffect(() => {
@@ -251,18 +286,22 @@ export function DataTable<TData, TValue>({
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
         <span>
           {filteredCount} baris
-          {table.getPageCount() > 1
-            ? ` · halaman ${table.getState().pagination.pageIndex + 1}/${table.getPageCount()}`
-            : null}
+          {showPager ? ` · halaman ${currentPage}/${pageTotal}` : null}
         </span>
-        {table.getPageCount() > 1 ? (
+        {showPager ? (
           <div className="flex gap-2">
             <Button
               type="button"
               variant="outline"
               size="sm"
-              disabled={!table.getCanPreviousPage()}
-              onClick={() => table.previousPage()}
+              disabled={manualPagination ? (pageIndexProp ?? 0) <= 0 : !table.getCanPreviousPage()}
+              onClick={() => {
+                if (manualPagination && onPageIndexChange) {
+                  onPageIndexChange(Math.max(0, (pageIndexProp ?? 0) - 1));
+                } else {
+                  table.previousPage();
+                }
+              }}
             >
               Sebelumnya
             </Button>
@@ -270,8 +309,18 @@ export function DataTable<TData, TValue>({
               type="button"
               variant="outline"
               size="sm"
-              disabled={!table.getCanNextPage()}
-              onClick={() => table.nextPage()}
+              disabled={
+                manualPagination
+                  ? (pageIndexProp ?? 0) >= pageTotal - 1
+                  : !table.getCanNextPage()
+              }
+              onClick={() => {
+                if (manualPagination && onPageIndexChange) {
+                  onPageIndexChange((pageIndexProp ?? 0) + 1);
+                } else {
+                  table.nextPage();
+                }
+              }}
             >
               Berikutnya
             </Button>

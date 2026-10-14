@@ -88,6 +88,90 @@ export async function catatMonitorKolam(userId: number, input: MonitorKolamInput
   });
 }
 
+function mapMonitorRow(
+  r: {
+    waktu: Date;
+    ppm: Prisma.Decimal;
+    ph: Prisma.Decimal;
+    suhu_c: Prisma.Decimal;
+    kolam: {
+      id: number;
+      nama: string;
+      greenhouse_id: number;
+      greenhouse: { nama: string; lahan_id: number };
+    };
+    siklus: {
+      id: number;
+      kode_batch: string;
+      varietas: { nama: string };
+    };
+  },
+): MonitorGrafikTitik {
+  const t = r.waktu;
+  const label = new Intl.DateTimeFormat("id-ID", {
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(t);
+  const gh = r.kolam.greenhouse?.nama ?? "Greenhouse";
+  return {
+    waktu: t.toISOString(),
+    label,
+    ppm: Number(r.ppm),
+    ph: Number(r.ph),
+    suhu: Number(r.suhu_c),
+    kolam: `${gh} / ${r.kolam.nama}`,
+    kolamNama: r.kolam.nama,
+    greenhouseNama: gh,
+    kolamId: r.kolam.id,
+    siklusId: r.siklus.id,
+    greenhouseId: r.kolam.greenhouse_id,
+    lahanId: r.kolam.greenhouse.lahan_id,
+    siklusLabel: ringkasanSiklusUntukTeks({
+      kode_batch: r.siklus.kode_batch,
+      varietas: r.siklus.varietas,
+      kolam: {
+        nama: r.kolam.nama,
+        greenhouse: { nama: gh },
+      },
+    }),
+  };
+}
+
+const monitorInclude = {
+  kolam: {
+    select: {
+      id: true,
+      nama: true,
+      greenhouse_id: true,
+      greenhouse: { select: { nama: true, lahan_id: true } },
+    },
+  },
+  siklus: {
+    select: {
+      id: true,
+      kode_batch: true,
+      varietas: { select: { nama: true } },
+    },
+  },
+} as const;
+
+/** Titik monitor dalam rentang tanggal (beranda Admin/Owner/Petani). */
+export async function listMonitorGrafikRentang(
+  start: Date,
+  end: Date,
+  take = 3000,
+): Promise<MonitorGrafikTitik[]> {
+  const rows = await prisma.log_Monitor_Kolam.findMany({
+    where: { waktu: { gte: start, lte: end } },
+    orderBy: { waktu: "desc" },
+    take,
+    include: monitorInclude,
+  });
+  return rows.reverse().map(mapMonitorRow);
+}
+
 /** Titik grafik beranda petani — batch aktif (bukan selesai/gagal total). */
 export async function listMonitorGrafikPetani(limit = 200): Promise<MonitorGrafikTitik[]> {
   const rows = await prisma.log_Monitor_Kolam.findMany({
@@ -100,55 +184,8 @@ export async function listMonitorGrafikPetani(limit = 200): Promise<MonitorGrafi
     },
     orderBy: { waktu: "desc" },
     take: limit,
-    include: {
-      kolam: {
-        select: {
-          id: true,
-          nama: true,
-          greenhouse_id: true,
-          greenhouse: { select: { nama: true, lahan_id: true } },
-        },
-      },
-      siklus: {
-        select: {
-          id: true,
-          kode_batch: true,
-          varietas: { select: { nama: true } },
-        },
-      },
-    },
+    include: monitorInclude,
   });
 
-  return rows
-    .reverse()
-    .map((r) => {
-      const t = r.waktu;
-      const label = new Intl.DateTimeFormat("id-ID", {
-        day: "numeric",
-        month: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-      }).format(t);
-      const gh = r.kolam.greenhouse?.nama ?? "Greenhouse";
-      return {
-        waktu: t.toISOString(),
-        label,
-        ppm: Number(r.ppm),
-        ph: Number(r.ph),
-        suhu: Number(r.suhu_c),
-        kolam: `${gh} / ${r.kolam.nama}`,
-        kolamId: r.kolam.id,
-        siklusId: r.siklus.id,
-        greenhouseId: r.kolam.greenhouse_id,
-        lahanId: r.kolam.greenhouse.lahan_id,
-        siklusLabel: ringkasanSiklusUntukTeks({
-          kode_batch: r.siklus.kode_batch,
-          varietas: r.siklus.varietas,
-          kolam: {
-            nama: r.kolam.nama,
-            greenhouse: { nama: gh },
-          },
-        }),
-      };
-    });
+  return rows.reverse().map(mapMonitorRow);
 }

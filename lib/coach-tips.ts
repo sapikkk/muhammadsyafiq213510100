@@ -74,6 +74,10 @@ export const COACH_TIPS: Record<string, string[]> = {
     "Tambah dan ubah lewat panel samping; nonaktifkan perlu konfirmasi.",
     "Pelanggan nonaktif tidak bisa dipilih saat buat pesanan jual baru.",
   ],
+  "admin-pelanggan-detail": [
+    "Klik baris pesanan untuk buka detail penjualan di panel samping.",
+    "HPP dan margin internal; faktur pelanggan tidak menampilkan HPP.",
+  ],
   "admin-penjualan": [
     "Urutan: buat pesanan, konfirmasi, kirim, lalu catat pelunasan atau uang muka.",
     "Klik baris untuk detail di panel samping.",

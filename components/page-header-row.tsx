@@ -1,26 +1,21 @@
 import type { ReactNode } from "react";
 import { PageHeader } from "@/components/page-header";
 
-/** Judul halaman + toolbar kanan (Panduan, aksi utama). */
+/** Judul halaman + aksi kanan (panduan lewat ikon di bawah AppShell). */
 export function PageHeaderRow({
   title,
   description,
-  guide,
   actions,
 }: {
   title: string;
   description?: string;
-  guide?: ReactNode;
   actions?: ReactNode;
 }) {
-  const hasToolbar = guide || actions;
-
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
       <PageHeader title={title} description={description} />
-      {hasToolbar ? (
+      {actions ? (
         <div className="flex shrink-0 flex-wrap items-center justify-end gap-2 sm:pt-0.5">
-          {guide}
           {actions}
         </div>
       ) : null}

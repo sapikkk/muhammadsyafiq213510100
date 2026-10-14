@@ -1,3 +1,4 @@
+import { DashboardBentoEmpty } from "@/components/dashboard-bento-empty";
 import { MetricCards } from "@/components/metric-cards";
 import { MonochromeProgressBar } from "@/components/monochrome-progress-bar";
 import type { ProduksiRingkasan } from "@/lib/produksi-kapasitas-types";
@@ -5,11 +6,26 @@ import type { ProduksiRingkasan } from "@/lib/produksi-kapasitas-types";
 export function ProduksiRingkasanPanel({
   data,
   showKapasitasBar = true,
+  kolamSetupHref,
+  kolamSetupLabel = "Atur lahan dan kolam",
 }: {
   data: ProduksiRingkasan;
   showKapasitasBar?: boolean;
+  /** Jika kapasitas nol, tampilkan pesan + tombol ke halaman ini. */
+  kolamSetupHref?: string;
+  kolamSetupLabel?: string;
 }) {
   const k = data.kapasitas;
+
+  if (k.totalLubang <= 0 && kolamSetupHref) {
+    return (
+      <DashboardBentoEmpty
+        message="Belum ada lubang kolam. Atur infrastruktur dulu agar ringkasan tanam muncul."
+        actionLabel={kolamSetupLabel}
+        href={kolamSetupHref}
+      />
+    );
+  }
 
   return (
     <div className="space-y-4">

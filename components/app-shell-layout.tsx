@@ -13,6 +13,7 @@ import { NotifikasiFloating } from "@/components/notifikasi-floating";
 import type { Role } from "@/types/role";
 import { roleLabel } from "@/types/role";
 import { NotifikasiInboxPopover } from "@/components/notifikasi-inbox-popover";
+import { PageGuideFooter } from "@/components/page-guide-footer";
 
 export function AppShellLayout({
   role,
@@ -64,7 +65,10 @@ export function AppShellLayout({
         </header>
 
         <div className="flex-1 p-4 md:p-8">
-          <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">{children}</div>
+          <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
+            {children}
+            <PageGuideFooter />
+          </div>
         </div>
       </main>
 

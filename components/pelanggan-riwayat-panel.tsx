@@ -1,7 +1,6 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
 import { EksporLembar } from "@/components/ekspor-lembar";
@@ -42,11 +41,7 @@ export function PelangganRiwayatPanel({
       {
         accessorKey: "nomor_so",
         header: "Pesanan jual",
-        cell: ({ row }) => (
-          <Link href={`/admin/penjualan/${row.original.id}`} className="underline-offset-2 hover:underline">
-            {row.original.nomor_so}
-          </Link>
-        ),
+        cell: ({ row }) => <span className="font-medium">{row.original.nomor_so}</span>,
       },
       {
         id: "tanggal",
@@ -81,9 +76,6 @@ export function PelangganRiwayatPanel({
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-muted-foreground">
-        HPP dan margin hanya untuk tim Kokonus. Faktur untuk pelanggan tidak menampilkan HPP.
-      </p>
       <EksporLembar
         judulTombol="Ekspor riwayat"
         unduhPath={`/api/export/pelanggan/${pelangganId}`}
@@ -105,6 +97,7 @@ export function PelangganRiwayatPanel({
         searchPlaceholder="Cari pesanan…"
         searchColumnIds={["nomor_so"]}
         emptyMessage="Belum ada pesanan untuk pelanggan ini."
+        getRowHref={(row) => `/admin/penjualan/${row.id}`}
       />
     </div>
   );

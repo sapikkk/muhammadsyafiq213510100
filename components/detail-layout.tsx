@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { FinanceModuleNav } from "@/components/finance-module-nav";
-import { DetailLayoutCoachFooter } from "@/components/detail-layout-coach-footer";
 import { DetailLayoutToolbar } from "@/components/detail-layout-toolbar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -86,7 +85,6 @@ export function DetailLayout({
       <div className={cn("flex flex-col", inSheet ? "gap-5" : "gap-6")}>{children}</div>
 
       {extra}
-      {!inSheet ? <DetailLayoutCoachFooter /> : null}
     </div>
   );
 }

@@ -35,6 +35,15 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
   }
   const staticMatchers: { pattern: RegExp; pageKey: string; title: string; steps: FlowStep[] }[] = [
     {
+      pattern: /^\/lupa-sandi\/?$/,
+      pageKey: "lupa-sandi",
+      title: "Lupa sandi",
+      steps: [
+        { label: "Email", detail: "Kirim permintaan — Admin yang memproses." },
+        { label: "Setelah disetujui", detail: "Admin beri sandi sementara; ganti lewat Ganti sandi." },
+      ],
+    },
+    {
       pattern: /^\/ganti-sandi\/?$/,
       pageKey: "ganti-sandi",
       title: "Ganti sandi",
@@ -139,8 +148,18 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
       pageKey: "detail-sales-order",
       title: "Detail pesanan jual",
       steps: [
-        { label: "Status", detail: "Menentukan tombol apa yang boleh diklik." },
-        { label: "Baris", detail: "Batch, jumlah, subtotal per item." },
+        { label: "Langkah utama", detail: "Tombol besar di atas: konfirmasi, kirim, sampai, atau pelunasan." },
+        { label: "Barang", detail: "Cek batch dan total sebelum simpan." },
+        { label: "Lainnya", detail: "Uang muka, packing, atau batalkan lewat menu Lainnya." },
+      ],
+    },
+    {
+      pattern: /^\/admin\/pelanggan\/\d+$/,
+      pageKey: "admin-pelanggan-detail",
+      title: "Detail pelanggan",
+      steps: [
+        { label: "Riwayat", detail: "Klik baris pesanan untuk buka detail di panel samping." },
+        { label: "Ubah data", detail: "Dari daftar pelanggan, pakai Ubah di baris yang sama." },
       ],
     },
     {
