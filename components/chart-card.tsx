@@ -15,7 +15,7 @@ export function ChartCard({
   contentClassName?: string;
 }) {
   return (
-    <Card className={cn("overflow-hidden shadow-none", className)}>
+    <Card className={cn("overflow-hidden", className)}>
       <CardHeader className="space-y-0 p-4 pb-2">
         <CardTitle className="text-base font-semibold">{title}</CardTitle>
       </CardHeader>

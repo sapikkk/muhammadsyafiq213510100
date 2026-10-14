@@ -74,8 +74,10 @@ push_env AUDIT_BYPASS_RBAC "false"
 green "3/6 — prisma db push (DB cloud)"
 npx prisma db push
 
-green "4/6 — seed demo"
-node --env-file="$ENV_FILE" prisma/seed.js
+green "4/6 — seed demo alur owner (operasi + keuangan + rekening)"
+node --env-file="$ENV_FILE" prisma/seed-kokonus-tahun.js
+node --env-file="$ENV_FILE" prisma/seed-keuangan.js
+node --env-file="$ENV_FILE" prisma/seed-rekening-kas-standalone.js
 
 green "5/6 — deploy production"
 vercel deploy --prod --yes --scope "$TEAM" --archive=tgz

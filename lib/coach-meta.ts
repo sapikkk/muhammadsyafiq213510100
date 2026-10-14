@@ -35,6 +35,15 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
   }
   const staticMatchers: { pattern: RegExp; pageKey: string; title: string; steps: FlowStep[] }[] = [
     {
+      pattern: /^\/lupa-sandi\/?$/,
+      pageKey: "lupa-sandi",
+      title: "Lupa sandi",
+      steps: [
+        { label: "Email", detail: "Kirim permintaan — Admin yang memproses." },
+        { label: "Setelah disetujui", detail: "Admin beri sandi sementara; ganti lewat Ganti sandi." },
+      ],
+    },
+    {
       pattern: /^\/ganti-sandi\/?$/,
       pageKey: "ganti-sandi",
       title: "Ganti sandi",
@@ -75,8 +84,9 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
       pageKey: "petani-siklus-baru",
       title: "Mulai semai baru",
       steps: [
-        { label: "Varietas dan kolam", detail: "Pastikan kolam siap dan paket cukup." },
-        { label: "Simpan", detail: "Batch baru muncul di daftar siklus." },
+        { label: "Kolam", detail: "Daftar hanya kolam menganggur. Satu batch per kolam." },
+        { label: "Lubang kosong", detail: "Di kolam yang sudah tanam, pakai tambal susulan di detail batch." },
+        { label: "Simpan", detail: "Stok pack berkurang otomatis setelah semai tersimpan." },
       ],
     },
   ];
@@ -86,6 +96,16 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
     }
   }
   const detailMatchers: { pattern: RegExp; pageKey: string; title: string; steps: FlowStep[] }[] = [
+    {
+      pattern: /^\/petani\/siklus\/\d+$/,
+      pageKey: "petani-siklus-detail",
+      title: "Detail batch",
+      steps: [
+        { label: "Isi kolam", detail: "Garis menunjukkan berapa lubang batch ini pakai." },
+        { label: "Langkah berikutnya", detail: "Tombol utama untuk lanjut fase atau lapor panen." },
+        { label: "Lainnya", detail: "Tambal, kegagalan, atau batalkan batch." },
+      ],
+    },
     {
       pattern: /^\/admin\/penjualan\/\d+\/invoice\/?$/,
       pageKey: "admin-penjualan-invoice",
@@ -128,8 +148,18 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
       pageKey: "detail-sales-order",
       title: "Detail pesanan jual",
       steps: [
-        { label: "Status", detail: "Menentukan tombol apa yang boleh diklik." },
-        { label: "Baris", detail: "Batch, jumlah, subtotal per item." },
+        { label: "Langkah utama", detail: "Tombol besar di atas: konfirmasi, kirim, sampai, atau pelunasan." },
+        { label: "Barang", detail: "Cek batch dan total sebelum simpan." },
+        { label: "Lainnya", detail: "Uang muka, packing, atau batalkan lewat menu Lainnya." },
+      ],
+    },
+    {
+      pattern: /^\/admin\/pelanggan\/\d+$/,
+      pageKey: "admin-pelanggan-detail",
+      title: "Detail pelanggan",
+      steps: [
+        { label: "Riwayat", detail: "Klik baris pesanan untuk buka detail di panel samping." },
+        { label: "Ubah data", detail: "Dari daftar pelanggan, pakai Ubah di baris yang sama." },
       ],
     },
     {

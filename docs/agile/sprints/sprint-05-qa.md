@@ -14,7 +14,7 @@
 | T5.5 | [#43](https://github.com/sapikkk/muhammadsyafiq213510100/issues/43) | Done | Retry P2024 + jeda di `lib/prisma.ts`; [#50](https://github.com/sapikkk/muhammadsyafiq213510100/issues/50) doc |
 | T5.6 | [#44](https://github.com/sapikkk/muhammadsyafiq213510100/issues/44) | Done | [`docs/deployment/panduan-deploy-vercel-postgres.md`](../../deployment/panduan-deploy-vercel-postgres.md), `check:production-env` |
 | T5.9 | [#45](https://github.com/sapikkk/muhammadsyafiq213510100/issues/45) | Done* | [`docs/testing/panduan-uji-dan-demo.md`](../../testing/panduan-uji-dan-demo.md#pelatihan-go-live-t59) |
-| T5.10 | — | Done | UX flow + perf **v1.28.0** — [`UX-FLOW-PERF-REPORT.md`](../UX-FLOW-PERF-REPORT.md), [`FLOW-NAV.md`](../../ux/FLOW-NAV.md) |
+| T5.10 | — | Done | UX flow + perf **v1.28.0** — [`UX-FLOW-PERF-REPORT.md`](../UX-FLOW-PERF-REPORT.md), [`FLOW-NAV.md`](../../desain/FLOW-NAV.md) |
 
 \* T5.9: materi pelatihan siap; sesi live 6 pengguna = aktivitas PO (post-merge).
 
@@ -29,8 +29,10 @@ T5.9 (materi pelatihan)
 
 ## Testing
 
-- `docs/testing/panduan-uji-dan-demo.md`, `docs/uji-blackbox.md` (section Sprint 5)
+- `docs/testing/panduan-uji-dan-demo.md`, `docs/testing/uji-blackbox.md` (section Sprint 5)
 - Seed demo: `E2E-S5-DEMO` — `prisma/seed-siklus-demo.js`, reset `scripts/reset-e2e-siklus.js`
 - Halaman `/`: progress Project #1 — `npm run sync:agile-progress` (PR [#85](https://github.com/sapikkk/muhammadsyafiq213510100/pull/85))
 
-Terakhir diperbarui: **2026-10-10**.
+Registry QA: [`../us-registry.md`](../us-registry.md#sprint-5--qa--go-live-bukan-us-produk)
+
+Terakhir diperbarui: **2026-10-15**.

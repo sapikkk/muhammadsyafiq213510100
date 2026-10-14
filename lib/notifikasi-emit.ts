@@ -215,7 +215,7 @@ export async function emitPetaniBaru(
     jenis: NotifJenis.PETANI_BARU,
     judul: "Petani baru ditambahkan",
     pesan: pesanAktivitas(pelaku, `mendaftarkan petani ${nama} (${email}).`),
-    href: `/owner/pengguna?user=${userId}`,
+    href: `/pengaturan?bagian=tim&tim=pengguna&user=${userId}`,
     entitas: "User",
     entitasId: userId,
   });

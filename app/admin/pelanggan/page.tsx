@@ -12,7 +12,6 @@ export default async function AdminPelangganPage() {
   return (
     <CrudPageLayout
       financeNavRole="ADMIN"
-      eyebrow="Keuangan"
       title="Pelanggan"
       actions={
         <PelangganFormSheet

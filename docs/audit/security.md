@@ -1,4 +1,6 @@
-# PHASE 6.4 — Security & integrity (draft)
+# Keamanan & integritas API
+
+Ringkasan temuan audit keamanan v1. Format temuan: [`../standards/format-temuan-audit.md`](../standards/format-temuan-audit.md).
 
 | Sev | Area | Temuan | Status |
 |-----|------|--------|--------|

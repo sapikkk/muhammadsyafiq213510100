@@ -1,12 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { ChevronDown, ChevronRight, LeafyGreen, LogOut, Settings } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  LeafyGreen,
+  LogOut,
+  Settings,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { getNavFlowGroups, type NavFlowGroup } from "@/lib/nav-flow";
+import {
+  isOwnerSidebarModuleActive,
+  OWNER_SIDEBAR_MODULES,
+} from "@/lib/owner-sidebar-nav";
 import { NotifikasiUnreadBadge } from "@/components/notifikasi-unread-badge";
 import { getNavItems, type NavItem } from "@/lib/nav-items";
 import type { Role } from "@/types/role";
@@ -28,19 +38,35 @@ function getAuditNavItems(stokRendahCount: number): NavItem[] {
   return items;
 }
 
-function isNavActive(pathname: string, href: string) {
-  if (href === pathname) return true;
-  if (href === "/admin" || href === "/owner" || href === "/petani") {
-    return pathname === href;
+function isNavActive(pathname: string, href: string, searchParams: URLSearchParams) {
+  const [path, query] = href.split("?");
+  if (path === "/admin" || path === "/owner" || path === "/petani") {
+    if (pathname !== path) return false;
+    return !query;
   }
-  return pathname.startsWith(`${href}/`) || pathname === href;
+  const pathOk = pathname === path || pathname.startsWith(`${path}/`);
+  if (!pathOk) return false;
+  if (!query) {
+    return pathname === path;
+  }
+  const expected = new URLSearchParams(query);
+  let match = true;
+  expected.forEach((v, k) => {
+    if (searchParams.get(k) !== v) match = false;
+  });
+  if (!match) return false;
+  return true;
 }
 
-/** Satu highlight — item pertama yang cocok dengan path (hindari semua sub-item hitam). */
-function pickActiveNavKey(pathname: string, groups: NavFlowGroup[]): string | null {
+/** Satu highlight — cocokkan path + query (epic 3.x / 7.x). */
+function pickActiveNavKey(
+  pathname: string,
+  searchParams: URLSearchParams,
+  groups: NavFlowGroup[],
+): string | null {
   for (const group of groups) {
     for (const item of group.items) {
-      if (isNavActive(pathname, item.href)) {
+      if (isNavActive(pathname, item.href, searchParams)) {
         return item.navKey ?? `${item.href}::${item.label}`;
       }
     }
@@ -64,15 +90,20 @@ export function AppSidebar({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const groups = auditShowAllNav ? null : getNavFlowGroups(role, stokRendahCount);
   const flatAudit = auditShowAllNav ? getAuditNavItems(stokRendahCount) : null;
   const activeNavKey =
-    groups && !flatAudit ? pickActiveNavKey(pathname, groups) : null;
+    groups && !flatAudit ? pickActiveNavKey(pathname, searchParams, groups) : null;
 
   return (
     <aside className="flex h-screen w-64 flex-col border-r bg-sidebar">
       <div className="flex h-14 shrink-0 items-center border-b px-4">
-        <Link href="/" className="flex items-center gap-2" onClick={() => onNavigate?.()}>
+        <Link
+          href={role === "OWNER" ? "/owner" : "/"}
+          className="flex items-center gap-2"
+          onClick={() => onNavigate?.()}
+        >
           <div className="flex h-7 w-7 items-center justify-center rounded-md bg-foreground">
             <LeafyGreen className="h-4 w-4 text-background" />
           </div>
@@ -87,7 +118,18 @@ export function AppSidebar({
               <NavLink
                 key={item.href}
                 item={item}
-                active={isNavActive(pathname, item.href)}
+                active={isNavActive(pathname, item.href, searchParams)}
+                onNavigate={onNavigate}
+              />
+            ))}
+          </ul>
+        ) : role === "OWNER" ? (
+          <ul className="space-y-0.5">
+            {OWNER_SIDEBAR_MODULES.map((item) => (
+              <NavLink
+                key={item.href}
+                item={item}
+                active={isOwnerSidebarModuleActive(pathname, item.href)}
                 onNavigate={onNavigate}
               />
             ))}
@@ -112,12 +154,12 @@ export function AppSidebar({
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-xs font-medium">{userName}</p>
-            <p className="truncate text-[11px] text-muted-foreground">{roleLabel[role]}</p>
+            <p className="truncate text-xs text-muted-foreground">{roleLabel[role]}</p>
           </div>
         </div>
         <div className="flex gap-1">
           <Link
-            href="/pengaturan#notifikasi"
+            href="/pengaturan?bagian=notifikasi"
             onClick={() => onNavigate?.()}
             className="relative flex min-h-10 flex-1 items-center justify-center gap-2 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
@@ -150,7 +192,10 @@ function NavFlowGroup({
   activeNavKey: string | null;
   onNavigate?: () => void;
 }) {
-  const hasActive = group.items.some((item) => isNavActive(pathname, item.href));
+  const searchParams = useSearchParams();
+  const hasActive = group.items.some((item) =>
+    isNavActive(pathname, item.href, searchParams),
+  );
   const [open, setOpen] = useState(hasActive);
 
   useEffect(() => {
@@ -184,7 +229,7 @@ function NavFlowGroup({
                 item={item}
                 active={activeNavKey === key}
                 muted={
-                  activeNavKey !== key && isNavActive(pathname, item.href)
+                  activeNavKey !== key && isNavActive(pathname, item.href, searchParams)
                 }
                 onNavigate={onNavigate}
               />
@@ -214,7 +259,7 @@ function NavLink({
         href={item.href}
         onClick={() => onNavigate?.()}
         className={cn(
-          "flex min-h-9 items-start gap-2 rounded-md px-2 py-1.5 text-[13px] leading-snug transition-colors",
+          "flex min-h-11 items-start gap-2 rounded-md px-2 py-1.5 text-sm leading-snug transition-colors",
           active
             ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground ring-1 ring-border/80"
             : muted

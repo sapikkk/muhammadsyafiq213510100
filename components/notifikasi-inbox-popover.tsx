@@ -125,7 +125,7 @@ export function NotifikasiInboxPopover({
 
       {open ? (
         <div
-          className="absolute right-0 top-full z-50 mt-2 flex w-[min(100vw-2rem,22rem)] flex-col overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md"
+          className="absolute right-0 top-full z-50 mt-2 flex w-[min(100vw-2rem,22rem)] flex-col overflow-hidden rounded-md border border-border bg-popover text-popover-foreground"
           role="dialog"
           aria-label="Daftar notifikasi"
         >

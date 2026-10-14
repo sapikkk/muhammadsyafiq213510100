@@ -1,4 +1,5 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { InventarisStokRendah } from "@/components/inventaris-stok-rendah";
 import { listAlertStokMinimum, serializeAlertStok } from "@/lib/inventaris";
 
@@ -9,10 +10,17 @@ export default async function AdminStokRendahPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi & stok"
-      title="Alert stok minimum"
+      title="Stok rendah"
+      actions={
+        <EksporDaftarTombol unduhPath="/api/export/stok-rendah" jenisPratinjau="stok-rendah" />
+      }
       list={
-        <InventarisStokRendah items={items.map(serializeAlertStok)} showRestockHint />
+        <InventarisStokRendah
+          items={items.map(serializeAlertStok)}
+          showRestockHint
+          restockHref="/admin/inventaris"
+          restockLabel="Catat pembelian di inventaris"
+        />
       }
       listTitle="Item di bawah minimum"
     />

@@ -37,7 +37,7 @@ Playwright dan TestCafe dipasang lewat npm, bukan clone penuh ke repo.
 
 ## Sprint 5
 
-Black-box manual: [`docs/tabel-blackbox-testing.md`](../tabel-blackbox-testing.md) (register langkah) dan [`docs/uji-blackbox.md`](../uji-blackbox.md) (notulensi). Audit debit=kredit: T5.4 setelah alur jurnal stabil.
+Black-box manual: [`docs/testing/tabel-blackbox-testing.md`](../tabel-blackbox-testing.md) (register langkah) dan [`docs/testing/uji-blackbox.md`](../uji-blackbox.md) (notulensi). Audit debit=kredit: T5.4 setelah alur jurnal stabil.
 
 ## Data demo sidang
 
@@ -55,8 +55,23 @@ Sandi tidak di-commit; ganti sebelum sidang publik ([`docs/deployment/panduan-de
 
 ```bash
 npx prisma db push   # atau migrate deploy
-npm run seed         # COA, inventaris, infrastruktur, varietas, siklus demo
+npm run seed         # COA fondasi (atau seed:demo-lengkap untuk akun demo)
 npm run seed:demo    # pelanggan demo + 1 jurnal DRAFT
+```
+
+**Demo operasi + keuangan penuh (sidang):**
+
+```bash
+npm run seed:demo-lengkap    # akun demo + inventaris + varietas + siklus ringkas
+npm run seed:kokonus-tahun   # 1 tahun produksi, panen, penjualan, overhead
+npm run seed:keuangan        # jurnal penjualan (APPROVED) + penyusutan 2025–bulan berjalan
+# atau satu baris (termasuk rekening kas + checklist alur Owner):
+npm run seed:owner-alur
+# alias tanpa checklist:
+npm run seed:demo-prod
+```
+
+Di DB cloud (Prisma Data Platform), seed panjang (`seed:kokonus-tahun`) lebih stabil dengan **`DIRECT_URL`** sebagai `DATABASE_URL` sekali jalan (bukan pooled).
 ```
 
 Isi `seed:demo`:
@@ -114,7 +129,7 @@ Tambah akun Petani lewat Owner → Kelola user jika perlu sampai 6 login unik.
 2. Petani (10 m) — daftar siklus → detail → centang konfirmasi → Lanjut fase; lihat log fase.
 3. Admin (10 m) — alert stok → jurnal → filter tanggal → cari DataTable → approve contoh.
 4. Owner (10 m) — dashboard bulan laba tertinggi → Pie biaya → evaluasi BEP tanpa Excel.
-5. Q&A dan checklist (5 m) — `docs/uji-blackbox.md` bagian Sprint 5.
+5. Q&A dan checklist (5 m) — `docs/testing/uji-blackbox.md` bagian Sprint 5.
 
 ### Checklist go-live
 

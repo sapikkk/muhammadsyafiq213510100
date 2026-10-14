@@ -67,7 +67,9 @@ export function FinanceHubPanel({
           { label: "Semua transaksi", href: "/admin/jurnal" },
         ]
       : [
-          { label: "Unduh laporan", href: "/owner/laporan" },
+          { label: "Laba rugi", href: "/owner/laporan?laporan=laba-rugi" },
+          { label: "Neraca", href: "/owner/laporan?laporan=neraca" },
+          { label: "Arus kas", href: "/owner/arus-kas" },
           { label: "Catatan keuangan", href: "/owner/jurnal" },
         ];
 

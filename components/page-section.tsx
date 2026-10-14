@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { pageLeadClass, sectionTitleClass } from "@/lib/ui-typography";
 import { cn } from "@/lib/utils";
 
 export function PageSection({
@@ -9,7 +10,7 @@ export function PageSection({
   className,
   id,
 }: {
-  title: string;
+  title?: string;
   description?: string;
   badge?: "Read" | "Create" | "Update" | "Delete";
   children: ReactNode;
@@ -28,18 +29,26 @@ export function PageSection({
             : null;
 
   return (
-    <section id={id} className={cn("space-y-4", className)} aria-labelledby={id ? `${id}-title` : undefined}>
-      <div className="flex flex-wrap items-baseline gap-2">
-        <h2 id={id ? `${id}-title` : undefined} className="text-lg font-semibold tracking-tight">
-          {title}
-        </h2>
-        {badgeLabel ? (
-          <span className="rounded border border-border px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
-            {badgeLabel}
-          </span>
-        ) : null}
-      </div>
-      {description ? <p className="text-sm text-muted-foreground">{description}</p> : null}
+    <section
+      id={id}
+      className={cn("min-w-0 max-w-full space-y-4", className)}
+      aria-labelledby={id ? `${id}-title` : undefined}
+    >
+      {title || badgeLabel ? (
+        <div className="flex flex-wrap items-baseline gap-2">
+          {title ? (
+            <h2 id={id ? `${id}-title` : undefined} className={sectionTitleClass}>
+              {title}
+            </h2>
+          ) : null}
+          {badgeLabel ? (
+            <span className="rounded border border-border px-2 py-0.5 text-xs font-medium text-muted-foreground">
+              {badgeLabel}
+            </span>
+          ) : null}
+        </div>
+      ) : null}
+      {description ? <p className={pageLeadClass}>{description}</p> : null}
       {children}
     </section>
   );

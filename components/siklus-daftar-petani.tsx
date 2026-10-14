@@ -81,8 +81,8 @@ export function SiklusDaftarPetani({ rows }: { rows: SiklusBarisPetani[] }) {
   return (
     <div className="space-y-4">
       <div className="flex flex-col gap-3 rounded-md border p-3 sm:flex-row sm:flex-wrap sm:items-end">
-        <label className="block min-w-[10rem] flex-1 space-y-1 text-sm">
-          <span className="font-medium">Greenhouse</span>
+        <label className="block min-w-0 flex-1 space-y-1 text-sm">
+          <span className="font-medium">Rumah kaca</span>
           <Select
             value={ghId}
             onValueChange={(v) => {
@@ -91,10 +91,10 @@ export function SiklusDaftarPetani({ rows }: { rows: SiklusBarisPetani[] }) {
             }}
           >
             <SelectTrigger className="h-11">
-              <SelectValue placeholder="Semua greenhouse" />
+              <SelectValue placeholder="Semua rumah kaca" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Semua greenhouse</SelectItem>
+              <SelectItem value="all">Semua rumah kaca</SelectItem>
               {greenhouseOptions.map(([id, nama]) => (
                 <SelectItem key={id} value={String(id)}>
                   {nama}
@@ -103,7 +103,7 @@ export function SiklusDaftarPetani({ rows }: { rows: SiklusBarisPetani[] }) {
             </SelectContent>
           </Select>
         </label>
-        <label className="block min-w-[10rem] flex-1 space-y-1 text-sm">
+        <label className="block min-w-0 flex-1 space-y-1 text-sm">
           <span className="font-medium">Kolam</span>
           <Select value={kolamId} onValueChange={setKolamId}>
             <SelectTrigger className="h-11">
@@ -130,7 +130,7 @@ export function SiklusDaftarPetani({ rows }: { rows: SiklusBarisPetani[] }) {
       </div>
       {kolamId !== "all" && !targetMonitor ? (
         <p className="text-sm text-muted-foreground">
-          Kolam ini belum punya siklus aktif di fase sprout–pendewasaan. Pilih kolam lain atau lanjutkan
+          Kolam ini belum punya siklus aktif (semai sampai pendewasaan). Pilih kolam lain atau lanjutkan
           fase di detail siklus.
         </p>
       ) : null}

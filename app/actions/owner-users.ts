@@ -43,7 +43,7 @@ export async function createOwnerUser(
       ringkasan: `Akun baru · ${user.email} (${user.role})`,
       actor: actorFromSession(ctx.session),
     });
-    revalidatePath("/owner/pengguna");
+    revalidatePath("/pengaturan");
     revalidatePath("/pengaturan");
     return { ok: true, message: "Akun baru dibuat." };
   } catch (error) {
@@ -71,7 +71,7 @@ export async function resetOwnerUserPassword(
       ringkasan: "Sandi direset oleh Owner",
       actor: actorFromSession(ctx.session),
     });
-    revalidatePath("/owner/pengguna");
+    revalidatePath("/pengaturan");
     revalidatePath("/pengaturan");
     return { ok: true, message: "Sandi direset; user wajib ganti saat login." };
   } catch (error) {
@@ -103,7 +103,7 @@ export async function ubahStatusOwnerUser(
       ringkasan: aktif ? "Diaktifkan" : "Dinonaktifkan",
       actor: actorFromSession(ctx.session),
     });
-    revalidatePath("/owner/pengguna");
+    revalidatePath("/pengaturan");
     return {
       ok: `Akun ${row.email} ${aktif ? "diaktifkan" : "dinonaktifkan"}.`,
     };

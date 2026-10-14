@@ -12,9 +12,16 @@ import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
 type Props = {
   items: SerializedAlertStok[];
   showRestockHint?: boolean;
+  restockHref?: string;
+  restockLabel?: string;
 };
 
-export function InventarisStokRendah({ items, showRestockHint = false }: Props) {
+export function InventarisStokRendah({
+  items,
+  showRestockHint = false,
+  restockHref = "/admin/inventaris",
+  restockLabel = "Catat pembelian di inventaris",
+}: Props) {
   const columns = useMemo<ColumnDef<SerializedAlertStok>[]>(
     () => [
       {
@@ -73,16 +80,16 @@ export function InventarisStokRendah({ items, showRestockHint = false }: Props) 
         columns={columns}
         data={items}
         pageSize={10}
-        searchPlaceholder="Cari kode atau nama item…"
+        searchPlaceholder="Cari nama barang…"
         searchColumnIds={["nama", "kode"]}
-        emptyMessage="Semua stok di atas minimum. Tidak ada alert saat ini."
+        emptyMessage="Semua stok di atas minimum."
       />
       {showRestockHint && items.length > 0 ? (
         <Link
-          href="/admin/inventaris"
+          href={restockHref}
           className="inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline"
         >
-          Catat pembelian di inventaris
+          {restockLabel}
         </Link>
       ) : null}
     </div>

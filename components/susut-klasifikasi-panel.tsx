@@ -49,7 +49,7 @@ function KlasifikasiBaris({ row }: { row: LogMenunggu }) {
           <select
             name="kategoriSusut"
             required
-            className="flex h-10 min-w-[220px] rounded-md border border-input bg-background px-2 text-sm"
+            className="flex h-10 w-full min-w-0 max-w-md rounded-md border border-input bg-background px-2 text-sm"
           >
             {kategoriSusutOptions.map((o) => (
               <option key={o.value} value={o.value}>

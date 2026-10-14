@@ -13,13 +13,13 @@ export default function PetaniError({
   reset: () => void;
 }) {
   useEffect(() => {
-    notify.error("Gagal memuat halaman Petani.", error.message);
+    notify.error("Gagal memuat halaman. Silakan coba lagi.");
   }, [error]);
 
   return (
     <StateScreen
       title="Gagal memuat halaman"
-      description="Terjadi kesalahan di area Petani. Coba lagi."
+      description="Terjadi kesalahan saat memuat halaman. Gunakan tombol di bawah untuk mencoba lagi."
     >
       <Button type="button" className="h-11" onClick={reset}>
         Coba lagi

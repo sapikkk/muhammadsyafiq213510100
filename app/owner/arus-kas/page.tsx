@@ -1,5 +1,7 @@
 import { CashFlowMutasiDaftar } from "@/components/cash-flow-mutasi-daftar";
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { OwnerKeuanganChrome } from "@/components/owner-keuangan-chrome";
+import { EksporLembar } from "@/components/ekspor-lembar";
 import { CashFlowSummaryChart } from "@/components/cash-flow-summary-chart";
 import { MetricCards } from "@/components/metric-cards";
 import { MonthRangeFilter } from "@/components/month-range-filter";
@@ -36,7 +38,6 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
     sampai: searchParams.sampai ?? defaultMonth(),
   });
 
-  const exportQ = `dari=${encodeURIComponent(data.dari)}&sampai=${encodeURIComponent(data.sampai)}`;
   const mutasiRows = data.movements.map((row, i) => ({
     id: `${row.jurnalId}-${row.tanggal}-${i}`,
     tanggal: row.tanggal,
@@ -48,17 +49,21 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
   }));
 
   return (
+    <OwnerKeuanganChrome>
     <CrudPageLayout
-      financeNavRole="OWNER"
-      eyebrow="Keuangan"
       title="Arus kas"
+      actions={
+        <EksporLembar
+          unduhPath="/api/export/cash-flow"
+          pratinjauPath="/api/export/preview?jenis=arus-kas"
+          rentang="bulan"
+          defaultDari={data.dari}
+          defaultSampai={data.sampai}
+        />
+      }
       list={
         <div className="space-y-6">
-          <MonthRangeFilter
-            dari={data.dari}
-            sampai={data.sampai}
-            exportHref={`/api/export/cash-flow?${exportQ}`}
-          />
+          <MonthRangeFilter dari={data.dari} sampai={data.sampai} />
 
           <MetricCards
             columns={3}
@@ -107,5 +112,6 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
       }
       listTitle="Ringkasan & mutasi"
     />
+    </OwnerKeuanganChrome>
   );
 }

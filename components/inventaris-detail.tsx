@@ -36,7 +36,6 @@ export async function InventarisDetail({
     <DetailLayout
       backHref={listHref}
       surface={surface}
-      eyebrow="Inventaris"
       title={serialized.nama}
       badge={
         <>
@@ -54,14 +53,12 @@ export async function InventarisDetail({
       }
     >
       <DetailKodeStrip label="Kode barang" kode={serialized.kode} />
-      <PageSection
-        title="Riwayat pergerakan"
-        description="50 pergerakan terakhir untuk item ini."
-        badge="Read"
-      >
+      <PageSection title="Riwayat pergerakan" badge="Read">
         <InventarisRiwayat rows={riwayat.map(serializePergerakan)} hideItemColumn />
       </PageSection>
-      <EntityChangeHistorySection entitas="ItemInventaris" entitasId={id} />
+      {writableMode === "petani" ? null : (
+        <EntityChangeHistorySection entitas="ItemInventaris" entitasId={id} />
+      )}
     </DetailLayout>
   );
 }

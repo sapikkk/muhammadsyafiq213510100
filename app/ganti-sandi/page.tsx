@@ -27,7 +27,7 @@ export default function GantiSandiPage() {
   }, [state.ok, state.role, update, router, session?.user?.role]);
 
   return (
-    <div className="mx-auto flex w-full max-w-sm flex-col justify-center gap-6 py-6">
+    <div className="mx-auto flex w-full min-w-0 max-w-sm flex-col justify-center gap-4 px-2 py-6 min-[220px]:gap-6 min-[220px]:px-0">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 space-y-1">
           <p className="text-sm font-medium text-primary">Kokonus Farm</p>

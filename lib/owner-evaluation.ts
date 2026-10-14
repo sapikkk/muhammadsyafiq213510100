@@ -3,6 +3,7 @@ import "server-only";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { labelBarisProduksiUtama, partsFromSiklusNested } from "@/lib/produksi-ui-labels";
+import { kolamSedangProduksi } from "@/lib/produksi-kapasitas";
 
 const nol = new Prisma.Decimal(0);
 
@@ -68,7 +69,7 @@ export async function ownerEvaluation(): Promise<OwnerEvaluationResult> {
   let kolamMenganggur = 0;
   for (const k of kolams) {
     totalLubang += k.kapasitas_lubang;
-    if (k.status === "TERPAKAI") {
+    if (kolamSedangProduksi(k.status)) {
       kolamTerpakai += 1;
       lubangTerpakai += k.kapasitas_lubang;
     } else {

@@ -46,6 +46,8 @@ export async function buildBalanceSheet(asOf: Date) {
     asOf: asOf.toISOString().slice(0, 10),
     sections,
     totalAset: totalAset.toFixed(2),
+    totalKewajiban: totalKewajiban.toFixed(2),
+    totalModal: totalModal.toFixed(2),
     totalKewajibanModal: totalKewajiban.add(totalModal).toFixed(2),
   };
 }

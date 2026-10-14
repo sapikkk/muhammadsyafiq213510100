@@ -1,4 +1,6 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { PetaniModulIntro } from "@/components/petani-modul-intro";
+import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { InventarisDaftar } from "@/components/inventaris-daftar";
 import { listItemInventaris, serializeItem } from "@/lib/inventaris";
 
@@ -9,8 +11,11 @@ export default async function PetaniInventarisPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi"
-      title="Inventaris"
+      title="Stok barang"
+      intro={<PetaniModulIntro modul="inventaris" />}
+      actions={
+        <EksporDaftarTombol unduhPath="/api/export/inventaris" jenisPratinjau="inventaris" />
+      }
       list={<InventarisDaftar items={items.map(serializeItem)} mode="petani" />}
       listTitle="Stok saat ini"
     />

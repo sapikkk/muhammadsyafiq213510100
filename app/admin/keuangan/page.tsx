@@ -14,7 +14,6 @@ export default async function AdminKeuanganPage() {
   return (
     <CrudPageLayout
       financeNavRole="ADMIN"
-      eyebrow="Keuangan"
       title="Modul keuangan"
       list={
         <FinanceHubPanel role="ADMIN" stats={stats} monthTrend={summary.months} />

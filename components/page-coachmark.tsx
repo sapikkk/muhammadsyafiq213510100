@@ -31,8 +31,8 @@ export type PageCoachmarkProps = {
   tips?: string[];
   /** Tampil otomatis saat pertama kali (localStorage). Default mati — buka lewat tombol Panduan. */
   autoOnFirstVisit?: boolean;
-  /** `toolbar` = sejajar aksi header; `block` = baris penuh kanan (legacy) */
-  placement?: "toolbar" | "block";
+  /** `footer` = bawah halaman (ikon saja); `toolbar`/`block` = legacy header */
+  placement?: "footer" | "toolbar" | "block";
 };
 
 function CoachDialog({
@@ -121,7 +121,7 @@ export function PageCoachmark({
   intro = UI_COPY.coachIntro,
   tips,
   autoOnFirstVisit = false,
-  placement = "block",
+  placement = "footer",
 }: PageCoachmarkProps) {
   const [coachOpen, setCoachOpen] = useState(false);
   const resolvedTips = tips?.length ? tips : tipsForCoachKey(pageKey);
@@ -154,23 +154,24 @@ export function PageCoachmark({
     <Button
       type="button"
       variant="outline"
-      size="sm"
-      className={cn(
-        "gap-1.5 text-xs",
-        placement === "toolbar" ? "h-11" : "h-9",
-      )}
+      size="icon"
+      className={cn("h-11 w-11 shrink-0", placement === "toolbar" && "h-11 w-auto gap-1.5 px-3")}
       onClick={() => setCoachOpen(true)}
       aria-label="Buka panduan halaman"
       data-coachmark={pageKey}
     >
-      <CircleHelp className="h-3.5 w-3.5" aria-hidden />
-      Panduan
+      <CircleHelp className="h-4 w-4" aria-hidden />
+      {placement === "toolbar" ? <span className="text-xs">Panduan</span> : null}
     </Button>
   );
 
   return (
     <>
-      {placement === "toolbar" ? (
+      {placement === "footer" ? (
+        <div className="flex justify-end border-t border-border/80 pt-4" data-coachmark={pageKey}>
+          {button}
+        </div>
+      ) : placement === "toolbar" ? (
         button
       ) : (
         <div className="flex w-full justify-end" data-coachmark={pageKey}>

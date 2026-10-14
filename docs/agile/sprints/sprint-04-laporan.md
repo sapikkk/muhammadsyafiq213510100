@@ -1,6 +1,9 @@
-# Sprint 4 — Dashboard, visualisasi, ekspor (rencana)
+# Sprint 4 — Beranda Owner, laporan, ekspor
 
-**Iteration:** 2026-11-18 → 2026-12-01 · **Epic:** EPIC-6 + US1.9 + US2.6
+**Tujuan:** Owner melihat KPI, evaluasi usaha, unduh laporan, plus kelola user dan baca jurnal.  
+**Iteration:** 2026-10-09 (delivery stack) · **Epic:** EPIC-6 + US1.9 + US2.6 · **Status:** Done
+
+Registry: [`../us-registry.md`](../us-registry.md)
 
 | US | Issue | Status |
 |----|-------|--------|
@@ -13,3 +16,5 @@
 | US2.6 Owner COA/jurnal | [#16](https://github.com/sapikkk/muhammadsyafiq213510100/issues/16) | Done (#78) |
 
 **Prasyarat:** transaksi jurnal + SO sampel dari Sprint 3.
+
+Terakhir diperbarui: **2026-10-15**.

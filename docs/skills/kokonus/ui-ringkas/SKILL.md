@@ -5,7 +5,7 @@ Teks di layar (`app/`, `components/`): bahasa Indonesia, kalimat pendek, tanpa j
 ## Prinsip
 
 1. **Judul cukup.** Hindari paragraf di bawah judul halaman dan di bawah judul tabel daftar.
-2. **Panduan opsional.** `flowSteps` / tombol Panduan hanya jika PO minta onboarding; default halaman CRUD tanpa blok panduan.
+2. **Panduan opsional.** Ikon `?` saja di **bawah** halaman (`PageGuideFooter` / AppShell); teks panjang hanya di dialog (`lib/coach-meta.ts`, `lib/coach-tips.ts`). Jangan tombol “Panduan” di header.
 3. **Daftar = aksi.** Tabel & dropdown: **hanya label manusia** (nama, lokasi, varietas). **Kode internal tidak di daftar** — hanya di **halaman detail** lewat `components/detail-kode-strip.tsx` (blok terpisah, bukan di bawah judul baris). Dropdown: `lib/inventaris-ui-labels.ts` (nama saja). Produksi: `lib/produksi-ui-labels.ts`. Jurnal detail: nama akun di tabel; kode akun di section «Kode akun (referensi)». Catat uang: `lib/smart-jurnal-catalog.ts` tanpa angka COA.
 4. **Tipografi tabel.** Teks panjang: `lib/table-cell-text.ts` (`truncate`, `text-sm`, `title` untuk hover).
 5. **Metrik & grafik keuangan.** Angka pakai `MetricCards` (kartu kecil, grid 2–3 kolom). Grafik di `ChartCard`, tinggi ~`h-52`, warna `lib/chart-monochrome.ts` (grayscale).

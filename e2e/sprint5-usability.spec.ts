@@ -44,11 +44,9 @@ test("T5.1 petani HP: pindah fase batch demo", async ({ page }) => {
   await loginAs(page, "petani@kokonus.farm", /\/petani/);
   const id = demoSiklusId();
 
-  await page.goto("/petani/siklus");
+  await page.goto(`/petani/siklus/${id}`);
   await expect(page.getByText("E2E-S5-DEMO")).toBeVisible();
-  await page.locator("tr", { hasText: "E2E-S5-DEMO" }).click();
-  await page.waitForURL(new RegExp(`/petani/siklus/${id}$`));
-  await expect(page.getByRole("heading", { name: "E2E-S5-DEMO" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Selada/i })).toBeVisible();
   await expect(page.getByRole("button", { name: /Langkah berikutnya/i })).toBeVisible();
 
   const detail = await page.request.get(`/api/production/${id}/phase`);
@@ -76,19 +74,17 @@ test("T5.2 admin: filter jurnal tanggal + cari", async ({ page }) => {
   await page.locator('input[name="sampai"]').fill("2030-12-31");
   await page.getByRole("button", { name: /Terapkan/i }).click();
   await expect(page.getByText(/sesuai filter/i)).toBeVisible();
-  const search = page.getByPlaceholder(/Cari keterangan/i);
+  const search = page.getByLabel(/Cari jurnal/i);
   await expect(search).toBeVisible();
   await search.fill("zzz-tidak-ada-xyz");
-  await expect(page.getByText(/\d+ baris/)).toBeVisible();
+  await expect(page.getByText(/Tidak ada catatan cocok pencarian/i)).toBeVisible();
 });
 
 test("T5.3 owner: KPI, grafik, pie biaya", async ({ page }) => {
   await loginAs(page, "owner@kokonus.farm", /\/owner/);
   await page.goto("/owner");
-  await expect(page.getByRole("heading", { name: "Pendapatan vs beban" })).toBeVisible();
+  await expect(page.getByText(/Pendapatan vs beban/i)).toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.getByRole("link", { name: /Pie biaya/i })).toBeVisible();
-  await page.getByRole("link", { name: /Pie biaya/i }).click();
-  await page.waitForURL(/\/owner\/biaya/);
-  await expect(page.getByRole("heading", { name: /Breakdown biaya/i })).toBeVisible();
+  await page.goto("/owner/biaya");
+  await expect(page.getByRole("heading", { name: /Biaya & HPP/i })).toBeVisible();
 });

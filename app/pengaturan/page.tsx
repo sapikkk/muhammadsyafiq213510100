@@ -1,21 +1,33 @@
+import { Suspense } from "react";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import { AccountSettings } from "@/components/account-settings";
 import { NotifikasiSection } from "@/components/notifikasi-section";
-import { PageGuideToolbar } from "@/components/page-guide-toolbar";
+import { OwnerUserCreateSheet, OwnerUserDaftar } from "@/components/owner-user-panel";
 import { PageHeaderRow } from "@/components/page-header-row";
+import { PengaturanTimSubnav } from "@/components/pengaturan-tim-panel";
+import { PetaniMasterDaftar } from "@/components/petani-master-daftar";
 import { RoleMatrix } from "@/components/role-matrix";
+import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
+import { listUsersForOwner } from "@/lib/owner-users";
+import { listPetani, serializePetani } from "@/lib/petani";
 import { prisma } from "@/lib/prisma";
-import { roleLabel, type Role } from "@/types/role";
 
 export const dynamic = "force-dynamic";
 
-export default async function PengaturanPage() {
-  const session = await getServerSession(authOptions);
-  const role = (session?.user?.role ?? "PEKERJA") as Role;
+type Search = { bagian?: string; tim?: string };
 
-  // Baca nama dari DB, bukan token. Token baru segar setelah update sesi.
+export default async function PengaturanPage({ searchParams }: { searchParams: Search }) {
+  const session = await getServerSession(authOptions);
   const userId = session?.user?.id ? Number(session.user.id) : null;
+  const role = session?.user?.role;
+  const bagian = searchParams.bagian ?? "profil";
+
+  if (bagian === "tim" && role !== "OWNER") {
+    redirect("/pengaturan?bagian=profil");
+  }
+
   const user = userId
     ? await prisma.user.findUnique({
         where: { id: userId },
@@ -25,17 +37,58 @@ export default async function PengaturanPage() {
   const nama = user?.nama ?? session?.user?.name ?? "";
 
   return (
-    <div className="mx-auto flex w-full max-w-lg flex-col gap-6">
-      <PageHeaderRow
-        title="Pengaturan"
-        description={`${nama} · ${roleLabel[role]}`}
-        guide={<PageGuideToolbar />}
-      />
+    <>
+      <PageHeaderRow title="Pengaturan" />
 
-      {userId ? <NotifikasiSection userId={userId} /> : null}
+      {bagian === "profil" ? (
+        <div className="flex flex-col gap-6">
+          {userId ? <AccountSettings nama={nama} /> : null}
+          <RoleMatrix />
+        </div>
+      ) : null}
 
-      <AccountSettings nama={nama} />
-      <RoleMatrix />
+      {bagian === "notifikasi" && userId ? <NotifikasiSection userId={userId} /> : null}
+
+      {bagian === "tim" && role === "OWNER" ? (
+        <TimOwnerPanel tim={searchParams.tim ?? "petani"} />
+      ) : null}
+    </>
+  );
+}
+
+async function TimOwnerPanel({ tim }: { tim: string }) {
+  const tab = tim === "pengguna" ? "pengguna" : "petani";
+
+  if (tab === "petani") {
+    const rows = await listPetani();
+    return (
+      <div className="flex flex-col gap-4">
+        <Suspense fallback={null}>
+          <PengaturanTimSubnav />
+        </Suspense>
+        <PetaniMasterDaftar rows={rows.map(serializePetani)} mode="owner" />
+      </div>
+    );
+  }
+
+  const users = await listUsersForOwner();
+  return (
+    <div className="flex flex-col gap-4">
+      <Suspense fallback={null}>
+        <PengaturanTimSubnav />
+      </Suspense>
+      <div className="flex justify-end">
+        <OwnerUserCreateSheet
+          trigger={
+            <Button type="button" className="h-11">
+              Tambah akun
+            </Button>
+          }
+        />
+      </div>
+      <Suspense fallback={<p className="text-sm text-muted-foreground">Memuat daftar…</p>}>
+        <OwnerUserDaftar users={users} />
+      </Suspense>
     </div>
   );
 }

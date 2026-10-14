@@ -11,7 +11,6 @@ export default async function AdminPenjualanBaruPage() {
   return (
     <DetailLayout
       backHref="/admin/penjualan"
-      eyebrow="Penjualan"
       title="Buat pesanan jual"
     >
       <PageSection title="Baris pesanan" badge="Create">

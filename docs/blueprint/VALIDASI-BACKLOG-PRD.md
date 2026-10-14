@@ -2,7 +2,7 @@
 
 **Tanggal:** 2026-10-10  
 **Blueprint:** `docs/blueprint/akuntansi-logistik-hidroponik.md`  
-**PRD:** `docs/prd-agile-kokonus-farm.md`  
+**PRD:** `docs/produk/prd-agile-kokonus-farm.md`  
 **Backlog GitHub:** US #2–#38 closed; Sprint 5 #39–#45 (QA/go-live) di PR #83.
 
 ---

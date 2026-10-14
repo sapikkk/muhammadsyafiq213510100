@@ -9,6 +9,7 @@ export default function PetaniVarietasDetailPage({ params }: { params: { id: str
       listHref="/petani/varietas"
       writable={false}
       requireAktif
+      roleView="petani"
     />
   );
 }

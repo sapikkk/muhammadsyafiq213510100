@@ -1,7 +1,6 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
@@ -31,17 +30,11 @@ export function HarvestAdminDaftar({ rows }: { rows: Row[] }) {
         header: "Lokasi panen",
         accessorFn: (row) =>
           labelBarisProduksiUtama(partsFromSerializeSiklus(row)),
-        cell: ({ row }) => {
-          const parts = partsFromSerializeSiklus(row.original);
-          return (
-            <Link
-              href={`/admin/harvest/${row.original.id}`}
-              className="font-medium text-primary underline-offset-2 hover:underline"
-            >
-              {labelBarisProduksiUtama(parts)}
-            </Link>
-          );
-        },
+        cell: ({ row }) => (
+          <span className="font-medium">
+            {labelBarisProduksiUtama(partsFromSerializeSiklus(row.original))}
+          </span>
+        ),
       },
       {
         accessorKey: "status",
@@ -79,6 +72,7 @@ export function HarvestAdminDaftar({ rows }: { rows: Row[] }) {
       searchPlaceholder="Cari lokasi, varietas, petani, kode batch…"
       searchColumnIds={["lokasi_panen", "kode_batch", "petani_nama", "status"]}
       emptyMessage="Belum ada laporan panen."
+      getRowHref={(row) => `/admin/harvest/${row.id}`}
     />
   );
 }

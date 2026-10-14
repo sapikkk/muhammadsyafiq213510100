@@ -11,6 +11,7 @@ import {
   YAxis,
 } from "recharts";
 import type { MonitorGrafikTitik } from "@/lib/monitor-kolam-types";
+import { CHART_PRIMARY, CHART_SECONDARY, CHART_TERTIARY } from "@/lib/chart-monochrome";
 
 export function PetaniMonitorChart({ points }: { points: MonitorGrafikTitik[] }) {
   if (points.length === 0) {
@@ -66,14 +67,14 @@ export function PetaniMonitorChart({ points }: { points: MonitorGrafikTitik[] })
             }}
           />
           <Legend />
-          <Line yAxisId="ppm" type="monotone" dataKey="ppm" name="PPM" stroke="hsl(142 76% 36%)" dot={false} strokeWidth={2} />
-          <Line yAxisId="ph" type="monotone" dataKey="ph" name="pH" stroke="hsl(221 83% 53%)" dot={false} strokeWidth={2} />
+          <Line yAxisId="ppm" type="monotone" dataKey="ppm" name="PPM" stroke={CHART_PRIMARY} dot={false} strokeWidth={2} />
+          <Line yAxisId="ph" type="monotone" dataKey="ph" name="pH" stroke={CHART_SECONDARY} dot={false} strokeWidth={2} />
           <Line
             yAxisId="suhu"
             type="monotone"
             dataKey="suhu"
             name="Suhu (°C)"
-            stroke="hsl(25 95% 53%)"
+            stroke={CHART_TERTIARY}
             dot={false}
             strokeWidth={2}
           />

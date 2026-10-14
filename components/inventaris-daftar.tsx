@@ -69,7 +69,7 @@ export function InventarisDaftar({
       columns={columns}
       data={items}
       pageSize={12}
-      searchPlaceholder="Cari nama barang atau kode…"
+      searchPlaceholder="Cari nama barang…"
       searchColumnIds={["barang", "kode", "nama"]}
       emptyMessage="Belum ada item inventaris."
       getRowHref={(row) => `${basePath[mode]}/${row.id}`}

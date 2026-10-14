@@ -6,7 +6,7 @@ import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
 
-export function RegisterPetani() {
+export function RegisterPetani({ showTitle = true }: { showTitle?: boolean }) {
   const [state, formAction] = useFormState(registerPetani, {});
   useActionToast({
     error: state.error,
@@ -17,10 +17,12 @@ export function RegisterPetani() {
   });
 
   return (
-    <section aria-labelledby="daftar-title" className="space-y-3">
-      <h2 id="daftar-title" className="text-lg font-semibold">
-        Daftarkan petani
-      </h2>
+    <section aria-labelledby={showTitle ? "daftar-title" : undefined} className="space-y-3">
+      {showTitle ? (
+        <h2 id="daftar-title" className="text-lg font-semibold">
+          Daftarkan petani
+        </h2>
+      ) : null}
       <p className="text-sm text-muted-foreground">
         Tidak ada pendaftaran publik. Isi nama, email, dan sandi awal, lalu
         berikan langsung ke petani.

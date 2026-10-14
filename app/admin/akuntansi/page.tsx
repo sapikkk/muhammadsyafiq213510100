@@ -13,7 +13,6 @@ export default async function AdminAkuntansiPage() {
   return (
     <CrudPageLayout
       financeNavRole="ADMIN"
-      eyebrow="Keuangan"
       title="Pengaturan akuntansi"
       list={
         <div className="space-y-6">

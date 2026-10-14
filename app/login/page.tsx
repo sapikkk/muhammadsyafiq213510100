@@ -6,16 +6,10 @@ import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { roleHome } from "@/lib/role-home";
 import { notify } from "@/lib/notify";
-import { PageCoachmark } from "@/components/page-coachmark";
+import { PageGuideFooter } from "@/components/page-guide-footer";
 import { PageHeaderRow } from "@/components/page-header-row";
 
 export default function LoginPage() {
@@ -60,32 +54,12 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="w-full max-w-sm space-y-6">
-        <PageHeaderRow
-          eyebrow="Kokonus Farm"
-          title="Masuk"
-          description="Gunakan akun Owner, Admin, atau Petani."
-          guide={
-            <PageCoachmark
-              pageKey="login"
-              title="Panduan masuk"
-              placement="toolbar"
-              steps={[
-                { label: "Email & sandi", detail: "Isi keduanya lalu klik Masuk." },
-                { label: "Peran", detail: "Diarahkan ke beranda Owner, Admin, atau Petani." },
-                { label: "Setelah masuk", detail: "Gunakan Panduan di setiap halaman jika perlu penjelasan alur." },
-              ]}
-            />
-          }
-        />
+    <main className="flex min-h-screen min-w-0 items-center justify-center overflow-x-clip bg-background px-2 min-[220px]:px-4">
+      <div className="w-full min-w-0 max-w-sm space-y-4 min-[220px]:space-y-6">
+        <PageHeaderRow title="Masuk" />
 
         <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">Masuk</CardTitle>
-            <CardDescription>Masuk dengan email dan sandi Anda.</CardDescription>
-          </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <form className="space-y-4" noValidate onSubmit={onSubmit}>
               <label className="block space-y-1.5 text-sm">
                 <span className="font-medium">Email</span>
@@ -127,6 +101,7 @@ export default function LoginPage() {
             Lupa sandi?
           </Link>
         </p>
+        <PageGuideFooter />
       </div>
     </main>
   );

@@ -1,0 +1,89 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
+
+export type OwnerSectionTab = {
+  id: string;
+  label: string;
+  epic?: string;
+  href: string;
+  /** Aktif jika pathname diawali prefix ini (mis. semua /owner/laporan). */
+  activePrefix?: string;
+};
+
+function tabActive(
+  pathname: string,
+  searchParams: URLSearchParams,
+  tab: OwnerSectionTab,
+): boolean {
+  if (tab.activePrefix) {
+    return pathname === tab.activePrefix || pathname.startsWith(`${tab.activePrefix}/`);
+  }
+  const href = tab.href;
+  const [path, query] = href.split("?");
+  const pathOk = pathname === path || pathname.startsWith(`${path}/`);
+  if (!pathOk) return false;
+  if (path === "/owner/evaluasi" && pathname === "/owner/evaluasi") {
+    const bagian = searchParams.get("bagian") ?? "untung";
+    const expected = new URLSearchParams(query ?? "").get("bagian") ?? "untung";
+    return bagian === expected;
+  }
+  if (path === "/owner/kegagalan-susut" && pathname === "/owner/kegagalan-susut") {
+    const bagian = searchParams.get("bagian") ?? "menunggu";
+    const expected = new URLSearchParams(query ?? "").get("bagian") ?? "menunggu";
+    return bagian === expected;
+  }
+  if (path === "/owner/biaya" && pathname === "/owner/biaya") {
+    const bagian = searchParams.get("bagian") ?? "langsung";
+    const expected = new URLSearchParams(query ?? "").get("bagian") ?? "langsung";
+    return bagian === expected;
+  }
+  if (!query) {
+    if (path === "/owner/varietas" && pathname === "/owner/varietas") {
+      return searchParams.get("tampilan") !== "status";
+    }
+    if (pathname !== path) return pathname.startsWith(`${path}/`);
+    return true;
+  }
+  const expected = new URLSearchParams(query);
+  let ok = true;
+  expected.forEach((v, k) => {
+    if (searchParams.get(k) !== v) ok = false;
+  });
+  return ok;
+}
+
+export function OwnerSectionTabs({ tabs }: { tabs: OwnerSectionTab[] }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  return (
+    <nav aria-label="Bagian modul" className="overflow-x-auto border-b pb-2">
+      <ul className="flex min-w-max gap-1">
+        {tabs.map((tab) => {
+          const active = tabActive(pathname, searchParams, tab);
+          return (
+            <li key={tab.id}>
+              <Link
+                href={tab.href}
+                className={cn(
+                  "inline-flex min-h-11 items-center gap-1.5 rounded-md border px-3 text-sm font-medium transition-colors",
+                  active
+                    ? "border-border bg-background text-foreground"
+                    : "border-transparent text-muted-foreground hover:border-border/60 hover:bg-muted/40 hover:text-foreground",
+                )}
+              >
+                {tab.epic ? (
+                  <span className="text-[10px] tabular-nums text-muted-foreground">{tab.epic}</span>
+                ) : null}
+                {tab.label}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+}

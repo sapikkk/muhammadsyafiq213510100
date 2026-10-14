@@ -1,83 +1,86 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { JurnalDaftar } from "@/components/jurnal-daftar";
+import { JurnalListFilter } from "@/components/jurnal-list-filter";
+import { OwnerPeriodFilter } from "@/components/owner-period-filter";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { listJurnal, serializeJurnalListRow, type FilterJurnal } from "@/lib/jurnal";
-import { statusJurnalLabel, statusJurnalList } from "@/lib/jurnal-status";
+import {
+  listJurnal,
+  normalizeJurnalFilter,
+  serializeJurnalListRow,
+  type FilterJurnal,
+} from "@/lib/jurnal";
+import { defaultYearMonth, parsePeriodeMode } from "@/lib/period-nav";
 
 export const dynamic = "force-dynamic";
 
 const selectClass =
   "flex h-11 w-full border border-input bg-background px-3 py-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground";
 
+function periodeQueryString(filter: ReturnType<typeof normalizeJurnalFilter>) {
+  const q = new URLSearchParams();
+  if (filter.periode === "rentang") q.set("periode", "rentang");
+  q.set("dari", filter.dari);
+  q.set("sampai", filter.sampai);
+  if (filter.status) q.set("status", filter.status);
+  return q.toString();
+}
+
 export default async function OwnerJurnalPage({
   searchParams,
 }: {
   searchParams: FilterJurnal;
 }) {
-  const rows = await listJurnal(searchParams);
-  const adaFilter = Boolean(searchParams.status || searchParams.dari || searchParams.sampai);
+  if (!searchParams.dari && !searchParams.sampai) {
+    const m = defaultYearMonth();
+    redirect(`/owner/jurnal?dari=${m}&sampai=${m}`);
+  }
+
+  const filter = normalizeJurnalFilter(searchParams);
+  const rows = await listJurnal(filter);
+  const adaFilterStatus = Boolean(filter.status);
+  const periodeQ = periodeQueryString(filter);
   const serialized = rows.map(serializeJurnalListRow);
 
   return (
     <CrudPageLayout
-      financeNavRole="OWNER"
-      eyebrow="Keuangan"
-      title="Catatan keuangan"
-      actions={
-        <Button asChild variant="outline" className="h-11">
-          <Link href="/owner/jurnal/koreksi">Koreksi manual</Link>
-        </Button>
-      }
+      title="Jurnal umum"
       list={
         <div className="space-y-4">
-          <form
-            method="get"
-            aria-label="Filter jurnal"
-            className="grid gap-3 rounded-md border bg-muted/20 p-4 sm:grid-cols-[1fr_1fr_1fr_auto] sm:items-end"
-          >
-            <label className="block space-y-1.5 text-sm">
-              <span className="font-medium">Dari tanggal</span>
-              <Input name="dari" type="date" defaultValue={searchParams.dari} className="h-11" />
-            </label>
-            <label className="block space-y-1.5 text-sm">
-              <span className="font-medium">Sampai tanggal</span>
-              <Input name="sampai" type="date" defaultValue={searchParams.sampai} className="h-11" />
-            </label>
-            <label className="block space-y-1.5 text-sm">
-              <span className="font-medium">Status</span>
-              <select name="status" defaultValue={searchParams.status ?? ""} className={selectClass}>
-                <option value="">Semua status</option>
-                {statusJurnalList.map((s) => (
-                  <option key={s} value={s}>
-                    {statusJurnalLabel[s]}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <div className="flex flex-wrap gap-2">
-              <Button type="submit" variant="outline" className="h-11">
-                Terapkan
-              </Button>
-              {adaFilter ? (
-                <Link
-                  href="/owner/jurnal"
-                  className="inline-flex h-11 items-center px-3 text-sm hover:bg-accent"
-                >
-                  Hapus filter
-                </Link>
-              ) : null}
-            </div>
-          </form>
+          <Suspense fallback={null}>
+            <OwnerPeriodFilter
+              dari={filter.dari}
+              sampai={filter.sampai}
+              periode={parsePeriodeMode(filter.periode)}
+              rentangField="date"
+              rentangOptionLabel="Rentang tanggal"
+            />
+          </Suspense>
           <JurnalDaftar
             rows={serialized}
             detailPrefix="/owner/jurnal"
-            emptyMessage={adaFilter ? "Tidak ada jurnal untuk filter ini." : "Belum ada jurnal."}
+            emptyMessage={
+              adaFilterStatus ? "Tidak ada jurnal untuk filter ini." : "Belum ada jurnal di periode ini."
+            }
+            listActions={
+              <>
+                <JurnalListFilter
+                  basePath="/owner/jurnal"
+                  status={filter.status}
+                  selectClass={selectClass}
+                  periodeQuery={periodeQ}
+                />
+                <Button asChild variant="outline" className="h-11 shrink-0">
+                  <Link href="/owner/jurnal/koreksi">Koreksi manual</Link>
+                </Button>
+              </>
+            }
           />
         </div>
       }
-      listTitle={`${rows.length} catatan${adaFilter ? " sesuai filter" : ""}`}
+      listTitle={`${rows.length} catatan${adaFilterStatus ? " sesuai filter" : ""}`}
     />
   );
 }

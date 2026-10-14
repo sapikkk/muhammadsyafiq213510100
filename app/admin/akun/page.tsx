@@ -13,7 +13,6 @@ export default async function AkunPage() {
   return (
     <CrudPageLayout
       financeNavRole="ADMIN"
-      eyebrow="Keuangan"
       title="Bagan akun"
       actions={
         <AkunFormSheet

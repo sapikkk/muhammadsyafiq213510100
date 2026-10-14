@@ -40,7 +40,7 @@ export function FlowSteps({
       tips={tips}
       title={title}
       intro={intro}
-      placement={toolbar ? "toolbar" : "block"}
+      placement={toolbar ? "footer" : "footer"}
     />
   );
 }

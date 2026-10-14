@@ -27,7 +27,7 @@ export function PelangganDaftar({ rows }: { rows: PelangganRow[] }) {
         header: "Nama",
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
-            <span>{row.original.nama}</span>
+            <span className="font-medium">{row.original.nama}</span>
             {!row.original.aktif ? (
               <Badge variant="outline" className="text-xs">
                 Nonaktif
@@ -88,6 +88,7 @@ export function PelangganDaftar({ rows }: { rows: PelangganRow[] }) {
       searchPlaceholder="Cari pelanggan…"
       searchColumnIds={["nama", "alamat", "email"]}
       emptyMessage="Belum ada pelanggan."
+      getRowHref={(row) => `/admin/pelanggan/${row.id}`}
     />
   );
 }

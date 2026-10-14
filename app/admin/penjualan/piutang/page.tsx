@@ -13,7 +13,6 @@ export default async function AdminPiutangPage() {
   return (
     <CrudPageLayout
       financeNavRole="ADMIN"
-      eyebrow="Keuangan"
       title="Piutang penjualan"
       actions={
         <Button asChild variant="outline" className="h-11">

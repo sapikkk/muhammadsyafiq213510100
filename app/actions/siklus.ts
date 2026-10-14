@@ -25,10 +25,13 @@ export async function mulaiSiklusSemai(
       throw new SiklusError("Peran Anda tidak berhak.", 403);
     }
     const raw = Object.fromEntries(formData.entries());
-    const siklus = await buatSiklusSemai(parseSiklusInput(raw), Number(session!.user!.id));
+    const input = parseSiklusInput(raw);
+    const siklus = await buatSiklusSemai(input, Number(session!.user!.id));
     revalidatePath("/petani/siklus");
     revalidatePath("/petani/siklus/baru");
-    redirect(`/petani/siklus/${siklus.id}`);
+    const qs = new URLSearchParams({ lubang: String(siklus.jumlah_disemai) });
+    if (input.activePackMediaId != null) qs.set("rw", "1");
+    redirect(`/petani/siklus/${siklus.id}?${qs.toString()}`);
   } catch (error) {
     if (error instanceof SiklusError) return { error: error.message };
     throw error;

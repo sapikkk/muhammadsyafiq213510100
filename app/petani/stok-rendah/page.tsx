@@ -1,4 +1,6 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { PetaniModulIntro } from "@/components/petani-modul-intro";
+import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { InventarisStokRendah } from "@/components/inventaris-stok-rendah";
 import { listAlertStokMinimum, serializeAlertStok } from "@/lib/inventaris";
 
@@ -9,9 +11,19 @@ export default async function PetaniStokRendahPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi"
       title="Stok rendah"
-      list={<InventarisStokRendah items={items.map(serializeAlertStok)} />}
+      intro={<PetaniModulIntro modul="stok-rendah" />}
+      actions={
+        <EksporDaftarTombol unduhPath="/api/export/stok-rendah" jenisPratinjau="stok-rendah" />
+      }
+      list={
+        <InventarisStokRendah
+          items={items.map(serializeAlertStok)}
+          showRestockHint
+          restockHref="/petani/inventaris"
+          restockLabel="Lihat stok barang"
+        />
+      }
       listTitle="Item di bawah minimum"
     />
   );

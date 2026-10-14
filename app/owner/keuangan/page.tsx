@@ -1,31 +1,19 @@
-import { CrudPageLayout } from "@/components/crud-page-layout";
-import { FinanceHubPanel } from "@/components/finance-hub-panel";
-import { getAdminFinanceHubStats } from "@/lib/finance-hub-stats";
-import { monthlySummaryCached } from "@/lib/cached-queries";
+import { OwnerDashboardKeuanganPanel } from "@/components/owner-dashboard-keuangan-panel";
+import { OwnerKeuanganChrome } from "@/components/owner-keuangan-chrome";
+import { OwnerKeuanganHubBento } from "@/components/owner-keuangan-hub-bento";
+import { PageHeaderRow } from "@/components/page-header-row";
+import { loadOwnerDashboardKeuangan } from "@/lib/owner-dashboard-keuangan";
 
 export const dynamic = "force-dynamic";
 
 export default async function OwnerKeuanganPage() {
-  const [stats, summary] = await Promise.all([
-    getAdminFinanceHubStats(),
-    monthlySummaryCached(6),
-  ]);
+  const keuangan = await loadOwnerDashboardKeuangan();
 
   return (
-    <CrudPageLayout
-      financeNavRole="OWNER"
-      eyebrow="Keuangan"
-      title="Modul keuangan"
-      list={
-        <FinanceHubPanel
-          role="OWNER"
-          stats={stats}
-          pendapatanBulanIni={summary.pendapatanBulanIni}
-          pengeluaranBulanIni={summary.pengeluaranBulanIni}
-          monthTrend={summary.months}
-        />
-      }
-      listTitle="Ringkasan"
-    />
+    <OwnerKeuanganChrome>
+      <PageHeaderRow title="Laporan keuangan" />
+      <OwnerDashboardKeuanganPanel data={keuangan} />
+      <OwnerKeuanganHubBento />
+    </OwnerKeuanganChrome>
   );
 }

@@ -9,7 +9,8 @@ labels: []
 
 - **Sprint:** (1–5)
 - **Epic:** EPIC-
-- **PRD:** [docs/prd-agile-kokonus-farm.md](../docs/prd-agile-kokonus-farm.md)
+- **PRD:** [docs/produk/prd-agile-kokonus-farm.md](../docs/produk/prd-agile-kokonus-farm.md)
+- **Format US:** [docs/agile/panduan-user-story.md](../docs/agile/panduan-user-story.md)
 - **Sprint doc:** [docs/agile/sprints/](../docs/agile/sprints/)
 - **Progress partial:** [docs/agile/partial-delivery-policy.md](../docs/agile/partial-delivery-policy.md)
 
@@ -38,8 +39,8 @@ Lihat [definition-of-done.md](../docs/agile/definition-of-done.md).
 - [ ] Semua AC terpenuhi **atau** catatan partial + sisa scope
 - [ ] PR dengan **≥1 approving review** (wajib)
 - [ ] `npm run typecheck` + lint
-- [ ] Notulensi / `docs/uji-blackbox.md` bila ada uji
-- [ ] `docs/api.md` jika ada API baru
+- [ ] Notulensi / `docs/testing/uji-blackbox.md` bila ada uji
+- [ ] `docs/referensi/api.md` jika ada API baru
 - [ ] Seed / migrasi terdokumentasi
 
 ## Rencana teknis

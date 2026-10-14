@@ -11,6 +11,7 @@ import {
   YAxis,
 } from "recharts";
 import type { MonthPoint } from "@/lib/monthly-summary-types";
+import { DashboardBentoEmpty } from "@/components/dashboard-bento-empty";
 import { formatRupiah } from "@/lib/format";
 import { CHART_PRIMARY, CHART_SECONDARY } from "@/lib/chart-monochrome";
 
@@ -23,10 +24,11 @@ export function OwnerRevenueChart({ months }: { months: MonthPoint[] }) {
 
   if (data.every((d) => d.pendapatan === 0 && d.pengeluaran === 0)) {
     return (
-      <p className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
-        Belum ada catatan keuangan sudah disetujui dengan pendapatan atau beban pada periode ini. Setujui jurnal
-        penjualan untuk mengisi grafik.
-      </p>
+      <DashboardBentoEmpty
+        message="Belum ada catatan disetujui dengan pendapatan atau beban pada 6 bulan terakhir."
+        actionLabel="Lihat catatan keuangan"
+        href="/owner/jurnal"
+      />
     );
   }
 

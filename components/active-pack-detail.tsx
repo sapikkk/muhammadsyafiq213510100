@@ -44,7 +44,6 @@ export async function ActivePackDetail({
     <DetailLayout
       backHref={listHref}
       surface={surface}
-      eyebrow="Paket siap pakai"
       title={serialized.item.nama}
       badge={
         habis ? (
@@ -73,7 +72,9 @@ export async function ActivePackDetail({
           <Item label="Keterangan" value={serialized.keterangan ?? "—"} />
         </dl>
       </PageSection>
-      <EntityChangeHistorySection entitas="ActivePack" entitasId={id} />
+      {writableMode === "petani" ? null : (
+        <EntityChangeHistorySection entitas="ActivePack" entitasId={id} />
+      )}
     </DetailLayout>
   );
 }

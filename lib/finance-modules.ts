@@ -1,5 +1,3 @@
-import type { Role } from "@/types/role";
-
 /** Satu modul dalam area keuangan (IA mirip Books / ERPNext — bukan salinan UI). */
 export type FinanceModule = {
   id: string;
@@ -7,6 +5,8 @@ export type FinanceModule = {
   href: string;
   /** Path aktif: exact atau prefix (tanpa query). */
   matchPrefixes: string[];
+  /** Query wajib cocok (mis. laporan=neraca). */
+  matchSearch?: Record<string, string>;
   hint: string;
 };
 
@@ -55,77 +55,44 @@ const adminModules: FinanceModule[] = [
   },
 ];
 
-const ownerModules: FinanceModule[] = [
-  {
-    id: "ringkasan",
-    label: "Ringkasan",
-    href: "/owner/keuangan",
-    matchPrefixes: ["/owner/keuangan"],
-    hint: "Angka ringkas dan pintasan laporan.",
-  },
-  {
-    id: "transaksi",
-    label: "Transaksi",
-    href: "/owner/jurnal",
-    matchPrefixes: ["/owner/jurnal"],
-    hint: "Daftar catatan keuangan dan koreksi.",
-  },
-  {
-    id: "penjualan",
-    label: "Penjualan",
-    href: "/owner/penjualan",
-    matchPrefixes: ["/owner/penjualan"],
-    hint: "Pesanan dan pendapatan.",
-  },
-  {
-    id: "biaya",
-    label: "Biaya & HPP",
-    href: "/owner/biaya",
-    matchPrefixes: ["/owner/biaya"],
-    hint: "Rincian beban dan alokasi.",
-  },
-  {
-    id: "analisis",
-    label: "Analisis",
-    href: "/owner/evaluasi",
-    matchPrefixes: ["/owner/evaluasi"],
-    hint: "Untung, titik impas, HPP.",
-  },
-  {
-    id: "laporan",
-    label: "Laporan",
-    href: "/owner/laporan",
-    matchPrefixes: ["/owner/laporan", "/owner/arus-kas", "/owner/akun"],
-    hint: "Laba rugi, neraca, arus kas, COA.",
-  },
-  {
-    id: "prive",
-    label: "Prive",
-    href: "/owner/prive",
-    matchPrefixes: ["/owner/prive"],
-    hint: "Ambil pribadi dari kas.",
-  },
-  {
-    id: "rekening",
-    label: "Rekening",
-    href: "/owner/rekening",
-    matchPrefixes: ["/owner/rekening"],
-    hint: "Kas tunai, bank, dan e-wallet pemilik.",
-  },
-];
+/** Owner memakai tab modul (`TABS_LAPORAN_KEUANGAN`), bukan nav horizontal ini. */
+const ownerModules: FinanceModule[] = [];
 
 export function getFinanceModules(role: "ADMIN" | "OWNER"): FinanceModule[] {
   return role === "ADMIN" ? adminModules : ownerModules;
 }
 
-export function resolveFinanceModuleId(pathname: string, role: "ADMIN" | "OWNER"): string | null {
+export function resolveFinanceModuleId(
+  pathname: string,
+  role: "ADMIN" | "OWNER",
+  searchParams?: URLSearchParams | null,
+): string | null {
   const modules = getFinanceModules(role);
+
+  if (role === "OWNER") return null;
+
   for (const mod of modules) {
-    for (const prefix of mod.matchPrefixes) {
-      if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
-        return mod.id;
-      }
+    const pathOnly = mod.href.split("?")[0];
+    const onPath =
+      pathname === pathOnly || pathname.startsWith(`${pathOnly}/`);
+    if (!onPath) continue;
+
+    if (mod.matchSearch && searchParams) {
+      const ok = Object.entries(mod.matchSearch).every(
+        ([k, v]) => searchParams.get(k) === v,
+      );
+      if (ok) return mod.id;
+      continue;
     }
+
+    if (mod.matchSearch) continue;
+
+    if (mod.id === "laba-rugi" || mod.id === "neraca") continue;
+    if (mod.id === "penjualan-piutang" && pathname.startsWith("/owner/penjualan/piutang")) {
+      continue;
+    }
+
+    return mod.id;
   }
   return null;
 }
@@ -135,7 +102,7 @@ export function financeNavRoleFromPath(pathname: string): "ADMIN" | "OWNER" | nu
     if (resolveFinanceModuleId(pathname, "ADMIN")) return "ADMIN";
   }
   if (pathname.startsWith("/owner/")) {
-    if (resolveFinanceModuleId(pathname, "OWNER")) return "OWNER";
+    if (resolveFinanceModuleId(pathname, "OWNER", null)) return "OWNER";
   }
   return null;
 }

@@ -1,18 +1,21 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
-import { AgileProgressDashboard } from "@/components/agile-progress-dashboard";
-import { FoundationPanel } from "@/components/foundation-panel";
-import { PageCoachmark } from "@/components/page-coachmark";
+import { ProjectHub } from "@/components/project-hub";
+import { PageGuideFooter } from "@/components/page-guide-footer";
 import { PageHeaderRow } from "@/components/page-header-row";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 import { loadAgileProgress } from "@/lib/agile-progress";
+import { HUB_TABS, loadProjectHubContent } from "@/lib/project-hub-content";
+import { loadGanttFromGit } from "@/lib/project-hub-gantt-git";
 import { roleHome } from "@/lib/role-home";
 import type { Role } from "@/types/role";
 
 export default async function HomePage() {
   const session = await getServerSession(authOptions);
   const progress = loadAgileProgress();
+  const hub = loadProjectHubContent();
+  const gantt = loadGanttFromGit();
   const role = session?.user?.role as Role | undefined;
 
   return (
@@ -20,7 +23,7 @@ export default async function HomePage() {
       <header className="flex h-14 items-center justify-between border-b px-6">
         <div className="flex items-center gap-2">
           <div className="flex h-6 w-6 items-center justify-center bg-foreground">
-            <span className="text-[10px] font-bold text-background">KF</span>
+            <span className="text-xs font-bold text-background">KF</span>
           </div>
           <span className="text-sm font-semibold">Kokonus Farm</span>
         </div>
@@ -37,29 +40,12 @@ export default async function HomePage() {
       </header>
 
       <section className="mx-auto w-full max-w-6xl px-6 py-10">
-        <PageHeaderRow
-          eyebrow="Kokonus Farm"
-          title="Tata kelola produksi hidroponik"
-          guide={
-            <PageCoachmark
-              pageKey="home"
-              title="Panduan halaman beranda"
-              placement="toolbar"
-              steps={[
-                { label: "Status pengembangan", detail: "Board di bawah untuk tim produk, bukan operasional kebun." },
-                { label: "Masuk aplikasi", detail: "Klik Masuk, lalu buka dashboard sesuai peran akun." },
-              ]}
-            />
-          }
-        />
+        <PageHeaderRow title="Pusat dokumentasi dan progress Kokonus Farm" />
 
         <div className="mt-8">
-          <AgileProgressDashboard data={progress} />
+          <ProjectHub tabs={HUB_TABS} hub={hub} agile={progress} gantt={gantt} />
         </div>
-
-        <div className="mt-16 border-t pt-10">
-          <FoundationPanel />
-        </div>
+        <PageGuideFooter />
       </section>
     </main>
   );

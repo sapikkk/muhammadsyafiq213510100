@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { JurnalDaftar } from "@/components/jurnal-daftar";
 import { Button } from "@/components/ui/button";
+import { JurnalEksporTombol } from "@/components/jurnal-ekspor-tombol";
 import { Input } from "@/components/ui/input";
 import { listJurnal, serializeJurnalListRow, type FilterJurnal } from "@/lib/jurnal";
 import { statusJurnalLabel, statusJurnalList } from "@/lib/jurnal-status";
@@ -35,7 +36,6 @@ export default async function JurnalPage({
   return (
     <CrudPageLayout
       financeNavRole="ADMIN"
-      eyebrow="Keuangan"
       title="Catatan keuangan"
       actions={
         <>
@@ -77,15 +77,15 @@ export default async function JurnalPage({
               <Button type="submit" variant="outline" className="h-11">
                 Terapkan
               </Button>
-              <Button type="button" variant="outline" className="h-11" asChild>
-                <a
-                  href={`/api/export/journal?${new URLSearchParams(
+              <JurnalEksporTombol
+                defaultDari={searchParams.dari ?? ""}
+                defaultSampai={searchParams.sampai ?? ""}
+                searchQuery={
+                  Object.fromEntries(
                     Object.entries(searchParams).filter(([, v]) => v) as [string, string][],
-                  ).toString()}`}
-                >
-                  Ekspor xlsx
-                </a>
-              </Button>
+                  )
+                }
+              />
               {adaFilter ? (
                 <Button type="button" variant="ghost" className="h-11" asChild>
                   <Link href="/admin/jurnal">Hapus filter</Link>

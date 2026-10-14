@@ -1,0 +1,21 @@
+---
+description: Router stack agent Kokonus (graphify, ponytail, superpowers, agency). Pakai slash /kokonus.
+alwaysApply: false
+---
+
+# Kokonus agent stack
+
+Panduan lengkap: `docs/cursor-agent-stack.md`.
+
+**Satu ketikan:** `/` → **kokonus** atau **all** (semua skill sesi penuh — `docs/skills/kokonus-sesi-penuh.md`).
+
+**Pasang ulang skill lokal:**
+
+```bash
+git submodule update --init --recursive vendor/agents/
+bash scripts/bootstrap-vendor-agents.sh
+```
+
+**Ponytail:** jangan symlink `ponytail.mdc` (always-on bentrok Karpathy). Pakai hooks proyek + `/ponytail full`.
+
+**Awesome-skills:** hanya manifest terkurasi — bukan 956 skill sekaligus.

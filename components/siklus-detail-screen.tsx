@@ -2,14 +2,15 @@ import { notFound } from "next/navigation";
 import { LogKegagalanDaftar } from "@/components/log-kegagalan-daftar";
 import { LogProduksiDaftar } from "@/components/log-produksi-daftar";
 import { PageSection } from "@/components/page-section";
+import { MonochromeProgressBar } from "@/components/monochrome-progress-bar";
 import {
-  SiklusDetailSecondary,
+  SiklusDetailActions,
   type SiklusLangkahBerikutnya,
-} from "@/components/siklus-detail-secondary";
+} from "@/components/siklus-detail-actions";
 import { SiklusTimeline } from "@/components/siklus-timeline";
 import { DetailLayout } from "@/components/detail-layout";
 import { Badge } from "@/components/ui/badge";
-import { formatTanggal } from "@/lib/format";
+import { formatRupiah, formatTanggal } from "@/lib/format";
 import { serializeLaporanRingkas } from "@/lib/laporan-panen";
 import { labelLaporanPanenStatus } from "@/lib/laporan-panen-status";
 import { faseBerikutnya, faseLabel, isFaseProduksi, type FaseProduksi } from "@/lib/siklus-fase";
@@ -20,6 +21,7 @@ import { siklusBolehAbort, STATUS_GAGAL_TOTAL } from "@/lib/siklus-abort-status"
 import { buildTimelineSiklus } from "@/lib/timeline-siklus";
 import { listActivePack } from "@/lib/active-pack";
 import { DetailKodeStrip } from "@/components/detail-kode-strip";
+import { SiklusEksporPaket } from "@/components/siklus-ekspor-paket";
 import {
   labelBarisProduksiUtama,
   partsFromSiklusNested,
@@ -28,9 +30,12 @@ import {
 export async function SiklusDetailScreen({
   id,
   surface = "page",
+  tampilkanBiayaSemai = false,
 }: {
   id: number;
   surface?: "page" | "sheet";
+  /** Ringkas biaya benih/rockwool saat semai (alur petani). */
+  tampilkanBiayaSemai?: boolean;
 }) {
   if (!Number.isInteger(id) || id <= 0) notFound();
 
@@ -97,57 +102,73 @@ export async function SiklusDetailScreen({
     <DetailLayout
       backHref="/petani/siklus"
       surface={surface}
-      eyebrow="Siklus"
       title={labelBarisProduksiUtama(partsFromSiklusNested(siklus))}
       badge={
         <Badge variant={status === STATUS_GAGAL_TOTAL ? "outline" : "secondary"}>
           {badgeLabel}
         </Badge>
       }
+      actions={<SiklusEksporPaket siklusId={id} />}
+      primaryActions={
+        <SiklusDetailActions
+          siklusId={id}
+          siklusLabel={labelBarisProduksiUtama(partsFromSiklusNested(siklus))}
+          kodeBatch={siklus.kode_batch}
+          jumlahDisemai={siklus.jumlah_disemai}
+          totalSusut={siklus.total_susut}
+          canTambal={Boolean(canTambal && (!laporan || laporan.status !== "APPROVED"))}
+          canAbort={canAbort}
+          showKegagalan={showKegagalan}
+          langkahBerikutnya={langkahBerikutnya}
+          packs={packsAktif}
+        />
+      }
     >
       <DetailKodeStrip label="Kode batch" kode={siklus.kode_batch} />
+
+      {(() => {
+        const kap = siklus.kolam.kapasitas_lubang;
+        const hidup = Math.max(0, siklus.jumlah_disemai - siklus.total_susut);
+        const pct = kap > 0 ? Math.round((hidup / kap) * 1000) / 10 : 0;
+        return (
+          <MonochromeProgressBar
+            label="Isi kolam siklus ini"
+            hint={`${hidup.toLocaleString("id-ID")} / ${kap.toLocaleString("id-ID")} lubang (${pct}%)`}
+            value={pct}
+          />
+        );
+      })()}
+
       {status === STATUS_GAGAL_TOTAL ? (
         <p className="rounded-md border border-destructive/30 bg-destructive/5 p-4 text-sm">
           Siklus tanam dihentikan. Tidak bisa lanjut fase atau panen.
         </p>
       ) : null}
 
-      <SiklusDetailSecondary
-        siklusId={id}
-        siklusLabel={labelBarisProduksiUtama(partsFromSiklusNested(siklus))}
-        kodeBatch={siklus.kode_batch}
-        jumlahDisemai={siklus.jumlah_disemai}
-        totalSusut={siklus.total_susut}
-        canTambal={Boolean(canTambal && (!laporan || laporan.status !== "APPROVED"))}
-        canAbort={canAbort}
-        showKegagalan={showKegagalan}
-        langkahBerikutnya={langkahBerikutnya}
-        packs={packsAktif}
-        variant="section"
-      />
-
-      <PageSection title="Timeline produksi" badge="Read">
+      <PageSection badge="Read" title="Linimasa">
         <SiklusTimeline steps={timeline} />
-      </PageSection>
-
-      <PageSection title="Log fase" badge="Read">
-        <LogProduksiDaftar
-          rows={logs.map((l) => ({
-            fase_dari: l.fase_dari,
-            fase_ke: l.fase_ke,
-            catatan: l.catatan,
-            waktu: l.waktu.toISOString(),
-            user: l.user,
-          }))}
-        />
-      </PageSection>
-
-      <PageSection title="Log kegagalan" badge="Read">
-        <LogKegagalanDaftar rows={kegagalanRows} />
+        {logs.length > 0 ? (
+          <div className="mt-6 border-t pt-4">
+            <LogProduksiDaftar
+              rows={logs.map((l) => ({
+                fase_dari: l.fase_dari,
+                fase_ke: l.fase_ke,
+                catatan: l.catatan,
+                waktu: l.waktu.toISOString(),
+                user: l.user,
+              }))}
+            />
+          </div>
+        ) : null}
+        {kegagalanRows.length > 0 ? (
+          <div className="mt-6 border-t pt-4">
+            <LogKegagalanDaftar rows={kegagalanRows} />
+          </div>
+        ) : null}
       </PageSection>
 
       {laporan ? (
-        <PageSection title="Laporan panen" badge="Read">
+        <PageSection badge="Read">
           <div className="space-y-2 text-sm">
             <p>
               Status: <strong>{labelLaporanPanenStatus(laporan.status)}</strong> ·{" "}
@@ -158,6 +179,24 @@ export async function SiklusDetailScreen({
               {laporan.jumlah_tidak_layak} pohon ({laporan.berat_tidak_layak_gram} g)
             </p>
           </div>
+        </PageSection>
+      ) : null}
+
+      {tampilkanBiayaSemai && siklus.biaya_langsung ? (
+        <PageSection badge="Read" title="Biaya langsung semai">
+          <ul className="space-y-1 text-sm">
+            <li>
+              Benih:{" "}
+              <strong>{formatRupiah(siklus.biaya_langsung.biaya_benih.toString())}</strong>
+            </li>
+            <li>
+              Rockwool / media:{" "}
+              <strong>{formatRupiah(siklus.biaya_langsung.biaya_rockwool.toString())}</strong>
+              {siklus.biaya_langsung.biaya_rockwool.isZero() ? (
+                <span className="text-muted-foreground"> — tidak dipakai saat semai</span>
+              ) : null}
+            </li>
+          </ul>
         </PageSection>
       ) : null}
 

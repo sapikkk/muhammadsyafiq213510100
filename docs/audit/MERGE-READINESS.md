@@ -11,7 +11,7 @@ Branch: `chore/global-audit-bw-refactor` → `main`.
 
 1. `.env` production/staging: **tanpa** `AUDIT_BYPASS_RBAC=true`.
 2. Uji manual singkat: `docs/audit/07-verification.md` — checklist `qa.md` **lengkap** (sidebar audit 35 route OK 2026-10-10).
-3. Review breaking API: klien fetch harus expect `{ ok, data }` (lihat `docs/api.md`).
+3. Review breaking API: klien fetch harus expect `{ ok, data }` (lihat `docs/referensi/api.md`).
 4. Setelah merge: tag release opsional; backlog US lanjut di sprint terpisah.
 
 ## Sengaja tidak masuk PR ini

@@ -2,6 +2,8 @@ import { simpanActivePackPetani } from "@/app/actions/active-pack";
 import { ActivePackDaftar } from "@/components/active-pack-daftar";
 import { ActivePackFormSheet } from "@/components/active-pack-form";
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { PetaniModulIntro } from "@/components/petani-modul-intro";
+import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { Button } from "@/components/ui/button";
 import {
   listActivePack,
@@ -23,21 +25,24 @@ export default async function PetaniActivePackPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Produksi"
       title="Paket siap pakai"
+      intro={<PetaniModulIntro modul="active-pack" />}
       actions={
-        <ActivePackFormSheet
-          items={items.map(serializeItem)}
-          action={simpanActivePackPetani}
-          trigger={
-            <Button type="button" className="h-11">
-              Tambah
-            </Button>
-          }
-        />
+        <div className="flex flex-wrap gap-2">
+          <EksporDaftarTombol unduhPath="/api/export/active-pack" jenisPratinjau="active-pack" />
+          <ActivePackFormSheet
+            items={items.map(serializeItem)}
+            action={simpanActivePackPetani}
+            trigger={
+              <Button type="button" className="h-11">
+                Tambah
+              </Button>
+            }
+          />
+        </div>
       }
       list={<ActivePackDaftar rows={packs} mode="petani" />}
-      listTitle="Paket siap pakai"
+      listTitle="Daftar paket"
     />
   );
 }

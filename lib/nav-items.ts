@@ -19,6 +19,7 @@ import {
   TriangleAlert,
   Calculator,
   LandPlot,
+  Landmark,
   ShoppingCart,
 } from "lucide-react";
 import { ICON_ARUS_KAS, ICON_EVALUASI, ICON_PELANGGAN, ICON_PENJUALAN } from "@/lib/nav-icons";
@@ -69,20 +70,24 @@ export function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
       { label: "Unduh laporan", href: "/owner/laporan", icon: FileDown },
       { label: "Catatan keuangan", href: "/owner/jurnal", icon: Banknote },
       { label: "Daftar akun", href: "/owner/akun", icon: BookOpen },
-      { label: "Rekening bank", href: "/owner/rekening", icon: Wallet },
+      { label: "Rekening bank", href: "/owner/rekening", icon: Landmark },
       { label: "Ambil pribadi", href: "/owner/prive", icon: PiggyBank },
       { label: "Arus kas", href: "/owner/arus-kas", icon: ICON_ARUS_KAS },
       { label: "Rincian biaya", href: "/owner/biaya", icon: Coins },
       { label: "Untung & titik impas", href: "/owner/evaluasi", icon: ICON_EVALUASI },
       { label: "Produksi", href: "/owner/produksi", icon: Sprout },
-      { label: "Kegagalan & susut", href: "/owner/kegagalan-susut", icon: ClipboardList },
+      {
+        label: "Kegagalan & susut",
+        href: "/owner/kegagalan-susut?bagian=menunggu",
+        icon: ClipboardList,
+      },
       { label: "Penjualan", href: "/owner/penjualan", icon: ShoppingCart },
       { label: "Stok barang", href: "/owner/inventaris", icon: Box },
       { label: "Lahan & kolam", href: "/owner/infrastruktur", icon: LandPlot },
       { label: "Varietas", href: "/owner/varietas", icon: LeafyGreen },
-      { label: "Data petani", href: "/owner/petani", icon: Users },
+      { label: "Data petani", href: "/pengaturan?bagian=tim&tim=petani", icon: Users },
       alertItem,
-      { label: "Kelola akun", href: "/owner/pengguna", icon: UserCog },
+      { label: "Kelola akun", href: "/pengaturan?bagian=tim&tim=pengguna", icon: UserCog },
     ];
   }
 

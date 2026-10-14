@@ -1,4 +1,7 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { OwnerSectionTabsShell } from "@/components/owner-section-tabs-shell";
+import { TABS_VARIETAS_LAHAN } from "@/lib/owner-section-tabs";
+import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { VarietasDaftar } from "@/components/varietas-daftar";
 import { VarietasFormSheet } from "@/components/varietas-form";
 import { Button } from "@/components/ui/button";
@@ -20,18 +23,25 @@ export default async function OwnerVarietasPage() {
 
   return (
     <CrudPageLayout
-      eyebrow="Operasi"
-      title="Varietas & asumsi"
+      title="Varietas & lahan"
       actions={
-        <VarietasFormSheet
-          trigger={
-            <Button type="button" className="h-11">
-              Tambah
-            </Button>
-          }
-        />
+        <div className="flex flex-wrap gap-2">
+          <EksporDaftarTombol unduhPath="/api/export/varietas" jenisPratinjau="varietas" />
+          <VarietasFormSheet
+            trigger={
+              <Button type="button" className="h-11">
+                Tambah
+              </Button>
+            }
+          />
+        </div>
       }
-      list={<VarietasDaftar rows={serialized} mode="owner" />}
+      list={
+        <div className="space-y-4">
+          <OwnerSectionTabsShell tabs={TABS_VARIETAS_LAHAN} />
+          <VarietasDaftar rows={serialized} mode="owner" />
+        </div>
+      }
       listTitle="Daftar varietas"
     />
   );

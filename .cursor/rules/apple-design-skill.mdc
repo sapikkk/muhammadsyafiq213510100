@@ -1,0 +1,17 @@
+---
+description: Review UI/UX against Apple HIG (123 pages) and design craft. Use for design audit, accessibility, layout polish, or "make this less generic". Stack Kokonus = Next.js/React web; pair with docs/skills/kokonus/ui-ringkas for copy bahasa Indonesia.
+globs: app/**,components/**
+alwaysApply: false
+---
+
+# Apple design review (HIG)
+
+When reviewing or improving UI/UX, follow the process in `vendor/agents/apple-design-skill/`:
+
+1. Read `vendor/agents/apple-design-skill/SKILL.md` in full (principles, lenses, report format).
+2. Read `vendor/agents/apple-design-skill/references/hig-lookup.md` to route topics.
+3. Load only the needed `references/hig/*.md` files (3–6), plus `references/cross-platform.md` for React/Next.js vocabulary.
+4. Cite findings as `file.md › Heading` with a short quote; tag Critical / High / Medium / Low.
+5. For **in-app copy**, also apply `docs/skills/kokonus/ui-ringkas/SKILL.md` (Indonesia, pengguna 40+, bukan Apple English labels).
+
+Trigger: design review, UI audit, accessibility check, layout improvement, app icon, onboarding, or visual/interaction feedback on screenshots or components.

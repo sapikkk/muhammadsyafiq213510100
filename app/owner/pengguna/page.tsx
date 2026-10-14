@@ -1,33 +1,5 @@
-import { Suspense } from "react";
-import { CrudPageLayout } from "@/components/crud-page-layout";
-import { OwnerUserCreateSheet, OwnerUserDaftar } from "@/components/owner-user-panel";
-import { Button } from "@/components/ui/button";
-import { listUsersForOwner } from "@/lib/owner-users";
+import { redirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
-export default async function OwnerPenggunaPage() {
-  const users = await listUsersForOwner();
-
-  return (
-    <CrudPageLayout
-      eyebrow="Kelola"
-      title="Kelola akun"
-      actions={
-        <OwnerUserCreateSheet
-          trigger={
-            <Button type="button" className="h-11">
-              Tambah
-            </Button>
-          }
-        />
-      }
-      list={
-        <Suspense fallback={<p className="text-sm text-muted-foreground">Memuat daftar…</p>}>
-          <OwnerUserDaftar users={users} />
-        </Suspense>
-      }
-      listTitle="Akun aplikasi"
-    />
-  );
+export default function OwnerPenggunaRedirect() {
+  redirect("/pengaturan?bagian=tim&tim=pengguna");
 }

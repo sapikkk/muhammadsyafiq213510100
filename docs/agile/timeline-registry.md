@@ -1,7 +1,9 @@
 # Timeline sprint — registry
 
-Durasi: **2 minggu / sprint · 10 hari kerja**.  
-**Actual start** = kapan sprint benar-benar dimulai di repo (bukan jadwal PRD awal).
+> **Konteks bisnis:** Greenhouse di lapangan (13 Mei – 14 Agu 2025) → dari **15 Agu 2025** fokus belajar Agile/UCD dan kode aplikasi. Lihat [konteks-lapangan-dan-aplikasi.md](./konteks-lapangan-dan-aplikasi.md).
+
+Durasi sprint di repo: **±2 minggu**.  
+**Actual start** = kapan sprint benar-benar dimulai di GitHub (bukan tanggal PRD lama).
 
 | Sprint | Iteration (Project #1) | Actual start | Target selesai | Scope | Progress (issue) |
 |--------|------------------------|--------------|----------------|-------|------------------|
@@ -43,4 +45,4 @@ Durasi: **2 minggu / sprint · 10 hari kerja**.
 | prod | 2026-10-10 | [kokonusfarm.vercel.app](https://kokonusfarm.vercel.app) |
 | v1.8–v1.11 | 2026-10-09 | US5–US6, US1.9, US2.6 |
 
-Terakhir diperbarui: **2026-10-10** — [audit-log.md](./audit-log.md).
+Terakhir diperbarui: **2026-10-15** — [audit-log.md](./audit-log.md).

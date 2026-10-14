@@ -1,4 +1,6 @@
-# PHASE 6.3 — QA & reliability (draft)
+# QA & reliabilitas — audit global
+
+Checklist QA fase audit (v1 go-live). Format temuan: [`../standards/format-temuan-audit.md`](../standards/format-temuan-audit.md). Hub: [`README.md`](README.md).
 
 ## Manual (audit mode ON)
 
