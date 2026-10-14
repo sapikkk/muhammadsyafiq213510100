@@ -1,4 +1,6 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { OwnerSectionTabsShell } from "@/components/owner-section-tabs-shell";
+import { TABS_PRODUKSI } from "@/lib/owner-section-tabs";
 import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { InventarisDaftar } from "@/components/inventaris-daftar";
 import { listItemInventaris, serializeItem } from "@/lib/inventaris";
@@ -10,11 +12,16 @@ export default async function OwnerInventarisPage() {
 
   return (
     <CrudPageLayout
-      title="Inventaris"
+      title="Produksi"
       actions={
         <EksporDaftarTombol unduhPath="/api/export/inventaris" jenisPratinjau="inventaris" />
       }
-      list={<InventarisDaftar items={items.map(serializeItem)} mode="owner" />}
+      list={
+        <div className="space-y-4">
+          <OwnerSectionTabsShell tabs={TABS_PRODUKSI} />
+          <InventarisDaftar items={items.map(serializeItem)} mode="owner" />
+        </div>
+      }
       listTitle="Stok bahan baku"
     />
   );

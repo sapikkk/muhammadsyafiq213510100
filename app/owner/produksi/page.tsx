@@ -1,4 +1,6 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { OwnerSectionTabsShell } from "@/components/owner-section-tabs-shell";
+import { TABS_PRODUKSI } from "@/lib/owner-section-tabs";
 import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { SiklusDaftar } from "@/components/siklus-daftar";
 import { PageSection } from "@/components/page-section";
@@ -16,12 +18,13 @@ export default async function OwnerProduksiPage() {
 
   return (
     <CrudPageLayout
-      title="Monitoring siklus produksi"
+      title="Produksi"
       actions={
         <EksporDaftarTombol unduhPath="/api/export/siklus-daftar" jenisPratinjau="siklus-daftar" />
       }
       list={
         <>
+          <OwnerSectionTabsShell tabs={TABS_PRODUKSI} />
           <PageSection title="Ringkasan fase">
             <ProduksiRingkasanPanel data={ringkasan} />
           </PageSection>

@@ -1,8 +1,8 @@
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
-import { OwnerKpiCards } from "@/components/owner-kpi-cards";
 import { ChartCard } from "@/components/chart-card";
 import { OwnerRevenueChart } from "@/components/owner-revenue-chart";
-import { OwnerFlowDashboard } from "@/components/owner-flow-dashboard";
+import { OwnerDashboardKeuanganPanel } from "@/components/owner-dashboard-keuangan-panel";
+import { loadOwnerDashboardKeuangan } from "@/lib/owner-dashboard-keuangan";
 import { DashboardBentoEmpty } from "@/components/dashboard-bento-empty";
 import { BentoSection, BentoSlot, DashboardBento } from "@/components/dashboard-bento";
 import { PageHeaderRow } from "@/components/page-header-row";
@@ -38,12 +38,13 @@ const MONITOR_KOSONG_OWNER = {
 };
 
 export default async function OwnerPage() {
-  const [stokRendah, summary, kpiV2, produksi, monitor] = await Promise.all([
+  const [stokRendah, summary, kpiV2, produksi, monitor, keuanganUtama] = await Promise.all([
     listAlertStokMinimumCached(),
     monthlySummaryCached(6),
     kpiHidroponikMvpCached(),
     loadProduksiRingkasan(),
     loadDashboardMonitorKolam(),
+    loadOwnerDashboardKeuangan(),
   ]);
 
   const labaTerbaik = bestProfitMonth(summary.months);
@@ -103,26 +104,35 @@ export default async function OwnerPage() {
         </BentoSlot>
 
         <BentoSlot span={6}>
-          <BentoSection title="Bulan ini">
-            <OwnerKpiCards
-              pendapatan={summary.pendapatanBulanIni}
-              pengeluaran={summary.pengeluaranBulanIni}
-              labaKasar={summary.labaKasarBulanIni}
-              batchPanenApproved={kpiV2.batchPanenApproved}
-              avgHppPerLubang={kpiV2.avgHppPerLubang}
-              avgYieldPct={kpiV2.avgYieldPct}
+          <BentoSection title="Operasional & HPP">
+            <MetricCards
+              columns={4}
+              items={[
+                ...operasionalItems,
+                {
+                  id: "hpp-lubang",
+                  label: "HPP rata-rata per lubang",
+                  value:
+                    kpiV2.batchPanenApproved > 0
+                      ? formatRupiah(kpiV2.avgHppPerLubang)
+                      : "—",
+                  ...(kpiV2.batchPanenApproved <= 0
+                    ? {
+                        emptyState: {
+                          message: "Belum ada batch panen disetujui.",
+                          actionLabel: "Lihat produksi",
+                          href: "/owner/produksi",
+                        },
+                      }
+                    : {}),
+                },
+              ]}
             />
           </BentoSection>
         </BentoSlot>
 
         <BentoSlot span={6}>
-          <BentoSection title="Operasional">
-            <MetricCards columns={4} items={operasionalItems} />
-          </BentoSection>
-        </BentoSlot>
-
-        <BentoSlot span={6}>
-          <OwnerFlowDashboard stokRendahCount={stokCount} />
+          <OwnerDashboardKeuanganPanel data={keuanganUtama} />
         </BentoSlot>
 
         <BentoSlot span={3}>

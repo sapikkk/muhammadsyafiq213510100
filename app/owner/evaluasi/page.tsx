@@ -1,4 +1,6 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { OwnerSectionTabsShell } from "@/components/owner-section-tabs-shell";
+import { TABS_EVALUASI } from "@/lib/owner-section-tabs";
 import { EvaluasiMarginDaftar } from "@/components/evaluasi-margin-daftar";
 import { MetricCards } from "@/components/metric-cards";
 import { MonochromeProgressBar } from "@/components/monochrome-progress-bar";
@@ -21,9 +23,10 @@ export default async function OwnerEvaluasiPage() {
 
   return (
     <CrudPageLayout
-      title="Untung dan titik impas"
+      title="Evaluasi"
       list={
         <div className="space-y-6">
+          <OwnerSectionTabsShell tabs={TABS_EVALUASI} />
           <MetricCards
             columns={3}
             items={[

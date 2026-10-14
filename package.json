@@ -50,6 +50,8 @@
     "seed:keuangan": "node --env-file=.env prisma/seed-keuangan.js",
     "seed:demo-prod": "npm run seed:kokonus-tahun && npm run seed:keuangan && node --env-file=.env prisma/seed-rekening-kas-standalone.js",
     "seed:owner-alur": "node --env-file=.env prisma/seed-owner-alur.js",
+    "graphify:update": "graphify update .",
+    "graphify:query": "graphify query",
     "db:reset": "bash scripts/db-reset-fondasi.sh",
     "test:e2e": "playwright test",
     "test:testcafe": "testcafe chrome e2e/smoke.spec.ts --skip-js-errors"

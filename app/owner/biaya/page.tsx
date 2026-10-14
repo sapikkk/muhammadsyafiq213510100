@@ -1,4 +1,6 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { OwnerSectionTabsShell } from "@/components/owner-section-tabs-shell";
+import { TABS_BIAYA } from "@/lib/owner-section-tabs";
 import { BebanDrilldownDaftar, BebanPerAkunDaftar } from "@/components/beban-per-akun-daftar";
 import { MetricCards } from "@/components/metric-cards";
 import { OwnerCostPie } from "@/components/owner-cost-pie";
@@ -28,9 +30,10 @@ export default async function OwnerBiayaPage({ searchParams }: { searchParams: S
 
   return (
     <CrudPageLayout
-      title="Rincian biaya"
+      title="Biaya & HPP"
       list={
         <div className="space-y-4">
+          <OwnerSectionTabsShell tabs={TABS_BIAYA} />
           <form method="get" className="flex flex-wrap items-end gap-3 text-sm">
             <label className="flex flex-col gap-1">
               <span className="text-muted-foreground">Dari (tahun-bulan)</span>

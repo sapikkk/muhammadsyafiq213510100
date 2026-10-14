@@ -1,5 +1,6 @@
 import { MetricCards } from "@/components/metric-cards";
-import { OwnerBagianSubnav } from "@/components/owner-bagian-subnav";
+import { OwnerSectionTabsShell } from "@/components/owner-section-tabs-shell";
+import { TABS_KEGAGALAN } from "@/lib/owner-section-tabs";
 import { PageSection } from "@/components/page-section";
 import {
   Table,
@@ -18,20 +19,7 @@ import {
 import { Suspense } from "react";
 
 function SubnavKegagalan() {
-  return (
-    <OwnerBagianSubnav
-      basePath="/owner/kegagalan-susut"
-      paramName="bagian"
-      defaultValue="menunggu"
-      links={OWNER_KEGAGALAN_BAGIAN.map((b) => ({
-        id: b.id,
-        label: b.label,
-        epic: b.epic || undefined,
-        param: "bagian",
-        value: b.id,
-      }))}
-    />
-  );
+  return <OwnerSectionTabsShell tabs={TABS_KEGAGALAN} />;
 }
 
 export async function KegagalanSusutOwnerPanel({

@@ -2,7 +2,9 @@
 
 ## Graphify (wajib untuk eksplorasi kode)
 
-Graf pengetahuan ada di `graphify-out/` (commit `9868c5af` saat terakhir di-build).
+Graf pengetahuan ada di `graphify-out/` (perbarui dengan `npm run graphify:update`).
+
+**CLI (mesin lokal):** paket PyPI resmi `graphifyy` → perintah `graphify`. Jika `ModuleNotFoundError`: `pip3 install --upgrade graphifyy` lalu `graphify install --platform cursor`. MCP Cursor: `.cursor/mcp.json` → `graphify-mcp graphify-out/graph.json` (butuh `pip3 install 'graphifyy[mcp]'`).
 
 Sebelum `Read` / `Grep` / `Glob` untuk orientasi arsitektur:
 

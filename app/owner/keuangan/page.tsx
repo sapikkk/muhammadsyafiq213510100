@@ -14,7 +14,7 @@ export default async function OwnerKeuanganPage() {
   return (
     <CrudPageLayout
       financeNavRole="OWNER"
-      title="Modul keuangan"
+      title="Laporan keuangan"
       list={
         <FinanceHubPanel
           role="OWNER"

@@ -55,21 +55,35 @@ const adminModules: FinanceModule[] = [
   },
 ];
 
-/** Tab horizontal Owner — selaras bagian 7 sidebar (laporan keuangan). */
+/** Tab horizontal Owner — modul 7 (laporan & akuntansi). */
 const ownerModules: FinanceModule[] = [
   {
     id: "ringkasan",
     label: "Ringkasan",
     href: "/owner/keuangan",
     matchPrefixes: ["/owner/keuangan"],
-    hint: "Angka ringkas dan pintasan.",
+    hint: "Indikator utama dan pintasan.",
+  },
+  {
+    id: "penjualan-piutang",
+    label: "Pesanan jual",
+    href: "/owner/penjualan",
+    matchPrefixes: ["/owner/penjualan"],
+    hint: "Faktur penjualan dan status kirim.",
+  },
+  {
+    id: "piutang",
+    label: "Piutang",
+    href: "/owner/penjualan/piutang",
+    matchPrefixes: ["/owner/penjualan/piutang"],
+    hint: "Sisa tagihan pelanggan.",
   },
   {
     id: "catatan",
-    label: "Catatan keuangan",
+    label: "Jurnal umum",
     href: "/owner/jurnal",
     matchPrefixes: ["/owner/jurnal"],
-    hint: "Daftar catatan dan koreksi.",
+    hint: "Catatan debit/kredit harian.",
   },
   {
     id: "laba-rugi",
@@ -77,7 +91,7 @@ const ownerModules: FinanceModule[] = [
     href: "/owner/laporan?laporan=laba-rugi",
     matchPrefixes: ["/owner/laporan"],
     matchSearch: { laporan: "laba-rugi" },
-    hint: "Pendapatan, beban, laba periode.",
+    hint: "Pendapatan dikurangi beban.",
   },
   {
     id: "neraca",
@@ -85,28 +99,28 @@ const ownerModules: FinanceModule[] = [
     href: "/owner/laporan?laporan=neraca",
     matchPrefixes: ["/owner/laporan"],
     matchSearch: { laporan: "neraca" },
-    hint: "Aset, kewajiban, modal.",
+    hint: "Aset, kewajiban, ekuitas.",
   },
   {
     id: "arus-kas",
     label: "Arus kas",
     href: "/owner/arus-kas",
     matchPrefixes: ["/owner/arus-kas"],
-    hint: "Masuk dan keluar kas.",
+    hint: "Operasi, investasi, pendanaan.",
   },
   {
     id: "akun",
-    label: "Daftar akun",
+    label: "Bagan akun",
     href: "/owner/akun",
     matchPrefixes: ["/owner/akun"],
-    hint: "Bagan akun.",
+    hint: "Buku besar per akun.",
   },
   {
     id: "rekening",
-    label: "Rekening",
+    label: "Kas & bank",
     href: "/owner/rekening",
     matchPrefixes: ["/owner/rekening"],
-    hint: "Kas, bank, e-wallet.",
+    hint: "Saldo rekening real-time.",
   },
   {
     id: "prive",
@@ -114,6 +128,20 @@ const ownerModules: FinanceModule[] = [
     href: "/owner/prive",
     matchPrefixes: ["/owner/prive"],
     hint: "Pencairan pribadi dari kas.",
+  },
+  {
+    id: "petani",
+    label: "Data petani",
+    href: "/owner/petani",
+    matchPrefixes: ["/owner/petani"],
+    hint: "Master petani dan gaji.",
+  },
+  {
+    id: "pengguna",
+    label: "Kelola akun login",
+    href: "/owner/pengguna",
+    matchPrefixes: ["/owner/pengguna"],
+    hint: "User admin dan pekerja.",
   },
 ];
 
@@ -134,6 +162,13 @@ export function resolveFinanceModuleId(
     return "laba-rugi";
   }
 
+  if (role === "OWNER" && pathname.startsWith("/owner/penjualan/piutang")) {
+    return "piutang";
+  }
+  if (role === "OWNER" && pathname.startsWith("/owner/penjualan")) {
+    return "penjualan-piutang";
+  }
+
   for (const mod of modules) {
     const pathOnly = mod.href.split("?")[0];
     const onPath =
@@ -151,6 +186,9 @@ export function resolveFinanceModuleId(
     if (mod.matchSearch) continue;
 
     if (mod.id === "laba-rugi" || mod.id === "neraca") continue;
+    if (mod.id === "penjualan-piutang" && pathname.startsWith("/owner/penjualan/piutang")) {
+      continue;
+    }
 
     return mod.id;
   }
@@ -162,7 +200,7 @@ export function financeNavRoleFromPath(pathname: string): "ADMIN" | "OWNER" | nu
     if (resolveFinanceModuleId(pathname, "ADMIN")) return "ADMIN";
   }
   if (pathname.startsWith("/owner/")) {
-    if (resolveFinanceModuleId(pathname, "OWNER")) return "OWNER";
+    if (resolveFinanceModuleId(pathname, "OWNER", null)) return "OWNER";
   }
   return null;
 }

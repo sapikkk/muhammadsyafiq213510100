@@ -1,4 +1,6 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
+import { OwnerSectionTabsShell } from "@/components/owner-section-tabs-shell";
+import { TABS_VARIETAS_LAHAN } from "@/lib/owner-section-tabs";
 import { InfrastrukturPohon } from "@/components/infrastruktur-pohon";
 import { PageSection } from "@/components/page-section";
 import { ProduksiRingkasanPanel } from "@/components/produksi-ringkasan-panel";
@@ -18,9 +20,10 @@ export default async function OwnerInfrastrukturPage() {
 
   return (
     <CrudPageLayout
-      title="Infrastruktur"
+      title="Varietas & lahan"
       list={
         <>
+          <OwnerSectionTabsShell tabs={TABS_VARIETAS_LAHAN} />
           <PageSection title="Kapasitas kolam">
             <ProduksiRingkasanPanel data={ringkasan} metricsVariant="compact" />
           </PageSection>
