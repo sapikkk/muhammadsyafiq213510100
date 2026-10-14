@@ -28,6 +28,15 @@ async function loginAdmin(page: import("@playwright/test").Page) {
   await loginAs(page, "admin@kokonus.farm", /\/admin/);
 }
 
+/** Grup sidebar Keuangan default tertutup jika halaman bukan modul keuangan. */
+async function bukaSidebarKeuangan(page: import("@playwright/test").Page) {
+  const grup = page.getByRole("button", { name: /^Keuangan$/ });
+  if (await grup.isVisible()) {
+    const expanded = await grup.getAttribute("aria-expanded");
+    if (expanded !== "true") await grup.click();
+  }
+}
+
 async function loginOwner(page: import("@playwright/test").Page) {
   await loginAs(page, "owner@kokonus.farm", /\/owner/);
 }
@@ -43,7 +52,7 @@ test("jurnal admin memuat tabel", async ({ page }) => {
   await loginAdmin(page);
   await page.goto("/admin/jurnal");
   await expect(page.getByRole("heading", { name: /^Catatan keuangan$/ })).toBeVisible();
-  await expect(page.getByPlaceholder(/Cari keterangan atau nama akun/i)).toBeVisible();
+  await expect(page.getByLabel(/Cari jurnal/i)).toBeVisible();
 });
 
 test("admin DataTable: pelanggan, inventaris, varietas — cari", async ({ page }) => {
@@ -53,7 +62,7 @@ test("admin DataTable: pelanggan, inventaris, varietas — cari", async ({ page 
   await expect(pelangganSearch).toBeVisible();
   await expect(page.getByRole("button", { name: /^Tambah$/ })).toBeVisible();
   await expect(page.getByText(/Klik baris untuk ubah/i)).toHaveCount(0);
-  await expect(page.getByRole("heading", { name: /Form pelanggan baru/i })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: /Tambah pelanggan/i })).toHaveCount(0);
   await page.getByRole("button", { name: /^Tambah$/ }).click();
   await expect(page.getByRole("heading", { name: /Tambah pelanggan/i })).toBeVisible();
   await page.keyboard.press("Escape");
@@ -61,9 +70,9 @@ test("admin DataTable: pelanggan, inventaris, varietas — cari", async ({ page 
   await expect(page.getByText(/\d+ baris/)).toBeVisible();
 
   await page.goto("/admin/inventaris");
-  await expect(page.getByPlaceholder(/Cari kode atau nama/i)).toBeVisible();
+  await expect(page.getByPlaceholder(/Cari nama barang/i)).toBeVisible();
   await expect(page.getByRole("button", { name: /^Tambah$/ })).toBeVisible();
-  await expect(page.getByRole("heading", { name: /Item & pergerakan stok/i })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: /Tambah item/i })).toHaveCount(0);
 
   await page.goto("/admin/petani");
   await expect(page.getByRole("button", { name: /^Tambah$/ })).toBeVisible();
@@ -78,7 +87,7 @@ test("404 saat login menampilkan shell dan tombol dashboard", async ({ page }) =
   await page.goto("/admin/halaman-tidak-ada-e2e");
   await expect(page.getByRole("heading", { name: /Halaman tidak ada/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Kembali ke dashboard/i })).toBeVisible();
-  await expect(page.getByRole("link", { name: /^Catatan keuangan$/ })).toBeVisible();
+  await expect(page.getByRole("navigation", { name: /Menu utama/i })).toBeVisible();
 });
 
 test("owner pengguna DataTable cari", async ({ page }) => {
@@ -98,6 +107,7 @@ test("mobile menu: buka navigasi lalu tutup setelah pilih link", async ({ page }
   await loginAdmin(page);
   await page.getByRole("button", { name: /Buka menu/i }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
+  await bukaSidebarKeuangan(page);
   await page.getByRole("link", { name: /^Catatan keuangan$/ }).click();
   await page.waitForURL(/\/admin\/jurnal/);
   await expect(page.getByRole("dialog")).toBeHidden();

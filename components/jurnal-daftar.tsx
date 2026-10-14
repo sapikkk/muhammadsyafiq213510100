@@ -83,7 +83,7 @@ export function JurnalDaftar({
   if (rows.length === 0) {
     return (
       <div className="space-y-4">
-        {listActions ? searchRow : null}
+        {searchRow}
         <p className="text-sm text-muted-foreground">{emptyMessage}</p>
       </div>
     );

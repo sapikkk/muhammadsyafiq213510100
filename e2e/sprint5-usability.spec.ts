@@ -74,10 +74,10 @@ test("T5.2 admin: filter jurnal tanggal + cari", async ({ page }) => {
   await page.locator('input[name="sampai"]').fill("2030-12-31");
   await page.getByRole("button", { name: /Terapkan/i }).click();
   await expect(page.getByText(/sesuai filter/i)).toBeVisible();
-  const search = page.getByPlaceholder(/Cari keterangan/i);
+  const search = page.getByLabel(/Cari jurnal/i);
   await expect(search).toBeVisible();
   await search.fill("zzz-tidak-ada-xyz");
-  await expect(page.getByText(/\d+ baris/)).toBeVisible();
+  await expect(page.getByText(/Tidak ada catatan cocok pencarian/i)).toBeVisible();
 });
 
 test("T5.3 owner: KPI, grafik, pie biaya", async ({ page }) => {
