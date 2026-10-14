@@ -94,7 +94,7 @@ test("owner pengguna DataTable cari", async ({ page }) => {
   await loginOwner(page);
   await page.goto("/pengaturan?bagian=tim&tim=pengguna");
   await expect(page.getByRole("heading", { name: /^Pengaturan$/ })).toBeVisible();
-  await expect(page.getByRole("button", { name: /^Tambah$/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^Tambah akun$/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Tambah akun login/i })).toHaveCount(0);
   const search = page.getByPlaceholder(/Cari nama atau email/i);
   await expect(search).toBeVisible();

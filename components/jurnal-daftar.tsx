@@ -81,10 +81,13 @@ export function JurnalDaftar({
   );
 
   if (rows.length === 0) {
+    const needle = q.trim();
     return (
       <div className="space-y-4">
         {searchRow}
-        <p className="text-sm text-muted-foreground">{emptyMessage}</p>
+        <p className="text-sm text-muted-foreground">
+          {needle ? "Tidak ada catatan cocok pencarian." : emptyMessage}
+        </p>
       </div>
     );
   }
