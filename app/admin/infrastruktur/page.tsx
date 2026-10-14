@@ -49,7 +49,7 @@ export default async function AdminInfrastrukturPage() {
       list={
         <>
           <PageSection title="Kapasitas kolam">
-            <ProduksiRingkasanPanel data={ringkasan} />
+            <ProduksiRingkasanPanel data={ringkasan} metricsVariant="compact" />
           </PageSection>
           <InfrastrukturPohon data={data} mode="admin" kolamIsi={kolamIsi} />
         </>

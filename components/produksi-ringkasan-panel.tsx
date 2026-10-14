@@ -6,11 +6,13 @@ import type { ProduksiRingkasan } from "@/lib/produksi-kapasitas-types";
 export function ProduksiRingkasanPanel({
   data,
   showKapasitasBar = true,
+  metricsVariant = "default",
   kolamSetupHref,
   kolamSetupLabel = "Atur lahan dan kolam",
 }: {
   data: ProduksiRingkasan;
   showKapasitasBar?: boolean;
+  metricsVariant?: "default" | "compact";
   /** Jika kapasitas nol, tampilkan pesan + tombol ke halaman ini. */
   kolamSetupHref?: string;
   kolamSetupLabel?: string;
@@ -38,7 +40,8 @@ export function ProduksiRingkasanPanel({
       ) : null}
 
       <MetricCards
-        columns={2}
+        variant={metricsVariant}
+        columns={metricsVariant === "compact" ? 3 : 2}
         items={[
           ...data.fase.map((f) => ({
             id: `fase-${f.fase}`,
