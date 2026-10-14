@@ -16,6 +16,8 @@ const {
   FLOW_PREFIX,
   SO_PREFIX,
 } = require("./data/kokonus-seed-catalog");
+const { seedSiklusAktifDanMenunggu } = require("./seed-siklus-aktif");
+const { seedPetani } = require("./seed-petani");
 
 const prisma = new PrismaClient();
 const DEMO_PASSWORD = "KokonusDemo2026";
@@ -202,7 +204,7 @@ async function seedSiklusTahun(ctx) {
   const varietasList = Object.values(varietasByName);
   const r = rng(20261013);
   const yearStart = dateOnly(new Date(Date.UTC(2025, 0, 15)));
-  const yearEnd = dateOnly(new Date(Date.UTC(2026, 0, 10)));
+  const yearEnd = dateOnly(new Date(Date.UTC(2026, 2, 1)));
   const cycleWeeks = 9;
   const created = [];
 
@@ -310,7 +312,7 @@ async function seedSiklusTahun(ctx) {
       }
 
       if (!gagalTotal) {
-        for (let day = dSprout; day < dPanen; day += 2) {
+        for (let day = dSprout; day < dPanen; day += 4) {
           await prisma.log_Monitor_Kolam.create({
             data: {
               kolam_id: kolam.id,
@@ -416,8 +418,21 @@ async function seedPelangganDanPenjualan(selesai, adminId) {
   let soSeq = 1;
   const modes = ["LUNAS", "CICIL", "KONSINYASI", "LUNAS", "PIUTANG"];
 
-  for (let i = 0; i < selesai.length && i < 24; i++) {
-    const { siklus, varietas, beratKg, jumlahLayak, tanggalPanen } = selesai[i];
+  const urutPanen = [...selesai].sort(
+    (a, b) => b.tanggalPanen.getTime() - a.tanggalPanen.getTime(),
+  );
+  const maxSo = Math.min(urutPanen.length, 40);
+
+  const now = new Date();
+  const bulanIni = dateOnly(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)));
+
+  for (let i = 0; i < maxSo; i++) {
+    let { siklus, varietas, beratKg, jumlahLayak, tanggalPanen } = urutPanen[i];
+    if (i < 8 && tanggalPanen < bulanIni) {
+      tanggalPanen = dateOnly(
+        new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 3 + (i % 20))),
+      );
+    }
     const mode = modes[i % modes.length];
     const hargaKg = isPakcoy(varietas.nama)
       ? new Prisma.Decimal("20000.00")
@@ -483,22 +498,29 @@ async function seedPelangganDanPenjualan(selesai, adminId) {
   return soSeq - 1;
 }
 
-async function seedOverheadListrik(lahanId) {
-  for (let m = 0; m < 12; m++) {
-    const periode = dateOnly(new Date(Date.UTC(2025, m, 1)));
-    const ada = await prisma.biaya_Overhead.findFirst({ where: { periode } });
-    if (ada) continue;
-    const listrik = new Prisma.Decimal(LISTRIK_BULAN);
-    await prisma.biaya_Overhead.create({
-      data: {
-        periode,
-        depresiasi_greenhouse: "8000000.00",
-        depresiasi_listrik: listrik.toFixed(2),
-        sewa_lahan: "2000000.00",
-        gaji_karyawan: "4500000.00",
-        subtotal: listrik.add(14500000).toFixed(2),
-      },
-    });
+async function seedOverheadListrik() {
+  const now = new Date();
+  const endYear = now.getUTCFullYear();
+  const endMonth = now.getUTCMonth();
+
+  for (let y = 2025; y <= endYear; y += 1) {
+    const lastM = y === endYear ? endMonth : 11;
+    for (let m = 0; m <= lastM; m += 1) {
+      const periode = dateOnly(new Date(Date.UTC(y, m, 1)));
+      const ada = await prisma.biaya_Overhead.findFirst({ where: { periode } });
+      if (ada) continue;
+      const listrik = new Prisma.Decimal(LISTRIK_BULAN);
+      await prisma.biaya_Overhead.create({
+        data: {
+          periode,
+          depresiasi_greenhouse: "8000000.00",
+          depresiasi_listrik: listrik.toFixed(2),
+          sewa_lahan: "2000000.00",
+          gaji_karyawan: "4500000.00",
+          subtotal: listrik.add(14500000).toFixed(2),
+        },
+      });
+    }
   }
 }
 
@@ -510,10 +532,16 @@ async function main() {
   const varietasByName = await seedCatalog();
   const selesai = await seedSiklusTahun({ varietasByName, kolams, petaniId, adminId });
   const jumlahSo = await seedPelangganDanPenjualan(selesai, adminId);
-  await seedOverheadListrik(lahan.id);
+  await seedOverheadListrik();
+  const jumlahPetani = await seedPetani(prisma);
+  const siklusAktif = await seedSiklusAktifDanMenunggu(prisma, {
+    kolams,
+    varietasByName,
+    petaniId,
+  });
 
   console.log(
-    `Seed kokonus-tahun: hapus ${wiped} batch lama, ${Object.keys(varietasByName).length} varietas, ${kolams.length} kolam, ${selesai.length} siklus selesai, ${jumlahSo} pesanan jual. Listrik Rp 500.000/bulan.`,
+    `Seed kokonus-tahun: hapus ${wiped} batch lama, ${Object.keys(varietasByName).length} varietas, ${kolams.length} kolam, ${selesai.length} siklus selesai, ${siklusAktif} siklus aktif, ${jumlahSo} pesanan jual, ${jumlahPetani} petani master. Listrik Rp 500.000/bulan.`,
   );
   console.log(`Login demo: admin@kokonus.farm / ${DEMO_PASSWORD}`);
   console.log("Langkah berikut (jurnal & saldo akun): npm run seed:keuangan");

@@ -64,8 +64,10 @@ npm run seed:demo    # pelanggan demo + 1 jurnal DRAFT
 ```bash
 npm run seed:demo-lengkap    # akun demo + inventaris + varietas + siklus ringkas
 npm run seed:kokonus-tahun   # 1 tahun produksi, panen, penjualan, overhead
-npm run seed:keuangan        # jurnal penjualan (APPROVED) + penyusutan 2025
-# atau satu baris:
+npm run seed:keuangan        # jurnal penjualan (APPROVED) + penyusutan 2025–bulan berjalan
+# atau satu baris (termasuk rekening kas + checklist alur Owner):
+npm run seed:owner-alur
+# alias tanpa checklist:
 npm run seed:demo-prod
 ```
 

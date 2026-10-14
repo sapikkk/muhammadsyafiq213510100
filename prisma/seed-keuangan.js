@@ -237,14 +237,21 @@ async function main() {
   }
 
   const jurnalPenyusutan = [];
-  for (let m = 1; m <= 12; m += 1) {
-    const bulan = `2025-${String(m).padStart(2, "0")}`;
-    try {
-      jurnalPenyusutan.push(...(await catatPenyusutanBulan(admin.id, bulan)));
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : String(e);
-      if (msg.includes("sudah dicatat")) continue;
-      throw e;
+  const now = new Date();
+  const endYear = now.getUTCFullYear();
+  const endMonth = now.getUTCMonth() + 1;
+
+  for (let y = 2025; y <= endYear; y += 1) {
+    const lastM = y === endYear ? endMonth : 12;
+    for (let m = 1; m <= lastM; m += 1) {
+      const bulan = `${y}-${String(m).padStart(2, "0")}`;
+      try {
+        jurnalPenyusutan.push(...(await catatPenyusutanBulan(admin.id, bulan)));
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : String(e);
+        if (msg.includes("sudah dicatat")) continue;
+        throw e;
+      }
     }
   }
 
