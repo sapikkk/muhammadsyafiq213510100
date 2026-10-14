@@ -1,6 +1,7 @@
 "use client";
 
 import type { ExportDocument } from "@/lib/export-document-types";
+import { cn } from "@/lib/utils";
 
 export function EksporPratinjauTabel({ doc }: { doc: ExportDocument | null }) {
   if (!doc) {
@@ -10,23 +11,27 @@ export function EksporPratinjauTabel({ doc }: { doc: ExportDocument | null }) {
   }
 
   return (
-    <div className="max-h-64 space-y-4 overflow-auto rounded-md border p-3 text-sm">
+    <div
+      className={cn(
+        "h-full min-h-[14rem] max-h-[min(52vh,36rem)] space-y-4 overflow-auto rounded-md border bg-muted/15 p-4 text-sm",
+      )}
+    >
       <div>
-        <p className="font-medium">{doc.title}</p>
+        <p className="text-base font-semibold">{doc.title}</p>
         {doc.subtitleLines?.map((line) => (
-          <p key={line} className="text-muted-foreground">
+          <p key={line} className="text-sm text-muted-foreground">
             {line}
           </p>
         ))}
       </div>
       {doc.sections.map((sec, i) => (
-        <div key={sec.title ?? i}>
-          {sec.title ? <p className="mb-1 font-medium">{sec.title}</p> : null}
-          <table className="w-full border-collapse text-left text-xs">
+        <div key={sec.title ?? i} className="overflow-x-auto">
+          {sec.title ? <p className="mb-2 font-medium">{sec.title}</p> : null}
+          <table className="w-full min-w-max border-collapse text-left text-sm">
             <thead>
-              <tr className="border-b">
+              <tr className="border-b bg-muted/40">
                 {sec.headers.map((h) => (
-                  <th key={h} className="py-1 pr-2 font-medium">
+                  <th key={h} className="whitespace-nowrap px-2 py-2 pr-4 font-medium">
                     {h}
                   </th>
                 ))}
@@ -36,7 +41,7 @@ export function EksporPratinjauTabel({ doc }: { doc: ExportDocument | null }) {
               {sec.rows.slice(0, 12).map((row, ri) => (
                 <tr key={ri} className="border-b border-dashed">
                   {row.map((cell, ci) => (
-                    <td key={ci} className="py-1 pr-2 align-top text-muted-foreground">
+                    <td key={ci} className="whitespace-nowrap px-2 py-1.5 pr-4 align-top text-muted-foreground">
                       {cell}
                     </td>
                   ))}
@@ -45,7 +50,7 @@ export function EksporPratinjauTabel({ doc }: { doc: ExportDocument | null }) {
             </tbody>
           </table>
           {sec.rows.length > 12 ? (
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="mt-2 text-xs text-muted-foreground">
               … {sec.rows.length - 12} baris lagi di file unduhan.
             </p>
           ) : null}

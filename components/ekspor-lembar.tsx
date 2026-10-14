@@ -108,7 +108,7 @@ export function EksporLembar({
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-lg gap-4">
+      <DialogContent className="flex max-h-[92vh] w-[min(96vw,56rem)] max-w-[min(96vw,56rem)] flex-col gap-4 overflow-hidden p-6 sm:max-w-[min(96vw,56rem)]">
         <DialogHeader>
           <DialogTitle>Ekspor data</DialogTitle>
         </DialogHeader>
@@ -192,7 +192,7 @@ export function EksporLembar({
           </fieldset>
         ) : null}
 
-        <div className="space-y-2">
+        <div className="flex min-h-0 flex-1 flex-col gap-2">
           <div className="flex flex-wrap gap-2">
             <Button
               type="button"
@@ -210,7 +210,9 @@ export function EksporLembar({
             </Button>
           </div>
           {previewError ? <p className="text-sm text-destructive">{previewError}</p> : null}
-          <EksporPratinjauTabel doc={preview} />
+          <div className="min-h-[14rem] flex-1 overflow-hidden">
+            <EksporPratinjauTabel doc={preview} />
+          </div>
         </div>
       </DialogContent>
     </Dialog>
