@@ -10,7 +10,7 @@ test("admin penjualan: form SO punya lubang terpakai (v2-D.1)", async ({ page })
   await page.waitForURL(/\/admin/);
 
   await page.goto("/admin/penjualan/baru");
-  await expect(page.getByText(/Sales order/i).first()).toBeVisible();
+  await expect(page.getByText(/Pesanan jual/i).first()).toBeVisible();
 
   const lubangField = page.getByPlaceholder("Lubang terpakai");
   const noBatch = page.getByText(/Tidak ada batch siap jual/);
