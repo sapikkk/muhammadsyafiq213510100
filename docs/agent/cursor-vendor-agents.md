@@ -16,6 +16,10 @@ Submodule + skrip pasang ulang skill pihak ketiga untuk Kokonus Farm.
 | `vendor/agents/ponytail` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | YAGNI implementasi; hooks + 6 skill |
 | `vendor/agents/caveman` | [JuliusBrussee/caveman](https://github.com/juliusbrussee/caveman) | Gaya agent + cavecrew (install Cursor opsional) |
 | `vendor/agents/awesome-skills` | [theneoai/awesome-skills](https://github.com/theneoai/awesome-skills) | 956 skill upstream; proyek sync **kurasi** saja |
+| `vendor/agents/founder-skill` | [Jakeschincariol/founder-skill](https://github.com/Jakeschincariol/founder-skill) | 11 skill validasi bisnis → `.agents/skills/founder-*` |
+| `vendor/agents/openmaic` | [THU-MAIC/OpenMAIC](https://github.com/THU-MAIC/OpenMAIC) | Skill kelas multi-agent + runtime pedagogi → `.agents/skills/openmaic*` |
+
+Detail founder/OpenMAIC: [`founder-openmaic.md`](founder-openmaic.md).
 
 **Router slash `/`:** [`cursor-agent-stack.md`](cursor-agent-stack.md).
 
@@ -32,6 +36,7 @@ bash scripts/bootstrap-vendor-agents.sh
 
 1. Menjalankan `convert.sh` + `install.sh --link` Agency → symlink `.cursor/rules/<agent>.mdc` (tidak di-commit; lihat `.gitignore`).
 2. Menjalankan `scripts/sync-agent-skills.sh` → salin skill ke `.agents/skills/` (gitignore).
+3. Menjalankan `scripts/sync-founder-openmaic-skills.sh` → founder-* + openmaic* (gitignore).
 
 Aturan di-commit:
 

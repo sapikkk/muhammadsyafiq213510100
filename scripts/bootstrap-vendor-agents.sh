@@ -10,7 +10,9 @@ git submodule update --init --recursive \
   vendor/agents/semgrep-skills \
   vendor/agents/mattpocock-skills \
   vendor/agents/apple-design-skill \
-  vendor/agents/ponytail
+  vendor/agents/ponytail \
+  vendor/agents/founder-skill \
+  vendor/agents/openmaic
 
 # awesome-skills punya nested submodule rusak di upstream — init tanpa --recursive
 git submodule update --init vendor/agents/awesome-skills
@@ -27,6 +29,7 @@ echo "==> Agency Agents: konversi + symlink ke .cursor/rules/"
 
 echo "==> Semgrep, Karpathy, Matt Pocock, Apple, Ponytail, awesome-kurasi, domain: sync ke .agents/skills/"
 bash "$ROOT/scripts/sync-agent-skills.sh"
+bash "$ROOT/scripts/sync-founder-openmaic-skills.sh"
 
 PONYTAIL_HOOKS="$ROOT/vendor/agents/ponytail/scripts/cursor-hooks.js"
 if [[ -f "$PONYTAIL_HOOKS" ]]; then
