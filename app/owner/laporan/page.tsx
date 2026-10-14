@@ -3,8 +3,9 @@ import { Suspense } from "react";
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { OwnerKeuanganChrome } from "@/components/owner-keuangan-chrome";
 import { EksporLembar } from "@/components/ekspor-lembar";
-import { MonthPeriodNav } from "@/components/month-period-nav";
+import { OwnerPeriodFilter } from "@/components/owner-period-filter";
 import { monthlySummaryCached } from "@/lib/cached-queries";
+import { defaultYearMonth, isYearMonth, parsePeriodeMode } from "@/lib/period-nav";
 import { OwnerBagianSubnav } from "@/components/owner-bagian-subnav";
 import {
   OwnerLaporanKeuanganPanel,
@@ -13,12 +14,7 @@ import {
 
 export const dynamic = "force-dynamic";
 
-type Search = { dari?: string; sampai?: string; laporan?: string };
-
-function defaultMonth() {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-}
+type Search = { dari?: string; sampai?: string; laporan?: string; periode?: string };
 
 function parseJenis(raw: string | undefined): OwnerLaporanJenis {
   return raw === "neraca" ? "neraca" : "laba-rugi";
@@ -31,15 +27,20 @@ const LAPORAN_LINKS = [
 
 export default async function OwnerLaporanPage({ searchParams }: { searchParams: Search }) {
   if (!searchParams.laporan) {
-    redirect(`/owner/laporan?laporan=laba-rugi&dari=${defaultMonth()}&sampai=${defaultMonth()}`);
+    const m = defaultYearMonth();
+    redirect(`/owner/laporan?laporan=laba-rugi&dari=${m}&sampai=${m}`);
   }
 
-  const dari =
-    searchParams.dari && /^\d{4}-\d{2}$/.test(searchParams.dari) ? searchParams.dari : defaultMonth();
-  const sampai =
-    searchParams.sampai && /^\d{4}-\d{2}$/.test(searchParams.sampai)
-      ? searchParams.sampai
-      : defaultMonth();
+  const periode = parsePeriodeMode(searchParams.periode);
+  const def = defaultYearMonth();
+  let dari =
+    searchParams.dari && isYearMonth(searchParams.dari) ? searchParams.dari : def;
+  let sampai =
+    searchParams.sampai && isYearMonth(searchParams.sampai) ? searchParams.sampai : def;
+  if (periode === "bulan") {
+    dari = dari || def;
+    sampai = dari;
+  }
   const jenis = parseJenis(searchParams.laporan);
 
   const unduhPath =
@@ -71,7 +72,14 @@ export default async function OwnerLaporanPage({ searchParams }: { searchParams:
             />
           </Suspense>
           <Suspense fallback={null}>
-            <MonthPeriodNav dari={dari} sampai={sampai} preserveKeys={["laporan"]} />
+            <OwnerPeriodFilter
+              dari={dari}
+              sampai={sampai}
+              periode={periode}
+              preserveKeys={["laporan"]}
+              rentangField="month"
+              rentangOptionLabel="Rentang bulan"
+            />
           </Suspense>
           <OwnerLaporanKeuanganPanel
             jenis={jenis}

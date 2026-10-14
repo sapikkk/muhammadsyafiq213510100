@@ -1,47 +1,45 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { ListFilterSheet } from "@/components/list-filter-sheet";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { statusJurnalLabel, statusJurnalList } from "@/lib/jurnal-status";
 
 export function JurnalListFilter({
   basePath,
-  dari,
-  sampai,
   status,
   selectClass,
+  periodeQuery,
 }: {
   basePath: string;
-  dari?: string;
-  sampai?: string;
   status?: string;
   selectClass: string;
+  /** Query periode & tanggal/bulan — dipertahankan saat filter status. */
+  periodeQuery: string;
 }) {
-  const active = Boolean(dari || sampai || status);
+  const searchParams = useSearchParams();
+  const active = Boolean(status);
+  const clearHref = periodeQuery ? `${basePath}?${periodeQuery}` : basePath;
 
   return (
     <ListFilterSheet
-      title="Filter catatan"
-      description="Batasi tanggal dan status jurnal."
+      title="Filter status"
+      description="Batasi status jurnal."
       active={active}
     >
       {(close) => (
         <form
           method="get"
-          className="grid gap-3 sm:grid-cols-2"
+          className="grid gap-3"
           onSubmit={() => close()}
         >
+          {Array.from(searchParams.entries())
+            .filter(([k]) => k !== "status")
+            .map(([k, v]) => (
+              <input key={k} type="hidden" name={k} value={v} />
+            ))}
           <label className="block space-y-1.5 text-sm">
-            <span className="font-medium">Dari tanggal</span>
-            <Input name="dari" type="date" defaultValue={dari} className="h-11" />
-          </label>
-          <label className="block space-y-1.5 text-sm">
-            <span className="font-medium">Sampai tanggal</span>
-            <Input name="sampai" type="date" defaultValue={sampai} className="h-11" />
-          </label>
-          <label className="block space-y-1.5 text-sm sm:col-span-2">
             <span className="font-medium">Status</span>
             <select name="status" defaultValue={status ?? ""} className={selectClass}>
               <option value="">Semua status</option>
@@ -52,13 +50,13 @@ export function JurnalListFilter({
               ))}
             </select>
           </label>
-          <div className="flex flex-wrap gap-2 sm:col-span-2">
+          <div className="flex flex-wrap gap-2">
             <Button type="submit" className="h-11">
               Terapkan
             </Button>
             {active ? (
               <Button type="button" variant="ghost" className="h-11" asChild>
-                <Link href={basePath}>Hapus filter</Link>
+                <Link href={clearHref}>Hapus filter</Link>
               </Button>
             ) : null}
           </div>

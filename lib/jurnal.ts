@@ -10,6 +10,13 @@ import {
   emitJurnalRejected,
 } from "@/lib/notifikasi-emit";
 import { revalidateOwnerDashboardCaches } from "@/lib/owner-dashboard-cache";
+import {
+  akhirBulanIso,
+  defaultYearMonth,
+  isIsoDate,
+  isYearMonth,
+  parsePeriodeMode,
+} from "@/lib/period-nav";
 import { prisma } from "@/lib/prisma";
 
 export type { SerializedJurnalListRow } from "@/lib/jurnal-types";
@@ -155,16 +162,57 @@ export async function createJurnal(
   return created;
 }
 
-export type FilterJurnal = { status?: string; dari?: string; sampai?: string };
+export type FilterJurnal = {
+  status?: string;
+  dari?: string;
+  sampai?: string;
+  periode?: string;
+};
+
+export function normalizeJurnalFilter(raw: FilterJurnal) {
+  const periode = parsePeriodeMode(raw.periode);
+  const def = defaultYearMonth();
+
+  if (periode === "bulan") {
+    const ym =
+      raw.dari && isYearMonth(raw.dari)
+        ? raw.dari
+        : raw.dari && isIsoDate(raw.dari)
+          ? raw.dari.slice(0, 7)
+          : def;
+    return { status: raw.status, periode, dari: ym, sampai: ym };
+  }
+
+  let dari = raw.dari?.trim() ?? "";
+  let sampai = raw.sampai?.trim() ?? "";
+  if (!isIsoDate(dari)) dari = `${def}-01`;
+  if (!isIsoDate(sampai)) sampai = akhirBulanIso(dari.slice(0, 7));
+  return { status: raw.status, periode, dari, sampai };
+}
 
 export function parseFilter(raw: FilterJurnal) {
+  const normalized = normalizeJurnalFilter(raw);
   const where: Prisma.JurnalWhereInput = {};
-  if (raw.status && (statusJurnalList as string[]).includes(raw.status)) {
-    where.status = raw.status as StatusJurnal;
+  if (normalized.status && (statusJurnalList as string[]).includes(normalized.status)) {
+    where.status = normalized.status as StatusJurnal;
   }
   const tanggal: Prisma.DateTimeFilter = {};
-  if (raw.dari && /^\d{4}-\d{2}-\d{2}$/.test(raw.dari)) tanggal.gte = new Date(raw.dari);
-  if (raw.sampai && /^\d{4}-\d{2}-\d{2}$/.test(raw.sampai)) tanggal.lte = new Date(raw.sampai);
+
+  if (normalized.periode === "bulan" && isYearMonth(normalized.dari)) {
+    const start = new Date(`${normalized.dari}-01T00:00:00`);
+    const [y, m] = normalized.sampai.split("-").map(Number);
+    const end = new Date(y, m, 0, 23, 59, 59);
+    tanggal.gte = start;
+    tanggal.lte = end;
+  } else {
+    if (normalized.dari && isIsoDate(normalized.dari)) {
+      tanggal.gte = new Date(`${normalized.dari}T00:00:00`);
+    }
+    if (normalized.sampai && isIsoDate(normalized.sampai)) {
+      tanggal.lte = new Date(`${normalized.sampai}T23:59:59`);
+    }
+  }
+
   if (tanggal.gte || tanggal.lte) where.tanggal = tanggal;
   return where;
 }
