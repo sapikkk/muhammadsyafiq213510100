@@ -19,11 +19,13 @@ import Link from "next/link";
 import { CuacaWidget } from "@/components/cuaca-widget";
 import { RekeningSaldoWidget } from "@/components/rekening-saldo-widget";
 import { prisma } from "@/lib/prisma";
+import { ProduksiRingkasanPanel } from "@/components/produksi-ringkasan-panel";
+import { loadProduksiRingkasan } from "@/lib/produksi-kapasitas";
 
 export const dynamic = "force-dynamic";
 
 export default async function OwnerPage() {
-  const [petani, stokRendah, summary, kpiV2] = await Promise.all([
+  const [petani, stokRendah, summary, kpiV2, produksi] = await Promise.all([
     prisma.user.findMany({
       where: { role: "PEKERJA" },
       orderBy: { nama: "asc" },
@@ -32,6 +34,7 @@ export default async function OwnerPage() {
     listAlertStokMinimumCached(),
     monthlySummaryCached(6),
     kpiHidroponikMvpCached(),
+    loadProduksiRingkasan(),
   ]);
 
   const labaTerbaik = bestProfitMonth(summary.months);
@@ -48,6 +51,9 @@ export default async function OwnerPage() {
         detailHref="/owner/stok-rendah"
       />
       <OwnerFlowDashboard />
+      <PageSection title="Tanam dan kolam">
+        <ProduksiRingkasanPanel data={produksi} />
+      </PageSection>
 
       <nav
         aria-label="Laporan cepat Owner"

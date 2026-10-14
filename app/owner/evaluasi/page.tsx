@@ -1,6 +1,7 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { EvaluasiMarginDaftar } from "@/components/evaluasi-margin-daftar";
 import { MetricCards } from "@/components/metric-cards";
+import { MonochromeProgressBar } from "@/components/monochrome-progress-bar";
 import { PageSection } from "@/components/page-section";
 import {
   Table,
@@ -25,7 +26,13 @@ export default async function OwnerEvaluasiPage() {
       list={
         <div className="space-y-6">
           <PageSection title="Kapasitas produksi" badge="Read">
+            <MonochromeProgressBar
+              label="Lubang terisi"
+              hint={`${data.kapasitas.lubangTerpakai.toLocaleString("id-ID")} dari ${data.kapasitas.totalLubang.toLocaleString("id-ID")} lubang`}
+              value={100 - Number(data.kapasitas.idlePct)}
+            />
             <MetricCards
+              className="mt-4"
               columns={2}
               items={[
                 {

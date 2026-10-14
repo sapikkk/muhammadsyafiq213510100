@@ -3,6 +3,8 @@ import { RegisterPetani } from "@/components/register-petani";
 import { ResetRequests } from "@/components/reset-requests";
 import { InventarisAlertBanner } from "@/components/inventaris-alert-banner";
 import { PageSection } from "@/components/page-section";
+import { ProduksiRingkasanPanel } from "@/components/produksi-ringkasan-panel";
+import { loadProduksiRingkasan } from "@/lib/produksi-kapasitas";
 import { alertBannerItems } from "@/lib/inventaris";
 import { listAlertStokMinimumCached } from "@/lib/cached-queries";
 import { CuacaWidget } from "@/components/cuaca-widget";
@@ -17,13 +19,14 @@ const formatter = new Intl.DateTimeFormat("id-ID", {
 });
 
 export default async function AdminPage() {
-  const [pending, stokRendah] = await Promise.all([
+  const [pending, stokRendah, produksi] = await Promise.all([
     prisma.passwordResetRequest.findMany({
       where: { status: "PENDING" },
       orderBy: { requestedAt: "asc" },
       include: { user: { select: { nama: true, email: true } } },
     }),
     listAlertStokMinimumCached(),
+    loadProduksiRingkasan(),
   ]);
 
   return (
@@ -34,6 +37,9 @@ export default async function AdminPage() {
         detailHref="/admin/stok-rendah"
       />
       <AdminFlowDashboard />
+      <PageSection title="Tanam dan kolam">
+        <ProduksiRingkasanPanel data={produksi} />
+      </PageSection>
 
       <PageSection title="Daftarkan petani" badge="Create">
         <RegisterPetani />

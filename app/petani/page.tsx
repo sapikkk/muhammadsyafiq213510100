@@ -12,6 +12,8 @@ import { daftarTugasPetani, historiAktivitasPetani } from "@/lib/tugas-petani";
 import type { TugasPetani } from "@/lib/tugas-petani-types";
 import type { HistoriPetaniBaris } from "@/lib/tugas-petani";
 import { CuacaWidget } from "@/components/cuaca-widget";
+import { ProduksiRingkasanPanel } from "@/components/produksi-ringkasan-panel";
+import { loadProduksiRingkasan } from "@/lib/produksi-kapasitas";
 
 export const dynamic = "force-dynamic";
 
@@ -29,7 +31,7 @@ export default async function PetaniPage() {
   const defaultTglAwal = monthAgo.toISOString().slice(0, 10);
   const defaultTglAkhir = new Date().toISOString().slice(0, 10);
 
-  const [stokRendah, tugas, histori, monitorGrafik, monitorFilter] = await Promise.all([
+  const [stokRendah, tugas, histori, monitorGrafik, monitorFilter, produksi] = await Promise.all([
     muatAman(
       async () => alertBannerItems(await listAlertStokMinimum()),
       [] as InventarisAlertBannerItem[],
@@ -43,6 +45,20 @@ export default async function PetaniPage() {
       kolam: [],
       siklus: [],
     }),
+    muatAman(loadProduksiRingkasan, {
+      kapasitas: {
+        totalLubang: 0,
+        lubangTerisi: 0,
+        lubangKosong: 0,
+        pctTerisi: 0,
+        pctKosong: 0,
+        kolamProduksi: 0,
+        kolamKosong: 0,
+      },
+      fase: [],
+      siapJualLubang: 0,
+      kolamIsi: [],
+    }),
   ]);
 
   return (
@@ -50,6 +66,9 @@ export default async function PetaniPage() {
       <PageHeaderRow title="Beranda" />
       <CuacaWidget />
       <InventarisAlertBanner items={stokRendah} detailHref="/petani/stok-rendah" />
+      <PageSection title="Tanam dan kolam">
+        <ProduksiRingkasanPanel data={produksi} />
+      </PageSection>
       <PageSection title="Monitor kolam" badge="Read">
         <PetaniMonitorSection
           points={monitorGrafik}

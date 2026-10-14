@@ -151,6 +151,7 @@ const siklusListInclude = {
     select: {
       id: true,
       nama: true,
+      kapasitas_lubang: true,
       greenhouse: { select: { id: true, nama: true } },
     },
   },

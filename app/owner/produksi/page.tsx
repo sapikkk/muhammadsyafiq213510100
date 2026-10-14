@@ -1,16 +1,18 @@
 import { CrudPageLayout } from "@/components/crud-page-layout";
 import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { SiklusDaftar } from "@/components/siklus-daftar";
-import {
-  LIST_SIKLUS_DEFAULT_LIMIT,
-  listSiklusProduksi,
-  serializeSiklus,
-} from "@/lib/siklus-produksi";
+import { PageSection } from "@/components/page-section";
+import { ProduksiRingkasanPanel } from "@/components/produksi-ringkasan-panel";
+import { loadProduksiRingkasan } from "@/lib/produksi-kapasitas";
+import { listSiklusProduksi, serializeSiklus } from "@/lib/siklus-produksi";
 
 export const dynamic = "force-dynamic";
 
 export default async function OwnerProduksiPage() {
-  const siklusRows = await listSiklusProduksi();
+  const [siklusRows, ringkasan] = await Promise.all([
+    listSiklusProduksi(),
+    loadProduksiRingkasan(),
+  ]);
 
   return (
     <CrudPageLayout
@@ -18,9 +20,15 @@ export default async function OwnerProduksiPage() {
       actions={
         <EksporDaftarTombol unduhPath="/api/export/siklus-daftar" jenisPratinjau="siklus-daftar" />
       }
-      list={<SiklusDaftar rows={siklusRows.map(serializeSiklus)} readOnly />}
-      listTitle="Siklus produksi"
-      listDescription={`Menampilkan ${LIST_SIKLUS_DEFAULT_LIMIT} batch terbaru. Detail batch lama tetap bisa dibuka lewat tautan langsung.`}
+      list={
+        <>
+          <PageSection title="Ringkasan fase">
+            <ProduksiRingkasanPanel data={ringkasan} />
+          </PageSection>
+          <SiklusDaftar rows={siklusRows.map(serializeSiklus)} readOnly />
+        </>
+      }
+      listTitle="Daftar batch"
     />
   );
 }

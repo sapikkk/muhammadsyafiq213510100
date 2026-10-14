@@ -16,12 +16,10 @@ export async function SiklusBaruScreen({
       backHref="/petani/siklus"
       surface={surface}
       title="Mulai semai baru"
-      description="Pilih varietas, kolam, dan pack benih/media — stok pack berkurang otomatis."
+      description="Hanya kolam yang statusnya menganggur. Lubang kosong di kolam yang sudah ada tanaman diisi lewat tambal susulan di detail batch."
     >
-      <PageSection title="Asumsi bibit" badge="Read">
-        <SiklusAsumsiPanel varietas={varietas} />
-      </PageSection>
-      <PageSection title="Data semai" badge="Create">
+      <SiklusAsumsiPanel varietas={varietas} />
+      <PageSection badge="Create">
         <SiklusForm
           varietas={varietas}
           kolam={kolam}

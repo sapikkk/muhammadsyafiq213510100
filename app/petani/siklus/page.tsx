@@ -3,6 +3,9 @@ import { CrudPageLayout } from "@/components/crud-page-layout";
 import { EksporDaftarTombol } from "@/components/ekspor-daftar-tombol";
 import { SiklusDaftarPetani } from "@/components/siklus-daftar-petani";
 import { Button } from "@/components/ui/button";
+import { PageSection } from "@/components/page-section";
+import { ProduksiRingkasanPanel } from "@/components/produksi-ringkasan-panel";
+import { loadProduksiRingkasan } from "@/lib/produksi-kapasitas";
 import {
   LIST_SIKLUS_DEFAULT_LIMIT,
   listSiklusProduksi,
@@ -12,7 +15,10 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function PetaniSiklusPage() {
-  const siklusRows = await listSiklusProduksi();
+  const [siklusRows, ringkasan] = await Promise.all([
+    listSiklusProduksi(),
+    loadProduksiRingkasan(),
+  ]);
 
   return (
     <CrudPageLayout
@@ -27,9 +33,15 @@ export default async function PetaniSiklusPage() {
           </Button>
         </div>
       }
-      list={<SiklusDaftarPetani rows={siklusRows.map(serializeSiklus)} />}
-      listTitle="Siklus aktif & selesai"
-      listDescription={`Menampilkan ${LIST_SIKLUS_DEFAULT_LIMIT} batch terbaru. Gunakan pencarian untuk kode batch di daftar ini.`}
+      list={
+        <>
+          <PageSection title="Ringkasan fase">
+            <ProduksiRingkasanPanel data={ringkasan} showKapasitasBar={false} />
+          </PageSection>
+          <SiklusDaftarPetani rows={siklusRows.map(serializeSiklus)} />
+        </>
+      }
+      listTitle="Daftar batch"
     />
   );
 }

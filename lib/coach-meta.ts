@@ -75,8 +75,9 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
       pageKey: "petani-siklus-baru",
       title: "Mulai semai baru",
       steps: [
-        { label: "Varietas dan kolam", detail: "Pastikan kolam siap dan paket cukup." },
-        { label: "Simpan", detail: "Batch baru muncul di daftar siklus." },
+        { label: "Kolam", detail: "Daftar hanya kolam menganggur. Satu batch per kolam." },
+        { label: "Lubang kosong", detail: "Di kolam yang sudah tanam, pakai tambal susulan di detail batch." },
+        { label: "Simpan", detail: "Stok pack berkurang otomatis setelah semai tersimpan." },
       ],
     },
   ];
@@ -86,6 +87,16 @@ export function resolveCoachMeta(pathname: string): CoachMeta | null {
     }
   }
   const detailMatchers: { pattern: RegExp; pageKey: string; title: string; steps: FlowStep[] }[] = [
+    {
+      pattern: /^\/petani\/siklus\/\d+$/,
+      pageKey: "petani-siklus-detail",
+      title: "Detail batch",
+      steps: [
+        { label: "Isi kolam", detail: "Garis menunjukkan berapa lubang batch ini pakai." },
+        { label: "Langkah berikutnya", detail: "Tombol utama untuk lanjut fase atau lapor panen." },
+        { label: "Lainnya", detail: "Tambal, kegagalan, atau batalkan batch." },
+      ],
+    },
     {
       pattern: /^\/admin\/penjualan\/\d+\/invoice\/?$/,
       pageKey: "admin-penjualan-invoice",

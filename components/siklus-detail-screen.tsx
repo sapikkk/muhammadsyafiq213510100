@@ -2,10 +2,11 @@ import { notFound } from "next/navigation";
 import { LogKegagalanDaftar } from "@/components/log-kegagalan-daftar";
 import { LogProduksiDaftar } from "@/components/log-produksi-daftar";
 import { PageSection } from "@/components/page-section";
+import { MonochromeProgressBar } from "@/components/monochrome-progress-bar";
 import {
-  SiklusDetailSecondary,
+  SiklusDetailActions,
   type SiklusLangkahBerikutnya,
-} from "@/components/siklus-detail-secondary";
+} from "@/components/siklus-detail-actions";
 import { SiklusTimeline } from "@/components/siklus-timeline";
 import { DetailLayout } from "@/components/detail-layout";
 import { Badge } from "@/components/ui/badge";
@@ -107,13 +108,27 @@ export async function SiklusDetailScreen({
       actions={<SiklusEksporPaket siklusId={id} />}
     >
       <DetailKodeStrip label="Kode batch" kode={siklus.kode_batch} />
+
+      {(() => {
+        const kap = siklus.kolam.kapasitas_lubang;
+        const hidup = Math.max(0, siklus.jumlah_disemai - siklus.total_susut);
+        const pct = kap > 0 ? Math.round((hidup / kap) * 1000) / 10 : 0;
+        return (
+          <MonochromeProgressBar
+            label="Isi kolam batch ini"
+            hint={`${hidup.toLocaleString("id-ID")} / ${kap.toLocaleString("id-ID")} lubang (${pct}%)`}
+            value={pct}
+          />
+        );
+      })()}
+
       {status === STATUS_GAGAL_TOTAL ? (
         <p className="rounded-md border border-destructive/30 bg-destructive/5 p-4 text-sm">
           Siklus tanam dihentikan. Tidak bisa lanjut fase atau panen.
         </p>
       ) : null}
 
-      <SiklusDetailSecondary
+      <SiklusDetailActions
         siklusId={id}
         siklusLabel={labelBarisProduksiUtama(partsFromSiklusNested(siklus))}
         kodeBatch={siklus.kode_batch}
@@ -124,31 +139,32 @@ export async function SiklusDetailScreen({
         showKegagalan={showKegagalan}
         langkahBerikutnya={langkahBerikutnya}
         packs={packsAktif}
-        variant="section"
       />
 
-      <PageSection title="Timeline produksi" badge="Read">
+      <PageSection badge="Read">
         <SiklusTimeline steps={timeline} />
-      </PageSection>
-
-      <PageSection title="Log fase" badge="Read">
-        <LogProduksiDaftar
-          rows={logs.map((l) => ({
-            fase_dari: l.fase_dari,
-            fase_ke: l.fase_ke,
-            catatan: l.catatan,
-            waktu: l.waktu.toISOString(),
-            user: l.user,
-          }))}
-        />
-      </PageSection>
-
-      <PageSection title="Log kegagalan" badge="Read">
-        <LogKegagalanDaftar rows={kegagalanRows} />
+        {logs.length > 0 ? (
+          <div className="mt-6 border-t pt-4">
+            <LogProduksiDaftar
+              rows={logs.map((l) => ({
+                fase_dari: l.fase_dari,
+                fase_ke: l.fase_ke,
+                catatan: l.catatan,
+                waktu: l.waktu.toISOString(),
+                user: l.user,
+              }))}
+            />
+          </div>
+        ) : null}
+        {kegagalanRows.length > 0 ? (
+          <div className="mt-6 border-t pt-4">
+            <LogKegagalanDaftar rows={kegagalanRows} />
+          </div>
+        ) : null}
       </PageSection>
 
       {laporan ? (
-        <PageSection title="Laporan panen" badge="Read">
+        <PageSection badge="Read">
           <div className="space-y-2 text-sm">
             <p>
               Status: <strong>{labelLaporanPanenStatus(laporan.status)}</strong> ·{" "}

@@ -34,7 +34,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useActionToast } from "@/lib/hooks/use-action-toast";
+import { MonochromeProgressBar } from "@/components/monochrome-progress-bar";
 import { labelLahanUntukLayar } from "@/lib/produksi-ui-labels";
+import type { KolamIsiBaris } from "@/lib/produksi-kapasitas-types";
 
 type Pohon = SerializedInfrastrukturPohon;
 
@@ -137,9 +139,11 @@ type GhBaris = {
 function GreenhouseBaris({
   baris,
   writable,
+  kolamIsi,
 }: {
   baris: GhBaris;
   writable: boolean;
+  kolamIsi?: Record<number, KolamIsiBaris>;
 }) {
   const [open, setOpen] = useState(false);
   const { lahan, gh } = baris;
@@ -201,11 +205,23 @@ function GreenhouseBaris({
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {gh.kolam.map((k) => (
+                    {gh.kolam.map((k) => {
+                      const isi = kolamIsi?.[k.id];
+                      return (
                       <TableRow key={k.id}>
                         <TableCell className="font-medium">{k.nama}</TableCell>
                         <TableCell>
-                          {k.kapasitasLubang.toLocaleString("id-ID")} lubang
+                          <div className="max-w-xs space-y-1">
+                            <p className="text-xs text-muted-foreground">
+                              {k.kapasitasLubang.toLocaleString("id-ID")} lubang
+                            </p>
+                            {isi ? (
+                              <MonochromeProgressBar
+                                value={isi.pctTerisi}
+                                hint={`${isi.pctTerisi}% terisi`}
+                              />
+                            ) : null}
+                          </div>
                         </TableCell>
                         <TableCell>
                           <KolamStatusBadge status={k.status as KolamStatus} />
@@ -216,7 +232,8 @@ function GreenhouseBaris({
                           </TableCell>
                         ) : null}
                       </TableRow>
-                    ))}
+                    );
+                    })}
                   </TableBody>
                 </Table>
               )}
@@ -231,9 +248,11 @@ function GreenhouseBaris({
 export function InfrastrukturPohon({
   data,
   mode = "owner",
+  kolamIsi,
 }: {
   data: Pohon;
   mode?: "admin" | "owner";
+  kolamIsi?: Record<number, KolamIsiBaris>;
 }) {
   const [filter, setFilter] = useState("");
   const view = useMemo(() => filterPohon(data, filter), [data, filter]);
@@ -299,6 +318,7 @@ export function InfrastrukturPohon({
                 key={baris.gh.id}
                 baris={baris}
                 writable={writable}
+                kolamIsi={kolamIsi}
               />
             ))}
           </TableBody>
