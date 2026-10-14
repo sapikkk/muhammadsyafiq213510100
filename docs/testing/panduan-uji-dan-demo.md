@@ -37,7 +37,7 @@ Playwright dan TestCafe dipasang lewat npm, bukan clone penuh ke repo.
 
 ## Sprint 5
 
-Black-box manual: [`docs/tabel-blackbox-testing.md`](../tabel-blackbox-testing.md) (register langkah) dan [`docs/uji-blackbox.md`](../uji-blackbox.md) (notulensi). Audit debit=kredit: T5.4 setelah alur jurnal stabil.
+Black-box manual: [`docs/testing/tabel-blackbox-testing.md`](../tabel-blackbox-testing.md) (register langkah) dan [`docs/testing/uji-blackbox.md`](../uji-blackbox.md) (notulensi). Audit debit=kredit: T5.4 setelah alur jurnal stabil.
 
 ## Data demo sidang
 
@@ -129,7 +129,7 @@ Tambah akun Petani lewat Owner → Kelola user jika perlu sampai 6 login unik.
 2. Petani (10 m) — daftar siklus → detail → centang konfirmasi → Lanjut fase; lihat log fase.
 3. Admin (10 m) — alert stok → jurnal → filter tanggal → cari DataTable → approve contoh.
 4. Owner (10 m) — dashboard bulan laba tertinggi → Pie biaya → evaluasi BEP tanpa Excel.
-5. Q&A dan checklist (5 m) — `docs/uji-blackbox.md` bagian Sprint 5.
+5. Q&A dan checklist (5 m) — `docs/testing/uji-blackbox.md` bagian Sprint 5.
 
 ### Checklist go-live
 

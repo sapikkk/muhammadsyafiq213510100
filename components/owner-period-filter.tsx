@@ -108,7 +108,7 @@ export function OwnerPeriodFilter({
           >
             <ChevronLeft className="size-4" />
           </Button>
-          <p className="min-w-[9rem] text-center text-base font-semibold tabular-nums">
+          <p className="min-w-0 flex-1 text-center text-sm font-semibold tabular-nums min-[220px]:text-base">
             {labelBulanIndonesia(bulanTampil)}
           </p>
           <Button

@@ -175,7 +175,7 @@ export function DataTable<TData, TValue>({
   }, [focusRowId, data, pageSize, getRowFocusId, getRowDomId]);
 
   return (
-    <div className="space-y-3">
+    <div className="min-w-0 max-w-full space-y-3">
       {searchPlaceholder ? (
         <Input
           value={globalFilter}
@@ -184,11 +184,11 @@ export function DataTable<TData, TValue>({
             table.setPageIndex(0);
           }}
           placeholder={searchPlaceholder}
-          className="h-9 max-w-sm"
+          className="h-9 w-full max-w-full min-[220px]:max-w-sm"
           aria-label={searchPlaceholder}
         />
       ) : null}
-      <div className="overflow-x-auto rounded-md border bg-card">
+      <div className="-mx-0.5 w-full min-w-0 max-w-full overflow-x-auto rounded-md border bg-card">
         <Table noContainer>
           <TableHeader className="sticky top-0 z-10 bg-muted">
             {table.getHeaderGroups().map((hg) => (

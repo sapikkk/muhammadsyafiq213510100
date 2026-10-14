@@ -54,8 +54,8 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="w-full max-w-sm space-y-6">
+    <main className="flex min-h-screen min-w-0 items-center justify-center overflow-x-clip bg-background px-2 min-[220px]:px-4">
+      <div className="w-full min-w-0 max-w-sm space-y-4 min-[220px]:space-y-6">
         <PageHeaderRow title="Masuk" />
 
         <Card>

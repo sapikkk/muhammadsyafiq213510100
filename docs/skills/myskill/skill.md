@@ -613,7 +613,7 @@ PostgreSQL dan login belum dipakai. `DATABASE_URL` dan `NEXTAUTH_SECRET` di `.en
 
 ## Cursor Agent (Superpowers)
 
-Plugin [Superpowers](https://github.com/obra/superpowers) ada di `.cursor/plugins/superpowers` (submodule). Setelah clone, jalankan `git submodule update --init --recursive`. Rincian: `docs/cursor-superpowers.md`.
+Plugin [Superpowers](https://github.com/obra/superpowers) ada di `.cursor/plugins/superpowers` (submodule). Setelah clone, jalankan `git submodule update --init --recursive`. Rincian: `docs/agent/cursor-superpowers.md`.
 
 
 
@@ -675,7 +675,7 @@ Untuk `docs/` dan notulensi uji: jalankan humanizer — hindari pola AI (kontras
 ## Backlog & pelacakan sprint
 
 - **Registry Agile (AC, DoD, timeline, audit log):** `docs/agile/README.md`
-- Urutan US: `docs/progress-backlog.md`
+- Urutan US: `docs/agile/progress-backlog.md`
 - Board: [Project #1](https://github.com/users/sapikkk/projects/1)
 - Gap GitHub vs docs: `docs/agile/KONFIRMASI-GAP-GITHUB.md` (konfirmasi PO)
 
@@ -16122,7 +16122,7 @@ export { Textarea };
 
 
 ================================================
-FILE: docs/api.md
+FILE: docs/referensi/api.md
 ================================================
 # Dokumentasi API
 
@@ -16408,7 +16408,7 @@ Lib: `lib/period-lock.ts` — dipanggil dari `createJurnal` dan Smart Jurnal.
 
 
 ================================================
-FILE: docs/asumsi-benih-media.md
+FILE: docs/produk/asumsi-benih-media.md
 ================================================
 # Asumsi benih & media semai (hidroponik)
 
@@ -16478,7 +16478,7 @@ Implementasi kode: `lib/hidroponik-asumsi.ts`, seed `prisma/seed-varietas.js`, i
 
 
 ================================================
-FILE: docs/cursor-superpowers.md
+FILE: docs/agent/cursor-superpowers.md
 ================================================
 # Superpowers (Cursor Agent)
 
@@ -16527,7 +16527,7 @@ git commit -m "chore: bump superpowers submodule"
 
 
 ================================================
-FILE: docs/figma-flow-inventory.md
+FILE: docs/desain/figma-flow-inventory.md
 ================================================
 # Inventaris Figma — KOKONUS FARM
 
@@ -16685,7 +16685,7 @@ Section produk bernomor:
 
 
 ================================================
-FILE: docs/notes.md
+FILE: docs/arsip/catatan-progres-teknis.md
 ================================================
 - [x] Cabut PAT GitHub yang sempat ditempel di chat — sudah dihapus di GitHub
 - [x] Folder lokal ini adalah repo `main`, sejajar dengan origin
@@ -16713,7 +16713,7 @@ FILE: docs/notes.md
 - [x] US2.3 & F12 approve harvest/HPP: `HPP` model, `calculateHPP` library, `/admin/harvest/[id]`, API approve/reject, jurnal persediaan otomatis.
 - [x] US4.5 master petani (ERD): `/admin/petani`, `/owner/petani`, `/api/petani`, seed `prisma/seed-petani.js`.
 - [x] US2.4 form biaya langsung & overhead: `/admin/biaya`, `/api/biaya/*`, alokasi overhead ke `calculateHPP`.
-- [x] Agent stack dokumen: `AGENTS.md`, Graphify, `docs/sprint-backlog-agile.md`, testing Playwright + vendor refs.
+- [x] Agent stack dokumen: `AGENTS.md`, Graphify, `docs/agile/sprint-backlog-agile.md`, testing Playwright + vendor refs.
 - [ ] Berikutnya: US3.5 log kegagalan, US2.5 susut normal/abnormal, US3.6–3.7.
 - [x] [Repo GitHub](https://github.com/sapikkk/muhammadsyafiq213510100) `main` berisi kode, rilis v1.0.0
 - [x] [Naskah UCD & Agile](skenario-narasi-ucd-agile.md) sudah di-humanizer
@@ -16722,14 +16722,14 @@ FILE: docs/notes.md
 
 
 ================================================
-FILE: docs/notulensi-2026-10-09.md
+FILE: docs/arsip/notulensi-2026-10-09.md
 ================================================
 # Notulensi — 2026-10-09
 
 ## Ringkasan sesi
 
 1. **Graphify** dipasang untuk repo Kokonus (`graphify-out/`, rule `.cursor/rules/graphify.mdc`, `AGENTS.md`). Graf commit `9868c5af`.
-2. **Backlog** diselaraskan: `docs/sprint-backlog-agile.md`, `docs/progress-backlog.md`, GitHub Project #1 (US3.3 Done, US2.3 In progress, #61/#63 Done).
+2. **Backlog** diselaraskan: `docs/agile/sprint-backlog-agile.md`, `docs/agile/progress-backlog.md`, GitHub Project #1 (US3.3 Done, US2.3 In progress, #61/#63 Done).
 3. **US4.5** Master petani: `/admin/petani`, `/owner/petani`, `/api/petani`, seed 4 nama petani PRD.
 4. **US2.4** Biaya langsung & overhead: `/admin/biaya`, API biaya, alokasi overhead ke HPP di `lib/hpp.ts`.
 5. **Testing:** `@playwright/test`, `testcafe`, `e2e/smoke.spec.ts`, submodule referensi di `vendor/testing/`.
@@ -16768,7 +16768,7 @@ US3.5, US2.5, merge PR #64 setelah uji, lalu Sprint 3 US5.1.
 
 
 ================================================
-FILE: docs/prd-agile-kokonus-farm.md
+FILE: docs/produk/prd-agile-kokonus-farm.md
 ================================================
 # PRD Agile — Kokonus Farm
 
@@ -17411,11 +17411,11 @@ Sumber layar rinci: `figma-flow-inventory.md`. Konteks tahan lama: `project-cont
 
 
 ================================================
-FILE: docs/progress-backlog.md
+FILE: docs/agile/progress-backlog.md
 ================================================
 # Progress & backlog — Kokonus Farm
 
-**Board live:** [GitHub Project #1](https://github.com/users/sapikkk/projects/1) · **Registry:** `docs/agile/` · **Blackbox:** `docs/uji-blackbox.md`  
+**Board live:** [GitHub Project #1](https://github.com/users/sapikkk/projects/1) · **Registry:** `docs/agile/` · **Blackbox:** `docs/testing/uji-blackbox.md`  
 **Sinkron board:** `npm run sync:project-board` · **Dashboard `/`:** `npm run sync:agile-progress`
 
 ## Ringkasan (2026-10-10)
@@ -17445,7 +17445,7 @@ Terakhir diperbarui: **2026-10-10** (**v1.28.0** UX flow + perf).
 
 
 ================================================
-FILE: docs/project-context.md
+FILE: docs/produk/project-context.md
 ================================================
 # Konteks proyek — KOKONUS FARM
 
@@ -17503,7 +17503,7 @@ Domain bisnis memakai nama **Kokonus Farm** dan metode **rakit apung**, bukan na
 
 
 ================================================
-FILE: docs/skenario-narasi-ucd-agile.md
+FILE: docs/ucd/skenario-narasi-ucd-agile.md
 ================================================
 # Skenario narasi UCD & Agile — Kokonus Farm
 
@@ -17814,11 +17814,11 @@ UCD menjawab untuk siapa sistem ini dan bagaimana rasanya di greenhouse. Agile S
 
 
 ================================================
-FILE: docs/sprint-backlog-agile.md
+FILE: docs/agile/sprint-backlog-agile.md
 ================================================
 # Rencana Sprint & Backlog Agile — Kokonus Farm
 
-Dokumen ini merangkum perencanaan dari `docs/prd-agile-kokonus-farm.md`, pelacakan `docs/notes.md`, dan audit kode + [GitHub Project #1](https://github.com/users/sapikkk/projects/1). Pemetaan dependensi US ada di `docs/progress-backlog.md`.
+Dokumen ini merangkum perencanaan dari `docs/produk/prd-agile-kokonus-farm.md`, pelacakan `docs/arsip/catatan-progres-teknis.md`, dan audit kode + [GitHub Project #1](https://github.com/users/sapikkk/projects/1). Pemetaan dependensi US ada di `docs/agile/progress-backlog.md`.
 
 **Catatan agent:** folder `.agents/skills` hanya lokal (tidak di-commit). Workflow agent: `AGENTS.md` (Graphify, Superpowers, Ponytail, Humanizer).
 
@@ -17919,9 +17919,9 @@ Pusat kontrol progres produk: **timeline sprint**, **issue GitHub**, **AC/DoD**,
 | [github-field-guide.md](./github-field-guide.md) | Project #1: Status, Iteration, filter |
 
 **Board live:** [GitHub Project #1](https://github.com/users/sapikkk/projects/1)  
-**PRD:** [docs/prd-agile-kokonus-farm.md](../prd-agile-kokonus-farm.md)  
-**Blackbox:** [docs/uji-blackbox.md](../uji-blackbox.md)  
-**Backlog ringkas:** [docs/progress-backlog.md](../progress-backlog.md)  
+**PRD:** [docs/produk/prd-agile-kokonus-farm.md](../prd-agile-kokonus-farm.md)  
+**Blackbox:** [docs/testing/uji-blackbox.md](../uji-blackbox.md)  
+**Backlog ringkas:** [docs/agile/progress-backlog.md](../progress-backlog.md)  
 **UCD increment v2 (post go-live):** [docs/ucd/](../ucd/) · [blueprint](../blueprint/) — WIP, Smart Jurnal, DP
 
 ## Alur kerja (acuan `sw-agiledevelopment`)
@@ -17930,7 +17930,7 @@ Pusat kontrol progres produk: **timeline sprint**, **issue GitHub**, **AC/DoD**,
 2. AC/DoD/tasklist: template issue + baris di `docs/agile/sprints/*`.
 3. **Partial:** issue **open** + `progress-partial` sampai AC lengkap; lihat partial-delivery-policy.
 4. **Merge:** PR dengan **≥1 approving review** → update sprint doc + `audit-log.md` → Project **Done** jika scope issue selesai.
-5. Uji → `docs/uji-blackbox.md`.
+5. Uji → `docs/testing/uji-blackbox.md`.
 
 ## Filter cepat (GitHub)
 
@@ -17967,7 +17967,7 @@ Legenda: **Hijau** = blackbox/notulensi sudah memadai · **Kuning** = sampel uji
 | US1.9 User | #10 | Owner reset sandi | PR #78 | Smoke owner pengguna (e2e ada) |
 | US3.2 Fase HP | #18 | Usability mobile | § US3.2 blackbox | **T5.1** wajib |
 
-US lain: cukup **smoke e2e** + spot-check blackbox `docs/uji-blackbox.md` kecuali PO menemukan gap.
+US lain: cukup **smoke e2e** + spot-check blackbox `docs/testing/uji-blackbox.md` kecuali PO menemukan gap.
 
 ## Checklist singkat PO (centang per sesi)
 
@@ -17993,7 +17993,7 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 - **Actor:** agent  
 - **Deliverable:** `CrudPageLayout` / sidebar grup / `DataTable` sort+zebra; `lib/cached-queries.ts` (stok, KPI, siklus); laporan [`UX-FLOW-PERF-REPORT.md`](./UX-FLOW-PERF-REPORT.md)  
-- **Artefak:** `docs/ux/FLOW-NAV.md`, `docs/audit/frontend.md` (baris perf)  
+- **Artefak:** `docs/desain/FLOW-NAV.md`, `docs/audit/frontend.md` (baris perf)  
 - **Belum opsional:** viewport matrix e2e; `DataTable` arus kas/evaluasi  
 
 ---
@@ -18069,7 +18069,7 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 - **GitHub:** Iteration **Increment v2 · Post go-live** di Project #1; field Status/Priority/Iteration untuk #50, #81, #87–#104 via `npm run sync:project-board`  
 - **Sub-issue:** story #95–#102 di-link ke epic #87–#94  
 - **Merge v2-A.1:** PR #104 · issue #95 closed · release **v1.14.0**  
-- **Docs:** `docs/progress-backlog.md`, `docs/agile/github-field-guide.md`, `scripts/sync-project-board.mjs`  
+- **Docs:** `docs/agile/progress-backlog.md`, `docs/agile/github-field-guide.md`, `scripts/sync-project-board.mjs`  
 
 ---
 
@@ -18125,7 +18125,7 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 ## 2026-10-07 — Sprint 1 selesai (inti)
 
 - US1.1–US1.8 issues #2–#9 closed  
-- Notulensi: `docs/uji-blackbox.md` US1.4–1.8
+- Notulensi: `docs/testing/uji-blackbox.md` US1.4–1.8
 
 ---
 
@@ -18158,11 +18158,11 @@ Sumber: [PRD §10](../prd-agile-kokonus-farm.md#10-definition-of-done).
 | 3 | TypeScript bersih | `npm run typecheck` |
 | 4 | ESLint + Prettier bersih | `npm run lint`, `npm run format:check` |
 | 5 | Tidak ada `console.error`/`warn` di production | Review diff / CI |
-| 6 | API: error handling + status HTTP benar | `docs/api.md` + uji curl |
+| 6 | API: error handling + status HTTP benar | `docs/referensi/api.md` + uji curl |
 | 7 | UI responsif 375px dan desktop | Uji browser / notulensi |
 | 8 | Migrasi terdokumentasi | `prisma migrate` / catatan push |
 | 9 | Seed di-update bila perlu | `prisma/seed*.js` |
-| 10 | **(PENTING)** Dokumentasi API | Entri di `docs/api.md` |
+| 10 | **(PENTING)** Dokumentasi API | Entri di `docs/referensi/api.md` |
 | 11 | **(PENTING)** Edge/error state informatif | Empty, 403, validasi form |
 | 12 | Tidak ada data bisnis hardcode di UI | Konstanta demo hanya seed/env |
 
@@ -18192,7 +18192,7 @@ URL: https://github.com/users/sapikkk/projects/1
 | Field | Arti | Sumber kebenaran |
 |-------|------|------------------|
 | **Status** | Todo / In progress / Done | Open + `progress-partial` = partial; Done = AC issue selesai atau close dengan catatan partial |
-| **Iteration** | Sprint 1–5 (v1) + **Increment v2 · Post go-live** | `docs/agile/timeline-registry.md`, `docs/progress-backlog.md` |
+| **Iteration** | Sprint 1–5 (v1) + **Increment v2 · Post go-live** | `docs/agile/timeline-registry.md`, `docs/agile/progress-backlog.md` |
 | **Priority** | P0 / P1 / P2 | PRD (HIGHEST → P0) — *belum diisi massal* |
 | **Size** | XS–XL | Opsional story points |
 | **Labels (issue)** | `sprint-1`…`sprint-5`, `progress-partial`, `blackbox-test`, `finding` | Filter di repo |
@@ -18375,7 +18375,7 @@ Keputusan PO · berlaku untuk semua US.
 - **Progress:** ~60% (3/5 AC)
 - **Selesai:** …
 - **Sisa:** … (US/issue tindak lanjut: #…)
-- **Bukti:** PR #… · commit … · `docs/uji-blackbox.md` §…
+- **Bukti:** PR #… · commit … · `docs/testing/uji-blackbox.md` §…
 ```
 
 ## Sinkron setelah merge
@@ -18457,7 +18457,7 @@ FILE: docs/agile/UX-FLOW-PERF-REPORT.md
 | Tabel | `DataTable`: sort header, zebra, sticky header, page 12; `ui/table` hover |
 | Latensi | `cached-queries.ts` — dedup stok rendah, KPI owner, siklus tugas petani |
 | Layout | Badge stok rendah tanpa load inventaris penuh per navigasi |
-| Dokumentasi | `docs/ux/FLOW-NAV.md`, baris audit `docs/audit/frontend.md` |
+| Dokumentasi | `docs/desain/FLOW-NAV.md`, baris audit `docs/audit/frontend.md` |
 
 ## Belum (opsional / backlog skripsi)
 
@@ -18499,7 +18499,7 @@ FILE: docs/agile/retro/sprint-01-retro.md
 ## Apa yang berjalan baik
 
 - Fondasi Next.js, Prisma, NextAuth, RBAC, dan state global selesai dalam 2 hari kerja pertama.
-- Notulensi blackbox US1.4–1.8 konsisten di `docs/uji-blackbox.md`.
+- Notulensi blackbox US1.4–1.8 konsisten di `docs/testing/uji-blackbox.md`.
 - Branch per US + merge ke `feat/ui-redesign` memudahkan audit git.
 
 ## Hambatan
@@ -18651,7 +18651,7 @@ FILE: docs/agile/sprints/sprint-01-fondasi.md
 
 **AC:** 16 tabel kamus §8.1; relasi Petani, Siklus, HPP, dll.; DECIMAL uang/berat.
 
-**Tech:** `prisma/schema.prisma`, `docs/prd-agile-kokonus-farm.md` §8.1
+**Tech:** `prisma/schema.prisma`, `docs/produk/prd-agile-kokonus-farm.md` §8.1
 
 ---
 
@@ -18862,7 +18862,7 @@ T5.9 (materi pelatihan)
 
 ## Testing
 
-- `docs/testing/README.md`, `docs/uji-blackbox.md` (section Sprint 5)
+- `docs/testing/README.md`, `docs/testing/uji-blackbox.md` (section Sprint 5)
 - Seed demo: `E2E-S5-DEMO` — `prisma/seed-siklus-demo.js`, reset `scripts/reset-e2e-siklus.js`
 - Halaman `/`: progress Project #1 — `npm run sync:agile-progress` (PR [#85](https://github.com/sapikkk/muhammadsyafiq213510100/pull/85))
 
@@ -18905,7 +18905,7 @@ Generated: 2026-10-09 · Branch: `chore/global-audit-bw-refactor` · App Router 
 | `AGENTS.md` | Graphify, Superpowers, Ponytail |
 | `.github/workflows/check.yml` | `npm ci`, `lint`, `typecheck` (no `build` in CI) |
 | `.agents/skills/**` | Ponytail, UI craft, Playwright, agile — apply per phase |
-| `docs/api.md` | API contract reference (may drift from `app/api`) |
+| `docs/referensi/api.md` | API contract reference (may drift from `app/api`) |
 
 **Not installed (relevant to master prompt):** `@tanstack/react-table`, `sonner`, `react-hook-form`, `zod` (verify before Phase 3/5 — may use ad-hoc validation today).
 
@@ -19311,7 +19311,7 @@ Branch: `chore/global-audit-bw-refactor` → `main`.
 
 1. `.env` production/staging: **tanpa** `AUDIT_BYPASS_RBAC=true`.
 2. Uji manual singkat: `docs/audit/07-verification.md` — checklist `qa.md` **lengkap** (sidebar audit 35 route OK 2026-10-10).
-3. Review breaking API: klien fetch harus expect `{ ok, data }` (lihat `docs/api.md`).
+3. Review breaking API: klien fetch harus expect `{ ok, data }` (lihat `docs/referensi/api.md`).
 4. Setelah merge: tag release opsional; backlog US lanjut di sprint terpisah.
 
 ## Sengaja tidak masuk PR ini
@@ -19713,7 +19713,7 @@ FILE: docs/blueprint/VALIDASI-BACKLOG-PRD.md
 
 **Tanggal:** 2026-10-10  
 **Blueprint:** `docs/blueprint/akuntansi-logistik-hidroponik.md`  
-**PRD:** `docs/prd-agile-kokonus-farm.md`  
+**PRD:** `docs/produk/prd-agile-kokonus-farm.md`  
 **Backlog GitHub:** US #2–#38 closed; Sprint 5 #39–#45 (QA/go-live) di PR #83.
 
 ---
@@ -19832,7 +19832,7 @@ FILE: docs/blueprint/epic-a/A.1-is-system-plan.md
 - [x] `lib/akun.ts`: tolak ubah `kode` / tipe / parent / nonaktif jika `isSystem`
 - [x] UI admin COA: badge Sistem; lock edit kode/tipe/induk; sembunyikan nonaktif
 - [x] `npm run typecheck` + `npm run check:jurnal-balance`
-- [x] Catatan uji di `docs/uji-blackbox.md` (section v2-A.1)
+- [x] Catatan uji di `docs/testing/uji-blackbox.md` (section v2-A.1)
 
 ## Keputusan PO (blokir seed)
 
@@ -19852,7 +19852,7 @@ A.1 hanya menandai COA standar v1 sebagai `isSystem`; rename/migrasi saldo = sto
 | Seed | `prisma/seed-akun.js` |
 | Domain | `lib/akun.ts`, `lib/api` routes COA |
 | UI | `app/owner/akun/`, `app/admin/` (jika ada edit COA) |
-| Docs | `docs/uji-blackbox.md`, `docs/api.md` |
+| Docs | `docs/testing/uji-blackbox.md`, `docs/referensi/api.md` |
 
 ## Urutan commit disarankan
 
@@ -19878,7 +19878,7 @@ FILE: docs/blueprint/epic-b/B.1-abort-plan.md
 - [x] Dr 5300 Cr WIP (proxy **1350** sampai akun WIP v2)
 - [x] Status `GAGAL_TOTAL`, blok fase / panen / kegagalan baru
 - [x] Satu jurnal abort (tidak double dengan partial susut on approve)
-- [x] Blackbox `docs/uji-blackbox.md` § v2-B.1
+- [x] Blackbox `docs/testing/uji-blackbox.md` § v2-B.1
 
 ## Catatan
 
@@ -20083,7 +20083,7 @@ description: >-
 
 Bantu user (mahasiswa skripsi, sistem digitalisasi tata kelola UMKM hidroponik) merancang, memeriksa, dan mengimplementasikan logika akuntansi dan logistik. Jawab dalam Bahasa Indonesia, ringkas, dan praktis.
 
-**Referensi repo (Kokonus Farm):** `docs/blueprint/akuntansi-logistik-hidroponik.md`, `docs/blueprint/VALIDASI-BACKLOG-PRD.md`, `docs/ucd/increment-v2-akuntansi-logistik.md`, `docs/prd-agile-kokonus-farm.md`, `prisma/seed-akun.js`, `lib/jurnal.ts`, `lib/laporan-panen.ts`, `lib/sales-order-delivery.ts`.
+**Referensi repo (Kokonus Farm):** `docs/blueprint/akuntansi-logistik-hidroponik.md`, `docs/blueprint/VALIDASI-BACKLOG-PRD.md`, `docs/ucd/increment-v2-akuntansi-logistik.md`, `docs/produk/prd-agile-kokonus-farm.md`, `prisma/seed-akun.js`, `lib/jurnal.ts`, `lib/laporan-panen.ts`, `lib/sales-order-delivery.ts`.
 
 ## Prinsip Inti
 
@@ -20181,7 +20181,7 @@ Repo upstream Playwright/TestCafe dipasang lewat npm (bukan clone penuh ke repo)
 
 ## Sprint 5
 
-Black-box manual: `docs/uji-blackbox.md`. Audit debit=kredit: T5.4 setelah alur jurnal stabil.
+Black-box manual: `docs/testing/uji-blackbox.md`. Audit debit=kredit: T5.4 setelah alur jurnal stabil.
 
 
 
@@ -20238,7 +20238,7 @@ npx skills add openaccountant/skills -y
 # → .agents/skills/
 ```
 
-Cursor Agent Skills Platform (submodule opsional, lihat `docs/sprint-backlog-agile.md`):
+Cursor Agent Skills Platform (submodule opsional, lihat `docs/agile/sprint-backlog-agile.md`):
 
 ```bash
 git submodule update --init --recursive .cursor/skills/agent-skills-platform
@@ -20274,7 +20274,7 @@ Sesi singkat (~45 menit) untuk Owner, Admin, dan Petani sebelum operasi harian. 
 2. **Petani** (10 m) — daftar siklus → detail → centang konfirmasi → **Lanjut fase**; lihat log fase.
 3. **Admin** (10 m) — alert stok → jurnal → filter tanggal → cari DataTable → approve contoh.
 4. **Owner** (10 m) — dashboard “bulan laba tertinggi” → **Pie biaya** → evaluasi BEP (tanpa Excel).
-5. **Q&A & checklist** (5 m) — [`docs/uji-blackbox.md`](../uji-blackbox.md) section Sprint 5.
+5. **Q&A & checklist** (5 m) — [`docs/testing/uji-blackbox.md`](../uji-blackbox.md) section Sprint 5.
 
 ## Checklist go-live
 
@@ -20389,7 +20389,7 @@ Terakhir: 2026-10-10.
 
 
 ================================================
-FILE: docs/ux/FLOW-NAV.md
+FILE: docs/desain/FLOW-NAV.md
 ================================================
 # UX alur — Kokonus Farm
 
@@ -21369,15 +21369,15 @@ FILE: graphify-out/2026-10-09/GRAPH_REPORT.md
 
 ## Surprising Connections (you probably didn't know these)
 - `Temuan` --references--> `registerPetani()`  [INFERRED]
-  docs/uji-blackbox.md → app/actions/register.ts
+  docs/testing/uji-blackbox.md → app/actions/register.ts
 - `Acceptance criteria (PRD US2.2)` --references--> `JurnalActions()`  [INFERRED]
-  docs/uji-blackbox.md → components/jurnal-actions.tsx
+  docs/testing/uji-blackbox.md → components/jurnal-actions.tsx
 - `G1 — **Journey panen → HPP → jurnal** (EPIC-2 + EPIC-3)` --references--> `calculateHPP()`  [INFERRED]
-  docs/progress-backlog.md → lib/hpp.ts
+  docs/agile/progress-backlog.md → lib/hpp.ts
 - `Temuan` --references--> `buatSiklusSemai()`  [INFERRED]
-  docs/uji-blackbox.md → lib/siklus-produksi.ts
+  docs/testing/uji-blackbox.md → lib/siklus-produksi.ts
 - `Alur kerja per user story` --references--> `main()`  [INFERRED]
-  docs/uji-blackbox.md → prisma/seed.js
+  docs/testing/uji-blackbox.md → prisma/seed.js
 
 ## Import Cycles
 - 3-file cycle: `lib/hpp-override.ts -> lib/laporan-panen.ts -> lib/hpp.ts -> lib/hpp-override.ts`
@@ -22756,61 +22756,61 @@ FILE: graphify-out/2026-10-09/manifest.json
     "ast_hash": "fbc2b9b7a835fc0d5e44130f07e453a8",
     "semantic_hash": ""
   },
-  "docs/api.md": {
+  "docs/referensi/api.md": {
     "mtime": 1791548778.8840132,
     "seen": 1791551832.647242,
     "ast_hash": "4a34eaab6d0c2b2ad61ff70bd374964d",
     "semantic_hash": ""
   },
-  "docs/asumsi-benih-media.md": {
+  "docs/produk/asumsi-benih-media.md": {
     "mtime": 1791548778.8944747,
     "seen": 1791551832.647243,
     "ast_hash": "12946e8326d7fbc6010c060f38ff53a6",
     "semantic_hash": ""
   },
-  "docs/cursor-superpowers.md": {
+  "docs/agent/cursor-superpowers.md": {
     "mtime": 1791548778.8953931,
     "seen": 1791551832.6472452,
     "ast_hash": "1389119b39da156c9330e53a21f4884f",
     "semantic_hash": ""
   },
-  "docs/figma-flow-inventory.md": {
+  "docs/desain/figma-flow-inventory.md": {
     "mtime": 1791388018.3720524,
     "seen": 1791544431.54547,
     "ast_hash": "5d5009aba1f15e4e3916392d6da096b5",
     "semantic_hash": ""
   },
-  "docs/notes.md": {
+  "docs/arsip/catatan-progres-teknis.md": {
     "mtime": 1791548778.9002795,
     "seen": 1791551832.6472478,
     "ast_hash": "e9dd3db8b615301afb35ae2f2422ebeb",
     "semantic_hash": ""
   },
-  "docs/prd-agile-kokonus-farm.md": {
+  "docs/produk/prd-agile-kokonus-farm.md": {
     "mtime": 1791397616.535281,
     "seen": 1791544431.5454762,
     "ast_hash": "53d70b0a432bc2c030017baf0e594b65",
     "semantic_hash": ""
   },
-  "docs/progress-backlog.md": {
+  "docs/agile/progress-backlog.md": {
     "mtime": 1791555508.9776251,
     "seen": 1791555670.148888,
     "ast_hash": "db18f19c3531debc82939bd051517270",
     "semantic_hash": ""
   },
-  "docs/project-context.md": {
+  "docs/produk/project-context.md": {
     "mtime": 1791388025.1832502,
     "seen": 1791544431.545481,
     "ast_hash": "3805aa144125fd4f4a5bf22e4f6e3d6a",
     "semantic_hash": ""
   },
-  "docs/skenario-narasi-ucd-agile.md": {
+  "docs/ucd/skenario-narasi-ucd-agile.md": {
     "mtime": 1791388026.3640494,
     "seen": 1791544431.545484,
     "ast_hash": "8ccecb4fd499e37c635fef4153f4f235",
     "semantic_hash": ""
   },
-  "docs/uji-blackbox.md": {
+  "docs/testing/uji-blackbox.md": {
     "mtime": 1791556698.9890344,
     "seen": 1791556840.511712,
     "ast_hash": "af426c93b5379662199cd16ab1dd29fa",
@@ -22972,13 +22972,13 @@ FILE: graphify-out/2026-10-09/manifest.json
     "ast_hash": "5b6cb4516db05d64dff85b99f77988b2",
     "semantic_hash": ""
   },
-  "docs/notulensi-2026-10-09.md": {
+  "docs/arsip/notulensi-2026-10-09.md": {
     "mtime": 1791548778.9154775,
     "seen": 1791551832.64725,
     "ast_hash": "c433d84d61cd4e641d38c02c3659aeae",
     "semantic_hash": ""
   },
-  "docs/sprint-backlog-agile.md": {
+  "docs/agile/sprint-backlog-agile.md": {
     "mtime": 1791548778.9271386,
     "seen": 1791551832.647258,
     "ast_hash": "7fd37b4a0058668eb689da73f75c337b",
@@ -34112,7 +34112,7 @@ create_story "[v2-E.1] Schema SO: jumlah_dp, akun_dp, status_pembayaran" "**Pare
 - Kolom §4 blueprint di Prisma + migrasi
 - DP posting ke uang muka (bukan pendapatan)
 
-**DoD:** API validate; docs/api.md"
+**DoD:** API validate; docs/referensi/api.md"
 
 create_story "[v2-F.1] Smart Jurnal MVP: beban operasional + prive + suntikan modal" "**Parent epic:** #$F
 
@@ -34957,7 +34957,7 @@ labels: []
 
 - **Sprint:** (1–5)
 - **Epic:** EPIC-
-- **PRD:** [docs/prd-agile-kokonus-farm.md](../docs/prd-agile-kokonus-farm.md)
+- **PRD:** [docs/produk/prd-agile-kokonus-farm.md](../docs/produk/prd-agile-kokonus-farm.md)
 - **Sprint doc:** [docs/agile/sprints/](../docs/agile/sprints/)
 - **Progress partial:** [docs/agile/partial-delivery-policy.md](../docs/agile/partial-delivery-policy.md)
 
@@ -34986,8 +34986,8 @@ Lihat [definition-of-done.md](../docs/agile/definition-of-done.md).
 - [ ] Semua AC terpenuhi **atau** catatan partial + sisa scope
 - [ ] PR dengan **≥1 approving review** (wajib)
 - [ ] `npm run typecheck` + lint
-- [ ] Notulensi / `docs/uji-blackbox.md` bila ada uji
-- [ ] `docs/api.md` jika ada API baru
+- [ ] Notulensi / `docs/testing/uji-blackbox.md` bila ada uji
+- [ ] `docs/referensi/api.md` jika ada API baru
 - [ ] Seed / migrasi terdokumentasi
 
 ## Rencana teknis

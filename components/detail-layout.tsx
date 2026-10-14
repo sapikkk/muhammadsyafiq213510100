@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { FinanceModuleNav } from "@/components/finance-module-nav";
 import { DetailLayoutToolbar } from "@/components/detail-layout-toolbar";
 import { Button } from "@/components/ui/button";
+import { detailTitleClass, pageLeadClass, pageContentClass } from "@/lib/ui-typography";
 import { cn } from "@/lib/utils";
 
 export type DetailLayoutProps = {
@@ -40,7 +41,14 @@ export function DetailLayout({
   const inSheet = surface === "sheet";
 
   return (
-    <div className={cn("flex flex-col", inSheet ? "gap-5" : "gap-6", className)}>
+    <div
+      className={cn(
+        "flex flex-col",
+        inSheet ? "gap-4 min-[220px]:gap-5" : "gap-4 min-[220px]:gap-6",
+        pageContentClass,
+        className,
+      )}
+    >
       {financeNavRole && !inSheet ? <FinanceModuleNav role={financeNavRole} /> : null}
       <div className={cn(inSheet && "space-y-4")}>
         {inSheet ? null : (
@@ -60,18 +68,13 @@ export function DetailLayout({
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
           <header className="min-w-0 space-y-1">
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-              <h1
-                className={cn(
-                  "font-semibold tracking-tight text-foreground",
-                  inSheet ? "text-xl leading-snug" : "text-2xl",
-                )}
-              >
+              <h1 className={cn(detailTitleClass, inSheet && "sm:text-xl md:text-xl")}>
                 {title}
               </h1>
               {badge ? <div className="shrink-0">{badge}</div> : null}
             </div>
             {description ? (
-              <div className="text-sm text-muted-foreground">{description}</div>
+              <div className={pageLeadClass}>{description}</div>
             ) : null}
           </header>
           <DetailLayoutToolbar actions={actions} />

@@ -10,7 +10,7 @@ Generated: 2026-10-09 · Branch: `chore/global-audit-bw-refactor` · App Router 
 | `AGENTS.md` | Graphify, Superpowers, Ponytail |
 | `.github/workflows/check.yml` | `npm ci`, `lint`, `typecheck` (no `build` in CI) |
 | `.agents/skills/**` | Ponytail, UI craft, Playwright, agile — apply per phase |
-| `docs/api.md` | API contract reference (may drift from `app/api`) |
+| `docs/referensi/api.md` | API contract reference (may drift from `app/api`) |
 
 **Not installed (relevant to master prompt):** `@tanstack/react-table`, `sonner`, `react-hook-form`, `zod` (verify before Phase 3/5 — may use ad-hoc validation today).
 

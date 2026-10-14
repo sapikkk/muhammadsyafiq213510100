@@ -1,16 +1,20 @@
-# Global audit & flat B&W refactor
+# Audit teknis — Kokonus Farm
 
-Master prompt execution log. Start with `00-inventory.md` and `01-baseline.md`.
+Log dan laporan review keamanan, RBAC, performa, dan UI. Mulai dari inventaris baseline, lalu lapisan aplikasi.
 
-| Phase | Doc (when ready) |
-|-------|------------------|
-| 0 | `00-inventory.md`, `01-baseline.md` |
-| 1–6 | `rbac.md`, `frontend.md`, [`backend.md`](backend.md), `qa.md`, `security.md` |
-| 4 | `perf-before-after.md` |
-| 7 | `SUMMARY.md`, [`07-verification.md`](07-verification.md), [`MERGE-READINESS.md`](MERGE-READINESS.md) |
+| Tahap | Dokumen |
+|-------|---------|
+| Inventaris | [`00-inventory.md`](00-inventory.md), [`01-baseline.md`](01-baseline.md) |
+| Lapisan app | [`rbac.md`](rbac.md), [`frontend.md`](frontend.md), [`backend.md`](backend.md), [`qa.md`](qa.md), [`security.md`](security.md) |
+| Performa | [`perf-before-after.md`](perf-before-after.md) |
+| Penutup | [`SUMMARY.md`](SUMMARY.md), [`07-verification.md`](07-verification.md), [`MERGE-READINESS.md`](MERGE-READINESS.md) |
+| UI responsif & tipografi | [`responsive-typography-2026-10-15.md`](responsive-typography-2026-10-15.md) |
+| UI 91 halaman (HIG) | [`apple-design-inventaris-91-halaman.md`](apple-design-inventaris-91-halaman.md) |
 
-Branch: `chore/global-audit-bw-refactor`.
+**Format temuan:** [`../standards/format-temuan-audit.md`](../standards/format-temuan-audit.md)
 
-**Agent:** baca [`AGENT-RUNBOOK.md`](AGENT-RUNBOOK.md) sebelum setiap sesi.
+**Agent:** baca [`AGENT-RUNBOOK.md`](AGENT-RUNBOOK.md) sebelum sesi audit.
 
-**UI 91 halaman (Apple HIG + ui-ringkas):** [`apple-design-inventaris-91-halaman.md`](apple-design-inventaris-91-halaman.md).
+Branch historis audit global: `chore/global-audit-bw-refactor`.
+
+Terakhir diperbarui: **2026-10-15**.

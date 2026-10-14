@@ -94,7 +94,7 @@ export const HUB_TABS: HubTab[] = [
       { title: "Blueprint akuntansi hidroponik", path: "docs/blueprint/akuntansi-logistik-hidroponik.md" },
       { title: "Rencana epic v2", path: "docs/blueprint/rencana-implementasi-epic-v2.md" },
       { title: "Validasi backlog PRD", path: "docs/blueprint/VALIDASI-BACKLOG-PRD.md" },
-      { title: "Skenario narasi UCD + agile", path: "docs/skenario-narasi-ucd-agile.md" },
+      { title: "Skenario narasi UCD + agile", path: "docs/ucd/skenario-narasi-ucd-agile.md" },
     ],
   },
   {
@@ -102,8 +102,8 @@ export const HUB_TABS: HubTab[] = [
     label: "Uji blackbox",
     description: "Daftar skenario uji dan catatan hasil pengujian.",
     docs: [
-      { title: "Tabel blackbox testing", path: "docs/tabel-blackbox-testing.md" },
-      { title: "Uji blackbox (notulensi)", path: "docs/uji-blackbox.md" },
+      { title: "Tabel blackbox testing", path: "docs/testing/tabel-blackbox-testing.md" },
+      { title: "Uji blackbox (notulensi)", path: "docs/testing/uji-blackbox.md" },
     ],
   },
   {
@@ -111,10 +111,11 @@ export const HUB_TABS: HubTab[] = [
     label: "Backlog",
     description: "Progress proyek, backlog sprint, dan dokumen kebutuhan produk.",
     docs: [
-      { title: "Progress & backlog", path: "docs/progress-backlog.md" },
-      { title: "Sprint backlog agile", path: "docs/sprint-backlog-agile.md" },
-      { title: "PRD agile Kokonus Farm", path: "docs/prd-agile-kokonus-farm.md" },
-      { title: "Project context", path: "docs/project-context.md" },
+      { title: "Registry user story", path: "docs/agile/us-registry.md" },
+      { title: "Progress & backlog", path: "docs/agile/progress-backlog.md" },
+      { title: "Sprint backlog agile", path: "docs/agile/sprint-backlog-agile.md" },
+      { title: "PRD agile Kokonus Farm", path: "docs/produk/prd-agile-kokonus-farm.md" },
+      { title: "Project context", path: "docs/produk/project-context.md" },
     ],
   },
   {

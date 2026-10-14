@@ -55,6 +55,15 @@ if [[ -d "$MATT" ]]; then
   done
 fi
 
+PONY="$ROOT/vendor/agents/ponytail/skills"
+if [[ -d "$PONY" ]]; then
+  for skill_dir in "$PONY"/*/; do
+    [[ -d "$skill_dir" ]] || continue
+    [[ -f "$skill_dir/SKILL.md" ]] || continue
+    rsync_skill_dir "$skill_dir" "$(basename "$skill_dir")"
+  done
+fi
+
 APPLE="$ROOT/vendor/agents/apple-design-skill"
 if [[ -f "$APPLE/SKILL.md" ]]; then
   mkdir -p "$DEST/apple-design"
@@ -67,6 +76,10 @@ if [[ -f "$APPLE/SKILL.md" ]]; then
     cp "$APPLE/SKILL.md" "$DEST/apple-design/"
     cp -R "$APPLE/references" "$DEST/apple-design/" 2>/dev/null || true
   fi
+fi
+
+if [[ -x "$ROOT/scripts/sync-awesome-skills-kokonus.sh" ]]; then
+  bash "$ROOT/scripts/sync-awesome-skills-kokonus.sh"
 fi
 
 echo "Skills synced to .agents/skills ($(find "$DEST" -name SKILL.md | wc -l | tr -d ' ') files)"

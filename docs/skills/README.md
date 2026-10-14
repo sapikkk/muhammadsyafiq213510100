@@ -13,8 +13,10 @@ Salinan **`SKILL.md`** (dan bundle besar via submodule + `sync-agent-skills.sh`)
 | `semgrep/` | 1 (ringkas) | [semgrep/skills](https://github.com/semgrep/skills) — bundle lengkap via submodule |
 | `apple-design/` | 1 (ringkas) | [dickwu/apple-design-skill](https://github.com/dickwu/apple-design-skill) — HIG + `references/` via submodule |
 | Matt Pocock | 31 skill | [mattpocock/skills](https://github.com/mattpocock/skills) — hanya via `vendor/agents/mattpocock-skills` + sync |
+| Ponytail | 6 skill | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) — via sync + `/ponytail full` |
+| awesome-skills (kurasi) | ~12 | [theneoai/awesome-skills](https://github.com/theneoai/awesome-skills) — prefix `awesome-*`, manifest [`awesome-skills-kokonus.manifest`](awesome-skills-kokonus.manifest) |
 
-**Agency Agents** (280+ persona) bukan `SKILL.md`; submodule `vendor/agents/agency-agents` → aturan Cursor `.mdc`. Lihat [`../cursor-vendor-agents.md`](../cursor-vendor-agents.md).
+**Agency Agents** (280+ persona) bukan `SKILL.md`; submodule `vendor/agents/agency-agents` → aturan Cursor `.mdc`. Lihat [`../agent/cursor-agent-stack.md`](../agent/cursor-agent-stack.md) dan [`../agent/cursor-vendor-agents.md`](../agent/cursor-vendor-agents.md).
 
 Daftar skill lokal lain yang pernah ada: [`../testing/DELETED-AGENTS-SKILLS-MANIFEST.md`](../testing/DELETED-AGENTS-SKILLS-MANIFEST.md).
 
@@ -34,4 +36,4 @@ bash scripts/sync-agent-skills.sh
 
 Superpowers (proses TDD/debug untuk US): submodule `.cursor/plugins/superpowers` — bukan folder ini.
 
-Terakhir diperbarui: **2026-10-13**.
+Terakhir diperbarui: **2026-10-15**.

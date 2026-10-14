@@ -11,20 +11,28 @@ e2e/.demo-siklus-id
 
 .agents/
 .cursor/skills/
+.cursor/hooks.json
 # Agency Agents: symlink lokal dari bootstrap (commit hanya graphify + karpathy)
 .cursor/rules/*
 !.cursor/rules/graphify.mdc
 !.cursor/rules/karpathy-guidelines.mdc
 !.cursor/rules/apple-design-skill.mdc
+!.cursor/rules/kokonus-stack.mdc
 skills-lock.json
 .DS_Store
 
-# Graphify — artefak lokal mesin (graph.json boleh di-commit jika tim setuju)
+# Graphify — commit hanya root graphify-out/ (MCP + agent); backup & lock lokal
 graphify-out/.graphify_root
 graphify-out/.graphify_python
 graphify-out/.graphify_analysis.json
 graphify-out/cache/
 graphify-out/needs_update
+graphify-out/20*/
+graphify-out/graph.json
+graphify-out/.gfy-*.tmp
+graphify-out/.graph.html.stale
+graphify-out/.rebuild.lock
+graphify-out/.graphify_labels.pending.json
 .vercel
 
 # Playwright / Neon CLI lokal

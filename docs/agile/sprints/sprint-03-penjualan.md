@@ -1,17 +1,20 @@
-# Sprint 3 — Penjualan & pengiriman (rencana)
+# Sprint 3 — Penjualan & pengiriman
 
-**Iteration:** 2026-11-04 → 2026-11-17 · **Epic:** EPIC-5
+**Tujuan:** Pesanan jual dari pelanggan sampai kirim, dengan jurnal pendapatan otomatis.  
+**Iteration:** 2026-10-09 (delivery stack) · **Epic:** EPIC-5 · **Status:** Done
 
-| US | Issue | Status | AC ringkas (PRD) |
-|----|-------|--------|------------------|
-| US5.1 | [#29](https://github.com/sapikkk/muhammadsyafiq213510100/issues/29) | Done | Pelanggan + SO, nomor `SO-YYYY-NNN` |
-| US5.2 | [#30](https://github.com/sapikkk/muhammadsyafiq213510100/issues/30) | Done | Item dinamis + cek stok |
-| US5.3 | [#31](https://github.com/sapikkk/muhammadsyafiq213510100/issues/31) | Done | CONFIRMED → SHIPPED → DELIVERED (petani) |
-| US5.4 | [#32](https://github.com/sapikkk/muhammadsyafiq213510100/issues/32) | Done | Jurnal otomatis saat DELIVERED |
-| US5.5 | [#33](https://github.com/sapikkk/muhammadsyafiq213510100/issues/33) | Done | Invoice, batal, biaya packing |
+Narasi per US: [`../us-registry.md`](../us-registry.md#epic-5--penjualan-sprint-3)
 
-**Prasyarat:** Sprint 2 G1 stabil (panen/HPP); stok hasil panen.
+| US | User story (singkat) | Issue | Status |
+|----|----------------------|-------|--------|
+| US5.1 | Admin buat pelanggan dan pesanan jual | [#29](https://github.com/sapikkk/muhammadsyafiq213510100/issues/29) | Done |
+| US5.2 | Baris pesanan dinamis + cek stok | [#30](https://github.com/sapikkk/muhammadsyafiq213510100/issues/30) | Done |
+| US5.3 | Petani update packing & kirim dari HP | [#31](https://github.com/sapikkk/muhammadsyafiq213510100/issues/31) | Done |
+| US5.4 | Jurnal pendapatan saat status terkirim | [#32](https://github.com/sapikkk/muhammadsyafiq213510100/issues/32) | Done |
+| US5.5 | Invoice, batal pesanan, biaya packing | [#33](https://github.com/sapikkk/muhammadsyafiq213510100/issues/33) | Done |
 
-**Tech target (PRD §11):** `/api/customers`, `/api/sales-orders`, confirm/deliver.
+**Prasyarat (terpenuhi):** panen/HPP stabil; stok hasil panen tersedia.
 
-DoD & blackbox: isi setelah sprint dimulai — salin template notulensi per US.
+**Uji:** [`../../testing/uji-blackbox.md`](../../testing/uji-blackbox.md) · API: [`../../referensi/api.md`](../../referensi/api.md)
+
+Terakhir diperbarui: **2026-10-15**.

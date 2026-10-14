@@ -1,4 +1,6 @@
-# PHASE 6.1 — Frontend audit log
+# Frontend — log audit
+
+Log perubahan UI global (layout, sidebar, tabel). Hub: [`README.md`](README.md) · UI 91 halaman: [`apple-design-inventaris-91-halaman.md`](apple-design-inventaris-91-halaman.md).
 
 Append-only. Agent menambah baris per sesi.
 

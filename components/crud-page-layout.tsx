@@ -1,9 +1,11 @@
 import type { ReactNode } from "react";
 import { Suspense } from "react";
+import { cn } from "@/lib/utils";
 import { FinanceModuleNav } from "@/components/finance-module-nav";
 import { PageHeaderRow } from "@/components/page-header-row";
 import type { FlowStep } from "@/components/flow-steps";
 import { PageSection } from "@/components/page-section";
+import { pageContentClass } from "@/lib/ui-typography";
 import { UI_COPY } from "@/lib/ui-copy";
 
 export function CrudPageLayout({
@@ -44,7 +46,7 @@ export function CrudPageLayout({
   extra?: ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-6">
+    <div className={cn("flex flex-col gap-4 min-[220px]:gap-6", pageContentClass)}>
       {financeNavRole ? (
         <Suspense fallback={null}>
           <FinanceModuleNav role={financeNavRole} />

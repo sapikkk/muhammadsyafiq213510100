@@ -2,12 +2,14 @@
 
 URL: https://github.com/users/sapikkk/projects/1
 
+**Deskripsi Project (PO):** salin dari [ringkasan-untuk-github-project.md](./ringkasan-untuk-github-project.md) — mencakup fase greenhouse vs aplikasi.
+
 ## Kolom
 
 | Field | Arti | Sumber kebenaran |
 |-------|------|------------------|
 | **Status** | Todo / In progress / Done | Open + `progress-partial` = partial; Done = AC issue selesai atau close dengan catatan partial |
-| **Iteration** | Sprint 1–5 (v1) + **Increment v2 · Post go-live** | `docs/agile/timeline-registry.md`, `docs/progress-backlog.md` |
+| **Iteration** | Sprint 1–5 (v1) + **Increment v2 · Post go-live** | `docs/agile/timeline-registry.md`, `docs/agile/progress-backlog.md` |
 | **Priority** | P0 / P1 / P2 | PRD (HIGHEST → P0) — *belum diisi massal* |
 | **Size** | XS–XL | Opsional story points |
 | **Labels (issue)** | `sprint-1`…`sprint-5`, `progress-partial`, `blackbox-test`, `finding` | Filter di repo |

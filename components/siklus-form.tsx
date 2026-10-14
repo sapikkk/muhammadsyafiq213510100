@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useFormState } from "react-dom";
 import { mulaiSiklusSemai } from "@/app/actions/siklus";
 import { SubmitButton } from "@/components/submit-button";
@@ -68,6 +68,12 @@ export function SiklusForm({
     () => packs.filter((p) => isItemMedia(p.itemKode)),
     [packs],
   );
+
+  useEffect(() => {
+    if (packsMedia.length === 1 && !packMediaId) {
+      setPackMediaId(String(packsMedia[0]!.id));
+    }
+  }, [packsMedia, packMediaId]);
 
   const jumlahDisemai = parseLubangPositif(jumlahDisemaiRaw);
   const varietasPilih = varietas.find((v) => String(v.id) === varietasId);
@@ -277,6 +283,14 @@ export function SiklusForm({
 
       <fieldset className="space-y-3 rounded-md border border-dashed p-3">
         <legend className="px-1 text-sm font-medium">Media rockwool (opsional)</legend>
+
+        {jumlahDisemai != null && slabEstimasi != null && slabEstimasi > 0 ? (
+          <p className="text-xs text-muted-foreground">
+            Perkiraan rockwool untuk {jumlahDisemai.toLocaleString("id-ID")} lubang:{" "}
+            <strong>{formatAngkaSingkat(slabEstimasi, 0)} slab</strong> (asumsi 720 lubang/slab).
+            {packMediaId ? null : " Pilih paket media di bawah agar biaya rockwool ikut HPP."}
+          </p>
+        ) : null}
 
         <label className="block space-y-1.5 text-sm">
           <span className="font-medium">Paket media</span>

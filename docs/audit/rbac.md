@@ -1,4 +1,6 @@
-# PHASE 1 — RBAC audit mode
+# RBAC & mode audit
+
+Bypass navigasi untuk audit global (dev saja). Format temuan: [`../standards/format-temuan-audit.md`](../standards/format-temuan-audit.md) · Hub: [`README.md`](README.md).
 
 ## Implementasi
 

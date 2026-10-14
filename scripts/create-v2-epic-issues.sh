@@ -141,7 +141,7 @@ create_story "[v2-E.1] Schema SO: jumlah_dp, akun_dp, status_pembayaran" "**Pare
 - Kolom §4 blueprint di Prisma + migrasi
 - DP posting ke uang muka (bukan pendapatan)
 
-**DoD:** API validate; docs/api.md"
+**DoD:** API validate; docs/referensi/api.md"
 
 create_story "[v2-F.1] Smart Jurnal MVP: beban operasional + prive + suntikan modal" "**Parent epic:** #$F
 

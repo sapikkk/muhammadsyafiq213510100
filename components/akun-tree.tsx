@@ -149,7 +149,7 @@ function Node({
         </div>
         <div className="flex shrink-0 items-center gap-3 sm:gap-4">
           <span
-            className={`min-w-[7rem] text-right text-sm tabular-nums ${induk ? "font-semibold" : ""}`}
+            className={`min-w-[4.5rem] shrink-0 text-right text-xs tabular-nums min-[220px]:min-w-[7rem] min-[220px]:text-sm ${induk ? "font-semibold" : ""}`}
             title={induk ? "Jumlah saldo akun di bawahnya" : "Saldo akun"}
           >
             {formatRupiah(tampilSaldo)}

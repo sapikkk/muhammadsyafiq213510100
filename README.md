@@ -140,19 +140,21 @@ Daftar lengkap: `app/api/**/route.ts`.
 
 ## Dokumentasi & mekanisme kerja
 
-Peta file Markdown untuk Agile, progres teknis, UCD, uji (black-box / UAT / SUS), blueprint v2, deploy, audit, dan alat agent. Mulai dari hub berikut, lalu turun ke dokumen anak.
+**Hub utama:** [`docs/README.md`](docs/README.md) — peta folder, link cepat, dan rencana refine dokumen.
+
+Di bawah ini ringkasan; path lama (`docs/prd-…`) tetap berupa redirect ke lokasi baru.
 
 ### Konteks & backlog produk
 
 | Dokumen | Isi |
 |---------|-----|
-| [`docs/project-context.md`](docs/project-context.md) | Tujuan, persona Owner, batasan lingkup |
-| [`docs/prd-agile-kokonus-farm.md`](docs/prd-agile-kokonus-farm.md) | PRD, epic, alur F1–F24 |
-| [`docs/progress-backlog.md`](docs/progress-backlog.md) | Urutan user story & status ringkas |
-| [`docs/sprint-backlog-agile.md`](docs/sprint-backlog-agile.md) | Backlog sprint (mirror PRD) |
-| [`docs/notes.md`](docs/notes.md) | Catatan terbuka / follow-up |
-| [`docs/figma-flow-inventory.md`](docs/figma-flow-inventory.md) | Inventaris layar Figma |
-| [`docs/api.md`](docs/api.md) | Kontrak API (acuan integrasi) |
+| [`docs/produk/project-context.md`](docs/produk/project-context.md) | Tujuan, persona Owner, batasan lingkup |
+| [`docs/produk/prd-agile-kokonus-farm.md`](docs/produk/prd-agile-kokonus-farm.md) | PRD, epic, alur F1–F24 |
+| [`docs/agile/progress-backlog.md`](docs/agile/progress-backlog.md) | Urutan user story & status ringkas |
+| [`docs/agile/sprint-backlog-agile.md`](docs/agile/sprint-backlog-agile.md) | Backlog sprint (mirror PRD) |
+| [`docs/arsip/catatan-progres-teknis.md`](docs/arsip/catatan-progres-teknis.md) | Catatan progres teknis (arsip) |
+| [`docs/desain/figma-flow-inventory.md`](docs/desain/figma-flow-inventory.md) | Inventaris layar Figma |
+| [`docs/referensi/api.md`](docs/referensi/api.md) | Kontrak API (acuan integrasi) |
 
 ### Agile — sprint, DoD, audit log
 
@@ -183,8 +185,8 @@ Peta file Markdown untuk Agile, progres teknis, UCD, uji (black-box / UAT / SUS)
 |---------|-----|
 | [`docs/ucd/README.md`](docs/ucd/README.md) | Hub UCD & increment v2 |
 | [`docs/ucd/increment-v2-akuntansi-logistik.md`](docs/ucd/increment-v2-akuntansi-logistik.md) | Persona, pain, HMW v2 |
-| [`docs/skenario-narasi-ucd-agile.md`](docs/skenario-narasi-ucd-agile.md) | Narasi alur UCD + Agile v1 |
-| [`docs/ux/FLOW-NAV.md`](docs/ux/FLOW-NAV.md) | Navigasi & alur per peran |
+| [`docs/ucd/skenario-narasi-ucd-agile.md`](docs/ucd/skenario-narasi-ucd-agile.md) | Narasi alur UCD + Agile v1 |
+| [`docs/desain/FLOW-NAV.md`](docs/desain/FLOW-NAV.md) | Navigasi & alur per peran |
 
 ### Blueprint v2 (akuntansi & logistik)
 
@@ -202,8 +204,8 @@ Peta file Markdown untuk Agile, progres teknis, UCD, uji (black-box / UAT / SUS)
 |---------|-----|
 | [`docs/testing/panduan-uji-dan-demo.md`](docs/testing/panduan-uji-dan-demo.md) | Playwright, seed demo, pelatihan go-live (T5.9) |
 | [`docs/testing/README.md`](docs/testing/README.md) | Indeks testing |
-| [`docs/tabel-blackbox-testing.md`](docs/tabel-blackbox-testing.md) | Tabel master 231 langkah blackbox (BB-ID) |
-| [`docs/uji-blackbox.md`](docs/uji-blackbox.md) | Notulensi uji black-box per US (AC, DoD, temuan) |
+| [`docs/testing/tabel-blackbox-testing.md`](docs/testing/tabel-blackbox-testing.md) | Tabel master 231 langkah blackbox (BB-ID) |
+| [`docs/testing/uji-blackbox.md`](docs/testing/uji-blackbox.md) | Notulensi uji black-box per US (AC, DoD, temuan) |
 | [`docs/testing/DELETED-AGENTS-SKILLS-MANIFEST.md`](docs/testing/DELETED-AGENTS-SKILLS-MANIFEST.md) | Manifest skill agent (referensi) |
 | [`e2e/smoke.spec.ts`](e2e/smoke.spec.ts) | Smoke E2E |
 | [`e2e/sprint5-usability.spec.ts`](e2e/sprint5-usability.spec.ts) | Usability Sprint 5 (T5.1–T5.3) |
@@ -234,17 +236,18 @@ SUS (10 butir, 6 responden) dan task usability dijelaskan di PRD § Sprint 5 dan
 | Dokumen | Isi |
 |---------|-----|
 | [`AGENTS.md`](AGENTS.md) | Panduan agent (Graphify, Superpowers, backlog) |
-| [`docs/cursor-superpowers.md`](docs/cursor-superpowers.md) | Submodule Superpowers |
+| [`docs/agent/cursor-superpowers.md`](docs/agent/cursor-superpowers.md) | Submodule Superpowers |
 | [`docs/skills/README.md`](docs/skills/README.md) | Skills lokal |
-| [`docs/cursor-vendor-agents.md`](docs/cursor-vendor-agents.md) | Agency Agents, Karpathy, Semgrep (submodule + bootstrap) |
+| [`docs/agent/cursor-vendor-agents.md`](docs/agent/cursor-vendor-agents.md) | Agency Agents, Karpathy, Semgrep (submodule + bootstrap) |
+| [`docs/agent/cursor-agent-stack.md`](docs/agent/cursor-agent-stack.md) | Stack agent satu slash `/kokonus` |
 | [`docs/skills/akuntansi-hidroponik/SKILL.md`](docs/skills/akuntansi-hidroponik/SKILL.md) | Skill domain akuntansi hidroponik |
 
 ### Domain & notulensi
 
 | Dokumen | Isi |
 |---------|-----|
-| [`docs/asumsi-benih-media.md`](docs/asumsi-benih-media.md) | Asumsi benih & media |
-| [`docs/notulensi-2026-10-09.md`](docs/notulensi-2026-10-09.md) | Notulensi rapat |
+| [`docs/produk/asumsi-benih-media.md`](docs/produk/asumsi-benih-media.md) | Asumsi benih & media |
+| [`docs/arsip/notulensi-2026-10-09.md`](docs/arsip/notulensi-2026-10-09.md) | Notulensi rapat |
 
 ## Kontribusi
 

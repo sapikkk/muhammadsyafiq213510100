@@ -10,7 +10,7 @@ description: >-
 
 Bantu user (mahasiswa skripsi, sistem digitalisasi tata kelola UMKM hidroponik) merancang, memeriksa, dan mengimplementasikan logika akuntansi dan logistik. Jawab dalam Bahasa Indonesia, ringkas, dan praktis.
 
-**Referensi repo (Kokonus Farm):** `docs/blueprint/akuntansi-logistik-hidroponik.md`, `docs/blueprint/VALIDASI-BACKLOG-PRD.md`, `docs/ucd/increment-v2-akuntansi-logistik.md`, `docs/prd-agile-kokonus-farm.md`, `prisma/seed-akun.js`, `lib/jurnal.ts`, `lib/laporan-panen.ts`, `lib/sales-order-delivery.ts`.
+**Referensi repo (Kokonus Farm):** `docs/blueprint/akuntansi-logistik-hidroponik.md`, `docs/blueprint/VALIDASI-BACKLOG-PRD.md`, `docs/ucd/increment-v2-akuntansi-logistik.md`, `docs/produk/prd-agile-kokonus-farm.md`, `prisma/seed-akun.js`, `lib/jurnal.ts`, `lib/laporan-panen.ts`, `lib/sales-order-delivery.ts`.
 
 ## Prinsip Inti
 

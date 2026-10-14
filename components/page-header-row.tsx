@@ -12,7 +12,7 @@ export function PageHeaderRow({
   actions?: ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div className="flex min-w-0 max-w-full flex-col gap-3 min-[220px]:gap-4 sm:flex-row sm:items-start sm:justify-between">
       <PageHeader title={title} description={description} />
       {actions ? (
         <div className="flex shrink-0 flex-wrap items-center justify-end gap-2 sm:pt-0.5">

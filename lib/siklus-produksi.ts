@@ -73,7 +73,7 @@ function parsePackJumlah(raw: unknown, label: string): Prisma.Decimal {
 function parseTanggal(raw: unknown): Date {
   const text = String(raw ?? "").trim();
   if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) {
-    throw new SiklusError("Tanggal semai wajib format YYYY-MM-DD.", 400);
+    throw new SiklusError("Tanggal semai tidak valid. Pilih tanggal di kalender.", 400);
   }
   return new Date(`${text}T12:00:00.000Z`);
 }
@@ -83,18 +83,18 @@ export function parseSiklusInput(raw: Record<string, unknown>): SiklusInput {
   const kolamId = parsePositiveInt(raw.kolamId, "Kolam");
   const tanggalSemai = parseTanggal(raw.tanggalSemai);
   const jumlahDisemai = parsePositiveInt(raw.jumlahDisemai, "Jumlah disemai");
-  const activePackBenihId = parsePositiveInt(raw.activePackBenihId, "Active pack benih");
-  const jumlahBenihPakai = parsePackJumlah(raw.jumlahBenihPakai, "Jumlah benih dari pack");
+  const activePackBenihId = parsePositiveInt(raw.activePackBenihId, "Paket benih");
+  const jumlahBenihPakai = parsePackJumlah(raw.jumlahBenihPakai, "Jumlah benih");
 
   const mediaIdRaw = raw.activePackMediaId;
   const activePackMediaId =
     mediaIdRaw === null || mediaIdRaw === undefined || mediaIdRaw === ""
       ? null
-      : parsePositiveInt(mediaIdRaw, "Active pack media");
+      : parsePositiveInt(mediaIdRaw, "Paket media");
 
   let jumlahMediaPakai: Prisma.Decimal | null = null;
   if (activePackMediaId !== null) {
-    jumlahMediaPakai = parsePackJumlah(raw.jumlahMediaPakai, "Jumlah media dari pack");
+    jumlahMediaPakai = parsePackJumlah(raw.jumlahMediaPakai, "Jumlah media");
   }
 
   return {
@@ -227,7 +227,7 @@ export async function buatSiklusSemai(input: SiklusInput, userId?: number) {
         include: { item: { select: { kode: true } } },
       });
       if (!packBenihRow || packBenihRow.status !== "AKTIF") {
-        throw new SiklusError("Active pack benih tidak ditemukan atau nonaktif.", 400);
+        throw new SiklusError("Paket benih tidak ditemukan atau sudah tidak aktif.", 400);
       }
 
       const jumlahBenihPakai = gramBenihUntukLubang(input.jumlahDisemai, varietas.biji_per_gram);
@@ -252,7 +252,7 @@ export async function buatSiklusSemai(input: SiklusInput, userId?: number) {
           include: { item: { select: { kode: true } } },
         });
         if (!packMediaRow || packMediaRow.status !== "AKTIF") {
-          throw new SiklusError("Active pack media tidak ditemukan atau nonaktif.", 400);
+          throw new SiklusError("Paket media tidak ditemukan atau sudah tidak aktif.", 400);
         }
         const mediaExpected = mediaUnitUntukLubang(input.jumlahDisemai);
         jumlahMediaPakai = mediaExpected;
@@ -350,6 +350,7 @@ export async function getSiklusProduksi(id: number) {
     include: {
       ...siklusListInclude,
       laporanPanen: true,
+      biaya_langsung: true,
     },
   });
 }

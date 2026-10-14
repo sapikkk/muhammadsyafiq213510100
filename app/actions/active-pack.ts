@@ -50,7 +50,7 @@ export async function simpanActivePack(
     revalidatePath(basePath);
     revalidatePath("/admin/inventaris");
     revalidatePath("/petani/inventaris");
-    return { ok: "Active pack tersimpan." };
+    return { ok: "Paket siap pakai tersimpan." };
   } catch (error) {
     return toState(error);
   }
@@ -95,8 +95,8 @@ export async function pakaiActivePackForm(
     return {
       ok:
         pack.status === "HABIS"
-          ? "Pack habis (DEPLETED). Biaya per unit tetap tercatat untuk HPP."
-          : "Pemakaian unit tercatat.",
+          ? "Paket habis. Biaya per unit tetap tercatat untuk HPP."
+          : "Pemakaian stok paket tercatat.",
     };
   } catch (error) {
     return toState(error);

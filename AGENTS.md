@@ -17,8 +17,10 @@ graphify explain "<simbol atau file>"
 Setelah mengubah kode TypeScript/JavaScript:
 
 ```bash
-graphify update .
+npm run graphify:update
 ```
+
+**Commit graf (cepat & cukup):** `manifest.json`, `GRAPH_REPORT.md`, `.graphify_labels.json` (+ `.sig` jika ada). **`graph.json` tidak di-commit** (sering >100 MB, ditolak GitHub; regenerasi lokal: `npm run graphify:update`, MCP tetap pakai file lokal). Boleh satu commit `chore(graphify): …` bareng PR kode. Jangan commit folder `graphify-out/20*/` (backup harian, gitignore) atau file lock/stale/tmp.
 
 Aturan Cursor: `.cursor/rules/graphify.mdc`.
 
@@ -61,26 +63,35 @@ Untuk `docs/` dan notulensi uji: jalankan humanizer — hindari pola AI (kontras
 - **Skill domain:** `docs/skills/akuntansi-hidroponik/SKILL.md`
 - **Skill keuangan umum (lokal, gitignore):** `npx skills add openaccountant/skills -y` → `.agents/skills/` ([openaccountant/skills](https://github.com/openaccountant/skills)); adaptasi COA Indonesia, bukan IRS/US mentah.
 
-## Skill vendor (Agency, Karpathy, Semgrep, Matt Pocock, Apple HIG)
+## Stack agent Cursor (satu slash `/`)
 
-Submodule di `vendor/agents/`; pasang ke Cursor + `.agents/skills/`:
+Panduan lengkap: [`docs/agent/cursor-agent-stack.md`](docs/agent/cursor-agent-stack.md).
+
+Pasang / refresh:
 
 ```bash
 git submodule update --init --recursive vendor/agents/
 bash scripts/bootstrap-vendor-agents.sh
 ```
 
-- **Agency Agents** ([msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)): `@<slug>` di chat Cursor setelah bootstrap.
-- **Karpathy guidelines** ([multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills)): `.cursor/rules/karpathy-guidelines.mdc` (always-on).
-- **Semgrep** — skill di [semgrep/skills](https://github.com/semgrep/skills); CLI mesin [semgrep/semgrep](https://github.com/semgrep/semgrep): `npm run semgrep:scan` setelah `brew install semgrep`.
-- **Matt Pocock** ([mattpocock/skills](https://github.com/mattpocock/skills)): engineering + productivity + misc → `.agents/skills/` (`tdd`, `code-review`, `triage`, …). Alternatif CLI: `npx skills add mattpocock/skills -a cursor` (jangan dobel dengan bootstrap).
-- **Apple design** ([dickwu/apple-design-skill](https://github.com/dickwu/apple-design-skill)): review HIG + craft; rule `.cursor/rules/apple-design-skill.mdc` pada `app/` & `components/`; teks UI tetap [`docs/skills/kokonus/ui-ringkas/SKILL.md`](docs/skills/kokonus/ui-ringkas/SKILL.md).
+Di chat Cursor: **`/kokonus`** atau **`/all`** — semua skill & agent aktif untuk sesi itu (lihat `docs/skills/kokonus-sesi-penuh.md`). Hooks `.cursor/hooks.json` opsional (auto Ponytail saat chat baru); tidak wajib jika selalu pakai slash.
 
-Detail: [`docs/cursor-vendor-agents.md`](docs/cursor-vendor-agents.md) · indeks skill: [`docs/skills/README.md`](docs/skills/README.md).
+## Skill vendor (Agency, Karpathy, Semgrep, Matt Pocock, Apple, Ponytail, awesome-skills)
+
+- **Agency Agents** ([msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)): `@<slug>` setelah bootstrap.
+- **Karpathy** — `.cursor/rules/karpathy-guidelines.mdc` (always-on).
+- **Ponytail** ([DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)): hooks proyek + `/ponytail full` (bukan symlink `ponytail.mdc` always-on).
+- **Awesome-skills** ([theneoai/awesome-skills](https://github.com/theneoai/awesome-skills)): kurasi `awesome-*` saja — manifest `docs/skills/awesome-skills-kokonus.manifest`.
+- **Caveman** ([JuliusBrussee/caveman](https://github.com/juliusbrussee/caveman)): opsional `bash scripts/install-caveman-cursor.sh` (global).
+- **Semgrep** — skill + `npm run semgrep:scan` setelah `brew install semgrep`.
+- **Matt Pocock** — `.agents/skills/`; jangan campur TDD dengan Superpowers dalam satu task.
+- **Apple design** — rule `apple-design-skill.mdc` + copy [`ui-ringkas`](docs/skills/kokonus/ui-ringkas/SKILL.md).
+
+Detail vendor lama: [`docs/agent/cursor-vendor-agents.md`](docs/agent/cursor-vendor-agents.md) · indeks skill: [`docs/skills/README.md`](docs/skills/README.md).
 
 ## Backlog & pelacakan sprint
 
 - **Registry Agile (AC, DoD, timeline, audit log):** `docs/agile/README.md`
-- Urutan US: `docs/progress-backlog.md`
+- Urutan US: `docs/agile/progress-backlog.md`
 - Board: [Project #1](https://github.com/users/sapikkk/projects/1)
 - Gap GitHub vs docs: `docs/agile/KONFIRMASI-GAP-GITHUB.md` (konfirmasi PO)

@@ -13,7 +13,7 @@ Epic [#87](https://github.com/sapikkk/muhammadsyafiq213510100/issues/87) · Stor
 - [x] `lib/akun.ts`: tolak ubah kode / tipe / parent / nonaktif jika `isSystem`
 - [x] UI admin COA: badge Sistem; lock edit kode/tipe/induk; sembunyikan nonaktif
 - [x] `npm run typecheck` + `npm run check:jurnal-balance`
-- [x] Catatan uji di `docs/uji-blackbox.md` (section v2-A.1)
+- [x] Catatan uji di `docs/testing/uji-blackbox.md` (section v2-A.1)
 
 ### Keputusan PO (blokir seed)
 
@@ -33,7 +33,7 @@ A.1 hanya menandai COA standar v1 sebagai `isSystem`; rename dan migrasi saldo m
 | Seed | `prisma/seed-akun.js` |
 | Domain | `lib/akun.ts`, route API COA |
 | UI | `app/owner/akun/`, form edit COA admin |
-| Docs | `docs/uji-blackbox.md`, `docs/api.md` |
+| Docs | `docs/testing/uji-blackbox.md`, `docs/referensi/api.md` |
 
 Urutan commit disarankan: schema + client → seed + flag → guard API/lib → UI + docs + blackbox.
 
@@ -49,7 +49,7 @@ Epic #88 · Issue #96 · Branch `feat/v2-b1-abort-siklus`
 - [x] Dr 5300 Cr WIP (proxy 1350 sampai akun WIP v2)
 - [x] Status `GAGAL_TOTAL`, blok fase / panen / kegagalan baru
 - [x] Satu jurnal abort (tidak double dengan partial susut on approve)
-- [x] Blackbox `docs/uji-blackbox.md` § v2-B.1
+- [x] Blackbox `docs/testing/uji-blackbox.md` § v2-B.1
 
 WIP penuh (benih → jurnal WIP) masuk story Epic A berikutnya. B.1 memakai nominal biaya langsung + overhead alokasi seperti HPP v1.
 

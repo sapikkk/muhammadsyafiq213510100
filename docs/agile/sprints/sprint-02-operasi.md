@@ -1,7 +1,9 @@
 # Sprint 2 — Akuntansi, produksi, inventaris
 
-**Goal PRD:** COA, jurnal, siklus HP, harvest, inventaris, HPP approve, master data.  
-**Iteration:** 2026-10-08 → 2026-10-21 · **Status sprint:** **Done** (issue #11–#28 closed, 2026-10-09)
+**Tujuan:** Pembukuan, siklus tanam di lapangan, inventaris, dan persetujuan HPP — fondasi operasi greenhouse.  
+**Iteration:** 2026-10-08 → 2026-10-21 · **Status:** Done (#11–#28, 2026-10-09)
+
+User story manusia: [`../us-registry.md`](../us-registry.md) (EPIC-2, 3, 4)
 
 | US | Issue | Status | PR / bukti | Blackbox |
 |----|-------|--------|------------|----------|

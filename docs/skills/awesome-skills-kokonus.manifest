@@ -1,0 +1,19 @@
+# Kurasi awesome-skills untuk Kokonus Farm (bukan 956 skill sekaligus).
+# Satu baris = path relatif di bawah vendor/agents/awesome-skills/skills/
+# Sync: bash scripts/sync-awesome-skills-kokonus.sh
+
+workflow/engineering/debug-diagnose
+workflow/engineering/architecture-review
+workflow/engineering/issue-triage
+workflow/engineering/zoom-out
+workflow/engineering/to-prd
+
+persona/agriculture/agronomist
+persona/agriculture/aquaculture-expert
+persona/agriculture/plant-protection-expert
+
+persona/product/product-manager
+
+persona/software/software-architect
+persona/software/devops-engineer
+persona/software/security-engineer

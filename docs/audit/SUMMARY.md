@@ -1,4 +1,6 @@
-# Global audit — ringkasan (draft)
+# Ringkasan audit global
+
+Indeks temuan lintas fase. Detail per lapisan: [`README.md`](README.md).
 
 | Fase | Status | Catatan |
 |------|--------|---------|

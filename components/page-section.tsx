@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { pageLeadClass, sectionTitleClass } from "@/lib/ui-typography";
 import { cn } from "@/lib/utils";
 
 export function PageSection({
@@ -28,11 +29,15 @@ export function PageSection({
             : null;
 
   return (
-    <section id={id} className={cn("space-y-4", className)} aria-labelledby={id ? `${id}-title` : undefined}>
+    <section
+      id={id}
+      className={cn("min-w-0 max-w-full space-y-4", className)}
+      aria-labelledby={id ? `${id}-title` : undefined}
+    >
       {title || badgeLabel ? (
         <div className="flex flex-wrap items-baseline gap-2">
           {title ? (
-            <h2 id={id ? `${id}-title` : undefined} className="text-lg font-semibold tracking-tight">
+            <h2 id={id ? `${id}-title` : undefined} className={sectionTitleClass}>
               {title}
             </h2>
           ) : null}
@@ -43,7 +48,7 @@ export function PageSection({
           ) : null}
         </div>
       ) : null}
-      {description ? <p className="text-sm text-muted-foreground">{description}</p> : null}
+      {description ? <p className={pageLeadClass}>{description}</p> : null}
       {children}
     </section>
   );

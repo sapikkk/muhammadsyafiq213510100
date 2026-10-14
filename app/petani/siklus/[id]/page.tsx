@@ -9,20 +9,25 @@ export default function PetaniSiklusDetailPage({
   searchParams,
 }: {
   params: { id: string };
-  searchParams: { lubang?: string };
+  searchParams: { lubang?: string; rw?: string };
 }) {
   if (params.id === "baru") redirect("/petani/siklus/baru");
 
   const lubang = Number(searchParams.lubang);
-  const toast =
-    Number.isInteger(lubang) && lubang > 0
-      ? `Semai ${lubang} lubang tersimpan.`
-      : undefined;
+  let toast: string | undefined;
+  if (Number.isInteger(lubang) && lubang > 0) {
+    toast = `Semai ${lubang.toLocaleString("id-ID")} lubang tersimpan.`;
+    if (searchParams.rw === "1") {
+      toast += " Biaya rockwool ikut tercatat.";
+    } else {
+      toast += " Tanpa media rockwool (biaya rockwool nol).";
+    }
+  }
 
   return (
     <>
       <FlashToast message={toast} />
-      <SiklusDetailScreen id={Number(params.id)} />
+      <SiklusDetailScreen id={Number(params.id)} tampilkanBiayaSemai />
     </>
   );
 }

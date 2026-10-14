@@ -44,8 +44,8 @@ export function MetricCards({
     : "flex min-w-0 flex-col p-4";
 
   const valueClass = compact
-    ? "mt-0.5 text-base font-semibold tabular-nums tracking-tight text-foreground"
-    : "mt-1.5 text-lg font-semibold tabular-nums tracking-tight text-foreground sm:text-xl";
+    ? "mt-0.5 text-sm font-semibold tabular-nums tracking-tight text-foreground min-[220px]:text-base"
+    : "mt-1.5 text-base font-semibold tabular-nums tracking-tight text-foreground min-[220px]:text-lg sm:text-xl";
 
   const labelClass = compact
     ? "text-[11px] font-medium leading-tight text-muted-foreground"
@@ -59,7 +59,7 @@ export function MetricCards({
     <div
       className={cn(
         "grid gap-2",
-        n === 1 ? "grid-cols-1" : "grid-cols-2",
+        n === 1 ? "grid-cols-1" : "grid-cols-1 min-[220px]:grid-cols-2",
         "md:[grid-template-columns:repeat(var(--metric-n),minmax(0,1fr))]",
         className,
       )}

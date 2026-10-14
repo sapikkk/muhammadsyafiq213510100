@@ -13,7 +13,7 @@ export default function PetaniError({
   reset: () => void;
 }) {
   useEffect(() => {
-    notify.error("Gagal memuat halaman Petani.", error.message);
+    notify.error("Gagal memuat halaman. Silakan coba lagi.");
   }, [error]);
 
   return (

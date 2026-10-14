@@ -10,7 +10,7 @@ import {
 import { SiklusTimeline } from "@/components/siklus-timeline";
 import { DetailLayout } from "@/components/detail-layout";
 import { Badge } from "@/components/ui/badge";
-import { formatTanggal } from "@/lib/format";
+import { formatRupiah, formatTanggal } from "@/lib/format";
 import { serializeLaporanRingkas } from "@/lib/laporan-panen";
 import { labelLaporanPanenStatus } from "@/lib/laporan-panen-status";
 import { faseBerikutnya, faseLabel, isFaseProduksi, type FaseProduksi } from "@/lib/siklus-fase";
@@ -30,9 +30,12 @@ import {
 export async function SiklusDetailScreen({
   id,
   surface = "page",
+  tampilkanBiayaSemai = false,
 }: {
   id: number;
   surface?: "page" | "sheet";
+  /** Ringkas biaya benih/rockwool saat semai (alur petani). */
+  tampilkanBiayaSemai?: boolean;
 }) {
   if (!Number.isInteger(id) || id <= 0) notFound();
 
@@ -176,6 +179,24 @@ export async function SiklusDetailScreen({
               {laporan.jumlah_tidak_layak} pohon ({laporan.berat_tidak_layak_gram} g)
             </p>
           </div>
+        </PageSection>
+      ) : null}
+
+      {tampilkanBiayaSemai && siklus.biaya_langsung ? (
+        <PageSection badge="Read" title="Biaya langsung semai">
+          <ul className="space-y-1 text-sm">
+            <li>
+              Benih:{" "}
+              <strong>{formatRupiah(siklus.biaya_langsung.biaya_benih.toString())}</strong>
+            </li>
+            <li>
+              Rockwool / media:{" "}
+              <strong>{formatRupiah(siklus.biaya_langsung.biaya_rockwool.toString())}</strong>
+              {siklus.biaya_langsung.biaya_rockwool.isZero() ? (
+                <span className="text-muted-foreground"> — tidak dipakai saat semai</span>
+              ) : null}
+            </li>
+          </ul>
         </PageSection>
       ) : null}
 

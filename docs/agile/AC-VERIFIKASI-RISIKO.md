@@ -16,7 +16,7 @@ Legenda: **Hijau** = blackbox/notulensi sudah memadai · **Kuning** = sampel uji
 | US1.9 User | #10 | Owner reset sandi | PR #78 | Smoke owner pengguna (e2e ada) |
 | US3.2 Fase HP | #18 | Usability mobile | § US3.2 blackbox | **T5.1** wajib |
 
-US lain: cukup **smoke e2e** + spot-check blackbox `docs/uji-blackbox.md` kecuali PO menemukan gap.
+US lain: cukup **smoke e2e** + spot-check blackbox `docs/testing/uji-blackbox.md` kecuali PO menemukan gap.
 
 ## Checklist singkat PO (centang per sesi)
 

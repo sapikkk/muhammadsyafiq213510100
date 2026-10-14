@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id">
-      <body className={inter.className}>
+      <body className={`${inter.className} min-w-0 overflow-x-clip`}>
         <Providers>{children}</Providers>
       </body>
     </html>

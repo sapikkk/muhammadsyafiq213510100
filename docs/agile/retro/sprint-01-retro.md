@@ -15,7 +15,7 @@
 ## Apa yang berjalan baik
 
 - Fondasi Next.js, Prisma, NextAuth, RBAC, dan state global selesai dalam 2 hari kerja pertama.
-- Notulensi blackbox US1.4–1.8 konsisten di `docs/uji-blackbox.md`.
+- Notulensi blackbox US1.4–1.8 konsisten di `docs/testing/uji-blackbox.md`.
 - Branch per US + merge ke `feat/ui-redesign` memudahkan audit git.
 
 ## Hambatan

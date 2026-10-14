@@ -1,3 +1,5 @@
+import { pageLeadClass, pageTitleClass } from "@/lib/ui-typography";
+
 export function PageHeader({
   title,
   description,
@@ -6,11 +8,9 @@ export function PageHeader({
   description?: string;
 }) {
   return (
-    <header className="space-y-1">
-      <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-      {description ? (
-        <p className="text-sm text-muted-foreground">{description}</p>
-      ) : null}
+    <header className="min-w-0 space-y-1">
+      <h1 className={pageTitleClass}>{title}</h1>
+      {description ? <p className={pageLeadClass}>{description}</p> : null}
     </header>
   );
 }

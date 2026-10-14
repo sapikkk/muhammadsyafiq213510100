@@ -23,3 +23,12 @@
 [submodule "vendor/agents/apple-design-skill"]
 	path = vendor/agents/apple-design-skill
 	url = https://github.com/dickwu/apple-design-skill.git
+[submodule "vendor/agents/ponytail"]
+	path = vendor/agents/ponytail
+	url = https://github.com/DietrichGebert/ponytail.git
+[submodule "vendor/agents/caveman"]
+	path = vendor/agents/caveman
+	url = https://github.com/JuliusBrussee/caveman.git
+[submodule "vendor/agents/awesome-skills"]
+	path = vendor/agents/awesome-skills
+	url = https://github.com/theneoai/awesome-skills.git

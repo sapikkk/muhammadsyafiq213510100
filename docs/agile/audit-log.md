@@ -4,11 +4,45 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 
 ---
 
+## 2026-10-15 — Sync issue GitHub dari registry
+
+- **Actor:** PM / dokumentasi  
+- **Deliverable:** `npm run sync:github-us-issues:apply` — **52 issue** (#2–#45 US+QA, #87–#94 epic v2) title + body user story manusia  
+- **Artefak:** `scripts/sync-github-us-issues.mjs`, `docs/agile/issue-bodies/`  
+
+---
+
+## 2026-10-15 — Registry US + sprint docs v1
+
+- **Actor:** PM / dokumentasi (setuju Owner)  
+- **Deliverable:** [`us-registry.md`](./us-registry.md) (37 US + T5 + epic v2); sprint 1–5 selaras; `progress-backlog` & `sprint-backlog-agile` status go-live; `project-context` diperbarui  
+- **Belum:** humanizer PRD/blackbox (Fase 2 rencana refine)  
+
+---
+
+## 2026-10-15 — Struktur docs + panduan refine
+
+- **Actor:** PM / dokumentasi  
+- **Deliverable:** Folder `docs/produk`, `agent`, `desain`, `arsip`, `referensi`, `standards`; hub [`docs/README.md`](../README.md); gaya dokumen + rencana refine + panduan US manusia; stub redirect di path lama; hub app (`project-hub-content.ts`) path baru  
+- **Artefak:** `standards/gaya-dokumen.md`, `standards/rencana-refine-dokumen.md`, `agile/panduan-user-story.md`  
+- **Belum:** humanizer massal semua `.md` (Fase 2–5 di rencana refine)  
+
+---
+
+## 2026-10-15 — Audit commit + agile disederhanakan
+
+- **Actor:** PM / dokumentasi (permintaan Owner)  
+- **Deliverable:** Konteks greenhouse (13 Mei – 14 Agu 2025) vs aplikasi (15 Agu 2025–); audit commit `origin/main` per kategori (dev, QA, release, PM); panduan pesan commit bahasa Indonesia; teks siap salin untuk [Project #1](https://github.com/users/sapikkk/projects/1)  
+- **Artefak:** `konteks-lapangan-dan-aplikasi.md`, `commit-kategori-main.md`, `panduan-pesan-commit.md`, `ringkasan-untuk-github-project.md`, `npm run audit:commit-kategori`, `npm run sync:project-board`  
+- **Commit lama:** rewrite massal **tidak** dijalankan (butuh force push); trailer Cursor dicegah hook `.githooks/commit-msg`  
+
+---
+
 ## 2026-10-10 — UX flow + perf (v1.28.0)
 
 - **Actor:** agent  
 - **Deliverable:** `CrudPageLayout` / sidebar grup / `DataTable` sort+zebra; `lib/cached-queries.ts` (stok, KPI, siklus); laporan [`UX-FLOW-PERF-REPORT.md`](./UX-FLOW-PERF-REPORT.md)  
-- **Artefak:** `docs/ux/FLOW-NAV.md`, `docs/audit/frontend.md` (baris perf)  
+- **Artefak:** `docs/desain/FLOW-NAV.md`, `docs/audit/frontend.md` (baris perf)  
 - **Belum opsional:** viewport matrix e2e; `DataTable` arus kas/evaluasi  
 
 ---
@@ -84,7 +118,7 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 - **GitHub:** Iteration **Increment v2 · Post go-live** di Project #1; field Status/Priority/Iteration untuk #50, #81, #87–#104 via `npm run sync:project-board`  
 - **Sub-issue:** story #95–#102 di-link ke epic #87–#94  
 - **Merge v2-A.1:** PR #104 · issue #95 closed · release **v1.14.0**  
-- **Docs:** `docs/progress-backlog.md`, `docs/agile/github-field-guide.md`, `scripts/sync-project-board.mjs`  
+- **Docs:** `docs/agile/progress-backlog.md`, `docs/agile/github-field-guide.md`, `scripts/sync-project-board.mjs`  
 
 ---
 
@@ -140,7 +174,7 @@ Format: `YYYY-MM-DD HH:MM UTC+7` · actor · ringkasan · artefak
 ## 2026-10-07 — Sprint 1 selesai (inti)
 
 - US1.1–US1.8 issues #2–#9 closed  
-- Notulensi: `docs/uji-blackbox.md` US1.4–1.8
+- Notulensi: `docs/testing/uji-blackbox.md` US1.4–1.8
 
 ---
 

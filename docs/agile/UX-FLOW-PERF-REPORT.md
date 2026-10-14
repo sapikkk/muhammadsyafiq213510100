@@ -14,7 +14,7 @@
 | Tabel | `DataTable`: sort header, zebra, sticky header, page 12; `ui/table` hover |
 | Latensi | `cached-queries.ts` — dedup stok rendah, KPI owner, siklus tugas petani |
 | Layout | Badge stok rendah tanpa load inventaris penuh per navigasi |
-| Dokumentasi | `docs/ux/FLOW-NAV.md`, baris audit `docs/audit/frontend.md` |
+| Dokumentasi | `docs/desain/FLOW-NAV.md`, baris audit `docs/audit/frontend.md` |
 
 ## Belum (opsional / backlog skripsi)
 
