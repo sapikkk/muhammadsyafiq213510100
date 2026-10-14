@@ -2,7 +2,9 @@
 
 URL: https://github.com/users/sapikkk/projects/1
 
-**Deskripsi Project (PO):** salin dari [ringkasan-untuk-github-project.md](./ringkasan-untuk-github-project.md) — mencakup fase greenhouse vs aplikasi.
+**Judul board (2026-10-15):** *Kokonus Farm — backlog & sprint* · deskripsi singkat + prod URL di Project settings.
+
+**Teks panjang (PO):** [ringkasan-untuk-github-project.md](./ringkasan-untuk-github-project.md) — fase greenhouse vs aplikasi, cara baca Status/Iteration.
 
 ## Kolom
 

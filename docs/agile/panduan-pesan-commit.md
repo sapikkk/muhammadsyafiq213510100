@@ -23,6 +23,16 @@ Agar riwayat Git mudah dibaca Owner dan tim — bukan hanya developer.
 - **Kenapa** (1–2 baris), bukan daftar file.
 - Link issue: `Closes #123` jika ada.
 
+## PR besar (banyak commit di cabang)
+
+Agar `main` tetap ** satu baris = satu makna**:
+
+1. Merge lewat GitHub **Squash and merge** (bukan merge commit).
+2. Judul squash = kalimat manusia + scope: `feat(owner): …`, `docs(agile): …`.
+3. PR contoh: [#128](https://github.com/sapikkk/muhammadsyafiq213510100/pull/128) — judul squash sudah dicantumkan di deskripsi PR.
+
+Commit di cabang feature boleh bertahap; yang masuk `main` cukup **satu commit squash** per PR.
+
 ## Riwayat lama di `main`
 
 Mengubah pesan commit yang **sudah di-push** butuh `git rebase` / `filter-repo` dan **force push** — hanya PO + tim setuju.  
