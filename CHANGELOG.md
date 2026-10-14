@@ -1,3 +1,10 @@
+## [1.37.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.37.0...v1.37.1) (2026-10-14)
+
+
+### Bug Fixes
+
+* **petani:** UX layar petani dan jurnal serah terima seimbang ([e4e88e9](https://github.com/sapikkk/muhammadsyafiq213510100/commit/e4e88e95ce58b2035fdc3105ca6fa9ca70f0acc1))
+
 # [1.37.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.36.6...v1.37.0) (2026-10-14)
 
 
