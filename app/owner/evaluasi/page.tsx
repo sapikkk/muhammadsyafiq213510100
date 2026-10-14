@@ -21,10 +21,27 @@ export default async function OwnerEvaluasiPage() {
 
   return (
     <CrudPageLayout
-      financeNavRole="OWNER"
       title="Untung dan titik impas"
       list={
         <div className="space-y-6">
+          <MetricCards
+            columns={3}
+            items={[
+              {
+                label: "HPP rata-rata per kg",
+                value: formatRupiah(data.rataRata.hppPerKg),
+              },
+              {
+                label: "Margin curah per kg",
+                value: formatRupiah(data.rataRata.marginCurahPerKg),
+              },
+              {
+                label: "Lubang kosong",
+                value: `${data.kapasitas.idlePct}%`,
+                hint: `${data.kapasitas.lubangMenganggur.toLocaleString("id-ID")} lubang`,
+              },
+            ]}
+          />
           <PageSection title="Kapasitas produksi" badge="Read">
             <MonochromeProgressBar
               label="Lubang terisi"

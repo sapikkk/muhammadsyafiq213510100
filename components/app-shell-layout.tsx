@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { Suspense, useState, type ReactNode } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,13 +36,15 @@ export function AppShellLayout({
     <div className="flex h-screen w-full overflow-hidden bg-background">
       <NotifikasiFloating />
       <div className="hidden shrink-0 md:flex">
-        <AppSidebar
-          role={role}
-          userName={userName}
-          stokRendahCount={stokRendahCount}
-          notifikasiUnreadCount={notifikasiUnreadCount}
-          auditShowAllNav={auditShowAllNav}
-        />
+        <Suspense fallback={<div className="h-screen w-64 border-r bg-sidebar" aria-hidden />}>
+          <AppSidebar
+            role={role}
+            userName={userName}
+            stokRendahCount={stokRendahCount}
+            notifikasiUnreadCount={notifikasiUnreadCount}
+            auditShowAllNav={auditShowAllNav}
+          />
+        </Suspense>
       </div>
 
       <main className="flex min-w-0 flex-1 flex-col overflow-y-auto">
@@ -75,14 +77,16 @@ export function AppShellLayout({
       <Dialog open={menuOpen} onOpenChange={setMenuOpen}>
         <DialogContent className="fixed left-0 top-0 flex h-full w-[min(100%,15rem)] max-w-none translate-x-0 translate-y-0 flex-col gap-0 border-r p-0 data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left">
           <DialogTitle className="sr-only">Menu navigasi</DialogTitle>
-          <AppSidebar
-            role={role}
-            userName={userName}
-            stokRendahCount={stokRendahCount}
-            notifikasiUnreadCount={notifikasiUnreadCount}
-            auditShowAllNav={auditShowAllNav}
-            onNavigate={() => setMenuOpen(false)}
-          />
+          <Suspense fallback={null}>
+            <AppSidebar
+              role={role}
+              userName={userName}
+              stokRendahCount={stokRendahCount}
+              notifikasiUnreadCount={notifikasiUnreadCount}
+              auditShowAllNav={auditShowAllNav}
+              onNavigate={() => setMenuOpen(false)}
+            />
+          </Suspense>
         </DialogContent>
       </Dialog>
     </div>

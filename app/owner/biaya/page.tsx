@@ -28,7 +28,6 @@ export default async function OwnerBiayaPage({ searchParams }: { searchParams: S
 
   return (
     <CrudPageLayout
-      financeNavRole="OWNER"
       title="Rincian biaya"
       list={
         <div className="space-y-4">

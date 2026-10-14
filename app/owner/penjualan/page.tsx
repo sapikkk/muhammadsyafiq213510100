@@ -10,7 +10,6 @@ export default async function OwnerPenjualanPage() {
 
   return (
     <CrudPageLayout
-      financeNavRole="OWNER"
       title="Pesanan jual"
       actions={
         <EksporDaftarTombol unduhPath="/api/export/penjualan" jenisPratinjau="penjualan" />

@@ -1,5 +1,3 @@
-import type { Role } from "@/types/role";
-
 /** Satu modul dalam area keuangan (IA mirip Books / ERPNext — bukan salinan UI). */
 export type FinanceModule = {
   id: string;
@@ -7,6 +5,8 @@ export type FinanceModule = {
   href: string;
   /** Path aktif: exact atau prefix (tanpa query). */
   matchPrefixes: string[];
+  /** Query wajib cocok (mis. laporan=neraca). */
+  matchSearch?: Record<string, string>;
   hint: string;
 };
 
@@ -55,62 +55,65 @@ const adminModules: FinanceModule[] = [
   },
 ];
 
+/** Tab horizontal Owner — selaras bagian 7 sidebar (laporan keuangan). */
 const ownerModules: FinanceModule[] = [
   {
     id: "ringkasan",
     label: "Ringkasan",
     href: "/owner/keuangan",
     matchPrefixes: ["/owner/keuangan"],
-    hint: "Angka ringkas dan pintasan laporan.",
+    hint: "Angka ringkas dan pintasan.",
   },
   {
-    id: "transaksi",
-    label: "Transaksi",
+    id: "catatan",
+    label: "Catatan keuangan",
     href: "/owner/jurnal",
     matchPrefixes: ["/owner/jurnal"],
-    hint: "Daftar catatan keuangan dan koreksi.",
+    hint: "Daftar catatan dan koreksi.",
   },
   {
-    id: "penjualan",
-    label: "Penjualan",
-    href: "/owner/penjualan",
-    matchPrefixes: ["/owner/penjualan"],
-    hint: "Pesanan dan pendapatan.",
+    id: "laba-rugi",
+    label: "Laba rugi",
+    href: "/owner/laporan?laporan=laba-rugi",
+    matchPrefixes: ["/owner/laporan"],
+    matchSearch: { laporan: "laba-rugi" },
+    hint: "Pendapatan, beban, laba periode.",
   },
   {
-    id: "biaya",
-    label: "Biaya & HPP",
-    href: "/owner/biaya",
-    matchPrefixes: ["/owner/biaya"],
-    hint: "Rincian beban dan alokasi.",
+    id: "neraca",
+    label: "Neraca",
+    href: "/owner/laporan?laporan=neraca",
+    matchPrefixes: ["/owner/laporan"],
+    matchSearch: { laporan: "neraca" },
+    hint: "Aset, kewajiban, modal.",
   },
   {
-    id: "analisis",
-    label: "Analisis",
-    href: "/owner/evaluasi",
-    matchPrefixes: ["/owner/evaluasi"],
-    hint: "Untung, titik impas, HPP.",
+    id: "arus-kas",
+    label: "Arus kas",
+    href: "/owner/arus-kas",
+    matchPrefixes: ["/owner/arus-kas"],
+    hint: "Masuk dan keluar kas.",
   },
   {
-    id: "laporan",
-    label: "Laporan",
-    href: "/owner/laporan",
-    matchPrefixes: ["/owner/laporan", "/owner/arus-kas", "/owner/akun"],
-    hint: "Laba rugi, neraca, arus kas, COA.",
-  },
-  {
-    id: "prive",
-    label: "Prive",
-    href: "/owner/prive",
-    matchPrefixes: ["/owner/prive"],
-    hint: "Ambil pribadi dari kas.",
+    id: "akun",
+    label: "Daftar akun",
+    href: "/owner/akun",
+    matchPrefixes: ["/owner/akun"],
+    hint: "Bagan akun.",
   },
   {
     id: "rekening",
     label: "Rekening",
     href: "/owner/rekening",
     matchPrefixes: ["/owner/rekening"],
-    hint: "Kas tunai, bank, dan e-wallet pemilik.",
+    hint: "Kas, bank, e-wallet.",
+  },
+  {
+    id: "prive",
+    label: "Ambil pribadi",
+    href: "/owner/prive",
+    matchPrefixes: ["/owner/prive"],
+    hint: "Pencairan pribadi dari kas.",
   },
 ];
 
@@ -118,14 +121,38 @@ export function getFinanceModules(role: "ADMIN" | "OWNER"): FinanceModule[] {
   return role === "ADMIN" ? adminModules : ownerModules;
 }
 
-export function resolveFinanceModuleId(pathname: string, role: "ADMIN" | "OWNER"): string | null {
+export function resolveFinanceModuleId(
+  pathname: string,
+  role: "ADMIN" | "OWNER",
+  searchParams?: URLSearchParams | null,
+): string | null {
   const modules = getFinanceModules(role);
+
+  if (role === "OWNER" && pathname === "/owner/laporan") {
+    const j = searchParams?.get("laporan");
+    if (j === "neraca") return "neraca";
+    return "laba-rugi";
+  }
+
   for (const mod of modules) {
-    for (const prefix of mod.matchPrefixes) {
-      if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
-        return mod.id;
-      }
+    const pathOnly = mod.href.split("?")[0];
+    const onPath =
+      pathname === pathOnly || pathname.startsWith(`${pathOnly}/`);
+    if (!onPath) continue;
+
+    if (mod.matchSearch && searchParams) {
+      const ok = Object.entries(mod.matchSearch).every(
+        ([k, v]) => searchParams.get(k) === v,
+      );
+      if (ok) return mod.id;
+      continue;
     }
+
+    if (mod.matchSearch) continue;
+
+    if (mod.id === "laba-rugi" || mod.id === "neraca") continue;
+
+    return mod.id;
   }
   return null;
 }

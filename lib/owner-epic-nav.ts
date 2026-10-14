@@ -27,7 +27,7 @@ export function getOwnerEpicNavGroups(stokRendahCount: number): NavFlowGroup[] {
       items: [
         link("", "Beranda", "/owner"),
         link("", "Modul keuangan", "/owner/keuangan"),
-        link("", "Unduh laporan", "/owner/laporan"),
+        link("", "Laba rugi", "/owner/laporan?laporan=laba-rugi"),
       ],
     },
     {
@@ -37,7 +37,7 @@ export function getOwnerEpicNavGroups(stokRendahCount: number): NavFlowGroup[] {
       items: [
         link("1.1", "Data varietas", "/owner/varietas"),
         link("1.2", "Lahan & kolam", "/owner/infrastruktur"),
-        link("1.3", "Aktif / nonaktif varietas", "/owner/varietas"),
+        link("1.3", "Aktif / nonaktif varietas", "/owner/varietas?tampilan=status"),
       ],
     },
     {
@@ -61,12 +61,12 @@ export function getOwnerEpicNavGroups(stokRendahCount: number): NavFlowGroup[] {
       title: "3. Kegagalan & susut",
       hint: "Tanaman gagal atau susut",
       items: [
-        link("3.1", "Catat kegagalan", "/owner/kegagalan-susut"),
-        link("3.2", "Total susut", "/owner/kegagalan-susut"),
-        link("3.3", "Normal vs tidak normal", "/owner/kegagalan-susut"),
-        link("3.4", "Jumlah layak jual", "/owner/kegagalan-susut"),
-        link("3.5", "Tidak layak jual", "/owner/kegagalan-susut"),
-        link("3.6", "Susut per siklus", "/owner/kegagalan-susut"),
+        link("3.1", "Catat kegagalan", "/owner/kegagalan-susut?bagian=menunggu"),
+        link("3.2", "Total susut", "/owner/kegagalan-susut?bagian=total"),
+        link("3.3", "Normal vs tidak normal", "/owner/kegagalan-susut?bagian=klasifikasi"),
+        link("3.4", "Jumlah layak jual", "/owner/kegagalan-susut?bagian=layak"),
+        link("3.5", "Tidak layak jual", "/owner/kegagalan-susut?bagian=tidak-layak"),
+        link("3.6", "Susut per siklus", "/owner/kegagalan-susut?bagian=per-siklus"),
       ],
     },
     {
@@ -112,8 +112,8 @@ export function getOwnerEpicNavGroups(stokRendahCount: number): NavFlowGroup[] {
       items: [
         link("", "Modul keuangan", "/owner/keuangan"),
         link("7.1", "Daftar akun", "/owner/akun"),
-        link("7.2", "Laba rugi", "/owner/laporan"),
-        link("7.3", "Neraca", "/owner/laporan"),
+        link("7.2", "Laba rugi", "/owner/laporan?laporan=laba-rugi"),
+        link("7.3", "Neraca", "/owner/laporan?laporan=neraca"),
         link("7.4", "Arus kas", "/owner/arus-kas"),
         link("", "Catatan keuangan", "/owner/jurnal"),
         link("", "Ambil pribadi", "/owner/prive"),

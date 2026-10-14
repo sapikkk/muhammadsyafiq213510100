@@ -21,12 +21,17 @@ import {
 export const FINANCE_MODULE_ICONS: Record<string, LucideIcon> = {
   ringkasan: LayoutGrid,
   transaksi: Banknote,
+  catatan: Banknote,
   penjualan: ShoppingCart,
   biaya: Coins,
   "buku-besar": BookOpen,
   "tutup-buku": Calculator,
   analisis: TrendingUp,
   laporan: FileDown,
+  "laba-rugi": LineChart,
+  neraca: BookOpen,
+  "arus-kas": Landmark,
+  akun: BookOpen,
   prive: PiggyBank,
   rekening: Landmark,
 };

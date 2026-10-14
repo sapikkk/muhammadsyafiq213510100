@@ -1,15 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { getFinanceModules, resolveFinanceModuleId, type FinanceModule } from "@/lib/finance-modules";
 import { financeModuleIcon } from "@/lib/nav-icons";
 
 export function FinanceModuleNav({ role }: { role: "ADMIN" | "OWNER" }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const modules = getFinanceModules(role);
-  const activeId = resolveFinanceModuleId(pathname, role);
+  const activeId = resolveFinanceModuleId(pathname, role, searchParams);
 
   return (
     <nav

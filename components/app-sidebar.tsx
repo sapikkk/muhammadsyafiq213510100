@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { ChevronDown, ChevronRight, LeafyGreen, LogOut, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -28,19 +28,35 @@ function getAuditNavItems(stokRendahCount: number): NavItem[] {
   return items;
 }
 
-function isNavActive(pathname: string, href: string) {
-  if (href === pathname) return true;
-  if (href === "/admin" || href === "/owner" || href === "/petani") {
-    return pathname === href;
+function isNavActive(pathname: string, href: string, searchParams: URLSearchParams) {
+  const [path, query] = href.split("?");
+  if (path === "/admin" || path === "/owner" || path === "/petani") {
+    if (pathname !== path) return false;
+    return !query;
   }
-  return pathname.startsWith(`${href}/`) || pathname === href;
+  const pathOk = pathname === path || pathname.startsWith(`${path}/`);
+  if (!pathOk) return false;
+  if (!query) {
+    return pathname === path;
+  }
+  const expected = new URLSearchParams(query);
+  let match = true;
+  expected.forEach((v, k) => {
+    if (searchParams.get(k) !== v) match = false;
+  });
+  if (!match) return false;
+  return true;
 }
 
-/** Satu highlight — item pertama yang cocok dengan path (hindari semua sub-item hitam). */
-function pickActiveNavKey(pathname: string, groups: NavFlowGroup[]): string | null {
+/** Satu highlight — cocokkan path + query (epic 3.x / 7.x). */
+function pickActiveNavKey(
+  pathname: string,
+  searchParams: URLSearchParams,
+  groups: NavFlowGroup[],
+): string | null {
   for (const group of groups) {
     for (const item of group.items) {
-      if (isNavActive(pathname, item.href)) {
+      if (isNavActive(pathname, item.href, searchParams)) {
         return item.navKey ?? `${item.href}::${item.label}`;
       }
     }
@@ -64,10 +80,11 @@ export function AppSidebar({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const groups = auditShowAllNav ? null : getNavFlowGroups(role, stokRendahCount);
   const flatAudit = auditShowAllNav ? getAuditNavItems(stokRendahCount) : null;
   const activeNavKey =
-    groups && !flatAudit ? pickActiveNavKey(pathname, groups) : null;
+    groups && !flatAudit ? pickActiveNavKey(pathname, searchParams, groups) : null;
 
   return (
     <aside className="flex h-screen w-64 flex-col border-r bg-sidebar">
@@ -87,7 +104,7 @@ export function AppSidebar({
               <NavLink
                 key={item.href}
                 item={item}
-                active={isNavActive(pathname, item.href)}
+                active={isNavActive(pathname, item.href, searchParams)}
                 onNavigate={onNavigate}
               />
             ))}
@@ -150,7 +167,10 @@ function NavFlowGroup({
   activeNavKey: string | null;
   onNavigate?: () => void;
 }) {
-  const hasActive = group.items.some((item) => isNavActive(pathname, item.href));
+  const searchParams = useSearchParams();
+  const hasActive = group.items.some((item) =>
+    isNavActive(pathname, item.href, searchParams),
+  );
   const [open, setOpen] = useState(hasActive);
 
   useEffect(() => {
@@ -184,7 +204,7 @@ function NavFlowGroup({
                 item={item}
                 active={activeNavKey === key}
                 muted={
-                  activeNavKey !== key && isNavActive(pathname, item.href)
+                  activeNavKey !== key && isNavActive(pathname, item.href, searchParams)
                 }
                 onNavigate={onNavigate}
               />
