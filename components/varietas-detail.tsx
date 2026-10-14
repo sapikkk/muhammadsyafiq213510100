@@ -49,7 +49,11 @@ export async function VarietasDetail({
       description={description}
       actions={writable ? <VarietasDetailActions row={serialized} /> : null}
     >
-      <PageSection title={forPetani ? "Info tanam" : "Parameter"} badge="Read">
+      <PageSection
+        title={forPetani ? "Info tanam" : "Parameter"}
+        badge="Read"
+        hidePermissionBadge={forPetani}
+      >
         <dl className="grid gap-3 text-sm sm:grid-cols-2">
           {forPetani ? null : (
             <Item label="Harga benih/gram" value={formatRupiah(serialized.hargaBenihPerGram)} />

@@ -12,6 +12,7 @@ export default async function PetaniVarietasPage() {
   return (
     <CrudPageLayout
       title="Varietas"
+      hidePermissionBadges
       intro={<PetaniModulIntro modul="varietas" />}
       actions={
         <EksporDaftarTombol unduhPath="/api/export/varietas" jenisPratinjau="varietas" />

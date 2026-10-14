@@ -1,4 +1,8 @@
 import type { ReactNode } from "react";
+import {
+  labelPermissionSectionBadge,
+  type PermissionSectionBadge,
+} from "@/lib/permission-section-badge";
 import { pageLeadClass, sectionTitleClass } from "@/lib/ui-typography";
 import { cn } from "@/lib/utils";
 
@@ -6,27 +10,21 @@ export function PageSection({
   title,
   description,
   badge,
+  hidePermissionBadge,
   children,
   className,
   id,
 }: {
   title?: string;
   description?: string;
-  badge?: "Read" | "Create" | "Update" | "Delete";
+  badge?: PermissionSectionBadge;
+  /** Sembunyikan badge izin (alur petani — tanpa jargon RBAC). */
+  hidePermissionBadge?: boolean;
   children: ReactNode;
   className?: string;
   id?: string;
 }) {
-  const badgeLabel =
-    badge === "Create"
-      ? "Buat"
-      : badge === "Update"
-        ? "Ubah"
-        : badge === "Delete"
-          ? "Hapus"
-          : badge === "Read"
-            ? "Lihat"
-            : null;
+  const badgeLabel = labelPermissionSectionBadge(badge, Boolean(hidePermissionBadge));
 
   return (
     <section

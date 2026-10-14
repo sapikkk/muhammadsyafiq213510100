@@ -20,9 +20,10 @@ export default async function PetaniSiklusPage() {
   return (
     <CrudPageLayout
       title="Siklus tanam"
+      hidePermissionBadges
       intro={<PetaniModulIntro modul="siklus" />}
       leading={
-        <PageSection title="Ringkasan fase" badge="Read">
+        <PageSection title="Ringkasan fase" hidePermissionBadge>
           <ProduksiRingkasanPanel data={ringkasan} showKapasitasBar={false} />
         </PageSection>
       }

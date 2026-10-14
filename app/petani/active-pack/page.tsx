@@ -26,6 +26,7 @@ export default async function PetaniActivePackPage() {
   return (
     <CrudPageLayout
       title="Paket siap pakai"
+      hidePermissionBadges
       intro={<PetaniModulIntro modul="active-pack" />}
       actions={
         <div className="flex flex-wrap gap-2">

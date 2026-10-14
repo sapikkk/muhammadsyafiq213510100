@@ -36,6 +36,7 @@ export function MonitorKolamForm({
         name="ppm"
         value={ppm}
         onChange={setPpm}
+        compactOnNarrow
         decimals={0}
         min={0}
         max={5000}
@@ -56,6 +57,7 @@ export function MonitorKolamForm({
         name="ph"
         value={ph}
         onChange={setPh}
+        compactOnNarrow
         decimals={2}
         min={0}
         max={14}
@@ -76,6 +78,7 @@ export function MonitorKolamForm({
         name="suhu"
         value={suhu}
         onChange={setSuhu}
+        compactOnNarrow
         decimals={1}
         min={0}
         max={50}

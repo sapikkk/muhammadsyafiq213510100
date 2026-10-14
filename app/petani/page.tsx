@@ -164,6 +164,7 @@ export default async function PetaniPage() {
 
         <BentoSlot span={6}>
           <DashboardMonitorKolamSection
+            hidePermissionBadge
             totalLogs={monitor.totalLogs}
             lahan={monitor.lahan}
             greenhouse={monitor.greenhouse}

@@ -22,6 +22,7 @@ export function CrudPageLayout({
   intro,
   leading,
   financeNavRole,
+  hidePermissionBadges,
 }: {
   title: string;
   description?: string;
@@ -44,6 +45,8 @@ export function CrudPageLayout({
   createTitle?: string;
   createDescription?: string;
   extra?: ReactNode;
+  /** Tanpa badge Read/Create di section (halaman petani). */
+  hidePermissionBadges?: boolean;
 }) {
   return (
     <div className={cn("flex flex-col gap-4 min-[220px]:gap-6", pageContentClass)}>
@@ -56,12 +59,24 @@ export function CrudPageLayout({
       {intro}
       {leading}
       {list ? (
-        <PageSection title={listTitle} description={listDescription} badge="Read" id="crud-list">
+        <PageSection
+          title={listTitle}
+          description={listDescription}
+          badge="Read"
+          hidePermissionBadge={hidePermissionBadges}
+          id="crud-list"
+        >
           {list}
         </PageSection>
       ) : null}
       {create ? (
-        <PageSection title={createTitle} description={createDescription} badge="Create" id="crud-create">
+        <PageSection
+          title={createTitle}
+          description={createDescription}
+          badge="Create"
+          hidePermissionBadge={hidePermissionBadges}
+          id="crud-create"
+        >
           {create}
         </PageSection>
       ) : null}

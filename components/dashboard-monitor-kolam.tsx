@@ -47,7 +47,7 @@ function buatKolomLog(rows: MonitorLogBaris[]): ColumnDef<MonitorLogBaris>[] {
 
   return [
     { accessorKey: "waktuLabel", header: "Waktu" },
-    { accessorKey: "greenhouse", header: "Greenhouse" },
+    { accessorKey: "greenhouse", header: "Rumah kaca" },
     { accessorKey: "kolam", header: "Kolam" },
     { accessorKey: "siklusLabel", header: "Siklus tanam" },
     {
@@ -90,7 +90,7 @@ function buatKolomAgregat(
 
   return [
     { accessorKey: "periodeLabel", header: periodeJudul },
-    { accessorKey: "greenhouse", header: "Greenhouse" },
+    { accessorKey: "greenhouse", header: "Rumah kaca" },
     { accessorKey: "kolam", header: "Kolam" },
     {
       accessorKey: "jumlah",
@@ -364,7 +364,7 @@ export function DashboardMonitorKolam({
           </select>
         </label>
         <label className="space-y-1 text-sm">
-          <span className="text-muted-foreground">Greenhouse</span>
+          <span className="text-muted-foreground">Rumah kaca</span>
           <select
             className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
             value={greenhouseId}

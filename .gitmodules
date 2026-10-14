@@ -32,3 +32,9 @@
 [submodule "vendor/agents/awesome-skills"]
 	path = vendor/agents/awesome-skills
 	url = https://github.com/theneoai/awesome-skills.git
+[submodule "vendor/agents/founder-skill"]
+	path = vendor/agents/founder-skill
+	url = https://github.com/Jakeschincariol/founder-skill.git
+[submodule "vendor/agents/openmaic"]
+	path = vendor/agents/openmaic
+	url = https://github.com/THU-MAIC/OpenMAIC.git

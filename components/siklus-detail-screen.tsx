@@ -145,7 +145,7 @@ export async function SiklusDetailScreen({
         </p>
       ) : null}
 
-      <PageSection badge="Read" title="Linimasa">
+      <PageSection title="Linimasa" hidePermissionBadge>
         <SiklusTimeline steps={timeline} />
         {logs.length > 0 ? (
           <div className="mt-6 border-t pt-4">
@@ -168,7 +168,7 @@ export async function SiklusDetailScreen({
       </PageSection>
 
       {laporan ? (
-        <PageSection badge="Read">
+        <PageSection hidePermissionBadge>
           <div className="space-y-2 text-sm">
             <p>
               Status: <strong>{labelLaporanPanenStatus(laporan.status)}</strong> ·{" "}
@@ -183,7 +183,7 @@ export async function SiklusDetailScreen({
       ) : null}
 
       {tampilkanBiayaSemai && siklus.biaya_langsung ? (
-        <PageSection badge="Read" title="Biaya langsung semai">
+        <PageSection title="Biaya langsung semai" hidePermissionBadge>
           <ul className="space-y-1 text-sm">
             <li>
               Benih:{" "}

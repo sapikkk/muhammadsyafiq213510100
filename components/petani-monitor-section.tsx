@@ -142,7 +142,7 @@ export function PetaniMonitorSection({
           </select>
         </label>
         <label className="space-y-1 text-sm">
-          <span className="text-muted-foreground">Greenhouse</span>
+          <span className="text-muted-foreground">Rumah kaca</span>
           <select
             className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
             value={greenhouseId}
@@ -192,22 +192,22 @@ export function PetaniMonitorSection({
         <label className="space-y-1 text-sm">
           <span className="text-muted-foreground">pH min – max</span>
           <div className="flex gap-2">
-            <Input className="h-11" placeholder="Min" value={phMin} onChange={(e) => setPhMin(e.target.value)} />
-            <Input className="h-11" placeholder="Max" value={phMax} onChange={(e) => setPhMax(e.target.value)} />
+            <Input className="h-11" placeholder="Terendah" value={phMin} onChange={(e) => setPhMin(e.target.value)} />
+            <Input className="h-11" placeholder="Tertinggi" value={phMax} onChange={(e) => setPhMax(e.target.value)} />
           </div>
         </label>
         <label className="space-y-1 text-sm">
           <span className="text-muted-foreground">PPM min – max</span>
           <div className="flex gap-2">
-            <Input className="h-11" placeholder="Min" value={ppmMin} onChange={(e) => setPpmMin(e.target.value)} />
-            <Input className="h-11" placeholder="Max" value={ppmMax} onChange={(e) => setPpmMax(e.target.value)} />
+            <Input className="h-11" placeholder="Terendah" value={ppmMin} onChange={(e) => setPpmMin(e.target.value)} />
+            <Input className="h-11" placeholder="Tertinggi" value={ppmMax} onChange={(e) => setPpmMax(e.target.value)} />
           </div>
         </label>
         <label className="space-y-1 text-sm sm:col-span-2">
           <span className="text-muted-foreground">Suhu (°C) min – max</span>
           <div className="flex gap-2">
-            <Input className="h-11" placeholder="Min" value={suhuMin} onChange={(e) => setSuhuMin(e.target.value)} />
-            <Input className="h-11" placeholder="Max" value={suhuMax} onChange={(e) => setSuhuMax(e.target.value)} />
+            <Input className="h-11" placeholder="Terendah" value={suhuMin} onChange={(e) => setSuhuMin(e.target.value)} />
+            <Input className="h-11" placeholder="Tertinggi" value={suhuMax} onChange={(e) => setSuhuMax(e.target.value)} />
           </div>
         </label>
       </div>

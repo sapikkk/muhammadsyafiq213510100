@@ -11,6 +11,7 @@ export function DashboardMonitorKolamSection({
   defaultTglAwal,
   defaultTglAkhir,
   emptyAction,
+  hidePermissionBadge,
 }: {
   totalLogs: number;
   lahan: MonitorFilterOption[];
@@ -20,9 +21,10 @@ export function DashboardMonitorKolamSection({
   defaultTglAwal: string;
   defaultTglAkhir: string;
   emptyAction: { message: string; actionLabel: string; href: string };
+  hidePermissionBadge?: boolean;
 }) {
   return (
-    <BentoSection title="Monitor kolam" badge="Read">
+    <BentoSection title="Monitor kolam" badge="Read" hidePermissionBadge={hidePermissionBadge}>
       <DashboardMonitorKolam
         totalLogs={totalLogs}
         lahan={lahan}

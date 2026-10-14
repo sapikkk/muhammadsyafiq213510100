@@ -136,7 +136,7 @@ export function SiklusDaftarPetani({ rows }: { rows: SiklusBarisPetani[] }) {
       ) : null}
       <SiklusDaftar rows={filtered} />
       <Dialog open={monitorOpen} onOpenChange={setMonitorOpen}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Monitor kolam hari ini</DialogTitle>
           </DialogHeader>

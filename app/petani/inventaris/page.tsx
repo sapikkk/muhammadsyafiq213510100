@@ -12,6 +12,7 @@ export default async function PetaniInventarisPage() {
   return (
     <CrudPageLayout
       title="Stok barang"
+      hidePermissionBadges
       intro={<PetaniModulIntro modul="inventaris" />}
       actions={
         <EksporDaftarTombol unduhPath="/api/export/inventaris" jenisPratinjau="inventaris" />

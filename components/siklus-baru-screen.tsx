@@ -19,7 +19,7 @@ export async function SiklusBaruScreen({
         surface={surface}
         title="Mulai semai baru"
       >
-        <PageSection badge="Create" title="Data semai">
+        <PageSection title="Data semai" badge="Create" hidePermissionBadge>
           <SiklusForm
             varietas={varietas}
             kolam={kolam}

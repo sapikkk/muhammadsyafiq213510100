@@ -9,6 +9,7 @@ Log dan laporan review keamanan, RBAC, performa, dan UI. Mulai dari inventaris b
 | Performa | [`perf-before-after.md`](perf-before-after.md) |
 | Penutup | [`SUMMARY.md`](SUMMARY.md), [`07-verification.md`](07-verification.md), [`MERGE-READINESS.md`](MERGE-READINESS.md) |
 | UI responsif & tipografi | [`responsive-typography-2026-10-15.md`](responsive-typography-2026-10-15.md) |
+| Halaman Petani (PEKERJA) | [`petani-pages-2026-10-15.md`](petani-pages-2026-10-15.md) |
 | UI 91 halaman (HIG) | [`apple-design-inventaris-91-halaman.md`](apple-design-inventaris-91-halaman.md) |
 
 **Format temuan:** [`../standards/format-temuan-audit.md`](../standards/format-temuan-audit.md)

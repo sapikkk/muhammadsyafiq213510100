@@ -53,7 +53,11 @@ export async function InventarisDetail({
       }
     >
       <DetailKodeStrip label="Kode barang" kode={serialized.kode} />
-      <PageSection title="Riwayat pergerakan" badge="Read">
+      <PageSection
+        title="Riwayat pergerakan"
+        badge="Read"
+        hidePermissionBadge={writableMode === "petani"}
+      >
         <InventarisRiwayat rows={riwayat.map(serializePergerakan)} hideItemColumn />
       </PageSection>
       {writableMode === "petani" ? null : (

@@ -12,6 +12,7 @@ export default async function PetaniPengirimanPage() {
   return (
     <CrudPageLayout
       title="Pengiriman"
+      hidePermissionBadges
       intro={<PetaniModulIntro modul="pengiriman" />}
       list={<SalesOrderDaftar rows={orders.map(serializeSalesOrder)} mode="pengiriman" />}
       listTitle="Pesanan jual aktif"

@@ -12,6 +12,7 @@ export default async function PetaniStokRendahPage() {
   return (
     <CrudPageLayout
       title="Stok rendah"
+      hidePermissionBadges
       intro={<PetaniModulIntro modul="stok-rendah" />}
       actions={
         <EksporDaftarTombol unduhPath="/api/export/stok-rendah" jenisPratinjau="stok-rendah" />

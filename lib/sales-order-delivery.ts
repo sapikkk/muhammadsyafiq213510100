@@ -11,6 +11,7 @@ import {
   splitPenerimaanPenjualan,
 } from "@/lib/sales-order-penerimaan";
 import { SalesOrderError, type JenisSo } from "@/lib/sales-order";
+import { selaraskanPendapatanJurnal } from "@/lib/sales-order-jurnal-pendapatan";
 
 export { parseUangDiterimaDeliver, splitPenerimaanPenjualan } from "@/lib/sales-order-penerimaan";
 
@@ -109,10 +110,17 @@ async function createJurnalPenjualanPending(
     cogsTotal = cogsTotal.add(await cogsForBaris(tx, line));
   }
 
-  pendapatanCurah = round2(pendapatanCurah);
-  pendapatanPack = round2(pendapatanPack);
   cogsTotal = round2(cogsTotal);
   const total = round2(so.total);
+  const selaras = selaraskanPendapatanJurnal(total, pendapatanCurah, pendapatanPack);
+  pendapatanCurah = selaras.curah;
+  pendapatanPack = selaras.pack;
+  if (pendapatanCurah.lt(0) || pendapatanPack.lt(0)) {
+    throw new SalesOrderError(
+      `Total pesanan (${total}) tidak cocok dengan baris jual — hubungi admin.`,
+      500,
+    );
+  }
 
   type Baris = { akunId: number; debit: Prisma.Decimal; kredit: Prisma.Decimal };
   const baris: Baris[] = [];
@@ -149,7 +157,11 @@ async function createJurnalPenjualanPending(
   const totalDebit = baris.reduce((s, b) => s.add(b.debit), nol);
   const totalKredit = baris.reduce((s, b) => s.add(b.kredit), nol);
   if (!totalDebit.eq(totalKredit)) {
-    throw new SalesOrderError("Jurnal penjualan tidak seimbang — hubungi admin.", 500);
+    const selisih = round2(totalDebit.sub(totalKredit));
+    throw new SalesOrderError(
+      `Jurnal penjualan tidak seimbang (selisih Rp ${selisih.abs().toFixed(2)}) — hubungi admin.`,
+      500,
+    );
   }
 
   const keterangan = `Penjualan ${so.nomor_so}`.slice(0, 255);

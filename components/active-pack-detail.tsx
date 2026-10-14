@@ -63,7 +63,11 @@ export async function ActivePackDetail({
         <DetailKodeStrip label="Kode paket" kode={serialized.kode} />
         <DetailKodeStrip label="Kode barang" kode={serialized.item.kode} />
       </div>
-      <PageSection title="Ringkasan biaya" badge="Read">
+      <PageSection
+        title="Ringkasan biaya"
+        badge="Read"
+        hidePermissionBadge={writableMode === "petani"}
+      >
         <dl className="grid gap-3 text-sm sm:grid-cols-2">
           <Item label="Harga pack" value={formatRupiah(serialized.hargaPack)} />
           <Item label="Biaya per unit" value={formatRupiah(serialized.biayaPerUnit)} />

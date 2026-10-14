@@ -58,7 +58,7 @@ export async function SalesOrderDetailLayout({
         <SalesOrderDetailActions row={so} mode={mode} rekeningOptions={rekeningOptions} />
       }
     >
-      <PageSection title="Barang" badge="Read">
+      <PageSection title="Barang" badge="Read" hidePermissionBadge={mode === "pengiriman"}>
         <SalesOrderDetail row={so} mode={mode} />
       </PageSection>
     </DetailLayout>

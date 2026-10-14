@@ -1,5 +1,9 @@
 import type { ReactNode } from "react";
 import { Card } from "@/components/ui/card";
+import {
+  labelPermissionSectionBadge,
+  type PermissionSectionBadge,
+} from "@/lib/permission-section-badge";
 import { cn } from "@/lib/utils";
 
 /** Grid bento 6 kolom (lg+), 2 kolom di layar kecil — dipakai di semua beranda peran. */
@@ -57,26 +61,19 @@ export function BentoSlot({
 export function BentoSection({
   title,
   badge,
+  hidePermissionBadge,
   children,
   className,
   id,
 }: {
   title?: string;
-  badge?: "Read" | "Create" | "Update" | "Delete";
+  badge?: PermissionSectionBadge;
+  hidePermissionBadge?: boolean;
   children: ReactNode;
   className?: string;
   id?: string;
 }) {
-  const badgeLabel =
-    badge === "Create"
-      ? "Buat"
-      : badge === "Update"
-        ? "Ubah"
-        : badge === "Delete"
-          ? "Hapus"
-          : badge === "Read"
-            ? "Lihat"
-            : null;
+  const badgeLabel = labelPermissionSectionBadge(badge, Boolean(hidePermissionBadge));
 
   return (
     <Card id={id} className={cn("flex h-full min-w-0 flex-col gap-3 p-3 min-[220px]:gap-4 min-[220px]:p-5", className)}>
