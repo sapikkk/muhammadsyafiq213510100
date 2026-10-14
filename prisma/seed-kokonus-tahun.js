@@ -88,6 +88,7 @@ async function wipeFlowData() {
   const ids = siklus.map((s) => s.id);
   if (!ids.length) return 0;
 
+  await prisma.penjualan.deleteMany({ where: { siklus_id: { in: ids } } });
   await prisma.hPP.deleteMany({ where: { siklus_id: { in: ids } } });
   await prisma.laporan_Panen.deleteMany({ where: { siklus_id: { in: ids } } });
   await prisma.log_Kegagalan.deleteMany({ where: { siklus_id: { in: ids } } });
