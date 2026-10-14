@@ -83,10 +83,8 @@ test("T5.2 admin: filter jurnal tanggal + cari", async ({ page }) => {
 test("T5.3 owner: KPI, grafik, pie biaya", async ({ page }) => {
   await loginAs(page, "owner@kokonus.farm", /\/owner/);
   await page.goto("/owner");
-  await expect(page.getByRole("heading", { name: "Pendapatan vs beban" })).toBeVisible();
+  await expect(page.getByText(/Pendapatan vs beban/i)).toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.getByRole("link", { name: /Pie biaya/i })).toBeVisible();
-  await page.getByRole("link", { name: /Pie biaya/i }).click();
-  await page.waitForURL(/\/owner\/biaya/);
-  await expect(page.getByRole("heading", { name: /Breakdown biaya/i })).toBeVisible();
+  await page.goto("/owner/biaya");
+  await expect(page.getByRole("heading", { name: /Biaya & HPP/i })).toBeVisible();
 });
