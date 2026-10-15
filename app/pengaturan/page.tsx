@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { AccountSettings } from "@/components/account-settings";
+import { UiThemeSettings } from "@/components/ui-theme-settings";
 import { NotifikasiSection } from "@/components/notifikasi-section";
 import { OwnerUserCreateSheet, OwnerUserDaftar } from "@/components/owner-user-panel";
 import { PageHeaderRow } from "@/components/page-header-row";
@@ -42,6 +43,7 @@ export default async function PengaturanPage({ searchParams }: { searchParams: S
 
       {bagian === "profil" ? (
         <div className="flex flex-col gap-6">
+          <UiThemeSettings />
           {userId ? <AccountSettings nama={nama} /> : null}
           <RoleMatrix />
         </div>
