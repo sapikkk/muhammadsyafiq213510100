@@ -1,0 +1,48 @@
+/**
+ * Contoh tema Lime → variabel shadcn (Tailwind v3).
+ * Sumber referensi: https://github.com/arla6ka/skills/tree/main/systems/lime
+ * Aktif saat html[data-ui-theme="lime"].
+ */
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap");
+
+html[data-ui-theme="lime"] {
+  --background: 40 20% 98%;
+  --foreground: 60 6% 5%;
+  --card: 0 0% 100%;
+  --card-foreground: 60 6% 5%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 60 6% 5%;
+  --primary: 64 88% 54%;
+  --primary-foreground: 60 6% 5%;
+  --secondary: 45 8% 93%;
+  --secondary-foreground: 60 6% 5%;
+  --muted: 45 8% 96%;
+  --muted-foreground: 50 5% 40%;
+  --accent: 64 80% 88%;
+  --accent-foreground: 60 6% 5%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 45 8% 89%;
+  --input: 45 8% 89%;
+  --ring: 68 100% 26%;
+  --radius: 0.625rem;
+  --sidebar-background: 45 8% 96%;
+  --sidebar-foreground: 50 5% 30%;
+  --sidebar-primary: 64 88% 54%;
+  --sidebar-primary-foreground: 60 6% 5%;
+  --sidebar-accent: 45 8% 93%;
+  --sidebar-accent-foreground: 60 6% 5%;
+  --sidebar-border: 45 8% 89%;
+  --sidebar-ring: 68 100% 26%;
+}
+
+html[data-ui-theme="lime"] body {
+  font-family: "Hanken Grotesk", var(--font-inter-fallback, ui-sans-serif), system-ui, sans-serif;
+}
+
+html[data-ui-theme="lime"] .shadow-sm,
+html[data-ui-theme="lime"] [data-slot="card"] {
+  box-shadow:
+    0 1px 2px rgb(40 36 20 / 0.06),
+    0 1px 1px rgb(40 36 20 / 0.04);
+}

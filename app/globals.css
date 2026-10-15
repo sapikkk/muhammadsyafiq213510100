@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  /* Wireframe lo-fi (default): monokrom, radius 0. Tema Lime: lihat app/styles/ui-theme-lime.css */
+  :root,
+  html[data-ui-theme="wireframe"] {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
