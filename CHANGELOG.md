@@ -1,3 +1,10 @@
+# [1.39.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.38.0...v1.39.0) (2026-10-15)
+
+
+### Features
+
+* **ui:** toggle preview Lime vs wireframe lo-fi ([#131](https://github.com/sapikkk/muhammadsyafiq213510100/issues/131)) ([eb5d878](https://github.com/sapikkk/muhammadsyafiq213510100/commit/eb5d8782c6e27e09443122ade5c92eeed5d741e0))
+
 # [1.38.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.37.2...v1.38.0) (2026-10-15)
 
 
