@@ -59,7 +59,9 @@ export default async function AdminPage() {
       <PageHeaderRow title="Beranda" />
       <DashboardBento>
         <BentoSlot span={6}>
-          <CuacaWidget />
+          <BentoSection title="Cuaca" className="max-sm:p-3">
+            <CuacaWidget />
+          </BentoSection>
         </BentoSlot>
 
         <BentoSlot span={6}>

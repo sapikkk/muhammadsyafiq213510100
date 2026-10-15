@@ -89,7 +89,7 @@ export default async function PetaniPage() {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3 max-sm:gap-2 sm:gap-4">
       <PageHeaderRow
         title="Beranda"
         actions={
@@ -100,26 +100,11 @@ export default async function PetaniPage() {
           </Button>
         }
       />
-      <DashboardBento>
-        <BentoSlot span={6}>
-          <PetaniAlurPanel tugasUtama={tugasUtama} />
-        </BentoSlot>
-
-        <BentoSlot span={6}>
-          {stokRendah.length > 0 ? (
-            <InventarisAlertBanner items={stokRendah} detailHref="/petani/stok-rendah" />
-          ) : (
-            <DashboardBentoEmpty
-              message="Tidak ada stok di bawah minimum."
-              actionLabel="Cek stok barang"
-              href="/petani/inventaris"
-            />
-          )}
-        </BentoSlot>
-
-        <BentoSlot span={6}>
-          <BentoSection title="Ringkasan singkat">
+      <DashboardBento className="max-sm:gap-1.5">
+        <BentoSlot span={6} className="order-1 lg:order-none">
+          <BentoSection title="Ringkasan singkat" className="max-sm:p-3">
             <MetricCards
+              variant="compact"
               columns={2}
               items={[
                 metricTugas,
@@ -131,12 +116,30 @@ export default async function PetaniPage() {
           </BentoSection>
         </BentoSlot>
 
-        <BentoSlot span={6}>
-          <CuacaWidget />
+        <BentoSlot span={6} className="order-2 lg:order-none">
+          <PetaniAlurPanel tugasUtama={tugasUtama} />
         </BentoSlot>
 
-        <BentoSlot span={6}>
-          <BentoSection title="Tugas dan histori" id="tugas-hari-ini">
+        <BentoSlot span={6} className="order-3 lg:order-none">
+          {stokRendah.length > 0 ? (
+            <InventarisAlertBanner items={stokRendah} detailHref="/petani/stok-rendah" />
+          ) : (
+            <DashboardBentoEmpty
+              message="Tidak ada stok di bawah minimum."
+              actionLabel="Cek stok barang"
+              href="/petani/inventaris"
+            />
+          )}
+        </BentoSlot>
+
+        <BentoSlot span={6} className="order-4 lg:order-none">
+          <BentoSection title="Cuaca" className="max-sm:p-3">
+            <CuacaWidget />
+          </BentoSection>
+        </BentoSlot>
+
+        <BentoSlot span={6} className="order-5 lg:order-none">
+          <BentoSection title="Tugas dan histori" id="tugas-hari-ini" className="max-sm:p-3">
             {tugas.length === 0 && histori.length === 0 ? (
               <DashboardBentoEmpty
                 message="Belum ada tugas. Ikuti urutan kerja di atas."
@@ -152,8 +155,8 @@ export default async function PetaniPage() {
           </BentoSection>
         </BentoSlot>
 
-        <BentoSlot span={6}>
-          <BentoSection title="Tanam dan kolam">
+        <BentoSlot span={6} className="order-6 lg:order-none">
+          <BentoSection title="Tanam dan kolam" className="max-sm:p-3">
             <ProduksiRingkasanPanel
               data={produksi}
               kolamSetupHref="/petani/siklus"
@@ -162,7 +165,7 @@ export default async function PetaniPage() {
           </BentoSection>
         </BentoSlot>
 
-        <BentoSlot span={6}>
+        <BentoSlot span={6} className="order-7 lg:order-none">
           <DashboardMonitorKolamSection
             hidePermissionBadge
             totalLogs={monitor.totalLogs}
