@@ -18,12 +18,71 @@ function CuacaKosong() {
   );
 }
 
-/** Cuaca kebun: ringkas di HP (satu baris prakiraan), grid penuh di layar lebar. */
-export async function CuacaWidget() {
+/** Cuaca kebun: `beranda` = muat satu layar bento; default = prakiraan 7 hari penuh. */
+export async function CuacaWidget({ variant = "default" }: { variant?: "default" | "beranda" } = {}) {
   const data = await fetchCuacaDashboard();
-  if (!data) return <CuacaKosong />;
+  if (!data) {
+    if (variant === "beranda") {
+      return (
+        <DashboardBentoEmpty
+          message="Cuaca belum tersedia."
+          actionLabel="Pengaturan"
+          href="/pengaturan"
+        />
+      );
+    }
+    return <CuacaKosong />;
+  }
 
   const { label, saatIni, tujuhHari } = data;
+  const prakiraan = variant === "beranda" ? tujuhHari.slice(0, 4) : tujuhHari;
+
+  if (variant === "beranda") {
+    return (
+      <div aria-label="Cuaca hari ini" className="flex min-h-0 flex-col gap-2">
+        <div className="flex items-center gap-2">
+          <CuacaIkon kode={saatIni.kodeCuaca} className="h-8 w-8 shrink-0" />
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[10px] text-muted-foreground">{label}</p>
+            <p className="text-xl font-semibold tabular-nums leading-none">{saatIni.suhuC}°C</p>
+            <p className="truncate text-[11px] text-muted-foreground">{saatIni.deskripsi}</p>
+          </div>
+          <div className="flex shrink-0 flex-col gap-1 text-right text-[10px] text-muted-foreground">
+            <span className="inline-flex items-center justify-end gap-0.5 tabular-nums">
+              <Droplets className="h-3 w-3" aria-hidden />
+              {saatIni.kelembapan != null ? `${saatIni.kelembapan}%` : "—"}
+            </span>
+            <span className="inline-flex items-center justify-end gap-0.5 tabular-nums">
+              <Wind className="h-3 w-3" aria-hidden />
+              {saatIni.anginKmh != null ? `${saatIni.anginKmh} km/j` : "—"}
+            </span>
+          </div>
+        </div>
+        <div
+          className={cn(
+            "grid grid-cols-4 gap-1",
+          )}
+        >
+          {prakiraan.map((hari, i) => (
+            <div
+              key={hari.tanggal}
+              title={hari.deskripsi}
+              className={cn(
+                "flex flex-col items-center gap-0.5 rounded-md border border-border/80 p-1 text-center",
+                i === 0 && "bg-muted/30",
+              )}
+            >
+              <p className="text-[9px] font-medium leading-none">{hari.label}</p>
+              <CuacaIkon kode={hari.kodeCuaca} className="h-4 w-4" />
+              <p className="text-[9px] tabular-nums">
+                {hari.suhuMax}° <span className="text-muted-foreground">{hari.suhuMin}°</span>
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section aria-label="Cuaca 7 hari" className="space-y-2 sm:space-y-3">
@@ -68,7 +127,7 @@ export async function CuacaWidget() {
           "[scrollbar-width:thin]",
         )}
       >
-        {tujuhHari.map((hari, i) => (
+        {prakiraan.map((hari, i) => (
           <Card
             key={hari.tanggal}
             title={hari.deskripsi}
