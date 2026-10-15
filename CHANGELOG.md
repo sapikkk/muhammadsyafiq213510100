@@ -1,3 +1,10 @@
+## [1.39.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.39.0...v1.39.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* **petani:** bento dan beranda lebih responsif di mobile ([#132](https://github.com/sapikkk/muhammadsyafiq213510100/issues/132)) ([8b2d412](https://github.com/sapikkk/muhammadsyafiq213510100/commit/8b2d412af21b6f4b57ec6222e7a099d08eece47d))
+
 # [1.39.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.38.0...v1.39.0) (2026-10-15)
 
 
