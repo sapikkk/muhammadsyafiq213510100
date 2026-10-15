@@ -1,3 +1,10 @@
+# [1.38.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.37.2...v1.38.0) (2026-10-15)
+
+
+### Features
+
+* **petani:** beranda bento ringkas satu layar ([#130](https://github.com/sapikkk/muhammadsyafiq213510100/issues/130)) ([ce397c2](https://github.com/sapikkk/muhammadsyafiq213510100/commit/ce397c2e29520f6a9a59066c45ea40da046eb066))
+
 ## [1.37.2](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.37.1...v1.37.2) (2026-10-15)
 
 
