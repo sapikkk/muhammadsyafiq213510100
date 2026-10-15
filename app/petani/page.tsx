@@ -78,7 +78,7 @@ export default async function PetaniPage() {
       <PageHeaderRow
         title="Beranda"
         actions={
-          <Button type="button" className="h-10 text-sm sm:h-11" asChild>
+          <Button type="button" className="h-10 w-full text-sm min-[480px]:w-auto sm:h-11" asChild>
             <Link href={headerHref} scroll={false}>
               {headerLabel}
             </Link>
@@ -96,7 +96,7 @@ export default async function PetaniPage() {
         </BentoSlot>
 
         <BentoSlot span={2} className="order-2">
-          <BentoSection title="Cuaca" className="max-sm:p-3 lg:p-3">
+          <BentoSection title="Cuaca">
             <CuacaWidget variant="beranda" />
           </BentoSection>
         </BentoSlot>
@@ -120,7 +120,7 @@ export default async function PetaniPage() {
         </BentoSlot>
 
         <BentoSlot span={3} className="order-5">
-          <BentoSection title="Tugas dan histori" id="tugas-hari-ini" className="max-sm:p-3 lg:p-3">
+          <BentoSection title="Tugas dan histori" id="tugas-hari-ini">
             {tugas.length === 0 && histori.length === 0 ? (
               <DashboardBentoEmpty
                 message="Belum ada tugas. Ikuti urutan kerja di atas."

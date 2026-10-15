@@ -6,7 +6,7 @@ import {
 } from "@/lib/permission-section-badge";
 import { cn } from "@/lib/utils";
 
-/** Grid bento 6 kolom (lg+), 2 kolom di layar kecil — dipakai di semua beranda peran. */
+/** Grid bento 6 kolom (lg+); di bawah lg satu kolom penuh agar HP tidak terpotong. */
 export function DashboardBento({
   children,
   className,
@@ -17,7 +17,7 @@ export function DashboardBento({
   return (
     <div
       className={cn(
-        "grid grid-cols-1 gap-2 auto-rows-min min-[220px]:grid-cols-2 min-[220px]:gap-3 lg:grid-cols-6",
+        "grid grid-cols-1 gap-2 auto-rows-min sm:gap-2.5 lg:grid-cols-6 lg:gap-3",
         className,
       )}
     >
@@ -35,7 +35,7 @@ const SPAN_LG: Record<1 | 2 | 3 | 4 | 5 | 6, string> = {
   6: "lg:col-span-6",
 };
 
-/** Satu sel bento. `span` = lebar di lg (dari 6 kolom). Di HP selalu lebar penuh. */
+/** Satu sel bento. `span` = lebar di lg (dari 6 kolom). Di bawah lg selalu lebar penuh. */
 export function BentoSlot({
   children,
   span = 6,
@@ -46,13 +46,7 @@ export function BentoSlot({
   className?: string;
 }) {
   return (
-    <div
-      className={cn(
-        "col-span-1 min-w-0 min-[220px]:col-span-2",
-        SPAN_LG[span],
-        className,
-      )}
-    >
+    <div className={cn("col-span-full min-w-0", SPAN_LG[span], className)}>
       {children}
     </div>
   );
@@ -79,14 +73,14 @@ export function BentoSection({
     <Card
       id={id}
       className={cn(
-        "flex h-full min-w-0 flex-col gap-2 p-2.5 min-[220px]:gap-4 min-[220px]:p-5 sm:gap-3 sm:p-3",
+        "flex h-full min-w-0 flex-col gap-2 p-2.5 sm:gap-2.5 sm:p-3 lg:gap-3",
         className,
       )}
     >
       {title || badgeLabel ? (
         <div className="flex flex-wrap items-baseline gap-2">
           {title ? (
-            <h2 className="text-sm font-semibold leading-snug tracking-tight min-[220px]:text-base">
+            <h2 className="text-sm font-semibold leading-snug tracking-tight sm:text-base">
               {title}
             </h2>
           ) : null}

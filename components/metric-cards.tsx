@@ -40,7 +40,7 @@ export function MetricCards({
   const compact = variant === "compact" || n >= 5;
 
   const cardClass = compact
-    ? "flex min-w-0 flex-col px-2.5 py-2 sm:px-3"
+    ? "flex min-w-0 flex-col px-1.5 py-1.5 max-sm:px-2 max-sm:py-2 sm:px-3"
     : "flex min-w-0 flex-col p-4";
 
   const valueClass = compact
