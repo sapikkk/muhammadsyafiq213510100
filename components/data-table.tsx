@@ -48,6 +48,8 @@ type DataTableProps<TData, TValue> = {
   rowCount?: number;
   pageIndex?: number;
   onPageIndexChange?: (index: number) => void;
+  /** Sembunyikan kotak cari di layar sempit (beranda petani). */
+  hideSearchOnMobile?: boolean;
 };
 
 export function DataTable<TData, TValue>({
@@ -67,6 +69,7 @@ export function DataTable<TData, TValue>({
   rowCount,
   pageIndex: pageIndexProp,
   onPageIndexChange,
+  hideSearchOnMobile,
 }: DataTableProps<TData, TValue>) {
   const router = useRouter();
   const pathname = usePathname();
@@ -184,7 +187,10 @@ export function DataTable<TData, TValue>({
             table.setPageIndex(0);
           }}
           placeholder={searchPlaceholder}
-          className="h-9 w-full max-w-full min-[220px]:max-w-sm"
+          className={cn(
+            "h-9 w-full max-w-full min-[220px]:max-w-sm",
+            hideSearchOnMobile && "hidden min-[480px]:block",
+          )}
           aria-label={searchPlaceholder}
         />
       ) : null}
@@ -196,12 +202,15 @@ export function DataTable<TData, TValue>({
                 {hg.headers.map((header) => {
                   const canSort = header.column.getCanSort();
                   const sorted = header.column.getIsSorted();
+                  const metaClass = (header.column.columnDef.meta as { className?: string } | undefined)
+                    ?.className;
                   return (
                     <TableHead
                       key={header.id}
                       className={cn(
                         "h-10 whitespace-nowrap px-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground",
                         canSort && "cursor-pointer select-none",
+                        metaClass,
                       )}
                       onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
                     >
@@ -262,11 +271,18 @@ export function DataTable<TData, TValue>({
                     }
                   }}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="px-3 py-2.5 text-sm align-middle">
+                  {row.getVisibleCells().map((cell) => {
+                    const metaClass = (cell.column.columnDef.meta as { className?: string } | undefined)
+                      ?.className;
+                    return (
+                    <TableCell
+                      key={cell.id}
+                      className={cn("px-3 py-2.5 text-sm align-middle", metaClass)}
+                    >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
-                  ))}
+                  );
+                  })}
                 </TableRow>
               );
               })

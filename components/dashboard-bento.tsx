@@ -76,7 +76,13 @@ export function BentoSection({
   const badgeLabel = labelPermissionSectionBadge(badge, Boolean(hidePermissionBadge));
 
   return (
-    <Card id={id} className={cn("flex h-full min-w-0 flex-col gap-3 p-3 min-[220px]:gap-4 min-[220px]:p-5", className)}>
+    <Card
+      id={id}
+      className={cn(
+        "flex h-full min-w-0 flex-col gap-2 p-2.5 min-[220px]:gap-4 min-[220px]:p-5 sm:gap-3 sm:p-3",
+        className,
+      )}
+    >
       {title || badgeLabel ? (
         <div className="flex flex-wrap items-baseline gap-2">
           {title ? (
