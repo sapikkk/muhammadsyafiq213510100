@@ -1,3 +1,10 @@
+## [1.37.2](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.37.1...v1.37.2) (2026-10-15)
+
+
+### Bug Fixes
+
+* **beranda:** cuaca ringkas dan layout petani mobile ([#129](https://github.com/sapikkk/muhammadsyafiq213510100/issues/129)) ([82cbda4](https://github.com/sapikkk/muhammadsyafiq213510100/commit/82cbda49eec72e92303772d72aae0adb35af85b6))
+
 ## [1.37.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.37.0...v1.37.1) (2026-10-14)
 
 
