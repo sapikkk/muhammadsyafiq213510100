@@ -40,7 +40,7 @@ export function UiThemeSettings() {
               key={opt.id}
               type="button"
               variant={active ? "default" : "outline"}
-              className="h-auto min-h-11 flex-1 flex-col items-start gap-0.5 px-3 py-2 text-left sm:max-w-xs"
+              className="h-auto min-h-11 w-full flex-col items-start gap-0.5 px-3 py-2 text-left sm:max-w-xs sm:flex-1"
               aria-pressed={active}
               onClick={() => setTheme(opt.id)}
             >

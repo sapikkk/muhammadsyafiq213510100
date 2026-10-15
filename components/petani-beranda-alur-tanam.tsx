@@ -17,7 +17,7 @@ export function PetaniBerandaAlurTanam({
   const k = produksi.kapasitas;
 
   return (
-    <BentoSection title="Urutan kerja" className="max-sm:p-3">
+    <BentoSection title="Urutan kerja">
       <div className="flex flex-col gap-2 lg:flex-row lg:items-stretch lg:gap-3">
         <div className="min-w-0 flex-1 lg:border-r lg:border-border lg:pr-3">
           <ol
@@ -46,7 +46,8 @@ export function PetaniBerandaAlurTanam({
           </ol>
         </div>
 
-        <div className="flex min-w-0 flex-col justify-center border-t border-border pt-3 lg:w-[min(100%,14rem)] lg:shrink-0 lg:border-t-0 lg:border-border lg:pt-0 lg:pl-0">
+        <div className="grid gap-2 border-t border-border pt-2 sm:grid-cols-2 sm:pt-3 lg:contents">
+        <div className="flex min-w-0 flex-col justify-center sm:rounded-md sm:border sm:border-border sm:p-2 lg:w-[min(100%,14rem)] lg:shrink-0 lg:rounded-none lg:border-0 lg:p-0">
           <p className="text-xs font-medium text-muted-foreground">Mulai dari sini</p>
           {tugasUtama ? (
             <>
@@ -71,7 +72,7 @@ export function PetaniBerandaAlurTanam({
           )}
         </div>
 
-        <div className="flex min-w-0 flex-col justify-center border-t border-border pt-3 lg:w-[min(100%,13rem)] lg:shrink-0 lg:border-l lg:border-t-0 lg:pl-4">
+        <div className="flex min-w-0 flex-col justify-center sm:rounded-md sm:border sm:border-border sm:p-2 lg:w-[min(100%,13rem)] lg:shrink-0 lg:rounded-none lg:border-0 lg:border-l lg:border-border lg:p-0 lg:pl-4">
           <p className="text-xs font-medium text-muted-foreground">Tanam dan kolam</p>
           {k.totalLubang <= 0 ? (
             <Link
@@ -93,6 +94,7 @@ export function PetaniBerandaAlurTanam({
               <MonochromeProgressBar value={k.pctTerisi} />
             </div>
           )}
+        </div>
         </div>
       </div>
     </BentoSection>

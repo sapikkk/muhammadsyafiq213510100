@@ -58,11 +58,7 @@ export async function CuacaWidget({ variant = "default" }: { variant?: "default"
             </span>
           </div>
         </div>
-        <div
-          className={cn(
-            "grid grid-cols-4 gap-1",
-          )}
-        >
+        <div className="grid grid-cols-4 gap-1 max-[340px]:grid-cols-2 max-[340px]:gap-1.5">
           {prakiraan.map((hari, i) => (
             <div
               key={hari.tanggal}
