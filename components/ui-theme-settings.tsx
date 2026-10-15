@@ -67,7 +67,7 @@ export function UiThemeSettings() {
         >
           arla6ka/skills — Lime
         </Link>
-        . Komponen penuh Lime belum dipasang; ini hanya token warna di UI shadcn.
+        . Skill agent: `npx skills add arla6ka/skills` + `docs/skills/kokonus/lime-preview/SKILL.md`. Wireframe lo-fi tidak berubah saat Lime mati.
       </p>
     </section>
   );

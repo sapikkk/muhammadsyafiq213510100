@@ -7,7 +7,7 @@ Salinan **`SKILL.md`** (dan bundle besar via submodule + `sync-agent-skills.sh`)
 | Folder / sumber | Jumlah (≈) | Sumber |
 |-----------------|------------|--------|
 | `akuntansi-hidroponik/` | 1 | Domain hidroponik (maintainer repo) |
-| `kokonus/` | 4 | Adaptasi flow + ui-ringkas |
+| `kokonus/` | 5 | Adaptasi flow, ui-ringkas, lime-preview |
 | `openaccountant/` | 44 | [openaccountant/skills](https://github.com/openaccountant/skills) |
 | `karpathy-guidelines/` | 1 | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) |
 | `semgrep/` | 1 (ringkas) | [semgrep/skills](https://github.com/semgrep/skills) — bundle lengkap via submodule |
@@ -32,6 +32,12 @@ Atau hanya domain + openaccountant:
 ```bash
 npx skills add openaccountant/skills -y
 bash scripts/sync-agent-skills.sh
+```
+
+Preview Lime (arla6ka + token upstream):
+
+```bash
+bash scripts/bootstrap-arla6ka-design-skills.sh
 ```
 
 Superpowers (proses TDD/debug untuk US): submodule `.cursor/plugins/superpowers` — bukan folder ini.

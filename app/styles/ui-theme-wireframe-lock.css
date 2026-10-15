@@ -1,0 +1,11 @@
+/**
+ * Kunci wireframe lo-fi: pastikan radius dan palet monokrom saat tema wireframe.
+ * Tidak menimpa html[data-ui-theme="lime"].
+ */
+html[data-ui-theme="wireframe"] {
+  --radius: 0rem;
+}
+
+html[data-ui-theme="wireframe"] body {
+  font-family: inherit;
+}

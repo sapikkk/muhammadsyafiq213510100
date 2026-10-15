@@ -7,7 +7,7 @@ Dipicu oleh slash **`/kokonus`** atau **`/all`** di Cursor. Berlaku untuk **selu
 1. Balas **satu baris**: `SESI PENUH Kokonus aktif — Ponytail full, graphify, domain farm, keuangan, superpowers, agency, awesome-kurasi, semgrep, Matt Pocock, Apple HIG, ui-ringkas.`
 2. Jangan tanya user mau pilih skill mana; **gabungkan** semua lapisan di bawah sesuai tugas.
 3. Sebelum eksplorasi arsitektur: `graphify query` / `graphify explain`; setelah edit TS: `graphify update .`
-4. Teks UI (`app/`, `components/`): Indonesia sederhana per `docs/skills/kokonus/ui-ringkas/SKILL.md`.
+4. Teks UI (`app/`, `components/`): Indonesia sederhana per `docs/skills/kokonus/ui-ringkas/SKILL.md`. **Wireframe default** — jangan sentuh Lime. Task preview Lime: `docs/skills/kokonus/lime-preview/SKILL.md` + `vendor/design/lime/SKILL.md` + skill arla6ka (`bootstrap-arla6ka-design-skills.sh`).
 5. Implementasi kode: diff minimal (Karpathy) + YAGNI (Ponytail full di bawah).
 6. Sebelum selesai: verifikasi (`npm run typecheck` atau uji relevan). Commit hanya jika user minta; tanpa trailer Cursor.
 

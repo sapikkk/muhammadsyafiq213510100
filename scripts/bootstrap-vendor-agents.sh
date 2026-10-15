@@ -31,6 +31,11 @@ echo "==> Semgrep, Karpathy, Matt Pocock, Apple, Ponytail, awesome-kurasi, domai
 bash "$ROOT/scripts/sync-agent-skills.sh"
 bash "$ROOT/scripts/sync-founder-openmaic-skills.sh"
 
+if [[ -x "$ROOT/scripts/bootstrap-arla6ka-design-skills.sh" ]]; then
+  echo "==> arla6ka design skills + Lime referensi (preview)"
+  bash "$ROOT/scripts/bootstrap-arla6ka-design-skills.sh"
+fi
+
 PONYTAIL_HOOKS="$ROOT/vendor/agents/ponytail/scripts/cursor-hooks.js"
 if [[ -f "$PONYTAIL_HOOKS" ]]; then
   echo "==> Ponytail: hooks proyek (.cursor/hooks.json) — mode default full via /ponytail full"
