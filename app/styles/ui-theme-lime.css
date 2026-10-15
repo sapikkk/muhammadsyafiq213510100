@@ -1,9 +1,10 @@
 /**
  * Contoh tema Lime → variabel shadcn (Tailwind v3).
- * Sumber referensi: https://github.com/arla6ka/skills/tree/main/systems/lime
- * Aktif saat html[data-ui-theme="lime"].
+ * Hanya html[data-ui-theme="lime"] — wireframe tidak memuat file ini ke token Lime.
+ * Token asli: vendor/design/lime/tokens.css (data-system="lime").
  */
 @import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap");
+@import "../../vendor/design/lime/tokens.css";
 
 html[data-ui-theme="lime"] {
   --background: 40 20% 98%;

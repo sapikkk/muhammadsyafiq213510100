@@ -22,6 +22,17 @@ export function readUiThemeFromStorage(): UiThemeId {
 export function applyUiThemeToDocument(theme: UiThemeId) {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
+  const body = document.body;
+
   root.dataset.uiTheme = theme;
-  root.classList.toggle("lime-ui", theme === "lime");
+
+  if (theme === "lime") {
+    root.dataset.system = "lime";
+    root.classList.add("lime-ui");
+    body.classList.add("lime");
+  } else {
+    delete root.dataset.system;
+    root.classList.remove("lime-ui");
+    body.classList.remove("lime");
+  }
 }

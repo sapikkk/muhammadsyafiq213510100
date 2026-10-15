@@ -24,8 +24,12 @@ if [[ -f "$VENDOR/SKILL.md" ]]; then
 
 Skill upstream: [arla6ka/skills/systems/lime](https://github.com/arla6ka/skills/tree/main/systems/lime).
 
-Di aplikasi: toggle **Pengaturan → Tampilan**. Default tetap wireframe lo-fi (`data-ui-theme="wireframe"`). Lime hanya memetakan token ke CSS shadcn — bukan migrasi komponen `@/components/lime/*`.
+Di aplikasi: toggle **Pengaturan → Tampilan**. Default wireframe: `docs/skills/kokonus/ui-ringkas/SKILL.md`. Preview Lime: `docs/skills/kokonus/lime-preview/SKILL.md` + skill arla6ka (`npx skills add arla6ka/skills -y`).
 EOF
+  if [[ -f "$ROOT/docs/skills/kokonus/lime-preview/SKILL.md" ]]; then
+    mkdir -p "$ROOT/.agents/skills/kokonus/lime-preview"
+    cp "$ROOT/docs/skills/kokonus/lime-preview/SKILL.md" "$ROOT/.agents/skills/kokonus/lime-preview/"
+  fi
 fi
 
 echo "Lime referensi → $VENDOR + $SKILL_DEST"

@@ -13,7 +13,7 @@ Ini **bukan** migrasi penuh ke `@/components/lime/*` (Tailwind v4 + portal Lime)
 ## Sinkron skill lokal
 
 ```bash
-bash scripts/sync-lime-design-skill.sh
+bash scripts/bootstrap-arla6ka-design-skills.sh
 ```
 
-Hasil: `vendor/design/lime/` + `.agents/skills/lime/SKILL.md` (gitignore).
+Hasil: skill **arla6ka/skills** (6 skill), `vendor/design/lime/`, `.agents/skills/lime/`, `docs/skills/kokonus/lime-preview/SKILL.md` → `.agents/skills/kokonus/lime-preview/` (gitignore).
