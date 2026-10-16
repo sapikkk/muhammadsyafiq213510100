@@ -1,11 +1,8 @@
 /**
- * Contoh tema Lime → variabel shadcn (Tailwind v3).
- * Hanya html[data-ui-theme="lime"] — wireframe tidak memuat file ini ke token Lime.
- * Token asli: vendor/design/lime/tokens.css (data-system="lime").
+ * Jembatan shadcn saat data-ui-theme=lime (navigasi, kartu lama).
+ * Token Lime resmi: components/lime/tokens.css via components/lime/styles.css.
+ * Wireframe tidak memakai override ini.
  */
-@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap");
-@import "../../vendor/design/lime/tokens.css";
-
 html[data-ui-theme="lime"] {
   --background: 40 20% 98%;
   --foreground: 60 6% 5%;

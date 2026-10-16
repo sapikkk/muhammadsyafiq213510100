@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { KokonusLimeContoh } from "@/components/kokonus-lime-contoh";
 import { Button } from "@/components/ui/button";
 import { useUiTheme } from "@/components/ui-theme-provider";
 import type { UiThemeId } from "@/lib/ui-theme";
@@ -58,17 +59,19 @@ export function UiThemeSettings() {
       </div>
 
       <p className="text-xs text-muted-foreground">
-        Referensi skill:{" "}
+        Referensi:{" "}
         <Link
-          href="https://github.com/arla6ka/skills/tree/main/systems/lime"
+          href="https://design.how/systems/lime"
           className="font-medium text-primary underline-offset-4 hover:underline"
           target="_blank"
           rel="noopener noreferrer"
         >
-          arla6ka/skills — Lime
+          design.how — Lime
         </Link>
-        . Skill agent: `npx skills add arla6ka/skills` + `docs/skills/kokonus/lime-preview/SKILL.md`. Wireframe lo-fi tidak berubah saat Lime mati.
+        , skill agent di `.agents/skills/lime/`. Grafik produksi tetap monokrom (`lib/chart-monochrome.ts`) di wireframe.
       </p>
+
+      <KokonusLimeContoh />
     </section>
   );
 }

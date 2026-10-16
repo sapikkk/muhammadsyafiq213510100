@@ -1,0 +1,57 @@
+'use client';
+
+import {useState} from 'react';
+import {Message} from '@/components/lime/ai/message';
+import {Icon, Locked, Play, ShoppingBag} from '@/components/lime/icon';
+import {useFocusWhenReplaced} from '@/lib/lime/use-focus-when-replaced';
+import {Amount, formatAmount} from '@/components/lime/ui/amount';
+import {Button} from '@/components/lime/ui/button';
+import {List, ListIcon, ListItem} from '@/components/lime/ui/list';
+import {Status} from '@/components/lime/ui/status';
+
+// A block: the assistant flagging something with one row and the answers to it. UnusualCharge is a charge to
+// confirm, CancelSubscription a subscription nobody opens.
+
+/** A charge that doesn't look like you, with the two answers. Freezing is solid, not a glow: it is a choice, not the push. */
+export function UnusualCharge() {
+  return (
+    <section aria-label="Unusual charge" className="flex w-full max-w-sm flex-col gap-4">
+      <Message name="Lime">This one does not look like you. Was it?</Message>
+      <List className="-mx-4">
+        <ListItem leading={<ListIcon icon={ShoppingBag} tone="danger"/>} title="Kestrel Shop" description="Lisbon, 2:14 am" trailing={<Amount value={-129} tone="danger"/>}/>
+      </List>
+      <div className="flex gap-2">
+        <Button variant="solid" className="flex-1" icon={<Icon icon={Locked} size={16}/>}>Freeze card</Button>
+        <Button variant="secondary" className="flex-1">It was me</Button>
+      </div>
+    </section>
+  );
+}
+
+/** A subscription nobody opens, found by the assistant: one row and one action, which holds the glow. Cancel it
+ * works for a moment, then the buttons give way to a status line in the same height. */
+export function CancelSubscription() {
+  const [state, setState] = useState<'open' | 'pending' | 'canceled' | 'kept'>('open');
+  // The pressed button is gone once the status shows, so focus moves to the status instead of the page top.
+  const {region, target: outcome} = useFocusWhenReplaced(state === 'canceled' || state === 'kept');
+  const cancel = () => {
+    setState('pending');
+    setTimeout(() => setState('canceled'), 900);
+  };
+  return (
+    <section aria-label="Subscription" className="flex w-full max-w-sm flex-col gap-4">
+      <Message name="Lime">You have not opened Streamly since July.</Message>
+      <List className="-mx-4">
+        <ListItem leading={<ListIcon icon={Play}/>} title="Streamly" description="Renews Oct 12" trailing={formatAmount(-15.99)}/>
+      </List>
+      <div ref={region} aria-live="polite" className="flex min-h-(--control-md) items-center gap-2">
+        {state === 'canceled' ? <Status ref={outcome} focusable status="canceled" label="Canceled. No more charges"/>
+          : state === 'kept' ? <Status ref={outcome} focusable status="done" label="Kept"/>
+          : <>
+            <Button className="flex-1" pending={state === 'pending'} onClick={cancel}>Cancel it</Button>
+            <Button variant="ghost" disabled={state === 'pending'} onClick={() => setState('kept')}>Keep</Button>
+          </>}
+      </div>
+    </section>
+  );
+}

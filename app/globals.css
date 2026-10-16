@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+@config "../tailwind.config.ts";
 
 @layer base {
   /* Wireframe lo-fi (default): monokrom, radius 0. Tema Lime: lihat app/styles/ui-theme-lime.css */
