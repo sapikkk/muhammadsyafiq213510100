@@ -17,6 +17,8 @@ import {
   OWNER_SIDEBAR_MODULES,
 } from "@/lib/owner-sidebar-nav";
 import { KokonusBrandMark } from "@/components/kokonus-brand-mark";
+import { KokonusBrandWordmark } from "@/components/kokonus-brand-wordmark";
+import { useUiTheme } from "@/components/ui-theme-provider";
 import { NotifikasiUnreadBadge } from "@/components/notifikasi-unread-badge";
 import { getNavItems, type NavItem } from "@/lib/nav-items";
 import type { Role } from "@/types/role";
@@ -95,6 +97,8 @@ export function AppSidebar({
   const flatAudit = auditShowAllNav ? getAuditNavItems(stokRendahCount) : null;
   const activeNavKey =
     groups && !flatAudit ? pickActiveNavKey(pathname, searchParams, groups) : null;
+  const { theme } = useUiTheme();
+  const lime = theme === "lime";
 
   return (
     <aside className="flex h-screen w-64 flex-col border-r bg-sidebar">
@@ -104,8 +108,12 @@ export function AppSidebar({
           className="flex items-center gap-2"
           onClick={() => onNavigate?.()}
         >
-          <KokonusBrandMark size={28} className="rounded-md" />
-          <span className="text-sm font-semibold tracking-tight">Kokonus Farm</span>
+          <KokonusBrandMark size={32} mark="icon" />
+          {lime ? (
+            <KokonusBrandWordmark variant="light" className="hidden min-[220px]:block sm:h-7" />
+          ) : (
+            <span className="text-sm font-semibold tracking-tight">Kokonus Farm</span>
+          )}
         </Link>
       </div>
 

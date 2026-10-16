@@ -4,6 +4,7 @@ import { Providers } from "@/components/providers";
 import "./globals.css";
 import "./styles/ui-theme-wireframe-lock.css";
 import "./styles/ui-theme-lime.css";
+import "./styles/kokonus-lime-surfaces.css";
 import "@/components/lime/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });

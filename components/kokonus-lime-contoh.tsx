@@ -4,6 +4,7 @@ import { CancelSubscription, UnusualCharge } from "@/components/lime/blocks/assi
 import { PayingABill } from "@/components/lime/blocks/assistant-approval";
 import { AssistantLimits, PaydayRule } from "@/components/lime/blocks/settings-rules";
 import { BillSchedule, type Bill } from "@/components/lime/ui/bill-schedule";
+import { KokonusBrandWordmark } from "@/components/kokonus-brand-wordmark";
 import { useUiTheme } from "@/components/ui-theme-provider";
 
 const UPCOMING_BILLS: Bill[] = [
@@ -20,6 +21,21 @@ export function KokonusLimeContoh() {
 
   return (
     <div className="mx-auto w-full max-w-2xl space-y-8 rounded-panel border border-line bg-page p-5 text-fg">
+      <section className="flex flex-col gap-3 border-b border-line pb-6">
+        <KokonusBrandWordmark variant="light" />
+        <p className="text-sm text-fg-2">
+          Pratinjau komponen Lime + token brand (hijau farm, aksen lime). Data produksi tetap dari app.
+        </p>
+        <div className="flex flex-wrap gap-2 text-xs" aria-hidden>
+          <span className="rounded-full px-2 py-1" style={{ background: "#1a3d2e", color: "#fff" }}>
+            Primary green
+          </span>
+          <span className="rounded-full px-2 py-1 text-fg" style={{ background: "#d3fa53" }}>
+            Accent lime
+          </span>
+          <span className="rounded-full border border-line bg-surface px-2 py-1">Surface</span>
+        </div>
+      </section>
       <section className="flex flex-col gap-3">
         <h2 className="text-lg font-semibold">Aturan gaji</h2>
         <PaydayRule />

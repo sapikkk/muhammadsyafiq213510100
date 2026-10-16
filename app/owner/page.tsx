@@ -22,7 +22,6 @@ import { ProduksiRingkasanPanel } from "@/components/produksi-ringkasan-panel";
 import { loadProduksiRingkasan } from "@/lib/produksi-kapasitas";
 import { DashboardMonitorKolamSection } from "@/components/dashboard-monitor-kolam-section";
 import { DashboardProduksiFaseChart } from "@/components/dashboard-produksi-fase-chart";
-import { DashboardMonitorChartsPanel } from "@/components/dashboard-monitor-charts-panel";
 import { loadDashboardMonitorKolam } from "@/lib/monitor-kolam-dashboard";
 
 export const dynamic = "force-dynamic";
@@ -141,14 +140,6 @@ export default async function OwnerPage() {
         </BentoSlot>
 
         <BentoSlot span={6}>
-          <DashboardMonitorChartsPanel
-            tglAwal={monitor.defaultTglAwal}
-            tglAkhir={monitor.defaultTglAkhir}
-            emptyHref="/owner/infrastruktur"
-          />
-        </BentoSlot>
-
-        <BentoSlot span={6}>
           <BentoSection title="Tanam dan kolam">
             <ProduksiRingkasanPanel
               data={produksi}
@@ -160,6 +151,7 @@ export default async function OwnerPage() {
         <BentoSlot span={6}>
           <DashboardMonitorKolamSection
             totalLogs={monitor.totalLogs}
+            logTerbaru={monitor.logTerbaru}
             lahan={monitor.lahan}
             greenhouse={monitor.greenhouse}
             kolam={monitor.kolam}

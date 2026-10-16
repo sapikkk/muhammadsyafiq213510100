@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Button as LimeButton } from "@/components/lime/ui/button";
 import { Input as LimeInput } from "@/components/lime/ui/input";
 import { KokonusBrandMark } from "@/components/kokonus-brand-mark";
+import { KokonusBrandWordmark } from "@/components/kokonus-brand-wordmark";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -70,9 +71,9 @@ export default function LoginPage() {
     >
       <div className="w-full min-w-0 max-w-sm space-y-4 min-[220px]:space-y-6">
         {lime ? (
-          <div className="flex flex-col items-center gap-2 pb-1">
-            <KokonusBrandMark size={48} />
-            <h1 className="text-xl font-semibold">Masuk ke Kokonus</h1>
+          <div className="flex flex-col items-center gap-3 pb-1">
+            <KokonusBrandWordmark variant="light" className="h-9" priority />
+            <p className="text-sm text-muted-foreground">Masuk ke akun farm Anda</p>
           </div>
         ) : (
           <PageHeaderRow title="Masuk" />

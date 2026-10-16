@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { formatRupiah } from "@/lib/format";
 import type { loadOwnerDashboardKeuangan } from "@/lib/owner-dashboard-keuangan";
+import { KokonusProgressBar } from "@/components/kokonus/kokonus-progress-bar";
 import { cn } from "@/lib/utils";
 
 type Keuangan = Awaited<ReturnType<typeof loadOwnerDashboardKeuangan>>;
@@ -119,6 +120,10 @@ export function OwnerKeuanganDashboardLayout({ data }: { data: Keuangan }) {
       ? `${data.jumlahPiutangPerluDitagih} pesanan sudah ≥30 hari.`
       : "Semua piutang masih di bawah 30 hari.";
 
+  const pendapatanN = Number(data.pendapatanBulanIni);
+  const bebanN = Number(data.bebanBulanIni);
+  const proporsiMax = Math.max(pendapatanN, bebanN, 1);
+
   return (
     <div className="flex flex-col gap-6 sm:gap-8">
       {/* Monex: zona gelap — saldo + sorotan laba + grafik */}
@@ -203,6 +208,27 @@ export function OwnerKeuanganDashboardLayout({ data }: { data: Keuangan }) {
             href="/owner/biaya"
           />
         </div>
+      </section>
+
+      <section className="flex flex-col gap-3 rounded-md border border-border p-4">
+        <h2 className="text-lg font-semibold leading-snug">Proporsi bulan ini</h2>
+        <p className="text-sm text-muted-foreground">Pendapatan dan beban terhadap yang lebih besar di antara keduanya.</p>
+        <KokonusProgressBar
+          segments={[
+            {
+              label: "Pendapatan",
+              value: pendapatanN,
+              max: proporsiMax,
+              tone: "lime",
+            },
+            {
+              label: "Beban",
+              value: bebanN,
+              max: proporsiMax,
+              tone: "green",
+            },
+          ]}
+        />
       </section>
 
       {/* Pipeline horizontal */}

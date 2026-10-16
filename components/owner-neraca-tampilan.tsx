@@ -83,10 +83,18 @@ export function OwnerNeracaTampilan({ sheet }: { sheet: Sheet }) {
         <p className="mb-4 text-sm text-muted-foreground">Per {tanggal}</p>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <KelompokNeraca
-            judul={neracaKelompokLabel.ASET}
-            section={sectionByTipe(sheet, "ASET")}
-          />
+          <div className="space-y-3">
+            <KelompokNeraca
+              judul={neracaKelompokLabel.ASET}
+              section={sectionByTipe(sheet, "ASET")}
+            />
+            <p className="flex items-center justify-between rounded-full bg-[var(--kokonus-green,#1a3d2e)] px-4 py-2.5 text-sm font-semibold text-white">
+              <span>Total aktiva</span>
+              <span className="tabular-nums text-[var(--kokonus-lime-mark,#d3fa53)]">
+                {formatRupiah(sheet.totalAset)}
+              </span>
+            </p>
+          </div>
           <div className="space-y-6">
             <KelompokNeraca
               judul={neracaKelompokLabel.KEWAJIBAN}
@@ -96,9 +104,11 @@ export function OwnerNeracaTampilan({ sheet }: { sheet: Sheet }) {
               judul={neracaKelompokLabel.MODAL}
               section={sectionByTipe(sheet, "MODAL")}
             />
-            <p className="border-t pt-3 text-sm font-medium">
-              Total pasiva (kewajiban + ekuitas):{" "}
-              <span className="tabular-nums">{formatRupiah(sheet.totalKewajibanModal)}</span>
+            <p className="mt-2 flex items-center justify-between rounded-full bg-[var(--kokonus-green,#1a3d2e)] px-4 py-2.5 text-sm font-semibold text-white">
+              <span>Total pasiva</span>
+              <span className="tabular-nums text-[var(--kokonus-lime-mark,#d3fa53)]">
+                {formatRupiah(sheet.totalKewajibanModal)}
+              </span>
             </p>
           </div>
         </div>

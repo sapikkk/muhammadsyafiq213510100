@@ -3,14 +3,7 @@ import { MetricCards } from "@/components/metric-cards";
 import { OwnerRevenueChart } from "@/components/owner-revenue-chart";
 import { PageSection } from "@/components/page-section";
 import type { MonthPoint } from "@/lib/monthly-summary-types";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { OwnerLaporanLabaRugiPresentasi } from "@/components/owner-laporan-laba-rugi-presentasi";
 import { OwnerNeracaTampilan } from "@/components/owner-neraca-tampilan";
 import { buildBalanceSheet } from "@/lib/balance-sheet";
 import { buildIncomeStatement } from "@/lib/income-statement";
@@ -70,33 +63,10 @@ export async function OwnerLaporanKeuanganPanel({
           },
         ]}
       />
-      <PageSection title="Laba rugi" badge="Read">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Pos</TableHead>
-              <TableHead className="text-right">Nominal</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {laba.lines.map((line) => (
-              <TableRow key={line.label}>
-                <TableCell className={line.label.includes("Laba") ? "font-medium" : undefined}>
-                  {sanitizeLabelLabaRugi(line.label)}
-                </TableCell>
-                <TableCell className="text-right tabular-nums">
-                  {formatRupiah(line.nominal)}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </PageSection>
+      <OwnerLaporanLabaRugiPresentasi
+        lines={laba.lines}
+        periodeLabel={dari === sampai ? dari : `${dari} – ${sampai}`}
+      />
     </div>
   );
-}
-
-/** Sembunyikan kode akun di label tampilan (audit kode di detail akun). */
-function sanitizeLabelLabaRugi(label: string): string {
-  return label.replace(/\s*\(\d+\)\s*$/, "").replace(/\(5100\)/, "").trim();
 }

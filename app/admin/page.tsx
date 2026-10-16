@@ -17,7 +17,6 @@ import { listAlertStokMinimumCached, monthlySummaryCached } from "@/lib/cached-q
 import { ChartCard } from "@/components/chart-card";
 import { OwnerRevenueChart } from "@/components/owner-revenue-chart";
 import { DashboardProduksiFaseChart } from "@/components/dashboard-produksi-fase-chart";
-import { DashboardMonitorChartsPanel } from "@/components/dashboard-monitor-charts-panel";
 import { CuacaWidget } from "@/components/cuaca-widget";
 import { DashboardMonitorKolamSection } from "@/components/dashboard-monitor-kolam-section";
 import { loadDashboardMonitorKolam } from "@/lib/monitor-kolam-dashboard";
@@ -129,14 +128,6 @@ export default async function AdminPage() {
         </BentoSlot>
 
         <BentoSlot span={6}>
-          <DashboardMonitorChartsPanel
-            tglAwal={monitor.defaultTglAwal}
-            tglAkhir={monitor.defaultTglAkhir}
-            emptyHref="/admin/infrastruktur"
-          />
-        </BentoSlot>
-
-        <BentoSlot span={6}>
           <BentoSection title="Tanam dan kolam">
             <ProduksiRingkasanPanel
               data={produksi}
@@ -148,6 +139,7 @@ export default async function AdminPage() {
         <BentoSlot span={6}>
           <DashboardMonitorKolamSection
             totalLogs={monitor.totalLogs}
+            logTerbaru={monitor.logTerbaru}
             lahan={monitor.lahan}
             greenhouse={monitor.greenhouse}
             kolam={monitor.kolam}

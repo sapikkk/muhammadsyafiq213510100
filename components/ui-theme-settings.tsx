@@ -14,8 +14,8 @@ const OPTIONS: { id: UiThemeId; label: string; hint: string }[] = [
   },
   {
     id: "lime",
-    label: "Lime (contoh)",
-    hint: "Hangat, aksen lime — pratinjau sistem design.how / arla6ka.",
+    label: "Lime Kokonus",
+    hint: "Hijau farm, aksen lime, sudut lembut — selaras Figma & brand.",
   },
 ];
 
@@ -29,7 +29,7 @@ export function UiThemeSettings() {
           Tampilan
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Lime hanya contoh. Matikan untuk kembali ke wireframe lo-fi.
+          Wireframe monokrom untuk kerja harian. Lime memakai token brand yang sama di semua halaman.
         </p>
       </div>
 

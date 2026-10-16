@@ -4,6 +4,9 @@
  * Wireframe tidak memakai override ini.
  */
 html[data-ui-theme="lime"] {
+  /* Kokonus Figma: Primary Green + Accent Lime */
+  --kokonus-green: #1a3d2e;
+  --kokonus-lime-mark: #d3fa53;
   --background: 40 20% 98%;
   --foreground: 60 6% 5%;
   --card: 0 0% 100%;
