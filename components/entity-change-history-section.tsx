@@ -1,4 +1,5 @@
 import { EntityChangeHistory } from "@/components/entity-change-history";
+import { EntityChangeHistoryDisclosure } from "@/components/entity-change-history-disclosure";
 import { PageSection } from "@/components/page-section";
 import { listEntityChanges } from "@/lib/entity-audit";
 
@@ -14,7 +15,9 @@ export async function EntityChangeHistorySection({
   const rows = await listEntityChanges(entitas, entitasId);
   return (
     <PageSection title={title} badge="Read">
-      <EntityChangeHistory rows={rows} />
+      <EntityChangeHistoryDisclosure count={rows.length}>
+        <EntityChangeHistory rows={rows} />
+      </EntityChangeHistoryDisclosure>
     </PageSection>
   );
 }

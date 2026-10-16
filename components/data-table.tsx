@@ -12,7 +12,7 @@ import {
 } from "@tanstack/react-table";
 import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -160,6 +160,12 @@ export function DataTable<TData, TValue>({
   const showPager = pageTotal > 1;
   const isRowInteractive = Boolean(getRowHref || onRowClick);
 
+  function prefetchRowHref(row: TData) {
+    if (!getRowHref) return;
+    const href = getRowHref(row);
+    if (href) router.prefetch(href);
+  }
+
   useEffect(() => {
     if (focusRowId == null || focusRowId === "" || !getRowFocusId) return;
     const target = String(focusRowId);
@@ -253,6 +259,8 @@ export function DataTable<TData, TValue>({
                     isRowInteractive &&
                       "cursor-pointer transition-colors hover:bg-muted/40",
                   )}
+                  onPointerEnter={() => prefetchRowHref(row.original)}
+                  onFocus={() => prefetchRowHref(row.original)}
                   onClick={(e) => {
                     if (!isRowInteractive) return;
                     const target = e.target as HTMLElement | null;
@@ -265,7 +273,7 @@ export function DataTable<TData, TValue>({
                     }
                     if (getRowHref) {
                       const href = getRowHref(row.original);
-                      if (href) router.push(href, { scroll: false });
+                      if (href) startTransition(() => router.push(href, { scroll: false }));
                     } else if (onRowClick) {
                       onRowClick(row.original);
                     }

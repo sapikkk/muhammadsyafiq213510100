@@ -21,9 +21,7 @@
    - One declaration per line: --name: value; followed by a comment of the form job | used by.
    - A line that starts with == opens a token group. Keep both formats when you retune.
 
-   Font: Hanken Grotesk, SIL OFL, from Google Fonts. */
-
-@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap");
+   Font: DM Sans (prosa), Manrope (angka tabular) via next/font di app/layout. */
 
 [data-system="lime"], .lime {
   /* == Surfaces == */
@@ -125,8 +123,8 @@
   --glow-success-to-press: #157038; /* bottom while pressed | glow-success */
 
   /* == Type == */
-  --font-sans: "Hanken Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; /* every word | all text */
-  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace; /* code and keys only | code, shortcut */
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; /* every word | all text */
+  --font-mono: var(--font-manrope), ui-sans-serif, system-ui, sans-serif; /* tabular amounts and numeric peers | amount, tabular-nums */
   --text-xs: 12px; /* captions, counters | badge, hint */
   --text-sm: 14px; /* controls and body | button, input, menu item */
   --text-base: 16px; /* prose, large controls | message, large button */

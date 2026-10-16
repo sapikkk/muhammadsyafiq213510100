@@ -69,9 +69,13 @@ export function RekeningSumberSelect({
 /** Baris ikon + label (dashboard, tabel rekening). */
 export function RekeningLabel({ option }: { option: RekeningKasOption }) {
   return (
-    <span className="inline-flex items-center gap-2">
-      <InstitusiKeuanganIcon logoSlug={option.logoSlug} jenis={option.jenis} className="h-5 w-5" />
-      <span>{labelOption(option)}</span>
+    <span className="inline-flex min-w-0 max-w-full items-center gap-2">
+      <InstitusiKeuanganIcon
+        logoSlug={option.logoSlug}
+        jenis={option.jenis}
+        className="h-5 w-5 shrink-0"
+      />
+      <span className="min-w-0 truncate text-left">{labelOption(option)}</span>
     </span>
   );
 }

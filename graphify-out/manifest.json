@@ -294,9 +294,9 @@
     "semantic_hash": ""
   },
   "app/layout.tsx": {
-    "mtime": 1792081807.7738395,
-    "seen": 1792117180.482862,
-    "ast_hash": "92c5e23b74baef2da66f69179f820ae7",
+    "mtime": 1792167210.6106043,
+    "seen": 1792168652.0332181,
+    "ast_hash": "bfbe11f037081a8b7f8a9ba048faaf86",
     "semantic_hash": ""
   },
   "app/loading.tsx": {
@@ -822,9 +822,9 @@
     "semantic_hash": ""
   },
   "middleware.ts": {
-    "mtime": 1791773173.6927052,
-    "seen": 1791965329.896999,
-    "ast_hash": "b45a512fc04de36ba9d76a79e48a5123",
+    "mtime": 1792166761.1404667,
+    "seen": 1792168652.071815,
+    "ast_hash": "6beb9adc69a993d250ba155e5122054e",
     "semantic_hash": ""
   },
   "next-env.d.ts": {
@@ -840,9 +840,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1792081580.1573656,
-    "seen": 1792117180.501421,
-    "ast_hash": "b99ac28f422d13051135693f7a2d8415",
+    "mtime": 1792117928.9621696,
+    "seen": 1792168652.0719419,
+    "ast_hash": "61297aed21917d3751991b772a960b3e",
     "semantic_hash": ""
   },
   "postcss.config.js": {
@@ -1104,9 +1104,9 @@
     "semantic_hash": ""
   },
   "e2e/smoke.spec.ts": {
-    "mtime": 1792006257.0195596,
-    "seen": 1792117180.493462,
-    "ast_hash": "7bf6a84ea8a4fded9d19c2a221773a2c",
+    "mtime": 1792166765.943107,
+    "seen": 1792168652.059158,
+    "ast_hash": "becabcbfb1f59b3a83cd5b7579b582b9",
     "semantic_hash": ""
   },
   "lib/biaya.ts": {
@@ -1698,15 +1698,15 @@
     "semantic_hash": ""
   },
   "lib/rbac.ts": {
-    "mtime": 1791603505.2388995,
-    "seen": 1791631123.352253,
-    "ast_hash": "b16b6d5e1dbf64c31c75bfa54346f0e4",
+    "mtime": 1792166760.6382694,
+    "seen": 1792168652.068749,
+    "ast_hash": "70e257c568c5d8cd70109b5346945b63",
     "semantic_hash": ""
   },
   "scripts/check-audit-env.sh": {
-    "mtime": 1791603505.3798444,
-    "seen": 1791631123.35236,
-    "ast_hash": "7fabbe8acbde4e82cbfac05ab1d23293",
+    "mtime": 1792166779.5575488,
+    "seen": 1792168652.073411,
+    "ast_hash": "473a79dc42588d60d5fa2eaf26debdc7",
     "semantic_hash": ""
   },
   "docs/audit/00-inventory.md": {
@@ -1848,15 +1848,15 @@
     "semantic_hash": ""
   },
   "e2e/admin-so-lubang.spec.ts": {
-    "mtime": 1792006257.0164173,
-    "seen": 1792117180.493331,
-    "ast_hash": "279ed861e62245a1e4282ea819605543",
+    "mtime": 1792166777.0173798,
+    "seen": 1792168652.0590541,
+    "ast_hash": "ce9b5146e4e930e8da8e084c0586cdd1",
     "semantic_hash": ""
   },
   "e2e/audit-nav.spec.ts": {
-    "mtime": 1791603504.3359566,
-    "seen": 1791631123.352105,
-    "ast_hash": "3b7b65cd659ee92f37717c4ab1c4cd62",
+    "mtime": 1792166777.484477,
+    "seen": 1792168652.059057,
+    "ast_hash": "1faffc5c4f8bc4d6012b3c54499c0eaa",
     "semantic_hash": ""
   },
   "e2e/global-setup.ts": {
@@ -1866,9 +1866,9 @@
     "semantic_hash": ""
   },
   "e2e/sprint5-usability.spec.ts": {
-    "mtime": 1792006257.0231943,
-    "seen": 1792117180.4934652,
-    "ast_hash": "17360250490f7d5e3e6175b24c48526d",
+    "mtime": 1792166777.0173483,
+    "seen": 1792168652.05916,
+    "ast_hash": "53be705c4d21c37eb5c0ca685a4593e2",
     "semantic_hash": ""
   },
   "lib/agile-progress.ts": {
@@ -2022,9 +2022,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/e2e.yml": {
-    "mtime": 1792006255.6264484,
-    "seen": 1792117180.682879,
-    "ast_hash": "4315f784ba612239e807a27d7af62b8f",
+    "mtime": 1792166777.7497852,
+    "seen": 1792168652.656242,
+    "ast_hash": "ce0ceae9489f660513fe2af6b8574a43",
     "semantic_hash": ""
   },
   "docs/agile/AC-VERIFIKASI-RISIKO.md": {
@@ -2190,9 +2190,9 @@
     "semantic_hash": ""
   },
   "e2e/admin-smart-jurnal.spec.ts": {
-    "mtime": 1792006257.0087442,
-    "seen": 1792117180.4933288,
-    "ast_hash": "18a4f4e6dc08f3a9ebfc83c74f3f625a",
+    "mtime": 1792166777.0560582,
+    "seen": 1792168652.059052,
+    "ast_hash": "7fba615412152d1d7c53422e906ab53a",
     "semantic_hash": ""
   },
   "lib/akun-kode.ts": {
@@ -2286,9 +2286,9 @@
     "semantic_hash": ""
   },
   "e2e/admin-akuntansi.spec.ts": {
-    "mtime": 1791639940.4332368,
-    "seen": 1791965329.89669,
-    "ast_hash": "148384da8389a7c4716e9a5d88cc350b",
+    "mtime": 1792166777.3028057,
+    "seen": 1792168652.059048,
+    "ast_hash": "b379169ee14f8d1b88d0f1562965e575",
     "semantic_hash": ""
   },
   "lib/penyusutan-otomatis.ts": {
@@ -2808,9 +2808,9 @@
     "semantic_hash": ""
   },
   "app/owner/keuangan/page.tsx": {
-    "mtime": 1792006255.8999417,
-    "seen": 1792117180.483846,
-    "ast_hash": "0fd909b151ec815717c1e53b7f895146",
+    "mtime": 1792167208.843581,
+    "seen": 1792168652.035119,
+    "ast_hash": "b7b296658c2e5f122d2b027afdf19a4c",
     "semantic_hash": ""
   },
   "app/owner/penjualan/@detail/(.)[id]/page.tsx": {
@@ -3618,9 +3618,9 @@
     "semantic_hash": ""
   },
   "data/gantt-from-git.json": {
-    "mtime": 1792116593.45956,
-    "seen": 1792117180.493093,
-    "ast_hash": "e7db44421cb13bd79e79831ea588d9c9",
+    "mtime": 1792167253.4251516,
+    "seen": 1792168652.0588522,
+    "ast_hash": "b7cd1a506e6488a2fc9ef7c6fe248d02",
     "semantic_hash": ""
   },
   "lib/active-pack-types.ts": {
@@ -4134,9 +4134,9 @@
     "semantic_hash": ""
   },
   "prisma/seed-demo-lengkap.js": {
-    "mtime": 1791794149.0322013,
-    "seen": 1791965329.897016,
-    "ast_hash": "3327373a55c931d964eff381eefb01e8",
+    "mtime": 1792166761.3511243,
+    "seen": 1792168652.072449,
+    "ast_hash": "424b67e4c3026a4f1ff37bdbf722d790",
     "semantic_hash": ""
   },
   "prisma/seed-keuangan.js": {
@@ -4146,9 +4146,9 @@
     "semantic_hash": ""
   },
   "prisma/seed-kokonus-tahun.js": {
-    "mtime": 1792006257.3846617,
-    "seen": 1792117180.501894,
-    "ast_hash": "360c68adbf31bb44bc39926aff606e46",
+    "mtime": 1792166761.5927534,
+    "seen": 1792168652.072669,
+    "ast_hash": "0e72593ce4b18bad897d74abfd6852ed",
     "semantic_hash": ""
   },
   "prisma/seed-owner-alur.js": {
@@ -4692,9 +4692,9 @@
     "semantic_hash": ""
   },
   "docs/deployment/panduan-deploy-vercel-postgres.md": {
-    "mtime": 1791777168.500868,
-    "seen": 1791965329.89732,
-    "ast_hash": "585a7ee9037e1a070baeacfc51a433b5",
+    "mtime": 1792166789.6913493,
+    "seen": 1792168652.666016,
+    "ast_hash": "7c3c7a1d58b6dfe8f6f1c418fce5c2de",
     "semantic_hash": ""
   },
   "docs/skills/README.md": {
@@ -5040,9 +5040,9 @@
     "semantic_hash": ""
   },
   "docs/testing/panduan-uji-dan-demo.md": {
-    "mtime": 1792006256.9857204,
-    "seen": 1792117180.689137,
-    "ast_hash": "17d6ba5c2af54dc237b11b59340378fe",
+    "mtime": 1792166765.826307,
+    "seen": 1792168652.6750631,
+    "ast_hash": "a1319087575bd267b1de79006c4e10c7",
     "semantic_hash": ""
   },
   "vendor/agents/agency-agents/.github/FUNDING.yml": {
@@ -78006,9 +78006,9 @@
     "semantic_hash": ""
   },
   "components/kokonus-lime-contoh.tsx": {
-    "mtime": 1792081811.1745918,
-    "seen": 1792117180.48943,
-    "ast_hash": "99128dfd6ce360046aba470340a099ce",
+    "mtime": 1792118412.202909,
+    "seen": 1792168652.047814,
+    "ast_hash": "3c7c22095296060d57cc2b382d466455",
     "semantic_hash": ""
   },
   "components/lime/ai/autonomy-rule.tsx": {
@@ -99399,6 +99399,126 @@
     "mtime": 1792014327.0943842,
     "seen": 1792117182.013559,
     "ast_hash": "4e8cb3013abb6fc4d9cf33c445367400",
+    "semantic_hash": ""
+  },
+  "components/keuangan-pipeline-stages.tsx": {
+    "mtime": 1792167209.018222,
+    "seen": 1792168652.047743,
+    "ast_hash": "350993b530d68ae8bb5b417a1c872ba9",
+    "semantic_hash": ""
+  },
+  "components/lime/ai/approval-request.tsx": {
+    "mtime": 1792117653.303671,
+    "seen": 1792168652.047883,
+    "ast_hash": "116c7483136fa1ceba03ef1db52fbc33",
+    "semantic_hash": ""
+  },
+  "components/lime/ai/message.tsx": {
+    "mtime": 1792117653.1623719,
+    "seen": 1792168652.0479722,
+    "ast_hash": "1c7a076fbe28e1e41c1d75f32342bead",
+    "semantic_hash": ""
+  },
+  "components/lime/blocks/assistant-alert.tsx": {
+    "mtime": 1792117874.044526,
+    "seen": 1792168652.0479748,
+    "ast_hash": "6e7117f401c1b54d242ea82544a422e0",
+    "semantic_hash": ""
+  },
+  "components/lime/blocks/assistant-approval.tsx": {
+    "mtime": 1792117653.3100116,
+    "seen": 1792168652.047977,
+    "ast_hash": "bba9ed8de3832eeed4cca0c68e91b552",
+    "semantic_hash": ""
+  },
+  "components/lime/ui/amount.tsx": {
+    "mtime": 1792117652.929993,
+    "seen": 1792168652.048139,
+    "ast_hash": "377e126348e337474ee7dbf9a9caa707",
+    "semantic_hash": ""
+  },
+  "components/lime/ui/bill-schedule.tsx": {
+    "mtime": 1792117653.2466986,
+    "seen": 1792168652.0481422,
+    "ast_hash": "8b19dd1762cbb4cb2e389d0e93da6994",
+    "semantic_hash": ""
+  },
+  "components/lime/ui/button.tsx": {
+    "mtime": 1792117653.0128424,
+    "seen": 1792168652.0481439,
+    "ast_hash": "24d43d6a64c3bfc2a6dac61785b3c8b2",
+    "semantic_hash": ""
+  },
+  "components/lime/ui/card.tsx": {
+    "mtime": 1792117653.130821,
+    "seen": 1792168652.048147,
+    "ast_hash": "22414422d646e7a6de1dd6d1b1e0bfea",
+    "semantic_hash": ""
+  },
+  "components/lime/ui/collapsible.tsx": {
+    "mtime": 1792117653.1770675,
+    "seen": 1792168652.048149,
+    "ast_hash": "ecf989d5b123b7c25faa708cfe66417b",
+    "semantic_hash": ""
+  },
+  "components/lime/ui/status.tsx": {
+    "mtime": 1792117653.2632692,
+    "seen": 1792168652.04832,
+    "ast_hash": "bd474cbd8c6837c68361665ca0d21b15",
+    "semantic_hash": ""
+  },
+  "components/owner-keuangan-dashboard-layout.tsx": {
+    "mtime": 1792167205.7473114,
+    "seen": 1792168652.050393,
+    "ast_hash": "a5ac1c12ddfcf3d1324267ef2b650ad6",
+    "semantic_hash": ""
+  },
+  "lib/lime/lint/classes.json": {
+    "mtime": 1792117939.2971365,
+    "seen": 1792168652.064675,
+    "ast_hash": "3c184d05197660fff78875fc4e2aa1a1",
+    "semantic_hash": ""
+  },
+  "lib/lime/lint/core.mjs": {
+    "mtime": 1792117939.2785573,
+    "seen": 1792168652.064678,
+    "ast_hash": "71b0a490fb84ada5a0c5f48262f97e2f",
+    "semantic_hash": ""
+  },
+  "lib/lime/lint/plugin.mjs": {
+    "mtime": 1792117938.178844,
+    "seen": 1792168652.0646799,
+    "ast_hash": "7ffb38a2d9f9649f44a07f77932f06d6",
+    "semantic_hash": ""
+  },
+  "lib/lime/lint/value-rules.mjs": {
+    "mtime": 1792117939.2919326,
+    "seen": 1792168652.064683,
+    "ast_hash": "3e1f53b2b469ace78d55b77498e614b4",
+    "semantic_hash": ""
+  },
+  "lib/lime/use-focus-when-replaced.ts": {
+    "mtime": 1792117652.8411453,
+    "seen": 1792168652.0647738,
+    "ast_hash": "ff71bc5437f7aad006757e7023d17a96",
+    "semantic_hash": ""
+  },
+  "lime.eslint.config.mjs": {
+    "mtime": 1792117937.7796931,
+    "seen": 1792168652.0718122,
+    "ast_hash": "fbe63261433a05d3daf58a09575b627f",
+    "semantic_hash": ""
+  },
+  "docs/design/lime-migration-audit.md": {
+    "mtime": 1792167193.9355257,
+    "seen": 1792168652.6663308,
+    "ast_hash": "ce4209fabece040f2f961ffa6d8aaac3",
+    "semantic_hash": ""
+  },
+  "docs/design/referensi-layout-dashboard-prompt.md": {
+    "mtime": 1792166264.2873554,
+    "seen": 1792168652.6663349,
+    "ast_hash": "07f5b246c85acb6d95ec9c605bafef40",
     "semantic_hash": ""
   }
 }

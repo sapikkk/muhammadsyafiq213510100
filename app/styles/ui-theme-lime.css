@@ -35,7 +35,51 @@ html[data-ui-theme="lime"] {
 }
 
 html[data-ui-theme="lime"] body {
-  font-family: "Hanken Grotesk", var(--font-inter-fallback, ui-sans-serif), system-ui, sans-serif;
+  font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+html[data-ui-theme="lime"] .tabular-nums,
+html[data-ui-theme="lime"] [data-slot="amount"] {
+  font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Owner keuangan — Monex / LeaseFlow (tema lime) */
+html[data-ui-theme="lime"] .owner-keuangan-hero {
+  background: var(--ink);
+  color: var(--fg-inverse);
+  border-color: var(--line);
+  border-radius: var(--radius-panel);
+}
+
+html[data-ui-theme="lime"] .owner-keuangan-hero-cta {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent-line);
+}
+
+html[data-ui-theme="lime"] .owner-keuangan-accent-metric {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: var(--radius-panel);
+}
+
+html[data-ui-theme="lime"] .lime-pipeline-hatch {
+  background: var(--accent-wash);
+  border-color: var(--line-strong);
+  border-radius: var(--radius-field);
+}
+
+html[data-ui-theme="lime"] .lime-pipeline-invert {
+  background: var(--ink);
+  color: var(--fg-inverse);
+  border-color: var(--line);
+  border-radius: var(--radius-panel);
+}
+
+html[data-ui-theme="lime"] .lime-pipeline-accent-bar {
+  background: var(--accent);
+  border-radius: var(--radius-sm);
 }
 
 html[data-ui-theme="lime"] .shadow-sm,

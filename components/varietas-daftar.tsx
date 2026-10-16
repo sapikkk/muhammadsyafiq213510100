@@ -3,6 +3,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
+import { VarietasGlyph } from "@/components/varietas-glyph";
 import { varietasStatusLabel, type VarietasStatus } from "@/lib/varietas-status";
 import type { SerializedVarietas } from "@/lib/varietas-types";
 
@@ -23,6 +24,12 @@ export function VarietasDaftar({
 }) {
   const columns = useMemo<ColumnDef<Row>[]>(() => {
     const cols: ColumnDef<Row>[] = [
+      {
+        id: "mark",
+        header: "",
+        cell: ({ row }) => <VarietasGlyph nama={row.original.nama} />,
+        enableSorting: false,
+      },
       { accessorKey: "nama", header: "Nama" },
       {
         accessorKey: "status",

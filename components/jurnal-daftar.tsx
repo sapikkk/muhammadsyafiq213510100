@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import { OpenDetailSheetLink } from "@/components/open-detail-sheet-link";
+import { useRouter } from "next/navigation";
 import { Fragment, useMemo, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,6 +35,7 @@ export function JurnalDaftar({
   /** Tombol filter / aksi di baris yang sama dengan pencarian. */
   listActions?: ReactNode;
 }) {
+  const router = useRouter();
   const [q, setQ] = useState("");
   const [pageIndex, setPageIndex] = useState(0);
   const [expanded, setExpanded] = useState<Set<number>>(() => new Set());
@@ -118,7 +120,21 @@ export function JurnalDaftar({
                   const open = expanded.has(row.id);
                   return (
                     <Fragment key={row.id}>
-                      <TableRow className="align-top">
+                      <TableRow
+                        className="cursor-pointer align-top transition-colors hover:bg-muted/30"
+                        onClick={(e) => {
+                          const target = e.target as HTMLElement | null;
+                          if (
+                            target?.closest(
+                              "button, a, input, [role='button'], [data-prevent-row-click]",
+                            )
+                          ) {
+                            return;
+                          }
+                          router.push(`${detailPrefix}/${row.id}`, { scroll: false });
+                        }}
+                        onMouseEnter={() => router.prefetch(`${detailPrefix}/${row.id}`)}
+                      >
                         <TableCell>
                           <button
                             type="button"
@@ -153,13 +169,12 @@ export function JurnalDaftar({
                           {formatRupiah(row.totalKredit)}
                         </TableCell>
                         <TableCell>
-                          <Link
+                          <OpenDetailSheetLink
                             href={`${detailPrefix}/${row.id}`}
-                            scroll={false}
-                            className="text-xs font-medium text-primary hover:underline"
+                            className="inline-flex min-h-9 items-center text-xs font-medium text-primary hover:underline"
                           >
                             Detail
-                          </Link>
+                          </OpenDetailSheetLink>
                         </TableCell>
                       </TableRow>
                       {open ? (

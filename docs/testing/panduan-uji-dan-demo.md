@@ -43,13 +43,17 @@ Black-box manual: [`docs/testing/tabel-blackbox-testing.md`](../tabel-blackbox-t
 
 ### Akun login (seed utama)
 
-| Peran | Email | Sandi |
+| Peran | Email | Sandi (setelah `seed:demo-lengkap` / `seed:kokonus-tahun`) |
 | --- | --- | --- |
-| Owner | owner@kokonus.farm | `KokonusDemo2026` (lihat `prisma/seed.js`) |
+| Owner | owner@kokonus.farm | `1` (atau `SEED_DEMO_PASSWORD`) |
 | Admin | admin@kokonus.farm | sama |
 | Petani | petani@kokonus.farm | sama |
 
-Sandi tidak di-commit; ganti sebelum sidang publik ([`docs/deployment/panduan-deploy-vercel-postgres.md`](../deployment/panduan-deploy-vercel-postgres.md)).
+Fondasi `npm run seed` saja: sandi Owner dari `SEED_OWNER_PASSWORD` di `.env` (min. 8 karakter).
+
+**Vercel pre-launch:** set `KOKONUS_PRELAUNCH_RBAC=true` agar admin/petani bisa buka `/owner/*` untuk uji hak akses; **matikan sebelum go-live**. Piutang butuh data: jalankan `npm run seed:kokonus-tahun` (atau `seed:demo-prod`) ke DB production.
+
+Sandi demo ganti sebelum go-live ([`docs/deployment/panduan-deploy-vercel-postgres.md`](../deployment/panduan-deploy-vercel-postgres.md)).
 
 ### Seed database
 

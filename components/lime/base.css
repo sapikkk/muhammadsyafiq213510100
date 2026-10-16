@@ -28,7 +28,10 @@
   .lime :where(img, video, canvas, svg) { display: block; max-width: 100%; }
   .lime :where(table) { border-collapse: collapse; }
   .lime :where(code, kbd, samp, pre) { font-family: var(--font-mono); }
-  .lime :where(td, th, time, data, output) { font-variant-numeric: tabular-nums; }
+  .lime :where(td, th, time, data, output, [data-slot="amount"], .tabular-nums) {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
   /* Every interactive element declares its transition, so no control cuts while its neighbour tweens. */
   .lime :where(a, button, summary, input, select, textarea, label, [role="button"], [role="tab"], [role="menuitem"], [role="option"], [role="switch"], [role="checkbox"], [role="radio"]) {
     transition-property: color, background-color, border-color, box-shadow, opacity;

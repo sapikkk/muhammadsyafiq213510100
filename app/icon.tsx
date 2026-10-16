@@ -3,6 +3,7 @@ import { ImageResponse } from "next/og";
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
+/** Favicon tab browser — warna dari emblem Figma (Primary Green). */
 export default function Icon() {
   return new ImageResponse(
     (
@@ -13,14 +14,18 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#166534",
-          color: "#ffffff",
-          fontSize: 20,
-          fontWeight: 700,
-          borderRadius: 6,
+          background: "#1a3d2e",
+          borderRadius: 8,
         }}
       >
-        K
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 3c-3 2-5 5-5 9a5 5 0 0 0 10 0c0-4-2-7-5-9Z"
+            stroke="#e4f222"
+            strokeWidth="1.8"
+          />
+          <path d="M12 12v9" stroke="#f6f5f2" strokeWidth="1.5" />
+        </svg>
       </div>
     ),
     { ...size },

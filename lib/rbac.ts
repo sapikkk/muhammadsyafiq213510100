@@ -11,12 +11,20 @@ export function isAuditBypassRbac(): boolean {
   );
 }
 
+/**
+ * Pre-launch staging (mis. Vercel): semua role boleh buka /owner, /admin, /petani + API.
+ * Set hanya di env hosting (jangan true di repo). Matikan sebelum go-live.
+ */
+export function isPrelaunchOpenRbac(): boolean {
+  return process.env.KOKONUS_PRELAUNCH_RBAC === "true";
+}
+
 export function isRoleAllowed(
   userRole: string | undefined | null,
   allowed: readonly Role[] | Role,
 ): boolean {
   if (!userRole) return false;
-  if (isAuditBypassRbac()) return true;
+  if (isAuditBypassRbac() || isPrelaunchOpenRbac()) return true;
   const list = Array.isArray(allowed) ? allowed : [allowed];
   return list.includes(userRole as Role);
 }

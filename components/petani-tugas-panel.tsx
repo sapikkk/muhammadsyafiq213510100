@@ -1,13 +1,12 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { TugasPetani } from "@/lib/tugas-petani-types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/data-table";
-import { cn } from "@/lib/utils";
+import { OpenDetailSheetLink } from "@/components/open-detail-sheet-link";
 
 const waktu = new Intl.DateTimeFormat("id-ID", {
   dateStyle: "medium",
@@ -36,8 +35,6 @@ export type HistoriPetaniBarisClient = {
   href: string;
 };
 
-type TabId = "tugas" | "histori";
-
 export function PetaniTugasPanel({
   tugas,
   histori,
@@ -45,7 +42,7 @@ export function PetaniTugasPanel({
   tugas: TugasPetani[];
   histori: HistoriPetaniBarisClient[];
 }) {
-  const [tab, setTab] = useState<TabId>("tugas");
+  const [historiOpen, setHistoriOpen] = useState(false);
 
   const tugasColumns = useMemo<ColumnDef<TugasPetani>[]>(
     () => [
@@ -82,12 +79,12 @@ export function PetaniTugasPanel({
         id: "aksi",
         header: "",
         cell: ({ row }) => (
-          <Link
+          <OpenDetailSheetLink
             href={row.original.href}
             className="text-xs font-medium text-primary underline-offset-4 hover:underline sm:text-sm"
           >
             Buka
-          </Link>
+          </OpenDetailSheetLink>
         ),
       },
     ],
@@ -128,12 +125,12 @@ export function PetaniTugasPanel({
         id: "link",
         header: "",
         cell: ({ row }) => (
-          <Link
+          <OpenDetailSheetLink
             href={row.original.href}
             className="text-xs text-primary underline-offset-4 hover:underline sm:text-sm"
           >
             Detail
-          </Link>
+          </OpenDetailSheetLink>
         ),
       },
     ],
@@ -141,65 +138,48 @@ export function PetaniTugasPanel({
   );
 
   return (
-    <div className="space-y-2 sm:space-y-3">
-      <div className="flex gap-1 sm:hidden" role="tablist" aria-label="Tugas atau histori">
+    <div className="space-y-3 sm:space-y-4">
+      <section className="space-y-2 sm:space-y-3" aria-label="Daftar tugas">
+        <p className="text-sm font-medium text-muted-foreground">Tugas</p>
+        <DataTable
+          columns={tugasColumns}
+          data={tugas}
+          pageSize={3}
+          hideSearchOnMobile
+          searchPlaceholder="Cari tugas…"
+          searchColumnIds={["judul", "deskripsi", "prioritas"]}
+          emptyMessage="Tidak ada tugas terbuka."
+          getRowHref={(row) => row.href}
+        />
+      </section>
+
+      <div className="flex flex-wrap items-center gap-2">
         <Button
           type="button"
+          variant="outline"
           size="sm"
-          variant={tab === "tugas" ? "default" : "outline"}
-          className="h-8 flex-1 text-xs"
-          onClick={() => setTab("tugas")}
-          role="tab"
-          aria-selected={tab === "tugas"}
+          className="h-11 min-h-11"
+          aria-expanded={historiOpen}
+          onClick={() => setHistoriOpen((v) => !v)}
         >
-          Tugas ({tugas.length})
-        </Button>
-        <Button
-          type="button"
-          size="sm"
-          variant={tab === "histori" ? "default" : "outline"}
-          className="h-8 flex-1 text-xs"
-          onClick={() => setTab("histori")}
-          role="tab"
-          aria-selected={tab === "histori"}
-        >
-          Histori ({histori.length})
+          {historiOpen ? "Sembunyikan histori" : `Lihat histori aktivitas (${histori.length})`}
         </Button>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2 lg:gap-6">
-        <section
-          className={cn("space-y-2 sm:space-y-3", tab !== "tugas" && "hidden sm:block")}
-          aria-label="Daftar tugas"
-        >
-          <p className="hidden text-sm font-medium text-muted-foreground sm:block">Tugas</p>
-          <DataTable
-            columns={tugasColumns}
-            data={tugas}
-            pageSize={3}
-            hideSearchOnMobile
-            searchPlaceholder="Cari tugas…"
-            searchColumnIds={["judul", "deskripsi", "prioritas"]}
-            emptyMessage="Tidak ada tugas terbuka."
-          />
-        </section>
-
-        <section
-          className={cn("space-y-2 sm:space-y-3", tab !== "histori" && "hidden sm:block")}
-          aria-label="Histori aktivitas"
-        >
-          <p className="hidden text-sm font-medium text-muted-foreground sm:block">Histori</p>
+      {historiOpen ? (
+        <section className="space-y-2 sm:space-y-3" aria-label="Histori aktivitas">
           <DataTable
             columns={historiColumns}
             data={histori}
-            pageSize={3}
+            pageSize={6}
             hideSearchOnMobile
             searchPlaceholder="Cari lokasi atau ringkasan…"
             searchColumnIds={["siklus", "ringkasan", "jenis"]}
             emptyMessage="Belum ada log produksi."
+            getRowHref={(row) => row.href}
           />
         </section>
-      </div>
+      ) : null}
     </div>
   );
 }

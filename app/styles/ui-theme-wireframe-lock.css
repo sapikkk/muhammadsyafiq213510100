@@ -9,3 +9,16 @@ html[data-ui-theme="wireframe"] {
 html[data-ui-theme="wireframe"] body {
   font-family: inherit;
 }
+
+html[data-ui-theme="wireframe"] .owner-keuangan-accent-metric {
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+}
+
+html[data-ui-theme="wireframe"] .lime-pipeline-hatch {
+  background: repeating-linear-gradient(
+    -45deg,
+    hsl(0 0% 90%) 0 4px,
+    hsl(0 0% 96%) 4px 8px
+  );
+}

@@ -6,7 +6,6 @@ import { signOut } from "next-auth/react";
 import {
   ChevronDown,
   ChevronRight,
-  LeafyGreen,
   LogOut,
   Settings,
 } from "lucide-react";
@@ -17,6 +16,7 @@ import {
   isOwnerSidebarModuleActive,
   OWNER_SIDEBAR_MODULES,
 } from "@/lib/owner-sidebar-nav";
+import { KokonusBrandMark } from "@/components/kokonus-brand-mark";
 import { NotifikasiUnreadBadge } from "@/components/notifikasi-unread-badge";
 import { getNavItems, type NavItem } from "@/lib/nav-items";
 import type { Role } from "@/types/role";
@@ -104,9 +104,7 @@ export function AppSidebar({
           className="flex items-center gap-2"
           onClick={() => onNavigate?.()}
         >
-          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-foreground">
-            <LeafyGreen className="h-4 w-4 text-background" />
-          </div>
+          <KokonusBrandMark size={28} className="rounded-md" />
           <span className="text-sm font-semibold tracking-tight">Kokonus Farm</span>
         </Link>
       </div>

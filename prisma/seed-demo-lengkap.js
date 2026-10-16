@@ -13,7 +13,8 @@ const { seedPetani } = require("./seed-petani");
 const { seedSiklusDemo } = require("./seed-siklus-demo");
 
 const prisma = new PrismaClient();
-const password = "KokonusDemo2026";
+/** Pre-launch uji; override: SEED_DEMO_PASSWORD di .env */
+const password = process.env.SEED_DEMO_PASSWORD?.trim() || "1";
 
 const accounts = [
   { nama: "Koko Nuswantoro", email: "owner@kokonus.farm", role: "OWNER" },
