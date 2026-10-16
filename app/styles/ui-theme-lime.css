@@ -88,3 +88,13 @@ html[data-ui-theme="lime"] [data-slot="card"] {
     0 1px 2px rgb(40 36 20 / 0.06),
     0 1px 1px rgb(40 36 20 / 0.04);
 }
+
+/* Daftar Lime + halaman auth */
+html[data-ui-theme="lime"] [data-slot="list"][data-variant="grouped"] {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+}
+
+html[data-ui-theme="lime"] main.bg-page {
+  background: var(--page);
+}

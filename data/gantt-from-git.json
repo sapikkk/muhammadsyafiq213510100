@@ -1,10 +1,10 @@
 {
   "range": {
     "start": "2026-10-06",
-    "end": "2026-10-16"
+    "end": "2026-10-17"
   },
   "months": [
-    "6 Okt 2026 – 16 Okt 2026"
+    "6 Okt 2026 – 17 Okt 2026"
   ],
   "lanes": [
     {
@@ -24,7 +24,7 @@
         {
           "label": "Dokumen UCD v2",
           "start": "2026-10-10",
-          "end": "2026-10-16"
+          "end": "2026-10-17"
         }
       ]
     },
@@ -57,12 +57,12 @@
         {
           "label": "Deploy & go-live",
           "start": "2026-10-10",
-          "end": "2026-10-16"
+          "end": "2026-10-17"
         }
       ]
     }
   ],
-  "caption": "11 hari · 6 Okt – 16 Okt",
+  "caption": "12 hari · 6 Okt – 17 Okt",
   "scale": "day",
-  "dayCount": 11
+  "dayCount": 12
 }

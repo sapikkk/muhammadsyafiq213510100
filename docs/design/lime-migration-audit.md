@@ -40,13 +40,15 @@ Legenda: **W** wireframe only · **B** jembatan CSS lime · **L** import `@/comp
 | Rute | W | B | L | Catatan |
 |------|---|---|---|---------|
 | `/pengaturan` | ✓ | ✓ | ✓ | `KokonusLimeContoh` |
+| `/login` | ✓ | ✓ | ✓ | Emblem + Input/Button Lime saat tema lime |
+| `/*/varietas` (admin/owner/petani) | ✓ | ✓ | ✓ | `VarietasDaftarLime` (List + Carbon) |
 | `/owner/keuangan` | ✓ | ✓ | — | Layout Monex/LeaseFlow (2026-10-16); masih `@/components/ui` |
 | `/owner/*` (28 halaman lain) | ✓ | ✓ | — | MetricCards, lucide, Card |
 | `/admin/*` | ✓ | ✓ | — | sama |
 | `/petani/*` | ✓ | ✓ | — | bento petani ada, bukan Lime |
 | `/login`, `/lupa-sandi`, … | ✓ | ✓ | — | form shadcn |
 
-**95** file `page.tsx`; **1** halaman pakai komponen Lime langsung (Pengaturan contoh).
+**95** file `page.tsx`; **4+** alur pakai komponen Lime langsung saat `data-ui-theme=lime` (Pengaturan, login, varietas).
 
 ## Prioritas migrasi (disarankan)
 
