@@ -1,0 +1,116 @@
+/* Landing publik — bentuk organik, terpisah dari wireframe app shell */
+
+.kokonus-landing {
+  --kl-deep: #0f2920;
+  --kl-green: #1a3d2e;
+  --kl-lime: #d3fa53;
+  --kl-cream: #f7f5ef;
+  --kl-ink: #0c0c0b;
+  color: var(--kl-cream);
+  background: var(--kl-deep);
+}
+
+.kokonus-landing__blob {
+  position: absolute;
+  border-radius: 55% 45% 60% 40% / 50% 55% 45% 50%;
+  filter: blur(0);
+  pointer-events: none;
+}
+
+.kokonus-landing__nav-pill {
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.08);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.kokonus-landing__hero-panel {
+  border-radius: 2.75rem 2.75rem 2.75rem 0.75rem;
+  background: linear-gradient(145deg, var(--kl-lime) 0%, #b8e840 55%, #9fd632 100%);
+  color: var(--kl-ink);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 2.5rem),
+    calc(100% - 3rem) 100%,
+    0 100%
+  );
+}
+
+@media (min-width: 768px) {
+  .kokonus-landing__hero-panel {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - 4rem),
+      calc(100% - 5rem) 100%,
+      0 100%
+    );
+  }
+}
+
+.kokonus-landing__wave {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: -1px;
+}
+
+.kokonus-landing__bento {
+  border-radius: 2rem;
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.1);
+}
+
+.kokonus-landing__bento--lime {
+  background: linear-gradient(160deg, rgb(211 250 83 / 0.22), rgb(211 250 83 / 0.06));
+  border-color: rgb(211 250 83 / 0.35);
+}
+
+.kokonus-landing__pill-btn {
+  border-radius: 9999px;
+  min-height: 2.75rem;
+  padding-inline: 1.35rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kokonus-landing__pill-btn:active {
+  transform: scale(0.98);
+}
+
+.kokonus-landing__pill-btn--solid {
+  background: var(--kl-cream);
+  color: var(--kl-ink);
+  box-shadow: none;
+}
+
+.kokonus-landing__pill-btn--ghost {
+  background: rgb(255 255 255 / 0.12);
+  color: var(--kl-cream);
+  border: 1px solid rgb(255 255 255 / 0.2);
+  backdrop-filter: blur(8px);
+}
+
+.kokonus-landing__stat-orbit {
+  border-radius: 9999px;
+  border: 1px dashed rgb(211 250 83 / 0.45);
+  padding: 0.35rem 0.85rem;
+}
+
+.kokonus-landing__display {
+  font-variation-settings: "wdth" 100;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.kokonus-landing__display-accent {
+  color: var(--kl-lime);
+  font-weight: 800;
+}
+
+.kokonus-landing__photo-cut {
+  border-radius: 2.5rem 0.75rem 2.5rem 2.5rem;
+  object-fit: cover;
+}

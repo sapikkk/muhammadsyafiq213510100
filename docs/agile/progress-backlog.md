@@ -4,7 +4,7 @@
 **Board:** [GitHub Project #1](https://github.com/users/sapikkk/projects/1)  
 **Blackbox:** [`../testing/uji-blackbox.md`](../testing/uji-blackbox.md)
 
-Sinkron: `npm run sync:project-board` · dashboard `/`: `npm run sync:agile-progress`
+Sinkron: `npm run sync:project-board` · dashboard tim `/hub`: `npm run sync:agile-progress`
 
 ---
 
