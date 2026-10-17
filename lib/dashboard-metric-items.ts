@@ -1,5 +1,6 @@
 import type { MetricCardItem } from "@/components/metric-cards";
 import type { KapasitasKolamRingkas } from "@/lib/produksi-kapasitas-types";
+import { METRIC_ICON_BY_ID } from "@/lib/metric-icons";
 
 export type DashboardBasePath = "/admin" | "/owner" | "/petani";
 
@@ -24,6 +25,7 @@ export function metricLubangTerisi(
   if (kap.totalLubang <= 0) {
     return {
       id: "lubang-terisi",
+      icon: METRIC_ICON_BY_ID["lubang-terisi"],
       label: "Lubang terisi",
       value: "—",
       emptyState: {
@@ -35,6 +37,7 @@ export function metricLubangTerisi(
   }
   return {
     id: "lubang-terisi",
+    icon: METRIC_ICON_BY_ID["lubang-terisi"],
     label: "Lubang terisi",
     value: `${kap.pctTerisi}%`,
     hint: `${kap.lubangTerisi} dari ${kap.totalLubang} lubang`,
@@ -49,6 +52,7 @@ export function metricSiapJual(
   if (kap.totalLubang <= 0) {
     return {
       id: "siap-jual",
+      icon: METRIC_ICON_BY_ID["siap-jual"],
       label: "Lubang siap jual",
       value: "—",
       emptyState: {
@@ -61,6 +65,7 @@ export function metricSiapJual(
   if (siapJual <= 0) {
     return {
       id: "siap-jual",
+      icon: METRIC_ICON_BY_ID["siap-jual"],
       label: "Lubang siap jual",
       value: "—",
       emptyState: {
@@ -73,6 +78,7 @@ export function metricSiapJual(
   }
   return {
     id: "siap-jual",
+    icon: METRIC_ICON_BY_ID["siap-jual"],
     label: "Lubang siap jual",
     value: siapJual,
   };
@@ -82,6 +88,7 @@ export function metricStokRendah(count: number, base: DashboardBasePath): Metric
   if (count > 0) {
     return {
       id: "stok-rendah",
+      icon: METRIC_ICON_BY_ID["stok-rendah"],
       label: "Stok di bawah minimum",
       value: count,
       hint: "Perlu cek stok barang",
@@ -93,6 +100,7 @@ export function metricStokRendah(count: number, base: DashboardBasePath): Metric
   }
   return {
     id: "stok-rendah",
+    icon: METRIC_ICON_BY_ID["stok-rendah"],
     label: "Stok di bawah minimum",
     value: count,
     hint: "Semua aman",
@@ -108,6 +116,7 @@ export function metricTugasPetani(count: number): MetricCardItem {
   if (count <= 0) {
     return {
       id: "tugas",
+      icon: METRIC_ICON_BY_ID.tugas,
       label: "Tugas hari ini",
       value: "—",
       emptyState: {
@@ -119,6 +128,7 @@ export function metricTugasPetani(count: number): MetricCardItem {
   }
   return {
     id: "tugas",
+    icon: METRIC_ICON_BY_ID.tugas,
     label: "Tugas hari ini",
     value: count,
   };

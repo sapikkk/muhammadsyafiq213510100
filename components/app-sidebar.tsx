@@ -3,13 +3,8 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { signOut } from "next-auth/react";
-import {
-  ChevronDown,
-  ChevronRight,
-  LeafyGreen,
-  LogOut,
-  Settings,
-} from "lucide-react";
+import { ChevronDown, ChevronRight, LogOut, Settings } from "lucide-react";
+import { KokonusSidebarLogo } from "@/components/kokonus-sidebar-logo";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { getNavFlowGroups, type NavFlowGroup } from "@/lib/nav-flow";
@@ -98,16 +93,13 @@ export function AppSidebar({
 
   return (
     <aside className="flex h-screen w-64 flex-col border-r bg-sidebar">
-      <div className="flex h-14 shrink-0 items-center border-b px-4">
+      <div className="flex h-14 shrink-0 items-center border-b px-3">
         <Link
           href={role === "OWNER" ? "/owner" : "/"}
-          className="flex items-center gap-2"
+          className="flex min-w-0 flex-1 items-center"
           onClick={() => onNavigate?.()}
         >
-          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-foreground">
-            <LeafyGreen className="h-4 w-4 text-background" />
-          </div>
-          <span className="text-sm font-semibold tracking-tight">Kokonus Farm</span>
+          <KokonusSidebarLogo />
         </Link>
       </div>
 

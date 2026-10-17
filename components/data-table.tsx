@@ -194,9 +194,9 @@ export function DataTable<TData, TValue>({
           aria-label={searchPlaceholder}
         />
       ) : null}
-      <div className="-mx-0.5 w-full min-w-0 max-w-full overflow-x-auto rounded-md border bg-card">
+      <div className="data-table-panel -mx-0.5 w-full min-w-0 max-w-full">
         <Table noContainer>
-          <TableHeader className="sticky top-0 z-10 bg-muted">
+          <TableHeader className="sticky top-0 z-10">
             {table.getHeaderGroups().map((hg) => (
               <TableRow key={hg.id} className="hover:bg-transparent">
                 {hg.headers.map((header) => {
@@ -208,7 +208,7 @@ export function DataTable<TData, TValue>({
                     <TableHead
                       key={header.id}
                       className={cn(
-                        "h-10 whitespace-nowrap px-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground",
+                        "h-10 whitespace-nowrap px-3 text-xs font-semibold uppercase tracking-wide",
                         canSort && "cursor-pointer select-none",
                         metaClass,
                       )}

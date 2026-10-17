@@ -6,7 +6,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap");
 @import "../../vendor/design/lime/tokens.css";
 
-html[data-ui-theme="lime"] {
+/* Token Lime (--popover = lebar px) bentrok dengan shadcn — ulang di html + body.lime */
+html[data-ui-theme="lime"],
+html[data-ui-theme="lime"] body.lime {
   --background: 40 20% 98%;
   --foreground: 60 6% 5%;
   --card: 0 0% 100%;
@@ -35,6 +37,8 @@ html[data-ui-theme="lime"] {
   --sidebar-accent-foreground: 60 6% 5%;
   --sidebar-border: 45 8% 89%;
   --sidebar-ring: 68 100% 26%;
+  /* Lebar overlay Lime — jangan pakai nama --popover */
+  --lime-popover-width: 320px;
 }
 
 html[data-ui-theme="lime"] body {

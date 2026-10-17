@@ -92,3 +92,34 @@
     text-wrap: pretty;
   }
 }
+
+@layer components {
+  /* Tabel daftar: header kontras, isi tanpa kotak border ganda */
+  .data-table-panel {
+    @apply overflow-x-auto rounded-md;
+  }
+
+  .data-table-panel thead tr {
+    @apply border-0 bg-foreground hover:bg-foreground;
+  }
+
+  .data-table-panel thead th {
+    @apply text-background;
+  }
+
+  .data-table-panel tbody tr {
+    @apply border-b border-border/70 transition-colors hover:bg-muted/30;
+  }
+
+  .data-table-panel tbody tr:last-child {
+    @apply border-b-0;
+  }
+
+  html[data-ui-theme="lime"] .data-table-panel thead tr {
+    background-color: hsl(var(--ring));
+  }
+
+  html[data-ui-theme="lime"] .data-table-panel thead th {
+    @apply text-white;
+  }
+}

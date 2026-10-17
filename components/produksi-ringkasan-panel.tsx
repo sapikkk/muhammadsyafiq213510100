@@ -1,6 +1,7 @@
 import { DashboardBentoEmpty } from "@/components/dashboard-bento-empty";
 import { MetricCards } from "@/components/metric-cards";
 import { MonochromeProgressBar } from "@/components/monochrome-progress-bar";
+import { METRIC_ICON_BY_ID, metricIconForFaseLabel } from "@/lib/metric-icons";
 import type { ProduksiRingkasan } from "@/lib/produksi-kapasitas-types";
 
 export function ProduksiRingkasanPanel({
@@ -45,12 +46,14 @@ export function ProduksiRingkasanPanel({
         items={[
           ...data.fase.map((f) => ({
             id: `fase-${f.fase}`,
+            icon: metricIconForFaseLabel(f.label),
             label: f.label,
             value: f.lubang.toLocaleString("id-ID"),
             hint: `${f.jumlahBatch} batch`,
           })),
           {
             id: "siap-jual",
+            icon: METRIC_ICON_BY_ID["siap-jual"],
             label: "Siap jual",
             value: data.siapJualLubang.toLocaleString("id-ID"),
             hint: "Lubang layak jual, belum dipesan",

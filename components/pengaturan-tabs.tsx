@@ -33,8 +33,8 @@ export function PengaturanTabs({ showTimTab }: { showTimTab: boolean }) {
   const tabs = showTimTab ? [...TABS_BASE, TAB_TIM] : TABS_BASE;
 
   return (
-    <nav aria-label="Bagian pengaturan" className="overflow-x-auto border-b pb-2">
-      <ul className="flex min-w-max gap-1">
+    <nav aria-label="Bagian pengaturan" className="border-b pb-2">
+      <ul className="flex flex-wrap gap-1">
         {tabs.map((tab) => {
           const active = tabActive(pathname, searchParams, tab);
           return (
