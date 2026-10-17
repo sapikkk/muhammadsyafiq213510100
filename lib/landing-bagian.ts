@@ -9,6 +9,8 @@ export const LANDING_BAGIAN = [
   "ATHLETE",
   "VERIFICATION",
   "FOOTER",
+  "TENTANG",
+  "EMBED",
 ] as const;
 
 export type LandingBagianId = (typeof LANDING_BAGIAN)[number];
@@ -22,6 +24,8 @@ export const LANDING_BAGIAN_LABEL: Record<LandingBagianId, string> = {
   ATHLETE: "Tim & pengalaman",
   VERIFICATION: "Stat verifikasi",
   FOOTER: "Footer",
+  TENTANG: "Tentang kami (halaman /tentang)",
+  EMBED: "Stok kartu sosmed (embed)",
 };
 
 export function isLandingBagian(raw: string): raw is LandingBagianId {

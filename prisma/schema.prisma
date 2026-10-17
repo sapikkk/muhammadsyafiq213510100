@@ -548,20 +548,25 @@ enum LandingBagian {
   ATHLETE
   VERIFICATION
   FOOTER
+  TENTANG
+  EMBED
 }
 
 model Landing_Kartu {
-  id     Int           @id @default(autoincrement())
-  bagian LandingBagian
-  urutan Int           @default(0)
-  judul  String        @db.VarChar(160)
-  meta   String?       @db.VarChar(255)
-  teks   String?       @db.Text
-  label  String?       @db.VarChar(80)
-  gambar String        @db.VarChar(500)
-  aktif  Boolean       @default(true)
+  id          Int           @id @default(autoincrement())
+  bagian      LandingBagian
+  urutan      Int           @default(0)
+  judul       String        @db.VarChar(160)
+  meta        String?       @db.VarChar(255)
+  teks        String?       @db.Text
+  label       String?       @db.VarChar(80)
+  gambar      String        @db.VarChar(500)
+  aktif       Boolean       @default(true)
+  embedAktif  Boolean       @default(false)
+  slug        String?       @unique @db.VarChar(80)
 
   @@index([bagian, urutan])
+  @@index([embedAktif, aktif])
 }
 
 /// Teks & gambar latar landing (satu baris).

@@ -13,6 +13,8 @@ export type LandingKartuView = {
   label: string | null;
   gambar: string;
   aktif: boolean;
+  embedAktif: boolean;
+  slug: string | null;
 };
 
 export type LandingBundle = {
@@ -31,6 +33,8 @@ function toView(row: Landing_Kartu): LandingKartuView {
     label: row.label,
     gambar: row.gambar,
     aktif: row.aktif,
+    embedAktif: row.embedAktif,
+    slug: row.slug,
   };
 }
 
@@ -44,6 +48,8 @@ function emptyByBagian(): Record<LandingBagianId, LandingKartuView[]> {
     ATHLETE: [],
     VERIFICATION: [],
     FOOTER: [],
+    TENTANG: [],
+    EMBED: [],
   };
 }
 
@@ -84,9 +90,20 @@ function fallbackBundle(): LandingBundle {
       label: k.label ?? null,
       gambar: k.gambar,
       aktif: true,
+      embedAktif: false,
+      slug: null,
     });
   });
   return { konten, kartu };
+}
+
+export async function listLandingKartuEmbed(): Promise<LandingKartuView[]> {
+  await ensureLandingSeeded();
+  const rows = await prisma.landing_Kartu.findMany({
+    where: { aktif: true, embedAktif: true },
+    orderBy: [{ urutan: "asc" }, { id: "asc" }],
+  });
+  return rows.map(toView);
 }
 
 export async function loadLandingBundle(): Promise<LandingBundle> {

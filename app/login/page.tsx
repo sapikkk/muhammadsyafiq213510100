@@ -124,6 +124,13 @@ export default function LoginPage() {
           >
             Lupa sandi?
           </Link>
+          {" · "}
+          <Link
+            href="/"
+            className="font-medium text-foreground underline-offset-4 hover:underline"
+          >
+            Lihat halaman depan
+          </Link>
         </p>
         <PageGuideFooter />
       </div>
