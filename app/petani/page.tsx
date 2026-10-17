@@ -105,7 +105,7 @@ export default async function PetaniPage() {
           <PetaniBerandaAlurTanam tugasUtama={tugasUtama} produksi={produksi} />
         </BentoSlot>
 
-        <BentoSlot span={3} className="order-4">
+        <BentoSlot span={4} className="order-4">
           <MonitorKolamBeranda
             totalLogs={monitor.totalLogs}
             logTerbaru={monitor.logTerbaru}
@@ -121,7 +121,7 @@ export default async function PetaniPage() {
           />
         </BentoSlot>
 
-        <BentoSlot span={3} className="order-5">
+        <BentoSlot span={2} className="order-5 max-lg:col-span-full">
           <BentoSection title="Tugas dan histori" id="tugas-hari-ini">
             {tugas.length === 0 && histori.length === 0 ? (
               <DashboardBentoEmpty

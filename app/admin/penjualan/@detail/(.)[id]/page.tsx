@@ -5,7 +5,7 @@ export default function AdminPenjualanDetailSheet({ params }: { params: { id: st
   if (params.id === "baru") return null;
 
   return (
-    <DetailSheetFrame>
+    <DetailSheetFrame listHref="/admin/penjualan">
       <SalesOrderDetailLayout
         id={Number(params.id)}
         listHref="/admin/penjualan"

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { FinanceModuleNav } from "@/components/finance-module-nav";
 import { DetailLayoutToolbar } from "@/components/detail-layout-toolbar";
+import { DetailSheetBackLink } from "@/components/detail-sheet-back-link";
 import { Button } from "@/components/ui/button";
 import { detailTitleClass, pageLeadClass, pageContentClass } from "@/lib/ui-typography";
 import { cn } from "@/lib/utils";
@@ -51,20 +52,21 @@ export function DetailLayout({
     >
       {financeNavRole && !inSheet ? <FinanceModuleNav role={financeNavRole} /> : null}
       <div className={cn(inSheet && "space-y-4")}>
-        <Button
-          asChild
-          variant="ghost"
-          size="sm"
-          className={cn(
-            "-ml-2 mb-3 min-h-11 gap-1.5 px-2 text-sm text-muted-foreground hover:bg-muted/40 hover:text-foreground",
-            inSheet && "mb-1",
-          )}
-        >
-          <Link href={backHref} scroll={false}>
-            <ArrowLeft className="size-3.5" aria-hidden />
-            <span>{backLabel}</span>
-          </Link>
-        </Button>
+        {inSheet ? (
+          <DetailSheetBackLink href={backHref} label={backLabel} className={inSheet ? "mb-1" : undefined} />
+        ) : (
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="-ml-2 mb-3 min-h-11 gap-1.5 px-2 text-sm text-muted-foreground hover:bg-muted/40 hover:text-foreground"
+          >
+            <Link href={backHref} scroll={false}>
+              <ArrowLeft className="size-3.5" aria-hidden />
+              <span>{backLabel}</span>
+            </Link>
+          </Button>
+        )}
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
           <header className="min-w-0 space-y-1">

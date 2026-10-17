@@ -1,9 +1,8 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Suspense, type ReactNode } from "react";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
-import { listHrefFromDetailPathname } from "@/lib/detail-list-href";
 import { cn } from "@/lib/utils";
 
 function DetailSheetLoading() {
@@ -16,18 +15,19 @@ function DetailSheetLoading() {
   );
 }
 
-/** Sheet detail lebar — tutup kembali ke daftar (bukan router.back). */
+/**
+ * Sheet detail lebar — tutup kembali ke daftar (`router.replace`, bukan `router.back`).
+ * `listHref` wajib: intercept `@detail` sering membuat pathname = URL daftar, jadi fallback pathname tidak cukup.
+ */
 export function DetailSheetFrame({
   children,
-  dismissHref,
+  listHref,
 }: {
   children: ReactNode;
-  /** Default: induk path dari URL saat ini (mis. /admin/inventaris/5 → /admin/inventaris). */
-  dismissHref?: string;
+  /** Daftar induk modul, mis. `/petani/inventaris`. */
+  listHref: string;
 }) {
   const router = useRouter();
-  const pathname = usePathname();
-  const listHref = dismissHref ?? listHrefFromDetailPathname(pathname);
 
   const dismiss = () => {
     router.replace(listHref, { scroll: false });

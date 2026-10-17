@@ -660,9 +660,9 @@
     "semantic_hash": ""
   },
   "components/ui/select.tsx": {
-    "mtime": 1792245432.5786502,
-    "seen": 1792246597.305675,
-    "ast_hash": "56395e1520764ae2fb0a7a042a1f0a84",
+    "mtime": 1792248393.1198342,
+    "seen": 1792248757.605545,
+    "ast_hash": "618316b3cadbf5e07c36fd703f681fce",
     "semantic_hash": ""
   },
   "components/ui/table.tsx": {
@@ -840,9 +840,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1792245965.9826028,
-    "seen": 1792246597.3330681,
-    "ast_hash": "52824d2542c332eb4c5e8285eb3c6f0f",
+    "mtime": 1792248391.856151,
+    "seen": 1792248757.623029,
+    "ast_hash": "9d8f94782a87afdae71b4a378e441eec",
     "semantic_hash": ""
   },
   "postcss.config.js": {
@@ -924,9 +924,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1792245432.5121272,
-    "seen": 1792246598.954452,
-    "ast_hash": "2d89f0510a58cc735d0fdfa45703b3b2",
+    "mtime": 1792248391.833847,
+    "seen": 1792248758.391098,
+    "ast_hash": "d1db6b31be755821f9ae798005cc0056",
     "semantic_hash": ""
   },
   "README.md": {
@@ -1608,9 +1608,9 @@
     "semantic_hash": ""
   },
   "app/owner/arus-kas/page.tsx": {
-    "mtime": 1792006255.8425872,
-    "seen": 1792117180.483093,
-    "ast_hash": "c4df146af0adc3482d63621a659278bc",
+    "mtime": 1792248393.098128,
+    "seen": 1792248757.577803,
+    "ast_hash": "58b90c87daafd9e0a7c93f496e984081",
     "semantic_hash": ""
   },
   "lib/cash-flow.ts": {
@@ -1794,9 +1794,9 @@
     "semantic_hash": ""
   },
   "components/agile-progress-dashboard.tsx": {
-    "mtime": 1791749933.884879,
-    "seen": 1791965329.896371,
-    "ast_hash": "e95d24ff849bba782837adf822ac0384",
+    "mtime": 1792248393.1020975,
+    "seen": 1792248757.587042,
+    "ast_hash": "d319d1a88e9f3a204f0e180f84c7273f",
     "semantic_hash": ""
   },
   "components/app-shell-layout.tsx": {
@@ -2850,9 +2850,9 @@
     "semantic_hash": ""
   },
   "app/owner/varietas/@detail/(.)[id]/page.tsx": {
-    "mtime": 1791746422.27412,
-    "seen": 1791965329.8962822,
-    "ast_hash": "d26d038c21b5452955aa51da64a22060",
+    "mtime": 1792248393.0988142,
+    "seen": 1792248757.5823581,
+    "ast_hash": "876adeeb709701ee8ca1d21799939d0d",
     "semantic_hash": ""
   },
   "app/owner/varietas/@detail/default.tsx": {
@@ -3054,9 +3054,9 @@
     "semantic_hash": ""
   },
   "components/cash-flow-summary-chart.tsx": {
-    "mtime": 1791826016.5208151,
-    "seen": 1791965329.89639,
-    "ast_hash": "93600b57ff7ae0f43d4bb7d3ce5c55bf",
+    "mtime": 1792248393.102755,
+    "seen": 1792248757.5886579,
+    "ast_hash": "de395c6088d4aeaf3d6a605d7251c06c",
     "semantic_hash": ""
   },
   "components/catat-uang-form-block.tsx": {
@@ -3162,9 +3162,9 @@
     "semantic_hash": ""
   },
   "components/detail-layout.tsx": {
-    "mtime": 1792006256.0246425,
-    "seen": 1792117180.4878058,
-    "ast_hash": "7f43d897cbaac7507da94e7b96d444fe",
+    "mtime": 1792248393.1061196,
+    "seen": 1792248757.590074,
+    "ast_hash": "08234a9985f10f4f52a46271325d3327",
     "semantic_hash": ""
   },
   "components/detail-sheet-frame.tsx": {
@@ -3396,9 +3396,9 @@
     "semantic_hash": ""
   },
   "components/owner-neraca-tampilan.tsx": {
-    "mtime": 1792176010.574571,
-    "seen": 1792246597.2879438,
-    "ast_hash": "c164db4bca88e58919c3aab9ab15aac6",
+    "mtime": 1792248393.1169462,
+    "seen": 1792248757.598707,
+    "ast_hash": "65fbd1b75f69172a50289550b9991610",
     "semantic_hash": ""
   },
   "components/owner-petani-akun-daftar.tsx": {
@@ -3690,9 +3690,9 @@
     "semantic_hash": ""
   },
   "lib/detail-list-href.ts": {
-    "mtime": 1792006257.1997645,
-    "seen": 1792117180.494834,
-    "ast_hash": "388db5098732cb3f369450c3cbfa6149",
+    "mtime": 1792248393.50346,
+    "seen": 1792248757.609385,
+    "ast_hash": "8fa2c8aebecbe7b431ecb12a4f60aa28",
     "semantic_hash": ""
   },
   "lib/entity-audit.ts": {
@@ -9414,9 +9414,9 @@
     "semantic_hash": ""
   },
   "components/owner-period-filter.tsx": {
-    "mtime": 1792006256.3073554,
-    "seen": 1792117180.490268,
-    "ast_hash": "f9092566004ac7d1d2d4d83f69e3f292",
+    "mtime": 1792248393.1182623,
+    "seen": 1792248757.59871,
+    "ast_hash": "fa0bf234cd1bea6bd74855c3af8c179a",
     "semantic_hash": ""
   },
   "lib/period-nav.ts": {
@@ -99396,9 +99396,9 @@
     "semantic_hash": ""
   },
   "components/keuangan-pipeline-stages.tsx": {
-    "mtime": 1792170466.2432206,
-    "seen": 1792171683.123615,
-    "ast_hash": "3c8ff10e8f3ba21feeaecceea0fc7ee4",
+    "mtime": 1792248393.1068237,
+    "seen": 1792248757.5932841,
+    "ast_hash": "70290a3c135ae48c0c6512bcab68f34b",
     "semantic_hash": ""
   },
   "components/lime/ai/approval-request.tsx": {
@@ -99462,9 +99462,9 @@
     "semantic_hash": ""
   },
   "components/owner-keuangan-dashboard-layout.tsx": {
-    "mtime": 1792176008.805138,
-    "seen": 1792246597.2876842,
-    "ast_hash": "204f0ad832d4ef428f4e48dda9a85c68",
+    "mtime": 1792248393.1147983,
+    "seen": 1792248757.598496,
+    "ast_hash": "0bf81d21202d5dc04339cd6135ed18f4",
     "semantic_hash": ""
   },
   "lib/lime/lint/classes.json": {
@@ -99528,9 +99528,9 @@
     "semantic_hash": ""
   },
   "components/kokonus-brand-mark.tsx": {
-    "mtime": 1792172855.1846805,
-    "seen": 1792173090.563006,
-    "ast_hash": "ab050ca9b8a4d837028598fe4c2ee8ec",
+    "mtime": 1792248393.1083763,
+    "seen": 1792248757.593357,
+    "ast_hash": "1ae283ae6ad72612aeb14f0d14acfe57",
     "semantic_hash": ""
   },
   "components/lime/varietas-list-icon.tsx": {
@@ -99576,9 +99576,9 @@
     "semantic_hash": ""
   },
   "docs/design/perencanaan-ui-figma-kokonus.md": {
-    "mtime": 1792169160.556839,
-    "seen": 1792171687.392769,
-    "ast_hash": "88979c735cb9790eadad8cf8fbf16d29",
+    "mtime": 1792248393.1207988,
+    "seen": 1792248758.404623,
+    "ast_hash": "36de458a76c3acb15eabe838c37e3c5a",
     "semantic_hash": ""
   },
   "public/brand/README.md": {
@@ -99648,9 +99648,9 @@
     "semantic_hash": ""
   },
   "components/owner-laporan-laba-rugi-presentasi.tsx": {
-    "mtime": 1792175987.389622,
-    "seen": 1792246597.287939,
-    "ast_hash": "bf8b39664d22e920f70bb9a1c0d3f5b5",
+    "mtime": 1792248393.1156378,
+    "seen": 1792248757.598704,
+    "ast_hash": "5b5d389c65e542300e3bb3f64ca4390c",
     "semantic_hash": ""
   },
   "components/rekening-kas-kartu-stack.tsx": {
@@ -99699,6 +99699,24 @@
     "mtime": 1792175283.5583012,
     "seen": 1792246601.264385,
     "ast_hash": "1a0bcb62ac1729daff614f75732ba6a1",
+    "semantic_hash": ""
+  },
+  "components/kokonus-sidebar-logo.tsx": {
+    "mtime": 1792248393.113422,
+    "seen": 1792248757.593497,
+    "ast_hash": "289ccd9589f7ad130f54a69a9287bf7b",
+    "semantic_hash": ""
+  },
+  "lib/metric-icons.tsx": {
+    "mtime": 1792245432.5812645,
+    "seen": 1792248757.6145349,
+    "ast_hash": "dfb2f453305c52a0b9084c18328a03fd",
+    "semantic_hash": ""
+  },
+  "public/brand/kokonus-wordmark.png": {
+    "mtime": 1792245432.6064007,
+    "seen": 1792248760.713207,
+    "ast_hash": "c9e4e52265cd8b5545e132d35e9a712e",
     "semantic_hash": ""
   }
 }

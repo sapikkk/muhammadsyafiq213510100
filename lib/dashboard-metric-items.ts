@@ -103,9 +103,8 @@ export function metricStokRendah(count: number, base: DashboardBasePath): Metric
     icon: METRIC_ICON_BY_ID["stok-rendah"],
     label: "Stok di bawah minimum",
     value: count,
-    hint: "Semua aman",
-    emptyState: {
-      message: "Semua stok di atas minimum.",
+    hint: "Semua stok di atas minimum.",
+    followUp: {
       actionLabel: "Cek stok barang",
       href: `${base}/inventaris`,
     },

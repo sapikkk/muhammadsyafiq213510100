@@ -8,7 +8,7 @@ export default function OwnerPenjualanDetailSheet({ params }: { params: { id: st
   }
 
   return (
-    <DetailSheetFrame>
+    <DetailSheetFrame listHref="/owner/penjualan">
       <SalesOrderDetailLayout
         id={Number(params.id)}
         listHref="/owner/penjualan"

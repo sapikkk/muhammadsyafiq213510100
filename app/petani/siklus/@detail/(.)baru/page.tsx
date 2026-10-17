@@ -13,7 +13,7 @@ function SiklusBaruSheetFallback() {
 /** Intercept dari daftar — form semai di sheet samping. */
 export default function PetaniSiklusBaruInterceptSlot() {
   return (
-    <DetailSheetFrame>
+    <DetailSheetFrame listHref="/petani/siklus">
       <Suspense fallback={<SiklusBaruSheetFallback />}>
         <SiklusBaruScreen surface="sheet" />
       </Suspense>
