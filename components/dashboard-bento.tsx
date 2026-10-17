@@ -56,6 +56,7 @@ export function BentoSection({
   title,
   badge,
   hidePermissionBadge,
+  headerAction,
   children,
   className,
   id,
@@ -63,6 +64,8 @@ export function BentoSection({
   title?: string;
   badge?: PermissionSectionBadge;
   hidePermissionBadge?: boolean;
+  /** Tombol/link di kanan judul (mis. CTA ke halaman lengkap). */
+  headerAction?: ReactNode;
   children: ReactNode;
   className?: string;
   id?: string;
@@ -77,17 +80,22 @@ export function BentoSection({
         className,
       )}
     >
-      {title || badgeLabel ? (
-        <div className="flex flex-wrap items-baseline gap-2">
-          {title ? (
-            <h2 className="text-sm font-semibold leading-snug tracking-tight sm:text-base">
-              {title}
-            </h2>
-          ) : null}
-          {badgeLabel ? (
-            <span className="rounded border border-border px-2 py-0.5 text-xs font-medium text-muted-foreground">
-              {badgeLabel}
-            </span>
+      {title || badgeLabel || headerAction ? (
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex min-w-0 flex-wrap items-baseline gap-2">
+            {title ? (
+              <h2 className="text-sm font-semibold leading-snug tracking-tight sm:text-base">
+                {title}
+              </h2>
+            ) : null}
+            {badgeLabel ? (
+              <span className="rounded border border-border px-2 py-0.5 text-xs font-medium text-muted-foreground">
+                {badgeLabel}
+              </span>
+            ) : null}
+          </div>
+          {headerAction ? (
+            <div className="flex shrink-0 justify-end sm:justify-end">{headerAction}</div>
           ) : null}
         </div>
       ) : null}

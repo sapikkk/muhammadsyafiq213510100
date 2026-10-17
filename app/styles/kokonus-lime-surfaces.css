@@ -49,15 +49,27 @@ html[data-ui-theme="lime"] table {
 html[data-ui-theme="lime"] thead tr {
   background: var(--kokonus-green);
   color: #fff;
+  border-bottom: none !important;
 }
 
 html[data-ui-theme="lime"] thead th {
-  color: inherit;
+  color: #fff !important;
+  background: transparent;
   border-color: transparent;
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+html[data-ui-theme="lime"] thead th:first-child {
+  padding-left: 1rem;
+}
+
+html[data-ui-theme="lime"] thead th:last-child {
+  padding-right: 1rem;
 }
 
 html[data-ui-theme="lime"] thead th:first-child {
@@ -68,6 +80,14 @@ html[data-ui-theme="lime"] thead th:first-child {
 html[data-ui-theme="lime"] thead th:last-child {
   border-top-right-radius: var(--radius-pill);
   border-bottom-right-radius: var(--radius-pill);
+}
+
+html[data-ui-theme="lime"] table thead {
+  display: table-header-group;
+}
+
+html[data-ui-theme="lime"] table tbody tr:first-child td {
+  padding-top: 0.625rem;
 }
 
 html[data-ui-theme="lime"] tbody tr {

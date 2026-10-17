@@ -1,10 +1,14 @@
 /**
  * Jembatan shadcn saat data-ui-theme=lime (navigasi, kartu lama).
- * Token Lime resmi: components/lime/tokens.css via components/lime/styles.css.
+ * Token Lime resmi: vendor/design/lime/tokens.css + components/lime/styles.css.
  * Wireframe tidak memakai override ini.
  */
-html[data-ui-theme="lime"] {
-  /* Kokonus Figma: Primary Green + Accent Lime */
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap");
+@import "../../vendor/design/lime/tokens.css";
+
+/* Token Lime (--popover = lebar px) bentrok dengan shadcn — ulang di html + body.lime */
+html[data-ui-theme="lime"],
+html[data-ui-theme="lime"] body.lime {
   --kokonus-green: #1a3d2e;
   --kokonus-lime-mark: #d3fa53;
   --background: 40 20% 98%;
@@ -35,6 +39,8 @@ html[data-ui-theme="lime"] {
   --sidebar-accent-foreground: 60 6% 5%;
   --sidebar-border: 45 8% 89%;
   --sidebar-ring: 68 100% 26%;
+  /* Lebar overlay Lime — jangan pakai nama --popover */
+  --lime-popover-width: 320px;
 }
 
 html[data-ui-theme="lime"] body {

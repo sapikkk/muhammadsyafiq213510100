@@ -108,7 +108,7 @@ export function NotifikasiInboxPopover({
   };
 
   return (
-    <div ref={panelRef} className={cn("relative", className)}>
+    <div ref={panelRef} className={cn("relative isolate z-[100]", className)}>
       <button
         type="button"
         className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-md border text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
@@ -125,7 +125,7 @@ export function NotifikasiInboxPopover({
 
       {open ? (
         <div
-          className="absolute right-0 top-full z-50 mt-2 flex w-[min(100vw-2rem,22rem)] flex-col overflow-hidden rounded-md border border-border bg-popover text-popover-foreground"
+          className="absolute right-0 top-full z-[120] mt-2 flex w-[min(100vw-2rem,22rem)] flex-col overflow-hidden rounded-md border border-border bg-card text-card-foreground shadow-lg"
           role="dialog"
           aria-label="Daftar notifikasi"
         >

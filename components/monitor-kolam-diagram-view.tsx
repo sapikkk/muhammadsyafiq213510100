@@ -15,7 +15,7 @@ import {
 } from "recharts";
 import { ChartCard } from "@/components/chart-card";
 import { DashboardBentoEmpty } from "@/components/dashboard-bento-empty";
-import { CHART_PRIMARY, CHART_SECONDARY, CHART_TERTIARY } from "@/lib/chart-monochrome";
+import { useChartPalette } from "@/lib/chart-palette";
 
 type ChartPayload = {
   harian: { label: string; ppm: number; ph: number; suhu: number }[];
@@ -39,6 +39,7 @@ export function MonitorKolamDiagramView({
   emptyHref: string;
   compact?: boolean;
 }) {
+  const { primary, secondary, tertiary } = useChartPalette();
   const [data, setData] = useState<ChartPayload | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -99,7 +100,7 @@ export function MonitorKolamDiagramView({
                   type="monotone"
                   dataKey="ppm"
                   name="PPM"
-                  stroke={CHART_PRIMARY}
+                  stroke={primary}
                   dot={false}
                   strokeWidth={2}
                 />
@@ -108,7 +109,7 @@ export function MonitorKolamDiagramView({
                   type="monotone"
                   dataKey="ph"
                   name="pH"
-                  stroke={CHART_SECONDARY}
+                  stroke={secondary}
                   dot={false}
                   strokeWidth={2}
                 />
@@ -117,7 +118,7 @@ export function MonitorKolamDiagramView({
                   type="monotone"
                   dataKey="suhu"
                   name="Suhu (°C)"
-                  stroke={CHART_TERTIARY}
+                  stroke={tertiary}
                   dot={false}
                   strokeWidth={2}
                 />
@@ -145,7 +146,7 @@ export function MonitorKolamDiagramView({
                 />
                 <YAxis tick={{ fontSize: 10 }} width={36} />
                 <Tooltip />
-                <Bar dataKey="ppm" name="PPM rata-rata" fill={CHART_PRIMARY} radius={[2, 2, 0, 0]} />
+                <Bar dataKey="ppm" name="PPM rata-rata" fill={primary} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

@@ -27,7 +27,7 @@ export default async function PengaturanLayout({ children }: { children: React.R
 
   return (
     <RoleHome role={role} stokRendahCount={stokRendahCount}>
-      <div className="flex w-full max-w-3xl flex-col gap-6">
+      <div className="flex w-full min-w-0 max-w-6xl flex-col gap-6">
         <Suspense fallback={null}>
           <PengaturanTabs showTimTab={showTimTab} />
         </Suspense>

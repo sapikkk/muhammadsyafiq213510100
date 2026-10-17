@@ -33,7 +33,7 @@ export function UiThemeSettings() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap" role="group" aria-label="Pilih tema tampilan">
+      <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Pilih tema tampilan">
         {OPTIONS.map((opt) => {
           const active = theme === opt.id;
           return (
@@ -41,7 +41,7 @@ export function UiThemeSettings() {
               key={opt.id}
               type="button"
               variant={active ? "default" : "outline"}
-              className="h-auto min-h-11 w-full flex-col items-start gap-0.5 px-3 py-2 text-left sm:max-w-xs sm:flex-1"
+              className="h-auto min-h-11 w-full flex-col items-start gap-0.5 px-3 py-2 text-left whitespace-normal"
               aria-pressed={active}
               onClick={() => setTheme(opt.id)}
             >

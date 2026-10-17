@@ -335,8 +335,10 @@ export function DashboardMonitorKolam({
 
   return (
     <div className="space-y-4">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1fr_min(18rem,100%)] lg:items-end">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <FilterChipGroup
+          layout="segmented"
+          className="w-full min-w-0 lg:max-w-xl"
           label="Rentang waktu"
           options={[
             { value: "7", label: "7 hari" },
@@ -352,7 +354,7 @@ export function DashboardMonitorKolam({
             else if (v === "90") terapkanPreset(90);
           }}
         />
-        <label className="flex flex-col gap-1 text-sm">
+        <label className="flex w-full min-w-0 flex-col gap-1 text-sm lg:max-w-xs lg:shrink-0">
           <span className="font-medium">Tampilan</span>
           <select
             className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"

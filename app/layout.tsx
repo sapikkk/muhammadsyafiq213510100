@@ -26,6 +26,10 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: "Kokonus Farm",
   description: "Tata kelola biaya produksi hidroponik rakit apung.",
+  icons: {
+    icon: [{ url: "/brand/kokonus-favicon.png", type: "image/png" }],
+    apple: [{ url: "/apple-icon.png", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({

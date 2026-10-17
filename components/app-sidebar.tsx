@@ -3,12 +3,8 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { signOut } from "next-auth/react";
-import {
-  ChevronDown,
-  ChevronRight,
-  LogOut,
-  Settings,
-} from "lucide-react";
+import { ChevronDown, ChevronRight, LogOut, Settings } from "lucide-react";
+import { KokonusSidebarLogo } from "@/components/kokonus-sidebar-logo";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { getNavFlowGroups, type NavFlowGroup } from "@/lib/nav-flow";
@@ -16,9 +12,6 @@ import {
   isOwnerSidebarModuleActive,
   OWNER_SIDEBAR_MODULES,
 } from "@/lib/owner-sidebar-nav";
-import { KokonusBrandMark } from "@/components/kokonus-brand-mark";
-import { KokonusBrandWordmark } from "@/components/kokonus-brand-wordmark";
-import { useUiTheme } from "@/components/ui-theme-provider";
 import { NotifikasiUnreadBadge } from "@/components/notifikasi-unread-badge";
 import { getNavItems, type NavItem } from "@/lib/nav-items";
 import type { Role } from "@/types/role";
@@ -97,23 +90,16 @@ export function AppSidebar({
   const flatAudit = auditShowAllNav ? getAuditNavItems(stokRendahCount) : null;
   const activeNavKey =
     groups && !flatAudit ? pickActiveNavKey(pathname, searchParams, groups) : null;
-  const { theme } = useUiTheme();
-  const lime = theme === "lime";
 
   return (
     <aside className="flex h-screen w-64 flex-col border-r bg-sidebar">
-      <div className="flex h-14 shrink-0 items-center border-b px-4">
+      <div className="flex h-14 shrink-0 items-center border-b px-3">
         <Link
           href={role === "OWNER" ? "/owner" : "/"}
-          className="flex items-center gap-2"
+          className="flex min-w-0 flex-1 items-center"
           onClick={() => onNavigate?.()}
         >
-          <KokonusBrandMark size={32} mark="icon" />
-          {lime ? (
-            <KokonusBrandWordmark variant="light" className="hidden min-[220px]:block sm:h-7" />
-          ) : (
-            <span className="text-sm font-semibold tracking-tight">Kokonus Farm</span>
-          )}
+          <KokonusSidebarLogo />
         </Link>
       </div>
 

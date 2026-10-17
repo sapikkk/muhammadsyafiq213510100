@@ -1,3 +1,17 @@
+## [1.40.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.40.0...v1.40.1) (2026-10-17)
+
+
+### Bug Fixes
+
+* **ui:** logo sidebar, tabel, dropdown, metrik, responsif ([#134](https://github.com/sapikkk/muhammadsyafiq213510100/issues/134)) ([5636e16](https://github.com/sapikkk/muhammadsyafiq213510100/commit/5636e16ca3e3d8027746cb908d0d634b4e9454ac))
+
+# [1.40.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.39.1...v1.40.0) (2026-10-15)
+
+
+### Features
+
+* **ui:** skill arla6ka Lime preview terpisah dari wireframe ([#133](https://github.com/sapikkk/muhammadsyafiq213510100/issues/133)) ([5922de2](https://github.com/sapikkk/muhammadsyafiq213510100/commit/5922de2808f0267b1de0566608fda07a81225cb1))
+
 ## [1.39.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.39.0...v1.39.1) (2026-10-15)
 
 

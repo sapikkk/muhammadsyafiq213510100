@@ -9,7 +9,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { CHART_PRIMARY } from "@/lib/chart-monochrome";
+import { useChartPalette } from "@/lib/chart-palette";
 import { formatRupiah } from "@/lib/format";
 
 export function OwnerKasNetTrendChart({
@@ -17,6 +17,7 @@ export function OwnerKasNetTrendChart({
 }: {
   points: { label: string; net: string }[];
 }) {
+  const { primary, secondary } = useChartPalette();
   const data = points.map((p) => ({ name: p.label, net: Number(p.net) }));
   if (data.every((d) => d.net === 0)) {
     return (
@@ -38,9 +39,9 @@ export function OwnerKasNetTrendChart({
             type="monotone"
             dataKey="net"
             name="Net operasi"
-            stroke={CHART_PRIMARY}
+            stroke={primary}
             strokeWidth={2}
-            dot={{ r: 3 }}
+            dot={{ r: 3, fill: primary, stroke: secondary }}
           />
         </LineChart>
       </ResponsiveContainer>

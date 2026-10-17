@@ -12,7 +12,7 @@ import {
 import { ChartCard } from "@/components/chart-card";
 import { DashboardBentoEmpty } from "@/components/dashboard-bento-empty";
 import type { FaseMetrikBaris } from "@/lib/produksi-kapasitas-types";
-import { CHART_PRIMARY } from "@/lib/chart-monochrome";
+import { useChartPalette } from "@/lib/chart-palette";
 
 export function DashboardProduksiFaseChart({
   fase,
@@ -23,6 +23,7 @@ export function DashboardProduksiFaseChart({
   siapJual: number;
   kolamSetupHref: string;
 }) {
+  const { primary } = useChartPalette();
   const data = [
     ...fase.map((f) => ({
       name: f.label,
@@ -52,7 +53,7 @@ export function DashboardProduksiFaseChart({
             <XAxis dataKey="name" tick={{ fontSize: 10 }} interval={0} angle={-20} textAnchor="end" height={56} />
             <YAxis tick={{ fontSize: 10 }} width={36} />
             <Tooltip formatter={(v: number) => [v.toLocaleString("id-ID"), "Lubang"]} />
-            <Bar dataKey="lubang" name="Lubang" fill={CHART_PRIMARY} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="lubang" name="Lubang" fill={primary} radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>

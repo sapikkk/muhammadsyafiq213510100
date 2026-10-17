@@ -13,9 +13,10 @@ import {
 import type { MonthPoint } from "@/lib/monthly-summary-types";
 import { DashboardBentoEmpty } from "@/components/dashboard-bento-empty";
 import { formatRupiah } from "@/lib/format";
-import { CHART_PRIMARY, CHART_SECONDARY } from "@/lib/chart-monochrome";
+import { useChartPalette } from "@/lib/chart-palette";
 
 export function OwnerRevenueChart({ months }: { months: MonthPoint[] }) {
+  const { primary, secondary } = useChartPalette();
   const data = months.map((m) => ({
     name: m.label,
     pendapatan: Number(m.pendapatan),
@@ -44,8 +45,8 @@ export function OwnerRevenueChart({ months }: { months: MonthPoint[] }) {
             labelStyle={{ fontSize: 12 }}
           />
           <Legend />
-          <Bar dataKey="pendapatan" name="Pendapatan" fill={CHART_PRIMARY} radius={[2, 2, 0, 0]} />
-          <Bar dataKey="pengeluaran" name="Beban" fill={CHART_SECONDARY} radius={[2, 2, 0, 0]} />
+          <Bar dataKey="pendapatan" name="Pendapatan" fill={primary} radius={[4, 4, 0, 0]} />
+          <Bar dataKey="pengeluaran" name="Beban" fill={secondary} radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
