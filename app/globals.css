@@ -121,12 +121,14 @@
   }
 
   html[data-ui-theme="lime"] .data-table-panel thead tr {
-    background-color: var(--kokonus-green, hsl(var(--ring)));
+    background: transparent;
     border-bottom: none;
   }
 
   html[data-ui-theme="lime"] .data-table-panel thead th {
     @apply text-white;
+    background-color: var(--kokonus-green, hsl(var(--ring)));
+    border-color: transparent;
     font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.06em;

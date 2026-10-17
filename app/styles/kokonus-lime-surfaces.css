@@ -47,14 +47,14 @@ html[data-ui-theme="lime"] table {
 }
 
 html[data-ui-theme="lime"] thead tr {
-  background: var(--kokonus-green);
+  background: transparent;
   color: #fff;
   border-bottom: none !important;
 }
 
 html[data-ui-theme="lime"] thead th {
   color: #fff !important;
-  background: transparent;
+  background: var(--kokonus-green);
   border-color: transparent;
   font-size: 0.6875rem;
   font-weight: 600;
@@ -62,6 +62,30 @@ html[data-ui-theme="lime"] thead th {
   text-transform: uppercase;
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
+}
+
+html[data-ui-theme="lime"] .data-table-panel table,
+html[data-ui-theme="lime"] .lime-report-sheet .data-table-panel table {
+  border-spacing: 0 0.375rem;
+}
+
+html[data-ui-theme="lime"] .data-table-panel thead th:only-child,
+html[data-ui-theme="lime"] table thead th:only-child {
+  border-radius: var(--radius-pill);
+  text-align: center;
+}
+
+html[data-ui-theme="lime"] .lime-report-sheet {
+  border: none;
+  box-shadow: none;
+}
+
+html[data-ui-theme="lime"] .data-table-panel tbody tr {
+  border-bottom: none;
+}
+
+html[data-ui-theme="lime"] .data-table-panel tbody td {
+  border-color: transparent;
 }
 
 html[data-ui-theme="lime"] thead th:first-child {
@@ -98,13 +122,42 @@ html[data-ui-theme="lime"] tbody td {
   font-size: 0.875rem;
 }
 
-/* Tombol & input */
-html[data-ui-theme="lime"] button[data-slot="button"].bg-primary,
-html[data-ui-theme="lime"] .bg-primary.text-primary-foreground {
-  background: var(--accent, hsl(var(--primary)));
-  color: var(--on-accent, hsl(var(--primary-foreground)));
+/* Tombol & input — flat (tanpa glow / glass design.how) */
+html[data-ui-theme="lime"] button.bg-primary,
+html[data-ui-theme="lime"] .bg-primary.text-primary-foreground,
+html[data-ui-theme="lime"] .owner-keuangan-hero-cta {
+  background: var(--kokonus-lime-mark, hsl(var(--primary))) !important;
+  background-image: none !important;
+  color: #0f0f0d !important;
+  border: 1px solid rgb(15 15 13 / 0.12) !important;
   border-radius: var(--radius-pill);
-  box-shadow: 0 0 0 1px var(--accent-line, hsl(var(--ring) / 0.35));
+  box-shadow: none !important;
+}
+
+html[data-ui-theme="lime"] button.bg-primary:hover,
+html[data-ui-theme="lime"] .owner-keuangan-hero-cta:hover {
+  filter: brightness(0.97);
+}
+
+html[data-ui-theme="lime"] .owner-keuangan-hero-outline:hover {
+  background: rgb(255 255 255 / 0.12) !important;
+  color: #fff !important;
+}
+
+html[data-ui-theme="lime"] .owner-keuangan-accent-metric {
+  background: var(--kokonus-lime-mark) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: #0f0f0d !important;
+}
+
+html[data-ui-theme="lime"] [data-slot="list-row"]:hover {
+  background: var(--kokonus-lime-soft, hsl(var(--muted) / 0.55)) !important;
+}
+
+html[data-ui-theme="lime"] .lime .glow {
+  background-image: none !important;
+  box-shadow: none !important;
 }
 
 html[data-ui-theme="lime"] button.border-input,
@@ -181,6 +234,21 @@ html[data-ui-theme="lime"] h2.text-lg.font-semibold {
 
 html[data-ui-theme="lime"] .text-muted-foreground {
   color: var(--fg-2, hsl(var(--muted-foreground)));
+}
+
+/* Field form — ikon tidak menempel pinggir */
+html[data-ui-theme="lime"] .kokonus-native-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235a5648' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+}
+
+html[data-ui-theme="lime"] input[type="date"],
+html[data-ui-theme="lime"] input[type="month"],
+html[data-ui-theme="lime"] input[type="datetime-local"] {
+  padding-right: 2.5rem;
 }
 
 /* Chart card */

@@ -37,6 +37,7 @@ function KelompokNeraca({
   return (
     <div>
       <h3 className="mb-2 text-sm font-semibold">{judul}</h3>
+      <div className="data-table-panel -mx-0.5 w-full min-w-0">
       <Table>
         <TableHeader>
           <TableRow>
@@ -61,6 +62,7 @@ function KelompokNeraca({
           </TableRow>
         </TableBody>
       </Table>
+      </div>
     </div>
   );
 }

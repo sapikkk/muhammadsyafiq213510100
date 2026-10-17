@@ -32,7 +32,8 @@ export function KokonusBrandMark({
       alt={alt}
       width={size}
       height={size}
-      className={cn("shrink-0 bg-transparent", className)}
+      unoptimized={mark === "icon"}
+      className={cn("shrink-0 bg-transparent object-contain", className)}
       priority
     />
   );

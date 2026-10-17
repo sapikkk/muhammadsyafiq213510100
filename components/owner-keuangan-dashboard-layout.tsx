@@ -150,7 +150,7 @@ export function OwnerKeuanganDashboardLayout({ data }: { data: Keuangan }) {
                 asChild
                 size="sm"
                 variant="outline"
-                className="border-background/40 bg-transparent text-background hover:bg-background/10"
+                className="owner-keuangan-hero-outline border-background/40 bg-transparent text-background hover:bg-white/10 hover:text-background"
               >
                 <Link href="/owner/laporan?laporan=laba-rugi">Lihat laba rugi</Link>
               </Button>
@@ -234,7 +234,12 @@ export function OwnerKeuanganDashboardLayout({ data }: { data: Keuangan }) {
       {/* Pipeline horizontal */}
       <section className="flex flex-col gap-3">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="text-lg font-semibold leading-snug">Alur posisi keuangan</h2>
+          <div className="min-w-0">
+            <h2 className="text-lg font-semibold leading-snug">Alur posisi keuangan</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Ketuk kartu untuk buka laporan atau daftar terkait.
+            </p>
+          </div>
           <Button asChild variant="outline" size="sm">
             <Link href="/owner/jurnal">Buka jurnal</Link>
           </Button>

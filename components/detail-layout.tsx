@@ -19,7 +19,7 @@ export type DetailLayoutProps = {
   children: ReactNode;
   extra?: ReactNode;
   className?: string;
-  /** `sheet` = drill-down dalam panel samping (tanpa link kembali). */
+  /** `sheet` = drill-down dalam panel samping (link kembali ke daftar). */
   surface?: "page" | "sheet";
   financeNavRole?: "ADMIN" | "OWNER";
 };
@@ -51,19 +51,20 @@ export function DetailLayout({
     >
       {financeNavRole && !inSheet ? <FinanceModuleNav role={financeNavRole} /> : null}
       <div className={cn(inSheet && "space-y-4")}>
-        {inSheet ? null : (
-          <Button
-            asChild
-            variant="ghost"
-            size="sm"
-            className="-ml-2 mb-3 min-h-11 gap-1.5 px-2 text-sm text-muted-foreground hover:text-foreground"
-          >
-            <Link href={backHref} scroll={false}>
-              <ArrowLeft className="size-3.5" aria-hidden />
-              <span>{backLabel}</span>
-            </Link>
-          </Button>
-        )}
+        <Button
+          asChild
+          variant="ghost"
+          size="sm"
+          className={cn(
+            "-ml-2 mb-3 min-h-11 gap-1.5 px-2 text-sm text-muted-foreground hover:bg-muted/40 hover:text-foreground",
+            inSheet && "mb-1",
+          )}
+        >
+          <Link href={backHref} scroll={false}>
+            <ArrowLeft className="size-3.5" aria-hidden />
+            <span>{backLabel}</span>
+          </Link>
+        </Button>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
           <header className="min-w-0 space-y-1">
