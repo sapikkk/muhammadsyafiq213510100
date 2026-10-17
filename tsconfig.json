@@ -23,6 +23,7 @@
     "vendor",
     ".agents",
     "graphify-out",
-    ".cursor/plugins"
+    ".cursor/plugins",
+    "reference"
   ]
 }

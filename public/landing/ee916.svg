@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon-density-medium">
+<mask id="mask0_0_13" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
+<rect id="icon-bounds" width="16" height="16" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_0_13)">
+<path id="density-medium-path" d="M2.4 13.6V12.4H13.6V13.6H2.4ZM2.4 8.6V7.4H13.6V8.6H2.4ZM2.4 3.6V2.4H13.6V3.6H2.4Z" fill="#1C1B1F"/>
+</g>
+</g>
+</svg>
