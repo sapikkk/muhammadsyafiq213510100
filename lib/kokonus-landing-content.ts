@@ -17,6 +17,7 @@ export const LANDING_ASSET = "/landing";
 export const LANDING_NAV = [
   { href: "#modul", label: "Modul" },
   { href: "#fasilitas", label: "Alur kebun" },
+  { href: "/tentang", label: "Tentang kami" },
   { href: "#masuk", label: "Masuk" },
 ] as const;
 

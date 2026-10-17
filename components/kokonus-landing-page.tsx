@@ -21,14 +21,14 @@ export async function KokonusLandingPage() {
   const { konten, kartu } = await loadLandingBundle();
 
   return (
-    <div className="kokonus-landing-ref min-h-dvh bg-[var(--kl-cream)] text-[var(--kl-ink)]">
+    <div className="kokonus-landing-ref min-h-dvh bg-background text-foreground">
       <LandingHeroSection konten={konten} kartu={kartu} appHref={appHref} />
       <LandingVerificationSection konten={konten} kartu={kartu} />
       <LandingSportsFeatureSection kartu={kartu} appHref={appHref} />
       <LandingFacilitiesSection kartu={kartu} appHref={appHref} />
       <LandingFundraisingSection konten={konten} kartu={kartu} appHref={appHref} />
       <LandingAthleteSection konten={konten} kartu={kartu} />
-      <LandingSportsFooterSection konten={konten} kartu={kartu} />
+      <LandingSportsFooterSection konten={konten} kartu={kartu} appHref={appHref} />
     </div>
   );
 }

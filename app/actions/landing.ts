@@ -37,6 +37,8 @@ function toState(error: unknown): FormState {
 
 function revalidateLanding() {
   revalidatePath("/");
+  revalidatePath("/tentang");
+  revalidatePath("/embed/galeri");
   revalidatePath("/pengaturan");
 }
 
@@ -105,6 +107,7 @@ export async function saveLandingKartu(_prev: FormState, formData: FormData): Pr
     const gambar = str(formData, "gambar");
     if (!gambar) return { error: "Alamat gambar wajib." };
 
+    const slugRaw = optionalStr(formData, "slug");
     const payload = {
       bagian: bagianRaw as LandingBagian,
       judul: judul || "—",
@@ -112,7 +115,12 @@ export async function saveLandingKartu(_prev: FormState, formData: FormData): Pr
       teks: optionalStr(formData, "teks"),
       label: optionalStr(formData, "label"),
       gambar,
-      aktif: formData.get("aktif") === "on" || formData.get("aktif") === "true",
+      aktif:
+        formData.get("aktif") === "on" ||
+        formData.get("aktif") === "true" ||
+        (!idRaw && formData.get("aktif") == null),
+      embedAktif: formData.get("embedAktif") === "on" || formData.get("embedAktif") === "true",
+      slug: slugRaw,
     };
 
     if (idRaw) {

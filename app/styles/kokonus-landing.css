@@ -1,15 +1,13 @@
-/* Landing — token selaras lime/wireframe (hijau kebun + lime aksen) */
+/* Landing publik: bentuk referensi Figma, warna & tipografi = token Kokonus (wireframe/lime) */
 
 .kokonus-landing-ref {
-  --kl-green: #1a3d2e;
-  --kl-lime: #d4f46a;
-  --kl-deep: #023f2d;
-  --kl-ink: #151515;
-  --kl-cream: #f4f2ed;
-  --kl-panel: #f3f3f3;
-  --kl-radius-lg: 20px;
-  --kl-radius-xl: 30px;
-  --kl-radius-pill: 60px;
+  --kl-shape-sm: 10px;
+  --kl-shape-lg: 20px;
+  --kl-shape-xl: 30px;
+  --kl-shape-pill: 9999px;
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  font-family: inherit;
 }
 
 .kokonus-landing-ref img {
@@ -22,4 +20,100 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.kokonus-landing-ref .kl-panel {
+  border-radius: var(--kl-shape-lg);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted));
+}
+
+.kokonus-landing-ref .kl-surface {
+  border-radius: var(--kl-shape-lg);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+}
+
+.kokonus-landing-ref .kl-badge {
+  border-radius: var(--kl-shape-lg);
+  border: 2px solid hsl(var(--border));
+  background: hsl(var(--background));
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.kokonus-landing-ref .kl-btn {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--kl-shape-lg);
+  background: hsl(var(--primary));
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: hsl(var(--primary-foreground));
+}
+
+.kokonus-landing-ref .kl-btn-outline {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+}
+
+.kokonus-landing-ref .kl-muted {
+  color: hsl(var(--muted-foreground));
+}
+
+.kokonus-landing-ref .kl-accent-text {
+  color: hsl(var(--primary));
+  font-weight: 600;
+}
+
+html[data-ui-theme="lime"] .kokonus-landing-ref .kl-feature-panel {
+  background: hsl(var(--primary) / 0.85);
+}
+
+html[data-ui-theme="wireframe"] .kokonus-landing-ref .kl-feature-panel,
+.kokonus-landing-ref .kl-feature-panel {
+  background: hsl(var(--foreground) / 0.88);
+  color: hsl(var(--primary-foreground));
+}
+
+.kokonus-landing-ref .kl-footer-pill {
+  border-radius: var(--kl-shape-pill);
+  background: hsl(var(--primary));
+  padding: 0.15rem 0.65rem;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: hsl(var(--primary-foreground));
+}
+
+.kokonus-landing-ref .kl-footer-field {
+  display: flex;
+  min-height: 2.5rem;
+  align-items: center;
+  border-radius: var(--kl-shape-pill);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(var(--muted-foreground));
+}
+
+.kokonus-landing-ref .kl-footer-cta {
+  display: flex;
+  min-height: 2.125rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--kl-shape-lg);
+  background: hsl(var(--primary));
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+  color: hsl(var(--primary-foreground));
+}
+
+.kokonus-landing-ref .kl-footer-cta:hover {
+  opacity: 0.92;
 }

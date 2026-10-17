@@ -42,11 +42,17 @@ export function LandingHeroSection({ konten, kartu, appHref }: SectionProps) {
               className="hidden items-center gap-4 rounded-[20px] border border-white bg-white/80 px-4 py-2 text-sm text-black md:flex"
               aria-label="Navigasi"
             >
-              {LANDING_NAV.slice(0, 2).map((item) => (
-                <a key={item.href} href={item.href} className="leading-none hover:opacity-70">
-                  {item.label}
-                </a>
-              ))}
+              {LANDING_NAV.map((item) =>
+                item.href.startsWith("#") ? (
+                  <a key={item.href} href={item.href} className="leading-none hover:opacity-70">
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link key={item.href} href={item.href} className="leading-none hover:opacity-70">
+                    {item.label}
+                  </Link>
+                ),
+              )}
             </nav>
             <Link
               href={appHref}
@@ -67,7 +73,7 @@ export function LandingHeroSection({ konten, kartu, appHref }: SectionProps) {
               <p className="max-w-md text-sm leading-relaxed text-white/90">{konten.heroLead}</p>
               <Link
                 href={appHref}
-                className="inline-flex min-h-11 w-fit items-center gap-2.5 rounded-[20px] bg-[var(--kl-green)] px-5 py-2.5 text-sm uppercase text-white"
+                className="kl-btn text-sm uppercase"
               >
                 {konten.heroCta}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -137,7 +143,7 @@ function HeroStackCard({
       {isLast ? (
         <div className="relative h-[88px] w-full overflow-hidden rounded-[10px] bg-[#d9d9d9]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" className="size-full object-cover" src={`${LANDING_ASSET}/7fa27.png`} />
+          <img alt="" className="size-full object-cover" src={card.gambar} />
         </div>
       ) : null}
     </div>
@@ -150,13 +156,13 @@ export function LandingVerificationSection({ konten, kartu }: Pick<SectionProps,
 
   return (
     <section className="mx-auto w-full max-w-[min(100%,960px)] px-3 py-6 sm:px-6">
-      <div className="flex flex-col gap-5 rounded-[20px] border border-black/10 bg-white px-4 py-6 sm:px-5">
-        <h2 className="text-[clamp(1.5rem,4vw,2.5rem)] font-bold leading-tight">
+      <div className="kl-surface flex flex-col gap-5 px-4 py-6 sm:px-5">
+        <h2 className="text-[clamp(1.35rem,4vw,2rem)] font-semibold leading-tight tracking-tight">
           {konten.verificationJudul}
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {metrics.map((m) => (
-            <div key={m.id} className="flex items-center gap-3 rounded-[20px] border border-black/10 bg-[#ecedef] p-3">
+            <div key={m.id} className="flex items-center gap-3 rounded-[var(--kl-shape-lg)] border border-border bg-muted p-3">
               <span className="grid size-10 shrink-0 place-items-center rounded-[20px] border border-black/20 bg-white">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img alt="" className="size-5" src={m.gambar} />
@@ -177,48 +183,38 @@ export function LandingVerificationSection({ konten, kartu }: Pick<SectionProps,
 }
 
 export function LandingSportsFeatureSection({ kartu, appHref }: Pick<SectionProps, "kartu" | "appHref">) {
-  const feature = kartu.SPORTS_FEATURE[0];
-  if (!feature) return null;
+  const features = kartu.SPORTS_FEATURE;
+  if (features.length === 0) return null;
 
   return (
     <section className="mx-auto w-full max-w-[min(100%,1080px)] px-3 py-4 sm:px-6">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-stretch">
-        <div className="flex flex-1 flex-col gap-4">
-          <div className="flex flex-wrap gap-2">
-            {["Produksi", "Penjualan", "Keuangan"].map((tab, i) => (
-              <span
-                key={tab}
-                className={`rounded-[20px] px-4 py-2 text-sm font-bold ${
-                  i === 0 ? "bg-black text-white" : "border-2 border-black/10 text-black"
-                }`}
-              >
-                {tab}
-              </span>
-            ))}
-          </div>
-          <div className="flex min-h-[280px] flex-col gap-4 rounded-[20px] bg-[#6e9a7f] p-4 text-white sm:flex-row sm:p-5">
-            <div className="relative min-h-[200px] flex-1 overflow-hidden rounded-[20px] sm:min-h-[260px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt="" className="size-full object-cover" src={feature.gambar} />
-            </div>
-            <div className="flex flex-1 flex-col justify-between gap-4">
-              <div>
-                <h2 className="text-xl font-semibold leading-snug sm:text-2xl">{feature.judul}</h2>
-                {feature.teks ? <p className="mt-2 text-xs leading-relaxed sm:text-sm">{feature.teks}</p> : null}
+      <div className="flex flex-col gap-5">
+        {features.map((feature, i) => (
+          <div key={feature.id} className="flex flex-col gap-4">
+            {feature.label ? (
+              <span className="kl-badge w-fit px-4 py-2">{feature.label}</span>
+            ) : (
+              <span className="kl-badge w-fit px-4 py-2">{`Modul ${i + 1}`}</span>
+            )}
+            <div className="kl-feature-panel flex min-h-[280px] flex-col gap-4 rounded-[var(--kl-shape-lg)] p-4 sm:flex-row sm:p-5">
+              <div className="relative min-h-[200px] flex-1 overflow-hidden rounded-[var(--kl-shape-lg)] sm:min-h-[260px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img alt="" className="kl-img-cover size-full object-cover" src={feature.gambar} />
               </div>
-              <Link
-                href={appHref}
-                className="inline-flex min-h-11 w-fit items-center gap-2 rounded-[20px] bg-black py-2 pl-4 pr-1 text-sm font-bold text-white"
-              >
-                Lihat modul
-                <span className="rounded-[20px] bg-white p-1.5">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img alt="" className="size-4" src={arrowDark} />
-                </span>
-              </Link>
+              <div className="flex flex-1 flex-col justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-semibold leading-snug sm:text-2xl">{feature.judul}</h2>
+                  {feature.teks ? (
+                    <p className="mt-2 text-xs leading-relaxed opacity-90 sm:text-sm">{feature.teks}</p>
+                  ) : null}
+                </div>
+                <Link href={appHref} className="kl-btn kl-btn-outline w-fit bg-background/90">
+                  Lihat modul
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </section>
   );
@@ -230,18 +226,13 @@ export function LandingFacilitiesSection({ kartu, appHref }: Pick<SectionProps, 
 
   return (
     <section id="modul" className="mx-auto w-full max-w-[min(100%,1080px)] px-3 pb-6 sm:px-6 md:px-10">
-      <div className="flex flex-col gap-5 rounded-[20px] bg-[#f3f3f3] p-4 sm:p-6 md:p-10">
+      <div className="kl-panel flex flex-col gap-5 p-4 sm:p-6 md:p-10">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="rounded-[20px] border-2 border-black/20 bg-white px-4 py-2 text-sm font-bold">
-              Modul
-            </span>
-            <h2 className="text-lg font-semibold sm:text-2xl">Alur kebun hidroponik</h2>
+            <span className="kl-badge px-4 py-2">Modul</span>
+            <h2 className="text-lg font-semibold tracking-tight sm:text-2xl">Alur kebun hidroponik</h2>
           </div>
-          <Link
-            href={appHref}
-            className="inline-flex min-h-11 items-center gap-2 rounded-[20px] bg-black px-4 text-sm font-bold text-white"
-          >
+          <Link href={appHref} className="kl-btn">
             Lihat aplikasi
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img alt="" className="size-4" src={arrowDark} />
@@ -250,7 +241,7 @@ export function LandingFacilitiesSection({ kartu, appHref }: Pick<SectionProps, 
 
         <div
           id="fasilitas"
-          className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-4"
+          className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2.5"
         >
           {facilities.map((fac) => (
             <article
@@ -404,45 +395,4 @@ export function LandingAthleteSection({ konten, kartu }: Pick<SectionProps, "kon
   );
 }
 
-export function LandingSportsFooterSection({ konten, kartu }: Pick<SectionProps, "konten" | "kartu">) {
-  const links = kartu.FOOTER;
-
-  return (
-    <footer className="bg-[#f3f3f3] py-12 sm:py-16">
-      <div className="mx-auto flex w-full max-w-[min(100%,1080px)] flex-col gap-10 px-4 sm:px-6 lg:flex-row lg:items-start lg:justify-between">
-        <div className="max-w-md">
-          <div className="flex items-center gap-2">
-            <KokonusBrandMark size={40} mark="icon" alt="" />
-            <span className="text-sm font-bold uppercase">Kokonus Farm</span>
-          </div>
-          <p className="mt-6 text-xl font-bold leading-snug sm:text-2xl">
-            <span className="text-[var(--kl-green)]">{konten.footerJudul}</span>
-            {" — "}
-            {konten.footerTeks}
-          </p>
-        </div>
-        {links.length > 0 ? (
-          <nav aria-label="Tautan footer" className="flex flex-wrap gap-6">
-            {links.map((link) => {
-              const href = link.meta?.startsWith("/") ? link.meta : `/${link.meta ?? ""}`;
-              return (
-                <Link
-                  key={link.id}
-                  href={href}
-                  className="flex items-center gap-2 text-sm font-bold hover:opacity-70"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img alt="" className="size-5" src={link.gambar} />
-                  {link.judul}
-                </Link>
-              );
-            })}
-          </nav>
-        ) : null}
-      </div>
-      <p className="mx-auto mt-10 max-w-[1080px] px-4 text-center text-[10px] uppercase tracking-widest text-black/40">
-        Kokonus Farm — hidroponik · rakit apung
-      </p>
-    </footer>
-  );
-}
+export { LandingSportsFooterSection } from "@/components/landing/landing-sports-footer";

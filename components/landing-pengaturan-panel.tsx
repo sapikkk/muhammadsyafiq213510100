@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useFormState } from "react-dom";
 import type { Landing_Konten } from "@prisma/client";
@@ -40,14 +41,32 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
 
   const editing = editId != null ? filtered.find((k) => k.id === editId) : null;
 
+  const totalKartu = kartu.length;
+
   return (
     <div className="flex flex-col gap-8">
+      <div className="flex flex-wrap gap-2">
+        <Button asChild variant="outline" type="button">
+          <Link href="/" target="_blank" rel="noopener noreferrer">
+            Lihat landing
+          </Link>
+        </Button>
+        <Button asChild variant="outline" type="button">
+          <Link href="/tentang" target="_blank" rel="noopener noreferrer">
+            Lihat tentang kami
+          </Link>
+        </Button>
+        <Button asChild variant="outline" type="button">
+          <Link href="/embed/galeri" target="_blank" rel="noopener noreferrer">
+            Kartu embed
+          </Link>
+        </Button>
+      </div>
       <p className="text-sm text-muted-foreground">
-        Kartu dan gambar halaman depan (/). Unggah file: lokal dev →{" "}
-        <code className="text-xs">public/landing/uploads/</code>; production Vercel → Blob (env{" "}
-        <code className="text-xs">BLOB_READ_WRITE_TOKEN</code> via{" "}
-        <code className="text-xs">vercel env pull</code>). Bisa juga path{" "}
-        <code className="text-xs">/landing/…</code> atau URL. Hard refresh setelah simpan.
+        Total <strong>{totalKartu}</strong> kartu di database. Tiap bagian (mis. Modul fasilitas) bisa
+        puluhan kartu — pakai <strong>Tambah kartu</strong>, bukan hanya empat gambar hero di bawah. Unggah
+        via Blob atau path <code className="text-xs">/landing/…</code>. Bagian &quot;Stok kartu sosmed&quot; untuk
+        iframe embed; &quot;Tentang kami&quot; untuk halaman <code className="text-xs">/tentang</code>.
       </p>
 
       <form action={kontenAction} className="flex flex-col gap-4 rounded-lg border p-4">
@@ -100,7 +119,12 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
           defaultValue={konten.fundraisingTeksGelap}
           textarea
         />
-        <Field label="Judul footer" name="footerJudul" defaultValue={konten.footerJudul} />
+        <Field
+          label="Judul footer"
+          name="footerJudul"
+          defaultValue={konten.footerJudul}
+          hint='Pill hijau: bungkus kata dengan {{teks}}, mis. Kebun {{hidroponik}} untuk tim.'
+        />
         <Field label="Teks footer" name="footerTeks" defaultValue={konten.footerTeks} textarea />
         {kontenState.error ? <p className="text-sm text-destructive">{kontenState.error}</p> : null}
         {kontenState.ok ? <p className="text-sm text-muted-foreground">{kontenState.ok}</p> : null}
@@ -110,7 +134,9 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
       </form>
 
       <div className="flex flex-col gap-4 rounded-lg border p-4">
-        <h2 className="text-base font-semibold">Kartu per bagian</h2>
+        <h2 className="text-base font-semibold">
+          Kartu per bagian ({filtered.length} / {totalKartu})
+        </h2>
         <label htmlFor="bagian-pilih" className="text-sm font-medium">
           Bagian
         </label>
@@ -170,7 +196,7 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
                 }}
               >
                 <input type="hidden" name="id" value={k.id} />
-                <Button type="submit" variant="destructive" size="sm">
+                <Button type="submit" variant="outline" size="sm" className="text-destructive">
                   Hapus
                 </Button>
               </form>
@@ -181,10 +207,19 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
         <form action={kartuAction} className="mt-2 flex flex-col gap-3 border-t pt-4">
           <h3 className="text-sm font-semibold">{editing ? "Ubah kartu" : "Tambah kartu"}</h3>
           <input type="hidden" name="bagian" value={bagian} />
-          {editing ? <input type="hidden" name="id" value={editing.id} /> : null}
+          {editing ? <input type="hidden" name="id" value={editing.id} /> : <input type="hidden" name="aktif" value="true" />}
           <Field label="Judul" name="judul" defaultValue={editing?.judul ?? ""} />
           <Field label="Meta (link footer / angka stat / varian kartu)" name="meta" defaultValue={editing?.meta ?? ""} />
-          <Field label="Label (badge)" name="label" defaultValue={editing?.label ?? ""} />
+          <Field
+            label="Label (badge / kolom footer)"
+            name="label"
+            defaultValue={editing?.label ?? ""}
+            hint={
+              bagian === "FOOTER"
+                ? "Kolom footer: fasilitas · tentang · sosial · ikon (chip bawah brand)."
+                : undefined
+            }
+          />
           <Field label="Teks" name="teks" defaultValue={editing?.teks ?? ""} textarea />
           <LandingGambarField
             key={editing?.id ?? "new"}
@@ -193,12 +228,30 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
             defaultValue={editing?.gambar ?? "/landing/"}
             required
           />
+          <Field label="Slug embed (opsional, unik)" name="slug" defaultValue={editing?.slug ?? ""} />
           {editing ? (
+            <>
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" name="aktif" defaultChecked={editing.aktif} />
+                Tampil di landing / tentang
+              </label>
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" name="embedAktif" defaultChecked={editing.embedAktif} />
+                Siap embed sosmed
+              </label>
+              {editing.embedAktif ? (
+                <p className="text-xs text-muted-foreground">
+                  Iframe:{" "}
+                  <code className="break-all">{`<iframe src="/embed/kartu/${editing.id}" width="420" height="320" />`}</code>
+                </p>
+              ) : null}
+            </>
+          ) : (
             <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" name="aktif" defaultChecked={editing.aktif} />
-              Tampil di landing
+              <input type="checkbox" name="embedAktif" />
+              Siap embed sosmed
             </label>
-          ) : null}
+          )}
           {kartuState.error ? <p className="text-sm text-destructive">{kartuState.error}</p> : null}
           {kartuState.ok ? <p className="text-sm text-muted-foreground">{kartuState.ok}</p> : null}
           <div className="flex flex-wrap gap-2">
@@ -221,12 +274,14 @@ function Field({
   defaultValue,
   textarea,
   required,
+  hint,
 }: {
   label: string;
   name: string;
   defaultValue: string;
   textarea?: boolean;
   required?: boolean;
+  hint?: string;
 }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -238,6 +293,7 @@ function Field({
       ) : (
         <Input id={name} name={name} defaultValue={defaultValue} required={required} />
       )}
+      {hint ? <p className="text-xs text-muted-foreground">{hint}</p> : null}
     </div>
   );
 }

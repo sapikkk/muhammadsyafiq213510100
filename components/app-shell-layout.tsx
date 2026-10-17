@@ -1,6 +1,7 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import Link from "next/link";
+import { ExternalLink, Menu } from "lucide-react";
 import { Suspense, useState, type ReactNode } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Button } from "@/components/ui/button";
@@ -65,6 +66,17 @@ export function AppShellLayout({
               {userName}
             </h1>
           </div>
+          <Button
+            asChild
+            variant="outline"
+            size="icon"
+            className="shrink-0"
+            aria-label="Lihat halaman depan"
+          >
+            <Link href="/" target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="h-4 w-4" />
+            </Link>
+          </Button>
           <NotifikasiInboxPopover initialUnreadCount={notifikasiUnreadCount} />
         </header>
 
