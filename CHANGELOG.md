@@ -1,3 +1,10 @@
+## [1.41.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.41.0...v1.41.1) (2026-10-17)
+
+
+### Bug Fixes
+
+* **ui:** alur detail Lime, tabel kapsul, grafik & brand sidebar ([#136](https://github.com/sapikkk/muhammadsyafiq213510100/issues/136)) ([fdbdf8e](https://github.com/sapikkk/muhammadsyafiq213510100/commit/fdbdf8eb9ef957287a03f385c03c4256e4e6b874))
+
 # [1.41.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.40.1...v1.41.0) (2026-10-17)
 
 
