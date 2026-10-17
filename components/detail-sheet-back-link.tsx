@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { dismissDetailSheet } from "@/lib/dismiss-detail-sheet";
 import { cn } from "@/lib/utils";
 
 /** Tutup intercept `@detail` — Link ke URL daftar yang sama sering no-op saat pathname masih list. */
@@ -25,7 +26,7 @@ export function DetailSheetBackLink({
         "-ml-2 mb-3 min-h-11 gap-1.5 px-2 text-sm text-muted-foreground hover:bg-muted/40 hover:text-foreground",
         className,
       )}
-      onClick={() => router.replace(href, { scroll: false })}
+      onClick={() => dismissDetailSheet(router, href)}
     >
       <ArrowLeft className="size-3.5" aria-hidden />
       <span>{label}</span>

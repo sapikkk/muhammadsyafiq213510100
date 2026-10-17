@@ -23,7 +23,7 @@ export function EntityChangeHistoryDisclosure({
         type="button"
         variant="outline"
         size="sm"
-        className="h-11 w-full sm:w-fit"
+        className="h-11 w-full shadow-none sm:w-fit"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >

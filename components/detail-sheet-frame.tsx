@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Suspense, type ReactNode } from "react";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
+import { dismissDetailSheet } from "@/lib/dismiss-detail-sheet";
 import { cn } from "@/lib/utils";
 
 function DetailSheetLoading() {
@@ -30,7 +31,7 @@ export function DetailSheetFrame({
   const router = useRouter();
 
   const dismiss = () => {
-    router.replace(listHref, { scroll: false });
+    dismissDetailSheet(router, listHref);
   };
 
   return (
