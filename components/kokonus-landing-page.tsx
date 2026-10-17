@@ -28,7 +28,7 @@ export async function KokonusLandingPage() {
       <LandingFacilitiesSection kartu={kartu} appHref={appHref} />
       <LandingFundraisingSection konten={konten} kartu={kartu} appHref={appHref} />
       <LandingAthleteSection konten={konten} kartu={kartu} />
-      <LandingSportsFooterSection konten={konten} kartu={kartu} />
+      <LandingSportsFooterSection konten={konten} kartu={kartu} appHref={appHref} />
     </div>
   );
 }

@@ -80,3 +80,40 @@ html[data-ui-theme="wireframe"] .kokonus-landing-ref .kl-feature-panel,
   background: hsl(var(--foreground) / 0.88);
   color: hsl(var(--primary-foreground));
 }
+
+.kokonus-landing-ref .kl-footer-pill {
+  border-radius: var(--kl-shape-pill);
+  background: hsl(var(--primary));
+  padding: 0.15rem 0.65rem;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: hsl(var(--primary-foreground));
+}
+
+.kokonus-landing-ref .kl-footer-field {
+  display: flex;
+  min-height: 2.5rem;
+  align-items: center;
+  border-radius: var(--kl-shape-pill);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(var(--muted-foreground));
+}
+
+.kokonus-landing-ref .kl-footer-cta {
+  display: flex;
+  min-height: 2.125rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--kl-shape-lg);
+  background: hsl(var(--primary));
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+  color: hsl(var(--primary-foreground));
+}
+
+.kokonus-landing-ref .kl-footer-cta:hover {
+  opacity: 0.92;
+}

@@ -119,7 +119,12 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
           defaultValue={konten.fundraisingTeksGelap}
           textarea
         />
-        <Field label="Judul footer" name="footerJudul" defaultValue={konten.footerJudul} />
+        <Field
+          label="Judul footer"
+          name="footerJudul"
+          defaultValue={konten.footerJudul}
+          hint='Pill hijau: bungkus kata dengan {{teks}}, mis. Kebun {{hidroponik}} untuk tim.'
+        />
         <Field label="Teks footer" name="footerTeks" defaultValue={konten.footerTeks} textarea />
         {kontenState.error ? <p className="text-sm text-destructive">{kontenState.error}</p> : null}
         {kontenState.ok ? <p className="text-sm text-muted-foreground">{kontenState.ok}</p> : null}
@@ -205,7 +210,16 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
           {editing ? <input type="hidden" name="id" value={editing.id} /> : <input type="hidden" name="aktif" value="true" />}
           <Field label="Judul" name="judul" defaultValue={editing?.judul ?? ""} />
           <Field label="Meta (link footer / angka stat / varian kartu)" name="meta" defaultValue={editing?.meta ?? ""} />
-          <Field label="Label (badge)" name="label" defaultValue={editing?.label ?? ""} />
+          <Field
+            label="Label (badge / kolom footer)"
+            name="label"
+            defaultValue={editing?.label ?? ""}
+            hint={
+              bagian === "FOOTER"
+                ? "Kolom footer: fasilitas · tentang · sosial · ikon (chip bawah brand)."
+                : undefined
+            }
+          />
           <Field label="Teks" name="teks" defaultValue={editing?.teks ?? ""} textarea />
           <LandingGambarField
             key={editing?.id ?? "new"}
@@ -260,12 +274,14 @@ function Field({
   defaultValue,
   textarea,
   required,
+  hint,
 }: {
   label: string;
   name: string;
   defaultValue: string;
   textarea?: boolean;
   required?: boolean;
+  hint?: string;
 }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -277,6 +293,7 @@ function Field({
       ) : (
         <Input id={name} name={name} defaultValue={defaultValue} required={required} />
       )}
+      {hint ? <p className="text-xs text-muted-foreground">{hint}</p> : null}
     </div>
   );
 }

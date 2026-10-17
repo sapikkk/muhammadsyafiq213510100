@@ -395,45 +395,4 @@ export function LandingAthleteSection({ konten, kartu }: Pick<SectionProps, "kon
   );
 }
 
-export function LandingSportsFooterSection({ konten, kartu }: Pick<SectionProps, "konten" | "kartu">) {
-  const links = kartu.FOOTER;
-
-  return (
-    <footer className="border-t border-border bg-muted py-12 sm:py-16">
-      <div className="mx-auto flex w-full max-w-[min(100%,1080px)] flex-col gap-10 px-4 sm:px-6 lg:flex-row lg:items-start lg:justify-between">
-        <div className="max-w-md">
-          <div className="flex items-center gap-2">
-            <KokonusBrandMark size={40} mark="icon" alt="" />
-            <span className="text-sm font-bold uppercase">Kokonus Farm</span>
-          </div>
-          <p className="mt-6 text-xl font-bold leading-snug sm:text-2xl">
-            <span className="kl-accent-text">{konten.footerJudul}</span>
-            {" — "}
-            {konten.footerTeks}
-          </p>
-        </div>
-        {links.length > 0 ? (
-          <nav aria-label="Tautan footer" className="flex flex-wrap gap-6">
-            {links.map((link) => {
-              const href = link.meta?.startsWith("/") ? link.meta : `/${link.meta ?? ""}`;
-              return (
-                <Link
-                  key={link.id}
-                  href={href}
-                  className="flex items-center gap-2 text-sm font-bold hover:opacity-70"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img alt="" className="size-5" src={link.gambar} />
-                  {link.judul}
-                </Link>
-              );
-            })}
-          </nav>
-        ) : null}
-      </div>
-      <p className="mx-auto mt-10 max-w-[1080px] px-4 text-center text-[10px] uppercase tracking-widest text-black/40">
-        Kokonus Farm — hidroponik · rakit apung
-      </p>
-    </footer>
-  );
-}
+export { LandingSportsFooterSection } from "@/components/landing/landing-sports-footer";
