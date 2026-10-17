@@ -1,3 +1,10 @@
+# [1.45.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.44.0...v1.45.0) (2026-10-17)
+
+
+### Features
+
+* **ui:** landing section lengkap, CRUD pengaturan, unggah Vercel Blob ([2587321](https://github.com/sapikkk/muhammadsyafiq213510100/commit/2587321ef92550910be69a6b4c5c506c1ff24958))
+
 # [1.44.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.43.0...v1.44.0) (2026-10-17)
 
 
