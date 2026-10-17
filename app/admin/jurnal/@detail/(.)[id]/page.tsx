@@ -12,7 +12,7 @@ export default async function AdminJurnalDetailSheet({ params }: { params: { id:
   if (!jurnal) notFound();
 
   return (
-    <DetailSheetFrame>
+    <DetailSheetFrame listHref="/admin/jurnal">
       <JurnalDetailScreen
         id={id}
         backHref="/admin/jurnal"

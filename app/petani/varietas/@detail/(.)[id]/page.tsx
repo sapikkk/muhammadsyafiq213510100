@@ -3,7 +3,7 @@ import { VarietasDetail } from "@/components/varietas-detail";
 
 export default function PetaniVarietasDetailSheet({ params }: { params: { id: string } }) {
   return (
-    <DetailSheetFrame>
+    <DetailSheetFrame listHref="/petani/varietas">
       <VarietasDetail
         id={Number(params.id)}
         listHref="/petani/varietas"

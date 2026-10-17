@@ -3,7 +3,7 @@ import { InventarisDetail } from "@/components/inventaris-detail";
 
 export default function PetaniInventarisDetailSheet({ params }: { params: { id: string } }) {
   return (
-    <DetailSheetFrame>
+    <DetailSheetFrame listHref="/petani/inventaris">
       <InventarisDetail
         id={Number(params.id)}
         listHref="/petani/inventaris"

@@ -3,7 +3,7 @@ import { InventarisDetail } from "@/components/inventaris-detail";
 
 export default function OwnerInventarisDetailSheet({ params }: { params: { id: string } }) {
   return (
-    <DetailSheetFrame>
+    <DetailSheetFrame listHref="/owner/inventaris">
       <InventarisDetail
         id={Number(params.id)}
         listHref="/owner/inventaris"

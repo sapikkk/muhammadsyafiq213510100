@@ -3,7 +3,7 @@ import { VarietasDetail } from "@/components/varietas-detail";
 
 export default function AdminVarietasDetailSheet({ params }: { params: { id: string } }) {
   return (
-    <DetailSheetFrame>
+    <DetailSheetFrame listHref="/admin/varietas">
       <VarietasDetail
         id={Number(params.id)}
         listHref="/admin/varietas"

@@ -9,7 +9,7 @@ export async function SalesOrderCreateSheet() {
   const { pelanggan, siklus, akunDp } = await loadSalesOrderCreateContext();
 
   return (
-    <DetailSheetFrame>
+    <DetailSheetFrame listHref="/admin/penjualan">
       <DetailLayout
         backHref="/admin/penjualan"
         surface="sheet"

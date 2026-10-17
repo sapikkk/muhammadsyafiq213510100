@@ -6,7 +6,7 @@ export default function PetaniSiklusDetailSheet({ params }: { params: { id: stri
   if (params.id === "baru") return null;
 
   return (
-    <DetailSheetFrame>
+    <DetailSheetFrame listHref="/petani/siklus">
       <SiklusDetailScreen id={Number(params.id)} surface="sheet" />
     </DetailSheetFrame>
   );

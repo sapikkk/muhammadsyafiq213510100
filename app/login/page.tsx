@@ -4,10 +4,9 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Button as LimeButton } from "@/components/lime/ui/button";
 import { Input as LimeInput } from "@/components/lime/ui/input";
-import { KokonusBrandMark } from "@/components/kokonus-brand-mark";
 import { KokonusBrandWordmark } from "@/components/kokonus-brand-wordmark";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -107,15 +106,13 @@ export default function LoginPage() {
                   {error}
                 </p>
               ) : null}
-              {lime ? (
-                <LimeButton type="submit" variant="primary" className="w-full" disabled={pending} pending={pending}>
-                  Masuk
-                </LimeButton>
-              ) : (
-                <Button type="submit" className="w-full" disabled={pending}>
-                  {pending ? "Memeriksa..." : "Masuk"}
-                </Button>
-              )}
+              <Button
+                type="submit"
+                className={cn("w-full shadow-none", lime && "owner-keuangan-hero-cta h-11")}
+                disabled={pending}
+              >
+                {pending ? "Memeriksa..." : "Masuk"}
+              </Button>
             </form>
           </CardContent>
         </Card>

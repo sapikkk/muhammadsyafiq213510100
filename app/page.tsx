@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { ProjectHub } from "@/components/project-hub";
 import { PageGuideFooter } from "@/components/page-guide-footer";
 import { PageHeaderRow } from "@/components/page-header-row";
+import { KokonusSidebarLogo } from "@/components/kokonus-sidebar-logo";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 import { loadAgileProgress } from "@/lib/agile-progress";
@@ -21,19 +22,16 @@ export default async function HomePage() {
   return (
     <main className="flex min-h-screen flex-col bg-background">
       <header className="flex h-14 items-center justify-between border-b px-6">
-        <div className="flex items-center gap-2">
-          <div className="flex h-6 w-6 items-center justify-center bg-foreground">
-            <span className="text-xs font-bold text-background">KF</span>
-          </div>
-          <span className="text-sm font-semibold">Kokonus Farm</span>
-        </div>
+        <Link href="/" className="flex min-w-0 items-center">
+          <KokonusSidebarLogo />
+        </Link>
         <div className="flex items-center gap-2">
           {role ? (
             <Button asChild size="sm" variant="secondary">
               <Link href={roleHome[role]}>Beranda aplikasi</Link>
             </Button>
           ) : null}
-          <Button asChild size="sm">
+          <Button asChild size="sm" className="shadow-none">
             <Link href="/login">{role ? "Ganti akun" : "Masuk"}</Link>
           </Button>
         </div>

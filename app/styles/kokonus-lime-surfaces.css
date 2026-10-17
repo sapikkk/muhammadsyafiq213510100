@@ -155,8 +155,24 @@ html[data-ui-theme="lime"] [data-slot="list-row"]:hover {
   background: var(--kokonus-lime-soft, hsl(var(--muted) / 0.55)) !important;
 }
 
-html[data-ui-theme="lime"] .lime .glow {
+html[data-ui-theme="lime"] .glow,
+html[data-ui-theme="lime"] .lime .glow,
+html[data-ui-theme="lime"] [data-slot="button"].glow {
   background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+html[data-ui-theme="lime"] [data-slot="button"].bg-accent,
+html[data-ui-theme="lime"] button.bg-accent {
+  background: var(--kokonus-lime-mark, hsl(var(--primary))) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: #0f0f0d !important;
+}
+
+html[data-ui-theme="lime"] button.shadow-none,
+html[data-ui-theme="lime"] .shadow-none.bg-primary {
   box-shadow: none !important;
 }
 
