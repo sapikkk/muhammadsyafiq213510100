@@ -114,3 +114,54 @@
   border-radius: 2.5rem 0.75rem 2.5rem 2.5rem;
   object-fit: cover;
 }
+
+.kokonus-landing__scene-wrap {
+  overflow: hidden;
+  border-radius: 2rem 2rem 2rem 0.5rem;
+  border: 1px solid rgb(211 250 83 / 0.25);
+  box-shadow: 0 24px 48px rgb(0 0 0 / 0.35);
+}
+
+.kokonus-landing__tag {
+  display: inline-block;
+  border-radius: 9999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgb(211 250 83 / 0.15);
+  color: var(--kl-lime);
+  border: 1px solid rgb(211 250 83 / 0.35);
+}
+
+.kokonus-landing__tag--dark {
+  background: rgb(255 255 255 / 0.08);
+  color: var(--kl-cream);
+  border-color: rgb(255 255 255 / 0.15);
+}
+
+.kokonus-landing__bento--on-cream {
+  background: rgb(26 61 46 / 0.04);
+  border: 1px solid rgb(26 61 46 / 0.1);
+  color: var(--kl-ink);
+}
+
+.kokonus-landing__bento--lime-cream {
+  background: linear-gradient(160deg, rgb(211 250 83 / 0.45), rgb(211 250 83 / 0.12));
+  border-color: rgb(26 61 46 / 0.12);
+}
+
+.kokonus-landing__feature-tag {
+  border-radius: 9999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--kl-green);
+  color: var(--kl-lime);
+}
+
+.kokonus-landing__flow-card {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 1.25rem), calc(100% - 1.25rem) 100%, 0 100%);
+}
+
