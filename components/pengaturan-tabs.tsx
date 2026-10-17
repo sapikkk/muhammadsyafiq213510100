@@ -21,16 +21,32 @@ const TAB_TIM: PengaturanTab = {
   href: "/pengaturan?bagian=tim",
 };
 
+const TAB_LANDING: PengaturanTab = {
+  id: "landing",
+  label: "Landing",
+  href: "/pengaturan?bagian=landing",
+};
+
 function tabActive(pathname: string, searchParams: URLSearchParams, tab: PengaturanTab): boolean {
   if (pathname !== "/pengaturan") return false;
   const bagian = searchParams.get("bagian") || "profil";
   return tab.id === bagian;
 }
 
-export function PengaturanTabs({ showTimTab }: { showTimTab: boolean }) {
+export function PengaturanTabs({
+  showTimTab,
+  showLandingTab,
+}: {
+  showTimTab: boolean;
+  showLandingTab: boolean;
+}) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const tabs = showTimTab ? [...TABS_BASE, TAB_TIM] : TABS_BASE;
+  const tabs = [
+    ...TABS_BASE,
+    ...(showLandingTab ? [TAB_LANDING] : []),
+    ...(showTimTab ? [TAB_TIM] : []),
+  ];
 
   return (
     <nav aria-label="Bagian pengaturan" className="border-b pb-2">

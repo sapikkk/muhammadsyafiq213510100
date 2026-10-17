@@ -14,6 +14,8 @@ import { authOptions } from "@/lib/auth";
 import { listUsersForOwner } from "@/lib/owner-users";
 import { listPetani, serializePetani } from "@/lib/petani";
 import { prisma } from "@/lib/prisma";
+import { LandingPengaturanPanel } from "@/components/landing-pengaturan-panel";
+import { getLandingKontenForEdit, listLandingKartuAll } from "@/lib/landing";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +28,10 @@ export default async function PengaturanPage({ searchParams }: { searchParams: S
   const bagian = searchParams.bagian ?? "profil";
 
   if (bagian === "tim" && role !== "OWNER") {
+    redirect("/pengaturan?bagian=profil");
+  }
+
+  if (bagian === "landing" && role !== "ADMIN" && role !== "OWNER") {
     redirect("/pengaturan?bagian=profil");
   }
 
@@ -54,8 +60,17 @@ export default async function PengaturanPage({ searchParams }: { searchParams: S
       {bagian === "tim" && role === "OWNER" ? (
         <TimOwnerPanel tim={searchParams.tim ?? "petani"} />
       ) : null}
+
+      {bagian === "landing" && (role === "ADMIN" || role === "OWNER") ? (
+        <LandingPengaturanSection />
+      ) : null}
     </>
   );
+}
+
+async function LandingPengaturanSection() {
+  const [konten, kartu] = await Promise.all([getLandingKontenForEdit(), listLandingKartuAll()]);
+  return <LandingPengaturanPanel konten={konten} kartu={kartu} />;
 }
 
 async function TimOwnerPanel({ tim }: { tim: string }) {

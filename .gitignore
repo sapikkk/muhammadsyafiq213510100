@@ -39,3 +39,7 @@ graphify-out/.graphify_labels.pending.json
 test-results/
 playwright-report/
 .neon
+.env*.local
+
+# Galeri Figma Make lokal — bukan bagian deploy
+reference/
