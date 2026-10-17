@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon-call-made">
+<mask id="mask0_0_14" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
+<rect id="icon-bounds" width="20" height="20" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_0_14)">
+<path id="call-made-path" d="M4.50003 16.6666L3.33336 15.4999L13 5.83322H7.50003V4.16655H15.8334V12.4999H14.1667V6.99988L4.50003 16.6666Z" fill="#023F2D"/>
+</g>
+</g>
+</svg>

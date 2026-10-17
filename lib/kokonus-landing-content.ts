@@ -1,123 +1,71 @@
-import type { LucideIcon } from "lucide-react";
-import { Building2, LineChart, Package, Truck, Wallet, Waves } from "lucide-react";
+/** Copy landing — bahasa Indonesia, kalimat pendek (ui-ringkas). */
 
-export type LandingNavItem = { href: string; label: string };
-export type LandingFeature = {
-  id: string;
+export type LandingStackCard = {
   title: string;
-  body: string;
-  icon: LucideIcon;
-  wide?: boolean;
-  tag?: string;
+  meta: string;
+  date: string;
+  image: string;
 };
-export type LandingFlowStep = { step: string; title: string; body: string };
-export type LandingRoleCard = { title: string; body: string; highlights: string[] };
 
-export const LANDING_NAV: LandingNavItem[] = [
-  { href: "#kebun", label: "Kebun" },
-  { href: "#fitur", label: "Fitur" },
-  { href: "#alur", label: "Alur" },
-  { href: "#peran", label: "Peran" },
-];
+export type LandingFacility = {
+  title: string;
+  image: string;
+};
 
-export const LANDING_DOMAIN_TAGS = [
-  "Greenhouse",
-  "Rakit apung",
-  "Hidroponik",
-  "Penjualan",
-  "Pengantaran",
-  "Petani",
+export const LANDING_ASSET = "/landing";
+
+export const LANDING_NAV = [
+  { href: "#modul", label: "Modul" },
+  { href: "#fasilitas", label: "Alur kebun" },
+  { href: "#masuk", label: "Masuk" },
 ] as const;
 
-export const LANDING_FEATURES: LandingFeature[] = [
-  {
-    id: "greenhouse",
-    title: "Greenhouse & kolam",
-    body: "Pantau varietas, siklus tanam, dan panen dari benih sampai sayur siap angkat.",
-    icon: Building2,
-    wide: true,
-    tag: "Produksi",
-  },
-  {
-    id: "rakit",
-    title: "Rakit apung",
-    body: "Biaya benih, nutrisi, dan pack siap pakai terhubung ke stok nyata di kolam.",
-    icon: Waves,
-    tag: "Hidroponik",
-  },
-  {
-    id: "stok",
-    title: "Stok & inventaris",
-    body: "Barang masuk, sisa pack, dan peringatan stok rendah — tanpa spreadsheet.",
-    icon: Package,
-    tag: "Operasi",
-  },
-  {
-    id: "penjualan",
-    title: "Penjualan",
-    body: "Pesanan jual, harga, dan piutang pelanggan dalam satu alur.",
-    icon: Wallet,
-    wide: true,
-    tag: "Penjualan",
-  },
-  {
-    id: "pengantaran",
-    title: "Pengantaran",
-    body: "Jadwal kirim dan status pengiriman — petani tahu apa yang harus dibawa hari ini.",
-    icon: Truck,
-    tag: "Pengantaran",
-  },
-  {
-    id: "keuangan",
-    title: "Laporan keuangan",
-    body: "Arus kas, laba rugi, jurnal — untuk owner dan admin kebun.",
-    icon: LineChart,
-    tag: "Keuangan",
-  },
-];
-
-export const LANDING_FLOW: LandingFlowStep[] = [
-  {
-    step: "1",
-    title: "Di greenhouse",
-    body: "Petani catat siklus, panen, dan pakai stok di kolam rakit apung.",
-  },
-  {
-    step: "2",
-    title: "Ke penjualan",
-    body: "Admin buat pesanan jual; pengantaran dijadwalkan ke pelanggan.",
-  },
-  {
-    step: "3",
-    title: "Ke laporan",
-    body: "Owner lihat biaya produksi dan uang masuk — angka selaras dengan lapangan.",
-  },
-];
-
-export const LANDING_ROLES: LandingRoleCard[] = [
-  {
-    title: "Petani",
-    body: "Fokus di kolam dan greenhouse: tugas hari ini, inventaris, panen, pengiriman.",
-    highlights: ["Beranda petani", "Monitor kolam", "Paket siap pakai"],
-  },
-  {
-    title: "Admin",
-    body: "Operasi harian kebun plus penjualan, pelanggan, dan jurnal.",
-    highlights: ["Pesanan jual", "Pengantaran", "Stok & panen"],
-  },
-  {
-    title: "Owner",
-    body: "Gambaran keuangan utuh tanpa harus mengecek setiap kolam sendiri.",
-    highlights: ["Arus kas", "Laba rugi", "Varietas & biaya"],
-  },
-];
-
-export const LANDING_KEBUN_COPY = {
-  eyebrow: "Greenhouse · rakit apung · hidroponik",
-  titleLead: "Dari kolam",
-  titleAccent: "sampai pelanggan.",
-  lead: "Kokonus Farm menghubungkan kerja di greenhouse, biaya rakit apung, penjualan sayur, dan pengantaran — dalam bahasa Indonesia yang mudah dibaca di lapangan.",
-  panelTitle: "Satu alur kebun",
-  panelBody:
-    "Trial di lapangan, catat di aplikasi. Stok, siklus, pesanan, dan uang tidak lagi terpisah di chat atau buku tulis.",
+export const LANDING_HERO = {
+  title: "Greenhouse, rakit apung, penjualan — satu aplikasi.",
+  lead:
+    "Petani catat di kolam. Admin jual dan jadwalkan antar. Owner lihat uang masuk. Teks di layar pakai bahasa Indonesia.",
+  cta: "Masuk",
+  previewTitle: "01 / 03",
+  previewBody: "Siklus tanam, stok pack, pesanan jual — berurutan, bukan di akhir bulan.",
+  stack: [
+    {
+      title: "Pengantaran",
+      meta: "Jadwal kirim hari ini",
+      date: "Petani",
+      image: `${LANDING_ASSET}/dab15.png`,
+    },
+    {
+      title: "Panen",
+      meta: "Rakit apung · greenhouse",
+      date: "Produksi",
+      image: `${LANDING_ASSET}/879d7.png`,
+    },
+    {
+      title: "Pesanan jual",
+      meta: "Pelanggan & piutang",
+      date: "Admin",
+      image: `${LANDING_ASSET}/7fa27.png`,
+    },
+  ] satisfies LandingStackCard[],
 };
+
+export const LANDING_FACILITIES: LandingFacility[] = [
+  { title: "Greenhouse & varietas", image: `${LANDING_ASSET}/79bee.png` },
+  { title: "Rakit apung & stok", image: `${LANDING_ASSET}/46779.png` },
+  { title: "Penjualan & antar", image: `${LANDING_ASSET}/5e4b8.png` },
+  { title: "Laporan keuangan", image: `${LANDING_ASSET}/cba57.png` },
+];
+
+export const LANDING_BENTO = {
+  stat: "3 peran",
+  statNote: "Petani · admin · owner",
+  darkTitle: "Biaya produksi hidroponik",
+  darkBody: "Catat di lapangan. Angka di owner selaras dengan kebun.",
+  button: "Buka aplikasi",
+};
+
+export const LANDING_ROLES = [
+  { title: "Petani", line: "Tugas, inventaris, panen, pengiriman." },
+  { title: "Admin", line: "Pesanan jual, pelanggan, stok, jurnal." },
+  { title: "Owner", line: "Arus kas, laba rugi, varietas." },
+] as const;
