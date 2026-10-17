@@ -1,16 +1,14 @@
-import Image from "next/image";
+import { KokonusBrandMark } from "@/components/kokonus-brand-mark";
 import { cn } from "@/lib/utils";
 
-/** Wordmark sidebar — lebar penuh area logo, tidak terpotong. */
+/** Logo sidebar — ikon + teks, muat lebar sidebar (bukan wordmark penuh). */
 export function KokonusSidebarLogo({ className }: { className?: string }) {
   return (
-    <Image
-      src="/brand/kokonus-wordmark.png"
-      alt="Kokonus Farm"
-      width={200}
-      height={28}
-      className={cn("h-7 w-auto max-w-[calc(100%-0.25rem)] object-contain object-left", className)}
-      priority
-    />
+    <span className={cn("flex min-w-0 items-center gap-2.5", className)}>
+      <KokonusBrandMark size={28} mark="icon" className="shrink-0" />
+      <span className="truncate text-sm font-semibold leading-tight tracking-tight">
+        Kokonus Farm
+      </span>
+    </span>
   );
 }

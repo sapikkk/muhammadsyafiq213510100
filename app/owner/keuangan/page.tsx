@@ -1,6 +1,5 @@
-import { OwnerDashboardKeuanganPanel } from "@/components/owner-dashboard-keuangan-panel";
 import { OwnerKeuanganChrome } from "@/components/owner-keuangan-chrome";
-import { OwnerKeuanganHubBento } from "@/components/owner-keuangan-hub-bento";
+import { OwnerKeuanganDashboardLayout } from "@/components/owner-keuangan-dashboard-layout";
 import { PageHeaderRow } from "@/components/page-header-row";
 import { loadOwnerDashboardKeuangan } from "@/lib/owner-dashboard-keuangan";
 
@@ -12,8 +11,7 @@ export default async function OwnerKeuanganPage() {
   return (
     <OwnerKeuanganChrome>
       <PageHeaderRow title="Laporan keuangan" />
-      <OwnerDashboardKeuanganPanel data={keuangan} />
-      <OwnerKeuanganHubBento />
+      <OwnerKeuanganDashboardLayout data={keuangan} />
     </OwnerKeuanganChrome>
   );
 }

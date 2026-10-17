@@ -4,9 +4,14 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Button as LimeButton } from "@/components/lime/ui/button";
+import { Input as LimeInput } from "@/components/lime/ui/input";
+import { KokonusBrandMark } from "@/components/kokonus-brand-mark";
+import { KokonusBrandWordmark } from "@/components/kokonus-brand-wordmark";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { useUiTheme } from "@/components/ui-theme-provider";
 import { roleHome } from "@/lib/role-home";
 import { notify } from "@/lib/notify";
 import { PageGuideFooter } from "@/components/page-guide-footer";
@@ -14,6 +19,9 @@ import { PageHeaderRow } from "@/components/page-header-row";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { theme } = useUiTheme();
+  const lime = theme === "lime";
+  const FieldInput = lime ? LimeInput : Input;
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -54,16 +62,29 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen min-w-0 items-center justify-center overflow-x-clip bg-background px-2 min-[220px]:px-4">
+    <main
+      className={
+        lime
+          ? "flex min-h-screen min-w-0 items-center justify-center overflow-x-clip bg-page px-2 text-fg min-[220px]:px-4"
+          : "flex min-h-screen min-w-0 items-center justify-center overflow-x-clip bg-background px-2 min-[220px]:px-4"
+      }
+    >
       <div className="w-full min-w-0 max-w-sm space-y-4 min-[220px]:space-y-6">
-        <PageHeaderRow title="Masuk" />
+        {lime ? (
+          <div className="flex flex-col items-center gap-3 pb-1">
+            <KokonusBrandWordmark variant="light" className="h-9" priority />
+            <p className="text-sm text-muted-foreground">Masuk ke akun farm Anda</p>
+          </div>
+        ) : (
+          <PageHeaderRow title="Masuk" />
+        )}
 
-        <Card>
+        <Card className={lime ? "border-line bg-surface shadow-none" : undefined}>
           <CardContent className="pt-6">
             <form className="space-y-4" noValidate onSubmit={onSubmit}>
               <label className="block space-y-1.5 text-sm">
                 <span className="font-medium">Email</span>
-                <Input
+                <FieldInput
                   name="email"
                   type="email"
                   autoComplete="username"
@@ -73,7 +94,7 @@ export default function LoginPage() {
               </label>
               <label className="block space-y-1.5 text-sm">
                 <span className="font-medium">Sandi</span>
-                <Input
+                <FieldInput
                   name="password"
                   type="password"
                   autoComplete="current-password"
@@ -86,9 +107,15 @@ export default function LoginPage() {
                   {error}
                 </p>
               ) : null}
-              <Button type="submit" className="w-full" disabled={pending}>
-                {pending ? "Memeriksa..." : "Masuk"}
-              </Button>
+              {lime ? (
+                <LimeButton type="submit" variant="primary" className="w-full" disabled={pending} pending={pending}>
+                  Masuk
+                </LimeButton>
+              ) : (
+                <Button type="submit" className="w-full" disabled={pending}>
+                  {pending ? "Memeriksa..." : "Masuk"}
+                </Button>
+              )}
             </form>
           </CardContent>
         </Card>

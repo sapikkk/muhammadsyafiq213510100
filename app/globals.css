@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+@config "../tailwind.config.ts";
 
 @layer base {
   /* Wireframe lo-fi (default): monokrom, radius 0. Tema Lime: lihat app/styles/ui-theme-lime.css */
@@ -115,11 +115,33 @@
     @apply border-b-0;
   }
 
+  html[data-ui-theme="lime"] .data-table-panel table {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
   html[data-ui-theme="lime"] .data-table-panel thead tr {
-    background-color: hsl(var(--ring));
+    background-color: var(--kokonus-green, hsl(var(--ring)));
+    border-bottom: none;
   }
 
   html[data-ui-theme="lime"] .data-table-panel thead th {
     @apply text-white;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  html[data-ui-theme="lime"] .data-table-panel thead th:first-child {
+    border-top-left-radius: 9999px;
+    border-bottom-left-radius: 9999px;
+    padding-left: 1rem;
+  }
+
+  html[data-ui-theme="lime"] .data-table-panel thead th:last-child {
+    border-top-right-radius: 9999px;
+    border-bottom-right-radius: 9999px;
+    padding-right: 1rem;
   }
 }

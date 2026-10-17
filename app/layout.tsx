@@ -1,15 +1,35 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, Inter, Manrope } from "next/font/google";
 import { Providers } from "@/components/providers";
 import "./globals.css";
 import "./styles/ui-theme-wireframe-lock.css";
 import "./styles/ui-theme-lime.css";
+import "./styles/kokonus-lime-surfaces.css";
+import "@/components/lime/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-dm-sans",
+  display: "swap",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-manrope",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Kokonus Farm",
   description: "Tata kelola biaya produksi hidroponik rakit apung.",
+  icons: {
+    icon: [{ url: "/brand/kokonus-favicon.png", type: "image/png" }],
+    apple: [{ url: "/apple-icon.png", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({
@@ -18,7 +38,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" data-ui-theme="wireframe" suppressHydrationWarning>
+    <html
+      lang="id"
+      data-ui-theme="wireframe"
+      suppressHydrationWarning
+      className={`${dmSans.variable} ${manrope.variable}`}
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{

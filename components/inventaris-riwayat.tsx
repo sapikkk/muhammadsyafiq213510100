@@ -3,6 +3,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
+import { TableSectionDisclosure } from "@/components/table-section-disclosure";
 import { formatQty } from "@/lib/format";
 import type { SerializedPergerakan } from "@/lib/inventaris-types";
 import { satuanInventarisLabel } from "@/lib/inventaris-satuan";
@@ -17,9 +18,12 @@ const waktu = new Intl.DateTimeFormat("id-ID", {
 export function InventarisRiwayat({
   rows,
   hideItemColumn = false,
+  /** Sheet detail: tabel disembunyikan dulu agar panel cepat terbuka. */
+  collapsedInSheet = false,
 }: {
   rows: SerializedPergerakan[];
   hideItemColumn?: boolean;
+  collapsedInSheet?: boolean;
 }) {
   const columns = useMemo<ColumnDef<SerializedPergerakan>[]>(
     () => [
@@ -72,7 +76,7 @@ export function InventarisRiwayat({
     [hideItemColumn],
   );
 
-  return (
+  const table = (
     <DataTable
       columns={columns}
       data={rows}
@@ -81,5 +85,16 @@ export function InventarisRiwayat({
       searchColumnIds={["item", "user.nama", "keterangan", "tipe"]}
       emptyMessage="Belum ada pergerakan stok."
     />
+  );
+
+  if (!collapsedInSheet) return table;
+
+  return (
+    <TableSectionDisclosure
+      count={rows.length}
+      closedLabel={`Tampilkan riwayat pergerakan (${rows.length})`}
+    >
+      {table}
+    </TableSectionDisclosure>
   );
 }

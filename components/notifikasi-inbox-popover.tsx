@@ -108,7 +108,7 @@ export function NotifikasiInboxPopover({
   };
 
   return (
-    <div ref={panelRef} className={cn("relative z-50", className)}>
+    <div ref={panelRef} className={cn("relative isolate z-[100]", className)}>
       <button
         type="button"
         className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-md border text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"

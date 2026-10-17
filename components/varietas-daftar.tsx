@@ -3,6 +3,9 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { DataTable } from "@/components/data-table";
+import { useUiTheme } from "@/components/ui-theme-provider";
+import { VarietasDaftarLime } from "@/components/varietas-daftar-lime";
+import { VarietasGlyph } from "@/components/varietas-glyph";
 import { varietasStatusLabel, type VarietasStatus } from "@/lib/varietas-status";
 import type { SerializedVarietas } from "@/lib/varietas-types";
 
@@ -14,7 +17,7 @@ const basePath = {
   petani: "/petani/varietas",
 } as const;
 
-export function VarietasDaftar({
+function VarietasDaftarWireframe({
   rows,
   mode,
 }: {
@@ -23,6 +26,12 @@ export function VarietasDaftar({
 }) {
   const columns = useMemo<ColumnDef<Row>[]>(() => {
     const cols: ColumnDef<Row>[] = [
+      {
+        id: "mark",
+        header: "",
+        cell: ({ row }) => <VarietasGlyph nama={row.original.nama} />,
+        enableSorting: false,
+      },
       { accessorKey: "nama", header: "Nama" },
       {
         accessorKey: "status",
@@ -82,4 +91,18 @@ export function VarietasDaftar({
       getRowHref={(row) => `${basePath[mode]}/${row.id}`}
     />
   );
+}
+
+export function VarietasDaftar({
+  rows,
+  mode,
+}: {
+  rows: Row[];
+  mode: keyof typeof basePath;
+}) {
+  const { theme } = useUiTheme();
+  if (theme === "lime") {
+    return <VarietasDaftarLime rows={rows} mode={mode} />;
+  }
+  return <VarietasDaftarWireframe rows={rows} mode={mode} />;
 }

@@ -1,8 +1,8 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import { BarChart3, Table2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { FilterChipGroup } from "@/components/kokonus/filter-chip-group";
 import type {
   MonitorAgregatBaris,
   MonitorKelompokMode,
@@ -26,6 +26,50 @@ const PAGE_SIZE = 12;
 
 type Tampilan = "log" | "rata";
 type ModeLihat = "tabel" | "diagram";
+
+type DataMode = "log" | "rata-hari" | "rata-minggu" | "rata-bulan";
+type ViewMode = "diagram" | DataMode;
+type PresetRentang = "7" | "30" | "90" | "custom";
+
+function toIsoDate(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function rentangHari(hari: number): { awal: string; akhir: string } {
+  const akhir = new Date();
+  const awal = new Date();
+  awal.setDate(akhir.getDate() - Math.max(1, hari));
+  return { awal: toIsoDate(awal), akhir: toIsoDate(akhir) };
+}
+
+function dataModeToState(mode: DataMode): { tampilan: Tampilan; kelompok: MonitorKelompokMode } {
+  if (mode === "log") return { tampilan: "log", kelompok: "hari" };
+  if (mode === "rata-minggu") return { tampilan: "rata", kelompok: "minggu" };
+  if (mode === "rata-bulan") return { tampilan: "rata", kelompok: "bulan" };
+  return { tampilan: "rata", kelompok: "hari" };
+}
+
+function stateToDataMode(tampilan: Tampilan, kelompok: MonitorKelompokMode): DataMode {
+  if (tampilan === "log") return "log";
+  if (kelompok === "minggu") return "rata-minggu";
+  if (kelompok === "bulan") return "rata-bulan";
+  return "rata-hari";
+}
+
+function viewModeToState(mode: ViewMode): {
+  modeLihat: ModeLihat;
+  tampilan: Tampilan;
+  kelompok: MonitorKelompokMode;
+} {
+  if (mode === "diagram") {
+    return { modeLihat: "diagram", tampilan: "rata", kelompok: "hari" };
+  }
+  const st = dataModeToState(mode);
+  return { modeLihat: "tabel", ...st };
+}
 
 function fmtAngka(n: number): string {
   return n.toLocaleString("id-ID", { maximumFractionDigits: 2 });
@@ -141,9 +185,10 @@ export function DashboardMonitorKolam({
   const [greenhouseId, setGreenhouseId] = useState("");
   const [kolamId, setKolamId] = useState("");
   const [siklusId, setSiklusId] = useState("");
-  const [tampilan, setTampilan] = useState<Tampilan>("rata");
-  const [kelompok, setKelompok] = useState<MonitorKelompokMode>("hari");
-  const [modeLihat, setModeLihat] = useState<ModeLihat>("tabel");
+  const [rentangPreset, setRentangPreset] = useState<PresetRentang>("90");
+  const [opsiLanjutOpen, setOpsiLanjutOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>("rata-hari");
+  const { modeLihat, tampilan, kelompok } = useMemo(() => viewModeToState(viewMode), [viewMode]);
   const [pageIndex, setPageIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -235,6 +280,43 @@ export function DashboardMonitorKolam({
     (k) => !greenhouseId || k.greenhouseId === Number(greenhouseId),
   );
 
+  const ringkasanLokasi = useMemo(() => {
+    const parts: string[] = [];
+    if (lahanId) {
+      const l = lahan.find((x) => String(x.id) === lahanId);
+      if (l) parts.push(l.label);
+    }
+    if (greenhouseId) {
+      const g = greenhouse.find((x) => String(x.id) === greenhouseId);
+      if (g) parts.push(g.label);
+    }
+    if (kolamId) {
+      const k = kolam.find((x) => String(x.id) === kolamId);
+      if (k) parts.push(k.label);
+    }
+    if (siklusId) {
+      const s = siklus.find((x) => String(x.id) === siklusId);
+      if (s) parts.push(s.label);
+    }
+    return parts.length ? parts.join(" · ") : "Semua lokasi";
+  }, [lahanId, greenhouseId, kolamId, siklusId, lahan, greenhouse, kolam, siklus]);
+
+  const adaFilterLokasi = Boolean(lahanId || greenhouseId || kolamId || siklusId);
+
+  function terapkanPreset(hari: 7 | 30 | 90) {
+    const { awal, akhir } = rentangHari(hari);
+    setRentangPreset(String(hari) as PresetRentang);
+    setTglAwal(awal);
+    setTglAkhir(akhir);
+  }
+
+  function resetFilterLokasi() {
+    setLahanId("");
+    setGreenhouseId("");
+    setKolamId("");
+    setSiklusId("");
+  }
+
   const kolomLog = useMemo(() => buatKolomLog(logRows), [logRows]);
   const kolomAgregatMemo = useMemo(
     () => buatKolomAgregat(kelompok, agregatRows),
@@ -253,189 +335,179 @@ export function DashboardMonitorKolam({
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-2">
-        <Button
-          type="button"
-          size="sm"
-          variant={modeLihat === "tabel" ? "default" : "outline"}
-          className="min-h-11 gap-1.5"
-          onClick={() => setModeLihat("tabel")}
-        >
-          <Table2 className="size-4" aria-hidden />
-          Tabel
-        </Button>
-        <Button
-          type="button"
-          size="sm"
-          variant={modeLihat === "diagram" ? "default" : "outline"}
-          className="min-h-11 gap-1.5"
-          onClick={() => setModeLihat("diagram")}
-        >
-          <BarChart3 className="size-4" aria-hidden />
-          Diagram
-        </Button>
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <FilterChipGroup
+          layout="segmented"
+          className="w-full min-w-0 lg:max-w-xl"
+          label="Rentang waktu"
+          options={[
+            { value: "7", label: "7 hari" },
+            { value: "30", label: "30 hari" },
+            { value: "90", label: "90 hari" },
+            { value: "custom", label: "Tanggal lain" },
+          ]}
+          value={rentangPreset}
+          onChange={(v) => {
+            setRentangPreset(v);
+            if (v === "7") terapkanPreset(7);
+            else if (v === "30") terapkanPreset(30);
+            else if (v === "90") terapkanPreset(90);
+          }}
+        />
+        <label className="flex w-full min-w-0 flex-col gap-1 text-sm lg:max-w-xs lg:shrink-0">
+          <span className="font-medium">Tampilan</span>
+          <select
+            className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+            value={viewMode}
+            onChange={(e) => setViewMode(e.target.value as ViewMode)}
+          >
+            <option value="rata-hari">Tabel — rata-rata per hari</option>
+            <option value="rata-minggu">Tabel — rata-rata per minggu</option>
+            <option value="rata-bulan">Tabel — rata-rata per bulan</option>
+            <option value="log">Tabel — setiap catatan</option>
+            <option value="diagram">Diagram pH, PPM, suhu</option>
+          </select>
+        </label>
       </div>
 
-      {modeLihat === "tabel" ? (
-        <div className="flex flex-wrap gap-2">
-          <Button
-            type="button"
-            size="sm"
-            variant={tampilan === "log" ? "default" : "outline"}
-            className="min-h-11"
-            onClick={() => setTampilan("log")}
-          >
-            Per catatan
-          </Button>
-          <Button
-            type="button"
-            size="sm"
-            variant={tampilan === "rata" ? "default" : "outline"}
-            className="min-h-11"
-            onClick={() => setTampilan("rata")}
-          >
-            Ringkasan rata-rata
-          </Button>
-          {tampilan === "rata" ? (
-            <>
-              {(
-                [
-                  ["hari", "Per hari"],
-                  ["minggu", "Per minggu"],
-                  ["bulan", "Per bulan"],
-                ] as const
-              ).map(([mode, label]) => (
-                <Button
-                  key={mode}
-                  type="button"
-                  size="sm"
-                  variant={kelompok === mode ? "secondary" : "outline"}
-                  className="min-h-11"
-                  onClick={() => setKelompok(mode)}
-                >
-                  {label}
-                </Button>
-              ))}
-            </>
-          ) : null}
+      {rentangPreset === "custom" ? (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <label className="space-y-1 text-sm">
+            <span className="text-muted-foreground">Dari tanggal</span>
+            <Input
+              className="h-11"
+              type="date"
+              value={tglAwal}
+              onChange={(e) => setTglAwal(e.target.value)}
+            />
+          </label>
+          <label className="space-y-1 text-sm">
+            <span className="text-muted-foreground">Sampai tanggal</span>
+            <Input
+              className="h-11"
+              type="date"
+              value={tglAkhir}
+              onChange={(e) => setTglAkhir(e.target.value)}
+            />
+          </label>
         </div>
       ) : (
-        <p className="text-sm text-muted-foreground">
-          Diagram memakai filter tanggal dan lokasi yang sama dengan tabel.
+        <p className="text-xs text-muted-foreground tabular-nums">
+          Periode: {tglAwal} — {tglAkhir} · Lokasi: {ringkasanLokasi}
         </p>
       )}
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <label className="space-y-1 text-sm">
-          <span className="text-muted-foreground">Dari tanggal</span>
-          <Input
-            className="h-11"
-            type="date"
-            value={tglAwal}
-            onChange={(e) => setTglAwal(e.target.value)}
-          />
-        </label>
-        <label className="space-y-1 text-sm">
-          <span className="text-muted-foreground">Sampai tanggal</span>
-          <Input
-            className="h-11"
-            type="date"
-            value={tglAkhir}
-            onChange={(e) => setTglAkhir(e.target.value)}
-          />
-        </label>
-        <label className="space-y-1 text-sm">
-          <span className="text-muted-foreground">Lahan</span>
-          <select
-            className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
-            value={lahanId}
-            onChange={(e) => {
-              setLahanId(e.target.value);
-              setGreenhouseId("");
-              setKolamId("");
-            }}
-          >
-            <option value="">Semua</option>
-            {lahan.map((l) => (
-              <option key={l.id} value={l.id}>
-                {l.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="space-y-1 text-sm">
-          <span className="text-muted-foreground">Rumah kaca</span>
-          <select
-            className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
-            value={greenhouseId}
-            onChange={(e) => {
-              setGreenhouseId(e.target.value);
-              setKolamId("");
-            }}
-          >
-            <option value="">Semua</option>
-            {ghFiltered.map((g) => (
-              <option key={g.id} value={g.id}>
-                {g.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="space-y-1 text-sm">
-          <span className="text-muted-foreground">Kolam</span>
-          <select
-            className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
-            value={kolamId}
-            onChange={(e) => setKolamId(e.target.value)}
-          >
-            <option value="">Semua</option>
-            {kolamFiltered.map((k) => (
-              <option key={k.id} value={k.id}>
-                {k.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="space-y-1 text-sm">
-          <span className="text-muted-foreground">Siklus tanam</span>
-          <select
-            className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
-            value={siklusId}
-            onChange={(e) => setSiklusId(e.target.value)}
-          >
-            <option value="">Semua</option>
-            {siklus.map((s) => (
-              <option key={s.id} value={s.id}>
-                {s.label}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+      <details
+        className="rounded-md border border-border bg-muted/10 px-3 py-2"
+        open={opsiLanjutOpen}
+        onToggle={(e) => setOpsiLanjutOpen((e.target as HTMLDetailsElement).open)}
+      >
+        <summary className="cursor-pointer list-none text-sm font-medium [&::-webkit-details-marker]:hidden">
+          Opsi lanjutan (lokasi, ekspor)
+        </summary>
+        <div className="mt-3 space-y-3 border-t border-border/80 pt-3">
+          <div className="flex flex-wrap items-center gap-2">
+            {adaFilterLokasi ? (
+              <Button type="button" size="sm" variant="ghost" className="min-h-11" onClick={resetFilterLokasi}>
+                Reset lokasi
+              </Button>
+            ) : null}
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <label className="space-y-1 text-sm">
+              <span className="text-muted-foreground">Lahan</span>
+              <select
+                className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+                value={lahanId}
+                onChange={(e) => {
+                  setLahanId(e.target.value);
+                  setGreenhouseId("");
+                  setKolamId("");
+                }}
+              >
+                <option value="">Semua</option>
+                {lahan.map((l) => (
+                  <option key={l.id} value={l.id}>
+                    {l.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="space-y-1 text-sm">
+              <span className="text-muted-foreground">Rumah kaca</span>
+              <select
+                className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+                value={greenhouseId}
+                onChange={(e) => {
+                  setGreenhouseId(e.target.value);
+                  setKolamId("");
+                }}
+              >
+                <option value="">Semua</option>
+                {ghFiltered.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="space-y-1 text-sm">
+              <span className="text-muted-foreground">Kolam</span>
+              <select
+                className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+                value={kolamId}
+                onChange={(e) => setKolamId(e.target.value)}
+              >
+                <option value="">Semua</option>
+                {kolamFiltered.map((k) => (
+                  <option key={k.id} value={k.id}>
+                    {k.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="space-y-1 text-sm">
+              <span className="text-muted-foreground">Siklus tanam</span>
+              <select
+                className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+                value={siklusId}
+                onChange={(e) => setSiklusId(e.target.value)}
+              >
+                <option value="">Semua</option>
+                {siklus.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <EksporLembar
+              judulTombol="Ekspor"
+              unduhPath="/api/export/monitor-kolam"
+              pratinjauPath="/api/export/preview?jenis=monitor-kolam"
+              rentang="tanggal"
+              defaultDari={tglAwal}
+              defaultSampai={tglAkhir}
+              extraParams={extraParams}
+              trigger={
+                <Button type="button" variant="outline" className="min-h-11">
+                  Ekspor lembar
+                </Button>
+              }
+            />
+          </div>
+        </div>
+      </details>
 
-      <div className="flex flex-wrap items-center gap-2">
-        <EksporLembar
-          judulTombol="Ekspor"
-          unduhPath="/api/export/monitor-kolam"
-          pratinjauPath="/api/export/preview?jenis=monitor-kolam"
-          rentang="tanggal"
-          defaultDari={tglAwal}
-          defaultSampai={tglAkhir}
-          extraParams={extraParams}
-          trigger={
-            <Button type="button" variant="outline" className="h-11">
-              Ekspor
-            </Button>
-          }
-        />
-        {modeLihat === "tabel" && loading ? (
-          <p className="text-xs text-muted-foreground">Memuat…</p>
-        ) : modeLihat === "tabel" ? (
-          <p className="text-xs text-muted-foreground">
-            {rowCount} baris · panah = banding catatan sebelumnya (kolam sama)
-          </p>
-        ) : null}
-      </div>
+      {modeLihat === "tabel" && loading ? (
+        <p className="text-sm text-muted-foreground">Memuat data…</p>
+      ) : modeLihat === "tabel" ? (
+        <p className="text-xs text-muted-foreground">
+          {rowCount} baris · panah = banding catatan sebelumnya (kolam sama)
+        </p>
+      ) : null}
 
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
 

@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const demoPassword = process.env.E2E_PASSWORD ?? "KokonusDemo2026";
+const demoPassword = process.env.E2E_PASSWORD ?? "1";
 
 test("halaman login tampil", async ({ page }) => {
   await page.goto("/login");

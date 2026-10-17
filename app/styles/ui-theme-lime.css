@@ -1,7 +1,7 @@
 /**
- * Contoh tema Lime → variabel shadcn (Tailwind v3).
- * Hanya html[data-ui-theme="lime"] — wireframe tidak memuat file ini ke token Lime.
- * Token asli: vendor/design/lime/tokens.css (data-system="lime").
+ * Jembatan shadcn saat data-ui-theme=lime (navigasi, kartu lama).
+ * Token Lime resmi: vendor/design/lime/tokens.css + components/lime/styles.css.
+ * Wireframe tidak memakai override ini.
  */
 @import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap");
 @import "../../vendor/design/lime/tokens.css";
@@ -9,6 +9,8 @@
 /* Token Lime (--popover = lebar px) bentrok dengan shadcn — ulang di html + body.lime */
 html[data-ui-theme="lime"],
 html[data-ui-theme="lime"] body.lime {
+  --kokonus-green: #1a3d2e;
+  --kokonus-lime-mark: #d3fa53;
   --background: 40 20% 98%;
   --foreground: 60 6% 5%;
   --card: 0 0% 100%;
@@ -42,7 +44,51 @@ html[data-ui-theme="lime"] body.lime {
 }
 
 html[data-ui-theme="lime"] body {
-  font-family: "Hanken Grotesk", var(--font-inter-fallback, ui-sans-serif), system-ui, sans-serif;
+  font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+html[data-ui-theme="lime"] .tabular-nums,
+html[data-ui-theme="lime"] [data-slot="amount"] {
+  font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Owner keuangan — Monex / LeaseFlow (tema lime) */
+html[data-ui-theme="lime"] .owner-keuangan-hero {
+  background: var(--ink);
+  color: var(--fg-inverse);
+  border-color: var(--line);
+  border-radius: var(--radius-panel);
+}
+
+html[data-ui-theme="lime"] .owner-keuangan-hero-cta {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent-line);
+}
+
+html[data-ui-theme="lime"] .owner-keuangan-accent-metric {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: var(--radius-panel);
+}
+
+html[data-ui-theme="lime"] .lime-pipeline-hatch {
+  background: var(--accent-wash);
+  border-color: var(--line-strong);
+  border-radius: var(--radius-field);
+}
+
+html[data-ui-theme="lime"] .lime-pipeline-invert {
+  background: var(--ink);
+  color: var(--fg-inverse);
+  border-color: var(--line);
+  border-radius: var(--radius-panel);
+}
+
+html[data-ui-theme="lime"] .lime-pipeline-accent-bar {
+  background: var(--accent);
+  border-radius: var(--radius-sm);
 }
 
 html[data-ui-theme="lime"] .shadow-sm,
@@ -50,4 +96,14 @@ html[data-ui-theme="lime"] [data-slot="card"] {
   box-shadow:
     0 1px 2px rgb(40 36 20 / 0.06),
     0 1px 1px rgb(40 36 20 / 0.04);
+}
+
+/* Daftar Lime + halaman auth */
+html[data-ui-theme="lime"] [data-slot="list"][data-variant="grouped"] {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+}
+
+html[data-ui-theme="lime"] main.bg-page {
+  background: var(--page);
 }

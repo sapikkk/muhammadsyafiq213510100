@@ -1,5 +1,6 @@
 import type { ExportDocument, ExportOrientation } from "@/lib/export-document-types";
 import { normalizeExportDocument } from "@/lib/export-align";
+import { EXPORT_BRAND } from "@/lib/export-brand";
 
 function pageSize(orient: ExportOrientation) {
   return orient === "landscape"
@@ -80,10 +81,20 @@ export async function pdfBufferFromExportDocument(
   const { jsPDF } = await import("jspdf");
   const { w, h, margin, contentW } = pageSize(orient);
   const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: orient });
+  pdf.setFontSize(11);
+  pdf.setFont("helvetica", "bold");
+  pdf.text(EXPORT_BRAND.legalName, margin, 12);
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(8);
+  pdf.text(EXPORT_BRAND.tagline, margin, 16);
+  pdf.setDrawColor(200);
+  pdf.line(margin, 18, w - margin, 18);
   pdf.setFontSize(14);
-  pdf.text(normalized.title, margin, 16);
+  pdf.setFont("helvetica", "bold");
+  pdf.text(normalized.title, margin, 26);
+  pdf.setFont("helvetica", "normal");
   pdf.setFontSize(9);
-  let y = 24;
+  let y = 32;
   for (const line of normalized.subtitleLines ?? []) {
     pdf.text(line, margin, y);
     y += 5;

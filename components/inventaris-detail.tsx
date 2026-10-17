@@ -31,6 +31,7 @@ export async function InventarisDetail({
   const serialized = serializeItem(item);
   const riwayat = await listPergerakan(id, 50);
   const satuan = satuanInventarisLabel[serialized.satuan];
+  const inSheet = surface === "sheet";
 
   return (
     <DetailLayout
@@ -58,7 +59,11 @@ export async function InventarisDetail({
         badge="Read"
         hidePermissionBadge={writableMode === "petani"}
       >
-        <InventarisRiwayat rows={riwayat.map(serializePergerakan)} hideItemColumn />
+        <InventarisRiwayat
+          rows={riwayat.map(serializePergerakan)}
+          hideItemColumn
+          collapsedInSheet={inSheet}
+        />
       </PageSection>
       {writableMode === "petani" ? null : (
         <EntityChangeHistorySection entitas="ItemInventaris" entitasId={id} />

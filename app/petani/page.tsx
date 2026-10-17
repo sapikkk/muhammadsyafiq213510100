@@ -3,7 +3,7 @@ import { DashboardBentoEmpty } from "@/components/dashboard-bento-empty";
 import { BentoSection, BentoSlot, DashboardBento } from "@/components/dashboard-bento";
 import { PageHeaderRow } from "@/components/page-header-row";
 import { PetaniBerandaAlurTanam } from "@/components/petani-beranda-alur-tanam";
-import { PetaniMonitorKolamBeranda } from "@/components/petani-monitor-kolam-beranda";
+import { MonitorKolamBeranda } from "@/components/monitor-kolam-beranda";
 import { PetaniRingkasanSingkat } from "@/components/petani-ringkasan-singkat";
 import { PetaniTugasBerandaRingkas } from "@/components/petani-tugas-beranda-ringkas";
 import { Button } from "@/components/ui/button";
@@ -106,7 +106,7 @@ export default async function PetaniPage() {
         </BentoSlot>
 
         <BentoSlot span={3} className="order-4">
-          <PetaniMonitorKolamBeranda
+          <MonitorKolamBeranda
             totalLogs={monitor.totalLogs}
             logTerbaru={monitor.logTerbaru}
             lahan={monitor.lahan}
@@ -116,6 +116,8 @@ export default async function PetaniPage() {
             defaultTglAwal={monitor.defaultTglAwal}
             defaultTglAkhir={monitor.defaultTglAkhir}
             emptyAction={MONITOR_KOSONG_PETANI}
+            hidePermissionBadge
+            className="max-sm:p-3"
           />
         </BentoSlot>
 

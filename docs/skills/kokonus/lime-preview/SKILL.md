@@ -27,11 +27,15 @@ bash scripts/sync-agent-skills.sh
 | `build-design-system`, `token-mapping`, `ui-review`, `component-docs`, `migrate-design-system`, `design-system-boss` | Audit, mapping token, review layar Lime |
 | `ui-ringkas` | Tetap untuk copy ID dan wireframe |
 
-## Implementasi saat ini (bukan migrasi penuh)
+## Implementasi saat ini (migrasi bertahap)
 
-- Preview global: `app/styles/ui-theme-lime.css` memetakan token → variabel shadcn (Tailwind v3).
-- Komponen `@/components/lime/*` dari design.how **belum** wajib; tambah hanya jika PO setuju migrasi bertahap.
-- Uji preview: toggle Lime → buka beberapa halaman; matikan → wireframe identik seperti sebelum toggle.
+- **Theme resmi:** `npx shadcn@latest add https://design.how/r/lime/theme.json` → `components/lime/{tokens,base,styles}.css`, `lib/lime/portal.tsx`, import `@/components/lime/styles.css` di `app/layout.tsx`.
+- **Tailwind v4** + `@tailwindcss/postcss` (app shadcn); utilitas Lime hanya di dalam `.lime` / `[data-system="lime"]`.
+- **Jembatan shadcn:** `app/styles/ui-theme-lime.css` (variabel HSL saat `data-ui-theme="lime"`).
+- **Komponen:** `@/components/lime/*` (contoh: `blocks/settings-rules`, `ui/list`, `ui/switch`, `ai/autonomy-rule`). Pratinjau: `components/kokonus-lime-contoh.tsx` di Pengaturan → Tampilan.
+- **Grafik:** wireframe tetap `lib/chart-monochrome.ts` (grayscale); tidak diubah saat Lime preview.
+- **Lint Lime (opsional):** `npx shadcn@latest add https://design.how/r/lime/lint.json` lalu `npx eslint -c lime.eslint.config.mjs .`
+- Uji: toggle Lime → Pengaturan + beberapa halaman shadcn; matikan → wireframe monokrom, radius 0.
 
 ## Agent
 

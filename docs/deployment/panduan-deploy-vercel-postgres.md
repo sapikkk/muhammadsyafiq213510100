@@ -49,6 +49,7 @@ Env wajib: `DATABASE_URL` (pooled), `DIRECT_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_U
    | `NEXTAUTH_URL` | ya | `https://<domain-anda>` |
    | `NEXTAUTH_SECRET` | ya | `openssl rand -base64 32` |
    | `AUDIT_BYPASS_RBAC` | jangan true | Hanya dev lokal |
+   | `KOKONUS_PRELAUNCH_RBAC` | opsional `true` | Pre-launch: semua role boleh `/owner/*`; **matikan sebelum go-live** |
 
 4. Build
    - Framework: Next.js (auto).

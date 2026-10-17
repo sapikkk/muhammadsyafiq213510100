@@ -1,0 +1,195 @@
+/**
+ * Kokonus Farm — skin Lime untuk seluruh app (data-ui-theme=lime).
+ * Wireframe tidak terpengaruh. Data & layout tetap; hanya token visual Figma/Kokonus.
+ */
+html[data-ui-theme="lime"] {
+  --kokonus-green: #1a3d2e;
+  --kokonus-green-hover: #143326;
+  --kokonus-lime-mark: #d3fa53;
+  --kokonus-lime-soft: #eef9c8;
+  --kokonus-warn-surface: #faf6e8;
+  --kokonus-warn-ink: #5c4a12;
+  --radius-panel: 1rem;
+  --radius-pill: 9999px;
+}
+
+html[data-ui-theme="lime"] body {
+  background: var(--page, hsl(var(--background)));
+}
+
+html[data-ui-theme="lime"] .bg-sidebar,
+html[data-ui-theme="lime"] aside.bg-sidebar {
+  background: var(--surface, hsl(var(--sidebar-background)));
+  border-color: var(--line, hsl(var(--sidebar-border)));
+}
+
+html[data-ui-theme="lime"] .border-r.bg-sidebar a.font-semibold {
+  letter-spacing: -0.02em;
+}
+
+/* Kartu & panel */
+html[data-ui-theme="lime"] [data-slot="card"],
+html[data-ui-theme="lime"] .rounded-md.border.bg-card,
+html[data-ui-theme="lime"] .rounded-lg.border {
+  border-radius: var(--radius-panel);
+  border-color: var(--line, hsl(var(--border)));
+}
+
+html[data-ui-theme="lime"] .rounded-md.border.border-border.bg-muted\/15 {
+  background: var(--surface, hsl(var(--muted) / 0.35));
+  border-radius: var(--radius-panel);
+}
+
+/* Tabel — header pill hijau (referensi portfolio / laporan) */
+html[data-ui-theme="lime"] table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+html[data-ui-theme="lime"] thead tr {
+  background: var(--kokonus-green);
+  color: #fff;
+  border-bottom: none !important;
+}
+
+html[data-ui-theme="lime"] thead th {
+  color: #fff !important;
+  background: transparent;
+  border-color: transparent;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+html[data-ui-theme="lime"] thead th:first-child {
+  padding-left: 1rem;
+}
+
+html[data-ui-theme="lime"] thead th:last-child {
+  padding-right: 1rem;
+}
+
+html[data-ui-theme="lime"] thead th:first-child {
+  border-top-left-radius: var(--radius-pill);
+  border-bottom-left-radius: var(--radius-pill);
+}
+
+html[data-ui-theme="lime"] thead th:last-child {
+  border-top-right-radius: var(--radius-pill);
+  border-bottom-right-radius: var(--radius-pill);
+}
+
+html[data-ui-theme="lime"] table thead {
+  display: table-header-group;
+}
+
+html[data-ui-theme="lime"] table tbody tr:first-child td {
+  padding-top: 0.625rem;
+}
+
+html[data-ui-theme="lime"] tbody tr {
+  border-color: var(--line, hsl(var(--border)));
+}
+
+html[data-ui-theme="lime"] tbody td {
+  font-size: 0.875rem;
+}
+
+/* Tombol & input */
+html[data-ui-theme="lime"] button[data-slot="button"].bg-primary,
+html[data-ui-theme="lime"] .bg-primary.text-primary-foreground {
+  background: var(--accent, hsl(var(--primary)));
+  color: var(--on-accent, hsl(var(--primary-foreground)));
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0 0 1px var(--accent-line, hsl(var(--ring) / 0.35));
+}
+
+html[data-ui-theme="lime"] button.border-input,
+html[data-ui-theme="lime"] input.border-input,
+html[data-ui-theme="lime"] select.border-input,
+html[data-ui-theme="lime"] textarea.border-input {
+  border-radius: 0.75rem;
+  border-color: var(--line-strong, hsl(var(--input)));
+  background: var(--field, hsl(var(--background)));
+}
+
+html[data-ui-theme="lime"] input[type="date"],
+html[data-ui-theme="lime"] select {
+  min-height: 2.75rem;
+}
+
+/* Chip / preset filter (monitor kolam, dll.) */
+html[data-ui-theme="lime"] button.min-h-11[aria-pressed="true"],
+html[data-ui-theme="lime"] button[aria-pressed="true"].bg-primary {
+  background: var(--kokonus-green);
+  color: #fff;
+}
+
+html[data-ui-theme="lime"] button.min-h-11.border.bg-transparent.text-background {
+  border-radius: var(--radius-pill);
+}
+
+/* Alert & peringatan */
+html[data-ui-theme="lime"] [role="alert"].border-destructive\/40 {
+  border-color: hsl(var(--destructive) / 0.35);
+  border-radius: var(--radius-panel);
+  background: var(--danger-tint, hsl(var(--destructive) / 0.06));
+}
+
+html[data-ui-theme="lime"] .kokonus-inline-alert {
+  border-radius: var(--radius-panel);
+  border: 1px solid rgb(92 74 18 / 0.2);
+  background: var(--kokonus-warn-surface);
+  color: var(--kokonus-warn-ink);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+}
+
+html[data-ui-theme="lime"] .kokonus-inline-alert strong {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+/* Progress (anggaran / siklus) */
+html[data-ui-theme="lime"] [role="progressbar"] {
+  border-radius: var(--radius-pill);
+  background: var(--surface-2, hsl(var(--muted)));
+  border-color: transparent;
+}
+
+html[data-ui-theme="lime"] [role="progressbar"] > div {
+  border-radius: var(--radius-pill);
+  background: var(--kokonus-green);
+}
+
+html[data-ui-theme="lime"] .kokonus-progress-accent [role="progressbar"] > div {
+  background: var(--kokonus-lime-mark);
+}
+
+/* Section judul */
+html[data-ui-theme="lime"] h1,
+html[data-ui-theme="lime"] h2.text-lg.font-semibold {
+  letter-spacing: -0.02em;
+}
+
+html[data-ui-theme="lime"] .text-muted-foreground {
+  color: var(--fg-2, hsl(var(--muted-foreground)));
+}
+
+/* Chart card */
+html[data-ui-theme="lime"] .owner-keuangan-hero .rounded-md.border {
+  border-radius: var(--radius-panel);
+}
+
+/* Empty state */
+html[data-ui-theme="lime"] .dashboard-bento-empty,
+html[data-ui-theme="lime"] [class*="DashboardBentoEmpty"] {
+  border-radius: var(--radius-panel);
+}

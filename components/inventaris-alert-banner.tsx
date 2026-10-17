@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { KokonusInlineAlert } from "@/components/kokonus/kokonus-inline-alert";
 import type { InventarisAlertBannerItem } from "@/lib/inventaris-types";
 
 export function InventarisAlertBanner({
@@ -17,23 +18,17 @@ export function InventarisAlertBanner({
   const sisa = items.length > 3 ? ` +${items.length - 3} lainnya` : "";
 
   return (
-    <div
-      role="alert"
-      className="rounded-md border border-destructive/40 bg-destructive/5 px-4 py-3 text-sm"
-    >
-      <p className="font-medium text-destructive">
-        {items.length} item di bawah stok minimum
-      </p>
-      <p className="mt-1 text-muted-foreground">
-        {kodeRingkas}
+    <KokonusInlineAlert title="Perhatian stok" variant="peringatan">
+      <p>
+        {items.length} item di bawah stok minimum: {kodeRingkas}
         {sisa}
       </p>
       <Link
         href={detailHref}
-        className="mt-2 inline-flex font-medium text-primary underline-offset-4 hover:underline"
+        className="mt-2 inline-flex font-medium underline-offset-4 hover:underline"
       >
         Lihat daftar stok rendah
       </Link>
-    </div>
+    </KokonusInlineAlert>
   );
 }

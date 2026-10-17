@@ -20,7 +20,7 @@ const { seedSiklusAktifDanMenunggu } = require("./seed-siklus-aktif");
 const { seedPetani } = require("./seed-petani");
 
 const prisma = new PrismaClient();
-const DEMO_PASSWORD = "KokonusDemo2026";
+const DEMO_PASSWORD = process.env.SEED_DEMO_PASSWORD?.trim() || "1";
 
 /** @param {number} seed */
 function rng(seed) {

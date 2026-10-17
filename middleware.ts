@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import type { Role } from "@/types/role";
-import { isAuditBypassRbac } from "@/lib/rbac";
+import { isAuditBypassRbac, isPrelaunchOpenRbac } from "@/lib/rbac";
 
 function requiredRole(pathname: string): Role | null {
   if (pathname.startsWith("/owner")) return "OWNER";
@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
   if (token.mustChangePassword) return redirectTo(request, "/ganti-sandi");
 
   const role = requiredRole(pathname);
-  if (role && token.role !== role && !isAuditBypassRbac()) {
+  if (role && token.role !== role && !isAuditBypassRbac() && !isPrelaunchOpenRbac()) {
     return redirectTo(request, "/akses-ditolak");
   }
 

@@ -1,9 +1,10 @@
-import { BentoSection } from "@/components/dashboard-bento";
-import { DashboardMonitorKolam } from "@/components/dashboard-monitor-kolam";
+import { MonitorKolamBeranda } from "@/components/monitor-kolam-beranda";
 import type { MonitorFilterOption } from "@/components/petani-monitor-section";
+import type { MonitorLogBaris } from "@/lib/monitor-kolam-types";
 
 export function DashboardMonitorKolamSection({
   totalLogs,
+  logTerbaru,
   lahan,
   greenhouse,
   kolam,
@@ -14,6 +15,7 @@ export function DashboardMonitorKolamSection({
   hidePermissionBadge,
 }: {
   totalLogs: number;
+  logTerbaru: MonitorLogBaris[];
   lahan: MonitorFilterOption[];
   greenhouse: MonitorFilterOption[];
   kolam: MonitorFilterOption[];
@@ -24,17 +26,18 @@ export function DashboardMonitorKolamSection({
   hidePermissionBadge?: boolean;
 }) {
   return (
-    <BentoSection title="Monitor kolam" badge="Read" hidePermissionBadge={hidePermissionBadge}>
-      <DashboardMonitorKolam
-        totalLogs={totalLogs}
-        lahan={lahan}
-        greenhouse={greenhouse}
-        kolam={kolam}
-        siklus={siklus}
-        defaultTglAwal={defaultTglAwal}
-        defaultTglAkhir={defaultTglAkhir}
-        emptyAction={emptyAction}
-      />
-    </BentoSection>
+    <MonitorKolamBeranda
+      totalLogs={totalLogs}
+      logTerbaru={logTerbaru}
+      lahan={lahan}
+      greenhouse={greenhouse}
+      kolam={kolam}
+      siklus={siklus}
+      defaultTglAwal={defaultTglAwal}
+      defaultTglAkhir={defaultTglAkhir}
+      emptyAction={emptyAction}
+      badge="Read"
+      hidePermissionBadge={hidePermissionBadge}
+    />
   );
 }

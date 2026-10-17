@@ -5,7 +5,7 @@ import path from "path";
 
 test.describe.configure({ mode: "serial" });
 
-const demoPassword = process.env.E2E_PASSWORD ?? "KokonusDemo2026";
+const demoPassword = process.env.E2E_PASSWORD ?? "1";
 const root = path.join(__dirname, "..");
 
 function demoSiklusId() {
