@@ -87,7 +87,7 @@ export function OwnerPeriodFilter({
       <label className="flex w-full max-w-xs flex-col gap-1.5 text-sm">
         <span className="font-medium text-muted-foreground">Periode</span>
         <select
-          className="flex h-11 w-full border border-input bg-background px-3 py-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
+          className="kokonus-native-select flex h-11 w-full border border-input bg-background py-2 pl-3 pr-10 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
           value={periode}
           onChange={(e) => onModeChange(e.target.value === "rentang" ? "rentang" : "bulan")}
         >

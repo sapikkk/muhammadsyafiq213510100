@@ -130,6 +130,7 @@ export function AgileProgressDashboard({ data }: { data: AgileProgressFile }) {
           </CardDescription>
         </CardHeader>
         <CardContent className="overflow-x-auto">
+          <div className="data-table-panel -mx-0.5 w-full min-w-0">
           <Table>
             <TableHeader>
               <TableRow>
@@ -157,6 +158,7 @@ export function AgileProgressDashboard({ data }: { data: AgileProgressFile }) {
               })}
             </TableBody>
           </Table>
+          </div>
         </CardContent>
       </Card>
 
@@ -251,7 +253,7 @@ function ItemsTable({
   compact?: boolean;
 }) {
   return (
-    <div className="overflow-x-auto rounded-md border">
+    <div className="data-table-panel -mx-0.5 w-full min-w-0 overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>

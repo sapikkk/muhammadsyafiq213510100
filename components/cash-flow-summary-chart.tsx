@@ -2,7 +2,7 @@
 
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { ChartCard } from "@/components/chart-card";
-import { chartFillAt } from "@/lib/chart-monochrome";
+import { useChartPalette } from "@/lib/chart-palette";
 import { formatRupiah } from "@/lib/format";
 
 export function CashFlowSummaryChart({
@@ -10,6 +10,7 @@ export function CashFlowSummaryChart({
 }: {
   sections: { label: string; net: string | number }[];
 }) {
+  const { fillAt } = useChartPalette();
   const data = sections.map((s) => ({
     name: s.label,
     net: Number(s.net),
@@ -28,7 +29,7 @@ export function CashFlowSummaryChart({
             <Tooltip formatter={(v: number) => formatRupiah(String(v))} />
             <Bar dataKey="net" name="Net" radius={[2, 2, 0, 0]}>
               {data.map((_, i) => (
-                <Cell key={i} fill={chartFillAt(i)} />
+                <Cell key={i} fill={fillAt(i)} />
               ))}
             </Bar>
           </BarChart>

@@ -77,6 +77,7 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
           <CashFlowSummaryChart sections={data.sections} />
 
           <PageSection title="Arus per kategori" badge="Read">
+            <div className="data-table-panel -mx-0.5 w-full min-w-0">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -103,6 +104,7 @@ export default async function OwnerArusKasPage({ searchParams }: { searchParams:
                 ))}
               </TableBody>
             </Table>
+            </div>
           </PageSection>
 
           <PageSection title="Mutasi kas" badge="Read">
