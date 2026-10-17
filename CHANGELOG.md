@@ -1,3 +1,10 @@
+## [1.41.2](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.41.1...v1.41.2) (2026-10-17)
+
+
+### Bug Fixes
+
+* **ui:** audit detail sheet, petani beranda, hub/login brand ([#137](https://github.com/sapikkk/muhammadsyafiq213510100/issues/137)) ([1bc6511](https://github.com/sapikkk/muhammadsyafiq213510100/commit/1bc65119001089e38227a1fa2933286f83e70808))
+
 ## [1.41.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.41.0...v1.41.1) (2026-10-17)
 
 
