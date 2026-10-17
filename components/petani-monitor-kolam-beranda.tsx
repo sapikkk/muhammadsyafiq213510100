@@ -65,11 +65,17 @@ export function PetaniMonitorKolamBeranda({
   return (
     <BentoSection title="Monitor kolam" className="max-sm:p-3" hidePermissionBadge>
       <DashboardMonitorKolamRingkas rows={logTerbaru} />
-      <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+      <div className="mt-2 flex flex-col gap-2 min-[480px]:flex-row min-[480px]:items-center min-[480px]:justify-between">
         <p className="text-[10px] text-muted-foreground">
           {logTerbaru.length} terbaru · {totalLogs.toLocaleString("id-ID")} total
         </p>
-        <Button type="button" variant="outline" size="sm" className="h-9 text-xs" onClick={() => setLengkap(true)}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="h-9 w-full text-xs min-[480px]:w-auto"
+          onClick={() => setLengkap(true)}
+        >
           Selengkapnya
         </Button>
       </div>

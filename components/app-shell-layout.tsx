@@ -48,7 +48,7 @@ export function AppShellLayout({
       </div>
 
       <main className="flex min-w-0 flex-1 flex-col overflow-y-auto">
-        <header className="flex h-12 min-[220px]:h-14 shrink-0 items-center gap-2 min-[220px]:gap-3 border-b bg-background px-2 min-[220px]:px-4 md:px-6">
+        <header className="relative z-40 flex h-12 min-[220px]:h-14 shrink-0 items-center gap-2 min-[220px]:gap-3 border-b bg-background px-2 min-[220px]:px-4 md:px-6">
           <Button
             type="button"
             variant="outline"

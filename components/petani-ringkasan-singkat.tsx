@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Warehouse } from "lucide-react";
 import { BentoSection } from "@/components/dashboard-bento";
 import { MetricCards } from "@/components/metric-cards";
 import {
@@ -48,9 +49,12 @@ export function PetaniRingkasanSingkat({
           aria-label="Stok di bawah minimum"
         >
           <div className="min-w-0 flex-1 lg:flex-none">
-            <p className="text-[11px] font-medium leading-tight text-muted-foreground">
-              Stok di bawah minimum
-            </p>
+            <div className="flex items-start gap-1.5">
+              <Warehouse className="mt-0.5 size-3.5 shrink-0 text-muted-foreground" aria-hidden />
+              <p className="text-[11px] font-medium leading-tight text-muted-foreground">
+                Stok di bawah minimum
+              </p>
+            </div>
             {stokRendahCount > 0 ? (
               <>
                 <p className="mt-0.5 text-lg font-semibold tabular-nums sm:text-xl">{stokRendahCount}</p>
