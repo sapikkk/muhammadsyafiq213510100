@@ -40,3 +40,6 @@ test-results/
 playwright-report/
 .neon
 .env*.local
+
+# Galeri Figma Make lokal — bukan bagian deploy
+reference/
