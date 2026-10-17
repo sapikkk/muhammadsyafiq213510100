@@ -1,3 +1,22 @@
+# [1.41.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.40.1...v1.41.0) (2026-10-17)
+
+
+### Bug Fixes
+
+* **ci:** kembalikan ESLint 8 agar next lint lulus di CI ([899577b](https://github.com/sapikkk/muhammadsyafiq213510100/commit/899577b2d027ad48e2e89c290b697aae6fd83c6b))
+* **ci:** legacy-peer-deps agar npm install lulus di Vercel ([97aab4d](https://github.com/sapikkk/muhammadsyafiq213510100/commit/97aab4d883c5cc42589f7111d036a7945bd2b406))
+* **ci:** min-release-age di .npmrc untuk Semgrep ([1e9583a](https://github.com/sapikkk/muhammadsyafiq213510100/commit/1e9583add4b25361d25c119e82628b0985e31d91))
+* **ui:** Lime beranda selaras spesifikasi user ([#135](https://github.com/sapikkk/muhammadsyafiq213510100/issues/135)) ([e998b57](https://github.com/sapikkk/muhammadsyafiq213510100/commit/e998b5771bda3ac29dd7d74b074b9d9cab5493a8)), closes [#134](https://github.com/sapikkk/muhammadsyafiq213510100/issues/134)
+* **ui:** selaraskan Lime pasca PR [#134](https://github.com/sapikkk/muhammadsyafiq213510100/issues/134) dengan spesifikasi beranda ([ad1496e](https://github.com/sapikkk/muhammadsyafiq213510100/commit/ad1496e1c90b64e2babbd29f4a2b177925c2ab40))
+
+
+### Features
+
+* **ui:** brand Lime, monitor kolam seragam, laporan & rekening Figma ([d64a6bd](https://github.com/sapikkk/muhammadsyafiq213510100/commit/d64a6bdeb9b59c8393912318e88c46aa63f5cc3d))
+* **ui:** keuangan bento, sheet detail cepat, brand dan Lime prep ([37114b3](https://github.com/sapikkk/muhammadsyafiq213510100/commit/37114b3df11e070eac4d7c729a6f7e1d9ff16b5c))
+* **ui:** Lime preview varietas List dan halaman masuk ([0abc303](https://github.com/sapikkk/muhammadsyafiq213510100/commit/0abc30374a1eaf5841996d7009283a92fa35c052))
+* **ui:** pasang sistem Lime design.how dengan preview Pengaturan ([6f4a2bf](https://github.com/sapikkk/muhammadsyafiq213510100/commit/6f4a2bfd174a55155afd43b9fb475a1d5920b3c1))
+
 ## [1.40.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.40.0...v1.40.1) (2026-10-17)
 
 
