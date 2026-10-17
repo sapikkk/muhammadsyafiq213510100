@@ -1,3 +1,10 @@
+# [1.43.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.42.0...v1.43.0) (2026-10-17)
+
+
+### Features
+
+* **ui:** landing brutalist anti-design — bento asymetri, slot foto ([7ccc873](https://github.com/sapikkk/muhammadsyafiq213510100/commit/7ccc87368e7881328b64a44fee3a26c618833482))
+
 # [1.42.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.41.2...v1.42.0) (2026-10-17)
 
 
