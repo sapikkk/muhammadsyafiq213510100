@@ -1,3 +1,10 @@
+# [1.44.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.43.0...v1.44.0) (2026-10-17)
+
+
+### Features
+
+* **ui:** landing ikut layout reference Figma (freight + facilities) ([63e85d4](https://github.com/sapikkk/muhammadsyafiq213510100/commit/63e85d42abb0e2b04bf11b5464cc5ac37069e8f3))
+
 # [1.43.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.42.0...v1.43.0) (2026-10-17)
 
 
