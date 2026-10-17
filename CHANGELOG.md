@@ -1,3 +1,16 @@
+# [1.42.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.41.2...v1.42.0) (2026-10-17)
+
+
+### Bug Fixes
+
+* **ui:** tutup sheet detail saat intercept [@detail](https://github.com/detail) no-op replace ([8ddbe1f](https://github.com/sapikkk/muhammadsyafiq213510100/commit/8ddbe1f8eca46bc7c6aceb723a2c03cef4147ce2))
+
+
+### Features
+
+* **ui:** landing kebun — greenhouse, rakit apung, penjualan, petani ([594f3c2](https://github.com/sapikkk/muhammadsyafiq213510100/commit/594f3c26c5042dde86dada9de2aa710da317d18c))
+* **ui:** landing publik antimainstream, hub tim di /hub ([7d538b2](https://github.com/sapikkk/muhammadsyafiq213510100/commit/7d538b25be2f823269a1d608b66e7616bfa37bc4))
+
 ## [1.41.2](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.41.1...v1.41.2) (2026-10-17)
 
 
