@@ -1,4 +1,4 @@
-/* Landing — layout mengikuti reference/Figma; token Kokonus */
+/* Landing — token selaras lime/wireframe (hijau kebun + lime aksen) */
 
 .kokonus-landing-ref {
   --kl-green: #1a3d2e;
@@ -6,8 +6,20 @@
   --kl-deep: #023f2d;
   --kl-ink: #151515;
   --kl-cream: #f4f2ed;
+  --kl-panel: #f3f3f3;
+  --kl-radius-lg: 20px;
+  --kl-radius-xl: 30px;
+  --kl-radius-pill: 60px;
 }
 
 .kokonus-landing-ref img {
+  max-width: 100%;
+  height: auto;
+}
+
+.kokonus-landing-ref .kl-img-cover {
   max-width: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

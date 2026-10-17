@@ -537,3 +537,51 @@ model RiwayatPerubahan {
 
   @@index([entitas, entitasId, createdAt])
 }
+
+/// Kartu landing publik (/) — diedit admin & owner di Pengaturan.
+enum LandingBagian {
+  HERO_STACK
+  FACILITIES
+  FUNDRAISING
+  ROLES
+  SPORTS_FEATURE
+  ATHLETE
+  VERIFICATION
+  FOOTER
+}
+
+model Landing_Kartu {
+  id     Int           @id @default(autoincrement())
+  bagian LandingBagian
+  urutan Int           @default(0)
+  judul  String        @db.VarChar(160)
+  meta   String?       @db.VarChar(255)
+  teks   String?       @db.Text
+  label  String?       @db.VarChar(80)
+  gambar String        @db.VarChar(500)
+  aktif  Boolean       @default(true)
+
+  @@index([bagian, urutan])
+}
+
+/// Teks & gambar latar landing (satu baris).
+model Landing_Konten {
+  id                    Int    @id @default(1)
+  heroJudul             String @db.VarChar(255)
+  heroLead              String @db.Text
+  heroCta               String @db.VarChar(40)
+  heroGambarLatar       String @db.VarChar(500)
+  heroGambarPratinjau   String @db.VarChar(500)
+  athleteJudul          String @db.VarChar(255)
+  athleteTeks           String @db.VarChar(500)
+  athleteGambar         String @db.VarChar(500)
+  verificationJudul     String @db.VarChar(120)
+  footerJudul           String @db.VarChar(255)
+  footerTeks            String @db.VarChar(500)
+  fundraisingStat       String @db.VarChar(40)
+  fundraisingCatatan    String @db.VarChar(255)
+  fundraisingJudulGelap String @db.VarChar(160)
+  fundraisingTeksGelap  String @db.VarChar(500)
+  fundraisingTombol     String @db.VarChar(80)
+  fundraisingGambarGelap String @db.VarChar(500)
+}

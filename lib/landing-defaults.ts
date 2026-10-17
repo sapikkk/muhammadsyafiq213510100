@@ -1,0 +1,205 @@
+import type { LandingBagianId } from "@/lib/landing-bagian";
+import { LANDING_ASSET } from "@/lib/kokonus-landing-content";
+
+export type LandingKartuSeed = {
+  bagian: LandingBagianId;
+  urutan: number;
+  judul: string;
+  meta?: string;
+  teks?: string;
+  label?: string;
+  gambar: string;
+};
+
+export const DEFAULT_LANDING_KONTEN = {
+  heroJudul: "Greenhouse, rakit apung, penjualan — satu aplikasi.",
+  heroLead:
+    "Petani catat di kolam. Admin jual dan jadwalkan antar. Owner lihat uang masuk. Teks di layar pakai bahasa Indonesia.",
+  heroCta: "Masuk",
+  heroGambarLatar: `${LANDING_ASSET}/3ccb6.png`,
+  heroGambarPratinjau: `${LANDING_ASSET}/ecc85.png`,
+  athleteJudul: "Tim petani dan admin — satu data kebun",
+  athleteTeks: "Pengalaman lapangan dan kantor selaras. Angka di owner mengikuti catatan di kolam.",
+  athleteGambar: `${LANDING_ASSET}/5d08e.png`,
+  verificationJudul: "Ringkasan operasi",
+  footerJudul: "Kebun hidroponik · rakit apung",
+  footerTeks: "Modul, alur, dan laporan — untuk petani, admin, dan owner.",
+  fundraisingStat: "3 peran",
+  fundraisingCatatan: "Petani · admin · owner",
+  fundraisingJudulGelap: "Biaya produksi hidroponik",
+  fundraisingTeksGelap: "Catat di lapangan. Angka di owner selaras dengan kebun.",
+  fundraisingTombol: "Buka aplikasi",
+  fundraisingGambarGelap: `${LANDING_ASSET}/7faac.png`,
+};
+
+export const DEFAULT_LANDING_KARTU: LandingKartuSeed[] = [
+  {
+    bagian: "HERO_STACK",
+    urutan: 0,
+    judul: "Pengantaran",
+    meta: "Jadwal kirim hari ini",
+    label: "Petani",
+    gambar: `${LANDING_ASSET}/dab15.png`,
+  },
+  {
+    bagian: "HERO_STACK",
+    urutan: 1,
+    judul: "Panen",
+    meta: "Rakit apung · greenhouse",
+    label: "Produksi",
+    gambar: `${LANDING_ASSET}/879d7.png`,
+  },
+  {
+    bagian: "HERO_STACK",
+    urutan: 2,
+    judul: "Pesanan jual",
+    meta: "Pelanggan & piutang",
+    label: "Admin",
+    gambar: `${LANDING_ASSET}/7fa27.png`,
+  },
+  {
+    bagian: "FACILITIES",
+    urutan: 0,
+    judul: "Greenhouse & varietas",
+    label: "Greenhouse",
+    gambar: `${LANDING_ASSET}/79bee.png`,
+  },
+  {
+    bagian: "FACILITIES",
+    urutan: 1,
+    judul: "Rakit apung & stok",
+    label: "Rakit apung",
+    gambar: `${LANDING_ASSET}/46779.png`,
+  },
+  {
+    bagian: "FACILITIES",
+    urutan: 2,
+    judul: "Penjualan & antar",
+    label: "Penjualan",
+    gambar: `${LANDING_ASSET}/5e4b8.png`,
+  },
+  {
+    bagian: "FACILITIES",
+    urutan: 3,
+    judul: "Laporan keuangan",
+    label: "Keuangan",
+    gambar: `${LANDING_ASSET}/cba57.png`,
+  },
+  {
+    bagian: "ROLES",
+    urutan: 0,
+    judul: "Petani",
+    teks: "Tugas, inventaris, panen, pengiriman.",
+    gambar: `${LANDING_ASSET}/143e7.svg`,
+  },
+  {
+    bagian: "ROLES",
+    urutan: 1,
+    judul: "Admin",
+    teks: "Pesanan jual, pelanggan, stok, jurnal.",
+    gambar: `${LANDING_ASSET}/143e7.svg`,
+  },
+  {
+    bagian: "ROLES",
+    urutan: 2,
+    judul: "Owner",
+    teks: "Arus kas, laba rugi, varietas.",
+    gambar: `${LANDING_ASSET}/143e7.svg`,
+  },
+  {
+    bagian: "FUNDRAISING",
+    urutan: 0,
+    judul: "Transparansi biaya",
+    teks: "HPP dan jurnal mengikuti siklus di kolam.",
+    meta: "gelap",
+    gambar: `${LANDING_ASSET}/7faac.png`,
+  },
+  {
+    bagian: "FUNDRAISING",
+    urutan: 1,
+    judul: "Stok & pack",
+    teks: "Active pack dan inventaris terhubung penjualan.",
+    meta: "muda",
+    gambar: `${LANDING_ASSET}/f0128.png`,
+  },
+  {
+    bagian: "FUNDRAISING",
+    urutan: 2,
+    judul: "Pelanggan setia",
+    teks: "Pesanan jual dan pengantaran terjadwal.",
+    meta: "komunitas",
+    gambar: `${LANDING_ASSET}/fdd8a.png`,
+  },
+  {
+    bagian: "SPORTS_FEATURE",
+    urutan: 0,
+    judul: "Kolam siap jual dan greenhouse terisi",
+    teks: "Kapasitas lubang, fase siklus, dan alert stok — satu layar untuk admin.",
+    label: "Produksi",
+    gambar: `${LANDING_ASSET}/30b63.png`,
+  },
+  {
+    bagian: "ATHLETE",
+    urutan: 0,
+    judul: "Pengalaman",
+    teks: "Tim petani dan admin memakai alur yang sama.",
+    gambar: `${LANDING_ASSET}/4e192.png`,
+  },
+  {
+    bagian: "ATHLETE",
+    urutan: 1,
+    judul: "—",
+    gambar: `${LANDING_ASSET}/2b194.png`,
+  },
+  {
+    bagian: "ATHLETE",
+    urutan: 2,
+    judul: "—",
+    gambar: `${LANDING_ASSET}/8c062.png`,
+  },
+  {
+    bagian: "VERIFICATION",
+    urutan: 0,
+    judul: "Kolam aktif",
+    meta: "24",
+    label: "unit",
+    gambar: `${LANDING_ASSET}/0397c.svg`,
+  },
+  {
+    bagian: "VERIFICATION",
+    urutan: 1,
+    judul: "Panen bulan ini",
+    meta: "128",
+    label: "kg",
+    gambar: `${LANDING_ASSET}/29215.svg`,
+  },
+  {
+    bagian: "VERIFICATION",
+    urutan: 2,
+    judul: "Pesanan terbuka",
+    meta: "12",
+    label: "SO",
+    gambar: `${LANDING_ASSET}/95545.svg`,
+  },
+  {
+    bagian: "FOOTER",
+    urutan: 0,
+    judul: "Modul",
+    meta: "/#modul",
+    gambar: `${LANDING_ASSET}/2674f.svg`,
+  },
+  {
+    bagian: "FOOTER",
+    urutan: 1,
+    judul: "Progress tim",
+    meta: "/hub",
+    gambar: `${LANDING_ASSET}/489c9.svg`,
+  },
+  {
+    bagian: "FOOTER",
+    urutan: 2,
+    judul: "Masuk",
+    meta: "/login",
+    gambar: `${LANDING_ASSET}/121c6.svg`,
+  },
+];

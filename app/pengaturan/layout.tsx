@@ -18,6 +18,7 @@ export default async function PengaturanLayout({ children }: { children: React.R
   if (!role) redirect("/login");
 
   const showTimTab = role === "OWNER";
+  const showLandingTab = role === "ADMIN" || role === "OWNER";
   let stokRendahCount = 0;
   try {
     stokRendahCount = await getStokRendahCount();
@@ -29,7 +30,7 @@ export default async function PengaturanLayout({ children }: { children: React.R
     <RoleHome role={role} stokRendahCount={stokRendahCount}>
       <div className="flex w-full min-w-0 max-w-6xl flex-col gap-6">
         <Suspense fallback={null}>
-          <PengaturanTabs showTimTab={showTimTab} />
+          <PengaturanTabs showTimTab={showTimTab} showLandingTab={showLandingTab} />
         </Suspense>
         {children}
       </div>
