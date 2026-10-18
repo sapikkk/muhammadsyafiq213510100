@@ -1,3 +1,18 @@
+# [1.46.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.45.0...v1.46.0) (2026-10-18)
+
+
+### Bug Fixes
+
+* **landing:** selaraskan footer dan aset reference ([0eab19e](https://github.com/sapikkk/muhammadsyafiq213510100/commit/0eab19e3366df9979c6ba9887ebe9ef42f14722a))
+* **landing:** tampilkan error database dengan aman ([e8c78aa](https://github.com/sapikkk/muhammadsyafiq213510100/commit/e8c78aa9bf36fb53e748239fddcc66ec5c4d0ccd))
+
+
+### Features
+
+* **landing:** footer 4 kolom referensi sports + CRUD kolom label ([1e80ae8](https://github.com/sapikkk/muhammadsyafiq213510100/commit/1e80ae8c30f690f31d4642b744738225b641d013))
+* **landing:** rapikan navigasi dan panel dinamis ([69cfa48](https://github.com/sapikkk/muhammadsyafiq213510100/commit/69cfa487afd83a262d38964bb1fed4ccd39cfc9b))
+* **ui:** navigasi landing, CRUD kartu luas, tentang & embed sosmed ([c1fb4b8](https://github.com/sapikkk/muhammadsyafiq213510100/commit/c1fb4b8c5636849f0a75ef178398102a4ddd95a1))
+
 # [1.45.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.44.0...v1.45.0) (2026-10-17)
 
 
