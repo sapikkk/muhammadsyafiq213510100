@@ -60,6 +60,15 @@ export function LandingSportsFooterSection({ konten, kartu, appHref }: Props) {
       <div className="flex flex-col gap-8 px-4 py-8 sm:px-8 sm:py-10 lg:flex-row lg:items-start lg:gap-8">
         <div className="flex max-w-[290px] flex-col justify-between gap-6 lg:min-h-[280px]">
           <div className="relative space-y-6">
+            {/* Dekorasi selendang mengikuti footer reference tanpa mengambil ruang layout. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              aria-hidden="true"
+              alt=""
+              src={`${LANDING_ASSET}/a2565.svg`}
+              className="pointer-events-none absolute left-0 top-16 z-0 w-[290px] opacity-60"
+            />
+            <div className="relative z-10 flex flex-col gap-6">
             <div className="flex items-center gap-2.5">
               <KokonusBrandMark size={40} mark="icon" alt="" />
               <span className="text-base font-bold uppercase tracking-wide">Kokonus Farm</span>
@@ -78,6 +87,7 @@ export function LandingSportsFooterSection({ konten, kartu, appHref }: Props) {
             {konten.footerTeks ? (
               <p className="text-sm leading-relaxed kl-muted">{konten.footerTeks}</p>
             ) : null}
+            </div>
           </div>
           {groups.ikon.length > 0 ? (
             <div className="flex flex-wrap gap-4">

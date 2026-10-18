@@ -32,23 +32,23 @@ export function LandingHeroSection({ konten, kartu, appHref }: SectionProps) {
           <div className="absolute inset-0 rounded-[10px] bg-[#0a1210]/45" />
         </div>
 
-        <header className="relative z-10 flex w-full shrink-0 flex-col gap-2 rounded-[60px] border border-white bg-white/20 p-2.5 sm:flex-row sm:items-center sm:justify-between">
+        <header className="relative z-10 mb-14 flex w-full shrink-0 flex-wrap items-center gap-2 rounded-[60px] border border-white bg-white/20 p-2.5 md:mb-0">
           <Link href="/" className="flex shrink-0 items-center gap-2.5 px-2 sm:px-4">
             <KokonusBrandMark size={24} mark="icon" alt="" />
             <span className="text-sm font-medium tracking-wide text-white">Kokonus Farm</span>
           </Link>
-          <div className="flex min-w-0 flex-wrap items-center justify-end gap-2">
+          <div className="ml-auto flex shrink-0 items-center gap-2">
             <nav
-              className="hidden items-center gap-4 rounded-[20px] border border-white bg-white/80 px-4 py-2 text-sm text-black md:flex"
+              className="absolute left-1/2 top-full mt-2 flex w-[calc(100%-1.25rem)] -translate-x-1/2 snap-x snap-mandatory items-center gap-1 overflow-x-auto rounded-[20px] border border-white bg-white/90 px-2 py-2 text-sm text-black md:static md:mt-0 md:w-auto md:translate-x-0 md:overflow-visible md:px-4"
               aria-label="Navigasi"
             >
               {LANDING_NAV.map((item) =>
                 item.href.startsWith("#") ? (
-                  <a key={item.href} href={item.href} className="leading-none hover:opacity-70">
+                  <a key={item.href} href={item.href} className="shrink-0 snap-start rounded-full px-3 py-2 leading-none hover:bg-black/5">
                     {item.label}
                   </a>
                 ) : (
-                  <Link key={item.href} href={item.href} className="leading-none hover:opacity-70">
+                  <Link key={item.href} href={item.href} className="shrink-0 snap-start rounded-full px-3 py-2 leading-none hover:bg-black/5">
                     {item.label}
                   </Link>
                 ),
@@ -57,7 +57,7 @@ export function LandingHeroSection({ konten, kartu, appHref }: SectionProps) {
             <Link
               href={appHref}
               id="masuk"
-              className="flex min-h-11 items-center gap-2 rounded-[20px] border border-white bg-white/80 px-4 py-2.5 text-sm font-medium text-black"
+              className="flex min-h-11 w-fit shrink-0 whitespace-nowrap items-center gap-2 rounded-[20px] border border-white bg-[var(--kl-lime)] px-3 py-2.5 text-sm font-semibold text-black shadow-none sm:px-4"
             >
               Masuk aplikasi
             </Link>
@@ -239,14 +239,11 @@ export function LandingFacilitiesSection({ kartu, appHref }: Pick<SectionProps, 
           </Link>
         </div>
 
-        <div
-          id="fasilitas"
-          className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2.5"
-        >
+        <div id="fasilitas" className="flex snap-x snap-mandatory gap-2.5 overflow-x-auto pb-2">
           {facilities.map((fac) => (
             <article
               key={fac.id}
-              className="relative flex min-h-[200px] flex-col justify-center overflow-hidden rounded-[20px] p-4 sm:min-h-[240px] sm:p-5 xl:min-h-[267px]"
+              className="relative flex min-h-[200px] min-w-[78vw] snap-start flex-col justify-center overflow-hidden rounded-[20px] p-4 sm:min-h-[240px] sm:min-w-[280px] sm:p-5 xl:min-h-[267px] xl:min-w-[300px]"
             >
               <div aria-hidden className="pointer-events-none absolute inset-0 rounded-[20px]">
                 <div className="absolute inset-0 rounded-[20px] bg-[#a0d6f8]" />
@@ -371,9 +368,9 @@ export function LandingAthleteSection({ konten, kartu }: Pick<SectionProps, "kon
 
   return (
     <section className="mx-auto w-full max-w-[min(100%,960px)] px-3 py-8 sm:px-6">
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col items-start gap-8">
         <h2 className="text-[clamp(1.5rem,4vw,2.5rem)] font-semibold leading-snug">{konten.athleteJudul}</h2>
-        <div className="relative flex min-h-[280px] flex-col justify-between overflow-hidden rounded-[20px] p-5 text-white sm:min-h-[310px]">
+        <div className="relative flex min-h-[280px] w-full max-w-[760px] flex-col justify-between overflow-hidden rounded-[20px] p-5 text-white sm:min-h-[310px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img alt="" className="absolute inset-0 size-full object-cover" src={konten.athleteGambar} />
           <div className="absolute inset-0 bg-black/25" />

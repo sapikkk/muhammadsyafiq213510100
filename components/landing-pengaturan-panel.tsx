@@ -31,6 +31,7 @@ const initial: { error?: string; ok?: string } = {};
 export function LandingPengaturanPanel({ konten, kartu }: Props) {
   const [bagian, setBagian] = useState<LandingBagianId>("FACILITIES");
   const [editId, setEditId] = useState<number | null>(null);
+  const [formOpen, setFormOpen] = useState(false);
   const [kontenState, kontenAction] = useFormState(saveLandingKonten, initial);
   const [kartuState, kartuAction] = useFormState(saveLandingKartu, initial);
 
@@ -152,6 +153,7 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
           onChange={(e) => {
             setBagian(e.target.value as LandingBagianId);
             setEditId(null);
+            setFormOpen(false);
           }}
         >
           {LANDING_BAGIAN.map((b) => (
@@ -170,7 +172,15 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img alt="" src={k.gambar} className="size-10 rounded object-cover" />
               <span className="min-w-0 flex-1 font-medium">{k.judul || "(avatar)"}</span>
-              <Button type="button" variant="outline" size="sm" onClick={() => setEditId(k.id)}>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setEditId(k.id);
+                  setFormOpen(true);
+                }}
+              >
                 Ubah
               </Button>
               <form
@@ -209,7 +219,24 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
           ))}
         </ul>
 
-        <form action={kartuAction} className="mt-2 flex flex-col gap-3 border-t pt-4">
+        <div className="flex items-center justify-between gap-3 border-t pt-4">
+          <p className="text-sm text-muted-foreground">
+            {formOpen ? (editing ? "Sedang mengubah kartu." : "Kartu baru untuk bagian ini.") : "Kelola kartu seperlunya."}
+          </p>
+          {!formOpen ? (
+            <Button
+              type="button"
+              onClick={() => {
+                setEditId(null);
+                setFormOpen(true);
+              }}
+            >
+              Tambah kartu
+            </Button>
+          ) : null}
+        </div>
+
+        {formOpen ? <form action={kartuAction} className="flex flex-col gap-3 border-t pt-4">
           <h3 className="text-sm font-semibold">{editing ? "Ubah kartu" : "Tambah kartu"}</h3>
           <input type="hidden" name="bagian" value={bagian} />
           {editing ? <input type="hidden" name="id" value={editing.id} /> : <input type="hidden" name="aktif" value="true" />}
@@ -261,13 +288,11 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
           {kartuState.ok ? <p className="text-sm text-muted-foreground">{kartuState.ok}</p> : null}
           <div className="flex flex-wrap gap-2">
             <Button type="submit">{editing ? "Simpan kartu" : "Tambah kartu"}</Button>
-            {editing ? (
-              <Button type="button" variant="ghost" onClick={() => setEditId(null)}>
-                Batal
-              </Button>
-            ) : null}
+            <Button type="button" variant="ghost" onClick={() => { setEditId(null); setFormOpen(false); }}>
+              Batal
+            </Button>
           </div>
-        </form>
+        </form> : null}
       </div>
     </div>
   );
