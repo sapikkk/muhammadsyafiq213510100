@@ -69,8 +69,16 @@ export default async function PengaturanPage({ searchParams }: { searchParams: S
 }
 
 async function LandingPengaturanSection() {
-  const [konten, kartu] = await Promise.all([getLandingKontenForEdit(), listLandingKartuAll()]);
-  return <LandingPengaturanPanel konten={konten} kartu={kartu} />;
+  try {
+    const [konten, kartu] = await Promise.all([getLandingKontenForEdit(), listLandingKartuAll()]);
+    return <LandingPengaturanPanel konten={konten} kartu={kartu} />;
+  } catch {
+    return (
+      <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm" role="alert">
+        Data halaman depan belum siap dimuat. Coba lagi setelah database selesai disinkronkan.
+      </div>
+    );
+  }
 }
 
 async function TimOwnerPanel({ tim }: { tim: string }) {

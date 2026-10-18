@@ -32,7 +32,7 @@ async function requireLandingWrite() {
 
 function toState(error: unknown): FormState {
   if (error instanceof LandingError) return { error: error.message };
-  throw error;
+  return { error: "Data halaman depan belum siap. Coba lagi setelah database disinkronkan." };
 }
 
 function revalidateLanding() {
