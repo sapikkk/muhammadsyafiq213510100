@@ -69,8 +69,12 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
         iframe embed; &quot;Tentang kami&quot; untuk halaman <code className="text-xs">/tentang</code>.
       </p>
 
-      <form action={kontenAction} className="flex flex-col gap-4 rounded-lg border p-4">
-        <h2 className="text-base font-semibold">Teks & gambar utama</h2>
+      <details className="group rounded-lg border bg-card" >
+        <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between px-4 py-3 text-base font-semibold [&::-webkit-details-marker]:hidden">
+          <span>Teks & gambar utama</span>
+          <span className="text-sm text-muted-foreground group-open:rotate-180" aria-hidden="true">⌄</span>
+        </summary>
+        <form action={kontenAction} className="flex flex-col gap-4 border-t p-4">
         <Field label="Judul hero" name="heroJudul" defaultValue={konten.heroJudul} />
         <Field label="Lead hero" name="heroLead" defaultValue={konten.heroLead} textarea />
         <div className="grid gap-4 sm:grid-cols-2">
@@ -131,7 +135,8 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
         <Button type="submit" className="w-fit">
           Simpan teks
         </Button>
-      </form>
+        </form>
+      </details>
 
       <div className="flex flex-col gap-4 rounded-lg border p-4">
         <h2 className="text-base font-semibold">

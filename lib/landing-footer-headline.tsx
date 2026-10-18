@@ -28,8 +28,13 @@ export function groupFooterLinks(
 ) {
   const pick = (key: FooterLinkGroup) =>
     links.filter((l) => (l.label ?? "").toLowerCase() === key);
+  const labeled = new Set<FooterLinkGroup>(["fasilitas", "tentang", "sosial", "ikon"]);
+  const unlabeled = links.filter(
+    (link) => !labeled.has((link.label ?? "").toLowerCase() as FooterLinkGroup),
+  );
   return {
-    fasilitas: pick("fasilitas"),
+    // Keep older CMS rows visible when they predate the footer column label.
+    fasilitas: [...pick("fasilitas"), ...unlabeled],
     tentang: pick("tentang"),
     sosial: pick("sosial"),
     ikon: pick("ikon"),

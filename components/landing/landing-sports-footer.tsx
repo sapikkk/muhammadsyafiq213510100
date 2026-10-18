@@ -56,9 +56,9 @@ export function LandingSportsFooterSection({ konten, kartu, appHref }: Props) {
   const headline = parseFooterHeadline(konten.footerJudul);
 
   return (
-    <footer className="kl-panel mx-3 mb-6 mt-8 max-w-[1080px] sm:mx-auto sm:px-2">
-      <div className="flex flex-col gap-10 px-4 py-10 sm:px-8 sm:py-14 lg:flex-row lg:items-start lg:gap-10">
-        <div className="flex max-w-[290px] flex-col justify-between gap-8 lg:min-h-[320px]">
+    <footer className="kl-panel mx-3 mb-6 mt-8 max-w-[1080px] overflow-hidden sm:mx-auto">
+      <div className="flex flex-col gap-8 px-4 py-8 sm:px-8 sm:py-10 lg:flex-row lg:items-start lg:gap-8">
+        <div className="flex max-w-[290px] flex-col justify-between gap-6 lg:min-h-[280px]">
           <div className="relative space-y-6">
             <div className="flex items-center gap-2.5">
               <KokonusBrandMark size={40} mark="icon" alt="" />
@@ -96,14 +96,14 @@ export function LandingSportsFooterSection({ konten, kartu, appHref }: Props) {
           ) : null}
         </div>
 
-        <div className="grid flex-1 gap-8 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_minmax(220px,263px)] lg:gap-6">
+        <div className="grid min-w-0 flex-1 gap-6 sm:grid-cols-2 lg:grid-cols-[repeat(3,minmax(0,1fr))_minmax(210px,263px)] lg:gap-7">
           <FooterLinkColumn title="Modul kebun" items={groups.fasilitas} />
           <FooterLinkColumn title="Tentang" items={groups.tentang} />
           <FooterLinkColumn title="Sosial" items={groups.sosial} />
 
           <div className="space-y-4 sm:col-span-2 lg:col-span-1">
             <p className="text-base font-semibold tracking-tight">Gabung</p>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-2">
               <div className="kl-footer-field">Email Anda</div>
               <div className="kl-footer-field">Nama lengkap</div>
               <div className="kl-footer-field">Peran (petani / admin)</div>
