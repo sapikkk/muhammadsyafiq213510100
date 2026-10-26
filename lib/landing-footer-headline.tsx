@@ -1,6 +1,8 @@
 /** Teks footer dengan bagian {{pill}} → highlight pill (token Kokonus). */
 
-export function parseFooterHeadline(text: string): Array<{ type: "text" | "pill"; value: string }> {
+export function parseFooterHeadline(
+  text: string,
+): Array<{ type: "text" | "pill"; value: string }> {
   const parts: Array<{ type: "text" | "pill"; value: string }> = [];
   const re = /\{\{([^}]+)\}\}/g;
   let last = 0;
@@ -24,11 +26,22 @@ export function parseFooterHeadline(text: string): Array<{ type: "text" | "pill"
 export type FooterLinkGroup = "fasilitas" | "tentang" | "sosial" | "ikon";
 
 export function groupFooterLinks(
-  links: { id: number; judul: string; meta: string | null; gambar: string; label: string | null }[],
+  links: {
+    id: number;
+    judul: string;
+    meta: string | null;
+    gambar: string;
+    label: string | null;
+  }[],
 ) {
   const pick = (key: FooterLinkGroup) =>
     links.filter((l) => (l.label ?? "").toLowerCase() === key);
-  const labeled = new Set<FooterLinkGroup>(["fasilitas", "tentang", "sosial", "ikon"]);
+  const labeled = new Set<FooterLinkGroup>([
+    "fasilitas",
+    "tentang",
+    "sosial",
+    "ikon",
+  ]);
   const unlabeled = links.filter(
     (link) => !labeled.has((link.label ?? "").toLowerCase() as FooterLinkGroup),
   );
