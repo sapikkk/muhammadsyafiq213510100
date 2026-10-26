@@ -1,3 +1,10 @@
+## [1.46.1](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.46.0...v1.46.1) (2026-10-26)
+
+
+### Bug Fixes
+
+* **landing:** kartu footer lama tanpa label dan panel pengaturan lebih jelas ([7144f63](https://github.com/sapikkk/muhammadsyafiq213510100/commit/7144f63ffc1c732d2a1ec8bb023f448faad2a3c0))
+
 # [1.46.0](https://github.com/sapikkk/muhammadsyafiq213510100/compare/v1.45.0...v1.46.0) (2026-10-18)
 
 
