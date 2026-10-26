@@ -36,7 +36,10 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
   const [kartuState, kartuAction] = useFormState(saveLandingKartu, initial);
 
   const filtered = useMemo(
-    () => kartu.filter((k) => k.bagian === bagian).sort((a, b) => a.urutan - b.urutan),
+    () =>
+      kartu
+        .filter((k) => k.bagian === bagian)
+        .sort((a, b) => a.urutan - b.urutan),
     [kartu, bagian],
   );
 
@@ -64,78 +67,130 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
         </Button>
       </div>
       <p className="text-sm text-muted-foreground">
-        Total <strong>{totalKartu}</strong> kartu di database. Tiap bagian (mis. Modul fasilitas) bisa
-        puluhan kartu — pakai <strong>Tambah kartu</strong>, bukan hanya empat gambar hero di bawah. Unggah
-        via Blob atau path <code className="text-xs">/landing/…</code>. Bagian &quot;Stok kartu sosmed&quot; untuk
-        iframe embed; &quot;Tentang kami&quot; untuk halaman <code className="text-xs">/tentang</code>.
+        Total <strong>{totalKartu}</strong> kartu di database. Tiap bagian (mis.
+        Modul fasilitas) bisa puluhan kartu — pakai{" "}
+        <strong>Tambah kartu</strong>, bukan hanya empat gambar hero di bawah.
+        Unggah via Blob atau path <code className="text-xs">/landing/…</code>.
+        Bagian &quot;Stok kartu sosmed&quot; untuk iframe embed; &quot;Tentang
+        kami&quot; untuk halaman <code className="text-xs">/tentang</code>.
       </p>
 
-      <details className="group rounded-lg border bg-card" >
+      <details className="group rounded-lg border bg-card">
         <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between px-4 py-3 text-base font-semibold [&::-webkit-details-marker]:hidden">
           <span>Teks & gambar utama</span>
-          <span className="text-sm text-muted-foreground group-open:rotate-180" aria-hidden="true">⌄</span>
+          <span
+            className="text-sm text-muted-foreground group-open:rotate-180"
+            aria-hidden="true"
+          >
+            ⌄
+          </span>
         </summary>
-        <form action={kontenAction} className="flex flex-col gap-4 border-t p-4">
-        <Field label="Judul hero" name="heroJudul" defaultValue={konten.heroJudul} />
-        <Field label="Lead hero" name="heroLead" defaultValue={konten.heroLead} textarea />
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Tombol hero" name="heroCta" defaultValue={konten.heroCta} />
-          <LandingGambarField
-            label="Gambar latar hero"
-            name="heroGambarLatar"
-            defaultValue={konten.heroGambarLatar}
-          />
-          <LandingGambarField
-            label="Gambar pratinjau hero"
-            name="heroGambarPratinjau"
-            defaultValue={konten.heroGambarPratinjau}
-          />
-          <LandingGambarField
-            label="Gambar panel gelap"
-            name="fundraisingGambarGelap"
-            defaultValue={konten.fundraisingGambarGelap}
-          />
-        </div>
-        <Field label="Judul tim (athlete)" name="athleteJudul" defaultValue={konten.athleteJudul} />
-        <Field label="Teks tim" name="athleteTeks" defaultValue={konten.athleteTeks} />
-        <LandingGambarField label="Gambar tim" name="athleteGambar" defaultValue={konten.athleteGambar} />
-        <Field
-          label="Judul statistik"
-          name="verificationJudul"
-          defaultValue={konten.verificationJudul}
-        />
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Stat fundraising" name="fundraisingStat" defaultValue={konten.fundraisingStat} />
+        <form
+          action={kontenAction}
+          className="flex flex-col gap-4 border-t p-4"
+        >
           <Field
-            label="Catatan fundraising"
-            name="fundraisingCatatan"
-            defaultValue={konten.fundraisingCatatan}
+            label="Judul hero"
+            name="heroJudul"
+            defaultValue={konten.heroJudul}
           />
           <Field
-            label="Judul panel gelap"
-            name="fundraisingJudulGelap"
-            defaultValue={konten.fundraisingJudulGelap}
+            label="Lead hero"
+            name="heroLead"
+            defaultValue={konten.heroLead}
+            textarea
           />
-          <Field label="Tombol fundraising" name="fundraisingTombol" defaultValue={konten.fundraisingTombol} />
-        </div>
-        <Field
-          label="Teks panel gelap"
-          name="fundraisingTeksGelap"
-          defaultValue={konten.fundraisingTeksGelap}
-          textarea
-        />
-        <Field
-          label="Judul footer"
-          name="footerJudul"
-          defaultValue={konten.footerJudul}
-          hint='Pill hijau: bungkus kata dengan {{teks}}, mis. Kebun {{hidroponik}} untuk tim.'
-        />
-        <Field label="Teks footer" name="footerTeks" defaultValue={konten.footerTeks} textarea />
-        {kontenState.error ? <p className="text-sm text-destructive">{kontenState.error}</p> : null}
-        {kontenState.ok ? <p className="text-sm text-muted-foreground">{kontenState.ok}</p> : null}
-        <Button type="submit" className="w-fit">
-          Simpan teks
-        </Button>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field
+              label="Tombol hero"
+              name="heroCta"
+              defaultValue={konten.heroCta}
+            />
+            <LandingGambarField
+              label="Gambar latar hero"
+              name="heroGambarLatar"
+              defaultValue={konten.heroGambarLatar}
+            />
+            <LandingGambarField
+              label="Gambar pratinjau hero"
+              name="heroGambarPratinjau"
+              defaultValue={konten.heroGambarPratinjau}
+            />
+            <LandingGambarField
+              label="Gambar panel gelap"
+              name="fundraisingGambarGelap"
+              defaultValue={konten.fundraisingGambarGelap}
+            />
+          </div>
+          <Field
+            label="Judul tim (athlete)"
+            name="athleteJudul"
+            defaultValue={konten.athleteJudul}
+          />
+          <Field
+            label="Teks tim"
+            name="athleteTeks"
+            defaultValue={konten.athleteTeks}
+          />
+          <LandingGambarField
+            label="Gambar tim"
+            name="athleteGambar"
+            defaultValue={konten.athleteGambar}
+          />
+          <Field
+            label="Judul statistik"
+            name="verificationJudul"
+            defaultValue={konten.verificationJudul}
+          />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field
+              label="Stat fundraising"
+              name="fundraisingStat"
+              defaultValue={konten.fundraisingStat}
+            />
+            <Field
+              label="Catatan fundraising"
+              name="fundraisingCatatan"
+              defaultValue={konten.fundraisingCatatan}
+            />
+            <Field
+              label="Judul panel gelap"
+              name="fundraisingJudulGelap"
+              defaultValue={konten.fundraisingJudulGelap}
+            />
+            <Field
+              label="Tombol fundraising"
+              name="fundraisingTombol"
+              defaultValue={konten.fundraisingTombol}
+            />
+          </div>
+          <Field
+            label="Teks panel gelap"
+            name="fundraisingTeksGelap"
+            defaultValue={konten.fundraisingTeksGelap}
+            textarea
+          />
+          <Field
+            label="Judul footer"
+            name="footerJudul"
+            defaultValue={konten.footerJudul}
+            hint="Pill hijau: bungkus kata dengan {{teks}}, mis. Kebun {{hidroponik}} untuk tim."
+          />
+          <Field
+            label="Teks footer"
+            name="footerTeks"
+            defaultValue={konten.footerTeks}
+            textarea
+          />
+          {kontenState.error ? (
+            <p className="text-sm text-destructive">{kontenState.error}</p>
+          ) : null}
+          {kontenState.ok ? (
+            <p className="text-sm text-muted-foreground">{kontenState.ok}</p>
+          ) : null}
+          <Button type="submit" className="w-fit">
+            Simpan teks
+          </Button>
         </form>
       </details>
 
@@ -170,8 +225,14 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
               className="flex flex-wrap items-center gap-2 rounded-md border px-3 py-2 text-sm"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt="" src={k.gambar} className="size-10 rounded object-cover" />
-              <span className="min-w-0 flex-1 font-medium">{k.judul || "(avatar)"}</span>
+              <img
+                alt=""
+                src={k.gambar}
+                className="size-10 rounded object-cover"
+              />
+              <span className="min-w-0 flex-1 font-medium">
+                {k.judul || "(avatar)"}
+              </span>
               <Button
                 type="button"
                 variant="outline"
@@ -211,7 +272,12 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
                 }}
               >
                 <input type="hidden" name="id" value={k.id} />
-                <Button type="submit" variant="outline" size="sm" className="text-destructive">
+                <Button
+                  type="submit"
+                  variant="outline"
+                  size="sm"
+                  className="text-destructive"
+                >
                   Hapus
                 </Button>
               </form>
@@ -221,7 +287,11 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
 
         <div className="flex items-center justify-between gap-3 border-t pt-4">
           <p className="text-sm text-muted-foreground">
-            {formOpen ? (editing ? "Sedang mengubah kartu." : "Kartu baru untuk bagian ini.") : "Kelola kartu seperlunya."}
+            {formOpen
+              ? editing
+                ? "Sedang mengubah kartu."
+                : "Kartu baru untuk bagian ini."
+              : "Kelola kartu seperlunya."}
           </p>
           {!formOpen ? (
             <Button
@@ -236,63 +306,112 @@ export function LandingPengaturanPanel({ konten, kartu }: Props) {
           ) : null}
         </div>
 
-        {formOpen ? <form action={kartuAction} className="flex flex-col gap-3 border-t pt-4">
-          <h3 className="text-sm font-semibold">{editing ? "Ubah kartu" : "Tambah kartu"}</h3>
-          <input type="hidden" name="bagian" value={bagian} />
-          {editing ? <input type="hidden" name="id" value={editing.id} /> : <input type="hidden" name="aktif" value="true" />}
-          <Field label="Judul" name="judul" defaultValue={editing?.judul ?? ""} />
-          <Field label="Meta (link footer / angka stat / varian kartu)" name="meta" defaultValue={editing?.meta ?? ""} />
-          <Field
-            label="Label (badge / kolom footer)"
-            name="label"
-            defaultValue={editing?.label ?? ""}
-            hint={
-              bagian === "FOOTER"
-                ? "Kolom footer: fasilitas · tentang · sosial · ikon (chip bawah brand)."
-                : undefined
-            }
-          />
-          <Field label="Teks" name="teks" defaultValue={editing?.teks ?? ""} textarea />
-          <LandingGambarField
-            key={editing?.id ?? "new"}
-            label="Gambar"
-            name="gambar"
-            defaultValue={editing?.gambar ?? "/landing/"}
-            required
-          />
-          <Field label="Slug embed (opsional, unik)" name="slug" defaultValue={editing?.slug ?? ""} />
-          {editing ? (
-            <>
+        {formOpen ? (
+          <form
+            action={kartuAction}
+            className="flex flex-col gap-3 border-t pt-4"
+          >
+            <h3 className="text-sm font-semibold">
+              {editing ? "Ubah kartu" : "Tambah kartu"}
+            </h3>
+            <input type="hidden" name="bagian" value={bagian} />
+            {editing ? (
+              <input type="hidden" name="id" value={editing.id} />
+            ) : (
+              <input type="hidden" name="aktif" value="true" />
+            )}
+            <Field
+              label="Judul"
+              name="judul"
+              defaultValue={editing?.judul ?? ""}
+            />
+            <Field
+              label="Meta (link footer / angka stat / varian kartu)"
+              name="meta"
+              defaultValue={editing?.meta ?? ""}
+            />
+            <Field
+              label="Label (badge / kolom footer)"
+              name="label"
+              defaultValue={editing?.label ?? ""}
+              hint={
+                bagian === "FOOTER"
+                  ? "Kolom footer: fasilitas · tentang · sosial · ikon (chip bawah brand)."
+                  : undefined
+              }
+            />
+            <Field
+              label="Teks"
+              name="teks"
+              defaultValue={editing?.teks ?? ""}
+              textarea
+            />
+            <LandingGambarField
+              key={editing?.id ?? "new"}
+              label="Gambar"
+              name="gambar"
+              defaultValue={editing?.gambar ?? "/landing/"}
+              required
+            />
+            <Field
+              label="Slug embed (opsional, unik)"
+              name="slug"
+              defaultValue={editing?.slug ?? ""}
+            />
+            {editing ? (
+              <>
+                <label className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    name="aktif"
+                    defaultChecked={editing.aktif}
+                  />
+                  Tampil di landing / tentang
+                </label>
+                <label className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    name="embedAktif"
+                    defaultChecked={editing.embedAktif}
+                  />
+                  Siap embed sosmed
+                </label>
+                {editing.embedAktif ? (
+                  <p className="text-xs text-muted-foreground">
+                    Iframe:{" "}
+                    <code className="break-all">{`<iframe src="/embed/kartu/${editing.id}" width="420" height="320" />`}</code>
+                  </p>
+                ) : null}
+              </>
+            ) : (
               <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" name="aktif" defaultChecked={editing.aktif} />
-                Tampil di landing / tentang
-              </label>
-              <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" name="embedAktif" defaultChecked={editing.embedAktif} />
+                <input type="checkbox" name="embedAktif" />
                 Siap embed sosmed
               </label>
-              {editing.embedAktif ? (
-                <p className="text-xs text-muted-foreground">
-                  Iframe:{" "}
-                  <code className="break-all">{`<iframe src="/embed/kartu/${editing.id}" width="420" height="320" />`}</code>
-                </p>
-              ) : null}
-            </>
-          ) : (
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" name="embedAktif" />
-              Siap embed sosmed
-            </label>
-          )}
-          {kartuState.error ? <p className="text-sm text-destructive">{kartuState.error}</p> : null}
-          {kartuState.ok ? <p className="text-sm text-muted-foreground">{kartuState.ok}</p> : null}
-          <div className="flex flex-wrap gap-2">
-            <Button type="submit">{editing ? "Simpan kartu" : "Tambah kartu"}</Button>
-            <Button type="button" variant="ghost" onClick={() => { setEditId(null); setFormOpen(false); }}>
-              Batal
-            </Button>
-          </div>
-        </form> : null}
+            )}
+            {kartuState.error ? (
+              <p className="text-sm text-destructive">{kartuState.error}</p>
+            ) : null}
+            {kartuState.ok ? (
+              <p className="text-sm text-muted-foreground">{kartuState.ok}</p>
+            ) : null}
+            <div className="flex flex-wrap gap-2">
+              <Button type="submit">
+                {editing ? "Simpan kartu" : "Tambah kartu"}
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => {
+                  setEditId(null);
+                  setFormOpen(false);
+                }}
+              >
+                Batal
+              </Button>
+            </div>
+          </form>
+        ) : null}
       </div>
     </div>
   );
@@ -319,9 +438,20 @@ function Field({
         {label}
       </label>
       {textarea ? (
-        <Textarea id={name} name={name} defaultValue={defaultValue} rows={3} required={required} />
+        <Textarea
+          id={name}
+          name={name}
+          defaultValue={defaultValue}
+          rows={3}
+          required={required}
+        />
       ) : (
-        <Input id={name} name={name} defaultValue={defaultValue} required={required} />
+        <Input
+          id={name}
+          name={name}
+          defaultValue={defaultValue}
+          required={required}
+        />
       )}
       {hint ? <p className="text-xs text-muted-foreground">{hint}</p> : null}
     </div>
