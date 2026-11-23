@@ -24,7 +24,7 @@ async function seedInfrastruktur(prisma) {
     },
   });
 
-  const kolamNames = ["Kolam A1", "Kolam A2", "Kolam A3", "Kolam A4"];
+  const kolamNames = ["Kolam A1", "Kolam A2", "Kolam A3", "Kolam A4", "Kolam A5", "Kolam A6"];
   for (const nama of kolamNames) {
     await prisma.kolam.create({
       data: {
@@ -36,7 +36,7 @@ async function seedInfrastruktur(prisma) {
     });
   }
 
-  return { lahan: 1, greenhouse: 1, kolam: kolamNames.length, totalLubang: 1920, skipped: false };
+  return { lahan: 1, greenhouse: 1, kolam: kolamNames.length, totalLubang: 2880, skipped: false };
 }
 
 module.exports = { seedInfrastruktur };

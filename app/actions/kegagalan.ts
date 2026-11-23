@@ -24,6 +24,7 @@ export async function submitLogKegagalan(_prev: FormState, formData: FormData): 
     const input = parseKegagalanInput(raw);
     await catatLogKegagalan(input);
     revalidatePath(`/petani/siklus/${input.siklusId}`);
+    revalidatePath("/petani/kolam");
     revalidatePath("/admin/susut");
     return { ok: "Kegagalan tercatat." };
   } catch (err) {
