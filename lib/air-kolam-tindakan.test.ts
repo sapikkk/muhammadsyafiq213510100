@@ -1,3 +1,4 @@
+/* eslint-disable no-console -- self-check script */
 import assert from "node:assert/strict";
 import { tindakanDariBacaanAir } from "./air-kolam-tindakan";
 import { lubangDariSemaiSingkat, parseBaki, parseKisaranSemai } from "./petani-semai-angka";
