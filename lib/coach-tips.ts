@@ -122,6 +122,10 @@ export const COACH_TIPS: Record<string, string[]> = {
   "admin-petani": [
     "Data petani lapangan beda dengan akun login; akun login dibuat di beranda Admin.",
   ],
+  "petani-kolam": [
+    "Enam sektor. Kosong: isi nama sayur, baki, kisaran. Terisi: catat air atau lapor gagal.",
+    "pH, PPM, dan suhu memunculkan tindakan. Grafik abu-abu adalah riwayat perlakuan.",
+  ],
   "petani-siklus": [
     "Satu baris = satu siklus tanam; buka baris untuk lanjut fase atau panen.",
     "Filter rumah kaca/kolam lalu «Monitor kolam hari ini» untuk catat pH dan PPM.",

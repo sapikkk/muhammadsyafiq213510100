@@ -93,6 +93,7 @@ export function getNavItems(role: Role, stokRendahCount: number): NavItem[] {
 
   return [
     { label: "Beranda", href: "/petani", icon: LayoutDashboard },
+    { label: "Kolam rakit", href: "/petani/kolam", icon: LandPlot },
     { label: "Siklus tanam", href: "/petani/siklus", icon: Sprout },
     { label: "Paket siap pakai", href: "/petani/active-pack", icon: Package },
     { label: "Stok barang", href: "/petani/inventaris", icon: Box },

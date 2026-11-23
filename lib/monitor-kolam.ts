@@ -72,7 +72,7 @@ export async function catatMonitorKolam(userId: number, input: MonitorKolamInput
       throw new MonitorKolamError("Kolam tidak cocok dengan siklus ini.", 400);
     }
     if (!siklusBolehMonitorKolam(siklus.status)) {
-      throw new MonitorKolamError("Monitor kolam hanya fase sprout hingga pendewasaan.", 400);
+      throw new MonitorKolamError("Monitor kolam hanya dari semai sampai pendewasaan.", 400);
     }
 
     return tx.log_Monitor_Kolam.create({

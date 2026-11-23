@@ -9,14 +9,14 @@ export type PetaniAlurLangkah = {
 export const PETANI_ALUR_LANGKAH: PetaniAlurLangkah[] = [
   {
     no: 1,
-    label: "Siklus tanam",
-    hint: "Semai baru atau lanjut fase di kolam.",
-    href: "/petani/siklus",
+    label: "Kolam rakit",
+    hint: "Semai tiga isian, catat air, atau lapor gagal.",
+    href: "/petani/kolam",
   },
   {
     no: 2,
-    label: "Monitor kolam",
-    hint: "Catat pH, PPM, dan suhu dari siklus aktif.",
+    label: "Siklus tanam",
+    hint: "Lanjut fase atau lihat daftar batch.",
     href: "/petani/siklus",
   },
   {

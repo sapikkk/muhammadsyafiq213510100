@@ -1,6 +1,7 @@
 import { isFaseProduksi, type FaseProduksi } from "@/lib/siklus-fase";
 
 const FASE_MONITOR: FaseProduksi[] = [
+  "SEMAI",
   "SPROUT_DAUN",
   "TAMBAL",
   "PINDAH_KOLAM",
